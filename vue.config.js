@@ -1,11 +1,4 @@
 module.exports = {
-  configureWebpack: {
-    rules: [
-      {
-        loaders: [{ test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader' }],
-      },
-    ],
-  },
   pluginOptions: {
     electronBuilder: {
       disableMainProcessTypescript: false,
