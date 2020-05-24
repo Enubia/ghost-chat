@@ -1,0 +1,61 @@
+{
+  "name": "ghost-chat",
+  "version": "0.0.1",
+  "description": "Standalone twitch chat overlay",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LettuceKiing/ghost-chat.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LettuceKiing/ghost-chat/issues"
+  },
+  "homepage": "https://github.com/LettuceKiing/ghost-chat#readme"
+  "private": false,
+  "author": {
+    "email": "lettucekiing@gmail.com",
+    "name": "Marco Schuster"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build --config electron-builder.json",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "dist_electron/bundled/background.js",
+  "dependencies": {
+    "core-js": "^3.4.3",
+    "electron-store": "^5.1.0",
+    "electron-window-state": "^5.0.3",
+    "tough-cookie": "^4.0.0",
+    "vue": "^2.6.10",
+    "vue-property-decorator": "^8.4.2",
+    "vue-router": "^3.1.3",
+    "vuex": "^3.1.2",
+    "vuex-electron": "^1.0.3"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "electron": "^9.0.0",
+    "electron-builder": "^22.6.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.0.5",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-electron-builder": "^1.4.4",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
+
