@@ -1,13 +1,14 @@
 import Vue from 'vue';
-import Electron from 'electron';
-import ElectronStore from 'electron-store';
+import * as Electron from 'electron';
+import * as ElectronStore from 'electron-store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './assets/scss/main.scss';
 
-import App from './App';
-import router from './router.js';
+import App from './App.vue';
+import router from './router';
 import store from './store';
 
 Vue.config.productionTip = false;

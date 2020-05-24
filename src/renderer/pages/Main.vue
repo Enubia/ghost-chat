@@ -2,88 +2,88 @@
   <div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis cum explicabo optio
-      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure iusto
-      nostrum praesentium repellat sint, tempore voluptatem?
+      repellat repellendus. Commodi, cum, cupiditate deleniti eligendi ex excepturi facere iure
+      iusto nostrum praesentium repellat sint, tempore voluptatem?
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({

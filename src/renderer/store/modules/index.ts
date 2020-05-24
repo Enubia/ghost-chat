@@ -3,12 +3,13 @@
  * in a one-shot manner. There should not be any reason to edit this file.
  */
 
-const files = require.context('.', false, /\.js$/);
+// @ts-ignore
+const files = require.context('.', false, /\.ts$/);
 const modules = {};
 
 files.keys().forEach((key) => {
-  if (key === './index.js') return;
-  const moduleName = key.replace(/(\.\/|\.js)/g, '');
+  if (key === './index.ts') return;
+  const moduleName = key.replace(/(\.\/|\.ts)/g, '');
   modules[moduleName] = files(key).default;
 });
 

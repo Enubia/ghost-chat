@@ -9,7 +9,7 @@ module.exports = {
   },
   parserOptions: {
     parser: 'babel-eslint',
-    ecmaVersion: 2016,
+    ecmaVersion: 2018,
     ecmaFeatures: { legacyDecorators: true },
   },
 };

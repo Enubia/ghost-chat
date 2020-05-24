@@ -3,10 +3,8 @@ html {
 }
 body {
   min-height: 100%;
-  &-webkit-scrollbar {
+  -webkit-app-region: drag;
+  &::-webkit-scrollbar {
     display: none;
-  }
-  .draggable-area {
-    -webkit-app-region: drag;
   }
 }
