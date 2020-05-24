@@ -4,6 +4,8 @@ html {
 body {
   min-height: 100%;
   -webkit-app-region: drag;
+  background: rgba(0, 0, 0, 0);
+  color: white;
   &::-webkit-scrollbar {
     display: none;
   }
