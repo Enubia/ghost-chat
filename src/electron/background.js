@@ -26,6 +26,9 @@ function createWindow() {
   let mainWindowState = windowStateKeeper({
     defaultWidth: 800,
     defaultHeight: 600,
+    // transparent background without top menu bar
+    // transparent: true,
+    // frame: false
   });
 
   // Create the browser window.
