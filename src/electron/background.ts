@@ -1,7 +1,7 @@
 'use strict';
 
 import { app, protocol, BrowserWindow } from 'electron';
-import windowStateKeeper from 'electron-window-state';
+import * as windowStateKeeper from 'electron-window-state';
 
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 
@@ -24,11 +24,8 @@ protocol.registerSchemesAsPrivileged([
 
 function createWindow() {
   let mainWindowState = windowStateKeeper({
-    defaultWidth: 800,
-    defaultHeight: 600,
-    // transparent background without top menu bar
-    // transparent: true,
-    // frame: false
+    defaultWidth: 500,
+    defaultHeight: 800,
   });
 
   // Create the browser window.
@@ -37,6 +34,9 @@ function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    // transparent background without frame
+    transparent: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
     },
