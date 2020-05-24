@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/LettuceKiing/ghost-chat/issues"
   },
-  "homepage": "https://github.com/LettuceKiing/ghost-chat#readme"
+  "homepage": "https://github.com/LettuceKiing/ghost-chat#readme",
   "private": false,
   "author": {
     "email": "lettucekiing@gmail.com",
@@ -58,4 +58,3 @@
     "last 2 versions"
   ]
 }
-
