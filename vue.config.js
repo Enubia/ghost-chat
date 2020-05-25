@@ -3,7 +3,7 @@ module.exports = {
     electronBuilder: {
       disableMainProcessTypescript: false,
       mainProcessTypeChecking: false,
-      mainProcessFile: 'src/background.ts',
+      mainProcessFile: 'src/electron/background.ts',
       builderOptions: {
         appId: 'test.com',
         win: {

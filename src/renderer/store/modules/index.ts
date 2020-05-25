@@ -3,12 +3,15 @@
  * in a one-shot manner. There should not be any reason to edit this file.
  */
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const files = require.context('.', false, /\.ts$/);
 const modules = {};
 
 files.keys().forEach((key) => {
-  if (key === './index.ts') return;
+  if (key === './index.ts') {
+    return;
+  }
   const moduleName = key.replace(/(\.\/|\.ts)/g, '');
   modules[moduleName] = files(key).default;
 });

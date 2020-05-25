@@ -3,8 +3,8 @@ import * as Electron from 'electron';
 import * as ElectronStore from 'electron-store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 import './assets/scss/main.scss';
 
 import App from './App.vue';

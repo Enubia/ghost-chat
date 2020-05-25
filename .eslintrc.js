@@ -1,15 +1,17 @@
 module.exports = {
   root: true,
-  env: {
-    node: true,
-  },
-  extends: ['plugin:vue/essential', 'eslint:recommended'],
-  rules: {
-    "no-console": "warn"
-  },
+  extends: ['@hokify/eslint-config-vue'],
   parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 2018,
-    ecmaFeatures: { legacyDecorators: true },
+    project: './tsconfig.eslint.json',
+    extraFileExtensions: ['.vue'],
+  },
+  rules: {
+    'no-console': 0,
+    'consistent-return': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
   },
 };

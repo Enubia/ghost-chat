@@ -1,12 +1,20 @@
-html {
+html,
+body {
   height: 100%;
 }
 body {
-  min-height: 100%;
-  -webkit-app-region: drag;
   background: rgba(0, 0, 0, 0);
   color: white;
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  #app {
+    -webkit-app-region: drag;
+    &.showBorder {
+      background: rgb(92, 39, 157);
+      border: 1px solid rgb(92, 39, 157);
+      border-radius: 10px;
+    }
   }
 }

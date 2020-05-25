@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "commonjs",
     "target": "es2018",
     "lib": ["es2018", "dom"],
-    "outDir": "dist_ts",
-    "rootDir": "src",
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": false,
@@ -15,7 +13,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "isolatedModules": false,
-    "declaration": true,
-    "types": ["node"]
-  }
+    "declaration": true
+  },
+  "exclude": ["node_modules"]
 }

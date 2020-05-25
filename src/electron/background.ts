@@ -1,10 +1,21 @@
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+app.disableHardwareAcceleration();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
+
+const windowSettings = {
+  width: 400,
+  height: 800,
+  transparent: true,
+  frame: false,
+  nodeIntegration: true,
+};
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -14,19 +25,23 @@ protocol.registerSchemesAsPrivileged([
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 500,
-    height: 800,
-    transparent: true,
-    frame: false,
+    width: windowSettings.width,
+    height: windowSettings.height,
+    transparent: windowSettings.transparent,
+    frame: windowSettings.frame,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: windowSettings.nodeIntegration,
     },
   });
+
+  win.setAlwaysOnTop(true, 'floating');
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    if (!process.env.IS_TEST) win.webContents.openDevTools();
+    if (!process.env.IS_TEST) {
+      win.webContents.openDevTools();
+    }
   } else {
     createProtocol('app');
     // Load the index.html when not in development

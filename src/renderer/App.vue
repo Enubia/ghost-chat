@@ -1,13 +1,21 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" :class="showBorder ? 'showBorder' : ''" class="container">
     <router-view />
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
-  name: 'App',
+  data() {
+    return {
+      showBorder: true,
+    };
+  },
 };
 </script>
 
-<style></style>
+<style>
+#app {
+  height: 100%;
+}
+</style>
