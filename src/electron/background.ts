@@ -1,5 +1,6 @@
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
+import * as windowStateKeeper from 'electron-window-state';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -9,28 +10,27 @@ app.disableHardwareAcceleration();
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
 
-const windowSettings = {
-  width: 400,
-  height: 800,
-  transparent: true,
-  frame: false,
-  nodeIntegration: true,
-};
-
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
 function createWindow() {
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 400,
+    defaultHeight: 800,
+  });
+
   // Create the browser window.
   win = new BrowserWindow({
-    width: windowSettings.width,
-    height: windowSettings.height,
-    transparent: windowSettings.transparent,
-    frame: windowSettings.frame,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    transparent: true,
+    frame: false,
     webPreferences: {
-      nodeIntegration: windowSettings.nodeIntegration,
+      nodeIntegration: true,
     },
   });
 
