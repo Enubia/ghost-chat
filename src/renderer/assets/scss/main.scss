@@ -10,6 +10,7 @@ body {
   }
 
   #app {
+    height: 100%;
     -webkit-app-region: drag;
     &.showBorder {
       background: rgb(92, 39, 157);
