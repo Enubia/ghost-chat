@@ -1,3 +1,4 @@
+// electron stuff
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import * as windowStateKeeper from 'electron-window-state';
@@ -15,7 +16,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
-function createWindow() {
+async function createWindow() {
   const mainWindowState = windowStateKeeper({
     defaultWidth: 400,
     defaultHeight: 800,
@@ -38,14 +39,14 @@ function createWindow() {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
     if (!process.env.IS_TEST) {
       win.webContents.openDevTools();
     }
   } else {
     createProtocol('app');
     // Load the index.html when not in development
-    win.loadURL('app://./index.html');
+    await win.loadURL('app://./index.html');
   }
 
   win.on('closed', () => {
@@ -62,11 +63,11 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
+app.on('activate', async () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow();
+    await createWindow();
   }
 });
 
@@ -74,7 +75,7 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  createWindow();
+  await createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.

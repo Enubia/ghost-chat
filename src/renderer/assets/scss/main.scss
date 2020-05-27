@@ -11,8 +11,8 @@ body {
 
   #app {
     height: 100%;
-    -webkit-app-region: drag;
     &.showBorder {
+      -webkit-app-region: drag;
       background: rgb(92, 39, 157);
       border: 1px solid rgb(92, 39, 157);
       border-radius: 10px;
