@@ -1,29 +1,35 @@
 <template>
-    <div>
-        <div v-for="item in data">
-            <div class="bg-info">
-                {{ item }}
-            </div>
-        </div>
+  <div v-if="data && data.length > 0">
+    <div v-for="(item, index) of data" :key="index">
+      <div class="mb-1">{{ item.user }}: {{ item.message }}</div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import TwitchApi from '../../api/twitchApi';
+import TwitchApi, { IMessageResponse } from '../../api/twitchApi';
+
+const messages: IMessageResponse[] = [];
 
 @Component({
   name: 'Main',
   components: {},
 })
 export default class Main extends Vue {
-  data = {};
-  async created() {
-    setInterval(async () => this.prepareData(), 3000);
+  private api = new TwitchApi({ channels: ['zizaran'] });
+
+  data = messages;
+
+  async created(): Promise<void> {
+    await this.api.initChat();
+    setInterval(async () => this.prepareData(), 5000);
   }
 
-  async prepareData() {
-    this.data = await TwitchApi.getTwitchChat()
+  async prepareData(): Promise<void> {
+    const response = await this.api.getTwitchChat();
+    messages.push(...response);
+    console.log(messages);
   }
 }
 </script>

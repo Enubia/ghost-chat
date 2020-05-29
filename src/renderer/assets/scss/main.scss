@@ -5,6 +5,7 @@ body {
 body {
   background: rgba(0, 0, 0, 0);
   color: white;
+  overflow-y: hidden;
   &::-webkit-scrollbar {
     display: none;
   }
