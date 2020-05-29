@@ -1,7 +1,14 @@
 <template>
   <div v-if="data && data.length > 0">
-    <div v-for="(item, index) of data" :key="index">
-      <div class="mb-1">{{ item.user }}: {{ item.message }}</div>
+    <div ref="chatMessages">
+      <div v-for="item of data" :key="item.key">
+        <div class="mb-1">
+          <b :style="'color:' + item.user.color">
+            {{ item.user.name }}
+          </b>
+          : {{ item.message }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -10,8 +17,6 @@
 import { Vue, Component } from 'vue-property-decorator';
 import TwitchApi, { IMessageResponse } from '../../api/twitchApi';
 
-const messages: IMessageResponse[] = [];
-
 @Component({
   name: 'Main',
   components: {},
@@ -19,17 +24,30 @@ const messages: IMessageResponse[] = [];
 export default class Main extends Vue {
   private api = new TwitchApi({ channels: ['zizaran'] });
 
-  data = messages;
+  data: IMessageResponse[] = [];
+
+  scrollToEnd(): void {
+    const messages: any = this.$refs.chatMessages;
+    if (messages) {
+      messages.scrollTop = messages.scrollHeight;
+      console.log(messages);
+    }
+  }
+
+  async prepareData(): Promise<void> {
+    const response = await this.api.getTwitchChat();
+    if (response && response.length > 0) {
+      this.data.push(...response);
+    }
+  }
 
   async created(): Promise<void> {
     await this.api.initChat();
     setInterval(async () => this.prepareData(), 5000);
   }
 
-  async prepareData(): Promise<void> {
-    const response = await this.api.getTwitchChat();
-    messages.push(...response);
-    console.log(messages);
+  updated(): void {
+    this.scrollToEnd();
   }
 }
 </script>
