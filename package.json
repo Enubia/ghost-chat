@@ -36,7 +36,7 @@
     "@electron/typescript-definitions": "^8.7.4",
     "@types/node": "12.12.42",
     "@hokify/eslint-config-vue": "^0.3.7",
-    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
     "@vue/cli-plugin-babel": "^4.4.1",
     "@vue/cli-plugin-eslint": "^4.4.1",
     "@vue/cli-plugin-typescript": "^4.4.1",
