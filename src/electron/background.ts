@@ -28,7 +28,7 @@ async function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    transparent: true,
+    transparent: false,
     frame: false,
     webPreferences: {
       nodeIntegration: true,

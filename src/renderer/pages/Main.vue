@@ -1,13 +1,11 @@
 <template>
-  <div v-if="data && data.length > 0">
-    <div ref="chatMessages">
-      <div v-for="item of data" :key="item.key">
-        <div class="mb-1">
-          <b :style="'color:' + item.user.color">
-            {{ item.user.name }}
-          </b>
-          : {{ item.message }}
-        </div>
+  <div class="container">
+    <div v-for="item of data" id="chat-messages" :key="item.key">
+      <div class="mb-1">
+        <b :style="'color:' + item.user.color">
+          {{ item.user.name }}
+        </b>
+        : {{ item.message }}
       </div>
     </div>
   </div>
@@ -16,23 +14,16 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import TwitchApi, { IMessageResponse } from '../../api/twitchApi';
+import { handleCustomButtons } from '../helper/customFrameButtons';
 
 @Component({
   name: 'Main',
   components: {},
 })
 export default class Main extends Vue {
-  private api = new TwitchApi({ channels: ['zizaran'] });
+  private api = new TwitchApi({ channels: ['a_seagull'] });
 
   data: IMessageResponse[] = [];
-
-  scrollToEnd(): void {
-    const messages: any = this.$refs.chatMessages;
-    if (messages) {
-      messages.scrollTop = messages.scrollHeight;
-      console.log(messages);
-    }
-  }
 
   async prepareData(): Promise<void> {
     const response = await this.api.getTwitchChat();
@@ -42,14 +33,36 @@ export default class Main extends Vue {
   }
 
   async created(): Promise<void> {
+    handleCustomButtons();
     await this.api.initChat();
-    setInterval(async () => this.prepareData(), 5000);
-  }
-
-  updated(): void {
-    this.scrollToEnd();
+    setInterval(async () => this.prepareData(), 1000);
   }
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.container {
+  background: rgba(0, 0, 0, 0);
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  width: 95%;
+
+  &:hover {
+    overflow-y: scroll;
+  }
+  &:hover::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f5f5;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: rgb(92, 39, 157);
+  }
+  &:hover::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(92, 39, 157, 0.3);
+    background-color: #f5f5f5;
+    border-radius: 2px;
+  }
+}
+</style>

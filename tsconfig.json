@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "es2015",
-    "target": "es5",
-    "lib": ["es2015", "dom"],
+    "target": "es2018",
+    "lib": ["es2018", "dom"],
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": false,
