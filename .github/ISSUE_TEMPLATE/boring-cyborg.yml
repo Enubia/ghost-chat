@@ -1,0 +1,20 @@
+# Enable "labeler" for your PR that would add labels to PRs based on the paths that are modified in the PR.
+labelPRBasedOnFilePath:
+  electron:
+    - src/electron/*
+
+  vue:
+    - src/renderer/*
+
+##### Greetings ########################################################################################################
+# Comment to be posted to welcome users when they open their first PR
+firstPRWelcomeComment: >
+  Thanks for opening this pull request! Please check out our contributing guidelines.
+
+# Comment to be posted to congratulate user on their first merged PR
+firstPRMergeComment: >
+  Awesome work, congrats on your first merged pull request! ![gif](https://gph.is/1MWZGtu)
+
+# Comment to be posted to on first time issues
+firstIssueWelcomeComment: >
+  Thanks for opening your first issue here! Be sure to follow the issue template! ![gif](https://gph.is/17BOn5Q)
