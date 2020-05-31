@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="title-bar-btns">
-      <div id="close-btn" class="btn float-right">x</div>
-      <div id="min-btn" class="btn float-right">-</div>
-    </div>
     <router-view />
   </div>
 </template>
@@ -16,13 +12,10 @@ export default class extends Vue {}
 
 <style scoped lang="scss">
 #app {
+  background: rgba(92, 39, 157, 0.18);
   color: #d0cbcb;
   border: 1px solid rgb(92, 39, 157);
   border-radius: 10px;
   height: 100%;
-
-  #title-bar-btns {
-    -webkit-app-region: drag;
-  }
 }
 </style>

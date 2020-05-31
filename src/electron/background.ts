@@ -28,20 +28,20 @@ async function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    transparent: false,
+    transparent: true,
     frame: false,
+    resizable: true,
+    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
     },
   });
 
-  win.setAlwaysOnTop(true, 'floating');
-
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
     if (!process.env.IS_TEST) {
-      win.webContents.openDevTools();
+      // win.webContents.openDevTools();
     }
   } else {
     createProtocol('app');

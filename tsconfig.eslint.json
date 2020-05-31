@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "*/**/*.vue",
     "*/**/*.ts",
     "*/**/*.js",
     "src/*.vue",
@@ -17,6 +16,5 @@
     "types/**/*.ts",
     "*.ts",
     "*.js"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }
