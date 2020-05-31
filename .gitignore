@@ -22,4 +22,3 @@ yarn-error.log*
 
 #Electron-builder output
 /dist_electron
-release
