@@ -1,6 +1,9 @@
 <template>
   <div id="messages" class="ml-2 mr-2">
-    <div class="drag-section"></div>
+    <div class="drag-section">
+      <div id="close-btn" class="btn btn-md float-right" @click.prevent="handleButtons">x</div>
+      <div id="min-btn" class="btn float-right" @click.prevent="handleButtons">_</div>
+    </div>
     <div id="chat-messages">
       <div v-for="item of data" :key="item.key">
         <div
@@ -14,7 +17,9 @@
         </div>
       </div>
     </div>
-    <div class="drag-section"></div>
+    <div class="drag-section text-center">
+      <router-link to="/">Back to channel selection</router-link>
+    </div>
   </div>
 </template>
 
@@ -28,13 +33,16 @@ import { handleCustomButtons } from '../helper/customFrameButtons';
   components: {},
 })
 export default class Chat extends Vue {
+  channel = '';
+
   data: IMessageResponse[] = [];
 
-  channels = ['zizaran'];
+  broadCaster =
+    this.channel.length > 0
+      ? `${this.channel[0].charAt(0).toUpperCase() + this.channel[0].slice(1)}`
+      : '';
 
-  broadCaster = `${this.channels[0].charAt(0).toUpperCase() + this.channels[0].slice(1)}`;
-
-  private api = new TwitchApi({ channels: this.channels });
+  private api = new TwitchApi({ channels: [this.channel] });
 
   async prepareData(): Promise<void> {
     const response = await this.api.getTwitchChat();
@@ -43,10 +51,22 @@ export default class Chat extends Vue {
     }
   }
 
-  async created(): Promise<void> {
+  handleButtons(): void {
     handleCustomButtons();
+  }
+
+  async created(): Promise<void> {
+    console.log(this.$route.params.channel);
+    this.channel = this.$route.params.channel;
     await this.api.initChat();
     setInterval(async () => this.prepareData(), 1000);
+  }
+
+  updated(): void {
+    const container = this.$el.querySelector('#chat-messages');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }
 }
 </script>
@@ -54,10 +74,9 @@ export default class Chat extends Vue {
 <style scoped lang="scss">
 #messages {
   height: 100%;
-  width: 95%;
 
   #chat-messages {
-    height: 95%;
+    height: 88%;
     overflow: hidden;
     &:hover {
       overflow-y: scroll;
@@ -80,8 +99,19 @@ export default class Chat extends Vue {
   }
 
   .drag-section {
+    width: 100%;
     -webkit-app-region: drag;
-    height: 20px;
+    height: 38px;
+
+    &:hover {
+      background-color: rgb(92, 39, 157);
+    }
+
+    #min-btn,
+    #close-btn {
+      color: white;
+      -webkit-app-region: no-drag;
+    }
   }
 }
 </style>

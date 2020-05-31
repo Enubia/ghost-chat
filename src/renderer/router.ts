@@ -8,7 +8,14 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'chat-page',
+      name: 'index',
+      // eslint-disable-next-line global-require
+      component: require('./pages/Index.vue').default,
+      meta: {},
+    },
+    {
+      path: '/chat/:channel?',
+      name: 'chat',
       // eslint-disable-next-line global-require
       component: require('./pages/Chat.vue').default,
       meta: {},
