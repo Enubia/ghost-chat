@@ -34,6 +34,7 @@ async function createWindow() {
     alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 

@@ -15,7 +15,12 @@ export default class TwitchApi {
   private messages: IMessageResponse[];
 
   constructor(private options: Options) {
-    this.client = client(options);
+    this.client = client({
+      connection: {
+        reconnect: true,
+      },
+      ...options,
+    });
     this.client.connect().catch((err) => {
       throw new Error(`Failed to connect to channel ${this.options.channels}: ${err}`);
     });
@@ -35,9 +40,16 @@ export default class TwitchApi {
     });
   }
 
-  public async getTwitchChat(): Promise<IMessageResponse[] | undefined> {
+  public async getTwitchChat(): Promise<IMessageResponse[]> {
     const responseMessages = this.messages;
     this.messages = [];
+    console.log('asdf');
     return responseMessages;
+  }
+
+  public async disconnect(): Promise<void> {
+    await this.client.disconnect().catch((error) => {
+      throw new Error(`Failed to disconnect from chat: ${error}`);
+    });
   }
 }

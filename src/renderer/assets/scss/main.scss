@@ -4,3 +4,15 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
+body {
+  #app {
+    .drag-section {
+      #min-btn,
+      #close-btn {
+        color: white;
+        -webkit-app-region: no-drag;
+      }
+    }
+  }
+}

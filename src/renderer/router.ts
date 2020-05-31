@@ -14,7 +14,7 @@ const router = new Router({
       meta: {},
     },
     {
-      path: '/chat/:channel?',
+      path: '/chat/:channel',
       name: 'chat',
       // eslint-disable-next-line global-require
       component: require('./pages/Chat.vue').default,

@@ -1,13 +1,17 @@
 <template>
-  <div id="messages" class="ml-2 mr-2">
+  <div id="messages">
     <div class="drag-section">
       <div id="close-btn" class="btn btn-md float-right" @click.prevent="handleButtons">x</div>
       <div id="min-btn" class="btn float-right" @click.prevent="handleButtons">_</div>
     </div>
-    <div id="chat-messages">
+    <div id="chat-messages" class="ml-2 mr-2">
       <div v-for="item of data" :key="item.key">
         <div
-          :style="item.message.startsWith(`@${broadCaster}`) ? 'background: #d15b5b' : ''"
+          :style="
+            item.message.includes(`@${broadCaster.length > 0 && broadCaster}`)
+              ? 'background: #d15b5b'
+              : ''
+          "
           class="mb-1"
         >
           <b :style="'color:' + (item.user ? item.user.color : 'white')">
@@ -17,8 +21,10 @@
         </div>
       </div>
     </div>
-    <div class="drag-section text-center">
-      <router-link to="/">Back to channel selection</router-link>
+    <div id="footer" class="text-center mt-2">
+      <div class="selection-link" @click.prevent="disconnectChat">
+        Back to channel selection
+      </div>
     </div>
   </div>
 </template>
@@ -37,16 +43,15 @@ export default class Chat extends Vue {
 
   data: IMessageResponse[] = [];
 
-  broadCaster =
-    this.channel.length > 0
-      ? `${this.channel[0].charAt(0).toUpperCase() + this.channel[0].slice(1)}`
-      : '';
+  broadCaster = '';
 
-  private api = new TwitchApi({ channels: [this.channel] });
+  api: TwitchApi;
+
+  interval;
 
   async prepareData(): Promise<void> {
     const response = await this.api.getTwitchChat();
-    if (response && response.length > 0) {
+    if (response.length > 0) {
       this.data.push(...response);
     }
   }
@@ -55,11 +60,20 @@ export default class Chat extends Vue {
     handleCustomButtons();
   }
 
+  async disconnectChat(): Promise<void> {
+    clearInterval(this.interval);
+    await this.api.disconnect();
+    await this.$router.push({
+      path: '/',
+    });
+  }
+
   async created(): Promise<void> {
-    console.log(this.$route.params.channel);
     this.channel = this.$route.params.channel;
+    this.broadCaster = `${this.channel[0].charAt(0).toUpperCase() + this.channel[0].slice(1)}`;
+    this.api = new TwitchApi({ channels: [this.channel] });
     await this.api.initChat();
-    setInterval(async () => this.prepareData(), 1000);
+    this.interval = setInterval(async () => this.prepareData(), 1000);
   }
 
   updated(): void {
@@ -76,7 +90,7 @@ export default class Chat extends Vue {
   height: 100%;
 
   #chat-messages {
-    height: 88%;
+    height: 90%;
     overflow: hidden;
     &:hover {
       overflow-y: scroll;
@@ -102,15 +116,24 @@ export default class Chat extends Vue {
     width: 100%;
     -webkit-app-region: drag;
     height: 38px;
+    border-radius: 10px 10px 0 0;
 
     &:hover {
       background-color: rgb(92, 39, 157);
     }
+  }
 
-    #min-btn,
-    #close-btn {
-      color: white;
-      -webkit-app-region: no-drag;
+  #footer {
+    font-size: 10pt;
+
+    .selection-link {
+      text-decoration: none;
+      color: #5c279d;
+
+      &:hover {
+        cursor: pointer;
+        color: #6e479d;
+      }
     }
   }
 }
