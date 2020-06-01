@@ -81,12 +81,12 @@ export default class Index extends Vue {
     #min-btn,
     #close-btn {
       color: white;
-      -webkit-app-region: no-drag;
     }
   }
 
   #channel-selection {
     height: 90%;
+    -webkit-app-region: no-drag;
 
     .btn-info {
       border-color: #6e479d;
