@@ -19,7 +19,7 @@ or you just want to have your chat on your main screen.
 
 Since this project is still in development, expect bugs to happen although everything should work properly.
 
-If you have any suggestions for features, found a bug, feel free to go to [https://github.com/LettuceKiing/ghost-chat/issues/new/choose](https://github.com/LettuceKiing/ghost-chat/issues/new/choose) and choose either Feature request or Bug report.
+If you have any suggestions for features or you've found a bug, feel free to go to [https://github.com/LettuceKiing/ghost-chat/issues/new/choose](https://github.com/LettuceKiing/ghost-chat/issues/new/choose) and choose either Feature request or Bug report.
 
 # Development setup
 
