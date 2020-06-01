@@ -31,12 +31,14 @@ async function createWindow() {
     transparent: true,
     frame: false,
     resizable: true,
-    alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
   });
+
+  win.setAlwaysOnTop(true, 'pop-up-menu');
+  win.setMaximizable(false);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode

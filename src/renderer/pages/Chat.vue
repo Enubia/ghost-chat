@@ -128,7 +128,7 @@ export default class Chat extends Vue {
 
     .selection-link {
       text-decoration: none;
-      color: #5c279d;
+      color: #8d41e6;
 
       &:hover {
         cursor: pointer;
