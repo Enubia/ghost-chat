@@ -9,6 +9,8 @@ or you just want to have your chat on your main screen.
 Nothing special required, just download the application from the [release](https://github.com/LettuceKiing/ghost-chat/releases) page and install it.
 Available on windows, mac and linux.
 
+### Make sure that the application you are overlaying is in windowed or borderless window mode, otherwise the overlay won't stay on top.
+
 ![gif](markdown-stuff/example.gif)
 
 # Development setup
