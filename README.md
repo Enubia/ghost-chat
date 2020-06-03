@@ -5,7 +5,7 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/lettucekiing/ghost-chat/total?color=brightgreen)
 # Ghost Chat
 
-Ghost chat is a standalone Twitch chat app written in Electron and Vue.
+Ghost chat is a standalone [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed fullscreen applications written in Electron and Vue.
 
 It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
 or you just want to have your chat on your main screen.
