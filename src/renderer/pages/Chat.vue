@@ -1,18 +1,24 @@
 <template>
-  <div id="messages">
-    <div class="drag-section">
-      <div id="close-btn" class="btn btn-md float-right" @click.prevent="handleButtons">x</div>
-      <div id="min-btn" class="btn float-right" @click.prevent="handleButtons">_</div>
+  <div id="messages" class="w-full">
+    <div id="top" class="drag-section mx-auto border-b mb-1">
+      <div id="buttons" class="inline-flex float-right">
+        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+          _
+        </div>
+        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+          x
+        </div>
+      </div>
     </div>
-    <div id="chat-messages" class="ml-2 mr-2">
-      <div v-for="item of data" :key="item.key">
+    <div id="chat-messages" class="container mx-auto px-4">
+      <div v-for="item of data" :key="item.key" class="break-all">
         <div
           :style="
             item.message.includes(`@${broadCaster.length > 0 && broadCaster}`)
               ? 'background: #d15b5b'
               : ''
           "
-          class="mb-1"
+          class="mb-1 text-white"
         >
           <b :style="'color:' + (item.user ? item.user.color : 'white')">
             {{ (item.user && item.user.name) || 'John Doe' }}
@@ -97,18 +103,7 @@ export default class Chat extends Vue {
     }
 
     &::-webkit-scrollbar {
-      width: 6px;
-      background-color: rgba(245, 245, 245, 0.74);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgb(92, 39, 157);
-    }
-
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(92, 39, 157, 0.3);
-      background-color: rgba(92, 39, 157, 0.3);
-      border-radius: 2px;
+      display: none;
     }
   }
 
@@ -117,6 +112,7 @@ export default class Chat extends Vue {
     -webkit-app-region: drag;
     height: 38px;
     border-radius: 10px 10px 0 0;
+    border-color: rgba(110, 71, 157, 0.67);
 
     &:hover {
       background-color: rgb(92, 39, 157);

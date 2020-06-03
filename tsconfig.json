@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "es2018",
     "lib": ["es2018", "dom"],
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "strict": true,
     "noImplicitAny": false,
     "removeComments": false,

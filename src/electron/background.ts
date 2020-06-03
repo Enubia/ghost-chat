@@ -1,7 +1,7 @@
 // electron stuff
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
-import * as windowStateKeeper from 'electron-window-state';
+import windowStateKeeper from 'electron-window-state';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 

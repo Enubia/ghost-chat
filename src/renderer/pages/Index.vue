@@ -1,32 +1,53 @@
 <template>
-  <div id="index" class="col-md-12">
-    <div id="top" class="drag-section row">
-      <div id="min-btn" class="btn ml-auto" @click.prevent="handleButtons">_</div>
-      <div id="close-btn" class="btn" @click.prevent="handleButtons">x</div>
+  <div id="index" class="grid w-full">
+    <div id="top" class="drag-section container mx-auto">
+      <div id="buttons" class="inline-flex float-right">
+        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+          _
+        </div>
+        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+          x
+        </div>
+      </div>
     </div>
-    <div id="channel-selection" class="form-group row">
-      <div class="text-center col-md-12 my-auto">
-        <div id="images" class="mb-3">
-          <img src="../assets/kappa.png" alt="kappa" />
-          <img src="../assets/twitch.svg" alt="twitch" style="width: 100px; height: 100px;" />
+    <div id="channel-selection" class="grid grid-rows-3">
+      <div class="text-center row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
+        <div id="images" class="inline-flex">
+          <img src="../assets/kappa.png" alt="kappa" class="h-32 w-32" />
+          <img src="../assets/twitch.svg" alt="twitch" class="h-24 w-24 mt-4" />
         </div>
         <label for="channel"></label>
-        <input
-          id="channel"
-          v-model="channelName"
-          type="text"
-          class="form-control"
-          @keyup.enter="startChat"
-        />
+        <div class="flex justify-center">
+          <div class="w-2/3 text-center">
+            <input
+              id="channel"
+              v-model="channelName"
+              type="text"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              @keyup.enter="startChat"
+            />
+          </div>
+        </div>
         <div class="mt-2">
-          <small id="channelHelp" class="form-text text-muted">
+          <small id="channelHelp" class="text-muted">
             Channel name, e.g. Enubia1
           </small>
-          <small v-if="showErrorMessage" id="channelError" class="form-text text-danger">
+          <br />
+          <small v-if="showErrorMessage" id="channelError" class="text-red-400">
             Please provide a channel name!
           </small>
         </div>
-        <div class="btn btn-md btn-info mt-4 w-100" @click.prevent="startChat">Go</div>
+        <div class="flex justify-center">
+          <div class="w-1/3 text-center">
+            <div
+              id="submit-button"
+              class="mt-2 text-white-800 py-1 px-2 rounded"
+              @click.prevent="startChat"
+            >
+              Go
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +101,9 @@ export default class Index extends Vue {
   .drag-section {
     #min-btn,
     #close-btn {
-      color: white;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -88,11 +111,12 @@ export default class Index extends Vue {
     height: 90%;
     -webkit-app-region: no-drag;
 
-    .btn-info {
+    #submit-button {
       border-color: #6e479d;
       background-color: #6e479d;
 
       &:hover {
+        cursor: pointer;
         border-color: #563879;
         background-color: #563879;
       }
