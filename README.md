@@ -2,6 +2,7 @@
 ![David](https://img.shields.io/david/lettucekiing/ghost-chat)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/lettucekiing/ghost-chat)
 ![GitHub issues](https://img.shields.io/github/issues/lettucekiing/ghost-chat)
+![GitHub All Releases](https://img.shields.io/github/downloads/lettucekiing/ghost-chat/total?color=brightgreen)
 # Ghost Chat
 
 Ghost chat is a standalone Twitch chat app written in Electron and Vue.
