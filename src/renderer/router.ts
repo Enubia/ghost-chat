@@ -7,17 +7,15 @@ const router = new Router({
   mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   routes: [
     {
-      path: '/',
       name: 'index',
-      // eslint-disable-next-line global-require
-      component: require('./pages/Index.vue').default,
+      path: '/',
+      component: () => import('./pages/Index.vue'),
       meta: {},
     },
     {
-      path: '/chat/:channel',
       name: 'chat',
-      // eslint-disable-next-line global-require
-      component: require('./pages/Chat.vue').default,
+      path: '/chat/:channel',
+      component: () => import('./pages/Chat.vue'),
       meta: {},
     },
     {
