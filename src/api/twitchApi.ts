@@ -28,11 +28,15 @@ export default class TwitchApi {
   }
 
   public async initChat(): Promise<void> {
-    this.client.on('message', (_channel, _userstate, message, _self) => {
+    this.client.on('message', (_channel, userstate, message, _self) => {
+      console.log(_channel);
+      console.log(userstate);
+      console.log(message);
+      console.log(_self);
       this.messages.push({
         user: {
-          color: _userstate.color,
-          name: _userstate.username,
+          color: userstate.color,
+          name: userstate.username,
         },
         message,
         key: Math.random().toString(36).substring(7),
@@ -43,7 +47,6 @@ export default class TwitchApi {
   public async getTwitchChat(): Promise<IMessageResponse[]> {
     const responseMessages = this.messages;
     this.messages = [];
-    console.log('asdf');
     return responseMessages;
   }
 

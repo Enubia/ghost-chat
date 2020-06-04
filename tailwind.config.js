@@ -1,5 +1,13 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: true,
+    content: [
+      './public/*.html',
+      './src/renderer/*.vue',
+      './src/renderer/**/*.vue',
+      './src/renderer/**/**/*.vue',
+    ],
+  },
   theme: {
     extend: {},
   },

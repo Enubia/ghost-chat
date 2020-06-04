@@ -1,9 +1,6 @@
+/* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const postcssPurgecss = require('@fullhuman/postcss-purgecss');
-const autoprefixer = require('autoprefixer');
-const tailwindcss = require('tailwindcss');
-
-const purgecss = postcssPurgecss({
+const purgecss = require('@fullhuman/postcss-purgecss')({
   // Specify the paths to all of the template files in your project.
   content: ['./public/**/*.html', './src/**/*.vue'],
   // Include any special characters you're using in this regular expression.
@@ -20,8 +17,8 @@ const purgecss = postcssPurgecss({
 
 module.exports = {
   plugins: [
-    tailwindcss,
-    autoprefixer,
+    require('tailwindcss'),
+    require('autoprefixer'),
     ...(process.env.NODE_ENV === 'production' ? [purgecss] : []),
   ],
 };
