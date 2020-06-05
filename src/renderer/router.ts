@@ -7,8 +7,14 @@ const router = new Router({
   mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   routes: [
     {
-      name: 'index',
+      name: 'version',
       path: '/',
+      component: () => import('./pages/ReleaseCheck.vue'),
+      meta: {},
+    },
+    {
+      name: 'index',
+      path: '/index',
       component: () => import('./pages/Index.vue'),
       meta: {},
     },

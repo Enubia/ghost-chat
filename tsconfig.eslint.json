@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "include": [
     "src/**/*.vue",
+    "src/**/**/*.vue",
     "src/**/*.ts",
     "src/**/*.js",
     "*.ts",

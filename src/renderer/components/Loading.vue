@@ -1,16 +1,18 @@
 <template>
   <div id="loading-wrapper">
-    <div id="loading-text">Loading Chat ⊂(◉‿◉)つ</div>
+    <div id="loading-text">{{ loadingText }}</div>
     <div id="loading-content"></div>
   </div>
 </template>
 
-<script>
-import { Vue, Component } from 'vue-property-decorator';
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator';
 @Component({
   name: 'Loading',
 })
-export default class Loading extends Vue {}
+export default class Loading extends Vue {
+  @Prop(String) readonly loadingText: string;
+}
 </script>
 
 <style scoped lang="scss">
@@ -26,7 +28,7 @@ export default class Loading extends Vue {}
     position: absolute;
     top: 45%;
     left: 49%;
-    color: rgb(121, 61, 185);
+    color: white;
     width: 100px;
     height: 30px;
     margin: -7px 0 0 -45px;

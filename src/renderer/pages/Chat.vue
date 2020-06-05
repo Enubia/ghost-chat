@@ -1,7 +1,7 @@
 <template>
   <div id="messages" class="w-full">
     <div id="top" class="drag-section mx-auto border-b mb-1">
-      <div id="buttons" class="inline-flex float-right">
+      <div class="inline-flex float-right">
         <div id="min-btn" class="text-white-800 py-1 px-4 drag-button" @click="handleButtons">
           _
         </div>
@@ -12,7 +12,7 @@
     </div>
     <div id="chat-messages" class="container mx-auto px-4">
       <div v-if="isLoading">
-        <Loading />
+        <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
       </div>
       <div v-else-if="!isLoading && isWaitingForMessages">
         <span>Connected, waiting for messages...</span>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div id="footer" class="text-center mt-2">
-      <div class="selection-link" @click.prevent="disconnectChat">
+      <div class="custom-link" @click.prevent="disconnectChat">
         Back to channel selection
       </div>
     </div>
@@ -125,10 +125,6 @@ export default class Chat extends Vue {
     background: rgba(92, 39, 157, 0.01);
     border-radius: 10px 10px 0 0;
     border-color: rgba(110, 71, 157, 0.67);
-
-    #buttons {
-      cursor: pointer;
-    }
   }
 
   #chat-messages {
@@ -153,16 +149,6 @@ export default class Chat extends Vue {
 
   #footer {
     font-size: 10pt;
-
-    .selection-link {
-      text-decoration: none;
-      color: #8d41e6;
-
-      &:hover {
-        cursor: pointer;
-        color: #6e479d;
-      }
-    }
   }
 }
 </style>

@@ -10,10 +10,34 @@ body {
 body {
   #app {
     .drag-section {
-      #min-btn,
-      #close-btn {
-        color: white;
+      .buttons {
         -webkit-app-region: no-drag;
+        color: white;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    #submit-button {
+      border-color: #6e479d;
+      background-color: #6e479d;
+
+      &:hover {
+        cursor: pointer;
+        border-color: #563879;
+        background-color: #563879;
+      }
+    }
+
+    .custom-link {
+      text-decoration: none;
+      color: #8d41e6;
+
+      &:hover {
+        cursor: pointer;
+        color: #6e479d;
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div id="index" class="grid w-full">
     <div id="top" class="drag-section container mx-auto">
-      <div id="buttons" class="inline-flex float-right">
+      <div class="buttons inline-flex float-right">
         <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
           _
         </div>
@@ -93,33 +93,12 @@ export default class Index extends Vue {
 <style scoped lang="scss">
 #index {
   height: 100%;
-  border-radius: 10px;
   background-color: #471e78;
   -webkit-app-region: drag;
-
-  .drag-section {
-    #min-btn,
-    #close-btn {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
 
   #channel-selection {
     height: 90%;
     -webkit-app-region: no-drag;
-
-    #submit-button {
-      border-color: #6e479d;
-      background-color: #6e479d;
-
-      &:hover {
-        cursor: pointer;
-        border-color: #563879;
-        background-color: #563879;
-      }
-    }
   }
 }
 </style>
