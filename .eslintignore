@@ -1,0 +1,7 @@
+node_modules
+markdown-stuff
+coverage
+build
+public
+.github
+dist_electron
