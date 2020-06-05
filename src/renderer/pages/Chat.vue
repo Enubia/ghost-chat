@@ -2,10 +2,10 @@
   <div id="messages" class="w-full">
     <div id="top" class="drag-section mx-auto border-b mb-1">
       <div id="buttons" class="inline-flex float-right">
-        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+        <div id="min-btn" class="text-white-800 py-1 px-4 drag-button" @click="handleButtons">
           _
         </div>
-        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+        <div id="close-btn" class="text-white-800 py-1 px-4 drag-button" @click="handleButtons">
           x
         </div>
       </div>
@@ -122,8 +122,8 @@ export default class Chat extends Vue {
     border-radius: 10px 10px 0 0;
     border-color: rgba(110, 71, 157, 0.67);
 
-    &:hover {
-      background-color: rgb(92, 39, 157);
+    #buttons {
+      cursor: pointer;
     }
   }
 
