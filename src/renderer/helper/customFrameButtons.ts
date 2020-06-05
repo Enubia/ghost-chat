@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 
-export function handleCustomButtons(): void {
+export const handleCustomButtons = (): void => {
   document.getElementById('min-btn')?.addEventListener('click', () => {
     const window = remote.getCurrentWindow();
     window?.minimize();
@@ -10,4 +10,4 @@ export function handleCustomButtons(): void {
     const window = remote.getCurrentWindow();
     window?.close();
   });
-}
+};

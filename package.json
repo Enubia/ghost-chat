@@ -19,20 +19,20 @@
   "main": "background.js",
   "dependencies": {
     "autoprefixer": "^9.8.0",
-    "electron-store": "^5.1.0",
+    "electron-store": "^5.1.1",
     "electron-window-state": "^5.0.3",
     "tailwindcss": "^1.4.6",
     "tmi.js": "^1.5.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.3.2",
-    "vuex": "^3.1.2",
+    "vuex": "^3.4.0",
     "vuex-electron": "^1.0.3"
   },
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",
     "@fullhuman/postcss-purgecss": "^2.2.0",
-    "@hokify/eslint-config-vue": "^0.3.8",
+    "@hokify/eslint-config-vue": "^0.3.9",
     "@types/node": "12.12.42",
     "@types/tmi.js": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
@@ -44,14 +44,14 @@
     "css-loader": "^3.5.3",
     "electron": "^9.0.2",
     "electron-builder": "^22.7.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "sass-loader": "^8.0.2",
     "typescript": "^3.9.5",
-    "vue-cli-plugin-electron-builder": "^1.4.4",
+    "vue-cli-plugin-electron-builder": "^1.4.6",
     "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
     "> 1%",

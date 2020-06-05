@@ -11,7 +11,10 @@
       </div>
     </div>
     <div id="chat-messages" class="container mx-auto px-4">
-      <div v-for="item of data" :key="item.key" class="break-text">
+      <div v-if="isLoading">
+        <Loading />
+      </div>
+      <div v-for="item of data" v-else :key="item.key" class="break-text">
         <div
           :style="
             item.message.toLowerCase().includes(`@${broadCaster.length > 0 && broadCaster}`)
@@ -27,7 +30,6 @@
               class="badges"
               alt="badge"
               :src="badge.badge"
-              style="min-width: 15px; min-height: 15px;"
             />
             <div>
               <b :style="'color:' + (item.user ? item.user.color : 'white')">
@@ -48,13 +50,16 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import Loading from '../components/Loading.vue';
 import TwitchApi from '../../api/twitchApi';
 import { IMessageResponse } from '../../api/types/IMessageResponse';
 import { handleCustomButtons } from '../helper/customFrameButtons';
 
 @Component({
   name: 'Chat',
-  components: {},
+  components: {
+    Loading,
+  },
 })
 export default class Chat extends Vue {
   channel = '';
@@ -65,6 +70,8 @@ export default class Chat extends Vue {
 
   api: TwitchApi;
 
+  isLoading = true;
+
   interval;
 
   async prepareData(): Promise<void> {
@@ -72,6 +79,7 @@ export default class Chat extends Vue {
     if (response.length > 0) {
       this.data.push(...response);
     }
+    this.isLoading = false;
   }
 
   handleButtons(): void {
@@ -133,6 +141,8 @@ export default class Chat extends Vue {
     .badges {
       margin-top: 5px;
       margin-right: 3px;
+      min-width: 15px;
+      min-height: 15px;
       float: left;
     }
   }
