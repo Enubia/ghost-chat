@@ -1,13 +1,7 @@
 import { client, Client, Options } from 'tmi.js';
-
-export interface IMessageResponse {
-  user?: {
-    color?: string;
-    name?: string;
-  };
-  message: string;
-  key: string;
-}
+import { getUserBadges } from '../renderer/helper/getUserBadges';
+import { IBadge } from './types/IBadge';
+import { IMessageResponse } from './types/IMessageResponse';
 
 export default class TwitchApi {
   private client: Client;
@@ -28,15 +22,18 @@ export default class TwitchApi {
   }
 
   public async initChat(): Promise<void> {
-    this.client.on('message', (_channel, userstate, message, _self) => {
-      console.log(_channel);
-      console.log(userstate);
-      console.log(message);
-      console.log(_self);
+    this.client.on('message', async (_channel, userstate, message, _self) => {
+      let badges: IBadge[] = [];
+
+      if (userstate.badges !== null) {
+        badges = await getUserBadges(userstate);
+      }
+
       this.messages.push({
         user: {
           color: userstate.color,
           name: userstate.username,
+          badges,
         },
         message,
         key: Math.random().toString(36).substring(7),
