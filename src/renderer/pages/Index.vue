@@ -70,9 +70,8 @@ export default class Index extends Vue {
 
   startChat(): void {
     if (this.channelName.length > 0) {
-      this.$router.push({
-        path: `/chat/${this.channelName.toLowerCase()}`,
-      });
+      this.$store.commit('setChannelName', this.channelName.toLowerCase());
+      this.$router.push('/chat');
     } else {
       this.showErrorMessage = true;
     }

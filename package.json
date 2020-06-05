@@ -10,7 +10,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint --fix",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
@@ -26,8 +26,7 @@
     "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.3.2",
-    "vuex": "^3.4.0",
-    "vuex-electron": "^1.0.3"
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",
@@ -45,6 +44,7 @@
     "electron": "^9.0.2",
     "electron-builder": "^22.7.0",
     "eslint": "^7.1.0",
+    "husky": "^4.2.5",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "sass-loader": "^8.0.2",
@@ -52,6 +52,11 @@
     "vue-cli-plugin-electron-builder": "^1.4.6",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "browserslist": [
     "> 1%",

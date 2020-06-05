@@ -14,6 +14,9 @@
       <div v-if="isLoading">
         <Loading />
       </div>
+      <div v-else-if="!isLoading && isWaitingForMessages">
+        <span>Connected, waiting for messages...</span>
+      </div>
       <div v-for="item of data" v-else :key="item.key" class="break-text">
         <div
           :style="
@@ -60,7 +63,7 @@ import { handleCustomButtons } from '../helper/customFrameButtons';
   },
 })
 export default class Chat extends Vue {
-  channel = '';
+  channel = this.$store.state.channelName;
 
   data: IMessageResponse[] = [];
 
@@ -70,14 +73,17 @@ export default class Chat extends Vue {
 
   isLoading = true;
 
+  isWaitingForMessages = true;
+
   interval;
 
   async prepareData(): Promise<void> {
     const response = await this.api.getTwitchChat();
     if (response.length > 0) {
       this.data.push(...response);
-      this.isLoading = false;
+      this.isWaitingForMessages = false;
     }
+    this.isLoading = false;
   }
 
   handleButtons(): void {
@@ -93,7 +99,6 @@ export default class Chat extends Vue {
   }
 
   async created(): Promise<void> {
-    this.channel = this.$route.params.channel;
     [this.broadCaster] = this.channel;
     this.api = new TwitchApi({ channels: [this.channel] });
     await this.api.initChat();

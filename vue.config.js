@@ -5,7 +5,7 @@ module.exports = {
       mainProcessTypeChecking: false,
       mainProcessFile: 'src/electron/background.ts',
       builderOptions: {
-        appId: 'test.com',
+        appId: 'com.electron.ghost-chat',
         win: {
           icon: 'public/favicon.ico',
         },

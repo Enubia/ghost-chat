@@ -1,5 +1,5 @@
 {
-  "productName": "Ghost Chat",
+  "productName": "Ghost-Chat",
   "appId": "ghost-chat",
   "directories": {
     "output": "release"
