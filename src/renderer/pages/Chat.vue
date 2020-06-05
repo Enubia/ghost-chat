@@ -17,9 +17,7 @@
       <div v-for="item of data" v-else :key="item.key" class="break-text">
         <div
           :style="
-            item.message.toLowerCase().includes(`@${broadCaster.length > 0 && broadCaster}`)
-              ? 'background: #d15b5b'
-              : ''
+            item.message.toLowerCase().includes(`@${broadCaster}`) ? 'background: #d15b5b' : ''
           "
           class="mb-1 text-white"
         >
@@ -96,7 +94,7 @@ export default class Chat extends Vue {
 
   async created(): Promise<void> {
     this.channel = this.$route.params.channel;
-    this.broadCaster = `${this.channel[0].charAt(0).toUpperCase() + this.channel[0].slice(1)}`;
+    [this.broadCaster] = this.channel;
     this.api = new TwitchApi({ channels: [this.channel] });
     await this.api.initChat();
     this.interval = setInterval(async () => this.prepareData(), 1000);
@@ -119,6 +117,7 @@ export default class Chat extends Vue {
     width: 100%;
     -webkit-app-region: drag;
     height: 38px;
+    background: rgba(92, 39, 157, 0.01);
     border-radius: 10px 10px 0 0;
     border-color: rgba(110, 71, 157, 0.67);
 
