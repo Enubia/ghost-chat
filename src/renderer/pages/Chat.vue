@@ -78,8 +78,8 @@ export default class Chat extends Vue {
     const response = await this.api.getTwitchChat();
     if (response.length > 0) {
       this.data.push(...response);
+      this.isLoading = false;
     }
-    this.isLoading = false;
   }
 
   handleButtons(): void {
