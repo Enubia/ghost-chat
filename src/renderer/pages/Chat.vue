@@ -94,7 +94,7 @@ export default class Chat extends Vue {
     clearInterval(this.interval);
     await this.api.disconnect();
     await this.$router.push({
-      path: '/',
+      path: '/index',
     });
   }
 
