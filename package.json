@@ -13,6 +13,7 @@
     "lint": "eslint --fix",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "upgradePackages": "ncu -u -x @types/node",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -20,7 +21,7 @@
   "dependencies": {
     "autoprefixer": "^9.8.0",
     "electron-context-menu": "^2.0.1",
-    "electron-store": "^5.1.1",
+    "electron-store": "^5.2.0",
     "electron-window-state": "^5.0.3",
     "mousetrap": "^1.6.5",
     "tailwindcss": "^1.4.6",
@@ -33,7 +34,7 @@
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",
     "@fullhuman/postcss-purgecss": "^2.2.0",
-    "@hokify/eslint-config-vue": "^0.3.9",
+    "@hokify/eslint-config-vue": "^0.3.10",
     "@types/node": "12.12.42",
     "@types/tmi.js": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
@@ -45,7 +46,7 @@
     "css-loader": "^3.5.3",
     "electron": "^9.0.2",
     "electron-builder": "^22.7.0",
-    "eslint": "^7.1.0",
+    "eslint": "^7.2.0",
     "husky": "^4.2.5",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
