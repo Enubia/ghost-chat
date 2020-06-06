@@ -16,5 +16,28 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      const contextMenu = require('electron-context-menu');
+      const remote = require('electron').remote;
+      const Mousetrap = require('mousetrap');
+      contextMenu({
+        prepend: () => [
+          {
+            label: 'Settings',
+            click: () => {
+              router.push('/settings').catch((err) => console.log(err));
+            },
+          },
+          {
+            label: 'Quit',
+            role: 'quit',
+          },
+        ],
+      });
+      Mousetrap.bind(['command+r', 'ctrl+r', 'f5'], () => {
+        remote.getCurrentWindow().reload();
+        return false; // prevents default behavior and stops event from bubbling
+      });
+    </script>
   </body>
 </html>

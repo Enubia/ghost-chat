@@ -1,7 +1,8 @@
 // electron stuff
-import { app, protocol, BrowserWindow } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import windowStateKeeper from 'electron-window-state';
+import * as path from 'path';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -10,6 +11,7 @@ app.disableHardwareAcceleration();
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
+let tray: Tray | null;
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -46,6 +48,18 @@ async function createWindow() {
     createProtocol('app');
     await win.loadURL('app://./index.html');
   }
+
+  tray = new Tray(path.join(__dirname, '../public/favicon.ico'));
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Quit Ghost Chat',
+      click: () => {
+        app.quit();
+      },
+    },
+  ]);
+  tray.setToolTip('Ghost Chat');
+  tray.setContextMenu(contextMenu);
 
   mainWindowState.manage(win);
 

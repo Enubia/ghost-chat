@@ -1,15 +1,6 @@
 <template>
-  <div id="version-check" class="grid w-full">
-    <div id="top" class="drag-section container mx-auto">
-      <div class="buttons inline-flex float-right">
-        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
-          _
-        </div>
-        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
-          x
-        </div>
-      </div>
-    </div>
+  <div id="version-check" class="grid w-full background-filled">
+    <MenuButtons />
     <div v-if="isLoading">
       <Loading loading-text="Checking for new Version" />
     </div>
@@ -40,10 +31,12 @@ import { Vue, Component } from 'vue-property-decorator';
 import { remote, shell } from 'electron';
 import Loading from '../components/Loading.vue';
 import { handleCustomButtons } from '../helper/customFrameButtons';
+import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
   name: 'ReleaseCheck',
   components: {
+    MenuButtons,
     Loading,
   },
 })
@@ -91,8 +84,6 @@ export default class ReleaseCheck extends Vue {
 
 <style scoped lang="scss">
 #version-check {
-  height: 100%;
-  background-color: #471e78;
   -webkit-app-region: drag;
 
   .no-drag {

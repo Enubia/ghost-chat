@@ -9,6 +9,12 @@ body {
 
 body {
   #app {
+    .background-filled {
+      height: 100%;
+      background-color: #471e78;
+      border-radius: 10px;
+    }
+
     .drag-section {
       .buttons {
         -webkit-app-region: no-drag;

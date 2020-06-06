@@ -1,15 +1,6 @@
 <template>
   <div id="messages" class="w-full">
-    <div id="top" class="drag-section mx-auto border-b mb-1">
-      <div class="inline-flex float-right">
-        <div id="min-btn" class="text-white-800 py-1 px-4 drag-button" @click="handleButtons">
-          _
-        </div>
-        <div id="close-btn" class="text-white-800 py-1 px-4 drag-button" @click="handleButtons">
-          x
-        </div>
-      </div>
-    </div>
+    <MenuButtons />
     <div id="chat-messages" class="container mx-auto px-4">
       <div v-if="isLoading">
         <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
@@ -55,11 +46,13 @@ import Loading from '../components/Loading.vue';
 import TwitchApi from '../../api/twitchApi';
 import { IMessageResponse } from '../../api/types/IMessageResponse';
 import { handleCustomButtons } from '../helper/customFrameButtons';
+import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
   name: 'Chat',
   components: {
     Loading,
+    MenuButtons,
   },
 })
 export default class Chat extends Vue {
@@ -117,15 +110,6 @@ export default class Chat extends Vue {
 <style scoped lang="scss">
 #messages {
   height: 100%;
-
-  .drag-section {
-    width: 100%;
-    -webkit-app-region: drag;
-    height: 38px;
-    background: rgba(92, 39, 157, 0.01);
-    border-radius: 10px 10px 0 0;
-    border-color: rgba(110, 71, 157, 0.67);
-  }
 
   #chat-messages {
     height: 90%;

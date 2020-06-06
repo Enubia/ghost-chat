@@ -1,16 +1,7 @@
 <template>
-  <div id="index" class="grid w-full">
-    <div id="top" class="drag-section container mx-auto">
-      <div class="buttons inline-flex float-right">
-        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
-          _
-        </div>
-        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
-          x
-        </div>
-      </div>
-    </div>
-    <div id="channel-selection" class="grid grid-rows-3">
+  <div id="index" class="grid w-full background-filled">
+    <MenuButtons />
+    <div id="channel-selection" class="grid grid-rows-1">
       <div class="text-center row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
         <div id="images" class="inline-flex">
           <img src="../assets/kappa.png" alt="kappa" class="h-32 w-32" />
@@ -56,10 +47,12 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Chat from './Chat.vue';
 import { handleCustomButtons } from '../helper/customFrameButtons';
+import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
   name: 'Index',
   components: {
+    MenuButtons,
     Chat,
   },
 })
@@ -92,8 +85,6 @@ export default class Index extends Vue {
 </script>
 <style scoped lang="scss">
 #index {
-  height: 100%;
-  background-color: #471e78;
   -webkit-app-region: drag;
 
   #channel-selection {

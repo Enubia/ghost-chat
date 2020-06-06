@@ -10,19 +10,21 @@ const router = new Router({
       name: 'version',
       path: '/',
       component: () => import('./pages/ReleaseCheck.vue'),
-      meta: {},
     },
     {
       name: 'index',
       path: '/index',
       component: () => import('./pages/Index.vue'),
-      meta: {},
     },
     {
       name: 'chat',
       path: '/chat',
       component: () => import('./pages/Chat.vue'),
-      meta: {},
+    },
+    {
+      name: 'settings',
+      path: '/settings',
+      component: () => import('./pages/Settings.vue'),
     },
     {
       path: '*',
