@@ -25,7 +25,8 @@ body {
       }
     }
 
-    #submit-button, #cancel-button {
+    #submit-button,
+    #cancel-button {
       border-color: #6e479d;
       background-color: #6e479d;
 
@@ -43,6 +44,15 @@ body {
       &:hover {
         cursor: pointer;
         color: #6e479d;
+      }
+    }
+
+    #messages {
+      .emotes {
+        max-height: 28px;
+        max-width: 28px;
+        display: inline-block;
+        vertical-align: middle;
       }
     }
   }

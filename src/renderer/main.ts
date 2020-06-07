@@ -19,6 +19,10 @@ ipcRenderer.on('index', () => {
   router.push('/index').catch((err) => console.log(err));
 });
 
+ipcRenderer.on('chat', () => {
+  router.push('/chat').catch((err) => console.log(err));
+});
+
 Mousetrap.bind(['command+r', 'ctrl+r', 'f5'], () => {
   remote.getCurrentWindow().reload();
   return false; // prevents default behavior and stops event from bubbling

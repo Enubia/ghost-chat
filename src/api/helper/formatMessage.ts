@@ -3,7 +3,7 @@ export const formatMessage = (
   emotes: { [p: string]: string[] } | undefined,
 ): string => {
   const img =
-    '<img alt="emote" width="30px;" height="25px;" src=https://static-cdn.jtvnw.net/emoticons/v1/{item}/3.0>';
+    ' <img alt="emote" class="emotes align-middle" src=https://static-cdn.jtvnw.net/emoticons/v1/{item}/2.0 /> ';
   const result = {};
 
   if (emotes) {
@@ -19,7 +19,7 @@ export const formatMessage = (
     });
 
     Object.keys(result).forEach((key) => {
-      message = message.replace(new RegExp(key, 'g'), result[key]);
+      message = message.replace(new RegExp(`[${key}]`, 'g'), result[key]);
     });
   }
 

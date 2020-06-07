@@ -16,10 +16,13 @@ export default class TwitchApi {
       },
       ...options,
     });
+    this.messages = [];
+  }
+
+  public async connect() {
     this.client.connect().catch((err) => {
       throw new Error(`Failed to connect to channel ${this.options.channels}: ${err}`);
     });
-    this.messages = [];
   }
 
   public async initChat(): Promise<void> {

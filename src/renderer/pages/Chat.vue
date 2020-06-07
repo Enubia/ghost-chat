@@ -8,14 +8,14 @@
       <div v-else-if="!isLoading && isWaitingForMessages">
         <span>Connected, waiting for messages...</span>
       </div>
-      <div v-for="item of data" v-else :key="item.key" class="break-text">
+      <div v-for="item of data" v-else :key="item.key">
         <div
           :style="
             item.message.toLowerCase().includes(`@${broadCaster}`) ? 'background: #d15b5b' : ''
           "
           class="mb-1 text-white"
         >
-          <div>
+          <div class="break-words">
             <img
               v-for="badge in item.user.badges"
               :key="badge.key"
@@ -23,13 +23,11 @@
               alt="badge"
               :src="badge.badge"
             />
-            <div class="flex">
-              <b :style="'color:' + (item.user ? item.user.color : 'white')">
-                {{ (item.user && item.user.name) || 'John Doe' }} </b
-              >:
-              <!--TODO: format this properly-->
-              <div class="inline-flex" v-html="item.message"></div>
-            </div>
+            <b :style="'color:' + (item.user ? item.user.color : 'white')">
+              {{ (item.user && item.user.name) || 'John Doe' }}
+              <span class="text-white font-light">: </span></b
+            >
+            <ChatMessage :message="item.message" />
           </div>
         </div>
       </div>
@@ -43,12 +41,14 @@ import Loading from '../components/Loading.vue';
 import TwitchApi from '../../api/twitchApi';
 import { IMessageResponse } from '../../api/types/IMessageResponse';
 import MenuButtons from '../components/MenuButtons.vue';
+import ChatMessage from '../components/ChatMessage.vue';
 
 @Component({
   name: 'Chat',
   components: {
     Loading,
     MenuButtons,
+    ChatMessage,
   },
 })
 export default class Chat extends Vue {
@@ -84,10 +84,18 @@ export default class Chat extends Vue {
   }
 
   async created(): Promise<void> {
-    [this.broadCaster] = this.channel;
-    this.api = new TwitchApi({ channels: [this.channel] });
-    await this.api.initChat();
-    this.interval = setInterval(() => this.prepareData(), 1000);
+    if (this.channel.length > 0) {
+      [this.broadCaster] = this.channel;
+      this.api = new TwitchApi({ channels: [this.channel] });
+      await this.api.connect();
+      await this.api.initChat();
+      this.interval = setInterval(() => this.prepareData(), 1000);
+    } else {
+      await this.$router.push({
+        name: 'index',
+        params: { message: 'no-channel' },
+      });
+    }
   }
 
   updated(): void {
@@ -115,7 +123,7 @@ export default class Chat extends Vue {
     }
 
     .badges {
-      margin-top: 5px;
+      margin-top: 3px;
       margin-right: 3px;
       min-width: 15px;
       min-height: 15px;

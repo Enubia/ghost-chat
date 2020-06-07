@@ -83,6 +83,12 @@ export default class Index extends Vue {
       }, 3000);
     }
   }
+
+  created() {
+    if (this.$route.params.message === 'no-channel') {
+      this.showErrorMessage = true;
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

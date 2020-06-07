@@ -68,7 +68,23 @@ async function createWindow() {
       {
         label: 'Back to index',
         click: () => {
-          win?.webContents.send('index');
+          if (win) {
+            if (!win.resizable) {
+              win.resizable = true;
+            }
+            win.webContents.send('index');
+          }
+        },
+      },
+      {
+        label: 'Back to Chat',
+        click: () => {
+          if (win) {
+            if (!win.resizable) {
+              win.resizable = true;
+            }
+            win.webContents.send('chat');
+          }
         },
       },
       {
@@ -111,6 +127,13 @@ async function createWindow() {
 ipcMain.on('relaunch', () => {
   app.relaunch();
   app.quit();
+});
+
+ipcMain.on('reload', () => {
+  if (win) {
+    win.reload();
+    win.resizable = true;
+  }
 });
 
 ipcMain.on('resize', (_event, args) => {

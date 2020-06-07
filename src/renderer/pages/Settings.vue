@@ -110,7 +110,7 @@ export default class Settings extends Vue {
 
   clickThrough = this.$config.get('clickThrough') || false;
 
-  showborders = this.$config.get('showBorders') || true;
+  showborders = this.$config.get('showBorders') || false;
 
   newBackgroundColor = '';
 
@@ -121,7 +121,19 @@ export default class Settings extends Vue {
   window;
 
   relaunch() {
-    ipcRenderer.send('relaunch');
+    this.$config.set('opacityLevel', this.opacityLevel);
+    this.$config.set('clickThrough', this.clickThrough);
+    this.$config.set('showBorders', this.showborders);
+    this.$config.set(
+      'backgroundColor',
+      this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
+    );
+
+    if (process.env.NODE_ENV === 'Production') {
+      ipcRenderer.send('relaunch');
+    } else {
+      ipcRenderer.send('reload');
+    }
   }
 
   redirectIndex() {
@@ -130,15 +142,15 @@ export default class Settings extends Vue {
   }
 
   setSliderValue(value) {
-    this.$config.set('opacityLevel', value);
+    this.opacityLevel = value;
   }
 
   setClickThrough(value) {
-    this.$config.set('clickThrough', value);
+    this.clickThrough = value;
   }
 
   setShowBorders(value) {
-    this.$config.set('showBorders', value);
+    this.showborders = value;
   }
 
   openColorPickerPage() {
@@ -154,9 +166,6 @@ export default class Settings extends Vue {
     if (color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/g)) {
       this.showColorSuccess = true;
       this.newBackgroundColor = color;
-      console.log(color);
-      console.log(color.slice(1, color.length));
-      this.$config.set('backgroundColor', color.slice(1, color.length).toLowerCase());
     } else {
       this.showColorError = color.length !== 0;
     }
@@ -164,8 +173,6 @@ export default class Settings extends Vue {
 
   created() {
     this.window = this.$route.query.windowSize;
-
-    console.log(this.window);
     ipcRenderer.send('resize', { width: 400, height: 800 });
   }
 }
