@@ -94,7 +94,7 @@ async function createWindow() {
     ],
   });
 
-  tray = new Tray(path.join(__dirname, '../public/favicon.ico'));
+  tray = new Tray(path.join(__dirname, '../public/favicon.png'));
   const trayIconMenu = Menu.buildFromTemplate([
     {
       label: 'Click through',
