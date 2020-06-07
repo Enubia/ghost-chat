@@ -129,7 +129,7 @@ export default class Settings extends Vue {
       this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
     );
 
-    if (process.env.NODE_ENV === 'Production') {
+    if (process.env.NODE_ENV === 'production') {
       ipcRenderer.send('relaunch');
     } else {
       ipcRenderer.send('reload');
