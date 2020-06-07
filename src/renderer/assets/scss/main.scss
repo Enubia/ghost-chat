@@ -11,7 +11,6 @@ body {
   #app {
     .background-filled {
       height: 100%;
-      background-color: #471e78;
       border-radius: 10px;
     }
 
@@ -26,7 +25,7 @@ body {
       }
     }
 
-    #submit-button {
+    #submit-button, #cancel-button {
       border-color: #6e479d;
       background-color: #6e479d;
 

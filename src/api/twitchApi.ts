@@ -1,7 +1,8 @@
 import { client, Client, Options } from 'tmi.js';
-import { getUserBadges } from '../renderer/helper/getUserBadges';
+import { getUserBadges } from './helper/getUserBadges';
 import { IBadge } from './types/IBadge';
 import { IMessageResponse } from './types/IMessageResponse';
+import { formatMessage } from './helper/formatMessage';
 
 export default class TwitchApi {
   private client: Client;
@@ -29,6 +30,10 @@ export default class TwitchApi {
         badges = await getUserBadges(userstate);
       }
 
+      if (userstate.emotes !== null) {
+        message = formatMessage(message, userstate.emotes);
+      }
+
       this.messages.push({
         user: {
           color: userstate.color,
@@ -41,7 +46,7 @@ export default class TwitchApi {
     });
   }
 
-  public async getTwitchChat(): Promise<IMessageResponse[]> {
+  public getTwitchChat(): IMessageResponse[] {
     const responseMessages = this.messages;
     this.messages = [];
     return responseMessages;

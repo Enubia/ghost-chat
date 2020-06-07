@@ -2,10 +2,10 @@
   <div id="menu-buttons">
     <div id="top" class="drag-section container mx-auto">
       <div class="buttons inline-flex float-right">
-        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+        <div id="min-btn" class="text-white-800 py-2 px-4 rounded" @click="handleButtons">
           _
         </div>
-        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click.prevent="handleButtons">
+        <div id="close-btn" class="text-white-800 py-2 px-4 rounded" @click="handleButtons">
           x
         </div>
       </div>

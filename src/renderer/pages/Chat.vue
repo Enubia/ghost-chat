@@ -23,18 +23,15 @@
               alt="badge"
               :src="badge.badge"
             />
-            <div>
+            <div class="flex">
               <b :style="'color:' + (item.user ? item.user.color : 'white')">
                 {{ (item.user && item.user.name) || 'John Doe' }} </b
-              >: {{ item.message }}
+              >:
+              <!--TODO: format this properly-->
+              <div class="inline-flex" v-html="item.message"></div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div id="footer" class="text-center mt-2">
-      <div class="custom-link" @click.prevent="disconnectChat">
-        Back to channel selection
       </div>
     </div>
   </div>
@@ -45,7 +42,6 @@ import { Vue, Component } from 'vue-property-decorator';
 import Loading from '../components/Loading.vue';
 import TwitchApi from '../../api/twitchApi';
 import { IMessageResponse } from '../../api/types/IMessageResponse';
-import { handleCustomButtons } from '../helper/customFrameButtons';
 import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
@@ -70,17 +66,13 @@ export default class Chat extends Vue {
 
   interval;
 
-  async prepareData(): Promise<void> {
-    const response = await this.api.getTwitchChat();
+  prepareData(): void {
+    const response = this.api.getTwitchChat();
     if (response.length > 0) {
       this.data.push(...response);
       this.isWaitingForMessages = false;
     }
     this.isLoading = false;
-  }
-
-  handleButtons(): void {
-    handleCustomButtons();
   }
 
   async disconnectChat(): Promise<void> {
@@ -95,7 +87,7 @@ export default class Chat extends Vue {
     [this.broadCaster] = this.channel;
     this.api = new TwitchApi({ channels: [this.channel] });
     await this.api.initChat();
-    this.interval = setInterval(async () => this.prepareData(), 1000);
+    this.interval = setInterval(() => this.prepareData(), 1000);
   }
 
   updated(): void {
@@ -129,10 +121,6 @@ export default class Chat extends Vue {
       min-height: 15px;
       float: left;
     }
-  }
-
-  #footer {
-    font-size: 10pt;
   }
 }
 </style>

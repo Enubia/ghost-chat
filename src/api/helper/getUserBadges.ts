@@ -1,6 +1,6 @@
 import { ChatUserstate } from 'tmi.js';
 import { badgeList } from './globalBadgeList';
-import { IBadge } from '../../api/types/IBadge';
+import { IBadge } from '../types/IBadge';
 
 export const getUserBadges = async (user: ChatUserstate): Promise<IBadge[]> => {
   const channelBadgeUrl = `https://badges.twitch.tv/v1/badges/channels/${user['room-id']}/display?language=en`;

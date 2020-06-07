@@ -1,41 +1,43 @@
 <template>
-  <div id="index" class="grid w-full background-filled">
+  <div id="index" class="background-filled">
     <MenuButtons />
-    <div id="channel-selection" class="grid grid-rows-1">
-      <div class="text-center row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
-        <div id="images" class="inline-flex">
-          <img src="../assets/kappa.png" alt="kappa" class="h-32 w-32" />
-          <img src="../assets/twitch.svg" alt="twitch" class="h-24 w-24 mt-4" />
-        </div>
-        <label for="channel"></label>
-        <div class="flex justify-center">
-          <div class="w-2/3 text-center">
-            <input
-              id="channel"
-              v-model="channelName"
-              type="text"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              @keyup.enter="startChat"
-            />
+    <div class="grid w-full h-full">
+      <div id="channel-selection" class="flex items-center justify-center text-center">
+        <div class="w-3/4 row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
+          <div id="images" class="inline-flex">
+            <img src="../assets/kappa.png" alt="kappa" class="h-32 w-32" />
+            <img src="../assets/twitch.svg" alt="twitch" class="h-24 w-24 mt-4" />
           </div>
-        </div>
-        <div class="mt-2">
-          <small id="channelHelp" class="text-muted">
-            Channel name, e.g. Enubia1
-          </small>
-          <br />
-          <small v-if="showErrorMessage" id="channelError" class="text-red-400">
-            Please provide a channel name!
-          </small>
-        </div>
-        <div class="flex justify-center">
-          <div class="w-1/3 text-center">
-            <div
-              id="submit-button"
-              class="mt-2 text-white-800 py-1 px-2 rounded"
-              @click.prevent="startChat"
-            >
-              Go
+          <label for="channel"></label>
+          <div class="flex justify-center">
+            <div class="w-2/3 text-center">
+              <input
+                id="channel"
+                v-model="channelName"
+                type="text"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                @keyup.enter="startChat"
+              />
+            </div>
+          </div>
+          <div class="mt-2">
+            <small id="channelHelp" class="text-muted">
+              Channel name, e.g. Enubia1
+            </small>
+            <br />
+            <small v-if="showErrorMessage" id="channelError" class="text-red-400">
+              Please provide a channel name!
+            </small>
+          </div>
+          <div class="flex justify-center">
+            <div class="w-1/3 text-center">
+              <div
+                id="submit-button"
+                class="mt-2 text-white-800 py-1 px-2 rounded"
+                @click.prevent="startChat"
+              >
+                Go
+              </div>
             </div>
           </div>
         </div>

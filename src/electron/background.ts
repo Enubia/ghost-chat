@@ -1,7 +1,9 @@
 // electron stuff
-import { app, protocol, BrowserWindow, Tray, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Tray, Menu, ipcMain } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import windowStateKeeper from 'electron-window-state';
+import contextMenu from 'electron-context-menu';
+import ElectronStore from 'electron-store';
 import * as path from 'path';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -12,6 +14,8 @@ app.disableHardwareAcceleration();
 // be closed automatically when the JavaScript object is garbage collected.
 let win: BrowserWindow | null;
 let tray: Tray | null;
+
+const store = new ElectronStore();
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -39,6 +43,7 @@ async function createWindow() {
     },
   });
 
+  win.setIgnoreMouseEvents(store.get('clickThrough') || false);
   win.setAlwaysOnTop(true, 'pop-up-menu');
   win.setMaximizable(false);
 
@@ -49,8 +54,43 @@ async function createWindow() {
     await win.loadURL('app://./index.html');
   }
 
+  contextMenu({
+    prepend: () => [
+      {
+        label: 'Settings',
+        click: () => {
+          if (win) {
+            win.resizable = false;
+            win.webContents.send('settings', { windowSize: win?.getSize() });
+          }
+        },
+      },
+      {
+        label: 'Back to index',
+        click: () => {
+          win?.webContents.send('index');
+        },
+      },
+      {
+        label: 'Quit',
+        role: 'quit',
+      },
+    ],
+  });
+
   tray = new Tray(path.join(__dirname, '../public/favicon.ico'));
-  const contextMenu = Menu.buildFromTemplate([
+  const trayIconMenu = Menu.buildFromTemplate([
+    {
+      label: 'Click through',
+      type: 'checkbox',
+      checked: store.get('clickThrough') === true,
+      click: () => {
+        if (store.get('clickThrough') === true) {
+          win?.setIgnoreMouseEvents(false);
+          store.set('clickThrough', false);
+        }
+      },
+    },
     {
       label: 'Quit Ghost Chat',
       click: () => {
@@ -59,7 +99,7 @@ async function createWindow() {
     },
   ]);
   tray.setToolTip('Ghost Chat');
-  tray.setContextMenu(contextMenu);
+  tray.setContextMenu(trayIconMenu);
 
   mainWindowState.manage(win);
 
@@ -67,6 +107,20 @@ async function createWindow() {
     win = null;
   });
 }
+
+ipcMain.on('relaunch', () => {
+  app.relaunch();
+  app.quit();
+});
+
+ipcMain.on('resize', (_event, args) => {
+  if (win) {
+    if (args.resizeAble) {
+      win.resizable = true;
+    }
+    win.setSize(args.width, args.height);
+  }
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
