@@ -5,8 +5,7 @@
       <div id="channel-selection" class="flex items-center justify-center text-center">
         <div class="w-3/4 row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
           <div id="images" class="inline-flex">
-            <img src="../assets/kappa.png" alt="kappa" class="h-32 w-32" />
-            <img src="../assets/twitch.svg" alt="twitch" class="h-24 w-24 mt-4" />
+            <img src="../assets/index-image.png" alt="kappa" class="h-32 w-32 mt-4" />
           </div>
           <label for="channel"></label>
           <div class="flex justify-center">
