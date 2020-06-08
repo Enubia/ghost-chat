@@ -94,7 +94,12 @@ async function createWindow() {
     ],
   });
 
-  tray = new Tray(path.join(__dirname, '../public/trayicon.png'));
+  const trayIcnName = 'trayicon.png';
+  const trayIcnPath = process.env.WEBPACK_DEV_SERVER_URL
+    ? path.join(__dirname, `../public/${trayIcnName}`)
+    : path.join(__dirname, `../app.asar/${trayIcnName}`);
+
+  tray = new Tray(trayIcnPath);
   const trayIconMenu = Menu.buildFromTemplate([
     {
       label: 'Click through',
