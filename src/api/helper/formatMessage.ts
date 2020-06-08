@@ -14,17 +14,16 @@ export const formatMessage = async (
       // same emotes are stored in on key
       Object.keys(emotes[key]).forEach((range) => {
         // grab the emote range and split it to two keys
-        const splittedEmotePosition = emotes[key][range].split('-');
+        const emoteCoordinates = emotes[key][range].split('-');
 
-        const substringFrom = parseInt(splittedEmotePosition[0], 10);
+        const substringFrom = parseInt(emoteCoordinates[0], 10);
         let substringTo: number;
 
         // check if emote is in first place of the message
-        if (parseInt(splittedEmotePosition[0], 10) === 0) {
-          substringTo = parseInt(splittedEmotePosition[1], 10);
+        if (parseInt(emoteCoordinates[0], 10) === 0) {
+          substringTo = parseInt(emoteCoordinates[1], 10);
         } else {
-          substringTo =
-            parseInt(splittedEmotePosition[1], 10) - parseInt(splittedEmotePosition[0], 10);
+          substringTo = parseInt(emoteCoordinates[1], 10) - parseInt(emoteCoordinates[0], 10);
         }
 
         const subString = message.substr(substringFrom, substringTo + 1);
