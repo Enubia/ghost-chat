@@ -124,10 +124,12 @@ export default class Settings extends Vue {
     this.$config.set('opacityLevel', this.opacityLevel);
     this.$config.set('clickThrough', this.clickThrough);
     this.$config.set('showBorders', this.showborders);
-    this.$config.set(
-      'backgroundColor',
-      this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
-    );
+    if (this.newBackgroundColor) {
+      this.$config.set(
+        'backgroundColor',
+        this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
+      );
+    }
 
     if (process.env.NODE_ENV === 'production') {
       ipcRenderer.send('relaunch');

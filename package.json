@@ -1,6 +1,6 @@
 {
   "name": "ghost-chat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Standalone twitch chat overlay",
   "author": {
