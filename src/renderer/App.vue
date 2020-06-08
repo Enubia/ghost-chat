@@ -2,7 +2,7 @@
   <div
     id="app"
     :style="`background: ${$windowBackgroundColor}; ${
-      $showBorder ? 'border: 2px solid rgba(91, 39, 154, 0.59);' : ''
+      $showBorder ? 'border: 1.5px solid black;' : ''
     }`"
   >
     <router-view />

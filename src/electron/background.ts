@@ -94,7 +94,7 @@ async function createWindow() {
     ],
   });
 
-  tray = new Tray(path.join(__dirname, '../public/favicon.png'));
+  tray = new Tray(path.join(__dirname, '../public/trayicon.png'));
   const trayIconMenu = Menu.buildFromTemplate([
     {
       label: 'Click through',
@@ -123,6 +123,12 @@ async function createWindow() {
     win = null;
   });
 }
+
+ipcMain.on('close', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
 
 ipcMain.on('relaunch', () => {
   app.relaunch();

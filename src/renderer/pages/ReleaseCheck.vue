@@ -30,7 +30,6 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { remote, shell } from 'electron';
 import Loading from '../components/Loading.vue';
-import { handleCustomButtons } from '../helper/customFrameButtons';
 import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
@@ -53,10 +52,6 @@ export default class ReleaseCheck extends Vue {
     shell.openExternal(this.newReleaseUrl);
   }
 
-  handleButtons() {
-    handleCustomButtons();
-  }
-
   async wait() {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -70,7 +65,9 @@ export default class ReleaseCheck extends Vue {
       'https://api.github.com/repos/lettucekiing/ghost-chat/releases',
     ).then((res) => res.json());
 
-    if (releaseResponse[0].tag_name !== this.currentReleaseVersion) {
+    const releaseVersion = releaseResponse[0].tag_name.slice(1, releaseResponse[0].tag_name.length);
+
+    if (releaseVersion !== this.currentReleaseVersion) {
       this.newReleaseUrl = releaseResponse[0].html_url;
       this.newVersion = releaseResponse[0].tag_name;
       await this.wait();

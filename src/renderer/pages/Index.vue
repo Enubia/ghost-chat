@@ -48,7 +48,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import Chat from './Chat.vue';
-import { handleCustomButtons } from '../helper/customFrameButtons';
 import MenuButtons from '../components/MenuButtons.vue';
 
 @Component({
@@ -70,10 +69,6 @@ export default class Index extends Vue {
     } else {
       this.showErrorMessage = true;
     }
-  }
-
-  handleButtons(): void {
-    handleCustomButtons();
   }
 
   updated(): void {

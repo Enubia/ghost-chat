@@ -14,25 +14,12 @@ body {
       border-radius: 10px;
     }
 
-    .drag-section {
-      .buttons {
-        -webkit-app-region: no-drag;
-        color: white;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-
     #submit-button,
     #cancel-button {
-      border-color: #6e479d;
       background-color: #6e479d;
 
       &:hover {
         cursor: pointer;
-        border-color: #563879;
         background-color: #563879;
       }
     }

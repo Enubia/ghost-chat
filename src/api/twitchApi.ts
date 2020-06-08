@@ -2,7 +2,7 @@ import { client, Client, Options } from 'tmi.js';
 import { getUserBadges } from './helper/getUserBadges';
 import { IBadge } from './types/IBadge';
 import { IMessageResponse } from './types/IMessageResponse';
-// import { formatMessage } from './helper/formatMessage';
+import { formatMessage } from './helper/formatMessage';
 
 export default class TwitchApi {
   private client: Client;
@@ -34,9 +34,9 @@ export default class TwitchApi {
       }
 
       // not working properly right now
-      // if (userstate.emotes !== null) {
-      //   message = formatMessage(message, userstate.emotes);
-      // }
+      if (userstate.emotes !== null) {
+        message = await formatMessage(message, userstate.emotes);
+      }
 
       this.messages.push({
         user: {

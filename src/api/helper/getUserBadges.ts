@@ -1,10 +1,11 @@
 import { ChatUserstate } from 'tmi.js';
-import { badgeList } from './globalBadgeList';
 import { IBadge } from '../types/IBadge';
 
 export const getUserBadges = async (user: ChatUserstate): Promise<IBadge[]> => {
+  const globalBadgeUrl = 'https://badges.twitch.tv/v1/badges/global/display';
   const channelBadgeUrl = `https://badges.twitch.tv/v1/badges/channels/${user['room-id']}/display?language=en`;
   const channelBadgeList = await fetch(channelBadgeUrl).then((res) => res.json());
+  const badgeList = await fetch(globalBadgeUrl).then((res) => res.json());
   const badges: { badge: string; key: string }[] = [];
 
   if (user.badges) {
