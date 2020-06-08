@@ -3,6 +3,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/lettucekiing/ghost-chat)
 ![GitHub issues](https://img.shields.io/github/issues/lettucekiing/ghost-chat)
 ![GitHub All Releases](https://img.shields.io/github/downloads/lettucekiing/ghost-chat/total?color=brightgreen)
+
 # Ghost Chat
 
 Ghost chat is a crossplatform, standalone [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed fullscreen applications written in Electron and Vue.
@@ -15,10 +16,12 @@ or you just want to have your chat on your main screen.
 ## Installation / Usage
 
 - Download the latest release (installer or standalone) from [https://github.com/LettuceKiing/ghost-chat/releases](https://github.com/LettuceKiing/ghost-chat/releases).
-- The first time you launch it on Windows, ```Windows protected your PC``` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click ```More info``` and then ```Run anyway```. You'll only have to do this once.
+- The first time you launch it on Windows, `Windows protected your PC` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click `More info` and then `Run anyway`. You'll only have to do this once.
 - After launching the application, enter the channel you want to receive chat messages from and click go / press enter.
 - You can move the window around by clicking and dragging the top section where minimize and close buttons are.
 - If you want to resize it, just click and drag the borders to whatever size you want.
+
+![png](markdown-stuff/showcase.png)
 
 - Settings can be reached through the context menu.
 
