@@ -19,7 +19,7 @@ export default class TwitchApi {
     this.messages = [];
   }
 
-  public async connect() {
+  public async connect(): Promise<void> {
     this.client.connect().catch((err) => {
       throw new Error(`Failed to connect to channel ${this.options.channels}: ${err}`);
     });
