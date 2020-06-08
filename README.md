@@ -18,8 +18,6 @@ or you just want to have your chat on your main screen.
 - You can move the window around by clicking and dragging the top section where minimize and close buttons are.
 - If you want to resize it, just click and drag the borders to whatever size you want.
 
-![png](markdown-stuff/example.png)
-
 - Settings can be reached through the context menu.
 
 ![png](markdown-stuff/contextmenu.png)
