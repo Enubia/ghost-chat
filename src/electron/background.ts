@@ -126,13 +126,13 @@ async function createWindow() {
 
 ipcMain.on('close', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    win?.close();
   }
 });
 
 ipcMain.on('relaunch', () => {
   app.relaunch();
-  app.quit();
+  win?.close();
 });
 
 ipcMain.on('reload', () => {
