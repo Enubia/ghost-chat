@@ -10,6 +10,8 @@ Ghost chat is a crossplatform, standalone [Twitch.tv](https://www.twitch.tv) cha
 It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
 or you just want to have your chat on your main screen.
 
+(Currently Mac and Windows are supported, if there's demand I will publish a Linux version as well)
+
 ## Installation / Usage
 
 - Download the latest release (installer or standalone) from [https://github.com/LettuceKiing/ghost-chat/releases](https://github.com/LettuceKiing/ghost-chat/releases).
