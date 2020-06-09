@@ -36,8 +36,8 @@ body {
 
     #messages {
       .emotes {
-        height: 28px;
-        width: 28px;
+        max-height: 28px;
+        max-width: 28px;
         display: inline-block;
         vertical-align: middle;
       }
