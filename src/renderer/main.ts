@@ -2,12 +2,15 @@ import Vue from 'vue';
 import ElectronStore from 'electron-store';
 import { remote, ipcRenderer } from 'electron';
 
+// global styles
 import './assets/scss/main.scss';
 
+// custom imports
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import { hexOpacityMapping } from './helper/hexOpacityMapping';
+import { StoreConstants } from '../helper/constants';
 
 import Mousetrap = require('mousetrap');
 
@@ -33,10 +36,10 @@ const electronStore = new ElectronStore();
 Vue.config.productionTip = false;
 
 Vue.prototype.$config = electronStore;
-Vue.prototype.$windowBackgroundColor = `#${electronStore.get('backgroundColor') || '5c279d'}${
-  hexOpacityMapping[electronStore.get('opacityLevel') || '0.01']
-}`;
-Vue.prototype.$showBorder = electronStore.get('showBorders');
+Vue.prototype.$windowBackgroundColor = `#${
+  electronStore.get(StoreConstants.BackgroundColor) || '5c279d'
+}${hexOpacityMapping[electronStore.get(StoreConstants.OpacityLevel) || '0.01']}`;
+Vue.prototype.$showBorder = electronStore.get(StoreConstants.ShowBorders);
 
 new Vue({
   ...App,

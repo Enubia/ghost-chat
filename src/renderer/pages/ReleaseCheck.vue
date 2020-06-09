@@ -12,14 +12,19 @@
             <div class="w-2/3 text-center">
               <div
                 id="submit-button"
-                class="mt-2 text-white-800 py-1 px-2 rounded"
+                class="bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
                 @click.prevent="openDownloadLink"
               >
                 Open in browser
               </div>
             </div>
           </div>
-          <span class="custom-link" @click="$router.push('/index')">Skip</span>
+          <span
+            class="text-main-lighter hover:text-main cursor-pointer underline"
+            @click="$router.push('/index')"
+          >
+            Skip
+          </span>
         </div>
       </div>
     </div>

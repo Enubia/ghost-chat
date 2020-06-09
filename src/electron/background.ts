@@ -6,6 +6,8 @@ import contextMenu from 'electron-context-menu';
 import ElectronStore from 'electron-store';
 import * as path from 'path';
 
+import { StoreConstants, IpcConstants } from '../helper/constants';
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 app.disableHardwareAcceleration();
@@ -43,7 +45,7 @@ async function createWindow() {
     },
   });
 
-  win.setIgnoreMouseEvents(store.get('clickThrough') || false);
+  win.setIgnoreMouseEvents(store.get(StoreConstants.ClickThrough) || false);
   win.setAlwaysOnTop(true, 'pop-up-menu');
   win.setMaximizable(false);
 
@@ -89,7 +91,16 @@ async function createWindow() {
       },
       {
         label: 'Quit',
-        role: 'quit',
+        click: () => {
+          if (win) {
+            store.set(StoreConstants.Channel, '');
+            store.set(StoreConstants.ClickThrough, false);
+            store.set(StoreConstants.ShowBorders, true);
+            store.set(StoreConstants.HideBordersByIcon, false);
+
+            win.close();
+          }
+        },
       },
     ],
   });
@@ -100,16 +111,19 @@ async function createWindow() {
     : path.join(__dirname, `../app.asar/${trayIcnName}`);
 
   tray = new Tray(trayIcnPath);
+
   const trayIconMenu = Menu.buildFromTemplate([
     {
       label: 'Click through',
-      type: 'checkbox',
-      checked: store.get('clickThrough') === true,
+      type: 'normal',
       click: () => {
-        if (store.get('clickThrough') === true) {
-          win?.setIgnoreMouseEvents(false);
-          store.set('clickThrough', false);
-        }
+        win?.setIgnoreMouseEvents(false);
+
+        store.set(StoreConstants.ClickThrough, false);
+        store.set(StoreConstants.ShowBorders, true);
+        store.set(StoreConstants.HideBordersByIcon, false);
+
+        win?.reload();
       },
     },
     {
@@ -119,35 +133,51 @@ async function createWindow() {
       },
     },
   ]);
-  tray.setToolTip('Ghost Chat');
-  tray.setContextMenu(trayIconMenu);
+
+  tray?.setToolTip('Ghost Chat');
+  tray?.setContextMenu(trayIconMenu);
 
   mainWindowState.manage(win);
 
   win.on('closed', () => {
+    if (store.get(StoreConstants.HideBordersByIcon)) {
+      store.set(StoreConstants.ShowBorders, true);
+      store.set(StoreConstants.ClickThrough, false);
+      store.set(StoreConstants.HideBordersByIcon, false);
+    }
+
+    store.set(StoreConstants.Channel, '');
+
     win = null;
   });
 }
 
-ipcMain.on('close', () => {
+ipcMain.on(IpcConstants.Close, () => {
   if (process.platform !== 'darwin') {
     win?.close();
   }
 });
 
-ipcMain.on('relaunch', () => {
+ipcMain.on(IpcConstants.Relaunch, () => {
   app.relaunch();
   win?.close();
 });
 
-ipcMain.on('reload', () => {
+ipcMain.on(IpcConstants.Reload, () => {
   if (win) {
     win.reload();
     win.resizable = true;
   }
 });
 
-ipcMain.on('resize', (_event, args) => {
+ipcMain.on(IpcConstants.SetClickThrough, () => {
+  if (win) {
+    win.setIgnoreMouseEvents(true);
+    win.reload();
+  }
+});
+
+ipcMain.on(IpcConstants.Resize, (_event, args) => {
   if (win) {
     if (args.resizeAble) {
       win.resizable = true;

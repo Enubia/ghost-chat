@@ -1,6 +1,6 @@
 <template>
   <div id="messages" class="w-full">
-    <MenuButtons />
+    <MenuButtons v-if="!isSetHideBordersByIcon" :is-chat-page="true" @go-back="disconnectChat" />
     <div id="chat-messages" class="container mx-auto px-4">
       <div v-if="isLoading">
         <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
@@ -16,13 +16,15 @@
           class="mb-1 text-white"
         >
           <div class="break-words">
-            <img
-              v-for="badge in item.user.badges"
-              :key="badge.key"
-              class="badges"
-              alt="badge"
-              :src="badge.badge"
-            />
+            <div v-if="item.user && item.user.badges">
+              <img
+                v-for="badge in item.user.badges"
+                :key="badge.key"
+                class="badges"
+                alt="badge"
+                :src="badge.badge"
+              />
+            </div>
             <b :style="'color:' + (item.user ? item.user.color : 'white')">
               {{ (item.user && item.user.name) || 'John Doe' }}
               <span class="text-white font-light">: </span></b
@@ -37,11 +39,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import Loading from '../components/Loading.vue';
 import TwitchApi from '../../api/twitchApi';
 import { IMessageResponse } from '../../api/types/IMessageResponse';
+import Loading from '../components/Loading.vue';
 import MenuButtons from '../components/MenuButtons.vue';
 import ChatMessage from '../components/ChatMessage.vue';
+import { StoreConstants } from '../../helper/constants';
 
 @Component({
   name: 'Chat',
@@ -60,11 +63,13 @@ export default class Chat extends Vue {
 
   api: TwitchApi;
 
+  isSetHideBordersByIcon = false;
+
   isLoading = true;
 
   isWaitingForMessages = true;
 
-  interval;
+  interval: NodeJS.Timeout;
 
   prepareData(): void {
     const response = this.api.getTwitchChat();
@@ -76,6 +81,7 @@ export default class Chat extends Vue {
   }
 
   async disconnectChat(): Promise<void> {
+    this.$config.set('channel', '');
     clearInterval(this.interval);
     await this.api.disconnect();
     await this.$router.push({
@@ -84,6 +90,7 @@ export default class Chat extends Vue {
   }
 
   async created(): Promise<void> {
+    this.isSetHideBordersByIcon = this.$config.get(StoreConstants.HideBordersByIcon);
     if (this.channel.length > 0) {
       [this.broadCaster] = this.channel;
       this.api = new TwitchApi({ channels: [this.channel] });

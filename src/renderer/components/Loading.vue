@@ -45,13 +45,9 @@ export default class Loading extends Vue {
     width: 170px;
     height: 170px;
     margin: -85px 0 0 -85px;
-    border: 3px solid #f00;
-  }
-
-  #loading-content {
     border: 3px solid transparent;
-    border-top-color: rgb(121, 61, 185);
-    border-bottom-color: rgb(121, 61, 185);
+    border-top-color: #8d41e6;
+    border-bottom-color: #8d41e6;
     border-radius: 50%;
     -webkit-animation: loader 2s linear infinite;
     -moz-animation: loader 2s linear infinite;

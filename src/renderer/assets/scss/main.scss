@@ -1,4 +1,5 @@
 @import 'tailwind.scss';
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 
 html,
 body {
@@ -9,29 +10,15 @@ body {
 
 body {
   #app {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12pt;
+    color: white;
+    border-radius: 10px;
+    height: 100%;
+
     .background-filled {
       height: 100%;
       border-radius: 10px;
-    }
-
-    #submit-button,
-    #cancel-button {
-      background-color: #6e479d;
-
-      &:hover {
-        cursor: pointer;
-        background-color: #563879;
-      }
-    }
-
-    .custom-link {
-      text-decoration: none;
-      color: #8d41e6;
-
-      &:hover {
-        cursor: pointer;
-        color: #6e479d;
-      }
     }
 
     #messages {

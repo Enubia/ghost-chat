@@ -5,7 +5,7 @@
       <div id="channel-selection" class="flex items-center justify-center text-center">
         <div class="w-3/4 row-span-3 sm:row-span-1 md:row-span-2 lg:row-span-3 xl:row-span-1">
           <div id="images" class="inline-flex">
-            <img src="../assets/index-image.png" alt="kappa" class="h-32 w-32 mt-4" />
+            <img src="../assets/images/index-image.png" alt="kappa" class="h-32 w-32 mt-4" />
           </div>
           <label for="channel"></label>
           <div class="flex justify-center">
@@ -32,7 +32,7 @@
             <div class="w-1/3 text-center">
               <div
                 id="submit-button"
-                class="mt-2 text-white-800 py-1 px-2 rounded"
+                class="mt-2 text-white-800 py-1 px-2 rounded bg-main hover:bg-main-darker cursor-pointer"
                 @click.prevent="startChat"
               >
                 Go
@@ -48,6 +48,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import Chat from './Chat.vue';
 import MenuButtons from '../components/MenuButtons.vue';
+import { StoreConstants } from '../../helper/constants';
 
 @Component({
   name: 'Index',
@@ -63,6 +64,7 @@ export default class Index extends Vue {
 
   startChat(): void {
     if (this.channelName.length > 0) {
+      this.$config.set(StoreConstants.Channel, this.channelName.toLowerCase());
       this.$store.commit('setChannelName', this.channelName.toLowerCase());
       this.$router.push('/chat');
     } else {
@@ -79,7 +81,10 @@ export default class Index extends Vue {
   }
 
   created() {
-    if (this.$route.params.message === 'no-channel') {
+    if (this.$config.get(StoreConstants.Channel).length > 0) {
+      this.$store.commit('setChannelName', this.$config.get(StoreConstants.Channel));
+      this.$router.push('/chat');
+    } else if (this.$route.params.message === 'no-channel') {
       this.showErrorMessage = true;
     }
   }

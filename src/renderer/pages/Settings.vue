@@ -42,7 +42,12 @@
         >
           <span class="text-2xl">Choose a background color</span>
           <br />
-          <span class="custom-link" @click="openColorPickerPage">Online color picker</span>
+          <span
+            class="text-link hover:text-link-darker underline cursor-pointer"
+            @click="openColorPickerPage"
+          >
+            Online color picker
+          </span>
           <br />
           <br />
           <span>Enter the hex value for your color</span>
@@ -75,14 +80,18 @@
         </div>
         <div class="flex justify-center">
           <div class="w-1/3 text-center">
-            <div id="submit-button" class="mt-2 text-white-800 py-1 px-2 rounded" @click="relaunch">
+            <div
+              id="submit-button"
+              class="bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
+              @click="relaunch"
+            >
               Save
             </div>
           </div>
           <div class="w-1/3 text-center ml-2">
             <div
               id="cancel-button"
-              class="mt-2 text-white-800 py-1 px-2 rounded"
+              class="bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
               @click="redirectIndex"
             >
               Cancel
@@ -100,17 +109,18 @@ import { shell, ipcRenderer } from 'electron';
 import MenuButtons from '../components/MenuButtons.vue';
 import Slider from '../components/Slider.vue';
 import CheckBox from '../components/CheckBox.vue';
+import { IpcConstants, StoreConstants } from '../../helper/constants';
 
 @Component({
   name: 'Settings',
   components: { MenuButtons, Slider, CheckBox },
 })
 export default class Settings extends Vue {
-  opacityLevel = this.$config.get('opacityLevel') || 0.01;
+  opacityLevel = this.$config.get(StoreConstants.OpacityLevel) || 0.01;
 
-  clickThrough = this.$config.get('clickThrough') || false;
+  clickThrough = this.$config.get(StoreConstants.ClickThrough) || false;
 
-  showborders = this.$config.get('showBorders') || false;
+  showborders = this.$config.get(StoreConstants.ShowBorders) || false;
 
   newBackgroundColor = '';
 
@@ -121,25 +131,29 @@ export default class Settings extends Vue {
   window;
 
   relaunch() {
-    this.$config.set('opacityLevel', this.opacityLevel);
-    this.$config.set('clickThrough', this.clickThrough);
-    this.$config.set('showBorders', this.showborders);
+    this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
+    this.$config.set(StoreConstants.ClickThrough, this.clickThrough);
+    this.$config.set(StoreConstants.ShowBorders, this.showborders);
     if (this.newBackgroundColor) {
       this.$config.set(
-        'backgroundColor',
+        StoreConstants.BackgroundColor,
         this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
       );
     }
 
     if (process.env.NODE_ENV === 'production') {
-      ipcRenderer.send('relaunch');
+      ipcRenderer.send(IpcConstants.Relaunch);
     } else {
-      ipcRenderer.send('reload');
+      ipcRenderer.send(IpcConstants.Reload);
     }
   }
 
   redirectIndex() {
-    ipcRenderer.send('resize', { width: this.window[0], height: this.window[1], resizeAble: true });
+    ipcRenderer.send(IpcConstants.Resize, {
+      width: this.window[0],
+      height: this.window[1],
+      resizeAble: true,
+    });
     this.$router.push('/index');
   }
 
@@ -175,7 +189,7 @@ export default class Settings extends Vue {
 
   created() {
     this.window = this.$route.query.windowSize;
-    ipcRenderer.send('resize', { width: 400, height: 800 });
+    ipcRenderer.send(IpcConstants.Resize, { width: 400, height: 800 });
   }
 }
 </script>
@@ -183,10 +197,5 @@ export default class Settings extends Vue {
 <style scoped lang="scss">
 #settings {
   -webkit-app-region: no-drag;
-
-  .custom-link {
-    color: #f9fb03;
-    text-decoration: underline;
-  }
 }
 </style>

@@ -33,7 +33,6 @@ export default class TwitchApi {
         badges = await getUserBadges(userstate);
       }
 
-      // not working properly right now
       if (userstate.emotes !== null) {
         message = await formatMessage(message, userstate.emotes);
       }
