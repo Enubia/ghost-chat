@@ -39,12 +39,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import TwitchApi from '../../api/twitchApi';
-import { IMessageResponse } from '../../api/types/IMessageResponse';
-import Loading from '../components/Loading.vue';
-import MenuButtons from '../components/MenuButtons.vue';
-import ChatMessage from '../components/ChatMessage.vue';
-import { StoreConstants } from '../../helper/constants';
+import { IMessageResponse } from '@/api/types/IMessageResponse';
+import { StoreConstants } from '@/utils/constants';
+import TwitchApi from '@/api/twitchApi';
+import Loading from '@/renderer/components/Loading.vue';
+import MenuButtons from '@/renderer/components/MenuButtons.vue';
+import ChatMessage from '@/renderer/components/ChatMessage.vue';
 
 @Component({
   name: 'Chat',

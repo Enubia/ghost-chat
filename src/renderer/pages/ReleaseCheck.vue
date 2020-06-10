@@ -34,8 +34,8 @@
 <script>
 import { Vue, Component } from 'vue-property-decorator';
 import { remote, shell } from 'electron';
-import Loading from '../components/Loading.vue';
-import MenuButtons from '../components/MenuButtons.vue';
+import Loading from '@/renderer/components/Loading.vue';
+import MenuButtons from '@/renderer/components/MenuButtons.vue';
 
 @Component({
   name: 'ReleaseCheck',

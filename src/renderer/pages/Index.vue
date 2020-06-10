@@ -46,9 +46,9 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { StoreConstants } from '@/utils/constants';
+import MenuButtons from '@/renderer/components/MenuButtons.vue';
 import Chat from './Chat.vue';
-import MenuButtons from '../components/MenuButtons.vue';
-import { StoreConstants } from '../../helper/constants';
 
 @Component({
   name: 'Index',

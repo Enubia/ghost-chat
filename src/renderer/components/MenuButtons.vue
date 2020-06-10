@@ -46,7 +46,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { remote, ipcRenderer } from 'electron';
-import { StoreConstants, IpcConstants } from '../../helper/constants';
+import { StoreConstants, IpcConstants } from '@/utils/constants';
 
 @Component({
   name: 'MenuButtons',

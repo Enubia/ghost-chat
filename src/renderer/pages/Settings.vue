@@ -106,10 +106,10 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { shell, ipcRenderer } from 'electron';
-import MenuButtons from '../components/MenuButtons.vue';
-import Slider from '../components/Slider.vue';
-import CheckBox from '../components/CheckBox.vue';
-import { IpcConstants, StoreConstants } from '../../helper/constants';
+import MenuButtons from '@/renderer/components/MenuButtons.vue';
+import Slider from '@/renderer/components/Slider.vue';
+import CheckBox from '@/renderer/components/CheckBox.vue';
+import { IpcConstants, StoreConstants } from '@/utils/constants';
 
 @Component({
   name: 'Settings',

@@ -14,7 +14,11 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "isolatedModules": false,
-    "declaration": true
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "exclude": ["node_modules", "dist_electron"]
 }

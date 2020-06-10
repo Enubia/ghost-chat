@@ -6,7 +6,7 @@ import contextMenu from 'electron-context-menu';
 import ElectronStore from 'electron-store';
 import * as path from 'path';
 
-import { StoreConstants, IpcConstants } from '../helper/constants';
+import { StoreConstants, IpcConstants } from '@/utils/constants';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 

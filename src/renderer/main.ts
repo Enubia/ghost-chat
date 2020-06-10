@@ -2,10 +2,10 @@ import Vue from 'vue';
 import ElectronStore from 'electron-store';
 import { ipcRenderer } from 'electron';
 import './assets/scss/main.scss';
+import { StoreConstants } from '@/utils/constants';
 import App from './App.vue';
 import router from './router';
 import { hexOpacityMapping } from './helper/hexOpacityMapping';
-import { StoreConstants } from '../helper/constants';
 
 ipcRenderer.on('settings', (_event, windowSize) => {
   router.push({ path: '/settings', query: windowSize }).catch((err) => console.log(err));
