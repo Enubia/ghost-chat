@@ -7,6 +7,7 @@ module.exports = {
       builderOptions: {
         appId: 'com.electron.ghost-chat',
         win: {
+          target: ['nsis', 'portable'],
           icon: 'public/favicon.ico',
         },
         mac: { icon: 'public/macfavicon.ico' },
