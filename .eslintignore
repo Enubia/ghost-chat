@@ -3,5 +3,5 @@ markdown-stuff
 coverage
 build
 public
-.github
 dist_electron
+.*
