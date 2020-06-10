@@ -55,7 +55,7 @@ import { StoreConstants } from '../../helper/constants';
   },
 })
 export default class Chat extends Vue {
-  channel = this.$store.state.channelName;
+  channel = this.$config.get('channel');
 
   data: IMessageResponse[] = [];
 

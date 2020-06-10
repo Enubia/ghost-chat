@@ -1,6 +1,6 @@
 {
   "name": "ghost-chat",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "Standalone twitch chat overlay",
   "author": {
@@ -10,7 +10,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint --fix",
+    "lint": "eslint --ignore-path .eslintignore src",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "upgradePackages": "ncu -u -x @types/node",
@@ -19,18 +19,15 @@
   },
   "main": "background.js",
   "dependencies": {
-    "autoprefixer": "^9.8.0",
     "electron-context-menu": "^2.0.1",
     "electron-store": "^5.2.0",
     "electron-window-state": "^5.0.3",
     "escape-string-regexp": "^4.0.0",
-    "mousetrap": "^1.6.5",
     "tailwindcss": "^1.4.6",
     "tmi.js": "^1.5.0",
     "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.2",
-    "vue-router": "^3.3.2",
-    "vuex": "^3.4.0"
+    "vue-router": "^3.3.2"
   },
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",

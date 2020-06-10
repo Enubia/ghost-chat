@@ -65,7 +65,6 @@ export default class Index extends Vue {
   startChat(): void {
     if (this.channelName.length > 0) {
       this.$config.set(StoreConstants.Channel, this.channelName.toLowerCase());
-      this.$store.commit('setChannelName', this.channelName.toLowerCase());
       this.$router.push('/chat');
     } else {
       this.showErrorMessage = true;
@@ -82,7 +81,6 @@ export default class Index extends Vue {
 
   created() {
     if (this.$config.get(StoreConstants.Channel).length > 0) {
-      this.$store.commit('setChannelName', this.$config.get(StoreConstants.Channel));
       this.$router.push('/chat');
     } else if (this.$route.params.message === 'no-channel') {
       this.showErrorMessage = true;
