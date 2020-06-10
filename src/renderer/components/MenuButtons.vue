@@ -17,7 +17,7 @@
           class="hover:bg-main-darker cursor-pointer py-2 px-2 rounded"
           @click="handleClickThrough"
         >
-          <img height="20px" width="20px" src="../assets/svg/alert.svg" alt="min" />
+          <img class="image" src="../assets/svg/alert.svg" alt="min" />
           <p class="tooltip">
             <span class="tooltip-text mt-4 -ml-12 w-1/3 text-left absolute p-2 rounded">
               Hide borders and make the window click through
@@ -29,14 +29,14 @@
           class="hover:bg-main-darker cursor-pointer py-2 px-2 rounded"
           @click="handleMinimize"
         >
-          <img height="20px" width="20px" src="../assets/svg/minimize.svg" alt="min" />
+          <img class="image" src="../assets/svg/minimize.svg" alt="min" />
         </div>
         <div
           id="close-btn"
           class="hover:bg-main-darker cursor-pointer py-2 px-2"
           @click="handleClose"
         >
-          <img height="17px" width="17px" src="../assets/svg/close.svg" alt="close" />
+          <img class="image" src="../assets/svg/close.svg" alt="close" />
         </div>
       </div>
     </div>
@@ -85,6 +85,11 @@ export default class MenuButtons extends Vue {
   .buttons {
     -webkit-app-region: no-drag;
     color: white;
+
+    .image {
+      height: 20px;
+      width: 20px;
+    }
 
     #back-btn {
       padding-top: 0.45rem;
