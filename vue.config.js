@@ -9,7 +9,7 @@ module.exports = {
         win: {
           icon: 'public/favicon.ico',
         },
-        mac: { icon: 'public/favicon.ico' },
+        mac: { icon: 'public/macfavicon.ico' },
       },
     },
   },
