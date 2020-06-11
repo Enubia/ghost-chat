@@ -5,6 +5,7 @@ export enum StoreConstants {
   ClickThrough = 'clickThrough',
   ShowBorders = 'showBorders',
   HideBordersByIcon = 'hideBordersByIcon',
+  SavedOpacityLevel = 'savedOpacityLevel',
 }
 
 export enum IpcConstants {

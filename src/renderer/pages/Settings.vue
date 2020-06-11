@@ -18,19 +18,6 @@
             <span>Background filled</span>
           </div>
         </div>
-        <div id="click-through" class="mt-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
-          <div class="mt-2 mb-1 flex justify-center">
-            <CheckBox
-              label-text="Enable click through"
-              :checked="clickThrough"
-              @change="setClickThrough"
-            />
-          </div>
-          <span class="text-red-400">
-            You can revert this setting in the tray menu <br />
-            since the window will not respond to any clicks anymore
-          </span>
-        </div>
         <div id="borders" class="mt-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
           <div class="mt-2 mb-1 flex justify-center">
             <CheckBox label-text="Show borders?" :checked="showborders" @change="setShowBorders" />
@@ -116,9 +103,7 @@ import { IpcConstants, StoreConstants } from '@/utils/constants';
   components: { MenuButtons, Slider, CheckBox },
 })
 export default class Settings extends Vue {
-  opacityLevel = this.$config.get(StoreConstants.OpacityLevel) || 0.01;
-
-  clickThrough = this.$config.get(StoreConstants.ClickThrough) || false;
+  opacityLevel = this.$config.get(StoreConstants.OpacityLevel) || 1;
 
   showborders = this.$config.get(StoreConstants.ShowBorders) || false;
 
@@ -132,7 +117,6 @@ export default class Settings extends Vue {
 
   relaunch() {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
-    this.$config.set(StoreConstants.ClickThrough, this.clickThrough);
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
     if (this.newBackgroundColor) {
       this.$config.set(
@@ -159,10 +143,6 @@ export default class Settings extends Vue {
 
   setSliderValue(value) {
     this.opacityLevel = value;
-  }
-
-  setClickThrough(value) {
-    this.clickThrough = value;
   }
 
   setShowBorders(value) {

@@ -119,6 +119,7 @@ async function createWindow() {
       click: () => {
         win?.setIgnoreMouseEvents(false);
 
+        store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
         store.set(StoreConstants.ClickThrough, false);
         store.set(StoreConstants.ShowBorders, true);
         store.set(StoreConstants.HideBordersByIcon, false);
@@ -141,6 +142,7 @@ async function createWindow() {
 
   win.on('closed', () => {
     if (store.get(StoreConstants.HideBordersByIcon)) {
+      store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
       store.set(StoreConstants.ShowBorders, true);
       store.set(StoreConstants.ClickThrough, false);
       store.set(StoreConstants.HideBordersByIcon, false);

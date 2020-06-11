@@ -60,6 +60,11 @@ export default class MenuButtons extends Vue {
 
   handleClickThrough() {
     this.$config.set(StoreConstants.HideBordersByIcon, true);
+    this.$config.set(
+      StoreConstants.SavedOpacityLevel,
+      this.$config.get(StoreConstants.OpacityLevel),
+    );
+    this.$config.set(StoreConstants.OpacityLevel, '0.01');
     this.$config.set(StoreConstants.ShowBorders, false);
     this.$config.set(StoreConstants.ClickThrough, true);
     ipcRenderer.send(IpcConstants.SetClickThrough);
