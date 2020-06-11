@@ -1,8 +1,8 @@
 ![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
-![David](https://img.shields.io/david/lettucekiing/ghost-chat)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/lettucekiing/ghost-chat)
-![GitHub issues](https://img.shields.io/github/issues/lettucekiing/ghost-chat)
-![GitHub All Releases](https://img.shields.io/github/downloads/lettucekiing/ghost-chat/total?color=brightgreen)
+![David](https://img.shields.io/david/enubia/ghost-chat)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/enubia/ghost-chat)
+![GitHub issues](https://img.shields.io/github/issues/enubia/ghost-chat)
+![GitHub All Releases](https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen)
 
 # Ghost Chat
 
