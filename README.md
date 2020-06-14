@@ -6,7 +6,7 @@
 
 # Ghost Chat
 
-Ghost chat is a standalone [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed fullscreen applications written in Electron and Vue.
+Ghost chat is a standalone [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed full screen applications written in Electron and Vue.
 
 It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
 or you just want to have your chat on your main screen.
@@ -21,15 +21,19 @@ or you just want to have your chat on your main screen.
 - You can move the window around by clicking and dragging the top section where minimize and close buttons are.
 - If you want to resize it, just click and drag the borders to whatever size you want.
 
-![png](markdown-stuff/showcase.png)
+![png](images/index.png)
 
-- Settings can be reached through the context menu.
+- Settings can be reached through the context menu. You can adjust transparency, click through, hide/show borders, and the overall background color.
 
-![png](markdown-stuff/contextmenu.png)
+![png](images/settings.png)
 
-- You can adjust transparency, click through, hide/show borders, and the overall background color.
+- Chat window
 
-![png](markdown-stuff/settings.png)
+![png](images/chatShowcase.png)
+
+- With a click on the action button in the top section, you'll set the window to transparent, remove the borders and make it click through.
+
+![png](images/transparentShowcase.png)
 
 ## Additional info
 
