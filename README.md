@@ -23,7 +23,7 @@ or you just want to have your chat on your main screen.
 
 ![png](images/index.png)
 
-- Settings can be reached through the context menu. You can adjust transparency, click through, hide/show borders, and the overall background color.
+- Settings can be reached through the context menu. You can adjust transparency, hide/show borders, and the overall background color.
 
 ![png](images/settings.png)
 
