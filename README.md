@@ -15,7 +15,7 @@ or you just want to have your chat on your main screen.
 
 ## Installation / Usage
 
-- Download the latest release (installer or standalone) from [https://github.com/LettuceKiing/ghost-chat/releases](https://github.com/LettuceKiing/ghost-chat/releases).
+- Download the latest release (installer or standalone) from [https://github.com/Enubia/ghost-chat/releases](https://github.com/Enubia/ghost-chat/releases).
 - The first time you launch it on Windows, `Windows protected your PC` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click `More info` and then `Run anyway`. You'll only have to do this once.
 - After launching the application, enter the channel you want to receive chat messages from and click go / press enter.
 - You can move the window around by clicking and dragging the top section where minimize and close buttons are.
@@ -37,7 +37,7 @@ or you just want to have your chat on your main screen.
 
 ## Additional info
 
-If you have any suggestions for features or you've found a bug, feel free to go to [https://github.com/LettuceKiing/ghost-chat/issues/new/choose](https://github.com/LettuceKiing/ghost-chat/issues/new/choose) and choose either Feature request or Bug report.
+If you have any suggestions for features or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose) and choose either Feature request or Bug report.
 
 # Development setup
 
