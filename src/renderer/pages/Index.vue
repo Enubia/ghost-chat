@@ -80,7 +80,9 @@ export default class Index extends Vue {
   }
 
   created() {
-    if (this.$config.get(StoreConstants.Channel).length > 0) {
+    const channelName = this.$config.get(StoreConstants.Channel) || '';
+
+    if (channelName.length > 0) {
       this.$router.push('/chat');
     } else if (this.$route.params.message === 'no-channel') {
       this.showErrorMessage = true;
