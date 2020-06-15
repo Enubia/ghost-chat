@@ -31,7 +31,11 @@ or you just want to have your chat on your main screen.
 
 ![png](images/chatShowcase.png)
 
-- With a click on the action button in the top section, you'll set the window to transparent, remove the borders and make it click through. This can be reverted by clicking ```Click Through``` in the tray icon menu.
+- With a click on the action button in the top section, you'll set the window to transparent, remove the borders and make it click through. This can be reverted by clicking `Click Through` in the tray icon menu.
+
+![png](images/actionbutton.png)
+
+- result
 
 ![png](images/transparentShowcase.png)
 
