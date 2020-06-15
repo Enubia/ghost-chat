@@ -4,6 +4,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import windowStateKeeper from 'electron-window-state';
 import contextMenu from 'electron-context-menu';
 import ElectronStore from 'electron-store';
+import * as logger from 'electron-log';
 import * as path from 'path';
 
 import { StoreConstants, IpcConstants } from '@/utils/constants';
@@ -93,7 +94,7 @@ async function createWindow() {
         label: 'Quit',
         click: () => {
           if (win) {
-            store.set(StoreConstants.Channel, '');
+            store.delete(StoreConstants.Channel);
             store.set(StoreConstants.ClickThrough, false);
             store.set(StoreConstants.ShowBorders, true);
             store.set(StoreConstants.HideBordersByIcon, false);
@@ -122,7 +123,8 @@ async function createWindow() {
         store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
         store.set(StoreConstants.ClickThrough, false);
         store.set(StoreConstants.ShowBorders, true);
-        store.set(StoreConstants.HideBordersByIcon, false);
+        store.delete(StoreConstants.SavedOpacityLevel);
+        store.delete(StoreConstants.HideBordersByIcon);
 
         win?.reload();
       },
@@ -141,14 +143,15 @@ async function createWindow() {
   mainWindowState.manage(win);
 
   win.on('closed', () => {
-    if (store.get(StoreConstants.HideBordersByIcon)) {
+    if (store.has(StoreConstants.HideBordersByIcon)) {
       store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
       store.set(StoreConstants.ShowBorders, true);
       store.set(StoreConstants.ClickThrough, false);
-      store.set(StoreConstants.HideBordersByIcon, false);
+      store.delete(StoreConstants.SavedOpacityLevel);
+      store.delete(StoreConstants.HideBordersByIcon);
     }
 
-    store.set(StoreConstants.Channel, '');
+    store.delete(StoreConstants.Channel);
 
     win = null;
   });
@@ -162,7 +165,9 @@ ipcMain.on(IpcConstants.Close, () => {
 
 ipcMain.on(IpcConstants.Relaunch, () => {
   app.relaunch();
-  win?.close();
+  if (win) {
+    win.close();
+  }
 });
 
 ipcMain.on(IpcConstants.Reload, () => {
@@ -202,6 +207,10 @@ app.on('activate', async () => {
 
 app.on('ready', async () => {
   await createWindow();
+});
+
+process.on('uncaughtException', (error) => {
+  logger.error(error);
 });
 
 if (isDevelopment) {
