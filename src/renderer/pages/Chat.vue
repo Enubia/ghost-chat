@@ -55,7 +55,7 @@ import ChatMessage from '@/renderer/components/ChatMessage.vue';
   },
 })
 export default class Chat extends Vue {
-  channel = this.$config.get('channel');
+  channel = this.$config.get(StoreConstants.Channel, '');
 
   data: IMessageResponse[] = [];
 
@@ -81,7 +81,7 @@ export default class Chat extends Vue {
   }
 
   async disconnectChat(): Promise<void> {
-    this.$config.set('channel', '');
+    this.$config.delete(StoreConstants.Channel);
     clearInterval(this.interval);
     await this.api.disconnect();
     await this.$router.push({
@@ -90,7 +90,7 @@ export default class Chat extends Vue {
   }
 
   async created(): Promise<void> {
-    this.isSetHideBordersByIcon = this.$config.get(StoreConstants.HideBordersByIcon);
+    this.isSetHideBordersByIcon = this.$config.has(StoreConstants.HideBordersByIcon);
     if (this.channel.length > 0) {
       [this.broadCaster] = this.channel;
       this.api = new TwitchApi({ channels: [this.channel] });
