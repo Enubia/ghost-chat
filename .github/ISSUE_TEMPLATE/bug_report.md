@@ -22,6 +22,10 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
+**Uncaught Exception Errors**
+1. Navigate to ```%USERPROFILE%\AppData\Roaming\ghost-chat\logs```
+2. Attach the main.log file to the issue. (This contains the whole stack trace of the error message)
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
