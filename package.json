@@ -27,7 +27,7 @@
     "tmi.js": "^1.5.0",
     "vue": "^2.6.11",
     "vue-property-decorator": "^8.4.2",
-    "vue-router": "^3.3.2"
+    "vue-router": "^3.3.4"
   },
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",
