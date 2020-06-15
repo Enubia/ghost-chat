@@ -103,9 +103,9 @@ import { IpcConstants, StoreConstants } from '@/utils/constants';
   components: { MenuButtons, Slider, CheckBox },
 })
 export default class Settings extends Vue {
-  opacityLevel = this.$config.get(StoreConstants.OpacityLevel) || 1;
+  opacityLevel = this.$config.get(StoreConstants.OpacityLevel, '1');
 
-  showborders = this.$config.get(StoreConstants.ShowBorders) || false;
+  showborders = this.$config.get(StoreConstants.ShowBorders, true);
 
   newBackgroundColor = '';
 
@@ -142,7 +142,7 @@ export default class Settings extends Vue {
   }
 
   setSliderValue(value) {
-    this.opacityLevel = value;
+    this.opacityLevel = value.toString();
   }
 
   setShowBorders(value) {
