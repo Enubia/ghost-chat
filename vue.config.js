@@ -14,7 +14,7 @@ module.exports = {
           target: ['nsis', 'portable'],
           icon: 'public/favicon.ico',
         },
-        // mac: { icon: 'public/macfavicon.ico' },
+        // mac: { icon: 'public/macfavicon.ico' }, // 512x512
       },
     },
   },

@@ -17,7 +17,7 @@
           class="hover:bg-main-darker cursor-pointer py-2 px-2 rounded"
           @click="handleClickThrough"
         >
-          <img class="image" src="../assets/svg/alert.svg" alt="min" />
+          <img class="image" src="../assets/svg/ghost.svg" alt="min" />
           <p class="tooltip">
             <span class="tooltip-text mt-4 -ml-12 w-1/3 text-left absolute p-2 rounded">
               Hide borders and make the window click through

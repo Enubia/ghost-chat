@@ -25,6 +25,16 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
+function revertWindowSettings(): void {
+  if (store.has(StoreConstants.HideBordersByIcon)) {
+    store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
+    store.delete(StoreConstants.HideBordersByIcon);
+    store.delete(StoreConstants.SavedOpacityLevel);
+  }
+  store.set(StoreConstants.ClickThrough, false);
+  store.set(StoreConstants.ShowBorders, true);
+}
+
 async function createWindow() {
   const mainWindowState = windowStateKeeper({
     defaultWidth: 400,
@@ -94,11 +104,7 @@ async function createWindow() {
         label: 'Quit',
         click: () => {
           if (win) {
-            store.delete(StoreConstants.Channel);
-            store.set(StoreConstants.ClickThrough, false);
-            store.set(StoreConstants.ShowBorders, true);
-            store.set(StoreConstants.HideBordersByIcon, false);
-
+            revertWindowSettings();
             win.close();
           }
         },
@@ -115,23 +121,18 @@ async function createWindow() {
 
   const trayIconMenu = Menu.buildFromTemplate([
     {
-      label: 'Click through',
+      label: 'Revert Click through',
       type: 'normal',
       click: () => {
         win?.setIgnoreMouseEvents(false);
-
-        store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
-        store.set(StoreConstants.ClickThrough, false);
-        store.set(StoreConstants.ShowBorders, true);
-        store.delete(StoreConstants.SavedOpacityLevel);
-        store.delete(StoreConstants.HideBordersByIcon);
-
+        revertWindowSettings();
         win?.reload();
       },
     },
     {
       label: 'Quit Ghost Chat',
       click: () => {
+        revertWindowSettings();
         app.quit();
       },
     },
@@ -144,11 +145,7 @@ async function createWindow() {
 
   win.on('closed', () => {
     if (store.has(StoreConstants.HideBordersByIcon)) {
-      store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
-      store.set(StoreConstants.ShowBorders, true);
-      store.set(StoreConstants.ClickThrough, false);
-      store.delete(StoreConstants.SavedOpacityLevel);
-      store.delete(StoreConstants.HideBordersByIcon);
+      revertWindowSettings();
     }
 
     store.delete(StoreConstants.Channel);

@@ -1,6 +1,6 @@
 {
   "name": "ghost-chat",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "private": false,
   "description": "Standalone twitch chat overlay",
   "author": {
@@ -11,8 +11,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "eslint --ignore-path .eslintignore src",
+    "start": "vue-cli-service electron:serve",
     "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
     "upgradePackages": "ncu -u -x @types/node",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
