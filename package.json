@@ -20,7 +20,7 @@
   "main": "background.js",
   "dependencies": {
     "electron-context-menu": "^2.0.1",
-    "electron-log": "^4.2.1",
+    "electron-log": "^4.2.2",
     "electron-store": "^5.2.0",
     "electron-window-state": "^5.0.3",
     "escape-string-regexp": "^4.0.0",
