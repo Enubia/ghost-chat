@@ -27,7 +27,7 @@
     "tailwindcss": "^1.4.6",
     "tmi.js": "^1.5.0",
     "vue": "^2.6.11",
-    "vue-property-decorator": "^8.4.2",
+    "vue-property-decorator": "^8.5.1",
     "vue-router": "^3.3.4"
   },
   "devDependencies": {
