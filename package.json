@@ -38,7 +38,7 @@
     "@types/tmi.js": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@vue/cli-plugin-babel": "^4.4.4",
-    "@vue/cli-plugin-eslint": "^4.4.4",
+    "@vue/cli-plugin-eslint": "^4.4.5",
     "@vue/cli-plugin-typescript": "^4.4.4",
     "@vue/cli-service": "^4.4.4",
     "babel-plugin-module-resolver": "^4.0.0",
