@@ -50,7 +50,7 @@
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "sass-loader": "^8.0.2",
-    "typescript": "^3.9.5",
+    "typescript": "^3.9.6",
     "vue-cli-plugin-electron-builder": "^1.4.6",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11"
