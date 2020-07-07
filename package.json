@@ -43,7 +43,7 @@
     "@vue/cli-service": "^4.4.6",
     "babel-plugin-module-resolver": "^4.0.0",
     "css-loader": "^3.6.0",
-    "electron": "^9.0.5",
+    "electron": "^9.1.0",
     "electron-builder": "^22.7.0",
     "eslint": "^7.3.1",
     "husky": "^4.2.5",
