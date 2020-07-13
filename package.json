@@ -33,10 +33,10 @@
   "devDependencies": {
     "@electron/typescript-definitions": "^8.7.4",
     "@fullhuman/postcss-purgecss": "^2.3.0",
-    "@hokify/eslint-config-vue": "^0.4.0",
+    "@hokify/eslint-config-vue": "^0.4.1",
     "@types/node": "12.12.42",
     "@types/tmi.js": "^1.4.0",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@vue/cli-plugin-babel": "^4.4.6",
     "@vue/cli-plugin-eslint": "^4.4.6",
     "@vue/cli-plugin-typescript": "^4.4.6",
