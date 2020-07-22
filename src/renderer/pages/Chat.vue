@@ -55,7 +55,7 @@ import ChatMessage from '@/renderer/components/ChatMessage.vue';
   },
 })
 export default class Chat extends Vue {
-  channel = this.$config.get(StoreConstants.Channel, '');
+  channel = String(this.$config.get(StoreConstants.Channel, ''));
 
   data: IMessageResponse[] = [];
 

@@ -56,7 +56,7 @@ async function createWindow() {
     },
   });
 
-  win.setIgnoreMouseEvents(store.get(StoreConstants.ClickThrough) || false);
+  win.setIgnoreMouseEvents(Boolean(store.get(StoreConstants.ClickThrough)) || false);
   win.setAlwaysOnTop(true, 'pop-up-menu');
   win.setMaximizable(false);
 

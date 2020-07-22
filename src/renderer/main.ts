@@ -26,7 +26,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$config = electronStore;
 Vue.prototype.$windowBackgroundColor = `#${
   electronStore.get(StoreConstants.BackgroundColor) || '5c279d'
-}${hexOpacityMapping[electronStore.get(StoreConstants.OpacityLevel, '1')]}`;
+}${hexOpacityMapping[String(electronStore.get(StoreConstants.OpacityLevel, '1'))]}`;
 Vue.prototype.$showBorder = electronStore.get(StoreConstants.ShowBorders, true);
 
 new Vue({

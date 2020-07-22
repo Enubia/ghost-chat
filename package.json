@@ -27,7 +27,8 @@
     "tailwindcss": "^1.5.2",
     "tmi.js": "^1.5.0",
     "vue": "^2.6.11",
-    "vue-property-decorator": "^8.5.1",
+    "vue-class-component": "^7.2.4",
+    "vue-property-decorator": "^9.0.0",
     "vue-router": "^3.3.4"
   },
   "devDependencies": {
@@ -45,7 +46,7 @@
     "css-loader": "^3.6.0",
     "electron": "^9.1.1",
     "electron-builder": "^22.7.0",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "husky": "^4.2.5",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
