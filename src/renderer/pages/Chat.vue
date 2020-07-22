@@ -1,8 +1,12 @@
 <template>
   <div id="messages" class="w-full">
     <MenuButtons v-if="!isSetHideBordersByIcon" :is-chat-page="true" @go-back="disconnectChat" />
-    <div id="chat-messages" class="container mx-auto px-4">
-      <div v-if="isLoading">
+    <div
+      id="chat-messages"
+      class="container mx-auto px-4"
+      :style="`${$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''}`"
+    >
+      <div v-if="isLoading" style="font-size: 12pt;">
         <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
       </div>
       <div v-else-if="!isLoading && isWaitingForMessages">
@@ -23,6 +27,7 @@
                 class="badges"
                 alt="badge"
                 :src="badge.badge"
+                :style="$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''"
               />
             </div>
             <b :style="'color:' + (item.user ? item.user.color : 'white')">

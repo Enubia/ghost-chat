@@ -45,12 +45,35 @@
           <div class="mt-4 mb-2 flex justify-center">
             <div class="w-2/3 text-center">
               <input
-                id="channel"
                 v-model="newBackgroundColor"
                 type="text"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 @change="checkColorFormat"
               />
+            </div>
+          </div>
+        </div>
+        <div id="font-size" class="mt-2 mb-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
+          <span class="text-2xl">Choose a chat font size</span>
+          <div class="mt-4 mb-2 flex justify-center">
+            <div class="text-center">
+              <div class="mt-2 flex justify-center">
+                <Slider
+                  class="w-3/6"
+                  :initial-value="newFontSize"
+                  min="5"
+                  max="35"
+                  step="1"
+                  @newValue="setFontSliderValue"
+                />
+                <p class="ml-3">New size: {{ newFontSize }}pt</p>
+              </div>
+              <div v-if="showFontError">
+                <p class="text-red-400">
+                  Attention: <br />
+                  This size will be very {{ newFontSize > 25 ? 'big' : 'small' }} from here on!
+                </p>
+              </div>
             </div>
           </div>
           <div v-if="showColorError">
@@ -109,20 +132,29 @@ export default class Settings extends Vue {
 
   newBackgroundColor = '';
 
+  newFontSize = String(this.$config.get(StoreConstants.FontSize, '12'));
+
   showColorError = false;
 
   showColorSuccess = false;
+
+  showFontError = false;
 
   window;
 
   relaunch() {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
+
     if (this.newBackgroundColor) {
       this.$config.set(
         StoreConstants.BackgroundColor,
         this.newBackgroundColor.slice(1, this.newBackgroundColor.length).toLowerCase(),
       );
+    }
+
+    if (this.newFontSize.length > 0) {
+      this.$config.set(StoreConstants.FontSize, this.newFontSize);
     }
 
     if (process.env.NODE_ENV === 'production') {
@@ -143,6 +175,10 @@ export default class Settings extends Vue {
 
   setSliderValue(value) {
     this.opacityLevel = value.toString();
+  }
+
+  setFontSliderValue(value) {
+    this.newFontSize = value.toString();
   }
 
   setShowBorders(value) {
@@ -170,6 +206,10 @@ export default class Settings extends Vue {
   created() {
     this.window = this.$route.query.windowSize;
     ipcRenderer.send(IpcConstants.Resize, { width: 400, height: 800 });
+  }
+
+  updated() {
+    this.showFontError = parseInt(this.newFontSize, 10) > 25 || parseInt(this.newFontSize, 10) < 10;
   }
 }
 </script>

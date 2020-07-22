@@ -4,10 +4,10 @@
     <input
       id="myRange"
       type="range"
-      min="0.1"
-      max="1"
-      step="0.01"
-      :value="opacityLevel"
+      :min="min"
+      :step="step"
+      :max="max"
+      :value="initialValue"
       class="slider"
       @input="$emit('newValue', $event.target.value)"
     />
@@ -21,7 +21,13 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
   name: 'Slider',
 })
 export default class Slider extends Vue {
-  @Prop(String) readonly opacityLevel: string;
+  @Prop(String) readonly initialValue: string;
+
+  @Prop(String) readonly min: string;
+
+  @Prop(String) readonly max: string;
+
+  @Prop(String) readonly step: string;
 }
 </script>
 

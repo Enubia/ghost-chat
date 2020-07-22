@@ -5,5 +5,6 @@ declare module 'vue/types/vue' {
     $config: ElectronStore;
     $windowBackgroundColor: string;
     $showBorder: boolean;
+    $fontSize: string;
   }
 }
