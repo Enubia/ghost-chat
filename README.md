@@ -4,6 +4,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/enubia/ghost-chat)
 ![GitHub All Releases](https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen)
 ![](https://img.shields.io/badge/Twitch-twitch.tv/enubia1-blue)
+[![Discord](https://img.shields.io/discord/735726454498787338.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/V83zRha)
 
 # Ghost Chat
 
