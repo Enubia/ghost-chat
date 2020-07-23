@@ -43,7 +43,7 @@ or you just want to have your chat on your main screen.
 
 ## Additional info
 
-If you have any suggestions for features or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose) and choose either Feature request or Bug report.
+If you have any suggestions for features or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose) and choose either Feature request or Bug report. You can also join the [Discord server](https://discord.gg/V83zRha) and post a bug or feature report/request into one of the channels.
 
 # Development setup
 
