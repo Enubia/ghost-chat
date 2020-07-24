@@ -11,6 +11,7 @@
       class="slider"
       @input="$emit('newValue', $event.target.value)"
     />
+    <slot />
   </div>
 </template>
 

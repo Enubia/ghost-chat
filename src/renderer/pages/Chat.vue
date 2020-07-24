@@ -9,7 +9,7 @@
       <div v-if="isLoading" style="font-size: 12pt;">
         <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
       </div>
-      <div v-else-if="!isLoading && isWaitingForMessages">
+      <div v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt;">
         <span>Connected, waiting for messages...</span>
       </div>
       <div v-for="item of data" v-else :key="item.key">
@@ -19,7 +19,7 @@
           "
           class="mb-1 text-white"
         >
-          <div class="break-words">
+          <div id="message" class="break-words">
             <div v-if="item.user && item.user.badges">
               <img
                 v-for="badge in item.user.badges"
@@ -27,7 +27,6 @@
                 class="badges"
                 alt="badge"
                 :src="badge.badge"
-                :style="$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''"
               />
             </div>
             <b :style="'color:' + (item.user ? item.user.color : 'white')">

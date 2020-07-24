@@ -14,7 +14,14 @@
           <span class="text-2xl">Window transparency</span>
           <div class="mt-2 flex justify-center">
             <span>Fully transparent</span>
-            <Slider class="w-2/5" :opacity-level="opacityLevel" @newValue="setSliderValue" />
+            <Slider
+              class="w-2/5"
+              :initial-value="opacityLevel"
+              min="0.01"
+              max="1"
+              step="0.01"
+              @newValue="setSliderValue"
+            />
             <span>Background filled</span>
           </div>
         </div>
@@ -35,44 +42,23 @@
           >
             Online color picker
           </span>
-          <br />
-          <br />
-          <span>Enter the hex value for your color</span>
-          <br />
-          <span>
-            (prefixed with a #, e.g. <span style="color: #f9fb03;">#f9fb03</span> for yellow)
-          </span>
-          <div class="mt-4 mb-2 flex justify-center">
-            <div class="w-2/3 text-center">
-              <input
-                v-model="newBackgroundColor"
-                type="text"
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                @change="checkColorFormat"
-              />
-            </div>
-          </div>
-        </div>
-        <div id="font-size" class="mt-2 mb-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
-          <span class="text-2xl">Choose a chat font size</span>
           <div class="mt-4 mb-2 flex justify-center">
             <div class="text-center">
-              <div class="mt-2 flex justify-center">
-                <Slider
-                  class="w-3/6"
-                  :initial-value="newFontSize"
-                  min="5"
-                  max="35"
-                  step="1"
-                  @newValue="setFontSliderValue"
+              <label for="newBackground">
+                <span>Enter the hex value for your color</span>
+                <br />
+                <span>
+                  (prefixed with a #, e.g. <span style="color: #f9fb03;">#f9fb03</span> for yellow)
+                </span>
+              </label>
+              <div class="mt-1">
+                <input
+                  id="newBackground"
+                  v-model="newBackgroundColor"
+                  type="text"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  @change="checkColorFormat"
                 />
-                <p class="ml-3">New size: {{ newFontSize }}pt</p>
-              </div>
-              <div v-if="showFontError">
-                <p class="text-red-400">
-                  Attention: <br />
-                  This size will be very {{ newFontSize > 25 ? 'big' : 'small' }} from here on!
-                </p>
               </div>
             </div>
           </div>
@@ -86,6 +72,22 @@
                 newBackgroundColor
               }}</span>
             </span>
+          </div>
+        </div>
+        <div id="font-size" class="mt-2 mb-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
+          <span class="text-2xl">Choose a chat font size</span>
+          <div class="mt-4 mb-2 flex justify-center">
+            <div class="flex justify-center">
+              <Slider
+                :initial-value="newFontSize"
+                min="5"
+                max="35"
+                step="1"
+                @newValue="setFontSliderValue"
+              >
+                <div :style="'font-size: ' + newFontSize + 'pt'">Aa</div>
+              </Slider>
+            </div>
           </div>
         </div>
         <div class="flex justify-center">
@@ -138,8 +140,6 @@ export default class Settings extends Vue {
 
   showColorSuccess = false;
 
-  showFontError = false;
-
   window;
 
   relaunch() {
@@ -174,6 +174,8 @@ export default class Settings extends Vue {
   }
 
   setSliderValue(value) {
+    console.log(value);
+
     this.opacityLevel = value.toString();
   }
 
@@ -206,10 +208,6 @@ export default class Settings extends Vue {
   created() {
     this.window = this.$route.query.windowSize;
     ipcRenderer.send(IpcConstants.Resize, { width: 400, height: 800 });
-  }
-
-  updated() {
-    this.showFontError = parseInt(this.newFontSize, 10) > 25 || parseInt(this.newFontSize, 10) < 10;
   }
 }
 </script>
