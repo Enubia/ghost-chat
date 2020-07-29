@@ -58,15 +58,22 @@ export default class MenuButtons extends Vue {
     this.$emit('go-back');
   }
 
-  handleClickThrough() {
-    this.$config.set(StoreConstants.HideBordersByIcon, true);
-    this.$config.set(
-      StoreConstants.SavedOpacityLevel,
-      this.$config.get(StoreConstants.OpacityLevel),
-    );
-    this.$config.set(StoreConstants.OpacityLevel, '0.01');
-    this.$config.set(StoreConstants.ShowBorders, false);
-    this.$config.set(StoreConstants.ClickThrough, true);
+  async manageConfigSettings() {
+    return new Promise((resolve) => {
+      this.$config.set(StoreConstants.HideBordersByIcon, true);
+      this.$config.set(
+        StoreConstants.SavedOpacityLevel,
+        this.$config.get(StoreConstants.OpacityLevel, '1'),
+      );
+      this.$config.set(StoreConstants.OpacityLevel, '0.01');
+      this.$config.set(StoreConstants.ShowBorders, false);
+      this.$config.set(StoreConstants.ClickThrough, true);
+      resolve();
+    });
+  }
+
+  async handleClickThrough() {
+    await this.manageConfigSettings();
     ipcRenderer.send(IpcConstants.SetClickThrough);
   }
 

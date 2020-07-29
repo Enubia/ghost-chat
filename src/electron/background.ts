@@ -7,7 +7,9 @@ import ElectronStore from 'electron-store';
 import * as logger from 'electron-log';
 import * as path from 'path';
 
+// custom stuff
 import { StoreConstants, IpcConstants } from '@/utils/constants';
+import clearConfigData from './helper/clearConfigData';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -25,14 +27,17 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
-function revertWindowSettings(): void {
-  if (store.has(StoreConstants.HideBordersByIcon)) {
-    store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
-    store.delete(StoreConstants.HideBordersByIcon);
-    store.delete(StoreConstants.SavedOpacityLevel);
-  }
-  store.set(StoreConstants.ClickThrough, false);
-  store.set(StoreConstants.ShowBorders, true);
+function revertWindowSettings(): Promise<void> {
+  return new Promise((resolve) => {
+    if (store.has(StoreConstants.HideBordersByIcon)) {
+      store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
+      store.delete(StoreConstants.HideBordersByIcon);
+      store.delete(StoreConstants.SavedOpacityLevel);
+    }
+    store.set(StoreConstants.ClickThrough, false);
+    store.set(StoreConstants.ShowBorders, true);
+    resolve();
+  });
 }
 
 async function createWindow() {
@@ -102,9 +107,9 @@ async function createWindow() {
       },
       {
         label: 'Quit',
-        click: () => {
+        click: async () => {
           if (win) {
-            revertWindowSettings();
+            await revertWindowSettings();
             win.close();
           }
         },
@@ -123,16 +128,16 @@ async function createWindow() {
     {
       label: 'Revert Click through',
       type: 'normal',
-      click: () => {
+      click: async () => {
         win?.setIgnoreMouseEvents(false);
-        revertWindowSettings();
+        await revertWindowSettings();
         win?.reload();
       },
     },
     {
       label: 'Quit Ghost Chat',
-      click: () => {
-        revertWindowSettings();
+      click: async () => {
+        await revertWindowSettings();
         app.quit();
       },
     },
@@ -143,9 +148,9 @@ async function createWindow() {
 
   mainWindowState.manage(win);
 
-  win.on('closed', () => {
+  win.on('closed', async () => {
     if (store.has(StoreConstants.HideBordersByIcon)) {
-      revertWindowSettings();
+      await revertWindowSettings();
     }
 
     store.delete(StoreConstants.Channel);
@@ -203,6 +208,10 @@ app.on('activate', async () => {
 });
 
 app.on('ready', async () => {
+  if (!store.has(StoreConstants.DataCleared)) {
+    clearConfigData(store);
+  }
+
   await createWindow();
 });
 

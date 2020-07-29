@@ -7,6 +7,7 @@ export enum StoreConstants {
   HideBordersByIcon = 'hideBordersByIcon',
   SavedOpacityLevel = 'savedOpacityLevel',
   FontSize = 'fontSize',
+  DataCleared = 'dataCleared',
 }
 
 export enum IpcConstants {
