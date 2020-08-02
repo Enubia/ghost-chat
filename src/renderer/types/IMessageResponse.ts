@@ -6,6 +6,7 @@ export interface IMessageResponse {
     name?: string;
     badges?: IBadge[];
   };
+  created: Date;
   message: string;
   key: string;
 }

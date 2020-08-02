@@ -8,6 +8,7 @@ export enum StoreConstants {
   SavedOpacityLevel = 'savedOpacityLevel',
   FontSize = 'fontSize',
   DataCleared = 'dataCleared',
+  Timer = 'timer',
 }
 
 export enum IpcConstants {

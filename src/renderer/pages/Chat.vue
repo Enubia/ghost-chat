@@ -33,7 +33,7 @@
               {{ (item.user && item.user.name) || 'John Doe' }}
               <span class="text-white font-light">: </span></b
             >
-            <ChatMessage :message="item.message" />
+            <ChatMessage :id="item.key" :message="item.message" @expired="handleRemoveMessage" />
           </div>
         </div>
       </div>
@@ -65,6 +65,8 @@ import { formatMessage } from '@/utils/formatMessage';
 export default class Chat extends Vue {
   channel = String(this.$config.get(StoreConstants.Channel, ''));
 
+  clearChatTimer = Number(this.$config.get(StoreConstants.Timer, 0));
+
   client: Client;
 
   data: IMessageResponse[] = [];
@@ -77,7 +79,32 @@ export default class Chat extends Vue {
 
   isWaitingForMessages = true;
 
-  interval: NodeJS.Timeout;
+  interval: NodeJS.Timeout | null;
+
+  handleRemoveMessage(id) {
+    this.data.splice(this.data.indexOf(id), 1);
+  }
+
+  handleInterval() {
+    if (this.clearChatTimer > 0) {
+      if (this.data.length > 0) {
+        this.interval = setInterval(() => {
+          const date = new Date().getTime();
+          const lastMessageDate = this.data[this.data.length - 1].created.getTime();
+          const minutes = this.clearChatTimer * 60 * 1000;
+
+          console.log('tick');
+
+          if (date - lastMessageDate > minutes) {
+            this.data = [];
+            if (this.interval) {
+              clearInterval(this.interval);
+            }
+          }
+        }, 1000);
+      }
+    }
+  }
 
   async disconnectChat(): Promise<void> {
     this.$config.delete(StoreConstants.Channel);
@@ -110,6 +137,15 @@ export default class Chat extends Vue {
       this.isWaitingForMessages = true;
 
       this.client.on('message', async (_channel, userstate, message, _self) => {
+        if (this.data.length === 100) {
+          // remove the first 80 messages, otherwise the array gets huge after some time
+          this.data.splice(0, 80);
+        }
+
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+
         let badges: IBadge[] = [];
 
         if (userstate.badges !== null) {
@@ -120,22 +156,18 @@ export default class Chat extends Vue {
           message = await formatMessage(message, userstate.emotes);
         }
 
-        if (this.data.length === 100) {
-          // remove the first 80 messages, otherwise the array gets huge after some time
-          this.data.splice(0, 80);
-        }
-
-        console.log(this.data.length);
-
         this.data.push({
           user: {
             color: userstate.color,
             name: userstate.username,
             badges,
           },
+          created: new Date(),
           message,
           key: Math.random().toString(36).substring(7),
         });
+
+        this.handleInterval();
 
         this.isWaitingForMessages = false;
       });

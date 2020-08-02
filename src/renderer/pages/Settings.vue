@@ -2,14 +2,7 @@
   <div id="settings" class="background-filled">
     <MenuButtons />
     <div class="grid w-full h-full">
-      <div class="flex justify-center">
-        <div id="header" class="text-center mt-2 w-3/4">
-          <span class="text-3xl">Choose your settings</span>
-          <br />
-          <span>Once you save, the window will reload and apply the new settings</span>
-        </div>
-      </div>
-      <div class="text-center -mt-16">
+      <div class="text-center">
         <div id="transparency" class="grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
           <span class="text-2xl">Window transparency</span>
           <div class="mt-2 flex justify-center">
@@ -74,6 +67,26 @@
             </span>
           </div>
         </div>
+        <div id="fade-out-timer" class="mt-2 mb-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
+          <div class="mt-4 mb-2 flex justify-center">
+            <div class="text-center">
+              <label for="fadeOut">
+                <span
+                  >Choose the removal of messages in minutes (recommended for slower chats, disabled
+                  on default)</span
+                >
+              </label>
+              <div class="mt-1">
+                <input
+                  id="fadeOut"
+                  v-model="newClearChatTimer"
+                  type="text"
+                  class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="font-size" class="mt-2 mb-2 grid-rows-1 text-center mr-5 ml-5 border-2 py-2">
           <span class="text-2xl">Choose a chat font size</span>
           <div class="mt-4 mb-2 flex justify-center">
@@ -132,6 +145,8 @@ export default class Settings extends Vue {
 
   showborders = this.$config.get(StoreConstants.ShowBorders, true);
 
+  newClearChatTimer = String(this.$config.get(StoreConstants.Timer, '0'));
+
   newBackgroundColor = '';
 
   newFontSize = String(this.$config.get(StoreConstants.FontSize, '12'));
@@ -145,6 +160,10 @@ export default class Settings extends Vue {
   relaunch() {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
+
+    if (this.newClearChatTimer) {
+      this.$config.set(StoreConstants.Timer, parseInt(this.newClearChatTimer, 10));
+    }
 
     if (this.newBackgroundColor) {
       this.$config.set(
