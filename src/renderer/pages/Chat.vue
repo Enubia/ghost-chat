@@ -43,12 +43,16 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { IMessageResponse } from '@/api/types/IMessageResponse';
+import { client, Client } from 'tmi.js';
 import { StoreConstants } from '@/utils/constants';
-import TwitchApi from '@/api/twitchApi';
 import Loading from '@/renderer/components/Loading.vue';
 import MenuButtons from '@/renderer/components/MenuButtons.vue';
 import ChatMessage from '@/renderer/components/ChatMessage.vue';
+
+import { getUserBadges } from '@/utils/getUserBadges';
+import { IBadge } from '@/renderer/types/IBadge';
+import { IMessageResponse } from '@/renderer/types/IMessageResponse';
+import { formatMessage } from '@/utils/formatMessage';
 
 @Component({
   name: 'Chat',
@@ -61,11 +65,11 @@ import ChatMessage from '@/renderer/components/ChatMessage.vue';
 export default class Chat extends Vue {
   channel = String(this.$config.get(StoreConstants.Channel, ''));
 
+  client: Client;
+
   data: IMessageResponse[] = [];
 
-  broadCaster = '';
-
-  api: TwitchApi;
+  broadCaster = this.channel;
 
   isSetHideBordersByIcon = false;
 
@@ -75,19 +79,13 @@ export default class Chat extends Vue {
 
   interval: NodeJS.Timeout;
 
-  prepareData(): void {
-    const response = this.api.getTwitchChat();
-    if (response.length > 0) {
-      this.data.push(...response);
-      this.isWaitingForMessages = false;
-    }
-    this.isLoading = false;
-  }
-
   async disconnectChat(): Promise<void> {
     this.$config.delete(StoreConstants.Channel);
-    clearInterval(this.interval);
-    await this.api.disconnect();
+
+    await this.client.disconnect().catch((error) => {
+      throw new Error(`Failed to disconnect from chat: ${error}`);
+    });
+
     await this.$router.push({
       path: '/index',
     });
@@ -95,12 +93,52 @@ export default class Chat extends Vue {
 
   async created(): Promise<void> {
     this.isSetHideBordersByIcon = this.$config.has(StoreConstants.HideBordersByIcon);
+
     if (this.channel.length > 0) {
-      [this.broadCaster] = this.channel;
-      this.api = new TwitchApi({ channels: [this.channel] });
-      await this.api.connect();
-      await this.api.initChat();
-      this.interval = setInterval(() => this.prepareData(), 1000);
+      this.client = client({
+        channels: [this.channel],
+        connection: {
+          reconnect: true,
+        },
+      });
+
+      await this.client.connect().catch((err) => {
+        throw new Error(`Failed to connect to channel ${this.broadCaster}: ${err}`);
+      });
+
+      this.isLoading = false;
+      this.isWaitingForMessages = true;
+
+      this.client.on('message', async (_channel, userstate, message, _self) => {
+        let badges: IBadge[] = [];
+
+        if (userstate.badges !== null) {
+          badges = await getUserBadges(userstate);
+        }
+
+        if (userstate.emotes !== null) {
+          message = await formatMessage(message, userstate.emotes);
+        }
+
+        if (this.data.length === 100) {
+          // remove the first 80 messages, otherwise the array gets huge after some time
+          this.data.splice(0, 80);
+        }
+
+        console.log(this.data.length);
+
+        this.data.push({
+          user: {
+            color: userstate.color,
+            name: userstate.username,
+            badges,
+          },
+          message,
+          key: Math.random().toString(36).substring(7),
+        });
+
+        this.isWaitingForMessages = false;
+      });
     } else {
       await this.$router.push({
         name: 'index',

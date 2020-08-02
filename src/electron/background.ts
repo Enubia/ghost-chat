@@ -159,8 +159,9 @@ async function createWindow() {
   });
 }
 
-ipcMain.on(IpcConstants.Close, () => {
+ipcMain.on(IpcConstants.Close, async () => {
   if (process.platform !== 'darwin') {
+    store.delete(StoreConstants.Channel);
     win?.close();
   }
 });

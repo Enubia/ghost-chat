@@ -1,5 +1,5 @@
 <template>
-  <span v-html="message"></span>
+  <span class="in" v-html="message"></span>
 </template>
 
 <script lang="ts">

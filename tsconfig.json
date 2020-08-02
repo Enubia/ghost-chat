@@ -17,7 +17,6 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@/api/*": ["src/api/*"],
       "@/utils/*": ["src/utils/*"],
       "@/renderer/*": ["src/renderer/*"],
       "@/electron/*": ["src/electron/*"]

@@ -1,5 +1,5 @@
 import { ChatUserstate } from 'tmi.js';
-import { IBadge } from '../types/IBadge';
+import { IBadge } from '@/renderer/types/IBadge';
 
 export const getUserBadges = async (user: ChatUserstate): Promise<IBadge[]> => {
   const globalBadgeUrl = 'https://badges.twitch.tv/v1/badges/global/display';
