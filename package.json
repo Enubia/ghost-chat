@@ -46,7 +46,7 @@
     "css-loader": "^4.2.0",
     "electron": "^9.1.2",
     "electron-builder": "^22.8.0",
-    "eslint": "^7.5.0",
+    "eslint": "^7.6.0",
     "husky": "^4.2.5",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
