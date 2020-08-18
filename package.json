@@ -36,7 +36,7 @@
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hokify/eslint-config-vue": "^0.4.12",
     "@types/node": "12.12.42",
-    "@types/tmi.js": "^1.4.0",
+    "@types/tmi.js": "^1.4.1",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@vue/cli-plugin-babel": "^4.4.6",
     "@vue/cli-plugin-eslint": "^4.5.3",
