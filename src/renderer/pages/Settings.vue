@@ -41,7 +41,7 @@
                 <span>Enter the hex value for your color</span>
                 <br />
                 <span>
-                  (prefixed with a #, e.g. <span style="color: #f9fb03;">#f9fb03</span> for yellow)
+                  (prefixed with a #, e.g. <span style="color: #f9fb03">#f9fb03</span> for yellow)
                 </span>
               </label>
               <div class="mt-1">
@@ -155,7 +155,7 @@ export default class Settings extends Vue {
 
   showColorSuccess = false;
 
-  window;
+  window: string | (string | null)[] = [];
 
   relaunch() {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);

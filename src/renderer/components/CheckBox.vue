@@ -27,9 +27,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
   name: 'CheckBox',
 })
 export default class CheckBox extends Vue {
-  @Prop([String, Boolean]) readonly labelText;
+  @Prop(String) readonly labelText: string;
 
-  @Prop(Boolean) readonly checked;
+  @Prop(Boolean) readonly checked: boolean;
 
   isChecked = false;
 

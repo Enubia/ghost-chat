@@ -6,10 +6,10 @@
       class="container mx-auto px-4"
       :style="`${$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''}`"
     >
-      <div v-if="isLoading" style="font-size: 12pt;">
+      <div v-if="isLoading" style="font-size: 12pt">
         <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
       </div>
-      <div v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt;">
+      <div v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt">
         <span>Connected, waiting for messages...</span>
       </div>
       <div v-for="item of data" v-else :key="item.key">

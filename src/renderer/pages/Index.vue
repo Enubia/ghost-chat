@@ -20,9 +20,7 @@
             </div>
           </div>
           <div class="mt-2">
-            <small id="channelHelp" class="text-muted">
-              Channel name, e.g. Enubia1
-            </small>
+            <small id="channelHelp" class="text-muted"> Channel name, e.g. Enubia1 </small>
             <br />
             <small v-if="showErrorMessage" id="channelError" class="text-red-400">
               Please provide a channel name!
