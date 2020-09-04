@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export enum StoreConstants {
   Channel = 'channel',
   OpacityLevel = 'opacityLevel',
