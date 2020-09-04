@@ -1,6 +1,6 @@
 <template>
   <div class="slidecontainer">
-    <label for="myRange"></label>
+    <label for="myRange" />
     <input
       id="myRange"
       type="range"

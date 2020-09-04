@@ -1,47 +1,52 @@
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
-    project: './tsconfig.eslint.json',
     extraFileExtensions: ['.vue'],
+    project: './tsconfig.eslint.json',
+    parser: '@typescript-eslint/parser',
   },
-  plugins: ['@typescript-eslint', 'unicorn', 'mocha', 'import', 'prettier'],
+  plugins: ['@typescript-eslint', 'unicorn', 'mocha', 'import', 'prettier', 'vue'],
   env: {
     jest: true,
     mocha: true,
     browser: true,
     node: true,
   },
+  globals: {
+    $nuxt: true,
+  },
   extends: [
     'airbnb-typescript/base',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:vue/strongly-recommended',
+    'plugin:vue-scoped-css/recommended',
     'prettier',
     'prettier/standard',
     'prettier/@typescript-eslint',
+    'prettier/vue',
   ],
   settings: {
+    'import/core-modules': ['vue'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+      webpack: {},
     },
     'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
   },
   rules: {
     'prettier/prettier': ['error'],
-
     'max-len': 0,
     'import/order': 'error',
     'import/first': 'error',
     'import/no-mutable-exports': 'error',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-    'no-console': [
-      process.env.NODE_ENV === 'production' ? 'error' : 'warn',
-      { allow: ['warn', 'error'] },
-    ],
+    'no-console': 'warn',
     'prefer-const': [
       'error',
       {
@@ -54,8 +59,23 @@ module.exports = {
     'no-underscore-dangle': 0,
     'object-curly-spacing': 0,
     'prefer-object-spread': 'error',
-    'no-plusplus': 'warn',
-    'no-param-reassign': 'warn',
+    'no-param-reassign': [
+      'off',
+      {
+        props: true,
+        ignorePropertyModificationsFor: [
+          'state',
+          'acc',
+          'e',
+          'ctx',
+          'req',
+          'request',
+          'res',
+          'response',
+          '$scope',
+        ],
+      },
+    ],
     'no-throw-literal': 'warn',
     curly: ['error', 'all'],
     'dot-notation': 'error',
@@ -77,6 +97,11 @@ module.exports = {
         selector: 'interface',
         format: ['PascalCase'],
         prefix: ['I'],
+        filter: {
+          regex:
+            '^(Window|Vue|Context|NuxtAppOptions|VueConstructor|Navigator|Process|AxiosRequestConfig|Chainable)$',
+          match: false,
+        },
       },
     ],
     '@typescript-eslint/camelcase': 'off',
@@ -90,6 +115,27 @@ module.exports = {
         jsx: 'never',
         ts: 'never',
         tsx: 'never',
+      },
+    ],
+
+    /**********************/
+    /*   Vue Rules    */
+    /**********************/
+    'vue-scoped-css/require-scoped': ['error'],
+    'vue/require-default-prop': 'warn',
+    'vue/no-unused-components': [
+      'warn',
+      {
+        ignoreWhenBindingPresent: true,
+      },
+    ],
+    'vue/attributes-order': 'error',
+    'vue/name-property-casing': ['error', 'PascalCase'],
+    'vue/component-name-in-template-casing': [
+      'error',
+      'PascalCase',
+      {
+        ignores: ['nuxt-link', 'nuxt', 'no-ssr', 'nuxt-child', 'nuxt-error', 'nuxt-loading'],
       },
     ],
 

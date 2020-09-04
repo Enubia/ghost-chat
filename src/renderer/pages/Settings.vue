@@ -157,7 +157,7 @@ export default class Settings extends Vue {
 
   window: string | (string | null)[] = [];
 
-  relaunch() {
+  relaunch(): void {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
 
@@ -183,7 +183,7 @@ export default class Settings extends Vue {
     }
   }
 
-  redirectIndex() {
+  redirectIndex(): void {
     ipcRenderer.send(IpcConstants.Resize, {
       width: this.window[0],
       height: this.window[1],
@@ -192,25 +192,23 @@ export default class Settings extends Vue {
     this.$router.push('/index');
   }
 
-  setSliderValue(value) {
-    console.log(value);
-
+  setSliderValue(value: number): void {
     this.opacityLevel = value.toString();
   }
 
-  setFontSliderValue(value) {
+  setFontSliderValue(value: number): void {
     this.newFontSize = value.toString();
   }
 
-  setShowBorders(value) {
+  setShowBorders(value: boolean): void {
     this.showborders = value;
   }
 
-  openColorPickerPage() {
+  openColorPickerPage(): void {
     shell.openExternal('https://htmlcolorcodes.com/color-picker/');
   }
 
-  checkColorFormat() {
+  checkColorFormat(): void {
     this.showColorSuccess = false;
     this.showColorError = false;
 
@@ -224,7 +222,7 @@ export default class Settings extends Vue {
     }
   }
 
-  created() {
+  created(): void {
     this.window = this.$route.query.windowSize;
     ipcRenderer.send(IpcConstants.Resize, { width: 400, height: 800 });
   }

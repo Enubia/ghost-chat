@@ -79,21 +79,19 @@ export default class Chat extends Vue {
 
   isWaitingForMessages = true;
 
-  interval: NodeJS.Timeout | null;
+  interval;
 
-  handleRemoveMessage(id) {
+  handleRemoveMessage(id: IMessageResponse): void {
     this.data.splice(this.data.indexOf(id), 1);
   }
 
-  handleInterval() {
+  handleInterval(): void {
     if (this.clearChatTimer > 0) {
       if (this.data.length > 0) {
         this.interval = setInterval(() => {
           const date = new Date().getTime();
           const lastMessageDate = this.data[this.data.length - 1].created.getTime();
           const minutes = this.clearChatTimer * 60 * 1000;
-
-          console.log('tick');
 
           if (date - lastMessageDate > minutes) {
             this.data = [];
@@ -136,7 +134,7 @@ export default class Chat extends Vue {
       this.isLoading = false;
       this.isWaitingForMessages = true;
 
-      this.client.on('message', async (_channel, userstate, message, _self) => {
+      this.client.on('message', async (_channel, userstate, message) => {
         if (this.data.length === 100) {
           // remove the first 80 messages, otherwise the array gets huge after some time
           this.data.splice(0, 80);

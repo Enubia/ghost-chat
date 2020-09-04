@@ -1,7 +1,9 @@
 <template>
   <div id="loading-wrapper">
-    <div id="loading-text">{{ loadingText }}</div>
-    <div id="loading-content"></div>
+    <div id="loading-text">
+      {{ loadingText }}
+    </div>
+    <div id="loading-content" />
   </div>
 </template>
 

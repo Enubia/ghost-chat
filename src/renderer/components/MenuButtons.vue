@@ -54,11 +54,11 @@ import { StoreConstants, IpcConstants } from '@/utils/constants';
 export default class MenuButtons extends Vue {
   @Prop({ type: Boolean, default: false }) readonly isChatPage: boolean;
 
-  handleBack() {
+  handleBack(): void {
     this.$emit('go-back');
   }
 
-  async manageConfigSettings() {
+  async manageConfigSettings(): Promise<void> {
     return new Promise((resolve) => {
       this.$config.set(StoreConstants.HideBordersByIcon, true);
       this.$config.set(
@@ -72,17 +72,17 @@ export default class MenuButtons extends Vue {
     });
   }
 
-  async handleClickThrough() {
+  async handleClickThrough(): Promise<void> {
     await this.manageConfigSettings();
     ipcRenderer.send(IpcConstants.SetClickThrough);
   }
 
-  handleMinimize() {
+  handleMinimize(): void {
     const window = remote.getCurrentWindow();
     window?.minimize();
   }
 
-  handleClose() {
+  handleClose(): void {
     ipcRenderer.send(IpcConstants.Close);
   }
 }

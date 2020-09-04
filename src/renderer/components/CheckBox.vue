@@ -33,7 +33,7 @@ export default class CheckBox extends Vue {
 
   isChecked = false;
 
-  setChecked(value) {
+  setChecked(value: boolean): void {
     this.isChecked = value;
   }
 }

@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { remote, shell } from 'electron';
 import Loading from '@/renderer/components/Loading.vue';
@@ -53,11 +53,11 @@ export default class ReleaseCheck extends Vue {
 
   isLoading = true;
 
-  openDownloadLink() {
+  openDownloadLink(): void {
     shell.openExternal(this.newReleaseUrl);
   }
 
-  async wait() {
+  async wait(): Promise<boolean> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve((this.isLoading = false));
@@ -65,7 +65,7 @@ export default class ReleaseCheck extends Vue {
     });
   }
 
-  async created() {
+  async created(): Promise<void> {
     const releaseResponse = await fetch(
       'https://api.github.com/repos/lettucekiing/ghost-chat/releases',
     ).then((res) => res.json());

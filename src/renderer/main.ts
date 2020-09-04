@@ -7,16 +7,16 @@ import App from './App.vue';
 import router from './router';
 import { hexOpacityMapping } from './helper/hexOpacityMapping';
 
-ipcRenderer.on('settings', (_event, windowSize) => {
-  router.push({ path: '/settings', query: windowSize }).catch((err) => console.log(err));
+ipcRenderer.on('settings', async (_event, windowSize) => {
+  await router.push({ path: '/settings', query: windowSize });
 });
 
-ipcRenderer.on('index', () => {
-  router.push('/index').catch((err) => console.log(err));
+ipcRenderer.on('index', async () => {
+  await router.push('/index');
 });
 
-ipcRenderer.on('chat', () => {
-  router.push('/chat').catch((err) => console.log(err));
+ipcRenderer.on('chat', async () => {
+  await router.push('/chat');
 });
 
 const electronStore = new ElectronStore();

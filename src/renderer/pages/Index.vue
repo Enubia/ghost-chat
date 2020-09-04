@@ -7,7 +7,7 @@
           <div id="images" class="inline-flex">
             <img src="../assets/images/index-image.png" alt="kappa" class="h-32 w-32 mt-4" />
           </div>
-          <label for="channel"></label>
+          <label for="channel" />
           <div class="flex justify-center">
             <div class="w-2/3 text-center">
               <input
@@ -77,7 +77,7 @@ export default class Index extends Vue {
     }
   }
 
-  created() {
+  created(): void {
     const channelName = String(this.$config.get(StoreConstants.Channel, ''));
 
     if (channelName.length > 0) {
