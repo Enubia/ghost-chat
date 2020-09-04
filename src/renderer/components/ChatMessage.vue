@@ -1,5 +1,9 @@
 <template>
-  <span class="in" v-html="message" />
+  <span
+    :class="$textStroke ? 'text-stroke' : null + 'text-white'"
+    :style="'color:' + $chatColor"
+    v-html="message"
+  />
 </template>
 
 <script lang="ts">
@@ -13,4 +17,4 @@ export default class ChatMessage extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

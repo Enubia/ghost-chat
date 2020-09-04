@@ -10,6 +10,8 @@ export enum StoreConstants {
   FontSize = 'fontSize',
   DataCleared = 'dataCleared',
   Timer = 'timer',
+  ChatColor = 'chatColor',
+  TextStroke = 'textStroke',
 }
 
 export enum IpcConstants {

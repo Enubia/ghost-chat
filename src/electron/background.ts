@@ -76,10 +76,28 @@ async function createWindow() {
     prepend: () => [
       {
         label: 'Settings',
-        click: () => {
+        click: async () => {
           if (win) {
             win.resizable = false;
             win.webContents.send('settings', { windowSize: win?.getSize() });
+
+            // const modalPath = process.env.WEBPACK_DEV_SERVER_URL
+            //   ? `${process.env.WEBPACK_DEV_SERVER_URL}/#/settings`
+            //   : 'app://./index.html#settings';
+
+            // let settingsWindow: BrowserWindow | null = new BrowserWindow({
+            //   modal: true,
+            //   webPreferences: {
+            //     nodeIntegration: true,
+            //     webSecurity: false,
+            //   },
+            // });
+
+            // settingsWindow.on('close', () => {
+            //   settingsWindow = null;
+            // });
+
+            // settingsWindow.loadURL(modalPath);
           }
         },
       },

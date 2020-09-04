@@ -29,7 +29,10 @@
                 :src="badge.badge"
               />
             </div>
-            <b :style="'color:' + (item.user ? item.user.color : 'white')">
+            <b
+              :class="$textStroke ? 'text-stroke' : null"
+              :style="'color:' + (item.user ? item.user.color : '#0398fc')"
+            >
               {{ (item.user && item.user.name) || 'John Doe' }}
               <span class="text-white font-light">: </span></b
             >

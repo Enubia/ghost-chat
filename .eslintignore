@@ -3,5 +3,5 @@ markdown-stuff
 coverage
 build
 public
-dist_electron
+dist_electron_electron
 .*

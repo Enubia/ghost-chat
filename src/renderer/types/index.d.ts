@@ -7,5 +7,7 @@ declare module 'vue/types/vue' {
     $windowBackgroundColor: string;
     $showBorder: boolean;
     $fontSize: string;
+    $chatColor: string;
+    $textStroke: boolean;
   }
 }
