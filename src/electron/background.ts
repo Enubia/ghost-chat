@@ -9,6 +9,7 @@ import * as path from 'path';
 
 // custom stuff
 import { StoreConstants, IpcConstants } from '@/utils/constants';
+import { IWindowState } from '@/renderer/types/IWindowState';
 import clearConfigData from './helper/clearConfigData';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -65,6 +66,15 @@ async function createWindow() {
   win.setAlwaysOnTop(true, 'pop-up-menu');
   win.setMaximizable(false);
 
+  // win.on('move', () => {
+  //   if (win) {
+  //     const [posX, posY] = win.getPosition();
+  //     const [sizeX, sizeY] = win.getSize();
+
+  //     store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
+  //   }
+  // });
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
   } else {
@@ -79,25 +89,21 @@ async function createWindow() {
         click: async () => {
           if (win) {
             win.resizable = false;
-            win.webContents.send('settings', { windowSize: win?.getSize() });
 
-            // const modalPath = process.env.WEBPACK_DEV_SERVER_URL
-            //   ? `${process.env.WEBPACK_DEV_SERVER_URL}/#/settings`
-            //   : 'app://./index.html#settings';
+            store.set(StoreConstants.IsSettingsPage, true);
 
-            // let settingsWindow: BrowserWindow | null = new BrowserWindow({
-            //   modal: true,
-            //   webPreferences: {
-            //     nodeIntegration: true,
-            //     webSecurity: false,
-            //   },
-            // });
+            const [posX, posY] = win.getPosition();
+            const [sizeX, sizeY] = win.getSize();
 
-            // settingsWindow.on('close', () => {
-            //   settingsWindow = null;
-            // });
+            store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
 
-            // settingsWindow.loadURL(modalPath);
+            win.center();
+            win.setSize(800, 800);
+
+            win.webContents.send('settings', {
+              windowSize: { sizeX, sizeY },
+              windowPosition: { posX, posY },
+            });
           }
         },
       },
@@ -107,6 +113,14 @@ async function createWindow() {
           if (win) {
             if (!win.resizable) {
               win.resizable = true;
+            }
+
+            store.delete(StoreConstants.IsSettingsPage);
+
+            if (store.has(StoreConstants.SavedWindowState)) {
+              const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
+              win.setSize(state.sizeX, state.sizeY);
+              win.setPosition(state.posX, state.posY);
             }
             win.webContents.send('index');
           }
@@ -118,6 +132,14 @@ async function createWindow() {
           if (win) {
             if (!win.resizable) {
               win.resizable = true;
+            }
+
+            store.delete(StoreConstants.IsSettingsPage);
+
+            if (store.has(StoreConstants.SavedWindowState)) {
+              const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
+              win.setSize(state.sizeX, state.sizeY);
+              win.setPosition(state.posX, state.posY);
             }
             win.webContents.send('chat');
           }
@@ -178,39 +200,60 @@ async function createWindow() {
 }
 
 ipcMain.on(IpcConstants.Close, async () => {
+  if (store.has(StoreConstants.IsSettingsPage)) {
+    store.delete(StoreConstants.IsSettingsPage);
+  }
+
+  const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
+  win?.setSize(state.sizeX, state.sizeY);
+  win?.setPosition(state.posX, state.posY);
+
   if (process.platform !== 'darwin') {
     store.delete(StoreConstants.Channel);
     win?.close();
   }
 });
 
-ipcMain.on(IpcConstants.Relaunch, () => {
+ipcMain.on(IpcConstants.Relaunch, (_event, args) => {
   app.relaunch();
-  if (win) {
-    win.close();
+
+  store.delete(StoreConstants.IsSettingsPage);
+
+  if (args) {
+    win?.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
+    win?.setPosition(parseInt(args.winPos.x, 10), parseInt(args.winPos.y, 10));
   }
+  win?.close();
 });
 
-ipcMain.on(IpcConstants.Reload, () => {
-  if (win) {
-    win.reload();
-    win.resizable = true;
-  }
+ipcMain.on(IpcConstants.Reload, (_event, args) => {
+  store.delete(StoreConstants.IsSettingsPage);
+
+  win?.reload();
+  win?.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {
-  if (win) {
-    win.setIgnoreMouseEvents(true);
-    win.reload();
-  }
+  win?.setIgnoreMouseEvents(true);
+  win?.reload();
 });
 
 ipcMain.on(IpcConstants.Resize, (_event, args) => {
+  store.delete(StoreConstants.IsSettingsPage);
+
   if (win) {
     if (args.resizeAble) {
       win.resizable = true;
     }
-    win.setSize(args.width, args.height);
+  }
+
+  const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
+  console.log(state);
+
+  win?.setSize(state.sizeX, state.sizeY);
+
+  if (!args.keepPosition) {
+    win?.setPosition(state.posX, state.posY);
   }
 });
 

@@ -9,5 +9,6 @@ declare module 'vue/types/vue' {
     $fontSize: string;
     $chatColor: string;
     $textStroke: boolean;
+    $isSettingsPage: boolean;
   }
 }

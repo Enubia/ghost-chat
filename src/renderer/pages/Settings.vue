@@ -135,6 +135,7 @@ import MenuButtons from '@/renderer/components/MenuButtons.vue';
 import Slider from '@/renderer/components/Slider.vue';
 import CheckBox from '@/renderer/components/CheckBox.vue';
 import { IpcConstants, StoreConstants } from '@/utils/constants';
+import { IWindowState } from '@/renderer/types/IWindowState';
 
 @Component({
   name: 'Settings',
@@ -155,7 +156,9 @@ export default class Settings extends Vue {
 
   showColorSuccess = false;
 
-  window: string | (string | null)[] = [];
+  windowSize: { x: number; y: number };
+
+  windowPos: { x: number; y: number };
 
   relaunch(): void {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
@@ -177,18 +180,21 @@ export default class Settings extends Vue {
     }
 
     if (process.env.NODE_ENV === 'production') {
-      ipcRenderer.send(IpcConstants.Relaunch);
+      this.$config.set(StoreConstants.IsSettingsPage, false);
+      ipcRenderer.send(IpcConstants.Relaunch, {
+        winSize: { width: this.windowSize.x, height: this.windowSize.y },
+        winPos: { x: this.windowPos.x, y: this.windowPos.y },
+      });
     } else {
-      ipcRenderer.send(IpcConstants.Reload);
+      ipcRenderer.send(IpcConstants.Reload, {
+        winSize: { width: this.windowSize.x, height: this.windowSize.y },
+      });
     }
   }
 
   redirectIndex(): void {
-    ipcRenderer.send(IpcConstants.Resize, {
-      width: this.window[0],
-      height: this.window[1],
-      resizeAble: true,
-    });
+    this.$config.set(StoreConstants.IsSettingsPage, false);
+    ipcRenderer.send(IpcConstants.Resize, { resizeAble: true });
     this.$router.push('/index');
   }
 
@@ -223,8 +229,16 @@ export default class Settings extends Vue {
   }
 
   created(): void {
-    this.window = this.$route.query.windowSize;
-    ipcRenderer.send(IpcConstants.Resize, { width: 400, height: 800 });
+    if (this.$config.has(StoreConstants.SavedWindowState)) {
+      const state = this.$config.get(StoreConstants.SavedWindowState) as IWindowState;
+      this.windowSize = { x: state.sizeX, y: state.sizeY };
+      this.windowPos = { x: state.posX, y: state.posY };
+    }
+
+    ipcRenderer.send(IpcConstants.Resize, {
+      winSize: { width: 800, height: 300 },
+      keepPosition: true,
+    });
   }
 }
 </script>

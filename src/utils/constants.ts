@@ -12,6 +12,8 @@ export enum StoreConstants {
   Timer = 'timer',
   ChatColor = 'chatColor',
   TextStroke = 'textStroke',
+  IsSettingsPage = 'isSettingsPage',
+  SavedWindowState = 'savedWindowState',
 }
 
 export enum IpcConstants {

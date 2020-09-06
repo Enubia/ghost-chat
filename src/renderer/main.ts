@@ -7,8 +7,10 @@ import App from './App.vue';
 import router from './router';
 import { hexOpacityMapping } from './helper/hexOpacityMapping';
 
-ipcRenderer.on('settings', async (_event, windowSize) => {
-  await router.push({ path: '/settings', query: windowSize });
+const electronStore = new ElectronStore();
+
+ipcRenderer.on('settings', async () => {
+  await router.push({ path: '/settings' });
 });
 
 ipcRenderer.on('index', async () => {
@@ -18,8 +20,6 @@ ipcRenderer.on('index', async () => {
 ipcRenderer.on('chat', async () => {
   await router.push('/chat');
 });
-
-const electronStore = new ElectronStore();
 
 Vue.config.productionTip = false;
 
@@ -33,6 +33,7 @@ Vue.prototype.$showBorder = electronStore.get(StoreConstants.ShowBorders, true);
 Vue.prototype.$fontSize = electronStore.get(StoreConstants.FontSize, undefined);
 Vue.prototype.$chatColor = electronStore.get(StoreConstants.ChatColor, 'white');
 Vue.prototype.$textStroke = electronStore.get(StoreConstants.TextStroke, true);
+Vue.prototype.$isSettingsPage = electronStore.get(StoreConstants.IsSettingsPage, false);
 
 new Vue({
   ...App,
