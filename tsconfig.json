@@ -17,9 +17,7 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@/utils/*": ["src/utils/*"],
-      "@/renderer/*": ["src/renderer/*"],
-      "@/electron/*": ["src/electron/*"]
+      "@/*": ["src/*"]
     }
   },
   "exclude": ["node_modules", "dist_electron"]
