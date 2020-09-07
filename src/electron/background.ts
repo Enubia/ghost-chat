@@ -66,15 +66,6 @@ async function createWindow() {
   win.setAlwaysOnTop(true, 'pop-up-menu');
   win.setMaximizable(false);
 
-  // win.on('move', () => {
-  //   if (win) {
-  //     const [posX, posY] = win.getPosition();
-  //     const [sizeX, sizeY] = win.getSize();
-
-  //     store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
-  //   }
-  // });
-
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
   } else {
@@ -248,7 +239,6 @@ ipcMain.on(IpcConstants.Resize, (_event, args) => {
   }
 
   const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
-  console.log(state);
 
   win?.setSize(state.sizeX, state.sizeY);
 
