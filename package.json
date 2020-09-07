@@ -51,7 +51,7 @@
     "electron-builder": "^22.8.0",
     "eslint": "^7.8.1",
     "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-airbnb-typescript": "^10.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-node": "^0.3.4",
