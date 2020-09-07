@@ -89,7 +89,7 @@ async function createWindow() {
             store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
 
             win.center();
-            win.setSize(800, 800);
+            win.setSize(600, 800);
 
             win.webContents.send('settings', {
               windowSize: { sizeX, sizeY },

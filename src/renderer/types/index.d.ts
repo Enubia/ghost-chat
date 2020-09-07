@@ -8,7 +8,8 @@ declare module 'vue/types/vue' {
     $showBorder: boolean;
     $fontSize: string;
     $chatColor: string;
-    $textStroke: boolean;
     $isSettingsPage: boolean;
+    $fontStroke: string;
+    $strokeColor: string;
   }
 }

@@ -1,9 +1,5 @@
 <template>
-  <span
-    :class="$textStroke ? 'text-stroke' : null + 'text-white'"
-    :style="'color:' + $chatColor"
-    v-html="message"
-  />
+  <span class="message" :style="style" v-html="message" />
 </template>
 
 <script lang="ts">
@@ -14,6 +10,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 })
 export default class ChatMessage extends Vue {
   @Prop(String) readonly message: string;
+
+  style = {
+    textShadow: this.$fontStroke
+      ? `-1px -1px 0 ${this.$strokeColor}, 1px -1px 0
+  ${this.$strokeColor}, -1px 1px 0 ${this.$strokeColor}, 1px 1px 0 ${this.$strokeColor}`
+      : null,
+    color: this.$chatColor,
+  };
 }
 </script>
 

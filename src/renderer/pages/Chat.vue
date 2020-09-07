@@ -17,7 +17,7 @@
           :style="
             item.message.toLowerCase().includes(`@${broadCaster}`) ? 'background: #d15b5b' : ''
           "
-          class="mb-1 text-white"
+          class="mb-1 text-text-white"
         >
           <div id="message" class="break-words">
             <div v-if="item.user && item.user.badges">
@@ -29,10 +29,7 @@
                 :src="badge.badge"
               />
             </div>
-            <b
-              :class="$textStroke ? 'text-stroke' : null"
-              :style="'color:' + (item.user ? item.user.color : '#0398fc')"
-            >
+            <b :style="'color:' + (item.user ? item.user.color : '#0398fc')">
               {{ (item.user && item.user.name) || 'John Doe' }}
               <span class="text-white font-light">: </span></b
             >

@@ -11,9 +11,10 @@ export enum StoreConstants {
   DataCleared = 'dataCleared',
   Timer = 'timer',
   ChatColor = 'chatColor',
-  TextStroke = 'textStroke',
   IsSettingsPage = 'isSettingsPage',
   SavedWindowState = 'savedWindowState',
+  FontStroke = 'fontStroke',
+  StrokeColor = 'strokeColor',
 }
 
 export enum IpcConstants {
