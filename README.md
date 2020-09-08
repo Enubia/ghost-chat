@@ -13,8 +13,6 @@ Ghost chat is a standalone [Twitch.tv](https://www.twitch.tv) chat as overlay on
 It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
 or you just want to have your chat on your main screen.
 
-(If there's demand, I will publish a Linux and Mac version as well)
-
 ## Installation / Usage
 
 - Download the latest release (installer or standalone) from [https://github.com/Enubia/ghost-chat/releases](https://github.com/Enubia/ghost-chat/releases).
@@ -25,7 +23,7 @@ or you just want to have your chat on your main screen.
 
 ![png](images/index.png)
 
-- Settings can be reached through the context menu. You can adjust transparency, hide/show borders, and the overall background color.
+- Settings can be reached through the context menu.
 
 ![png](images/settings.png)
 
@@ -47,7 +45,7 @@ If you have any suggestions for features, or you've found a bug, feel free to go
 
 # Development setup
 
-Clone/Download this repo
+Clone/Fork/Download this repo
 
 Install all dependencies inside the root directory
 
