@@ -2,12 +2,12 @@
 const { parallel, task } = require('gulp');
 const del = require('del');
 
+task('cleanDist', () => {
+  return del(['./dist_electron']);
+});
+
 task('cleanModules', () => {
   return del(['./node_modules']);
 });
 
-task('cleandist_electron', () => {
-  return del(['./dist_electron']);
-});
-
-exports.clean = parallel('cleanModules', 'cleandist_electron');
+exports.clean = parallel('cleanDist', 'cleanModules');

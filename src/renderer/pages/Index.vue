@@ -78,12 +78,20 @@ export default class Index extends Vue {
   }
 
   created(): void {
-    const channelName = String(this.$config.get(StoreConstants.Channel, ''));
+    let channelName = String(this.$config.get(StoreConstants.Channel, ''));
 
-    if (channelName.length > 0) {
-      this.$router.push('/chat');
-    } else if (this.$route.params.message === 'no-channel') {
+    if (channelName === '' && this.$config.has(StoreConstants.DefaultChannel)) {
+      channelName = String(this.$config.get(StoreConstants.DefaultChannel));
+      this.$config.set(StoreConstants.Channel, channelName);
+    }
+
+    // TODO: this is not working properly, params is empty for whatever reason
+    if (this.$route.params.message === 'no-channel') {
       this.showErrorMessage = true;
+    } else if (this.$route.params.message === 'show-index') {
+      this.$config.set(StoreConstants.Channel, '');
+    } else if (channelName.length > 0) {
+      this.$router.push('/chat');
     }
   }
 }

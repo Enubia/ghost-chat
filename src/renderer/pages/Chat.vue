@@ -113,6 +113,7 @@ export default class Chat extends Vue {
 
     await this.$router.push({
       path: '/index',
+      params: { message: 'show-index' },
     });
   }
 
@@ -171,7 +172,7 @@ export default class Chat extends Vue {
       });
     } else {
       await this.$router.push({
-        name: 'index',
+        name: '/index',
         params: { message: 'no-channel' },
       });
     }

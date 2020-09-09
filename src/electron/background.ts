@@ -81,20 +81,15 @@ async function createWindow() {
           if (win) {
             win.resizable = false;
 
-            store.set(StoreConstants.IsSettingsPage, true);
-
             const [posX, posY] = win.getPosition();
             const [sizeX, sizeY] = win.getSize();
 
             store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
+            store.set(StoreConstants.IsSettingsPage, true);
 
             win.center();
-            win.setSize(600, 800);
 
-            win.webContents.send('settings', {
-              windowSize: { sizeX, sizeY },
-              windowPosition: { posX, posY },
-            });
+            win.webContents.send('settings');
           }
         },
       },
@@ -238,11 +233,11 @@ ipcMain.on(IpcConstants.Resize, (_event, args) => {
     }
   }
 
-  const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
+  if (!args.center) {
+    const state = store.get(StoreConstants.SavedWindowState) as IWindowState;
 
-  win?.setSize(state.sizeX, state.sizeY);
+    win?.setSize(state.sizeX, state.sizeY);
 
-  if (!args.keepPosition) {
     win?.setPosition(state.posX, state.posY);
   }
 });

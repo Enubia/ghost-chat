@@ -85,6 +85,29 @@
             </span>
           </div>
         </div>
+        <div class="w-full mt-2 mb-6">
+          <hr class="delimiter" />
+        </div>
+        <div id="default-channel" class="grid-rows-1 text-center mr-5 ml-5 py-2">
+          <div class="mt-2 mb-2 text-center">
+            <label for="channel-name"> Enter a default channel to connect to </label>
+            <input
+              id="channel-name"
+              v-model="defaultChannel"
+              type="text"
+              class="mt-3 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="channel-btn absolute w-2/4 left-25">
+            <div
+              id="submit-button"
+              class="duration-300 bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
+              @click="resetDefaultChannel"
+            >
+              Reset channel config
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div v-if="activeTab === 'chat'" class="grid w-full h-full">
@@ -221,21 +244,21 @@ import { IWindowState } from '@/renderer/types/IWindowState';
   components: { MenuButtons, Slider, CheckBox },
 })
 export default class Settings extends Vue {
-  opacityLevel = this.$config.get(StoreConstants.OpacityLevel, '1');
-
-  showborders = this.$config.get(StoreConstants.ShowBorders, true);
-
   newClearChatTimer = String(this.$config.get(StoreConstants.Timer, '0'));
-
-  fontStroke = this.$config.get(StoreConstants.FontStroke, false);
-
-  newStrokeColor = this.$config.get(StoreConstants.StrokeColor, '#000');
 
   newChatColor = String(this.$config.get(StoreConstants.ChatColor, 'white'));
 
   newBackgroundColor = '';
 
   newFontSize = String(this.$config.get(StoreConstants.FontSize, '12'));
+
+  opacityLevel = this.$config.get(StoreConstants.OpacityLevel, '1');
+
+  showborders = this.$config.get(StoreConstants.ShowBorders, true);
+
+  fontStroke = this.$config.get(StoreConstants.FontStroke, false);
+
+  defaultChannel = String(this.$config.get(StoreConstants.DefaultChannel, ''));
 
   showColorError = false;
 
@@ -257,8 +280,7 @@ export default class Settings extends Vue {
     }
 
     ipcRenderer.send(IpcConstants.Resize, {
-      winSize: { width: 800, height: 300 },
-      keepPosition: true,
+      center: true,
     });
   }
 
@@ -267,6 +289,7 @@ export default class Settings extends Vue {
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
     this.$config.set(StoreConstants.FontStroke, this.fontStroke);
     this.$config.set(StoreConstants.ChatColor, this.newChatColor);
+    this.$config.set(StoreConstants.DefaultChannel, this.defaultChannel);
 
     if (this.newClearChatTimer) {
       this.$config.set(StoreConstants.Timer, parseInt(this.newClearChatTimer, 10));
@@ -298,7 +321,9 @@ export default class Settings extends Vue {
 
   redirectIndex(): void {
     this.$config.set(StoreConstants.IsSettingsPage, false);
-    ipcRenderer.send(IpcConstants.Resize, { resizeAble: true });
+    ipcRenderer.send(IpcConstants.Resize, {
+      resizeAble: true,
+    });
     this.$router.push('/index');
   }
 
@@ -352,6 +377,10 @@ export default class Settings extends Vue {
       }
     }
   }
+
+  resetDefaultChannel(): void {
+    this.$config.delete(StoreConstants.DefaultChannel);
+  }
 }
 </script>
 
@@ -367,5 +396,9 @@ export default class Settings extends Vue {
 }
 .buttons {
   bottom: 30px;
+}
+
+.channel-btn {
+  left: 25%;
 }
 </style>

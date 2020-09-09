@@ -15,6 +15,7 @@ export enum StoreConstants {
   SavedWindowState = 'savedWindowState',
   FontStroke = 'fontStroke',
   StrokeColor = 'strokeColor',
+  DefaultChannel = 'defaultChannel',
 }
 
 export enum IpcConstants {
