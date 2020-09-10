@@ -90,7 +90,7 @@
         </div>
         <div id="default-channel" class="grid-rows-1 text-center mr-5 ml-5 py-2">
           <div class="mt-2 mb-2 text-center">
-            <label for="channel-name"> Enter a default channel to connect to </label>
+            <label for="channel-name">Enter a default channel to connect to on start-up</label>
             <input
               id="channel-name"
               v-model="defaultChannel"
@@ -98,7 +98,7 @@
               class="mt-3 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div class="channel-btn absolute w-2/4 left-25">
+          <div class="channel-btn absolute w-2/5">
             <div
               id="submit-button"
               class="duration-300 bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
@@ -380,6 +380,7 @@ export default class Settings extends Vue {
 
   resetDefaultChannel(): void {
     this.$config.delete(StoreConstants.DefaultChannel);
+    this.defaultChannel = '';
   }
 }
 </script>
@@ -399,6 +400,6 @@ export default class Settings extends Vue {
 }
 
 .channel-btn {
-  left: 25%;
+  left: 30%;
 }
 </style>
