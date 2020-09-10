@@ -157,7 +157,7 @@ export default class Chat extends Vue {
 
         this.data.push({
           user: {
-            color: userstate.color,
+            color: userstate.color || '#8d41e6',
             name: userstate.username,
             badges,
           },
