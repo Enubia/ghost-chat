@@ -38,7 +38,7 @@
     "@electron/typescript-definitions": "^8.7.8",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@types/node": "12.12.42",
-    "@types/tmi.js": "^1.4.1",
+    "@types/tmi.js": "^1.4.2",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.1",
     "@vue/cli-plugin-babel": "^4.5.6",
