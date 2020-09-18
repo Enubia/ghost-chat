@@ -48,7 +48,7 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "css-loader": "^4.3.0",
     "del": "^5.1.0",
-    "electron-builder": "^22.8.0",
+    "electron-builder": "^22.8.1",
     "eslint": "^7.9.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-typescript": "^10.0.0",
