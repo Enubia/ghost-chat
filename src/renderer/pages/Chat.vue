@@ -79,6 +79,8 @@ export default class Chat extends Vue {
 
   isWaitingForMessages = true;
 
+  addNewMessageToBottom = !this.$config.get(StoreConstants.ReverseChat, false);
+
   interval;
 
   handleRemoveMessage(id: IMessageResponse): void {
@@ -136,11 +138,6 @@ export default class Chat extends Vue {
       this.isWaitingForMessages = true;
 
       this.client.on('message', async (_channel, userstate, message) => {
-        if (this.data.length === 100) {
-          // remove the first 80 messages, otherwise the array gets huge after some time
-          this.data.splice(0, 80);
-        }
-
         if (this.interval) {
           clearInterval(this.interval);
         }
@@ -155,7 +152,7 @@ export default class Chat extends Vue {
           message = await formatMessage(message, userstate.emotes);
         }
 
-        this.data.push({
+        const newItem = {
           user: {
             color: userstate.color || '#8d41e6',
             name: userstate.username,
@@ -164,7 +161,20 @@ export default class Chat extends Vue {
           created: new Date(),
           message,
           key: Math.random().toString(36).substring(7),
-        });
+        };
+
+        if (this.data.length === 100) {
+          const removeFrom = this.addNewMessageToBottom ? 0 : 20;
+
+          // remove the first 80 messages, otherwise the array gets huge after some time
+          this.data.splice(removeFrom, 80);
+        }
+
+        if (this.addNewMessageToBottom) {
+          this.data.push(newItem);
+        } else {
+          this.data.unshift(newItem);
+        }
 
         this.handleInterval();
 
@@ -181,7 +191,7 @@ export default class Chat extends Vue {
   updated(): void {
     const container = this.$el.querySelector('#chat-messages');
     if (container) {
-      container.scrollTop = container.scrollHeight;
+      container.scrollTop = this.addNewMessageToBottom ? container.scrollHeight : 0;
     }
   }
 }

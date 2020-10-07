@@ -137,6 +137,9 @@
               @change="setFontStroke"
             />
           </div>
+          <div class="flex justify-center">
+            <CheckBox label-text="Reverse chat?" :checked="reverseChat" @change="setReverseChat" />
+          </div>
         </div>
         <div class="w-full mt-2 mb-6">
           <hr class="delimiter" />
@@ -258,6 +261,8 @@ export default class Settings extends Vue {
 
   fontStroke = this.$config.get(StoreConstants.FontStroke, false);
 
+  reverseChat = this.$config.get(StoreConstants.ReverseChat, false);
+
   defaultChannel = String(this.$config.get(StoreConstants.DefaultChannel, ''));
 
   showColorError = false;
@@ -288,6 +293,7 @@ export default class Settings extends Vue {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
     this.$config.set(StoreConstants.ShowBorders, this.showborders);
     this.$config.set(StoreConstants.FontStroke, this.fontStroke);
+    this.$config.set(StoreConstants.ReverseChat, this.reverseChat);
     this.$config.set(StoreConstants.ChatColor, this.newChatColor);
     this.$config.set(StoreConstants.DefaultChannel, this.defaultChannel);
 
@@ -341,6 +347,10 @@ export default class Settings extends Vue {
 
   setFontStroke(value: boolean): void {
     this.fontStroke = value;
+  }
+
+  setReverseChat(value: boolean): void {
+    this.reverseChat = value;
   }
 
   openColorPickerPage(): void {

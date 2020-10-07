@@ -16,6 +16,7 @@ export enum StoreConstants {
   FontStroke = 'fontStroke',
   StrokeColor = 'strokeColor',
   DefaultChannel = 'defaultChannel',
+  ReverseChat = 'reverseChat',
 }
 
 export enum IpcConstants {
