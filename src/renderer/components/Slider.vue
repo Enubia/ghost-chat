@@ -9,7 +9,7 @@
       :max="max"
       :value="initialValue"
       class="slider"
-      @input="$emit('newValue', $event.target.value)"
+      @input="$emit('new-value', $event.target.value)"
     />
     <slot />
   </div>
