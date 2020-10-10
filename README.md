@@ -43,26 +43,6 @@ or you just want to have your chat on your main screen.
 
 If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose) or join the [Discord server](https://discord.gg/V83zRha) and post a bug or feature report/request into one of the channels.
 
-# Development setup
+# Contributing
 
-Clone/Fork/Download this repo
-
-Install all dependencies inside the root directory
-
-```bash
-npm install
-```
-
-To start the development server with hot reload enabled
-
-```bash
-npm run electron:serve
-```
-
-if you want to build it for production run
-
-```bash
-npm run electron:build
-```
-
-Electron will build it for your current OS which you are running this script from.
+Please refer to our [contributing guidlines](CONTRIBUTING.md).
