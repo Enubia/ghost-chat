@@ -69,9 +69,16 @@ export default class Message {
   public async getUserBadges(user: ChatUserstate): Promise<IBadge[]> {
     const globalBadgeUrl = 'https://badges.twitch.tv/v1/badges/global/display';
     const channelBadgeUrl = `https://badges.twitch.tv/v1/badges/channels/${user['room-id']}/display?language=en`;
-    this.channelBadgeList = await fetch(channelBadgeUrl).then((res) => res.json());
-    this.badgeList = await fetch(globalBadgeUrl).then((res) => res.json());
     const badges: { badge: string; key: string }[] = [];
+
+    // cache both badge lists so that we don't need to query it every time we need to parse badges
+    if (this.channelBadgeList.length === 0) {
+      this.channelBadgeList = await fetch(channelBadgeUrl).then((res) => res.json());
+    }
+
+    if (this.badgeList.length === 0) {
+      this.badgeList = await fetch(globalBadgeUrl).then((res) => res.json());
+    }
 
     if (user.badges) {
       Object.keys(user.badges).forEach((item) => {
