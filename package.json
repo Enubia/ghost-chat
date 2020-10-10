@@ -35,7 +35,7 @@
     "vue-router": "^3.4.6"
   },
   "devDependencies": {
-    "@electron/typescript-definitions": "^8.7.9",
+    "@electron/typescript-definitions": "^8.8.0",
     "@fullhuman/postcss-purgecss": "^3.0.0",
     "@types/node": "12.12.42",
     "@types/tmi.js": "^1.4.2",
