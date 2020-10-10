@@ -28,7 +28,7 @@
               min="0.01"
               max="1"
               step="0.01"
-              @newValue="setOpacityLevel"
+              @new-value="setOpacityLevel"
             />
             <span class="ml-4">{{ Math.floor(Number(opacityLevel) * 100) }}%</span>
           </div>
@@ -197,7 +197,7 @@
                 min="5"
                 max="35"
                 step="1"
-                @newValue="setFontSliderValue"
+                @new-value="setFontSliderValue"
               >
                 <div :style="'font-size: ' + newFontSize + 'pt'">Aa</div>
               </Slider>
@@ -333,12 +333,13 @@ export default class Settings extends Vue {
     this.$router.push('/index');
   }
 
-  setOpacityLevel(value: number): void {
-    this.opacityLevel = value.toString();
+  setOpacityLevel(value: string): void {
+    console.log(value);
+    this.opacityLevel = value;
   }
 
-  setFontSliderValue(value: number): void {
-    this.newFontSize = value.toString();
+  setFontSliderValue(value: string): void {
+    this.newFontSize = value;
   }
 
   setShowBorders(value: boolean): void {

@@ -49,10 +49,9 @@ import Loading from '@/renderer/components/Loading.vue';
 import MenuButtons from '@/renderer/components/MenuButtons.vue';
 import ChatMessage from '@/renderer/components/ChatMessage.vue';
 
-import { getUserBadges } from '@/utils/getUserBadges';
 import { IBadge } from '@/renderer/types/IBadge';
 import { IMessageResponse } from '@/renderer/types/IMessageResponse';
-import { formatMessage } from '@/utils/formatMessage';
+import Message from '@/utils/Message';
 
 @Component({
   name: 'Chat',
@@ -63,6 +62,8 @@ import { formatMessage } from '@/utils/formatMessage';
   },
 })
 export default class Chat extends Vue {
+  private message = new Message();
+
   channel = String(this.$config.get(StoreConstants.Channel, ''));
 
   clearChatTimer = Number(this.$config.get(StoreConstants.Timer, 0));
@@ -145,11 +146,11 @@ export default class Chat extends Vue {
         let badges: IBadge[] = [];
 
         if (userstate.badges !== null) {
-          badges = await getUserBadges(userstate);
+          badges = await this.message.getUserBadges(userstate);
         }
 
         if (userstate.emotes !== null) {
-          message = await formatMessage(message, userstate.emotes);
+          message = await this.message.formatMessage(message, userstate.emotes);
         }
 
         const newItem = {

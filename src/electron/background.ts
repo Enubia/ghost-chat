@@ -87,6 +87,7 @@ async function createWindow() {
             store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
             store.set(StoreConstants.IsSettingsPage, true);
 
+            win.setSize(400, 800);
             win.center();
 
             win.webContents.send('settings');
