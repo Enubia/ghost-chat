@@ -47,7 +47,7 @@
     "@vue/cli-plugin-typescript": "^4.5.7",
     "@vue/cli-service": "^4.5.7",
     "babel-plugin-module-resolver": "^4.0.0",
-    "css-loader": "^4.3.0",
+    "css-loader": "^5.0.0",
     "del": "^6.0.0",
     "electron-builder": "^22.8.1",
     "eslint": "^7.11.0",
