@@ -22,7 +22,7 @@
   "dependencies": {
     "electron": "^10.1.5",
     "electron-context-menu": "^2.3.0",
-    "electron-log": "^4.2.4",
+    "electron-log": "^4.3.0",
     "electron-store": "^6.0.1",
     "electron-window-state": "^5.0.3",
     "escape-string-regexp": "^4.0.0",
