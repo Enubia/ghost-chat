@@ -80,7 +80,9 @@ export default class Chat extends Vue {
 
   isWaitingForMessages = true;
 
-  addNewMessageToBottom = !this.$config.get(StoreConstants.ReverseChat, false);
+  // inverted chat set to default
+  // until we figure out why the scrolling isn't working in frameless windows
+  addNewMessageToBottom = false; // !this.$config.get(StoreConstants.ReverseChat, false);
 
   interval;
 
