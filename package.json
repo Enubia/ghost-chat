@@ -39,7 +39,7 @@
     "@fullhuman/postcss-purgecss": "^3.0.0",
     "@types/node": "12.12.42",
     "@types/tmi.js": "^1.4.2",
-    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.6.1",
     "@vue/cli": "^4.5.8",
     "@vue/cli-plugin-babel": "^4.5.8",
