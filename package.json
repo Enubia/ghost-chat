@@ -27,7 +27,7 @@
     "electron-window-state": "^5.0.3",
     "escape-string-regexp": "^4.0.0",
     "tailwindcss": "^1.9.6",
-    "tmi.js": "^1.5.0",
+    "tmi.js": "^1.7.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-cli-plugin-electron-builder": "^1.4.6",
