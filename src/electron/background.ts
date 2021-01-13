@@ -53,6 +53,7 @@ async function createWindow() {
     y: mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    minHeight: 335,
     transparent: true,
     frame: false,
     resizable: true,

@@ -96,7 +96,7 @@ export default class Message {
         Object.keys(this.channelBadgeList.badge_sets).forEach((badge) => {
           if (badge === item) {
             const badgeImageUrl = this.channelBadgeList.badge_sets[badge].versions[
-              user.badges?.[item]
+              user.badges![item]!
             ]?.image_url_1x;
 
             if (badgeImageUrl) {

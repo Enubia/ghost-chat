@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "es2018",
-    "lib": ["es2018", "dom"],
+    "target": "es5",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "allowJs": true,
+		"checkJs": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
@@ -17,8 +22,20 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "exclude": ["node_modules", "dist_electron"]
+  "include": [
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.js",
+    "*.ts",
+    "*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist_electron"
+  ]
 }

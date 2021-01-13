@@ -194,7 +194,7 @@
             <div class="flex justify-center">
               <Slider
                 :initial-value="newFontSize"
-                min="5"
+                min="9"
                 max="35"
                 step="1"
                 @new-value="setFontSliderValue"
