@@ -44,7 +44,7 @@
     "@types/tmi.js": "^1.7.1",
     "@vue/cli": "^4.5.10",
     "@vue/cli-plugin-babel": "^4.5.11",
-    "@vue/cli-plugin-typescript": "^4.5.10",
+    "@vue/cli-plugin-typescript": "^4.5.11",
     "@vue/cli-service": "^4.5.10",
     "babel-plugin-module-resolver": "^4.1.0",
     "del": "^6.0.0",
