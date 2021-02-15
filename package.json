@@ -21,7 +21,7 @@
   "main": "background.js",
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.3",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.2.4",
     "electron": "^11.2.3",
     "electron-context-menu": "^2.4.0",
     "electron-log": "^4.3.1",
