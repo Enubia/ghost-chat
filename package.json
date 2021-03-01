@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@electron/typescript-definitions": "^8.8.0",
-    "@hokify/eslint-config-vue": "^1.0.12",
+    "@hokify/eslint-config-vue": "^1.0.14",
     "@types/node": "14.14.31",
     "@types/tmi.js": "^1.7.1",
     "@vue/cli": "^4.5.11",
