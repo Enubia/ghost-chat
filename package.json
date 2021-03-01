@@ -51,7 +51,7 @@
     "electron-builder": "^22.9.1",
     "eslint": "^7.20.0",
     "gulp": "^4.0.2",
-    "husky": "^5.1.1",
+    "husky": "^5.1.2",
     "prettier": "^2.2.1",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
