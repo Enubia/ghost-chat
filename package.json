@@ -28,7 +28,7 @@
     "electron-store": "^7.0.2",
     "electron-window-state": "^5.0.3",
     "escape-string-regexp": "^4.0.0",
-    "postcss": "^8.2.6",
+    "postcss": "^8.2.7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "tmi.js": "^1.7.3",
     "vue": "^2.6.12",
