@@ -8,20 +8,27 @@ We love your input! We want to make contributing to this project as easy and tra
 - Proposing new features
 - Becoming a maintainer
 
-## We Develop with Github
-
-We use github to host code, to track issues and feature requests, as well as accept pull requests.
-
 ## All Code Changes Happen Through Pull Requests
+
+### Prerequisites
+
+Make sure you have ```npm``` version 7+ installed since this will automatically install peer dependencies.
+The ```.vscode``` directory contains and extensions.json file which has 3 recommended extensions in it. Please install them.
+
+This project makes heavy use of [typescript](https://www.typescriptlang.org/), so if you aren't familiar with it yet please check it out.
+
+All the code for the views is located in the ```src/renderer``` directory and electron specific setups are done in the ```src/electron``` directory.
 
 Pull requests are the best way to propose changes to the codebase. We actively welcome your pull requests:
 
 1. Fork the repo and create your branch from `master`.
-2. If you've added code that should be tested, add tests.
-3. If you've changed APIs, update the documentation.
-4. Ensure the test suite passes.
-5. Make sure your code lints.
-6. Issue that pull request!
+2. Run ```npm install``` (this might take some time on the first run since it needs to download the electron binaries).
+3. ```npm start``` will startup the project locally.
+4. If you're done making your changes: ```npm run electron:build```, this will create a production executable.
+5. Run the recently built executable and verify that everything is still working as expected. (it is located in the newly generated ```dist_electron``` directory)
+6. If everything is fine, increase the version number in ```package.json```. Take a look at [https://semver.org/](https://semver.org/) if you are not sure how to version your changes.
+7. Make sure your code lints.
+8. Issue that pull request!
 
 ## Any contributions you make will be under the MIT Software License
 
