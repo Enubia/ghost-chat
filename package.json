@@ -30,7 +30,7 @@
     "escape-string-regexp": "^4.0.0",
     "postcss": "^8.2.8",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "tmi.js": "^1.7.3",
+    "tmi.js": "^1.7.5",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
     "vue-cli-plugin-electron-builder": "^1.4.6",
