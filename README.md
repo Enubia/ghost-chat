@@ -4,7 +4,6 @@
 ![GitHub issues](https://img.shields.io/github/issues/enubia/ghost-chat?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=flat-square)
 [![](https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=flat-square)](https://www.twitch.tv/enubia1)
-[![Discord](https://img.shields.io/discord/735726454498787338.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2&style=flat-square)](https://discord.gg/V83zRha)
 
 # Ghost Chat
 
@@ -41,7 +40,7 @@ or you just want to have your chat on your main screen.
 
 ## Additional info
 
-If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose) or join the [Discord server](https://discord.gg/V83zRha) and post a bug or feature report/request into one of the channels.
+If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose).
 
 # Contributing
 
