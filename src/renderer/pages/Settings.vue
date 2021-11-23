@@ -298,7 +298,7 @@ export default class Settings extends Vue {
     this.$config.set(StoreConstants.DefaultChannel, this.defaultChannel);
 
     if (this.newClearChatTimer) {
-      this.$config.set(StoreConstants.Timer, parseInt(this.newClearChatTimer, 10));
+      this.$config.set(StoreConstants.Timer, parseFloat(this.newClearChatTimer));
     }
 
     if (this.newBackgroundColor) {

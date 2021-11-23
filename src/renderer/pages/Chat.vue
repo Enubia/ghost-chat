@@ -93,18 +93,22 @@ export default class Chat extends Vue {
   handleInterval(): void {
     if (this.clearChatTimer > 0) {
       if (this.data.length > 0) {
-        this.interval = setInterval(() => {
-          const date = new Date().getTime();
-          const lastMessageDate = this.data[this.data.length - 1].created.getTime();
-          const minutes = this.clearChatTimer * 60 * 1000;
-
-          if (date - lastMessageDate > minutes) {
-            this.data = [];
-            if (this.interval) {
-              clearInterval(this.interval);
-            }
-          }
-        }, 1000);
+        for (let i = 0; i < this.data.length - 1; i++) {
+          this.interval = setInterval(() => {
+            try {
+              const date = new Date().getTime();
+              const lastMessageDate = this.data[this.data.length - 1].created.getTime();
+              const minutes = this.clearChatTimer * 60 * 1000;
+              if (date - lastMessageDate > minutes) {
+                this.data.pop();
+                if (this.interval) {
+                  clearInterval(this.interval);
+                }
+              }
+              // eslint-disable-next-line no-empty
+            } catch (error) {}
+          }, 1000);
+        }
       }
     }
   }
