@@ -102,10 +102,46 @@ export default class Chat extends Vue {
             this.data = [];
             if (this.interval) {
               clearInterval(this.interval);
+              this.interval = null;
             }
           }
         }, 1000);
       }
+    }
+  }
+
+  addSystemMessage(message): void {
+    const state = {
+      color: '#FF0000',
+      username: 'SYSTEM',
+    };
+
+    this.addMessage(state, message, []);
+  }
+
+  addMessage(userstate, message, badges): void {
+    const newItem = {
+      user: {
+        color: userstate.color || '#8d41e6',
+        name: userstate.username,
+        badges,
+      },
+      created: new Date(),
+      message,
+      key: Math.random().toString(36).substring(7),
+    };
+
+    if (this.data.length === 100) {
+      const removeFrom = this.addNewMessageToBottom ? 0 : 20;
+
+      // remove the first 80 messages, otherwise the array gets huge after some time
+      this.data.splice(removeFrom, 80);
+    }
+
+    if (this.addNewMessageToBottom) {
+      this.data.push(newItem);
+    } else {
+      this.data.unshift(newItem);
     }
   }
 
@@ -138,46 +174,27 @@ export default class Chat extends Vue {
       });
 
       this.isLoading = false;
+
+      // Only show the waiting for messages prompt for a bit
       this.isWaitingForMessages = true;
+      setTimeout(() => {
+        this.isWaitingForMessages = false;
+      }, 15_000);
 
       this.client.on('message', async (_channel, userstate, message) => {
         if (this.interval) {
           clearInterval(this.interval);
+          this.interval = null;
         }
 
         let badges: IBadge[] = [];
-
         if (userstate.badges !== null) {
           badges = await this.message.getUserBadges(userstate);
         }
-
         if (userstate.emotes !== null) {
           message = await this.message.formatMessage(message, userstate.emotes);
         }
-
-        const newItem = {
-          user: {
-            color: userstate.color || '#8d41e6',
-            name: userstate.username,
-            badges,
-          },
-          created: new Date(),
-          message,
-          key: Math.random().toString(36).substring(7),
-        };
-
-        if (this.data.length === 100) {
-          const removeFrom = this.addNewMessageToBottom ? 0 : 20;
-
-          // remove the first 80 messages, otherwise the array gets huge after some time
-          this.data.splice(removeFrom, 80);
-        }
-
-        if (this.addNewMessageToBottom) {
-          this.data.push(newItem);
-        } else {
-          this.data.unshift(newItem);
-        }
+        this.addMessage(userstate, message, badges);
 
         this.handleInterval();
 
