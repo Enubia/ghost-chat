@@ -91,22 +91,29 @@ export default class Chat extends Vue {
   }
 
   handleInterval(): void {
-    if (this.clearChatTimer > 0) {
-      if (this.data.length > 0) {
-        this.interval = setInterval(() => {
-          const date = new Date().getTime();
-          const lastMessageDate = this.data[this.data.length - 1].created.getTime();
-          const minutes = this.clearChatTimer * 60 * 1000;
+    const now = new Date().getTime();
 
-          if (date - lastMessageDate > minutes) {
-            this.data = [];
-            if (this.interval) {
-              clearInterval(this.interval);
-              this.interval = null;
-            }
-          }
-        }, 1000);
+    const notStale = (msg) => {
+      const messageDate = msg.created.getTime();
+      const minutes = this.clearChatTimer * 60 * 1000;
+      return now - messageDate <= minutes;
+    };
+
+    // Filter the `this.data` message list by removing any expired messages in
+    // place by writing only recent messages to a moving index while iterating the list
+    // then truncating the list to the value of the write pointer, preserving order.
+    let reader = 0;
+    let writer = 0;
+    while (reader < this.data.length) {
+      const val = this.data[reader];
+      if (notStale(val)) {
+        this.data[writer] = val;
+        writer += 1;
       }
+      reader += 1;
+    }
+    if (this.data.length !== writer) {
+      this.data.splice(writer);
     }
   }
 
@@ -143,6 +150,8 @@ export default class Chat extends Vue {
     } else {
       this.data.unshift(newItem);
     }
+
+    this.isWaitingForMessages = false;
   }
 
   async disconnectChat(): Promise<void> {
@@ -181,12 +190,12 @@ export default class Chat extends Vue {
         this.isWaitingForMessages = false;
       }, 15_000);
 
-      this.client.on('message', async (_channel, userstate, message) => {
-        if (this.interval) {
-          clearInterval(this.interval);
-          this.interval = null;
-        }
+      // Set up the worldwide poll for clearing messages if we need to
+      if (this.clearChatTimer > 0) {
+        this.interval = setInterval(this.handleInterval, 1000);
+      }
 
+      this.client.on('message', async (_channel, userstate, message) => {
         let badges: IBadge[] = [];
         if (userstate.badges !== null) {
           badges = await this.message.getUserBadges(userstate);
@@ -195,10 +204,6 @@ export default class Chat extends Vue {
           message = await this.message.formatMessage(message, userstate.emotes);
         }
         this.addMessage(userstate, message, badges);
-
-        this.handleInterval();
-
-        this.isWaitingForMessages = false;
       });
     } else {
       await this.$router.push({
