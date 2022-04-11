@@ -117,15 +117,6 @@ export default class Chat extends Vue {
     }
   }
 
-  addSystemMessage(message): void {
-    const state = {
-      color: '#FF0000',
-      username: 'SYSTEM',
-    };
-
-    this.addMessage(state, message, []);
-  }
-
   addMessage(userstate, message, badges): void {
     const newItem = {
       user: {
