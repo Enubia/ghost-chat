@@ -118,7 +118,7 @@ export default class Chat extends Vue {
   }
 
   addMessage(userstate, message, badges): void {
-    const newItem = {
+    const newItem: IMessageResponse = {
       user: {
         color: userstate.color || '#8d41e6',
         name: userstate.username,
