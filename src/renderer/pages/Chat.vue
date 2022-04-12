@@ -86,22 +86,58 @@ export default class Chat extends Vue {
   interval;
 
   handleInterval(): void {
-    if (this.clearChatTimer > 0) {
-      if (this.data.length > 0) {
-        this.interval = setInterval(() => {
-          const date = new Date().getTime();
-          const lastMessageDate = this.data[this.data.length - 1].created.getTime();
-          const minutes = this.clearChatTimer * 60 * 1000;
+    const now = new Date().getTime();
 
-          if (date - lastMessageDate > minutes) {
-            this.data = [];
-            if (this.interval) {
-              clearInterval(this.interval);
-            }
-          }
-        }, 1000);
+    const notStale = (msg) => {
+      const messageDate = msg.created.getTime();
+      const minutes = this.clearChatTimer * 60 * 1000;
+      return now - messageDate <= minutes;
+    };
+
+    // Filter the `this.data` message list by removing any expired messages in
+    // place by writing only recent messages to a moving index while iterating the list
+    // then truncating the list to the value of the write pointer, preserving order.
+    let reader = 0;
+    let writer = 0;
+    while (reader < this.data.length) {
+      const val = this.data[reader];
+      if (notStale(val)) {
+        this.data[writer] = val;
+        writer += 1;
       }
+      reader += 1;
     }
+    if (this.data.length !== writer) {
+      this.data.splice(writer);
+    }
+  }
+
+  addMessage(userstate, message, badges): void {
+    const newItem: IMessageResponse = {
+      user: {
+        color: userstate.color || '#8d41e6',
+        name: userstate.username,
+        badges,
+      },
+      created: new Date(),
+      message,
+      key: Math.random().toString(36).substring(7),
+    };
+
+    if (this.data.length === 100) {
+      const removeFrom = this.addNewMessageToBottom ? 0 : 20;
+
+      // remove the first 80 messages, otherwise the array gets huge after some time
+      this.data.splice(removeFrom, 80);
+    }
+
+    if (this.addNewMessageToBottom) {
+      this.data.push(newItem);
+    } else {
+      this.data.unshift(newItem);
+    }
+
+    this.isWaitingForMessages = false;
   }
 
   async disconnectChat(): Promise<void> {
@@ -133,50 +169,27 @@ export default class Chat extends Vue {
       });
 
       this.isLoading = false;
+
+      // Only show the waiting for messages prompt for a bit
       this.isWaitingForMessages = true;
+      setTimeout(() => {
+        this.isWaitingForMessages = false;
+      }, 15_000);
+
+      // Set up the worldwide poll for clearing messages if we need to
+      if (this.clearChatTimer > 0) {
+        this.interval = setInterval(this.handleInterval, 1000);
+      }
 
       this.client.on('message', async (_channel, userstate, message) => {
-        if (this.interval) {
-          clearInterval(this.interval);
-        }
-
         let badges: IBadge[] = [];
-
         if (userstate.badges !== null) {
           badges = await this.message.getUserBadges(userstate);
         }
-
         if (userstate.emotes !== null) {
           message = await this.message.formatMessage(message, userstate.emotes);
         }
-
-        const newItem = {
-          user: {
-            color: userstate.color || '#8d41e6',
-            name: userstate.username,
-            badges,
-          },
-          created: new Date(),
-          message,
-          key: Math.random().toString(36).substring(7),
-        };
-
-        if (this.data.length === 100) {
-          const removeFrom = this.addNewMessageToBottom ? 0 : 20;
-
-          // remove the first 80 messages, otherwise the array gets huge after some time
-          this.data.splice(removeFrom, 80);
-        }
-
-        if (this.addNewMessageToBottom) {
-          this.data.push(newItem);
-        } else {
-          this.data.unshift(newItem);
-        }
-
-        this.handleInterval();
-
-        this.isWaitingForMessages = false;
+        this.addMessage(userstate, message, badges);
       });
     } else {
       await this.$router.push({

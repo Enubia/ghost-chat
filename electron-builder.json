@@ -28,5 +28,8 @@
   },
   "linux": {
     "icon": "build/icon.ico"
+  },
+  "extraMetadata": {
+    "main": "background.js"
   }
 }
