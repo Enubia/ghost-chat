@@ -11,6 +11,7 @@
       </div>
       <div v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt">
         <span>Connected, waiting for messages...</span>
+        <div>New messages will be added to the {{ addNewMessageToBottom ? 'bottom' : 'top' }}</div>
       </div>
       <div v-for="item of data" v-else :key="item.key">
         <div
@@ -33,7 +34,7 @@
               {{ (item.user && item.user.name) || 'John Doe' }}
               <span class="text-white font-light">: </span></b
             >
-            <ChatMessage :id="item.key" :message="item.message" @expired="handleRemoveMessage" />
+            <ChatMessage :id="item.key" :message="item.message" />
           </div>
         </div>
       </div>
@@ -80,15 +81,9 @@ export default class Chat extends Vue {
 
   isWaitingForMessages = true;
 
-  // inverted chat set to default
-  // until we figure out why the scrolling isn't working in frameless windows
-  addNewMessageToBottom = false; // !this.$config.get(StoreConstants.ReverseChat, false);
+  addNewMessageToBottom = !this.$config.get(StoreConstants.ReverseChat, false);
 
   interval;
-
-  handleRemoveMessage(id: IMessageResponse): void {
-    this.data.splice(this.data.indexOf(id), 1);
-  }
 
   handleInterval(): void {
     if (this.clearChatTimer > 0) {
@@ -194,7 +189,18 @@ export default class Chat extends Vue {
   updated(): void {
     const container = this.$el.querySelector('#chat-messages');
     if (container) {
-      container.scrollTop = this.addNewMessageToBottom ? container.scrollHeight : 0;
+      const messages = container.querySelectorAll('#message');
+      const lastMessage = messages && messages[messages.length - 1];
+
+      if (this.addNewMessageToBottom) {
+        // For some reason using `container.scrollTop = ...` does not work correctly
+        // when the window is invisible. This, on the other hand, works correctly.
+        if (lastMessage) {
+          lastMessage.scrollIntoView();
+        }
+      } else {
+        container.scrollTop = 0;
+      }
     }
   }
 }
