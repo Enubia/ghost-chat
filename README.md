@@ -40,7 +40,7 @@ or you just want to have your chat on your main screen.
 
 ## Additional info
 
-If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose).
+If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose). You can also contact me via Discord Enubia#1385.
 
 # Contributing
 
