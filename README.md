@@ -1,5 +1,4 @@
 ![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
-![David](https://img.shields.io/david/Enubia/ghost-chat?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/enubia/ghost-chat?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/enubia/ghost-chat?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=flat-square)
