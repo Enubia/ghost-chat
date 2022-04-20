@@ -1,10 +1,7 @@
-<template>
-  <div id="loading-wrapper">
-    <div id="loading-text">
-      {{ loadingText }}
-    </div>
-    <div id="loading-content" />
-  </div>
+<template lang="pug">
+  #loading-wrapper
+    #loading-text {{ loadingText }}
+    #loading-content
 </template>
 
 <script lang="ts">

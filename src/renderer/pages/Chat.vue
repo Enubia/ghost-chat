@@ -1,45 +1,37 @@
-<template>
-  <div id="messages" class="w-full">
-    <MenuButtons v-if="!isSetHideBordersByIcon" :is-chat-page="true" @go-back="disconnectChat" />
-    <div
-      id="chat-messages"
-      class="container mx-auto px-4"
+<template lang="pug">
+  #messages.w-full
+    MenuButtons( v-if="!isSetHideBordersByIcon" :is-chat-page="true" @go-back="disconnectChat" )
+    #chat-messages.container.mx-auto.px-4(
       :style="`${$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''}`"
-    >
-      <div v-if="isLoading" style="font-size: 12pt">
-        <Loading loading-text="Loading Chat ⊂(◉‿◉)つ" />
-      </div>
-      <div v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt">
-        <span>Connected, waiting for messages...</span>
-        <div>New messages will be added to the {{ addNewMessageToBottom ? 'bottom' : 'top' }}</div>
-      </div>
-      <div v-for="item of data" v-else :key="item.key">
-        <div
-          :style="
-            item.message.toLowerCase().includes(`@${broadCaster}`) ? 'background: #d15b5b' : ''
-          "
-          class="mb-1 text-text-white"
-        >
-          <div id="message" class="break-words">
-            <div v-if="item.user && item.user.badges">
-              <img
+    )
+      div( v-if="isLoading" style="font-size: 12pt" )
+        Loading( loading-text="Loading Chat ⊂(◉‿◉)つ" )
+
+      div( v-else-if="!isLoading && isWaitingForMessages" style="font-size: 12pt" )
+        span Connected, waiting for messages...
+        br
+        span New messages will be added to the {{ addNewMessageToBottom ? 'bottom' : 'top' }}
+
+      div( v-for="item of data" v-else :key="item.key" )
+        div.mb-1.text-text-white(
+          :style="item.message.toLowerCase().includes(`@${broadCaster}`) ? 'background: #d15b5b' : ''"
+        )
+
+          #message.break-words
+            div( v-if="item.user && item.user.badges" )
+              img(
                 v-for="badge in item.user.badges"
                 :key="badge.key"
                 class="badges"
                 alt="badge"
                 :src="badge.badge"
-              />
-            </div>
-            <b :style="'color:' + (item.user ? item.user.color : '#0398fc')">
-              {{ (item.user && item.user.name) || 'John Doe' }}
-              <span class="text-white font-light">: </span></b
-            >
-            <ChatMessage :id="item.key" :message="item.message" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              )
+
+            b.viewer-name( :style="'color:' + (item.user ? item.user.color : '#0398fc')" ) {{ (item.user && item.user.name) || 'John Doe' }}
+              span.text-white.font-light
+              | : !{' '}
+
+            ChatMessage( :id="item.key" :message="item.message" )
 </template>
 
 <script lang="ts">

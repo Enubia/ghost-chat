@@ -1,34 +1,26 @@
-<template>
-  <div id="version-check" class="grid w-full background-filled">
-    <MenuButtons />
-    <div v-if="isLoading">
-      <Loading loading-text="Checking for new Version" />
-    </div>
-    <div v-else>
-      <div class="grid grid-rows-2 no-drag">
-        <div class="text-center row-span-3">
-          <div class="mb-4 text-2xl">Version {{ newVersion }} is available!</div>
-          <div class="flex justify-center mb-2">
-            <div class="w-2/3 text-center">
-              <div
-                id="submit-button"
-                class="bg-main hover:bg-main-darker cursor-pointer mt-2 text-white-800 py-1 px-2 rounded"
+<template lang="pug">
+  #version-check.grid.w-full.background-filled
+
+    MenuButtons
+
+    div( v-if="isLoading" )
+      Loading( loading-text="Checking for new Version" )
+
+    div( v-else )
+      .grid.grid-rows-2.no-drag
+        .text-center.row-span-3
+          .mb-4.text-2xl Version {{ newVersion }} is available!
+          .flex.justify-center.mb-2
+            .text-center( class="w-2/3" )
+              #submit-button.bg-main.cursor-pointer.mt-2.text-white-800.py-1.px-2.rounded(
+                class="hover:bg-main-darker"
                 @click.prevent="openDownloadLink"
-              >
-                Open in browser
-              </div>
-            </div>
-          </div>
-          <span
-            class="text-main-lighter hover:text-main cursor-pointer underline"
+              ) Open in browser
+
+          span.text-main-lighter.cursor-pointer.underline(
+            class="hover:text-main"
             @click="$router.push('/index')"
-          >
-            Skip
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+          ) Skip
 </template>
 
 <script lang="ts">

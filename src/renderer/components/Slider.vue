@@ -1,8 +1,7 @@
-<template>
-  <div class="slidecontainer">
-    <label for="myRange" />
-    <input
-      id="myRange"
+<template lang="pug">
+  .slidecontainer
+    label( for="myRange" )
+    input#myRange(
       type="range"
       :min="min"
       :step="step"
@@ -10,9 +9,9 @@
       :value="initialValue"
       class="slider"
       @input="$emit('new-value', $event.target.value)"
-    />
-    <slot />
-  </div>
+    )
+
+    slot
 </template>
 
 <script lang="ts">

@@ -1,46 +1,31 @@
-<template>
-  <div id="menu-buttons">
-    <div id="top" class="drag-section container mx-auto">
-      <div v-if="isChatPage" class="buttons inline-flex float-left">
-        <div
-          id="back-btn"
-          class="hover:bg-main-darker cursor-pointer text-white-800 px-4"
-          @click="handleBack"
-        >
-          <i class="arrow inline-block left p-1" />
-        </div>
-      </div>
-      <div class="buttons inline-flex float-right">
-        <div
+<template lang="pug">
+  #menu-buttons
+    #top.drag-section.container.mx-auto
+      .buttons.inline-flex.float-left( v-if="isChatPage" )
+        #back-btn.cursor-pointer.text-white-800.px-4( class="hover:bg-main-darker" @click="handleBack")
+          i.arrow.inline-block.left.p-1
+
+      .buttons.inline-flex.float-right
+        #click-through.cursor-pointer.py-2.px-2.rounded(
+          class="hover:bg-main-darker "
           v-if="isChatPage"
-          id="click-through"
-          class="hover:bg-main-darker cursor-pointer py-2 px-2 rounded"
           @click="handleClickThrough"
-        >
-          <img class="image" src="../assets/svg/ghost.svg" alt="min" />
-          <p class="tooltip">
-            <span class="tooltip-text mt-4 -ml-12 w-1/3 text-left absolute p-2 rounded">
-              Hide borders and make the window click through
-            </span>
-          </p>
-        </div>
-        <div
-          id="min-btn"
-          class="hover:bg-main-darker cursor-pointer py-2 px-2 rounded"
+        )
+          img.image( src="../assets/svg/ghost.svg" alt="min" )
+          p.tooltip
+            span.tooltip-text.mt-4.-ml-12.text-left.absolute.p-2.rounded( class=".w-1/3" ) Hide borders and make the window click through
+
+        #min-btn.cursor-pointer.py-2.px-2.rounded(
+          class="hover:bg-main-darker"
           @click="handleMinimize"
-        >
-          <img class="image" src="../assets/svg/minimize.svg" alt="min" />
-        </div>
-        <div
-          id="close-btn"
-          class="hover:bg-main-darker cursor-pointer py-2 px-2"
+        )
+          img.image( src="../assets/svg/minimize.svg" alt="min" )
+
+        #close-btn.cursor-pointer.py-2.px-2(
+          class="hover:bg-main-darker"
           @click="handleClose"
-        >
-          <img class="image" src="../assets/svg/close.svg" alt="close" />
-        </div>
-      </div>
-    </div>
-  </div>
+        )
+          img.image( src="../assets/svg/close.svg" alt="close" )
 </template>
 
 <script lang="ts">

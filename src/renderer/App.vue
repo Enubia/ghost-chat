@@ -1,12 +1,9 @@
-<template>
-  <div
-    id="app"
-    :style="`background: ${$windowBackgroundColor}; ${
-      $showBorder ? 'border: 1.5px solid black;' : null
-    } height: ${$isSettingsPage ? 'auto' : '100%'}`"
-  >
-    <router-view />
-  </div>
+<template lang="pug">
+  #app(
+    :style="`background: ${$windowBackgroundColor}; ${ $showBorder ? 'border: 1.5px solid black;' : null } height: ${$isSettingsPage ? 'auto' : '100%'}`"
+  )
+
+    router-view
 </template>
 
 <script lang="ts">

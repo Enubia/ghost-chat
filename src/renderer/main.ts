@@ -31,10 +31,10 @@ Vue.prototype.$windowBackgroundColor = `#${String(
 )}${hexOpacityMapping[String(electronStore.get(StoreConstants.OpacityLevel, '1'))]}`;
 Vue.prototype.$showBorder = electronStore.get(StoreConstants.ShowBorders, true);
 Vue.prototype.$fontSize = electronStore.get(StoreConstants.FontSize, undefined);
-Vue.prototype.$chatColor = electronStore.get(StoreConstants.ChatColor, '#fff');
+Vue.prototype.$chatColor = electronStore.get(StoreConstants.ChatColor, 'white');
 Vue.prototype.$isSettingsPage = electronStore.get(StoreConstants.IsSettingsPage, false);
 Vue.prototype.$fontStroke = electronStore.get(StoreConstants.FontStroke, false);
-Vue.prototype.$strokeColor = electronStore.get(StoreConstants.StrokeColor, '#000');
+Vue.prototype.$strokeColor = electronStore.get(StoreConstants.StrokeColor, 'black');
 
 new Vue({
   ...App,
