@@ -36,7 +36,7 @@
           .flex.justify-center
             CheckBox(
               label-text="Show borders?"
-              :checked="showborders"
+              :checked="showBorders"
               @change="setShowBorders"
             )
 
@@ -99,6 +99,12 @@
               v-model="newClearChatTimer"
               type="text"
               class="focus:outline-none focus:shadow-outline"
+            )
+          .flex.justify-center
+            CheckBox(
+              label-text="Use seconds instead of minutes"
+              :checked="useSecondsForFadeout"
+              @change="setUseSecondsForFadeout"
             )
 
         .w-full.mt-2.mb-6
@@ -201,15 +207,17 @@ export default class Settings extends Vue {
 
   newFontSize = String(this.$config.get(StoreConstants.FontSize, '12'));
 
-  opacityLevel = this.$config.get(StoreConstants.OpacityLevel, '1');
+  opacityLevel = String(this.$config.get(StoreConstants.OpacityLevel, '1'));
 
-  showborders = this.$config.get(StoreConstants.ShowBorders, true);
+  showBorders = Boolean(this.$config.get(StoreConstants.ShowBorders, true));
 
-  fontStroke = this.$config.get(StoreConstants.FontStroke, false);
+  fontStroke = Boolean(this.$config.get(StoreConstants.FontStroke, false));
 
-  reverseChat = this.$config.get(StoreConstants.ReverseChat, false);
+  reverseChat = Boolean(this.$config.get(StoreConstants.ReverseChat, false));
 
   defaultChannel = String(this.$config.get(StoreConstants.DefaultChannel, ''));
+
+  useSecondsForFadeout = Boolean(this.$config.get(StoreConstants.UseSecondsForFadeout, false));
 
   showColorError = false;
 
@@ -237,11 +245,12 @@ export default class Settings extends Vue {
 
   relaunch(): void {
     this.$config.set(StoreConstants.OpacityLevel, this.opacityLevel);
-    this.$config.set(StoreConstants.ShowBorders, this.showborders);
+    this.$config.set(StoreConstants.ShowBorders, this.showBorders);
     this.$config.set(StoreConstants.FontStroke, this.fontStroke);
     this.$config.set(StoreConstants.ReverseChat, this.reverseChat);
     this.$config.set(StoreConstants.ChatColor, this.newChatColor);
     this.$config.set(StoreConstants.DefaultChannel, this.defaultChannel);
+    this.$config.set(StoreConstants.UseSecondsForFadeout, this.useSecondsForFadeout);
 
     if (this.newClearChatTimer) {
       this.$config.set(StoreConstants.Timer, parseInt(this.newClearChatTimer, 10));
@@ -288,7 +297,7 @@ export default class Settings extends Vue {
   }
 
   setShowBorders(value: boolean): void {
-    this.showborders = value;
+    this.showBorders = value;
   }
 
   setFontStroke(value: boolean): void {
@@ -337,6 +346,10 @@ export default class Settings extends Vue {
   resetDefaultChannel(): void {
     this.$config.delete(StoreConstants.DefaultChannel);
     this.defaultChannel = '';
+  }
+
+  setUseSecondsForFadeout(): void {
+    this.useSecondsForFadeout = !this.useSecondsForFadeout;
   }
 }
 </script>

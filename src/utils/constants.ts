@@ -17,6 +17,7 @@ export enum StoreConstants {
   StrokeColor = 'strokeColor',
   DefaultChannel = 'defaultChannel',
   ReverseChat = 'reverseChat',
+  UseSecondsForFadeout = 'useSecondsForFadeout',
 }
 
 export enum IpcConstants {

@@ -61,6 +61,8 @@ export default class Chat extends Vue {
 
   clearChatTimer = Number(this.$config.get(StoreConstants.Timer, 0));
 
+  useSecondsForFadeout = Boolean(this.$config.get(StoreConstants.UseSecondsForFadeout));
+
   client: Client;
 
   data: IMessageResponse[] = [];
@@ -83,6 +85,12 @@ export default class Chat extends Vue {
     const notStale = (msg) => {
       const messageDate = msg.created.getTime();
       const minutes = this.clearChatTimer * 60 * 1000;
+      const seconds = this.clearChatTimer * 1000;
+
+      if (this.useSecondsForFadeout) {
+        return now - messageDate <= seconds;
+      }
+
       return now - messageDate <= minutes;
     };
 
