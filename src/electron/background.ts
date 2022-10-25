@@ -59,7 +59,6 @@ async function createWindow() {
     resizable: true,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
     },
   });
 
@@ -80,7 +79,7 @@ async function createWindow() {
         label: 'Settings',
         click: async () => {
           if (win) {
-            win.resizable = false;
+            win.resizable = true;
 
             const [posX, posY] = win.getPosition();
             const [sizeX, sizeY] = win.getSize();
@@ -89,7 +88,6 @@ async function createWindow() {
             store.set(StoreConstants.IsSettingsPage, true);
 
             win.setSize(400, 800);
-            win.center();
 
             win.webContents.send('settings');
           }
