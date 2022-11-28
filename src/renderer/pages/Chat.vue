@@ -1,7 +1,7 @@
 <template lang="pug">
   #messages.w-full
     MenuButtons( v-if="!isSetHideBordersByIcon" :is-chat-page="true" @go-back="disconnectChat" )
-    #chat-messages.container.mx-auto.px-4(
+    #chat-messages.container.mx-auto.px-4.pb-4(
       :style="`${$fontSize ? 'font-size: ' + $fontSize + 'pt' : ''}`"
     )
       div( v-if="isLoading" style="font-size: 12pt" )
@@ -79,6 +79,10 @@ export default class Chat extends Vue {
 
   interval;
 
+  scrollPosition = 0;
+
+  enableAutoScroll = true;
+
   handleInterval(): void {
     const now = new Date().getTime();
 
@@ -153,6 +157,22 @@ export default class Chat extends Vue {
     });
   }
 
+  // handleScroll(): void {
+  //   const currentScrollPosition = window.scrollY;
+
+  //   if (currentScrollPosition < this.scrollPosition) {
+  //     this.enableAutoScroll = false;
+  //   } else {
+  //     this.enableAutoScroll = true;
+  //   }
+
+  //   this.scrollPosition = window.scrollY;
+  // }
+
+  // mounted(): void {
+  //   document.body.addEventListener('scroll', this.handleScroll);
+  // }
+
   async created(): Promise<void> {
     this.isSetHideBordersByIcon = this.$config.has(StoreConstants.HideBordersByIcon);
 
@@ -164,9 +184,11 @@ export default class Chat extends Vue {
         },
       });
 
-      await this.client.connect().catch((err) => {
+      try {
+        await this.client.connect();
+      } catch (err) {
         throw new Error(`Failed to connect to channel ${this.broadCaster}: ${err}`);
-      });
+      }
 
       this.isLoading = false;
 
@@ -208,7 +230,7 @@ export default class Chat extends Vue {
       if (this.addNewMessageToBottom) {
         // For some reason using `container.scrollTop = ...` does not work correctly
         // when the window is invisible. This, on the other hand, works correctly.
-        if (lastMessage) {
+        if (lastMessage && this.enableAutoScroll) {
           lastMessage.scrollIntoView();
         }
       } else {
@@ -216,6 +238,10 @@ export default class Chat extends Vue {
       }
     }
   }
+
+  // destroyed() {
+  //   document.body.removeEventListener('scroll', this.handleScroll);
+  // }
 }
 </script>
 

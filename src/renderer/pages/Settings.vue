@@ -17,7 +17,7 @@
       .text-center
 
         #transparency.grid-rows-1.text-center.mr-5.ml-5.py-2
-          span.text-2xl Window transparency
+          span.text-2xl Window opacity
           .mt-2.flex.justify-center
             Slider(
               class="w-2/5"

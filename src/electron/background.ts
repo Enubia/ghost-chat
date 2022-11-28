@@ -59,6 +59,7 @@ async function createWindow() {
     resizable: true,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 

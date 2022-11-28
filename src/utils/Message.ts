@@ -3,13 +3,13 @@ import { ChatUserstate } from 'tmi.js';
 import { IBadge } from '@/renderer/types/IBadge';
 
 export default class Message {
-  private channelBadgeList: any;
+  private channelBadgeList: Record<string, any> | null;
 
-  private badgeList: any;
+  private badgeList: Record<string, any> | null;
 
   constructor() {
-    this.channelBadgeList = [];
-    this.badgeList = [];
+    this.channelBadgeList = null;
+    this.badgeList = null;
   }
 
   private async fetchFFZEmotes(): Promise<void> {
@@ -72,19 +72,23 @@ export default class Message {
     const badges: { badge: string; key: string }[] = [];
 
     // cache both badge lists so that we don't need to query it every time we need to parse badges
-    if (this.channelBadgeList.length === 0) {
-      this.channelBadgeList = await fetch(channelBadgeUrl).then((res) => res.json());
+    if (!this.channelBadgeList) {
+      const res = await fetch(channelBadgeUrl);
+
+      this.channelBadgeList = await res.json();
     }
 
-    if (this.badgeList.length === 0) {
-      this.badgeList = await fetch(globalBadgeUrl).then((res) => res.json());
+    if (!this.badgeList) {
+      const res = await fetch(globalBadgeUrl);
+
+      this.badgeList = await res.json();
     }
 
     if (user.badges) {
       Object.keys(user.badges).forEach((item) => {
-        Object.keys(this.badgeList.badge_sets).forEach((badge) => {
+        Object.keys(this.badgeList?.badge_sets).forEach((badge) => {
           if (badge === item) {
-            const badgeImageUrl = this.badgeList.badge_sets[badge].versions['1']?.image_url_1x;
+            const badgeImageUrl = this.badgeList?.badge_sets[badge].versions['1']?.image_url_1x;
             if (badgeImageUrl) {
               badges.push({
                 badge: badgeImageUrl,
@@ -93,9 +97,9 @@ export default class Message {
             }
           }
         });
-        Object.keys(this.channelBadgeList.badge_sets).forEach((badge) => {
+        Object.keys(this.channelBadgeList?.badge_sets).forEach((badge) => {
           if (badge === item) {
-            const badgeImageUrl = this.channelBadgeList.badge_sets[badge].versions[
+            const badgeImageUrl = this.channelBadgeList?.badge_sets[badge].versions[
               user.badges![item]!
             ]?.image_url_1x;
 
