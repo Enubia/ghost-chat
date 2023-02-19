@@ -5,4 +5,3 @@ build
 public
 dist_electron_electron
 .*
-v2

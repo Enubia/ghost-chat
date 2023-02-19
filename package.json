@@ -4,7 +4,6 @@
   "private": false,
   "description": "Standalone twitch chat overlay",
   "author": {
-    "email": "blitzball555@gmail.com",
     "name": "Marco Schuster"
   },
   "scripts": {
