@@ -1,0 +1,24 @@
+@import 'includes';
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
+
+.center-elements {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+html,
+body {
+	background: rgba(0, 0, 0, 0);
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	#app {
+		font-family: 'Ubuntu', sans-serif;
+		font-size: 12pt;
+		// color: white;
+		border-radius: 10px;
+	}
+}
