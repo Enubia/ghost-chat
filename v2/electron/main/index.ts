@@ -45,7 +45,7 @@ const indexHtml = join(process.env.DIST, 'index.html');
 
 async function createWindow() {
 	win = new BrowserWindow({
-		title: 'Main window',
+		title: 'Ghost Chat',
 		icon: join(process.env.PUBLIC, 'favicon.ico'),
 		webPreferences: {
 			preload,

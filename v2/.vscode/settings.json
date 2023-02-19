@@ -1,25 +1,26 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.tsc.autoDetect": "off",
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "/*electron-builder.json5",
-        "/*electron-builder.json"
-      ],
-      "url": "https://json.schemastore.org/electron-builder"
-    }
-  ],
-  "eslint.enable": true,
-  "editor.formatOnSave": true,
-  "vetur.validation.template": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/dist_electron": true
-  }
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.tsc.autoDetect": "off",
+	"json.schemas": [
+		{
+			"fileMatch": [
+				"/*electron-builder.json5",
+				"/*electron-builder.json"
+			],
+			"url": "https://json.schemastore.org/electron-builder"
+		}
+	],
+	"eslint.enable": true,
+	"editor.formatOnSave": true,
+	"vetur.validation.template": false,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*.code-search": true,
+		"dist-electron": true,
+		"dist": true
+	}
 }

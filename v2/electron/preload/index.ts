@@ -32,32 +32,59 @@ const safeDOM = {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
-	const className = `loaders-css__square-spin`;
 	const styleContent = `
-		@keyframes square-spin {
-			25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
-			50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
-			75% { transform: perspective(100px) rotateX(0) rotateY(180deg); }
-			100% { transform: perspective(100px) rotateX(0) rotateY(0); }
-		}
-		.${className} > div {
-			animation-fill-mode: both;
-			width: 50px;
-			height: 50px;
-			background: #fff;
-			animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
-		}
-		.app-loading-wrap {
+		.loading-wrapper {
 			position: fixed;
-			top: 0;
+			width: 100%;
+			height: 95%;
 			left: 0;
-			width: 100vw;
-			height: 100vh;
+			top: 0;
+			background-color: #6e479d;
 			display: flex;
-			align-items: center;
 			justify-content: center;
-			background: #282c34;
-			z-index: 9;
+			align-items: center;
+		}
+		.loading-wrapper > .loading-text {
+			display: block;
+			position: absolute;
+			top: 45%;
+			left: 49%;
+			color: white;
+			width: 100px;
+			height: 30px;
+			margin: -7px 0 0 -45px;
+			text-align: center;
+			font-family: 'PT Sans Narrow', sans-serif;
+			font-size: 18px;
+		}
+		.loading-wrapper > .loading-content {
+			display: block;
+			position: absolute;
+			left: 50%;
+			top: 46%;
+			width: 170px;
+			height: 170px;
+			margin: -85px 0 0 -85px;
+			border: 3px solid transparent;
+			border-top-color: #8d41e6;
+			border-bottom-color: #8d41e6;
+			border-radius: 50%;
+			-webkit-animation: loader 2s linear infinite;
+			-moz-animation: loader 2s linear infinite;
+			-o-animation: loader 2s linear infinite;
+			animation: loader 2s linear infinite;
+		}
+		@keyframes loader {
+			0% {
+				-webkit-transform: rotate(0deg);
+				-ms-transform: rotate(0deg);
+				transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(360deg);
+				-ms-transform: rotate(360deg);
+				transform: rotate(360deg);
+			}
 		}
     `;
 	const oStyle = document.createElement('style');
@@ -65,8 +92,11 @@ function useLoading() {
 
 	oStyle.id = 'app-loading-style';
 	oStyle.innerHTML = styleContent;
-	oDiv.className = 'app-loading-wrap';
-	oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
+	oDiv.className = 'loading-wrapper';
+	oDiv.innerHTML = `
+		<div class="loading-text">Loading</div>
+		<div class="loading-content"></div>
+	`;
 
 	return {
 		appendLoading() {
@@ -88,5 +118,3 @@ domReady().then(appendLoading);
 window.onmessage = (ev) => {
 	ev.data.payload === 'removeLoading' && removeLoading();
 };
-
-setTimeout(removeLoading, 4999);
