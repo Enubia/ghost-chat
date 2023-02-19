@@ -41,11 +41,11 @@
     "last 2 versions"
   ],
   "bugs": {
-    "url": "https://github.com/LettuceKiing/ghost-chat/issues"
+    "url": "https://github.com/Enubia/ghost-chat/issues"
   },
-  "homepage": "https://github.com/LettuceKiing/ghost-chat#readme",
+  "homepage": "https://github.com/Enubia/ghost-chat#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LettuceKiing/ghost-chat.git"
+    "url": "git+https://github.com/Enubia/ghost-chat.git"
   }
 }
