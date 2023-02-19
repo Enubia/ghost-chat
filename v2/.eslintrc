@@ -1,0 +1,146 @@
+{
+	"root": true,
+	"parser": "vue-eslint-parser",
+	"parserOptions": {
+		"parser": "@typescript-eslint/parser",
+		"sourceType": "module"
+	},
+	"extends": [
+		"plugin:vue/vue3-recommended",
+		"prettier"
+	],
+	"plugins": [
+		"prettier",
+		"@typescript-eslint",
+		"unicorn",
+		"import",
+		"unused-imports"
+	],
+	"rules": {
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto"
+			}
+		],
+		"curly": [
+			"error",
+			"all"
+		],
+		"dot-notation": "error",
+		"no-console": [
+			"warn",
+			{
+				"allow": [
+					"warn",
+					"error"
+				]
+			}
+		],
+		"no-debugger": "error",
+		"no-lonely-if": "error",
+		"no-param-reassign": "warn",
+		"no-restricted-syntax": [
+			"error",
+			"ForInStatement",
+			"LabeledStatement",
+			"WithStatement"
+		],
+		"no-throw-literal": "error",
+		"no-underscore-dangle": "error",
+		"no-useless-constructor": "error",
+		"no-useless-rename": "error",
+		"no-var": "error",
+		"object-shorthand": "error",
+		"prefer-const": [
+			"error",
+			{
+				"destructuring": "any",
+				"ignoreReadBeforeAssign": false
+			}
+		],
+		"prefer-object-spread": "error",
+		"require-atomic-updates": "error",
+
+		"@typescript-eslint/no-inferrable-types": "error",
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{
+				"argsIgnorePattern": "^_"
+			}
+		],
+		"@typescript-eslint/no-useless-constructor": "error",
+		"@typescript-eslint/parameter-properties": "error",
+
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"js": "never",
+				"mjs": "never",
+				"jsx": "never",
+				"ts": "never",
+				"tsx": "never"
+			}
+		],
+		"import/first": "error",
+		"import/no-mutable-exports": "error",
+		"import/no-unresolved": [
+			2,
+			{
+				"caseSensitive": true
+			}
+		],
+		"import/order": [
+			"error",
+			{
+				"newlines-between": "always",
+				"alphabetize": {
+					"order": "asc",
+					"caseInsensitive": true
+				}
+			}
+		],
+
+		"unicorn/error-message": "error",
+		"unicorn/escape-case": "error",
+		"unicorn/no-instanceof-array": "error",
+		"unicorn/no-new-buffer": "error",
+		"unicorn/no-unsafe-regex": "error",
+		"unicorn/number-literal-case": "error",
+		"unicorn/prefer-includes": "error",
+		"unicorn/prefer-string-starts-ends-with": "error",
+		"unicorn/prefer-type-error": "error",
+		"unicorn/throw-new-error": "error",
+
+		"unused-imports/no-unused-imports": "error"
+	},
+	"env": {
+		"jest": false,
+		"mocha": false,
+		"browser": true,
+		"node": true
+	},
+	"settings": {
+		"import/parsers": {
+			"@typescript-eslint/parser": [
+				".ts",
+				".tsx"
+			]
+		},
+		"import/resolver": {
+			"node": {
+				"extensions": [
+					".ts"
+				]
+			},
+			"typescript": {
+				"alwaysTryTypes": true
+			}
+		},
+		"import/ignore": [
+			"node_modules",
+			"\\.(coffee|scss|css|less|hbs|svg|json)$"
+		]
+	}
+}
