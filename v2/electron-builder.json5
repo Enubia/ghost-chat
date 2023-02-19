@@ -2,7 +2,8 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-	"appId": "YourAppID",
+	"productName": "Ghost-Chat",
+	"appId": "ghost-chat",
 	"asar": true,
 	"icon": "public/favicon.ico",
 	"directories": {
@@ -15,7 +16,7 @@
 	"mac": {
 		"artifactName": "${productName}_${version}.${ext}",
 		"target": [
-		"dmg"
+			"dmg"
 		]
 	},
 	"win": {
@@ -23,7 +24,7 @@
 		{
 			"target": "nsis",
 			"arch": [
-			"x64"
+				"x64"
 			]
 		}
 		],
