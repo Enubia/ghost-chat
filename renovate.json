@@ -1,0 +1,14 @@
+{
+    "extends": [
+        "config:base",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "ignorePaths": [
+        "**/v1/**"
+    ],
+    "pinVersions": true,
+    "schedule": [
+        "on Monday",
+        "every weekend"
+    ]
+}
