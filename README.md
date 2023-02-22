@@ -19,23 +19,23 @@ or you just want to have your chat on your main screen.
 - You can move the window around by clicking and dragging the top section where minimize and close buttons are.
 - If you want to resize it, just click and drag the borders to whatever size you want.
 
-![png](images/index.png)
+![png](v1/images/index.png)
 
 - Settings can be reached through the context menu.
 
-![png](images/settings.png)
+![png](v1/images/settings.png)
 
 - Chat window
 
-![png](images/chatShowcase.png)
+![png](v1/images/chatShowcase.png)
 
 - With a click on the ghost, you'll set the window to transparent, remove the borders and make it click through. This can be reverted by clicking `Revert Click through` in the tray icon menu.
 
-![png](images/ghostbutton.png)
+![png](v1/images/ghostbutton.png)
 
 - result
 
-![png](images/transparentShowcase.png)
+![png](v1/images/transparentShowcase.png)
 
 ## Additional info
 
