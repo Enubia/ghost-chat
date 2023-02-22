@@ -5,19 +5,10 @@ console.log('[App.vue]', `Hello world from Electron ${process.versions.electron}
 </script>
 
 <template>
-	<a href="https://www.electronjs.org/" target="_blank">
-		<img src="./assets/electron.svg" class="logo electron" alt="Electron logo" />
-	</a>
-	<a href="https://vitejs.dev/" target="_blank">
-		<img src="/vite.svg" class="logo" alt="Vite logo" />
-	</a>
-	<a href="https://vuejs.org/" target="_blank">
-		<img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-	</a>
 	<HelloWorld msg="Electron + Vite + Vue" />
 	<div class="center-elements">
 		Place static files into the <code>/public</code> folder
-		<img style="width: 5em" src="/node.svg" alt="Node logo" />
+		<img style="width: 5em" src="/img/icons/icon-256x256.png" alt="Node logo" />
 	</div>
 </template>
 
