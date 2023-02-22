@@ -14,6 +14,9 @@ dist-electron
 release
 *.local
 
+# eslint
+.eslintcache
+
 # Editor directories and files
 .vscode/.debug.env
 .idea

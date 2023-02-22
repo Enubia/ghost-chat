@@ -124,18 +124,15 @@
 	"settings": {
 		"import/parsers": {
 			"@typescript-eslint/parser": [
-				".ts",
-				".tsx"
+				".ts"
 			]
 		},
 		"import/resolver": {
 			"node": {
 				"extensions": [
+					".js",
 					".ts"
 				]
-			},
-			"typescript": {
-				"alwaysTryTypes": true
 			}
 		},
 		"import/ignore": [
