@@ -14,10 +14,12 @@
 		"isolatedModules": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"noEmit": true
+		"noEmit": true,
 	},
 	"include": [
-		"src"
+		"@types",
+		"src",
+		"constants"
 	],
 	"references": [
 		{

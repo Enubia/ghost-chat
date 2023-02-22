@@ -19,14 +19,4 @@ export const StoreConstants = {
 	UseSecondsForFadeout: 'useSecondsForFadeout',
 };
 
-export type StoreConstantsType = keyof typeof StoreConstants;
-
-export const IpcConstants = {
-	Close: 'close',
-	Relaunch: 'relaunch',
-	Reload: 'reload',
-	SetClickThrough: 'setClickThrough',
-	Resize: 'resize',
-};
-
-export type IpcConstantsType = keyof typeof IpcConstants;
+export type StoreConstantsOptions = keyof typeof StoreConstants;

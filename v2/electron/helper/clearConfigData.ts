@@ -4,7 +4,7 @@ import path from 'node:path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { StoreConstants } from '../utils/contants';
+import { StoreConstants } from '../../constants';
 
 const clearConfigData = (store: ElectronStore): void => {
 	const appName = app.getName();
