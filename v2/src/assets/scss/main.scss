@@ -1,4 +1,5 @@
 @import 'includes';
+
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 
 .center-elements {
@@ -12,19 +13,54 @@ body {
 	background: rgba(0, 0, 0, 0);
 	height: 100%;
 	overflow: hidden;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-	-webkit-app-region: drag;
-
 	button, a {
 		-webkit-app-region: no-drag;
 	}
 
 	#app {
 		font-family: 'Ubuntu', sans-serif;
-		font-size: 12pt;
-		// color: white;
+		// font-size: 12pt;
 		border-radius: 10px;
+		height: 100%;
+
+		header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			-webkit-app-region: drag;
+			border-bottom: 1px solid $black;
+			height: 45px;
+
+			// #app-info {
+			// 	width: 75%;
+			// }
+
+			#menu-buttons {
+				height: 30px;
+				width: 30%;
+				display: flex;
+				align-items: center;
+				justify-content: end;
+
+				button {
+					margin-bottom: 0;
+					padding: 10px;
+
+					img {
+						height: 10px;
+					}
+				}
+			}
+
+		}
+
+		main {
+			height: 100%;
+		}
 	}
 }
