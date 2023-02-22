@@ -5,7 +5,7 @@
     ],
     "dependencyDashboard": true,
     "ignorePaths": [
-        "**/v1/**"
+        "v1/**"
     ],
     "packageRules": [
         {
