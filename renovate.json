@@ -3,6 +3,7 @@
         "config:base",
         "helpers:pinGitHubActionDigests"
     ],
+    "dependencyDashboard": true,
     "ignorePaths": [
         "**/v1/**"
     ],
