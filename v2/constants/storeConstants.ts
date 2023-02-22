@@ -17,6 +17,6 @@ export const StoreConstants = {
 	DefaultChannel: 'defaultChannel',
 	ReverseChat: 'reverseChat',
 	UseSecondsForFadeout: 'useSecondsForFadeout',
-};
+} as const;
 
-export type StoreConstantsOptions = keyof typeof StoreConstants;
+export type StoreConstantsOptions = (typeof StoreConstants)[keyof typeof StoreConstants];

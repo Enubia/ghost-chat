@@ -4,6 +4,6 @@ export const IpcConstants = {
 	Reload: 'reload',
 	SetClickThrough: 'setClickThrough',
 	Resize: 'resize',
-};
+} as const;
 
-export type IpcConstantsOptions = keyof typeof IpcConstants;
+export type IpcConstantsOptions = (typeof IpcConstants)[keyof typeof IpcConstants];

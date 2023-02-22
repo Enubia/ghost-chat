@@ -78,7 +78,7 @@ async function createWindow() {
 		height: windowState.sizeY || 800,
 		minHeight: 335,
 		// transparent: true,
-		// frame: false,
+		frame: false,
 		resizable: true,
 		webPreferences: {
 			preload,
@@ -107,7 +107,10 @@ async function createWindow() {
 		// electron-vite-vue#298
 		win.loadURL(url);
 		// Open devTool if the app is not packaged
-		win.webContents.openDevTools();
+		win.webContents.openDevTools({
+			mode: 'detach',
+			activate: false,
+		});
 	} else {
 		win.loadFile(indexHtml);
 	}
