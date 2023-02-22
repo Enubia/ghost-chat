@@ -33,57 +33,75 @@ const safeDOM = {
  */
 function useLoading() {
 	const styleContent = `
-		.loading-wrapper {
-			position: fixed;
-			width: 100%;
-			height: 95%;
-			left: 0;
-			top: 0;
+		.version-check {
 			background-color: #6e479d;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
 			display: flex;
-			justify-content: center;
-			align-items: center;
 		}
-		.loading-wrapper > .loading-text {
-			display: block;
+		.loading-text {
+			color: #ffffff;
+		}
+		.loader,
+		.loader:before,
+		.loader:after {
+			background: #ffffff;
+			-webkit-animation: load1 1s infinite ease-in-out;
+			animation: load1 1s infinite ease-in-out;
+			width: 1em;
+			height: 4em;
+		}
+		.loader {
+			color: #ffffff;
+			top: 30%;
+			text-indent: -9999em;
+			margin: 88px auto;
+			position: relative;
+			font-size: 11px;
+			-webkit-transform: translateZ(0);
+			-ms-transform: translateZ(0);
+			transform: translateZ(0);
+			-webkit-animation-delay: -0.16s;
+			animation-delay: -0.16s;
+		}
+		.loader:before,
+		.loader:after {
 			position: absolute;
-			top: 45%;
-			left: 49%;
-			color: white;
-			width: 100px;
-			height: 30px;
-			margin: -7px 0 0 -45px;
-			text-align: center;
-			font-family: 'PT Sans Narrow', sans-serif;
-			font-size: 18px;
+			top: 0;
+			content: '';
 		}
-		.loading-wrapper > .loading-content {
-			display: block;
-			position: absolute;
-			left: 50%;
-			top: 46%;
-			width: 170px;
-			height: 170px;
-			margin: -85px 0 0 -85px;
-			border: 3px solid transparent;
-			border-top-color: #8d41e6;
-			border-bottom-color: #8d41e6;
-			border-radius: 50%;
-			-webkit-animation: loader 2s linear infinite;
-			-moz-animation: loader 2s linear infinite;
-			-o-animation: loader 2s linear infinite;
-			animation: loader 2s linear infinite;
+		.loader:before {
+			left: -1.5em;
+			-webkit-animation-delay: -0.32s;
+			animation-delay: -0.32s;
 		}
-		@keyframes loader {
-			0% {
-				-webkit-transform: rotate(0deg);
-				-ms-transform: rotate(0deg);
-				transform: rotate(0deg);
-			}
+		.loader:after {
+			left: 1.5em;
+		}
+		@-webkit-keyframes load1 {
+			0%,
+			80%,
 			100% {
-				-webkit-transform: rotate(360deg);
-				-ms-transform: rotate(360deg);
-				transform: rotate(360deg);
+				box-shadow: 0 0;
+				height: 4em;
+			}
+			40% {
+				box-shadow: 0 -2em;
+				height: 5em;
+			}
+		}
+		@keyframes load1 {
+			0%,
+			80%,
+			100% {
+				box-shadow: 0 0;
+				height: 4em;
+			}
+			40% {
+				box-shadow: 0 -2em;
+				height: 5em;
 			}
 		}
     `;
@@ -92,10 +110,11 @@ function useLoading() {
 
 	oStyle.id = 'app-loading-style';
 	oStyle.innerHTML = styleContent;
-	oDiv.className = 'loading-wrapper';
-	oDiv.innerHTML = `
-		<div class="loading-text">Loading</div>
-		<div class="loading-content"></div>
+	oDiv.className = 'version-check';
+	oDiv.innerHTML = /*html*/ `
+		<div class="container-fluid">
+			<div class="loader"></div>
+		</div>
 	`;
 
 	return {
