@@ -31,7 +31,7 @@ on:
 		# ref: https://github.com/github/docs/blob/main/.github/workflows/triage-unallowed-contributions.yml
 		- name: Comment About Changes We Can't Accept
 			if: ${{ steps.filter_not_allowed.outputs.change == 'true' }}
-			uses: actions/github-script@v6
+			uses: actions/github-script@98814c53be79b1d30f795b907e553d8679345975 # v6
 			with:
 			script: |
 				let workflowFailMessage = "It looks like you've modified some files that we can't accept as contributions."
@@ -73,7 +73,7 @@ on:
 		if: ${{ always() && needs.job1.outputs.markdown_change == 'true' }}
 		steps:
 		- name: Checkout Code
-			uses: actions/checkout@v3
+			uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
 			with:
 			ref: ${{ github.event.pull_request.head.sha }}
 
