@@ -1,0 +1,32 @@
+@import 'tailwind.scss';
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
+
+html,
+body {
+  background: rgba(0, 0, 0, 0);
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  #app {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12pt;
+    color: white;
+    border-radius: 10px;
+
+    .background-filled {
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    #messages {
+      .emotes {
+        max-height: 28px;
+        max-width: 28px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+}
