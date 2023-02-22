@@ -6,6 +6,15 @@
     "ignorePaths": [
         "**/v1/**"
     ],
+    "packageRules": [
+        {
+            "description": "v2 dependencies",
+            "matchPaths": [
+                "v2/**"
+            ],
+            "groupName": "v2 dependencies"
+        }
+    ],
     "pinVersions": true,
     "schedule": [
         "on Monday",
