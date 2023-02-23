@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
+import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 
-import MenuButtons from './components/MenuButtons.vue';
+import type { AppStore } from '../shared/constants';
+
+import DropDownMenu from './components/header/DropDownMenu.vue';
+import MenuButtons from './components/header/MenuButtons.vue';
+import Settings from './components/settings/Settings.vue';
+
+const store = new ElectronStore<AppStore>();
 
 postMessage({ payload: 'removeLoading' }, '*');
 
@@ -12,34 +19,23 @@ ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
 });
 
-const toggleTheme = () => {
-	const $html = document.querySelector('html');
-	const theme = $html?.getAttribute('data-theme');
+const showSettings = ref(false);
 
-	if (theme && theme === 'dark') {
-		$html?.setAttribute('data-theme', 'light');
-	} else {
-		$html?.setAttribute('data-theme', 'dark');
-	}
-};
+function setShowSetting() {
+	showSettings.value = true;
+}
 </script>
 
 <template>
 	<header>
-		<details id="app-info" role="list">
-			<summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-				<img src="./assets/svg/ghost.svg" />
-			</summary>
-			<ul role="listbox">
-				<li><a @click="toggleTheme">Toggle Color Theme</a></li>
-				<!-- <li><a>Another action</a></li>
-				<li><a>Something else here</a></li> -->
-			</ul>
-		</details>
-		<MenuButtons :is-chat-page="true" />
+		<DropDownMenu :store="store" @show-settings="setShowSetting" />
+		<MenuButtons :store="store" :is-chat-page="true" />
 	</header>
 	<main class="container-fluid">
-		<i class="fa-solid fa-house"></i>
+		<div v-if="showSettings">
+			<Settings />
+		</div>
+		<div v-else></div>
 	</main>
 	<span id="version">{{ version }}</span>
 </template>

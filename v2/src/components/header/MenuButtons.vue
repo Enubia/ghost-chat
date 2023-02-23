@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
+import ElectronStore from 'electron-store';
 
-import { IpcConstants } from '../../shared/constants';
+import { IpcConstants } from '../../../shared/constants';
 
-defineProps<{ isChatPage: boolean }>();
+defineProps<{ isChatPage: boolean; store: ElectronStore }>();
 
 function close() {
 	ipcRenderer.send(IpcConstants.Close);
@@ -20,13 +21,13 @@ function back() {
 
 <template>
 	<div id="menu-buttons">
-		<button v-if="isChatPage" id="back" class="secondary" @click="back">
+		<button id="back" class="secondary" @click="back">
 			<font-awesome-icon icon="fa-solid fa-chevron-left" />
 		</button>
 		<button id="minimize" class="secondary" @click="minimize">
 			<font-awesome-icon icon="fa-solid fa-down-left-and-up-right-to-center" />
 		</button>
-		<button id="close" @click="close">
+		<button id="close" class="secondary" @click="close">
 			<font-awesome-icon icon="fa-solid fa-xmark" />
 		</button>
 	</div>

@@ -4,14 +4,14 @@ import path from 'node:path';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { StoreConstants } from '../../shared/constants';
+import { AppStore, StoreKeys } from '../../shared/constants';
 
-const clearConfigData = (store: ElectronStore): void => {
+const clearConfigData = (store: ElectronStore<AppStore>): void => {
 	const appName = app.getName();
 	const configPath = path.join(app.getPath('appData'), `${appName}\\config.json`);
 
 	fs.unlink(configPath, () => {
-		store.set(StoreConstants.DataCleared, true);
+		store.set(StoreKeys.DataCleared, true);
 		app.relaunch();
 		app.exit();
 	});

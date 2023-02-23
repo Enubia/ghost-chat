@@ -38,6 +38,7 @@ body {
 
 			#app-info {
 				margin: 0;
+				-webkit-app-region: no-drag;
 
 				summary {
 					padding: 8px;
@@ -66,8 +67,10 @@ body {
 					border-radius: 0%;
 					border: none;
 
-					img {
-						height: 15px;
+					&#close {
+						&:hover {
+							background-color: var(--del-color);
+						}
 					}
 				}
 			}

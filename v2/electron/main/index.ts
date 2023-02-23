@@ -4,8 +4,7 @@ import { join } from 'node:path';
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcConstants, StoreConstants } from '../../shared/constants';
-import type { WindowState } from '../../shared/types/windowState';
+import { AppStore, IpcConstants, StoreKeys } from '../../shared/constants';
 import { getWindowBoundsForStore } from '../../shared/utils';
 import clearConfigData from '../helper/clearConfigData';
 
@@ -41,20 +40,20 @@ if (!app.requestSingleInstanceLock()) {
 let window: BrowserWindow | null = null;
 let tray: Tray | null;
 
-const store = new ElectronStore();
+const store = new ElectronStore<AppStore>();
 
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js');
 const indexHtml = join(process.env.DIST, 'index.html');
 
 function revertWindowSettings() {
-	store.set(StoreConstants.ClickThrough, false);
+	store.set(StoreKeys.ClickThrough, false);
 	window?.setIgnoreMouseEvents(false);
 }
 
 async function createWindow() {
-	const windowState = store.get(StoreConstants.SavedWindowState, {}) as WindowState;
-	const shouldBeTransparent = store.get(StoreConstants.ShouldBeTransparent, false) as boolean;
+	const windowState = store.get(StoreKeys.SavedWindowState);
+	const shouldBeTransparent = store.get(StoreKeys.ShouldBeTransparent, false) as boolean;
 
 	window = new BrowserWindow({
 		title: 'Ghost Chat',
@@ -142,16 +141,16 @@ async function createWindow() {
 		if (window) {
 			const options = getWindowBoundsForStore(window);
 
-			store.set(StoreConstants.SavedWindowState, options);
+			store.set(StoreKeys.SavedWindowState, options);
 		}
 
-		if (store.has(StoreConstants.ClickThrough)) {
+		if (store.has(StoreKeys.ClickThrough)) {
 			revertWindowSettings();
 		}
 	});
 
 	window.on('closed', () => {
-		store.delete(StoreConstants.Channel);
+		store.delete(StoreKeys.Channel);
 	});
 }
 
@@ -211,7 +210,7 @@ app.on('activate', async () => {
 	if (window?.isMinimized()) {
 		window.restore();
 	} else {
-		if (!store.has(StoreConstants.DataCleared)) {
+		if (!store.has(StoreKeys.DataCleared)) {
 			clearConfigData(store);
 		}
 
