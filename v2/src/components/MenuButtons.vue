@@ -1,19 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const isChatPage = ref(true);
+defineProps<{ isChatPage: boolean }>();
 </script>
 
 <template>
-	<div v-if="isChatPage" id="menu-buttons">
-		<button class="secondary">
-			<img id="back" src="../assets/svg/back.svg" />
+	<div id="menu-buttons">
+		<button v-if="isChatPage" id="back" class="secondary">
+			<img src="../assets/svg/back.svg" />
 		</button>
-		<button class="secondary">
-			<img id="back" src="../assets/svg/minimize.svg" />
+		<button id="minimize" class="secondary">
+			<img src="../assets/svg/minimize.svg" />
 		</button>
-		<button class="secondary">
-			<img id="back" src="../assets/svg/close.svg" />
+		<button id="close">
+			<img src="../assets/svg/close.svg" />
 		</button>
 	</div>
 </template>

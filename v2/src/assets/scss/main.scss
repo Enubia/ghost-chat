@@ -24,7 +24,6 @@ body {
 
 	#app {
 		font-family: 'Ubuntu', sans-serif;
-		// font-size: 12pt;
 		border-radius: 10px;
 		height: 100%;
 
@@ -33,26 +32,38 @@ body {
 			align-items: center;
 			justify-content: space-between;
 			-webkit-app-region: drag;
-			border-bottom: 1px solid $black;
-			height: 45px;
+			border-bottom: 1px solid var(--secondary);
+			height: 40px;
+			background-color: var(--secondary);
 
-			// #app-info {
-			// 	width: 75%;
-			// }
+			#app-info {
+				margin: 0;
+
+				summary {
+					padding: 8px;
+					height: inherit;
+					border-radius: 0%;
+					border: none;
+				}
+
+				ul[role=listbox] {
+					right: inherit;
+				}
+			}
 
 			#menu-buttons {
-				height: 30px;
-				width: 30%;
+				// width: 40%;
 				display: flex;
 				align-items: center;
-				justify-content: end;
 
 				button {
 					margin-bottom: 0;
-					padding: 10px;
+					padding: 8px 15px 8px 15px;
+					border-radius: 0%;
+					border: none;
 
 					img {
-						height: 10px;
+						height: 15px;
 					}
 				}
 			}

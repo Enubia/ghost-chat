@@ -2,7 +2,6 @@ import { release } from 'node:os';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
-import contextMenu from 'electron-context-menu';
 import ElectronStore from 'electron-store';
 
 import type { WindowState } from '../../@types/windowState';
@@ -37,11 +36,6 @@ if (!app.requestSingleInstanceLock()) {
 	app.quit();
 	process.exit(0);
 }
-
-// Remove electron security warnings
-// This warning only shows in development mode
-// Read more on https://www.electronjs.org/docs/latest/tutorial/security
-// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 let win: BrowserWindow | null = null;
 let tray: Tray | null;
@@ -92,7 +86,7 @@ async function createWindow() {
 		},
 	});
 
-	// win.setIgnoreMouseEvents(Boolean(store.get(StoreConstants.ClickThrough)) || false);
+	win.setIgnoreMouseEvents(Boolean(store.get(StoreConstants.ClickThrough)) || false);
 
 	if (process.platform !== 'darwin') {
 		win.setAlwaysOnTop(true, 'pop-up-menu');
@@ -117,87 +111,14 @@ async function createWindow() {
 		win.loadFile(indexHtml);
 	}
 
-	// Test actively push message to the Electron-Renderer
-	// win.webContents.on('did-finish-load', () => {
-	// 	win?.webContents.send('main-process-message', new Date().toLocaleString());
-	// });
+	win.webContents.on('did-finish-load', () => {
+		win.webContents.send('get-version', app.getVersion());
+	});
 
 	// Make all links open with the browser, not with the application
 	win.webContents.on('will-navigate', (event, url) => {
 		event.preventDefault();
 		shell.openExternal(url);
-	});
-
-	contextMenu({
-		prepend: () => [
-			{
-				label: 'Settings',
-				click: async () => {
-					if (win) {
-						win.resizable = true;
-
-						const [posX, posY] = win.getPosition();
-						const [sizeX, sizeY] = win.getSize();
-
-						store.set(StoreConstants.SavedWindowState, { posX, posY, sizeX, sizeY });
-						store.set(StoreConstants.IsSettingsPage, true);
-
-						win.setSize(400, 800);
-
-						win.webContents.send('settings');
-					}
-				},
-			},
-			{
-				label: 'Back to start',
-				click: () => {
-					if (win) {
-						if (!win.resizable) {
-							win.resizable = true;
-						}
-
-						store.delete(StoreConstants.IsSettingsPage);
-						store.delete(StoreConstants.Channel);
-
-						if (store.has(StoreConstants.SavedWindowState)) {
-							const state = store.get(StoreConstants.SavedWindowState) as WindowState;
-							win.setSize(state.sizeX, state.sizeY);
-							win.setPosition(state.posX, state.posY);
-						}
-
-						win.webContents.send('index');
-					}
-				},
-			},
-			{
-				label: 'Back to Chat',
-				click: () => {
-					if (win) {
-						if (!win.resizable) {
-							win.resizable = true;
-						}
-
-						store.delete(StoreConstants.IsSettingsPage);
-
-						if (store.has(StoreConstants.SavedWindowState)) {
-							const state = store.get(StoreConstants.SavedWindowState) as WindowState;
-							win.setSize(state.sizeX, state.sizeY);
-							win.setPosition(state.posX, state.posY);
-						}
-						win.webContents.send('chat');
-					}
-				},
-			},
-			{
-				label: 'Quit',
-				click: async () => {
-					if (win) {
-						await revertWindowSettings();
-						win.close();
-					}
-				},
-			},
-		],
 	});
 
 	const trayIcnName = 'trayicon.png';
@@ -210,9 +131,9 @@ async function createWindow() {
 			label: 'Revert Click through',
 			type: 'normal',
 			click: async () => {
-				win?.setIgnoreMouseEvents(false);
+				win.setIgnoreMouseEvents(false);
 				await revertWindowSettings();
-				win?.reload();
+				win.reload();
 			},
 		},
 		{
@@ -274,6 +195,7 @@ app.on('activate', async () => {
 	if (!store.has(StoreConstants.DataCleared)) {
 		clearConfigData(store);
 	}
+
 	const allWindows = BrowserWindow.getAllWindows();
 	if (allWindows.length) {
 		allWindows[0].focus();
@@ -288,12 +210,12 @@ ipcMain.on(IpcConstants.Close, async () => {
 	}
 
 	const state = store.get(StoreConstants.SavedWindowState) as WindowState;
-	win?.setSize(state.sizeX, state.sizeY);
-	win?.setPosition(state.posX, state.posY);
+	win.setSize(state.sizeX, state.sizeY);
+	win.setPosition(state.posX, state.posY);
 
 	if (process.platform !== 'darwin') {
 		store.delete(StoreConstants.Channel);
-		win?.close();
+		win.close();
 	}
 });
 
@@ -304,8 +226,8 @@ ipcMain.on(IpcConstants.Close, async () => {
 // 	store.delete(StoreConstants.IsSettingsPage);
 
 // 	if (args) {
-// 		win?.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
-// 		win?.setPosition(parseInt(args.winPos.x, 10), parseInt(args.winPos.y, 10));
+// 		win.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
+// 		win.setPosition(parseInt(args.winPos.x, 10), parseInt(args.winPos.y, 10));
 // 	}
 
 // 	app.relaunch();
@@ -314,13 +236,13 @@ ipcMain.on(IpcConstants.Close, async () => {
 ipcMain.on(IpcConstants.Reload, (_event, args) => {
 	store.delete(StoreConstants.IsSettingsPage);
 
-	win?.reload();
-	win?.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
+	win.reload();
+	win.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {
-	win?.setIgnoreMouseEvents(true);
-	win?.reload();
+	win.setIgnoreMouseEvents(true);
+	win.reload();
 });
 
 ipcMain.on(IpcConstants.Resize, (_event, args) => {
@@ -335,9 +257,9 @@ ipcMain.on(IpcConstants.Resize, (_event, args) => {
 	if (!args.center) {
 		const state = store.get(StoreConstants.SavedWindowState) as WindowState;
 
-		win?.setSize(state.sizeX, state.sizeY);
+		win.setSize(state.sizeX, state.sizeY);
 
-		win?.setPosition(state.posX, state.posY);
+		win.setPosition(state.posX, state.posY);
 	}
 });
 
