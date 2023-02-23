@@ -44,6 +44,10 @@ body {
 					height: inherit;
 					border-radius: 0%;
 					border: none;
+
+					img {
+						height: 24px;
+					}
 				}
 
 				ul[role=listbox] {
@@ -72,6 +76,17 @@ body {
 
 		main {
 			height: 100%;
+		}
+
+
+		#version {
+			font-size: 8pt;
+			font-weight: 400;
+			margin-right: 10px;
+
+			position: absolute;
+			bottom: 0;
+			right: 0;
 		}
 	}
 }

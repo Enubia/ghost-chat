@@ -1,17 +1,19 @@
 export const StoreConstants = {
+	// in usage
 	Channel: 'channel',
+	ClickThrough: 'clickThrough',
+	ShouldBeTransparent: 'shouldBeTransparent',
+	SavedWindowState: 'savedWindowState',
+	DataCleared: 'dataCleared',
+
+	// not used right now
 	OpacityLevel: 'opacityLevel',
 	BackgroundColor: 'backgroundColor',
-	ClickThrough: 'clickThrough',
-	ShowBorders: 'showBorders',
-	HideBordersByIcon: 'hideBordersByIcon',
 	SavedOpacityLevel: 'savedOpacityLevel',
 	FontSize: 'fontSize',
-	DataCleared: 'dataCleared',
 	Timer: 'timer',
 	ChatColor: 'chatColor',
 	IsSettingsPage: 'isSettingsPage',
-	SavedWindowState: 'savedWindowState',
 	FontStroke: 'fontStroke',
 	StrokeColor: 'strokeColor',
 	DefaultChannel: 'defaultChannel',

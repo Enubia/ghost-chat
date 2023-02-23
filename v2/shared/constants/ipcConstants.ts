@@ -1,9 +1,9 @@
 export const IpcConstants = {
 	Close: 'close',
-	Relaunch: 'relaunch',
+	Back: 'back',
 	Reload: 'reload',
 	SetClickThrough: 'setClickThrough',
-	Resize: 'resize',
+	Minimize: 'minimize',
 } as const;
 
 export type IpcConstantsOptions = (typeof IpcConstants)[keyof typeof IpcConstants];

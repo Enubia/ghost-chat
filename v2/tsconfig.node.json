@@ -4,13 +4,10 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
 	},
 	"include": [
-		"@types",
-		"constants",
-		"vite.config.ts",
-		"package.json",
-		"electron"
-	]
+		"electron",
+		"shared"
+	],
 }

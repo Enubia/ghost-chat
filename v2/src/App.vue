@@ -27,7 +27,9 @@ const toggleTheme = () => {
 <template>
 	<header>
 		<details id="app-info" role="list">
-			<summary aria-haspopup="listbox" role="button" class="secondary">{{ version }}</summary>
+			<summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
+				<img src="./assets/svg/ghost.svg" />
+			</summary>
 			<ul role="listbox">
 				<li><a @click="toggleTheme">Toggle Color Theme</a></li>
 				<!-- <li><a>Another action</a></li>
@@ -36,5 +38,8 @@ const toggleTheme = () => {
 		</details>
 		<MenuButtons :is-chat-page="true" />
 	</header>
-	<main class="container-fluid"></main>
+	<main class="container-fluid">
+		<i class="fa-solid fa-house"></i>
+	</main>
+	<span id="version">{{ version }}</span>
 </template>

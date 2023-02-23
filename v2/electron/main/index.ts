@@ -4,8 +4,9 @@ import { join } from 'node:path';
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { WindowState } from '../../@types/windowState';
-import { IpcConstants, StoreConstants } from '../../constants';
+import { IpcConstants, StoreConstants } from '../../shared/constants';
+import type { WindowState } from '../../shared/types/windowState';
+import { getWindowBoundsForStore } from '../../shared/utils';
 import clearConfigData from '../helper/clearConfigData';
 
 // The built directory structure
@@ -37,41 +38,33 @@ if (!app.requestSingleInstanceLock()) {
 	process.exit(0);
 }
 
-let win: BrowserWindow | null = null;
+let window: BrowserWindow | null = null;
 let tray: Tray | null;
 
 const store = new ElectronStore();
 
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js');
-const url = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, 'index.html');
 
-function revertWindowSettings(): Promise<void> {
-	return new Promise((resolve) => {
-		if (store.has(StoreConstants.HideBordersByIcon)) {
-			store.set(StoreConstants.OpacityLevel, store.get(StoreConstants.SavedOpacityLevel));
-			store.delete(StoreConstants.HideBordersByIcon);
-			store.delete(StoreConstants.SavedOpacityLevel);
-		}
-		store.set(StoreConstants.ClickThrough, false);
-		store.set(StoreConstants.ShowBorders, true);
-		resolve();
-	});
+function revertWindowSettings() {
+	store.set(StoreConstants.ClickThrough, false);
+	window?.setIgnoreMouseEvents(false);
 }
 
 async function createWindow() {
 	const windowState = store.get(StoreConstants.SavedWindowState, {}) as WindowState;
+	const shouldBeTransparent = store.get(StoreConstants.ShouldBeTransparent, false) as boolean;
 
-	win = new BrowserWindow({
+	window = new BrowserWindow({
 		title: 'Ghost Chat',
 		// icon: join(process.env.PUBLIC, 'favicon.ico'),
-		x: windowState.posX,
-		y: windowState.posY,
-		width: windowState.sizeX || 400,
-		height: windowState.sizeY || 800,
+		x: windowState.x,
+		y: windowState.y,
+		width: windowState.width || 400,
+		height: windowState.height || 800,
 		minHeight: 335,
-		// transparent: true,
+		transparent: shouldBeTransparent,
 		frame: false,
 		resizable: true,
 		webPreferences: {
@@ -86,37 +79,35 @@ async function createWindow() {
 		},
 	});
 
-	win.setIgnoreMouseEvents(Boolean(store.get(StoreConstants.ClickThrough)) || false);
-
 	if (process.platform !== 'darwin') {
-		win.setAlwaysOnTop(true, 'pop-up-menu');
+		window.setAlwaysOnTop(true, 'pop-up-menu');
 	} else {
 		app.dock.hide();
-		win.setAlwaysOnTop(true, 'floating');
-		win.setVisibleOnAllWorkspaces(true);
-		win.setFullScreenable(false);
+		window.setAlwaysOnTop(true, 'floating');
+		window.setVisibleOnAllWorkspaces(true);
+		window.setFullScreenable(false);
 	}
 
-	win.setMaximizable(false);
+	window.setMaximizable(false);
 
 	if (process.env.VITE_DEV_SERVER_URL) {
 		// electron-vite-vue#298
-		win.loadURL(url);
+		window.loadURL(process.env.VITE_DEV_SERVER_URL);
 		// Open devTool if the app is not packaged
-		win.webContents.openDevTools({
+		window.webContents.openDevTools({
 			mode: 'detach',
 			activate: false,
 		});
 	} else {
-		win.loadFile(indexHtml);
+		window.loadFile(indexHtml);
 	}
 
-	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('get-version', app.getVersion());
+	window.webContents.on('did-finish-load', () => {
+		window?.webContents.send('get-version', app.getVersion());
 	});
 
 	// Make all links open with the browser, not with the application
-	win.webContents.on('will-navigate', (event, url) => {
+	window.webContents.on('will-navigate', (event, url) => {
 		event.preventDefault();
 		shell.openExternal(url);
 	});
@@ -131,16 +122,15 @@ async function createWindow() {
 			label: 'Revert Click through',
 			type: 'normal',
 			click: async () => {
-				win.setIgnoreMouseEvents(false);
-				await revertWindowSettings();
-				win.reload();
+				revertWindowSettings();
+				window?.reload();
 			},
 		},
 		{
 			label: 'Quit Ghost Chat',
 			click: async () => {
-				await revertWindowSettings();
-				app.quit();
+				revertWindowSettings();
+				window?.close();
 			},
 		},
 	]);
@@ -148,119 +138,40 @@ async function createWindow() {
 	tray?.setToolTip('Ghost Chat');
 	tray?.setContextMenu(trayIconMenu);
 
-	win.on('close', () => {
-		const windowBounds = win.getBounds();
+	window.on('close', () => {
+		if (window) {
+			const options = getWindowBoundsForStore(window);
 
-		const options: WindowState = {
-			posX: windowBounds.x,
-			posY: windowBounds.y,
-			sizeX: windowBounds.width,
-			sizeY: windowBounds.height,
-		};
-
-		store.set(StoreConstants.SavedWindowState, options);
-	});
-
-	win.on('closed', async () => {
-		if (store.has(StoreConstants.HideBordersByIcon)) {
-			await revertWindowSettings();
+			store.set(StoreConstants.SavedWindowState, options);
 		}
 
-		store.delete(StoreConstants.Channel);
+		if (store.has(StoreConstants.ClickThrough)) {
+			revertWindowSettings();
+		}
+	});
 
-		win = null;
+	window.on('closed', () => {
+		store.delete(StoreConstants.Channel);
 	});
 }
 
-app.whenReady().then(createWindow);
+// ---------------------------------- ipc handling ----------------------------------
 
-app.on('window-all-closed', () => {
-	win = null;
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+ipcMain.on(IpcConstants.Close, () => {
+	window?.close();
 });
 
-app.on('second-instance', () => {
-	if (win) {
-		// Focus on the main window if the user tried to open another
-		if (win.isMinimized()) {
-			win.restore();
-		}
-		win.focus();
-	}
-});
-
-app.on('activate', async () => {
-	if (!store.has(StoreConstants.DataCleared)) {
-		clearConfigData(store);
-	}
-
-	const allWindows = BrowserWindow.getAllWindows();
-	if (allWindows.length) {
-		allWindows[0].focus();
-	} else {
-		await createWindow();
-	}
-});
-
-ipcMain.on(IpcConstants.Close, async () => {
-	if (store.has(StoreConstants.IsSettingsPage)) {
-		store.delete(StoreConstants.IsSettingsPage);
-	}
-
-	const state = store.get(StoreConstants.SavedWindowState) as WindowState;
-	win.setSize(state.sizeX, state.sizeY);
-	win.setPosition(state.posX, state.posY);
-
-	if (process.platform !== 'darwin') {
-		store.delete(StoreConstants.Channel);
-		win.close();
-	}
-});
-
-// TODO: check if this is still needed or not,
-// reloading the renderer should be fine for almost everything
-
-// ipcMain.on(IpcConstants.Relaunch, (_event, args) => {
-// 	store.delete(StoreConstants.IsSettingsPage);
-
-// 	if (args) {
-// 		win.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
-// 		win.setPosition(parseInt(args.winPos.x, 10), parseInt(args.winPos.y, 10));
-// 	}
-
-// 	app.relaunch();
-// });
-
-ipcMain.on(IpcConstants.Reload, (_event, args) => {
-	store.delete(StoreConstants.IsSettingsPage);
-
-	win.reload();
-	win.setSize(parseInt(args.winSize.width, 10), parseInt(args.winSize.height, 10));
+ipcMain.on(IpcConstants.Reload, () => {
+	window?.reload();
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {
-	win.setIgnoreMouseEvents(true);
-	win.reload();
+	window?.setIgnoreMouseEvents(true);
+	window?.reload();
 });
 
-ipcMain.on(IpcConstants.Resize, (_event, args) => {
-	store.delete(StoreConstants.IsSettingsPage);
-
-	if (win) {
-		if (args.resizeAble) {
-			win.resizable = true;
-		}
-	}
-
-	if (!args.center) {
-		const state = store.get(StoreConstants.SavedWindowState) as WindowState;
-
-		win.setSize(state.sizeX, state.sizeY);
-
-		win.setPosition(state.posX, state.posY);
-	}
+ipcMain.on(IpcConstants.Minimize, () => {
+	window?.minimize();
 });
 
 // New window example arg: new windows url
@@ -279,3 +190,38 @@ ipcMain.on(IpcConstants.Resize, (_event, args) => {
 // 		childWindow.loadFile(indexHtml, { hash: arg });
 // 	}
 // });
+
+// ---------------------------------- app handling ----------------------------------
+
+// Let the user create a second instance for another chat
+// app.on('second-instance', () => {
+// 	if (window?.isMinimized()) {
+// 		window.restore();
+// 	}
+
+// 	window?.focus();
+// });
+
+app.on('window-all-closed', () => {
+	window = null;
+	app.quit();
+});
+
+app.on('activate', async () => {
+	if (window?.isMinimized()) {
+		window.restore();
+	} else {
+		if (!store.has(StoreConstants.DataCleared)) {
+			clearConfigData(store);
+		}
+
+		const allWindows = BrowserWindow.getAllWindows();
+		if (allWindows.length) {
+			allWindows[0].focus();
+		} else {
+			await createWindow();
+		}
+	}
+});
+
+app.whenReady().then(createWindow);

@@ -17,13 +17,7 @@
 		"noEmit": true,
 	},
 	"include": [
-		"@types",
 		"src",
-		"constants"
+		"shared"
 	],
-	"references": [
-		{
-			"path": "./tsconfig.node.json"
-		}
-	]
 }

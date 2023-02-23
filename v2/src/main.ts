@@ -1,10 +1,10 @@
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { createApp } from 'vue';
 
 import './assets/scss/main.scss';
+import './helper/fontAwesome';
+
 import App from './App.vue';
 // import './samples/node-api';
 
-createApp(App).mount('#app');
-// .$nextTick(() => {
-// 	postMessage({ payload: 'removeLoading' }, '*');
-// });
+createApp(App).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');
