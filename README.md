@@ -3,6 +3,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/enubia/ghost-chat?style=flat-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=flat-square)
 [![](https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=flat-square)](https://www.twitch.tv/enubia1)
+[![](https://dcbadge.vercel.app/api/server/SfaKfDNCcd?style=flat)](https://discord.gg/SfaKfDNCcd)
 
 # Ghost Chat
 
