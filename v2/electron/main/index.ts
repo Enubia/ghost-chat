@@ -2,22 +2,13 @@ import { release } from 'node:os';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
-import ElectronStore from 'electron-store';
 
-import { AppStore, IpcConstants, StoreKeys } from '../../shared/constants';
+import { IpcConstants, StoreKeys } from '../../shared/constants';
 import { getWindowBoundsForStore } from '../../shared/utils';
-import clearConfigData from '../helper/clearConfigData';
+import { savedWindowState } from '../utils';
 
-// The built directory structure
-//
-// ├─┬ dist-electron
-// │ ├─┬ main
-// │ │ └── index.js    > Electron-Main
-// │ └─┬ preload
-// │   └── index.js    > Preload-Scripts
-// ├─┬ dist
-// │ └── index.html    > Electron-Renderer
-//
+import createStore from './appStore';
+
 process.env.DIST_ELECTRON = join(__dirname, '..');
 process.env.DIST = join(process.env.DIST_ELECTRON, '../dist');
 process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(process.env.DIST_ELECTRON, '../public') : process.env.DIST;
@@ -40,7 +31,7 @@ if (!app.requestSingleInstanceLock()) {
 let window: BrowserWindow | null = null;
 let tray: Tray | null;
 
-const store = new ElectronStore<AppStore>();
+const store = createStore();
 
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js');
@@ -62,7 +53,6 @@ async function createWindow() {
 		y: windowState.y,
 		width: windowState.width || 400,
 		height: windowState.height || 800,
-		minHeight: 335,
 		transparent: shouldBeTransparent,
 		frame: false,
 		resizable: true,
@@ -85,6 +75,11 @@ async function createWindow() {
 		window.setAlwaysOnTop(true, 'floating');
 		window.setVisibleOnAllWorkspaces(true);
 		window.setFullScreenable(false);
+	}
+
+	if (windowState.x === 0 && windowState.y === 0) {
+		// center the window on initial launch
+		window.center();
 	}
 
 	window.setMaximizable(false);
@@ -139,6 +134,7 @@ async function createWindow() {
 
 	window.on('close', () => {
 		if (window) {
+			savedWindowState(window, store);
 			const options = getWindowBoundsForStore(window);
 
 			store.set(StoreKeys.SavedWindowState, options);
@@ -210,10 +206,6 @@ app.on('activate', async () => {
 	if (window?.isMinimized()) {
 		window.restore();
 	} else {
-		if (!store.has(StoreKeys.DataCleared)) {
-			clearConfigData(store);
-		}
-
 		const allWindows = BrowserWindow.getAllWindows();
 		if (allWindows.length) {
 			allWindows[0].focus();

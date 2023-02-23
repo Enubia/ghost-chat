@@ -6,7 +6,6 @@ export const StoreKeys = {
 	ClickThrough: 'clickThrough',
 	ShouldBeTransparent: 'shouldBeTransparent',
 	SavedWindowState: 'savedWindowState',
-	DataCleared: 'dataCleared',
 
 	// not used right now
 	// OpacityLevel: 'opacityLevel',
@@ -28,7 +27,6 @@ type StoreKeysTypes = {
 	clickThrough: boolean;
 	shouldBeTransparent: boolean;
 	savedWindowState: WindowState;
-	dataCleared: boolean;
 };
 
 type StoreKeysStrings = (typeof StoreKeys)[keyof typeof StoreKeys];

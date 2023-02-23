@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 
-import { CustomStore, StoreConstants } from '../../../shared/constants';
+import { AppStore, StoreKeys } from '../../../shared/constants';
 
-const props = defineProps<{ store: ElectronStore<CustomStore> }>();
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const channel = props.store.get(StoreConstants.Channel);
+const channel = props.store.get(StoreKeys.Channel);
 
 const emit = defineEmits<{
 	(event: 'showSettings'): void;
