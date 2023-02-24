@@ -6,7 +6,12 @@ export default function createStore() {
 	return new ElectronStore<AppStore>({
 		defaults: {
 			[StoreKeys.ClickThrough]: false,
-			[StoreKeys.Channel]: '',
+			[StoreKeys.ChannelOptions]: {
+				channel: '',
+				fadeMessages: false,
+				showBotActivity: true,
+				customCSS: '',
+			},
 			[StoreKeys.SavedWindowState]: {
 				x: 0,
 				y: 0,

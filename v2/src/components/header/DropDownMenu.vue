@@ -5,7 +5,7 @@ import { AppStore, StoreKeys } from '../../../shared/constants';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const channel = props.store.get(StoreKeys.Channel);
+const channelOptions = props.store.get(StoreKeys.ChannelOptions);
 
 const emit = defineEmits<{
 	(event: 'showSettings'): void;
@@ -32,7 +32,7 @@ const toggleTheme = () => {
 		</summary>
 		<ul role="listbox">
 			<li><a @click="emit('showMain')">Main</a></li>
-			<li v-if="channel !== ''"><a @click="emit('showChat')">Chat</a></li>
+			<li v-if="channelOptions.channel !== 'asdf'"><a @click="emit('showChat')">Chat</a></li>
 			<li><a @click="emit('showSettings')">Settings</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
 		</ul>

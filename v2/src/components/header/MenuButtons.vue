@@ -4,7 +4,9 @@ import ElectronStore from 'electron-store';
 
 import { IpcConstants } from '../../../shared/constants';
 
-defineProps<{ isChatPage: boolean; store: ElectronStore }>();
+defineProps<{ store: ElectronStore }>();
+
+const emit = defineEmits(['back']);
 
 function close() {
 	ipcRenderer.send(IpcConstants.Close);
@@ -13,15 +15,11 @@ function close() {
 function minimize() {
 	ipcRenderer.send(IpcConstants.Minimize);
 }
-
-function back() {
-	ipcRenderer.send(IpcConstants.Back);
-}
 </script>
 
 <template>
 	<div id="menu-buttons">
-		<button id="back" class="secondary" @click="back">
+		<button id="back" class="secondary" @click="emit('back')">
 			<font-awesome-icon icon="fa-solid fa-chevron-left" />
 		</button>
 		<button id="minimize" class="secondary" @click="minimize">

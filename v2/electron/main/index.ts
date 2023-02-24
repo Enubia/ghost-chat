@@ -89,8 +89,7 @@ async function createWindow() {
 		window.loadURL(process.env.VITE_DEV_SERVER_URL);
 		// Open devTool if the app is not packaged
 		window.webContents.openDevTools({
-			mode: 'detach',
-			activate: false,
+			mode: 'bottom',
 		});
 	} else {
 		window.loadFile(indexHtml);
@@ -146,7 +145,7 @@ async function createWindow() {
 	});
 
 	window.on('closed', () => {
-		store.delete(StoreKeys.Channel);
+		store.set('channelOptions.channel', '');
 	});
 }
 

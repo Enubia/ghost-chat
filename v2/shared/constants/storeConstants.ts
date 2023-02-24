@@ -1,8 +1,24 @@
 import { WindowState } from '../types/windowState';
 
+export const ChannelOptions = {
+	Channel: 'channel',
+	ShowBotActivity: 'showBotActivity',
+	FadeMessages: 'fadeMessages',
+	CustomCSS: 'customCSS',
+} as const;
+
+export type ChannelOptions = {
+	channel: string;
+	showBotActivity: boolean;
+	fadeMessages: boolean | number;
+	customCSS: string;
+};
+
+type ChannelOptionsStrings = (typeof ChannelOptions)[keyof typeof ChannelOptions];
+
 export const StoreKeys = {
 	// in usage
-	Channel: 'channel',
+	ChannelOptions: 'channelOptions',
 	ClickThrough: 'clickThrough',
 	ShouldBeTransparent: 'shouldBeTransparent',
 	SavedWindowState: 'savedWindowState',
@@ -22,8 +38,10 @@ export const StoreKeys = {
 	// UseSecondsForFadeout: 'useSecondsForFadeout',
 } as const;
 
-type StoreKeysTypes = {
-	channel: string;
+export type StoreKeys = {
+	channelOptions: {
+		[K in ChannelOptionsStrings]: ChannelOptions[K];
+	};
 	clickThrough: boolean;
 	shouldBeTransparent: boolean;
 	savedWindowState: WindowState;
@@ -32,5 +50,5 @@ type StoreKeysTypes = {
 type StoreKeysStrings = (typeof StoreKeys)[keyof typeof StoreKeys];
 
 export type AppStore = {
-	[K in StoreKeysStrings]: StoreKeysTypes[K];
+	[K in StoreKeysStrings]: StoreKeys[K];
 };
