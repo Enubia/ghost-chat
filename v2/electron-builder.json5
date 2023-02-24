@@ -22,14 +22,10 @@
 	},
 	"win": {
 		"target": [
-		{
-			"target": "nsis",
-			"arch": [
-				"x64"
-			]
-		}
-		],
-		"artifactName": "${productName}_${version}.${ext}"
+			"nsis",
+			"portable"
+		]
+		// "artifactName": "${productName}_${version}.${ext}"
 	},
 	"nsis": {
 		"oneClick": false,

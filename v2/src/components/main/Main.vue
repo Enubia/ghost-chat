@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
+
+const channel = ref('');
+</script>
 <template>
-	<div>Main page</div>
+	<div id="main">
+		<div class="center-elements">
+			<img src="/img/icons/icon-128x128.png" />
+		</div>
+		<div class="center-elements">
+			<input id="channel" v-model="channel" type="text" @keydown.enter="emit('channel', channel)" />
+		</div>
+		<div class="center-elements">
+			<button @click="emit('channel', channel)">Go!</button>
+		</div>
+	</div>
 </template>

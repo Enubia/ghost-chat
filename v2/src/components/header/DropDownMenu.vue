@@ -1,17 +1,7 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
+const props = defineProps<{ isChatPage: boolean }>();
 
-import { AppStore, StoreKeys } from '../../../shared/constants';
-
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
-
-const channelOptions = props.store.get(StoreKeys.ChannelOptions);
-
-const emit = defineEmits<{
-	(event: 'showSettings'): void;
-	(event: 'showChat'): void;
-	(event: 'showMain'): void;
-}>();
+const emit = defineEmits(['showSettings', 'showChat', 'showMain', 'vanish']);
 
 const toggleTheme = () => {
 	const $html = document.querySelector('html');
@@ -28,13 +18,21 @@ const toggleTheme = () => {
 <template>
 	<details id="app-info" role="list">
 		<summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-			<img src="../../assets/svg/ghost.svg" />
+			<span>Menu</span>
 		</summary>
 		<ul role="listbox">
 			<li><a @click="emit('showMain')">Main</a></li>
-			<li v-if="channelOptions.channel !== 'asdf'"><a @click="emit('showChat')">Chat</a></li>
+			<li v-if="!props.isChatPage"><a @click="emit('showChat')">Chat</a></li>
 			<li><a @click="emit('showSettings')">Settings</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
+			<!-- this is not working right now because of app.relaunch() app.exit() not relaunching properly -->
+			<!-- <li v-if="isChatPage" id="vanish">
+				<a @click="emit('vanish')">
+					<font-awesome-icon icon="fa-solid fa-ghost" />
+					<span>Vanish</span>
+				</a>
+				<span data-tooltip="transparent and click-through" data-placement="bottom">?</span>
+			</li> -->
 		</ul>
 	</details>
 </template>

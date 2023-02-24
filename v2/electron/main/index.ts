@@ -3,9 +3,7 @@ import { join } from 'node:path';
 
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
 
-import { IpcConstants, StoreKeys } from '../../shared/constants';
-import { getWindowBoundsForStore } from '../../shared/utils';
-import { savedWindowState } from '../utils';
+import { IpcConstants, StoreKeys, WindowState } from '../../shared/constants';
 
 import createStore from './appStore';
 
@@ -33,36 +31,25 @@ let tray: Tray | null;
 
 const store = createStore();
 
-// Here, you can also use other preload
-const preload = join(__dirname, '../preload/index.js');
+// const preload = join(__dirname, '../preload/index.js');
 const indexHtml = join(process.env.DIST, 'index.html');
-
-function revertWindowSettings() {
-	store.set(StoreKeys.ClickThrough, false);
-	window?.setIgnoreMouseEvents(false);
-}
 
 async function createWindow() {
 	const windowState = store.get(StoreKeys.SavedWindowState);
-	const shouldBeTransparent = store.get(StoreKeys.ShouldBeTransparent, false) as boolean;
 
 	window = new BrowserWindow({
 		title: 'Ghost Chat',
-		// icon: join(process.env.PUBLIC, 'favicon.ico'),
 		x: windowState.x,
 		y: windowState.y,
 		width: windowState.width || 400,
 		height: windowState.height || 800,
-		transparent: shouldBeTransparent,
+		transparent: windowState.isTransparent,
 		frame: false,
 		resizable: true,
+		maximizable: false,
 		webPreferences: {
-			preload,
-			// https://www.electronjs.org/docs/latest/api/webview-tag <- embeds the chats and can inject css, good stuff
+			// preload,
 			webviewTag: true,
-			// Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-			// Consider using contextBridge.exposeInMainWorld
-			// Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
 			nodeIntegration: true,
 			contextIsolation: false,
 		},
@@ -82,12 +69,8 @@ async function createWindow() {
 		window.center();
 	}
 
-	window.setMaximizable(false);
-
 	if (process.env.VITE_DEV_SERVER_URL) {
-		// electron-vite-vue#298
 		window.loadURL(process.env.VITE_DEV_SERVER_URL);
-		// Open devTool if the app is not packaged
 		window.webContents.openDevTools({
 			mode: 'bottom',
 		});
@@ -112,17 +95,26 @@ async function createWindow() {
 
 	const trayIconMenu = Menu.buildFromTemplate([
 		{
-			label: 'Revert Click through',
+			label: 'Revert Vanish',
 			type: 'normal',
 			click: async () => {
-				revertWindowSettings();
-				window?.reload();
+				store.set('savedWindowState.clickThrough', false);
+				store.set('savedWindowState.isTransparent', false);
+				window?.setIgnoreMouseEvents(false);
+				app.relaunch();
+				app.exit();
+			},
+		},
+		{
+			label: 'Revert ClickThrough',
+			type: 'normal',
+			click: async () => {
+				window?.setIgnoreMouseEvents(false);
 			},
 		},
 		{
 			label: 'Quit Ghost Chat',
 			click: async () => {
-				revertWindowSettings();
 				window?.close();
 			},
 		},
@@ -133,14 +125,21 @@ async function createWindow() {
 
 	window.on('close', () => {
 		if (window) {
-			savedWindowState(window, store);
-			const options = getWindowBoundsForStore(window);
+			const windowBounds = window.getBounds();
 
-			store.set(StoreKeys.SavedWindowState, options);
-		}
+			const windowState = {
+				[WindowState.X]: windowBounds.x,
+				[WindowState.Y]: windowBounds.y,
+				[WindowState.Width]: windowBounds.width,
+				[WindowState.Height]: windowBounds.height,
+				[WindowState.IsClickThrough]: false,
+				[WindowState.IsTransparent]: false,
+			};
 
-		if (store.has(StoreKeys.ClickThrough)) {
-			revertWindowSettings();
+			store.set(StoreKeys.SavedWindowState, windowState);
+		} else {
+			// if the window should be null reset the window state entirely just in case
+			store.reset(StoreKeys.SavedWindowState);
 		}
 	});
 
@@ -155,17 +154,19 @@ ipcMain.on(IpcConstants.Close, () => {
 	window?.close();
 });
 
-ipcMain.on(IpcConstants.Reload, () => {
-	window?.reload();
-});
-
 ipcMain.on(IpcConstants.SetClickThrough, () => {
 	window?.setIgnoreMouseEvents(true);
-	window?.reload();
 });
 
 ipcMain.on(IpcConstants.Minimize, () => {
 	window?.minimize();
+});
+
+ipcMain.on(IpcConstants.Vanish, () => {
+	store.set('savedWindowState.isTransparent', true);
+	window?.setIgnoreMouseEvents(true);
+	app.relaunch();
+	app.exit();
 });
 
 // New window example arg: new windows url

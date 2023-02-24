@@ -53,6 +53,18 @@ body {
 
 				ul[role=listbox] {
 					right: inherit;
+
+					#vanish {
+						display: flex;
+						justify-content: space-between;
+						width: 100%;
+
+						a {
+							span {
+								margin-left: 10px;
+							}
+						}
+					}
 				}
 			}
 
@@ -82,6 +94,20 @@ body {
 
 			#webview-tag {
 				height: 95%;
+			}
+
+			#main {
+				position: relative;
+				top: 25%;
+
+				#channel {
+					margin-top: 10px;
+					width: 60%;
+				}
+
+				button {
+					width: 70%;
+				}
 			}
 		}
 
