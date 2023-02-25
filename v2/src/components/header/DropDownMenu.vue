@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ isChatPage: boolean; isMainPage: boolean }>();
+const props = defineProps<{ isChatPage: boolean; isMainPage: boolean; channel: string }>();
 
 const emit = defineEmits(['showSettings', 'showChat', 'showMain', 'vanish']);
 
@@ -22,7 +22,9 @@ const toggleTheme = () => {
 		</summary>
 		<ul role="listbox">
 			<li v-if="!isMainPage"><a @click="emit('showMain')">Main</a></li>
-			<li v-if="!props.isChatPage"><a @click="emit('showChat')">Chat</a></li>
+			<li v-if="!props.isChatPage && props.channel !== ''">
+				<a @click="emit('showChat')">Chat</a>
+			</li>
 			<li><a @click="emit('showSettings')">Settings</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
 			<!-- this is not working right now because of app.relaunch() app.exit() not relaunching properly -->

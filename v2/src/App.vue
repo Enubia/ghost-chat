@@ -17,6 +17,8 @@ const store = new ElectronStore<AppStore>();
 const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
+const savedWindowState = ref(store.get('savedWindowState'));
+const channelOptions = ref(store.get('channelOptions'));
 
 ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
@@ -25,8 +27,6 @@ ipcRenderer.on('get-version', (_, args) => {
 function spawnSettings() {
 	console.log('here we should spawn the settings in a new window');
 }
-
-const savedWindowState = store.get('savedWindowState');
 
 function setShowMain() {
 	showChat.value = false;
@@ -52,6 +52,7 @@ function enableChat(channel: string) {
 		<DropDownMenu
 			:is-chat-page="showChat"
 			:is-main-page="showMain"
+			:channel="channelOptions.channel"
 			@show-settings="spawnSettings"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
