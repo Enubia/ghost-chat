@@ -34,7 +34,7 @@ const store = createStore();
 // const preload = join(__dirname, '../preload/index.js');
 const indexHtml = join(process.env.DIST, 'index.html');
 
-export default function createWindow() {
+function createWindow() {
 	const windowState = store.get('savedWindowState');
 
 	// eslint-disable-next-line no-param-reassign
