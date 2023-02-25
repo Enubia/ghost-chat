@@ -1,6 +1,6 @@
 // ---------------------- channel configs ----------------------
 
-export const ChannelOptions = {
+const ChannelOptions = {
 	Channel: 'channel',
 	ShowBotActivity: 'showBotActivity',
 	FadeMessages: 'fadeMessages',
@@ -18,7 +18,7 @@ type ChannelOptionsStrings = (typeof ChannelOptions)[keyof typeof ChannelOptions
 
 // ---------------------- window state ----------------------
 
-export const WindowState = {
+const WindowState = {
 	X: 'x',
 	Y: 'y',
 	Width: 'width',
@@ -40,7 +40,7 @@ type WindowStateStrings = (typeof WindowState)[keyof typeof WindowState];
 
 // ---------------------- store ----------------------
 
-export const StoreKeys = {
+const StoreKeys = {
 	ChannelOptions: 'channelOptions',
 	SavedWindowState: 'savedWindowState',
 } as const;

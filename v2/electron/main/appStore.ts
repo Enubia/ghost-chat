@@ -1,24 +1,24 @@
 import ElectronStore from 'electron-store';
 
-import { AppStore, StoreKeys } from '../../shared/constants';
+import { AppStore } from '../../shared/constants';
 
 export default function createStore() {
 	return new ElectronStore<AppStore>({
 		defaults: {
-			[StoreKeys.ClickThrough]: false,
-			[StoreKeys.ChannelOptions]: {
+			channelOptions: {
 				channel: '',
 				fadeMessages: false,
 				showBotActivity: true,
 				customCSS: '',
 			},
-			[StoreKeys.SavedWindowState]: {
+			savedWindowState: {
 				x: 0,
 				y: 0,
 				width: 400,
 				height: 600,
+				isTransparent: false,
+				isClickThrough: false,
 			},
-			[StoreKeys.ShouldBeTransparent]: false,
 		},
 		// clears the config is a user edits it and causes a syntax error
 		clearInvalidConfig: true,

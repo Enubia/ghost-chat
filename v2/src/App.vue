@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 
-import { AppStore, IpcConstants, StoreKeys } from '../shared/constants';
+import { AppStore, IpcConstants } from '../shared/constants';
 
 import Chat from './components/chat/Chat.vue';
 import DropDownMenu from './components/header/DropDownMenu.vue';
@@ -12,7 +12,7 @@ import Main from './components/main/Main.vue';
 
 const store = new ElectronStore<AppStore>();
 
-postMessage({ payload: 'removeLoading' }, '*');
+// postMessage({ payload: 'removeLoading' }, '*');
 
 const version = ref('');
 const showMain = ref(true);
@@ -26,7 +26,7 @@ function spawnSettings() {
 	console.log('here we should spawn the settings in a new window');
 }
 
-const savedWindowState = store.get(StoreKeys.SavedWindowState);
+const savedWindowState = store.get('savedWindowState');
 
 function setShowMain() {
 	showChat.value = false;

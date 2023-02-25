@@ -2,12 +2,12 @@
 import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import { AppStore, StoreKeys } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/constants';
 
 import SearchParams from './linkSearchParams';
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const channelOptions = props.store.get(StoreKeys.ChannelOptions);
+const channelOptions = props.store.get('channelOptions');
 
 const link = new URL('https://nightdev.com/hosted/obschat');
 link.searchParams.append(SearchParams.THEME, 'undefined');

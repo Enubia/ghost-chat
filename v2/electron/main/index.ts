@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { app, BrowserWindow, shell, Tray, Menu, ipcMain } from 'electron';
 
-import { IpcConstants, StoreKeys, WindowState } from '../../shared/constants';
+import { IpcConstants } from '../../shared/constants';
 
 import createStore from './appStore';
 
@@ -35,7 +35,7 @@ const store = createStore();
 const indexHtml = join(process.env.DIST, 'index.html');
 
 async function createWindow() {
-	const windowState = store.get(StoreKeys.SavedWindowState);
+	const windowState = store.get('savedWindowState');
 
 	window = new BrowserWindow({
 		title: 'Ghost Chat',
@@ -128,18 +128,18 @@ async function createWindow() {
 			const windowBounds = window.getBounds();
 
 			const windowState = {
-				[WindowState.X]: windowBounds.x,
-				[WindowState.Y]: windowBounds.y,
-				[WindowState.Width]: windowBounds.width,
-				[WindowState.Height]: windowBounds.height,
-				[WindowState.IsClickThrough]: false,
-				[WindowState.IsTransparent]: false,
+				x: windowBounds.x,
+				y: windowBounds.y,
+				width: windowBounds.width,
+				height: windowBounds.height,
+				isClickThrough: false,
+				isTransparent: false,
 			};
 
-			store.set(StoreKeys.SavedWindowState, windowState);
+			store.set('savedWindowState', windowState);
 		} else {
 			// if the window should be null reset the window state entirely just in case
-			store.reset(StoreKeys.SavedWindowState);
+			store.reset('savedWindowState');
 		}
 	});
 
