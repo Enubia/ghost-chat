@@ -31,7 +31,7 @@ let tray: Tray | null;
 
 const store = createStore();
 
-// const preload = join(__dirname, '../preload/index.js');
+const preload = join(__dirname, '../preload/index.js');
 const indexHtml = join(process.env.DIST, 'index.html');
 
 function createWindow() {
@@ -49,20 +49,21 @@ function createWindow() {
 		resizable: true,
 		maximizable: false,
 		webPreferences: {
-			// preload,
+			preload,
 			webviewTag: true,
 			nodeIntegration: true,
 			contextIsolation: false,
 		},
 	});
 
-	if (process.platform !== 'darwin') {
-		window.setAlwaysOnTop(true, 'pop-up-menu');
-	} else {
-		app.dock.hide();
-		window.setAlwaysOnTop(true, 'floating');
+	window.setAlwaysOnTop(true, 'pop-up-menu');
+	window.setFullScreenable(false);
+
+	if (process.platform === 'darwin') {
 		window.setVisibleOnAllWorkspaces(true);
-		window.setFullScreenable(false);
+		// TODO: check if this is still needed on mac
+		// 	app.dock.hide();
+		// 	window.setAlwaysOnTop(true, 'floating');
 	}
 
 	if (windowState.x === 0 && windowState.y === 0) {
@@ -169,6 +170,10 @@ ipcMain.on(IpcConstants.Vanish, () => {
 	window?.setIgnoreMouseEvents(true);
 	app.relaunch();
 	app.exit();
+});
+
+ipcMain.on('removeLoading', () => {
+	window?.webContents.send('removeLoading');
 });
 
 // New window example arg: new windows url

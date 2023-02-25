@@ -34,7 +34,7 @@ const safeDOM = {
 function useLoading() {
 	const styleContent = `
 		.version-check {
-			background-color: #6e479d;
+			background-color: var(--background-color);
 			position: absolute;
 			top: 0;
 			width: 100%;

@@ -12,8 +12,6 @@ import Main from './components/main/Main.vue';
 
 const store = new ElectronStore<AppStore>();
 
-// postMessage({ payload: 'removeLoading' }, '*');
-
 const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
