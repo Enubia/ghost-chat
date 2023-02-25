@@ -81,6 +81,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Change directory to v2
+        run: cd v2
+
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
