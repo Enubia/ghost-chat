@@ -10,7 +10,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.53.0
   '@typescript-eslint/parser': 5.53.0
   '@vitejs/plugin-vue': 4.0.0
-  electron: 22.3.1
+  electron: 23.1.1
   electron-builder: 23.6.0
   electron-context-menu: 3.6.1
   electron-store: 8.1.0
@@ -43,7 +43,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.53.0_ny4s7qc6yg74faf3d6xty2ofzy
   '@typescript-eslint/parser': 5.53.0_7kw3g6rralp5ps6mg3uyzz6azm
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
-  electron: 22.3.1
+  electron: 23.1.1
   electron-builder: 23.6.0
   electron-context-menu: 3.6.1
   electron-store: 8.1.0
@@ -1744,8 +1744,8 @@ packages:
       type-fest: 2.19.0
     dev: true
 
-  /electron/22.3.1:
-    resolution: {integrity: sha512-iDltL9j12bINK3aOp8ZoGq4NFBFjJhw1AYHelbWj93XUCAIT4fdA+PRsq0aaTHg3bthLLlLRvIZVgNsZPqWcqg==}
+  /electron/23.1.1:
+    resolution: {integrity: sha512-junV1NzPx5T8Mx9+o8fMWK1Q5WOtG5vggiM09PGYg/6zTcGDL3DjGVHeUa/97gx7ErXL37DrFnxNg6+ePWprDg==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
