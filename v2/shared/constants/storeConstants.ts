@@ -7,7 +7,7 @@ const ChannelOptions = {
 	CustomCSS: 'customCSS',
 } as const;
 
-export type ChannelOptions = {
+type ChannelOptions = {
 	channel: string;
 	showBotActivity: boolean;
 	fadeMessages: boolean | number;
@@ -27,7 +27,7 @@ const WindowState = {
 	IsTransparent: 'isTransparent',
 } as const;
 
-export type WindowState = {
+type WindowState = {
 	x: number;
 	y: number;
 	width: number;
@@ -45,12 +45,10 @@ const StoreKeys = {
 	SavedWindowState: 'savedWindowState',
 } as const;
 
-export type StoreKeys = {
+type StoreKeys = {
 	channelOptions: {
 		[K in ChannelOptionsStrings]: ChannelOptions[K];
 	};
-	clickThrough: boolean;
-	isTransparent: boolean;
 	savedWindowState: {
 		[K in WindowStateStrings]: WindowState[K];
 	};
