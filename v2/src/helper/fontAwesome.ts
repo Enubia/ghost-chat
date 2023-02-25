@@ -1,4 +1,10 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChevronLeft,
+	faDownLeftAndUpRightToCenter,
+	faXmark,
+	faGhost,
+	faBars,
+} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost);
+library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost, faBars);

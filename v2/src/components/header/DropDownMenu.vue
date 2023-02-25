@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ isChatPage: boolean }>();
+const props = defineProps<{ isChatPage: boolean; isMainPage: boolean }>();
 
 const emit = defineEmits(['showSettings', 'showChat', 'showMain', 'vanish']);
 
@@ -18,10 +18,10 @@ const toggleTheme = () => {
 <template>
 	<details id="app-info" role="list">
 		<summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-			<span>Menu</span>
+			<span><font-awesome-icon icon="fa-solid fa-bars" /></span>
 		</summary>
 		<ul role="listbox">
-			<li><a @click="emit('showMain')">Main</a></li>
+			<li v-if="!isMainPage"><a @click="emit('showMain')">Main</a></li>
 			<li v-if="!props.isChatPage"><a @click="emit('showChat')">Chat</a></li>
 			<li><a @click="emit('showSettings')">Settings</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>

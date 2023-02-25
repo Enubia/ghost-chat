@@ -11,10 +11,15 @@ const channel = ref('');
 			<img src="/img/icons/icon-128x128.png" />
 		</div>
 		<div class="center-elements">
-			<input id="channel" v-model="channel" type="text" @keydown.enter="emit('channel', channel)" />
+			<input
+				id="channel"
+				v-model="channel"
+				type="text"
+				@keydown.enter="channel !== '' && emit('channel', channel)"
+			/>
 		</div>
 		<div class="center-elements">
-			<button @click="emit('channel', channel)">Go!</button>
+			<button @click="channel !== '' && emit('channel', channel)">Go!</button>
 		</div>
 	</div>
 </template>

@@ -38,6 +38,7 @@ body {
 
 			#app-info {
 				margin: 0;
+				width: 10%;
 				-webkit-app-region: no-drag;
 
 				summary {
@@ -45,9 +46,11 @@ body {
 					height: inherit;
 					border-radius: 0%;
 					border: none;
+					display: flex;
+					justify-content: center;
 
-					img {
-						height: 24px;
+					&::after {
+						content: none;
 					}
 				}
 

@@ -9,14 +9,12 @@ import Chat from './components/chat/Chat.vue';
 import DropDownMenu from './components/header/DropDownMenu.vue';
 import MenuButtons from './components/header/MenuButtons.vue';
 import Main from './components/main/Main.vue';
-import Settings from './components/settings/Settings.vue';
 
 const store = new ElectronStore<AppStore>();
 
 postMessage({ payload: 'removeLoading' }, '*');
 
 const version = ref('');
-const showSettings = ref(false);
 const showMain = ref(true);
 const showChat = ref(false);
 
@@ -24,10 +22,8 @@ ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
 });
 
-function setShowSetting() {
-	showChat.value = false;
-	showMain.value = false;
-	showSettings.value = true;
+function spawnSettings() {
+	console.log('here we should spawn the settings in a new window');
 }
 
 const savedWindowState = store.get(StoreKeys.SavedWindowState);
@@ -35,12 +31,10 @@ const savedWindowState = store.get(StoreKeys.SavedWindowState);
 function setShowMain() {
 	showChat.value = false;
 	showMain.value = true;
-	showSettings.value = false;
 }
 function setShowChat() {
 	showChat.value = true;
 	showMain.value = false;
-	showSettings.value = false;
 }
 
 function vanishWindow() {
@@ -57,7 +51,8 @@ function enableChat(channel: string) {
 	<header v-if="!savedWindowState.isTransparent">
 		<DropDownMenu
 			:is-chat-page="showChat"
-			@show-settings="setShowSetting"
+			:is-main-page="showMain"
+			@show-settings="spawnSettings"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
 			@vanish="vanishWindow"
@@ -65,8 +60,7 @@ function enableChat(channel: string) {
 		<MenuButtons :store="store" @back="setShowMain" />
 	</header>
 	<main class="container-fluid">
-		<Settings v-if="showSettings" />
-		<Main v-else-if="showMain" @channel="enableChat" />
+		<Main v-if="showMain" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
 	</main>
 	<span id="version">{{ version }}</span>
