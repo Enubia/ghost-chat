@@ -81,13 +81,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Change directory to v2
-        run: cd v2
-
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: cd v2 && pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm run lint
+        run: cd v2 && pnpm run lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
