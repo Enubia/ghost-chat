@@ -15,7 +15,11 @@
   </a>
 </p>
 
-## V2 is in development, status can be tracked here [#426](https://github.com/Enubia/ghost-chat/issues/426), please add additional requests to this issue or join the [Discord](https://discord.gg/SfaKfDNCcd) and post it in the appropriate channel
+### V2 is in development and the roadmap can be tracked here [#426](https://github.com/Enubia/ghost-chat/issues/426)
+
+### For (feature) suggestions I'd recommend joining the [Discord](https://discord.gg/SfaKfDNCcd) and post it in the appropriate channel or create a new [issue](https://github.com/Enubia/ghost-chat/issues/new/choose)
+
+---
 
 # Ghost Chat
 
