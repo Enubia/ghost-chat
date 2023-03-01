@@ -26,10 +26,7 @@ const safeDOM = {
 };
 
 /**
- * https://tobiasahlin.com/spinkit
- * https://connoratherton.com/loaders
- * https://projects.lukehaas.me/css-loaders
- * https://matejkustec.github.io/SpinThatShit
+ * https://loading.io/css/
  */
 function useLoading() {
 	const styleContent = `
@@ -40,71 +37,99 @@ function useLoading() {
 			width: 100%;
 			height: 100%;
 			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
-		.loading-text {
-			color: #ffffff;
+		.spinner {
+			display: flex;
+			justify-content: center;
 		}
-		.loader,
-		.loader:before,
-		.loader:after {
-			background: #ffffff;
-			-webkit-animation: load1 1s infinite ease-in-out;
-			animation: load1 1s infinite ease-in-out;
-			width: 1em;
-			height: 4em;
-		}
-		.loader {
-			color: #ffffff;
-			top: 30%;
-			text-indent: -9999em;
-			margin: 88px auto;
+		.lds-roller {
+			display: inline-block;
 			position: relative;
-			font-size: 11px;
-			-webkit-transform: translateZ(0);
-			-ms-transform: translateZ(0);
-			transform: translateZ(0);
-			-webkit-animation-delay: -0.16s;
-			animation-delay: -0.16s;
+			width: 80px;
+			height: 80px;
 		}
-		.loader:before,
-		.loader:after {
+		.lds-roller div {
+			animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+			transform-origin: 40px 40px;
+		}
+		.lds-roller div:after {
+			content: " ";
+			display: block;
 			position: absolute;
-			top: 0;
-			content: '';
+			width: 7px;
+			height: 7px;
+			border-radius: 50%;
+			background: var(--primary);
+			margin: -4px 0 0 -4px;
 		}
-		.loader:before {
-			left: -1.5em;
-			-webkit-animation-delay: -0.32s;
-			animation-delay: -0.32s;
+		.lds-roller div:nth-child(1) {
+			animation-delay: -0.036s;
 		}
-		.loader:after {
-			left: 1.5em;
+		.lds-roller div:nth-child(1):after {
+			top: 63px;
+			left: 63px;
 		}
-		@-webkit-keyframes load1 {
-			0%,
-			80%,
+		.lds-roller div:nth-child(2) {
+			animation-delay: -0.072s;
+		}
+		.lds-roller div:nth-child(2):after {
+			top: 68px;
+			left: 56px;
+		}
+		.lds-roller div:nth-child(3) {
+			animation-delay: -0.108s;
+		}
+		.lds-roller div:nth-child(3):after {
+			top: 71px;
+			left: 48px;
+		}
+		.lds-roller div:nth-child(4) {
+			animation-delay: -0.144s;
+		}
+		.lds-roller div:nth-child(4):after {
+			top: 72px;
+			left: 40px;
+		}
+		.lds-roller div:nth-child(5) {
+			animation-delay: -0.18s;
+		}
+		.lds-roller div:nth-child(5):after {
+			top: 71px;
+			left: 32px;
+		}
+		.lds-roller div:nth-child(6) {
+			animation-delay: -0.216s;
+		}
+		.lds-roller div:nth-child(6):after {
+			top: 68px;
+			left: 24px;
+		}
+		.lds-roller div:nth-child(7) {
+			animation-delay: -0.252s;
+		}
+		.lds-roller div:nth-child(7):after {
+			top: 63px;
+			left: 17px;
+		}
+		.lds-roller div:nth-child(8) {
+			animation-delay: -0.288s;
+		}
+		.lds-roller div:nth-child(8):after {
+			top: 56px;
+			left: 12px;
+		}
+		@keyframes lds-roller {
+			0% {
+				transform: rotate(0deg);
+			}
 			100% {
-				box-shadow: 0 0;
-				height: 4em;
-			}
-			40% {
-				box-shadow: 0 -2em;
-				height: 5em;
-			}
-		}
-		@keyframes load1 {
-			0%,
-			80%,
-			100% {
-				box-shadow: 0 0;
-				height: 4em;
-			}
-			40% {
-				box-shadow: 0 -2em;
-				height: 5em;
+				transform: rotate(360deg);
 			}
 		}
     `;
+	const loadingMessages = ['Loading hot chat actions', 'Crunching latest follower numbers'];
 	const oStyle = document.createElement('style');
 	const oDiv = document.createElement('div');
 
@@ -112,8 +137,20 @@ function useLoading() {
 	oStyle.innerHTML = styleContent;
 	oDiv.className = 'version-check';
 	oDiv.innerHTML = /*html*/ `
-		<div class="container-fluid">
-			<div class="loader"></div>
+		<div>
+			<div class="spinner">
+				<div class="lds-roller">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			<div>${loadingMessages[Math.floor(Math.random() * loadingMessages.length)]}</div>
 		</div>
 	`;
 
@@ -134,6 +171,6 @@ function useLoading() {
 const { appendLoading, removeLoading } = useLoading();
 domReady().then(appendLoading);
 
-window.onmessage = (ev) => {
-	ev.data.payload === 'removeLoading' && removeLoading();
-};
+setTimeout(() => {
+	removeLoading();
+}, 1000);

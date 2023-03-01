@@ -33,7 +33,6 @@ body {
 			justify-content: space-between;
 			-webkit-app-region: drag;
 			border-bottom: 1px solid var(--secondary);
-			height: 40px;
 			background-color: var(--secondary);
 
 			#app-menu {
@@ -42,7 +41,7 @@ body {
 				-webkit-app-region: no-drag;
 
 				summary {
-					padding: 8px;
+					padding: 0;
 					height: inherit;
 					border-radius: 0%;
 					border: none;
@@ -72,13 +71,12 @@ body {
 			}
 
 			#menu-buttons {
-				// width: 40%;
 				display: flex;
 				align-items: center;
 
 				button {
 					margin-bottom: 0;
-					padding: 8px 15px 8px 15px;
+					padding: 0 15px 0 15px;
 					border-radius: 0%;
 					border: none;
 

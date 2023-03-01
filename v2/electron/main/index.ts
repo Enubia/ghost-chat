@@ -201,10 +201,6 @@ ipcMain.on(IpcConstants.Vanish, () => {
 	app.exit();
 });
 
-ipcMain.on('removeLoading', () => {
-	window?.webContents.send('removeLoading');
-});
-
 ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 	const { savedWindowState } = store.get('settings');
 
