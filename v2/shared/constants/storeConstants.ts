@@ -40,12 +40,14 @@ type WindowStateStrings = (typeof WindowState)[keyof typeof WindowState];
 
 // ---------------------- store ----------------------
 
-const StoreKeys = {
+export const StoreKeys = {
 	ChannelOptions: 'channelOptions',
 	SavedWindowState: 'savedWindowState',
 } as const;
 
-type StoreKeys = {
+type StoreKeysStrings = (typeof StoreKeys)[keyof typeof StoreKeys];
+
+type StoreKeysMap = {
 	channelOptions: {
 		[K in ChannelOptionsStrings]: ChannelOptions[K];
 	};
@@ -54,8 +56,6 @@ type StoreKeys = {
 	};
 };
 
-type StoreKeysStrings = (typeof StoreKeys)[keyof typeof StoreKeys];
-
 export type AppStore = {
-	[K in StoreKeysStrings]: StoreKeys[K];
+	[K in StoreKeysStrings]: StoreKeysMap[K];
 };

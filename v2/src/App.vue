@@ -22,25 +22,29 @@ ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
 });
 
-function spawnSettings() {
+const spawnSettings = () => {
 	console.log('here we should spawn the settings in a new window');
-}
+};
 
-function setShowMain() {
+const setShowMain = () => {
 	showChat.value = false;
 	showMain.value = true;
-}
-function setShowChat() {
+};
+const setShowChat = () => {
 	showChat.value = true;
 	showMain.value = false;
-}
+};
 
-function vanishWindow() {
+const vanishWindow = () => {
 	ipcRenderer.send(IpcConstants.Vanish);
-}
+};
 
-function enableChat(channel: string) {
+const enableChat = (channel: string) => {
 	store.set('channelOptions.channel', channel);
+	setShowChat();
+};
+
+if (savedWindowState.value.isTransparent && channelOptions.value.channel !== '') {
 	setShowChat();
 }
 </script>

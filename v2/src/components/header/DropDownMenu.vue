@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import { ipcRenderer } from 'electron';
+
+import { IpcConstants } from '../../../shared/constants';
+
 const props = defineProps<{ isChatPage: boolean; isMainPage: boolean; channel: string }>();
 
 const emit = defineEmits(['showSettings', 'showChat', 'showMain', 'vanish']);
+
+const showSettings = () => {
+	document.querySelector('details')?.removeAttribute('open');
+	emit('showSettings');
+};
 
 const toggleTheme = () => {
 	const $html = document.querySelector('html');
@@ -13,10 +22,15 @@ const toggleTheme = () => {
 		$html?.setAttribute('data-theme', 'dark');
 	}
 };
+
+const setClickThrough = () => {
+	document.querySelector('details')?.removeAttribute('open');
+	ipcRenderer.send(IpcConstants.SetClickThrough);
+};
 </script>
 
 <template>
-	<details id="app-info" role="list">
+	<details id="app-menu" role="list">
 		<summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
 			<span><font-awesome-icon icon="fa-solid fa-bars" /></span>
 		</summary>
@@ -25,16 +39,16 @@ const toggleTheme = () => {
 			<li v-if="!props.isChatPage && props.channel !== ''">
 				<a @click="emit('showChat')">Chat</a>
 			</li>
-			<li><a @click="emit('showSettings')">Settings</a></li>
+			<li><a @click="showSettings">Settings</a></li>
+			<li><a @click="setClickThrough">Set click-through</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
-			<!-- this is not working right now because of app.relaunch() app.exit() not relaunching properly -->
-			<!-- <li v-if="isChatPage" id="vanish">
+			<li v-if="isChatPage" id="vanish">
 				<a @click="emit('vanish')">
 					<font-awesome-icon icon="fa-solid fa-ghost" />
 					<span>Vanish</span>
 				</a>
 				<span data-tooltip="transparent and click-through" data-placement="bottom">?</span>
-			</li> -->
+			</li>
 		</ul>
 	</details>
 </template>

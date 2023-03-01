@@ -1,9 +1,9 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Tray, ipcMain, Menu, shell } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences } from 'electron';
 
-import { IpcConstants } from '../../shared/constants';
+import { IpcConstants, StoreKeys } from '../../shared/constants';
 
 import createStore from './appStore';
 
@@ -37,6 +37,16 @@ const indexHtml = join(process.env.DIST, 'index.html');
 function createWindow() {
 	const windowState = store.get('savedWindowState');
 
+	const webPreferences: WebPreferences = {
+		webviewTag: true,
+		nodeIntegration: true,
+		contextIsolation: false,
+	};
+
+	if (!windowState.isTransparent) {
+		webPreferences.preload = preload;
+	}
+
 	// eslint-disable-next-line no-param-reassign
 	window = new BrowserWindow({
 		title: 'Ghost Chat',
@@ -48,12 +58,7 @@ function createWindow() {
 		frame: false,
 		resizable: true,
 		maximizable: false,
-		webPreferences: {
-			preload,
-			webviewTag: true,
-			nodeIntegration: true,
-			contextIsolation: false,
-		},
+		webPreferences,
 	});
 
 	window.setAlwaysOnTop(true, 'pop-up-menu');
@@ -61,9 +66,7 @@ function createWindow() {
 
 	if (process.platform === 'darwin') {
 		window.setVisibleOnAllWorkspaces(true);
-		// TODO: check if this is still needed on mac
-		// 	app.dock.hide();
-		// 	window.setAlwaysOnTop(true, 'floating');
+		app.dock.hide();
 	}
 
 	if (windowState.x === 0 && windowState.y === 0) {
@@ -71,11 +74,17 @@ function createWindow() {
 		window.center();
 	}
 
+	if (windowState.isClickThrough) {
+		window.setIgnoreMouseEvents(true);
+	}
+
 	if (process.env.VITE_DEV_SERVER_URL) {
 		window.loadURL(process.env.VITE_DEV_SERVER_URL);
-		window.webContents.openDevTools({
-			mode: 'bottom',
-		});
+		if (!windowState.isTransparent) {
+			window.webContents.openDevTools({
+				mode: 'bottom',
+			});
+		}
 	} else {
 		window.loadFile(indexHtml);
 	}
@@ -112,6 +121,11 @@ function createWindow() {
 			label: 'Revert ClickThrough',
 			type: 'normal',
 			click: async () => {
+				store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+					...store.get('savedWindowState'),
+					isClickThrough: false,
+				});
+
 				window?.setIgnoreMouseEvents(false);
 			},
 		},
@@ -130,16 +144,14 @@ function createWindow() {
 		if (window) {
 			const windowBounds = window.getBounds();
 
-			const windowState = {
+			store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 				x: windowBounds.x,
 				y: windowBounds.y,
 				width: windowBounds.width,
 				height: windowBounds.height,
 				isClickThrough: false,
 				isTransparent: false,
-			};
-
-			store.set('savedWindowState', windowState);
+			});
 		} else {
 			// if the window should be null reset the window state entirely just in case
 			store.reset('savedWindowState');
@@ -147,7 +159,12 @@ function createWindow() {
 	});
 
 	window.on('closed', () => {
-		store.set('channelOptions.channel', '');
+		if (!store.get('savedWindowState').isTransparent) {
+			store.set<typeof StoreKeys.ChannelOptions>('channelOptions', {
+				...store.get('channelOptions'),
+				channel: '',
+			});
+		}
 	});
 }
 
@@ -158,6 +175,10 @@ ipcMain.on(IpcConstants.Close, () => {
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {
+	store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+		...store.get('savedWindowState'),
+		isClickThrough: true,
+	});
 	window?.setIgnoreMouseEvents(true);
 });
 
@@ -166,8 +187,15 @@ ipcMain.on(IpcConstants.Minimize, () => {
 });
 
 ipcMain.on(IpcConstants.Vanish, () => {
-	store.set('savedWindowState.isTransparent', true);
-	window?.setIgnoreMouseEvents(true);
+	const windowBounds = window?.getBounds();
+	store.set('savedWindowState', {
+		x: windowBounds?.x,
+		y: windowBounds?.y,
+		width: windowBounds?.width,
+		height: windowBounds?.height,
+		isClickThrough: true,
+		isTransparent: true,
+	});
 	app.relaunch();
 	app.exit();
 });
