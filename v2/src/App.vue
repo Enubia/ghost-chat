@@ -11,15 +11,15 @@ import MenuButtons from './components/header/MenuButtons.vue';
 import Main from './components/main/Main.vue';
 import Settings from './components/settings/Settings.vue';
 
-const store = new ElectronStore<AppStore>();
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
-const savedWindowState = ref(store.get('savedWindowState'));
-const channelOptions = ref(store.get('channelOptions'));
-const settings = ref(store.get('settings'));
+const savedWindowState = ref(props.store.get('savedWindowState'));
+const channelOptions = ref(props.store.get('channelOptions'));
+const settings = ref(props.store.get('settings'));
 
 ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
@@ -47,7 +47,7 @@ const vanishWindow = () => {
 };
 
 const enableChat = (channel: string) => {
-	store.set('channelOptions.channel', channel);
+	props.store.set('channelOptions.channel', channel);
 	setShowChat();
 };
 
@@ -66,6 +66,7 @@ if (settings.value.isOpen) {
 			:is-chat-page="showChat"
 			:is-main-page="showMain"
 			:channel="channelOptions.channel"
+			:store="store"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
 			@vanish="vanishWindow"

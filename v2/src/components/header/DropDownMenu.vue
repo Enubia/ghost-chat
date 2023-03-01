@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
+import ElectronStore from 'electron-store';
 
-import { IpcConstants } from '../../../shared/constants';
+import { AppStore, IpcConstants } from '../../../shared/constants';
 
-const props = defineProps<{ isChatPage: boolean; isMainPage: boolean; channel: string }>();
+const props = defineProps<{
+	isChatPage: boolean;
+	isMainPage: boolean;
+	channel: string;
+	store: ElectronStore<AppStore>;
+}>();
 
 const emit = defineEmits(['showChat', 'showMain', 'vanish']);
 
@@ -18,8 +24,10 @@ const toggleTheme = () => {
 
 	if (theme && theme === 'dark') {
 		$html?.setAttribute('data-theme', 'light');
+		props.store.set('savedWindowState.theme', 'light');
 	} else {
 		$html?.setAttribute('data-theme', 'dark');
+		props.store.set('savedWindowState.theme', 'dark');
 	}
 };
 
@@ -27,6 +35,13 @@ const setClickThrough = () => {
 	document.querySelector('details')?.removeAttribute('open');
 	ipcRenderer.send(IpcConstants.SetClickThrough);
 };
+
+const $html = document.querySelector('html');
+
+if (!$html?.getAttribute('data-theme')) {
+	const theme = props.store.get('savedWindowState.theme');
+	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+}
 </script>
 
 <template>

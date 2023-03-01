@@ -27,6 +27,7 @@ const WindowState = {
 	Height: 'height',
 	IsClickThrough: 'isClickThrough',
 	IsTransparent: 'isTransparent',
+	Theme: 'theme',
 } as const;
 
 type WindowState = {
@@ -36,6 +37,7 @@ type WindowState = {
 	height: number;
 	isClickThrough: boolean;
 	isTransparent: boolean;
+	theme?: 'dark' | 'light';
 };
 
 type WindowStateStrings = (typeof WindowState)[keyof typeof WindowState];

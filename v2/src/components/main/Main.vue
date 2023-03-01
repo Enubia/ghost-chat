@@ -19,6 +19,9 @@ const channel = ref('');
 			/>
 		</div>
 		<div class="center-elements">
+			<small id="info">Enter a channel, e.g. enubia1</small>
+		</div>
+		<div class="center-elements">
 			<button @click="channel !== '' && emit('channel', channel)">Go!</button>
 		</div>
 	</div>

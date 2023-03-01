@@ -10,7 +10,7 @@
 
 html,
 body {
-	background: rgba(0, 0, 0, 0);
+	// background: rgba(0, 0, 0, 0);
 	height: 100%;
 	overflow: hidden;
 	margin: 0;
@@ -103,11 +103,17 @@ body {
 
 				#channel {
 					margin-top: 10px;
-					width: 60%;
+					margin-bottom: 0;
+					width: 50%;
+				}
+
+				#info {
+					margin-top: 5px;
+					margin-bottom: 10px;
 				}
 
 				button {
-					width: 70%;
+					width: 40%;
 				}
 			}
 		}

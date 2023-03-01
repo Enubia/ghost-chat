@@ -1,7 +1,7 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences, nativeTheme } from 'electron';
 
 import { IpcConstants, StoreKeys } from '../../shared/constants';
 
@@ -79,6 +79,8 @@ function createWindow() {
 		window.setIgnoreMouseEvents(true);
 	}
 
+	store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+
 	if (process.env.VITE_DEV_SERVER_URL) {
 		window.loadURL(process.env.VITE_DEV_SERVER_URL);
 		if (!windowState.isTransparent) {
@@ -152,7 +154,10 @@ function createWindow() {
 				height: windowBounds.height,
 				isClickThrough: false,
 				isTransparent: false,
+				theme: store.get('savedWindowState.theme'),
 			});
+
+			store.set('settings.isOpen', false);
 		} else {
 			// if the window should be null reset the window state entirely just in case
 			store.reset('savedWindowState');
@@ -208,8 +213,8 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 		title: 'Ghost Chat - Settings',
 		x: savedWindowState.x,
 		y: savedWindowState.y,
-		width: savedWindowState.width || 600,
-		height: savedWindowState.height || 600,
+		width: savedWindowState.width || 900,
+		height: savedWindowState.height || 900,
 		resizable: true,
 		maximizable: false,
 		webPreferences: {
@@ -222,6 +227,10 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 		isOpen: true,
 		savedWindowState,
 	});
+
+	if (savedWindowState.x === 0 && savedWindowState.y === 0) {
+		childWindow.center();
+	}
 
 	if (process.env.VITE_DEV_SERVER_URL) {
 		childWindow.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
