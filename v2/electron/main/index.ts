@@ -1,15 +1,17 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences, nativeTheme } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences, nativeTheme, crashReporter } from 'electron';
 
 import { IpcConstants, StoreKeys } from '../../shared/constants';
 
 import createStore from './appStore';
 
-process.env.DIST_ELECTRON = join(__dirname, '..');
-process.env.DIST = join(process.env.DIST_ELECTRON, '../dist');
-process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(process.env.DIST_ELECTRON, '../public') : process.env.DIST;
+crashReporter.start({ submitURL: '', uploadToServer: false });
+
+const DIST_ELECTRON = join(__dirname, '..');
+const DIST = join(DIST_ELECTRON, '../dist');
+const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) {
@@ -33,7 +35,7 @@ let tray: Tray | null;
 const store = createStore();
 
 const preload = join(__dirname, '../preload/index.js');
-const indexHtml = join(process.env.DIST, 'index.html');
+const indexHtml = join(DIST, 'index.html');
 
 function createWindow() {
 	const windowState = store.get('savedWindowState');
@@ -103,7 +105,7 @@ function createWindow() {
 	});
 
 	const trayIcnName = 'trayicon.png';
-	const trayIcnPath = `${process.env.PUBLIC}/${trayIcnName}`;
+	const trayIcnPath = `${PUBLIC}/${trayIcnName}`;
 
 	// eslint-disable-next-line no-param-reassign
 	tray = new Tray(trayIcnPath);
@@ -193,15 +195,17 @@ ipcMain.on(IpcConstants.Minimize, () => {
 });
 
 ipcMain.on(IpcConstants.Vanish, () => {
-	const windowBounds = window?.getBounds();
-	store.set('savedWindowState', {
-		x: windowBounds?.x,
-		y: windowBounds?.y,
-		width: windowBounds?.width,
-		height: windowBounds?.height,
+	const windowBounds = window?.getBounds() as Electron.Rectangle;
+	store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+		x: windowBounds.x,
+		y: windowBounds.y,
+		width: windowBounds.width,
+		height: windowBounds.height,
 		isClickThrough: true,
 		isTransparent: true,
+		theme: store.get('savedWindowState.theme'),
 	});
+
 	app.relaunch();
 	app.exit();
 });

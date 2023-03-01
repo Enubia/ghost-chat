@@ -5,7 +5,7 @@ import { createApp } from 'vue';
 import { AppStore } from '../shared/constants';
 
 import './assets/scss/main.scss';
-import './helper/fontAwesome';
+import './components/fontAwesome';
 
 import App from './App.vue';
 

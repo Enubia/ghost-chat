@@ -22,10 +22,12 @@
 	},
 	"win": {
 		"target": [
-			"nsis",
-			"portable"
-		]
-		// "artifactName": "${productName}_${version}.${ext}"
+			"nsis"
+			// portable disabled for now, won't restart on app.relaunch() app.quit()
+			// probably related to this issue https://github.com/electron/electron/issues/22293
+			// "portable"
+		],
+		"artifactName": "${productName}_${version}.${ext}"
 	},
 	"nsis": {
 		"oneClick": false,
