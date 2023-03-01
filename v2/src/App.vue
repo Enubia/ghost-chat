@@ -30,6 +30,7 @@ const setShowMain = () => {
 	showMain.value = true;
 	showSettings.value = false;
 };
+
 const setShowChat = () => {
 	showChat.value = true;
 	showMain.value = false;

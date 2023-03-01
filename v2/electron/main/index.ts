@@ -112,20 +112,23 @@ function createWindow() {
 
 	const trayIconMenu = Menu.buildFromTemplate([
 		{
-			label: 'Revert Vanish',
+			label: 'Disable Vanish',
 			type: 'normal',
-			click: async () => {
-				store.set('savedWindowState.clickThrough', false);
-				store.set('savedWindowState.isTransparent', false);
-				window?.setIgnoreMouseEvents(false);
+			click: () => {
+				store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+					...store.get('savedWindowState'),
+					isClickThrough: false,
+					isTransparent: false,
+				});
+
 				app.relaunch();
 				app.exit();
 			},
 		},
 		{
-			label: 'Revert ClickThrough',
+			label: 'Disable Click-Through',
 			type: 'normal',
-			click: async () => {
+			click: () => {
 				store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 					...store.get('savedWindowState'),
 					isClickThrough: false,
@@ -135,9 +138,9 @@ function createWindow() {
 			},
 		},
 		{
-			label: 'Quit Ghost Chat',
-			click: async () => {
-				window?.close();
+			label: 'Quit GhostChat',
+			click: () => {
+				app.quit();
 			},
 		},
 	]);
@@ -277,7 +280,7 @@ app.on('window-all-closed', () => {
 	app.quit();
 });
 
-app.on('activate', async () => {
+app.on('activate', () => {
 	if (window?.isMinimized()) {
 		window.restore();
 	} else {

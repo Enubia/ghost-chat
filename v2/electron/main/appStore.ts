@@ -19,6 +19,7 @@ export default function createStore() {
 				height: 600,
 				isTransparent: false,
 				isClickThrough: false,
+				theme: undefined,
 			},
 			settings: {
 				isOpen: false,
