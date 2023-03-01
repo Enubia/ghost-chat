@@ -5,11 +5,11 @@ import { IpcConstants } from '../../../shared/constants';
 
 const props = defineProps<{ isChatPage: boolean; isMainPage: boolean; channel: string }>();
 
-const emit = defineEmits(['showSettings', 'showChat', 'showMain', 'vanish']);
+const emit = defineEmits(['showChat', 'showMain', 'vanish']);
 
 const showSettings = () => {
 	document.querySelector('details')?.removeAttribute('open');
-	emit('showSettings');
+	ipcRenderer.send(IpcConstants.OpenSettings);
 };
 
 const toggleTheme = () => {

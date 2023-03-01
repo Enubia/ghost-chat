@@ -10,6 +10,7 @@ export default function createStore() {
 				fadeMessages: false,
 				showBotActivity: true,
 				customCSS: '',
+				persistentChannel: '',
 			},
 			savedWindowState: {
 				x: 0,
@@ -18,6 +19,15 @@ export default function createStore() {
 				height: 600,
 				isTransparent: false,
 				isClickThrough: false,
+			},
+			settings: {
+				isOpen: false,
+				savedWindowState: {
+					x: 0,
+					y: 0,
+					width: 400,
+					height: 600,
+				},
 			},
 		},
 		// clears the config is a user edits it and causes a syntax error

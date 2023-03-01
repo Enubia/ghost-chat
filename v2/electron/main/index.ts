@@ -27,6 +27,7 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 let window: BrowserWindow | null = null;
+let childWindow: BrowserWindow | null = null;
 let tray: Tray | null;
 
 const store = createStore();
@@ -204,22 +205,52 @@ ipcMain.on('removeLoading', () => {
 	window?.webContents.send('removeLoading');
 });
 
-// New window example arg: new windows url
-// ipcMain.handle('open-win', (_, arg) => {
-// 	const childWindow = new BrowserWindow({
-// 		webPreferences: {
-// 			preload,
-// 			nodeIntegration: true,
-// 			contextIsolation: false,
-// 		},
-// 	});
+ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
+	const { savedWindowState } = store.get('settings');
 
-// 	if (process.env.VITE_DEV_SERVER_URL) {
-// 		childWindow.loadURL(`${url}#${arg}`);
-// 	} else {
-// 		childWindow.loadFile(indexHtml, { hash: arg });
-// 	}
-// });
+	childWindow = new BrowserWindow({
+		title: 'Ghost Chat - Settings',
+		x: savedWindowState.x,
+		y: savedWindowState.y,
+		width: savedWindowState.width || 600,
+		height: savedWindowState.height || 600,
+		resizable: true,
+		maximizable: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false,
+		},
+	});
+
+	store.set<typeof StoreKeys.Settings>('settings', {
+		isOpen: true,
+		savedWindowState,
+	});
+
+	if (process.env.VITE_DEV_SERVER_URL) {
+		childWindow.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
+	} else {
+		childWindow.loadFile(indexHtml, { hash: arg });
+	}
+
+	childWindow.on('close', () => {
+		if (childWindow) {
+			const windowBounds = childWindow.getBounds();
+
+			store.set<typeof StoreKeys.Settings>('settings', {
+				isOpen: false,
+				savedWindowState: {
+					x: windowBounds.x,
+					y: windowBounds.y,
+					width: windowBounds.width,
+					height: windowBounds.height,
+				},
+			});
+		} else {
+			store.reset('settings');
+		}
+	});
+});
 
 // ---------------------------------- app handling ----------------------------------
 

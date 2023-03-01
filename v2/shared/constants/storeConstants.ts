@@ -5,6 +5,7 @@ const ChannelOptions = {
 	ShowBotActivity: 'showBotActivity',
 	FadeMessages: 'fadeMessages',
 	CustomCSS: 'customCSS',
+	PersistentChannel: 'persistentChannel',
 } as const;
 
 type ChannelOptions = {
@@ -12,6 +13,7 @@ type ChannelOptions = {
 	showBotActivity: boolean;
 	fadeMessages: boolean | number;
 	customCSS: string;
+	persistentChannel: string;
 };
 
 type ChannelOptionsStrings = (typeof ChannelOptions)[keyof typeof ChannelOptions];
@@ -38,11 +40,26 @@ type WindowState = {
 
 type WindowStateStrings = (typeof WindowState)[keyof typeof WindowState];
 
+// ---------------------- settings ----------------------
+
+const Settings = {
+	IsOpen: 'isOpen',
+	SavedWindowSate: 'savedWindowState',
+} as const;
+
+type Settings = {
+	isOpen: boolean;
+	savedWindowState: Omit<WindowState, 'isClickThrough' | 'isTransparent'>;
+};
+
+type SettingsStrings = (typeof Settings)[keyof typeof Settings];
+
 // ---------------------- store ----------------------
 
 export const StoreKeys = {
 	ChannelOptions: 'channelOptions',
 	SavedWindowState: 'savedWindowState',
+	Settings: 'settings',
 } as const;
 
 type StoreKeysStrings = (typeof StoreKeys)[keyof typeof StoreKeys];
@@ -53,6 +70,9 @@ type StoreKeysMap = {
 	};
 	savedWindowState: {
 		[K in WindowStateStrings]: WindowState[K];
+	};
+	settings: {
+		[K in SettingsStrings]: Settings[K];
 	};
 };
 

@@ -9,30 +9,37 @@ import Chat from './components/chat/Chat.vue';
 import DropDownMenu from './components/header/DropDownMenu.vue';
 import MenuButtons from './components/header/MenuButtons.vue';
 import Main from './components/main/Main.vue';
+import Settings from './components/settings/Settings.vue';
 
 const store = new ElectronStore<AppStore>();
 
 const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
+const showSettings = ref(false);
 const savedWindowState = ref(store.get('savedWindowState'));
 const channelOptions = ref(store.get('channelOptions'));
+const settings = ref(store.get('settings'));
 
 ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
 });
 
-const spawnSettings = () => {
-	console.log('here we should spawn the settings in a new window');
-};
-
 const setShowMain = () => {
 	showChat.value = false;
 	showMain.value = true;
+	showSettings.value = false;
 };
 const setShowChat = () => {
 	showChat.value = true;
 	showMain.value = false;
+	showSettings.value = false;
+};
+
+const setShowSettings = () => {
+	showChat.value = false;
+	showMain.value = false;
+	showSettings.value = true;
 };
 
 const vanishWindow = () => {
@@ -47,15 +54,18 @@ const enableChat = (channel: string) => {
 if (savedWindowState.value.isTransparent && channelOptions.value.channel !== '') {
 	setShowChat();
 }
+
+if (settings.value.isOpen) {
+	setShowSettings();
+}
 </script>
 
 <template>
-	<header v-if="!savedWindowState.isTransparent">
+	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
 		<DropDownMenu
 			:is-chat-page="showChat"
 			:is-main-page="showMain"
 			:channel="channelOptions.channel"
-			@show-settings="spawnSettings"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
 			@vanish="vanishWindow"
@@ -65,6 +75,7 @@ if (savedWindowState.value.isTransparent && channelOptions.value.channel !== '')
 	<main class="container-fluid">
 		<Main v-if="showMain" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
+		<Settings v-else-if="showSettings" />
 	</main>
 	<span id="version">{{ version }}</span>
 </template>
