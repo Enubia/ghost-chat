@@ -66,7 +66,7 @@ export default class ReleaseCheck extends Vue {
 
     console.log(this.currentReleaseVersion);
 
-    if (releaseVersion !== this.currentReleaseVersion) {
+    if (!releaseVersion.includes('beta') && releaseVersion !== this.currentReleaseVersion) {
       this.newReleaseUrl = releaseResponse[0].html_url;
       this.newVersion = releaseResponse[0].tag_name;
       await this.wait();
