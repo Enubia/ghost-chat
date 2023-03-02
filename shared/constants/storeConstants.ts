@@ -37,7 +37,7 @@ type WindowState = {
 	height: number;
 	isClickThrough: boolean;
 	isTransparent: boolean;
-	theme?: 'dark' | 'light';
+	theme: 'dark' | 'light' | null;
 };
 
 type WindowStateStrings = (typeof WindowState)[keyof typeof WindowState];

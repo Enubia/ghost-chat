@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 
 import { AppStore, IpcConstants } from '../shared/constants';
 
@@ -17,12 +17,42 @@ const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
-const savedWindowState = ref(props.store.get('savedWindowState'));
-const channelOptions = ref(props.store.get('channelOptions'));
-const settings = ref(props.store.get('settings'));
+let savedWindowState = shallowRef(props.store.get('savedWindowState'));
+let channelOptions = shallowRef(props.store.get('channelOptions'));
+let settings = shallowRef(props.store.get('settings'));
 
 ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
+});
+
+props.store.onDidChange('channelOptions', (newValue, oldValue) => {
+	if (newValue) {
+		channelOptions.value = newValue;
+	}
+
+	if (oldValue) {
+		channelOptions.value = oldValue;
+	}
+});
+
+props.store.onDidChange('savedWindowState', (newValue, oldValue) => {
+	if (newValue) {
+		savedWindowState.value = newValue;
+	}
+
+	if (oldValue) {
+		savedWindowState.value = oldValue;
+	}
+});
+
+props.store.onDidChange('settings', (newValue, oldValue) => {
+	if (newValue) {
+		settings.value = newValue;
+	}
+
+	if (oldValue) {
+		settings.value = oldValue;
+	}
 });
 
 const setShowMain = () => {
@@ -79,5 +109,5 @@ if (settings.value.isOpen) {
 		<Chat v-else-if="showChat" :store="store" />
 		<Settings v-else-if="showSettings" />
 	</main>
-	<span id="version">{{ version }}</span>
+	<span v-if="!showChat" id="version" @click="props.store.openInEditor()">{{ version }}</span>
 </template>

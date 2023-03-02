@@ -82,6 +82,7 @@ function createWindow() {
 	}
 
 	store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+	store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
 
 	if (process.env.VITE_DEV_SERVER_URL) {
 		window.loadURL(process.env.VITE_DEV_SERVER_URL);
@@ -249,6 +250,7 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 					y: windowBounds.y,
 					width: windowBounds.width,
 					height: windowBounds.height,
+					theme: store.get('settings.theme'),
 				},
 			});
 		} else {

@@ -45,6 +45,7 @@
 		],
 		"no-throw-literal": "error",
 		"no-underscore-dangle": "error",
+		"no-unused-vars": "off",
 		"no-useless-constructor": "error",
 		"no-useless-rename": "error",
 		"object-shorthand": "error",

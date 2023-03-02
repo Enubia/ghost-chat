@@ -19,7 +19,7 @@ export default function createStore() {
 				height: 600,
 				isTransparent: false,
 				isClickThrough: false,
-				theme: undefined,
+				theme: null,
 			},
 			settings: {
 				isOpen: false,
@@ -28,6 +28,7 @@ export default function createStore() {
 					y: 0,
 					width: 900,
 					height: 900,
+					theme: null,
 				},
 			},
 		},
