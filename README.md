@@ -10,14 +10,14 @@
   <a href="https://www.twitch.tv/enubia1" target="_blank">
     <img alt="" src="https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=for-the-badge">
   </a>
-  <a href="https://discord.gg/SfaKfDNCcd" target="_blank">
+  <a href="https://discord.gg/UVMX32dDcy" target="_blank">
     <img alt="Discord" src="https://img.shields.io/discord/1078447787252916234?label=Discord&logo=Discord&style=for-the-badge">
   </a>
 </p>
 
 ### V2 is in development and the roadmap can be tracked here [#426](https://github.com/Enubia/ghost-chat/issues/426)
 
-### For (feature) suggestions I'd recommend joining the [Discord](https://discord.gg/SfaKfDNCcd) and post it in the appropriate channel or create a new [issue](https://github.com/Enubia/ghost-chat/issues/new/choose)
+### For (feature) suggestions I'd recommend joining the [Discord](https://discord.gg/UVMX32dDcy) and post it in the appropriate channel or create a new [issue](https://github.com/Enubia/ghost-chat/issues/new/choose)
 
 ---
 
@@ -56,7 +56,7 @@ or you just want to have your chat on your main screen.
 
 ## Additional info
 
-If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose). You can also contact me via [Discord](https://discord.gg/SfaKfDNCcd).
+If you have any suggestions for features, or you've found a bug, feel free to go to [https://github.com/Enubia/ghost-chat/issues/new/choose](https://github.com/Enubia/ghost-chat/issues/new/choose). You can also contact me via [Discord](https://discord.gg/UVMX32dDcy).
 
 # Contributing
 

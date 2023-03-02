@@ -129,10 +129,7 @@ function createWindow() {
 			label: 'Disable Click-Through',
 			type: 'normal',
 			click: () => {
-				store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-					...store.get('savedWindowState'),
-					isClickThrough: false,
-				});
+				store.set('savedWindowState.isClickThrough', false);
 
 				window?.setIgnoreMouseEvents(false);
 			},
@@ -171,10 +168,7 @@ function createWindow() {
 
 	window.on('closed', () => {
 		if (!store.get('savedWindowState').isTransparent) {
-			store.set<typeof StoreKeys.ChannelOptions>('channelOptions', {
-				...store.get('channelOptions'),
-				channel: '',
-			});
+			store.set('channelOptions.channel', '');
 		}
 	});
 }
@@ -188,10 +182,7 @@ ipcMain.on(IpcConstants.Close, () => {
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {
-	store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-		...store.get('savedWindowState'),
-		isClickThrough: true,
-	});
+	store.set('savedWindowState.isClickThrough', true);
 	window?.setIgnoreMouseEvents(true);
 });
 
