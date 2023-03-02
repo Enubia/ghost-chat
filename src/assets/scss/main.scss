@@ -8,6 +8,11 @@
 	align-items: center;
 }
 
+:root {
+	--primary: hsl(264, 80%, 54%);
+	--primary-hover: hsl(264, 80%, 60%);
+}
+
 html,
 body {
 	height: 100%;
@@ -19,6 +24,7 @@ body {
 body {
 	button, a {
 		-webkit-app-region: no-drag;
+		cursor: pointer;
 	}
 
 	#app {
@@ -113,6 +119,27 @@ body {
 
 				button {
 					width: 40%;
+				}
+			}
+
+			#settings {
+				height: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				#content {
+					display: flex;
+					align-items: center;
+					height: 80%;
+
+					aside {
+						width: 35%;
+					}
+
+					div[role=document] {
+						width: 100%;
+					}
 				}
 			}
 		}

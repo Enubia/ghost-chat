@@ -25,6 +25,13 @@ ipcRenderer.on('get-version', (_, args) => {
 	version.value = `v${args}`;
 });
 
+const $html = document.querySelector('html');
+
+if (!$html?.getAttribute('data-theme')) {
+	const theme = props.store.get('savedWindowState.theme');
+	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+}
+
 props.store.onDidChange('channelOptions', (newValue, oldValue) => {
 	if (newValue) {
 		channelOptions.value = newValue;

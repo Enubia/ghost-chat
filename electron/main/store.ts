@@ -26,8 +26,8 @@ export default function createStore() {
 				savedWindowState: {
 					x: 0,
 					y: 0,
-					width: 900,
-					height: 900,
+					width: 880,
+					height: 550,
 					theme: null,
 				},
 			},

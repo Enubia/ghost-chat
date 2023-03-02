@@ -35,13 +35,6 @@ const setClickThrough = () => {
 	document.querySelector('details')?.removeAttribute('open');
 	ipcRenderer.send(IpcConstants.SetClickThrough);
 };
-
-const $html = document.querySelector('html');
-
-if (!$html?.getAttribute('data-theme')) {
-	const theme = props.store.get('savedWindowState.theme');
-	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-}
 </script>
 
 <template>
