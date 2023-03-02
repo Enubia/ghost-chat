@@ -36,7 +36,7 @@ export default function createStore() {
 		// used to reflect changes from main in renderer
 		watch: true,
 		migrations: {
-			'2.0.0': (store) => {
+			'2.0.0-beta': (store) => {
 				store.clear();
 			},
 		},
