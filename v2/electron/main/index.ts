@@ -1,11 +1,11 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, Tray, ipcMain, Menu, shell, WebPreferences, nativeTheme, crashReporter } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain, Menu, shell, nativeTheme, crashReporter } from 'electron';
 
 import { IpcConstants, StoreKeys } from '../../shared/constants';
 
-import createStore from './appStore';
+import createStore from './store';
 
 crashReporter.start({ submitURL: '', uploadToServer: false });
 
@@ -13,8 +13,8 @@ const DIST_ELECTRON = join(__dirname, '..');
 const DIST = join(DIST_ELECTRON, '../dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
 
-// Disable GPU Acceleration for Windows 7
-if (release().startsWith('6.1')) {
+// disable gpu acceleration for windows 7 and linux
+if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
 	app.disableHardwareAcceleration();
 }
 
@@ -40,7 +40,7 @@ const indexHtml = join(DIST, 'index.html');
 function createWindow() {
 	const windowState = store.get('savedWindowState');
 
-	const webPreferences: WebPreferences = {
+	const webPreferences: Electron.WebPreferences = {
 		webviewTag: true,
 		nodeIntegration: true,
 		contextIsolation: false,
@@ -182,7 +182,9 @@ function createWindow() {
 // ---------------------------------- ipc handling ----------------------------------
 
 ipcMain.on(IpcConstants.Close, () => {
-	window?.close();
+	for (const window of BrowserWindow.getAllWindows()) {
+		window.close();
+	}
 });
 
 ipcMain.on(IpcConstants.SetClickThrough, () => {

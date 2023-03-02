@@ -6,7 +6,9 @@
 		"sourceType": "module"
 	},
 	"extends": [
+		"eslint:recommended",
 		"plugin:vue/vue3-recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
 		"prettier"
 	],
 	"plugins": [
@@ -17,12 +19,7 @@
 		"unused-imports"
 	],
 	"rules": {
-		"prettier/prettier": [
-			"error",
-			{
-				"endOfLine": "auto"
-			}
-		],
+		"prettier/prettier": "error",
 		"curly": [
 			"error",
 			"all"
@@ -50,15 +47,7 @@
 		"no-underscore-dangle": "error",
 		"no-useless-constructor": "error",
 		"no-useless-rename": "error",
-		"no-var": "error",
 		"object-shorthand": "error",
-		"prefer-const": [
-			"error",
-			{
-				"destructuring": "any",
-				"ignoreReadBeforeAssign": false
-			}
-		],
 		"prefer-object-spread": "error",
 		"require-atomic-updates": "error",
 

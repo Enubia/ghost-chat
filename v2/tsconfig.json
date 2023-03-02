@@ -1,19 +1,7 @@
 {
+	"extends": "./tsconfig.shared.json",
 	"compilerOptions": {
-		"target": "ESNext",
-		"lib": [
-			"ESNext",
-			"DOM"
-		],
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"useDefineForClassFields": true,
-		"strict": true,
-		"jsx": "preserve",
-		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
 		"noEmit": true,
 	},
 	"include": [

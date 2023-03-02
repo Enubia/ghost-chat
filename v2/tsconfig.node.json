@@ -1,10 +1,8 @@
 {
+	"extends": "./tsconfig.shared.json",
 	"compilerOptions": {
-		"composite": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": false,
 	},
 	"include": [
 		"electron",
