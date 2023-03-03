@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
-
-const channel = ref('');
-</script>
 <template>
 	<div id="main">
 		<div class="center-elements">
@@ -26,3 +19,11 @@ const channel = ref('');
 		</div>
 	</div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
+
+const channel = ref('');
+</script>

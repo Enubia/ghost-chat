@@ -1,3 +1,27 @@
+<template>
+	<div id="settings">
+		<div id="content" class="container">
+			<aside>
+				<nav>
+					<ul>
+						<li><a @click="setShowGeneral">General</a></li>
+						<li><a @click="setShowChat">Chat</a></li>
+						<li><a @click="setShowCSS">CSS</a></li>
+					</ul>
+				</nav>
+			</aside>
+			<div role="document">
+				<article v-if="showGeneral">General</article>
+				<article v-else-if="showChat">Chat</article>
+				<article v-else-if="showCSS">
+					<!-- https://www.npmjs.com/package/vue-codemirror -->
+					CSS
+				</article>
+			</div>
+		</div>
+	</div>
+</template>
+
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
@@ -30,26 +54,3 @@ const setShowCSS = () => {
 	showCSS.value = true;
 };
 </script>
-<template>
-	<div id="settings">
-		<div id="content" class="container">
-			<aside>
-				<nav>
-					<ul>
-						<li><a @click="setShowGeneral">General</a></li>
-						<li><a @click="setShowChat">Chat</a></li>
-						<li><a @click="setShowCSS">CSS</a></li>
-					</ul>
-				</nav>
-			</aside>
-			<div role="document">
-				<article v-if="showGeneral">General</article>
-				<article v-else-if="showChat">Chat</article>
-				<article v-else-if="showCSS">
-					<!-- https://www.npmjs.com/package/vue-codemirror -->
-					CSS
-				</article>
-			</div>
-		</div>
-	</div>
-</template>

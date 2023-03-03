@@ -6,18 +6,22 @@ import { AppStore } from '../../shared/types';
 
 export default class TrayIcon {
 	private tray: Tray;
-	private store: ElectronStore<AppStore>;
-	private window: BrowserWindow;
 
-	constructor(store: ElectronStore<AppStore>, window: BrowserWindow) {
-		this.store = store;
-		this.window = window;
-	}
+	constructor(private store: ElectronStore<AppStore>, private window: BrowserWindow) {}
 
 	buildTray(trayIconPath: string) {
 		this.tray = new Tray(trayIconPath);
 
+		this.tray.setToolTip(`GhostChat v${app.getVersion()}`);
+
 		const trayIconMenu = Menu.buildFromTemplate([
+			{
+				label: 'Open config',
+				type: 'normal',
+				click: () => {
+					this.store.openInEditor();
+				},
+			},
 			{
 				label: 'Disable Vanish',
 				type: 'normal',
@@ -49,7 +53,6 @@ export default class TrayIcon {
 			},
 		]);
 
-		this.tray?.setToolTip('Ghost Chat');
-		this.tray?.setContextMenu(trayIconMenu);
+		this.tray.setContextMenu(trayIconMenu);
 	}
 }

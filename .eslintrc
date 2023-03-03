@@ -45,7 +45,7 @@
 		],
 		"no-throw-literal": "error",
 		"no-unused-vars": "off",
-		"no-useless-constructor": "error",
+		"no-useless-constructor": "off",
 		"no-useless-rename": "error",
 		"object-shorthand": "error",
 		"prefer-object-spread": "error",
@@ -59,7 +59,6 @@
 			}
 		],
 		"@typescript-eslint/no-useless-constructor": "error",
-		"@typescript-eslint/parameter-properties": "error",
 
 		"import/extensions": [
 			"error",

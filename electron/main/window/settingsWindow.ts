@@ -5,11 +5,8 @@ import { AppStore } from '../../../shared/types';
 
 export default class SettingsWindow {
 	window: BrowserWindow | null;
-	private store: ElectronStore<AppStore>;
 
-	constructor(store: ElectronStore<AppStore>) {
-		this.store = store;
-	}
+	constructor(private store: ElectronStore<AppStore>) {}
 
 	buildWindow(indexHtml: string, arg: any) {
 		const { savedWindowState } = this.store.get('settings');

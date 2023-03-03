@@ -1,3 +1,24 @@
+<template>
+	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
+		<DropDownMenu
+			:is-chat-page="showChat"
+			:is-main-page="showMain"
+			:channel="channelOptions.channel"
+			:store="store"
+			@show-main="setShowMain"
+			@show-chat="setShowChat"
+			@vanish="vanishWindow"
+		/>
+		<MenuButtons :store="store" @back="setShowMain" />
+	</header>
+	<main class="container-fluid">
+		<Main v-if="showMain" @channel="enableChat" />
+		<Chat v-else-if="showChat" :store="store" />
+		<Settings v-else-if="showSettings" :key="rerenderKey" />
+	</main>
+	<span v-if="!showChat" id="version" @click="props.store.openInEditor()">{{ version }}</span>
+</template>
+
 <script setup lang="ts">
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import ElectronStore from 'electron-store';
@@ -76,24 +97,3 @@ if (settings.value.isOpen) {
 	setShowSettings();
 }
 </script>
-
-<template>
-	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
-		<DropDownMenu
-			:is-chat-page="showChat"
-			:is-main-page="showMain"
-			:channel="channelOptions.channel"
-			:store="store"
-			@show-main="setShowMain"
-			@show-chat="setShowChat"
-			@vanish="vanishWindow"
-		/>
-		<MenuButtons :store="store" @back="setShowMain" />
-	</header>
-	<main class="container-fluid">
-		<Main v-if="showMain" @channel="enableChat" />
-		<Chat v-else-if="showChat" :store="store" />
-		<Settings v-else-if="showSettings" :key="rerenderKey" />
-	</main>
-	<span v-if="!showChat" id="version" @click="props.store.openInEditor()">{{ version }}</span>
-</template>

@@ -7,12 +7,9 @@ import { AppStore } from '../../shared/types';
 import SettingsWindow from './window/settingsWindow';
 
 export default class IpcEvents {
-	private store: ElectronStore<AppStore>;
 	private settingsWindow: BrowserWindow | null;
 
-	constructor(store: ElectronStore<AppStore>) {
-		this.store = store;
-	}
+	constructor(private store: ElectronStore<AppStore>) {}
 
 	registerEvents(mainWindow: BrowserWindow | null, indexHtml: string) {
 		this.rerender(mainWindow);
@@ -76,10 +73,14 @@ export default class IpcEvents {
 
 	private openSettings(indexHtml: string) {
 		ipcMain.on(IpcConstants.OpenSettings, (_event: Electron.IpcMainEvent, args: any) => {
-			const _settingsWindow = new SettingsWindow(this.store);
-			_settingsWindow.buildWindow(indexHtml, args);
-			// eslint-disable-next-line no-param-reassign
-			this.settingsWindow = _settingsWindow.window;
+			if (this.settingsWindow) {
+				this.settingsWindow.focus();
+			} else {
+				const _settingsWindow = new SettingsWindow(this.store);
+				_settingsWindow.buildWindow(indexHtml, args);
+				// eslint-disable-next-line no-param-reassign
+				this.settingsWindow = _settingsWindow.window;
+			}
 		});
 	}
 }
