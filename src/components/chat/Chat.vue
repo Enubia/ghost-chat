@@ -2,9 +2,16 @@
 import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import type { AppStore } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
 
-import SearchParams from './linkSearchParams';
+const SearchParams = {
+	THEME: 'theme',
+	CHANNEL: 'channel',
+	FADE: 'fade',
+	BOT_ACTIVITY: 'bot_activity',
+	PREVENT_CLIPPING: 'prevent_clipping',
+};
+
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const channelOptions = props.store.get('channelOptions');

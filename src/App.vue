@@ -3,7 +3,8 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 
-import { AppStore, IpcConstants } from '../shared/constants';
+import { IpcConstants } from '../shared/constants';
+import { AppStore } from '../shared/types';
 
 import Chat from './components/chat/Chat.vue';
 import DropDownMenu from './components/header/DropDownMenu.vue';

@@ -2,7 +2,7 @@
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 
-import { AppStore } from '../../../shared/constants';
+import { AppStore } from '../../../shared/types';
 
 const store = new ElectronStore<AppStore>();
 

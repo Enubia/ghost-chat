@@ -1,6 +1,6 @@
 import ElectronStore from 'electron-store';
 
-import { AppStore } from '../../shared/constants';
+import { AppStore } from '../../shared/types';
 
 export default function createStore() {
 	return new ElectronStore<AppStore>({

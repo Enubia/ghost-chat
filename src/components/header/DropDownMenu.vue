@@ -2,7 +2,8 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { AppStore, IpcConstants } from '../../../shared/constants';
+import { IpcConstants } from '../../../shared/constants';
+import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{
 	isChatPage: boolean;

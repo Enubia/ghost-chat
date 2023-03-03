@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 
-import { AppStore } from '../shared/constants';
+import { AppStore } from '../shared/types';
 
 import './assets/scss/main.scss';
 import './components/fontAwesome';

@@ -234,7 +234,7 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 		},
 	});
 
-	store.set<typeof StoreKeys.Settings>('settings', {
+	store.set<'settings'>('settings', {
 		isOpen: true,
 		savedWindowState,
 	});
@@ -256,7 +256,7 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 		if (childWindow) {
 			const windowBounds = childWindow.getBounds();
 
-			store.set<typeof StoreKeys.Settings>('settings', {
+			store.set('settings', {
 				isOpen: false,
 				savedWindowState: {
 					x: windowBounds.x,

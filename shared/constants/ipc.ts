@@ -8,5 +8,3 @@ export const IpcConstants = {
 	GetVersion: 'getVersion',
 	Rerender: 'rerender',
 } as const;
-
-export type IpcConstantsOptions = (typeof IpcConstants)[keyof typeof IpcConstants];
