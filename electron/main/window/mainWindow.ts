@@ -7,7 +7,6 @@ import { IpcConstants, StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class MainWindow {
-	window: BrowserWindow;
 	private store: ElectronStore<AppStore>;
 
 	constructor(store: ElectronStore<AppStore>) {
@@ -26,7 +25,7 @@ export default class MainWindow {
 			webPreferences.preload = join(__dirname, '../preload/index.js');
 		}
 
-		this.window = new BrowserWindow({
+		const window = new BrowserWindow({
 			title: 'Ghost Chat',
 			x: windowState.x,
 			y: windowState.y,
@@ -39,48 +38,48 @@ export default class MainWindow {
 			webPreferences,
 		});
 
-		this.window.setAlwaysOnTop(true, 'pop-up-menu');
-		this.window.setFullScreenable(false);
+		window.setAlwaysOnTop(true, 'pop-up-menu');
+		window.setFullScreenable(false);
 
 		if (process.platform === 'darwin') {
-			this.window.setVisibleOnAllWorkspaces(true);
+			window.setVisibleOnAllWorkspaces(true);
 			app.dock.hide();
 		}
 
 		if (windowState.x === 0 && windowState.y === 0) {
-			this.window.center();
+			window.center();
 		}
 
 		if (windowState.isClickThrough) {
-			this.window.setIgnoreMouseEvents(true);
+			window.setIgnoreMouseEvents(true);
 		}
 
 		this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
 		this.store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
 
 		if (process.env.VITE_DEV_SERVER_URL) {
-			this.window.loadURL(process.env.VITE_DEV_SERVER_URL);
+			window.loadURL(process.env.VITE_DEV_SERVER_URL);
 			if (!windowState.isTransparent) {
-				this.window.webContents.openDevTools({
+				window.webContents.openDevTools({
 					mode: 'bottom',
 				});
 			}
 		} else {
-			this.window.loadFile(indexHtml);
+			window.loadFile(indexHtml);
 		}
 
-		this.window.webContents.on('did-finish-load', () => {
-			this.window?.webContents.send(IpcConstants.GetVersion, app.getVersion());
+		window.webContents.on('did-finish-load', () => {
+			window?.webContents.send(IpcConstants.GetVersion, app.getVersion());
 		});
 
-		this.window.webContents.on('will-navigate', (event, url) => {
+		window.webContents.on('will-navigate', (event, url) => {
 			event.preventDefault();
 			shell.openExternal(url);
 		});
 
-		this.window.on('close', () => {
-			if (this.window) {
-				const windowBounds = this.window.getBounds();
+		window.on('close', () => {
+			if (window) {
+				const windowBounds = window.getBounds();
 
 				this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 					x: windowBounds.x,
@@ -98,10 +97,12 @@ export default class MainWindow {
 			}
 		});
 
-		this.window.on('closed', () => {
+		window.on('closed', () => {
 			if (!this.store.get('savedWindowState').isTransparent) {
 				this.store.set('channelOptions.channel', '');
 			}
 		});
+
+		return window;
 	}
 }

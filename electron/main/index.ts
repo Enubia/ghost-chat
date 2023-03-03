@@ -39,9 +39,7 @@ let mainWindow: BrowserWindow | null;
 app.on('ready', () => {
 	setTimeout(
 		() => {
-			const _mainWindow = new MainWindow(store);
-			_mainWindow.buildWindow(indexHtml);
-			mainWindow = _mainWindow.window;
+			mainWindow = new MainWindow(store).buildWindow(indexHtml);
 			new TrayIcon(store, mainWindow).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(mainWindow, indexHtml);
 		},
