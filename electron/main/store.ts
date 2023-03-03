@@ -10,6 +10,7 @@ export default function createStore() {
 				fadeMessages: false,
 				showBotActivity: true,
 				customCSS: '',
+				customJS: '',
 				persistentChannel: '',
 			},
 			savedWindowState: {

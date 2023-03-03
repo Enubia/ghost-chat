@@ -4,18 +4,21 @@
 			<aside>
 				<nav>
 					<ul>
-						<li><a @click="setShowGeneral">General</a></li>
-						<li><a @click="setShowChat">Chat</a></li>
-						<li><a @click="setShowCSS">CSS</a></li>
+						<li><a class="contrast" @click="setShowChat">Chat</a></li>
+						<li><a class="contrast" @click="setShowCSS">Custom CSS</a></li>
+						<li><a class="contrast" @click="setShowJS">Custom JavaScript</a></li>
 					</ul>
 				</nav>
 			</aside>
 			<div role="document">
-				<article v-if="showGeneral">General</article>
-				<article v-else-if="showChat">Chat</article>
+				<article v-if="showChat">
+					<Chat :store="store" />
+				</article>
 				<article v-else-if="showCSS">
-					<!-- https://www.npmjs.com/package/vue-codemirror -->
-					CSS
+					<Editor :store="store" :type="'css'" />
+				</article>
+				<article v-else-if="showJS">
+					<Editor :store="store" :type="'js'" />
 				</article>
 			</div>
 		</div>
@@ -28,28 +31,33 @@ import { ref } from 'vue';
 
 import { AppStore } from '../../../shared/types';
 
+import Chat from './components/Chat.vue';
+import Editor from './components/Editor.vue';
+
 const store = new ElectronStore<AppStore>();
 
 const theme = store.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
-const showGeneral = ref(true);
-const showChat = ref(false);
+const showChat = ref(true);
 const showCSS = ref(false);
+const showJS = ref(false);
 
-const setShowGeneral = () => {
-	showGeneral.value = true;
+const setShowJS = () => {
+	showJS.value = true;
 	showChat.value = false;
 	showCSS.value = false;
 };
+
 const setShowChat = () => {
-	showGeneral.value = false;
+	showJS.value = false;
 	showChat.value = true;
 	showCSS.value = false;
 };
+
 const setShowCSS = () => {
-	showGeneral.value = false;
+	showJS.value = false;
 	showChat.value = false;
 	showCSS.value = true;
 };

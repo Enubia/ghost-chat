@@ -3,6 +3,7 @@ export type ChannelOptions = {
 	showBotActivity: boolean;
 	fadeMessages: boolean | number;
 	customCSS: string;
+	customJS: string;
 	persistentChannel: string;
 };
 

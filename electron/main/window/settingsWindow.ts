@@ -1,12 +1,13 @@
 import { BrowserWindow } from 'electron';
 import ElectronStore from 'electron-store';
 
+import { StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class SettingsWindow {
 	window: BrowserWindow | null;
 
-	constructor(private store: ElectronStore<AppStore>) {}
+	constructor(private store: ElectronStore<AppStore>, private destroyWindow: () => void) {}
 
 	buildWindow(indexHtml: string, arg: any) {
 		const { savedWindowState } = this.store.get('settings');
@@ -25,7 +26,7 @@ export default class SettingsWindow {
 			},
 		});
 
-		this.store.set<'settings'>('settings', {
+		this.store.set<typeof StoreKeys.Settings>('settings', {
 			isOpen: true,
 			savedWindowState,
 		});
@@ -47,7 +48,7 @@ export default class SettingsWindow {
 			if (this.window) {
 				const windowBounds = this.window.getBounds();
 
-				this.store.set('settings', {
+				this.store.set<typeof StoreKeys.Settings>('settings', {
 					isOpen: false,
 					savedWindowState: {
 						x: windowBounds.x,
@@ -62,6 +63,7 @@ export default class SettingsWindow {
 			}
 
 			this.window = null;
+			this.destroyWindow();
 		});
 	}
 }

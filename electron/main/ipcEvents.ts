@@ -76,11 +76,14 @@ export default class IpcEvents {
 			if (this.settingsWindow) {
 				this.settingsWindow.focus();
 			} else {
-				const _settingsWindow = new SettingsWindow(this.store);
+				const _settingsWindow = new SettingsWindow(this.store, this.destroyWindow.bind(this));
 				_settingsWindow.buildWindow(indexHtml, args);
-				// eslint-disable-next-line no-param-reassign
 				this.settingsWindow = _settingsWindow.window;
 			}
 		});
+	}
+
+	private destroyWindow() {
+		this.settingsWindow = null;
 	}
 }

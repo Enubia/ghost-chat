@@ -9,14 +9,13 @@
 			@show-chat="setShowChat"
 			@vanish="vanishWindow"
 		/>
-		<MenuButtons :store="store" @back="setShowMain" />
+		<MenuButtons :store="store" :is-chat="showChat" @back="setShowMain" />
 	</header>
 	<main class="container-fluid">
 		<Main v-if="showMain" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
 		<Settings v-else-if="showSettings" :key="rerenderKey" />
 	</main>
-	<span v-if="!showChat" id="version" @click="props.store.openInEditor()">{{ version }}</span>
 </template>
 
 <script setup lang="ts">
@@ -35,7 +34,6 @@ import Settings from './components/settings/Settings.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
@@ -50,10 +48,6 @@ const forceRerender = (_event: IpcRendererEvent, _args: any) => {
 };
 
 ipcRenderer.on(IpcConstants.Rerender, forceRerender);
-
-ipcRenderer.on(IpcConstants.GetVersion, (_, args) => {
-	version.value = `v${args}`;
-});
 
 const $html = document.querySelector('html');
 

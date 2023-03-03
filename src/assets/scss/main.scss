@@ -134,11 +134,30 @@ body {
 					height: 80%;
 
 					aside {
-						width: 35%;
+						width: 30%;
+						margin-right: 3px;
+
+						ul {
+							font-weight: 300;
+							text-transform: uppercase;
+						}
 					}
 
 					div[role=document] {
 						width: 100%;
+
+						article {
+							#button-area {
+								display: flex;
+								justify-content: center;
+
+								button {
+									margin-top: 10px;
+									width: 50%;
+									margin-bottom: 10px;
+								}
+							}
+						}
 					}
 				}
 			}

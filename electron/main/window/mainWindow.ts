@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcConstants, StoreKeys } from '../../../shared/constants';
+import { StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class MainWindow {
@@ -63,10 +63,6 @@ export default class MainWindow {
 		} else {
 			window.loadFile(indexHtml);
 		}
-
-		window.webContents.on('did-finish-load', () => {
-			window?.webContents.send(IpcConstants.GetVersion, app.getVersion());
-		});
 
 		window.webContents.on('will-navigate', (event, url) => {
 			event.preventDefault();

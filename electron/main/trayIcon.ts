@@ -16,6 +16,10 @@ export default class TrayIcon {
 
 		const trayIconMenu = Menu.buildFromTemplate([
 			{
+				label: `GhostChat v${app.getVersion()}`,
+				enabled: false,
+			},
+			{
 				label: 'Open config',
 				type: 'normal',
 				click: () => {
@@ -46,7 +50,7 @@ export default class TrayIcon {
 				},
 			},
 			{
-				label: 'Quit GhostChat',
+				label: 'Exit',
 				click: () => {
 					app.quit();
 				},
