@@ -5,6 +5,8 @@ export const IpcConstants = {
 	Minimize: 'minimize',
 	Vanish: 'vanish',
 	OpenSettings: 'openSettings',
+	GetVersion: 'getVersion',
+	Rerender: 'rerender',
 } as const;
 
 export type IpcConstantsOptions = (typeof IpcConstants)[keyof typeof IpcConstants];

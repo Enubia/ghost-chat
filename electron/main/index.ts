@@ -96,7 +96,7 @@ function createWindow() {
 	}
 
 	window.webContents.on('did-finish-load', () => {
-		window?.webContents.send('get-version', app.getVersion());
+		window?.webContents.send(IpcConstants.GetVersion, app.getVersion());
 	});
 
 	// Make all links open with the browser, not with the application
@@ -176,6 +176,16 @@ function createWindow() {
 
 // ---------------------------------- ipc handling ----------------------------------
 
+ipcMain.on(IpcConstants.Rerender, (_, args) => {
+	if (args === 'child' && childWindow) {
+		childWindow.webContents.send(IpcConstants.Rerender);
+	}
+
+	if (args === 'parent' && window) {
+		window.webContents.send(IpcConstants.Rerender);
+	}
+});
+
 ipcMain.on(IpcConstants.Close, () => {
 	for (const window of BrowserWindow.getAllWindows()) {
 		window.close();
@@ -235,6 +245,9 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 
 	if (process.env.VITE_DEV_SERVER_URL) {
 		childWindow.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
+		childWindow.webContents.openDevTools({
+			mode: 'bottom',
+		});
 	} else {
 		childWindow.loadFile(indexHtml, { hash: arg });
 	}
@@ -256,6 +269,8 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 		} else {
 			store.reset('settings');
 		}
+
+		childWindow = null;
 	});
 });
 
@@ -272,6 +287,7 @@ ipcMain.on(IpcConstants.OpenSettings, (_, arg) => {
 
 app.on('window-all-closed', () => {
 	window = null;
+	childWindow = null;
 	app.quit();
 });
 

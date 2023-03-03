@@ -1,5 +1,14 @@
 <script setup lang="ts">
+import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+
+import { AppStore } from '../../../shared/constants';
+
+const store = new ElectronStore<AppStore>();
+
+const theme = store.get('savedWindowState.theme');
+const $html = document.querySelector('html');
+$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
 const showGeneral = ref(true);
 const showChat = ref(false);

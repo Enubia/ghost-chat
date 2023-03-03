@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref, shallowRef } from 'vue';
+import { ref } from 'vue';
 
 import { AppStore, IpcConstants } from '../shared/constants';
 
@@ -17,11 +17,19 @@ const version = ref('');
 const showMain = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
-let savedWindowState = shallowRef(props.store.get('savedWindowState'));
-let channelOptions = shallowRef(props.store.get('channelOptions'));
-let settings = shallowRef(props.store.get('settings'));
+const rerenderKey = ref(0);
 
-ipcRenderer.on('get-version', (_, args) => {
+let savedWindowState = ref(props.store.get('savedWindowState'));
+let channelOptions = ref(props.store.get('channelOptions'));
+let settings = ref(props.store.get('settings'));
+
+const forceRerender = (_event: IpcRendererEvent, _args: any) => {
+	rerenderKey.value++;
+};
+
+ipcRenderer.on(IpcConstants.Rerender, forceRerender);
+
+ipcRenderer.on(IpcConstants.GetVersion, (_, args) => {
 	version.value = `v${args}`;
 });
 
@@ -31,36 +39,6 @@ if (!$html?.getAttribute('data-theme')) {
 	const theme = props.store.get('savedWindowState.theme');
 	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 }
-
-props.store.onDidChange('channelOptions', (newValue, oldValue) => {
-	if (newValue) {
-		channelOptions.value = newValue;
-	}
-
-	if (oldValue) {
-		channelOptions.value = oldValue;
-	}
-});
-
-props.store.onDidChange('savedWindowState', (newValue, oldValue) => {
-	if (newValue) {
-		savedWindowState.value = newValue;
-	}
-
-	if (oldValue) {
-		savedWindowState.value = oldValue;
-	}
-});
-
-props.store.onDidChange('settings', (newValue, oldValue) => {
-	if (newValue) {
-		settings.value = newValue;
-	}
-
-	if (oldValue) {
-		settings.value = oldValue;
-	}
-});
 
 const setShowMain = () => {
 	showChat.value = false;
@@ -114,7 +92,7 @@ if (settings.value.isOpen) {
 	<main class="container-fluid">
 		<Main v-if="showMain" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
-		<Settings v-else-if="showSettings" />
+		<Settings v-else-if="showSettings" :key="rerenderKey" />
 	</main>
 	<span v-if="!showChat" id="version" @click="props.store.openInEditor()">{{ version }}</span>
 </template>

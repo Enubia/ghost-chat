@@ -25,10 +25,14 @@ const toggleTheme = () => {
 	if (theme && theme === 'dark') {
 		$html?.setAttribute('data-theme', 'light');
 		props.store.set('savedWindowState.theme', 'light');
+		props.store.set('settings.savedWindowState.theme', 'light');
 	} else {
 		$html?.setAttribute('data-theme', 'dark');
 		props.store.set('savedWindowState.theme', 'dark');
+		props.store.set('settings.savedWindowState.theme', 'dark');
 	}
+
+	ipcRenderer.send(IpcConstants.Rerender, 'child');
 };
 
 const setClickThrough = () => {
