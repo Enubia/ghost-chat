@@ -22,7 +22,7 @@ specifiers:
   eslint-config-prettier: 8.6.0
   eslint-plugin-import: 2.27.5
   eslint-plugin-prettier: 4.2.1
-  eslint-plugin-unicorn: 45.0.2
+  eslint-plugin-unicorn: 46.0.0
   eslint-plugin-unused-imports: 2.0.0
   eslint-plugin-vue: 9.9.0
   husky: 8.0.3
@@ -60,7 +60,7 @@ devDependencies:
   eslint-config-prettier: 8.6.0_eslint@8.35.0
   eslint-plugin-import: 2.27.5_ajyizmi44oc3hrc35l6ndh7p4e
   eslint-plugin-prettier: 4.2.1_u2zha4kiojzs42thzpgwygphmy
-  eslint-plugin-unicorn: 45.0.2_eslint@8.35.0
+  eslint-plugin-unicorn: 46.0.0_eslint@8.35.0
   eslint-plugin-unused-imports: 2.0.0_hlu2tevvfejtijvruutuci6rky
   eslint-plugin-vue: 9.9.0_eslint@8.35.0
   husky: 8.0.3
@@ -2146,8 +2146,8 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-  /eslint-plugin-unicorn/45.0.2_eslint@8.35.0:
-    resolution: {integrity: sha512-Y0WUDXRyGDMcKLiwgL3zSMpHrXI00xmdyixEGIg90gHnj0PcHY4moNv3Ppje/kDivdAy5vUeUr7z211ImPv2gw==}
+  /eslint-plugin-unicorn/46.0.0_eslint@8.35.0:
+    resolution: {integrity: sha512-j07WkC+PFZwk8J33LYp6JMoHa1lXc1u6R45pbSAipjpfpb7KIGr17VE2D685zCxR5VL4cjrl65kTJflziQWMDA==}
     engines: {node: '>=14.18'}
     peerDependencies:
       eslint: '>=8.28.0'
