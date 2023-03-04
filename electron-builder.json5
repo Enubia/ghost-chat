@@ -17,22 +17,12 @@
 		"artifactName": "${productName}_${version}.${ext}",
 		"icon": "dist/favicon.png",
 		"target": "dmg",
-		"publish": [
-			{
-				"provider": "github",
-				"owner": "Marco Schuster"
-			}
-		]
+		"publish": ["github"]
 	},
 	"win": {
 		"artifactName": "${productName}_${version}.${ext}",
 		"target": "nsis",
-		"publish": [
-			{
-				"provider": "github",
-				"owner": "Marco Schuster"
-			}
-		]
+		"publish": ["github"]
 		// portable disabled for now, won't restart on app.relaunch() app.quit()
 		// probably related to this issue https://github.com/electron/electron/issues/22293
 		// "target": ["nsis", "portable"]
@@ -41,12 +31,7 @@
 	"linux": {
 		"artifactName": "${productName}_${version}.${ext}",
 		"target": "AppImage",
-		"publish": [
-			{
-				"provider": "github",
-				"owner": "Marco Schuster"
-			}
-		]
+		"publish": ["github"]
 	},
 	"nsis": {
 		"oneClick": false,
