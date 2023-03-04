@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcConstants, StoreKeys } from '../../shared/constants';
+import { IpcEvent, StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 import Settings from './window/settings';
@@ -21,19 +21,19 @@ export default class IpcEvents {
 	}
 
 	private rerender(overlay: BrowserWindow | null) {
-		ipcMain.on(IpcConstants.Rerender, (_event: Electron.IpcMainEvent, args: any) => {
+		ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: any) => {
 			if (args === 'child' && this.settings) {
-				this.settings.webContents.send(IpcConstants.Rerender);
+				this.settings.webContents.send(IpcEvent.Rerender);
 			}
 
 			if (args === 'parent' && overlay) {
-				overlay.webContents.send(IpcConstants.Rerender);
+				overlay.webContents.send(IpcEvent.Rerender);
 			}
 		});
 	}
 
 	private close() {
-		ipcMain.on(IpcConstants.Close, () => {
+		ipcMain.on(IpcEvent.Close, () => {
 			for (const window of BrowserWindow.getAllWindows()) {
 				window.close();
 			}
@@ -41,20 +41,20 @@ export default class IpcEvents {
 	}
 
 	private setClickThrough(overlay: BrowserWindow | null) {
-		ipcMain.on(IpcConstants.SetClickThrough, () => {
+		ipcMain.on(IpcEvent.SetClickThrough, () => {
 			this.store.set('savedWindowState.isClickThrough', true);
 			overlay?.setIgnoreMouseEvents(true);
 		});
 	}
 
 	private minimize(overlay: BrowserWindow | null) {
-		ipcMain.on(IpcConstants.Minimize, () => {
+		ipcMain.on(IpcEvent.Minimize, () => {
 			overlay?.minimize();
 		});
 	}
 
 	private vanish(overlay: BrowserWindow | null) {
-		ipcMain.on(IpcConstants.Vanish, () => {
+		ipcMain.on(IpcEvent.Vanish, () => {
 			const windowBounds = overlay?.getBounds() as Electron.Rectangle;
 			this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 				x: windowBounds.x,
@@ -72,7 +72,7 @@ export default class IpcEvents {
 	}
 
 	private openSettings(indexHtml: string) {
-		ipcMain.on(IpcConstants.OpenSettings, () => {
+		ipcMain.on(IpcEvent.OpenSettings, () => {
 			if (this.settings) {
 				this.settings.focus();
 			} else {

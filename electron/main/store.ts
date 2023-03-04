@@ -35,6 +35,9 @@ export default function createStore() {
 					theme: null,
 				},
 			},
+			updater: {
+				channel: 'latest',
+			},
 		},
 		// clears the config is a user edits it and causes a syntax error
 		clearInvalidConfig: true,

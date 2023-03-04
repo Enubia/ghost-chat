@@ -16,17 +16,17 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcConstants } from '../../../shared/constants';
+import { IpcEvent } from '../../../shared/constants';
 
 defineProps<{ store: ElectronStore; isChat: boolean }>();
 
 const emit = defineEmits(['back']);
 
 function close() {
-	ipcRenderer.send(IpcConstants.Close);
+	ipcRenderer.send(IpcEvent.Close);
 }
 
 function minimize() {
-	ipcRenderer.send(IpcConstants.Minimize);
+	ipcRenderer.send(IpcEvent.Minimize);
 }
 </script>

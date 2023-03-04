@@ -10,7 +10,6 @@
 .center-elements {
 	@extend %align-items;
 	justify-content: center;
-	
 }
 
 .align-elements {
@@ -22,9 +21,21 @@
 	--primary-hover: hsl(264, 80%, 60%);
 }
 
+::-webkit-scrollbar {
+	width: 3px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--primary);
+}
+
 html,
 body {
-	background-color: rgba(0,0,0,0);
+	background-color: rgba(0, 0, 0, 0);
 	height: 100%;
 	overflow: hidden;
 	margin: 0;
@@ -32,13 +43,13 @@ body {
 }
 
 body {
-	button, a {
+	button,
+	a {
 		-webkit-app-region: no-drag;
 		cursor: pointer;
 	}
 
 	#app {
-
 		&:not([vanished]) {
 			background-color: var(--background-color);
 		}
@@ -47,7 +58,7 @@ body {
 		border-radius: 10px;
 		height: 100%;
 
-			height: 100%;
+		height: 100%;
 
 		#version-check {
 			height: 100%;
@@ -87,7 +98,7 @@ body {
 					}
 				}
 
-				ul[role=listbox] {
+				ul[role='listbox'] {
 					right: inherit;
 
 					#vanish {
@@ -121,7 +132,6 @@ body {
 					}
 				}
 			}
-
 		}
 
 		main {
@@ -176,14 +186,19 @@ body {
 						}
 					}
 
-					div[role=document] {
+					div[role='document'] {
 						height: 100%;
 						width: 100%;
 						overflow-y: auto;
-						
+
+						#updates-container {
+							height: 100%;
+							@extend %align-items;
+						}
+
 						article {
 							margin: 0;
-							
+
 							input {
 								margin-bottom: 0;
 							}

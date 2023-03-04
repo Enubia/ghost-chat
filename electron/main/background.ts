@@ -2,13 +2,25 @@ import { release } from 'node:os';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, crashReporter } from 'electron';
+import log from 'electron-log';
 
+import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
 import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 
+/* 
+	Log locations:
+		on Linux: ~/.config/ghost-chat/logs/main.log
+		on macOS: ~/Library/Logs /ghost-chat/ main.log
+		on Windows: %appdata%\Roaming\ghost-chat\logs\main.log
+*/
+log.info('App starting...');
+
 crashReporter.start({ submitURL: '', uploadToServer: false });
+
+log.info('Crash reporter started');
 
 if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
 	app.disableHardwareAcceleration();
@@ -25,6 +37,8 @@ if (!app.requestSingleInstanceLock()) {
 
 const store = createStore();
 
+log.info('Store created');
+
 const DIST_ELECTRON = join(__dirname, '..');
 const DIST = join(DIST_ELECTRON, '../dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
@@ -38,10 +52,11 @@ let overlay: BrowserWindow | null;
 
 app.on('ready', () => {
 	setTimeout(
-		() => {
+		async () => {
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(overlay, indexHtml);
+			new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
 		},
 		process.platform === 'linux' ? 1000 : 0,
 	);
@@ -62,5 +77,6 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
 	overlay = null;
+	log.info('App closing...');
 	app.quit();
 });

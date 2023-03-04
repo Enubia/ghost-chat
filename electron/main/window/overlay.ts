@@ -1,4 +1,5 @@
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
+import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
 import { StoreKeys } from '../../../shared/constants';
@@ -8,6 +9,8 @@ export default class Overlay {
 	constructor(private store: ElectronStore<AppStore>) {}
 
 	buildWindow(indexHtml: string) {
+		log.info('Building overlay window');
+
 		const windowState = this.store.get('savedWindowState');
 		const webPreferences: Electron.WebPreferences = {
 			webviewTag: true,
@@ -60,6 +63,7 @@ export default class Overlay {
 		}
 
 		window.webContents.on('will-navigate', (event, url) => {
+			log.info(`Opening external link to ${url}`);
 			event.preventDefault();
 			shell.openExternal(url);
 		});
@@ -84,6 +88,7 @@ export default class Overlay {
 
 				this.store.set('settings.isOpen', false);
 			} else {
+				log.error('Overlay closed but reference is already gone');
 				this.store.reset('savedWindowState');
 			}
 		});

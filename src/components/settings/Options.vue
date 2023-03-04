@@ -68,7 +68,7 @@ import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 
-import { IpcConstants } from '../../../shared/constants';
+import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
@@ -94,6 +94,6 @@ const save = () => {
 	props.store.set('channelOptions.preventClipping', preventClipping.value);
 	props.store.set('channelOptions.chatTheme', chatTheme.value);
 
-	ipcRenderer.send(IpcConstants.Rerender, 'parent');
+	ipcRenderer.send(IpcEvent.Rerender, 'parent');
 };
 </script>

@@ -26,7 +26,7 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcConstants } from '../../../shared/constants';
+import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{
@@ -40,7 +40,7 @@ const emit = defineEmits(['showChat', 'showMain', 'vanish']);
 
 const showSettings = () => {
 	document.querySelector('details')?.removeAttribute('open');
-	ipcRenderer.send(IpcConstants.OpenSettings);
+	ipcRenderer.send(IpcEvent.OpenSettings);
 };
 
 const toggleTheme = () => {
@@ -57,11 +57,11 @@ const toggleTheme = () => {
 		props.store.set('settings.savedWindowState.theme', 'dark');
 	}
 
-	ipcRenderer.send(IpcConstants.Rerender, 'child');
+	ipcRenderer.send(IpcEvent.Rerender, 'child');
 };
 
 const setClickThrough = () => {
 	document.querySelector('details')?.removeAttribute('open');
-	ipcRenderer.send(IpcConstants.SetClickThrough);
+	ipcRenderer.send(IpcEvent.SetClickThrough);
 };
 </script>

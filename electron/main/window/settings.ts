@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron';
+import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
 import { StoreKeys } from '../../../shared/constants';
@@ -10,6 +11,8 @@ export default class Settings {
 	constructor(private store: ElectronStore<AppStore>, private destroyWindow: () => void) {}
 
 	buildWindow(indexHtml: string, arg: any) {
+		log.info('Building settings window');
+
 		const { savedWindowState } = this.store.get('settings');
 
 		this.window = new BrowserWindow({
@@ -64,6 +67,7 @@ export default class Settings {
 					},
 				});
 			} else {
+				log.error('Settings closed but reference is already gone');
 				this.store.reset('settings');
 			}
 

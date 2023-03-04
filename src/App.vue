@@ -24,7 +24,7 @@ import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref, shallowRef } from 'vue';
 
-import { IpcConstants } from '../shared/constants';
+import { IpcEvent } from '../shared/constants';
 import { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
@@ -50,7 +50,7 @@ const forceRerender = () => {
 	rerenderKey.value++;
 };
 
-ipcRenderer.on(IpcConstants.Rerender, forceRerender);
+ipcRenderer.on(IpcEvent.Rerender, forceRerender);
 
 const $html = document.querySelector('html');
 
@@ -81,7 +81,7 @@ const setShowSettings = () => {
 };
 
 const vanish = () => {
-	ipcRenderer.send(IpcConstants.Vanish);
+	ipcRenderer.send(IpcEvent.Vanish);
 };
 
 const enableChat = (channel: string) => {
