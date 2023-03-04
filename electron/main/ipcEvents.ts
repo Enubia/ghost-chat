@@ -7,27 +7,27 @@ import { AppStore } from '../../shared/types';
 import Settings from './window/settings';
 
 export default class IpcEvents {
-	private settingsWindow: BrowserWindow | null;
+	private settings: BrowserWindow | null;
 
 	constructor(private store: ElectronStore<AppStore>) {}
 
-	registerEvents(mainWindow: BrowserWindow | null, indexHtml: string) {
-		this.rerender(mainWindow);
+	registerEvents(overlay: BrowserWindow | null, indexHtml: string) {
+		this.rerender(overlay);
 		this.close();
-		this.setClickThrough(mainWindow);
-		this.minimize(mainWindow);
-		this.vanish(mainWindow);
+		this.setClickThrough(overlay);
+		this.minimize(overlay);
+		this.vanish(overlay);
 		this.openSettings(indexHtml);
 	}
 
-	private rerender(mainWindow: BrowserWindow | null) {
+	private rerender(overlay: BrowserWindow | null) {
 		ipcMain.on(IpcConstants.Rerender, (_event: Electron.IpcMainEvent, args: any) => {
-			if (args === 'child' && this.settingsWindow) {
-				this.settingsWindow.webContents.send(IpcConstants.Rerender);
+			if (args === 'child' && this.settings) {
+				this.settings.webContents.send(IpcConstants.Rerender);
 			}
 
-			if (args === 'parent' && mainWindow) {
-				mainWindow.webContents.send(IpcConstants.Rerender);
+			if (args === 'parent' && overlay) {
+				overlay.webContents.send(IpcConstants.Rerender);
 			}
 		});
 	}
@@ -40,22 +40,22 @@ export default class IpcEvents {
 		});
 	}
 
-	private setClickThrough(mainWindow: BrowserWindow | null) {
+	private setClickThrough(overlay: BrowserWindow | null) {
 		ipcMain.on(IpcConstants.SetClickThrough, () => {
 			this.store.set('savedWindowState.isClickThrough', true);
-			mainWindow?.setIgnoreMouseEvents(true);
+			overlay?.setIgnoreMouseEvents(true);
 		});
 	}
 
-	private minimize(mainWindow: BrowserWindow | null) {
+	private minimize(overlay: BrowserWindow | null) {
 		ipcMain.on(IpcConstants.Minimize, () => {
-			mainWindow?.minimize();
+			overlay?.minimize();
 		});
 	}
 
-	private vanish(mainWindow: BrowserWindow | null) {
+	private vanish(overlay: BrowserWindow | null) {
 		ipcMain.on(IpcConstants.Vanish, () => {
-			const windowBounds = mainWindow?.getBounds() as Electron.Rectangle;
+			const windowBounds = overlay?.getBounds() as Electron.Rectangle;
 			this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 				x: windowBounds.x,
 				y: windowBounds.y,
@@ -72,18 +72,18 @@ export default class IpcEvents {
 	}
 
 	private openSettings(indexHtml: string) {
-		ipcMain.on(IpcConstants.OpenSettings, (_event: Electron.IpcMainEvent, args: any) => {
-			if (this.settingsWindow) {
-				this.settingsWindow.focus();
+		ipcMain.on(IpcConstants.OpenSettings, () => {
+			if (this.settings) {
+				this.settings.focus();
 			} else {
-				const _settingsWindow = new Settings(this.store, this.destroyWindow.bind(this));
-				_settingsWindow.buildWindow(indexHtml, args);
-				this.settingsWindow = _settingsWindow.window;
+				const _settings = new Settings(this.store, this.destroyWindow.bind(this));
+				_settings.buildWindow(indexHtml, 'settings');
+				this.settings = _settings.window;
 			}
 		});
 	}
 
 	private destroyWindow() {
-		this.settingsWindow = null;
+		this.settings = null;
 	}
 }

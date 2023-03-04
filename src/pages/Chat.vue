@@ -23,17 +23,17 @@ const props = defineProps<{ store: ElectronStore<AppStore> }>();
 const channelOptions = props.store.get('channelOptions');
 
 const link = new URL('https://nightdev.com/hosted/obschat');
-link.searchParams.append(SearchParams.THEME, 'undefined');
+link.searchParams.append(SearchParams.THEME, channelOptions.chatTheme);
 link.searchParams.append(SearchParams.CHANNEL, channelOptions.channel);
 
 if (channelOptions.fadeMessages) {
-	link.searchParams.append(SearchParams.FADE, channelOptions.fadeMessages.toString());
+	link.searchParams.append(SearchParams.FADE, channelOptions.fadeTimeout.toString());
 } else {
 	link.searchParams.append(SearchParams.FADE, 'false');
 }
 
 link.searchParams.append(SearchParams.BOT_ACTIVITY, channelOptions.showBotActivity.toString());
-link.searchParams.append(SearchParams.PREVENT_CLIPPING, 'false');
+link.searchParams.append(SearchParams.PREVENT_CLIPPING, channelOptions.preventClipping.toString());
 
 let webView: Element;
 

@@ -1,10 +1,13 @@
 export type ChannelOptions = {
 	channel: string;
 	showBotActivity: boolean;
-	fadeMessages: boolean | number;
+	fadeMessages: boolean;
+	fadeTimeout: number;
 	customCSS: string;
 	customJS: string;
-	persistentChannel: string;
+	defaultChannel: string;
+	preventClipping: boolean;
+	chatTheme: string;
 };
 
 export type WindowState = {

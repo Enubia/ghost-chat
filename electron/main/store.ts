@@ -8,10 +8,13 @@ export default function createStore() {
 			channelOptions: {
 				channel: '',
 				fadeMessages: false,
-				showBotActivity: true,
-				customCSS: '',
+				fadeTimeout: 30,
+				showBotActivity: false,
+				customCSS: '.chat_line {\n    font-size: 14px;\n}',
 				customJS: '',
-				persistentChannel: '',
+				defaultChannel: '',
+				preventClipping: false,
+				chatTheme: 'undefined',
 			},
 			savedWindowState: {
 				x: 0,
@@ -27,8 +30,8 @@ export default function createStore() {
 				savedWindowState: {
 					x: 0,
 					y: 0,
-					width: 880,
-					height: 550,
+					width: 900,
+					height: 760,
 					theme: null,
 				},
 			},

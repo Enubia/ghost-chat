@@ -2,10 +2,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 
-.center-elements {
+%align-items {
 	display: flex;
-	justify-content: center;
 	align-items: center;
+}
+
+.center-elements {
+	@extend %align-items;
+	justify-content: center;
+	
+}
+
+.align-elements {
+	@extend %align-items;
 }
 
 :root {
@@ -155,13 +164,53 @@ body {
 						ul {
 							font-weight: 300;
 							text-transform: uppercase;
+
+							a[active] {
+								color: var(--primary);
+							}
 						}
 					}
 
 					div[role=document] {
+						height: 100%;
 						width: 100%;
-
+						overflow-y: auto;
+						
 						article {
+							margin: 0;
+							
+							input {
+								margin-bottom: 0;
+							}
+
+							hr {
+								margin-top: 18px;
+								margin-bottom: 18px;
+							}
+
+							small {
+								font-size: 0.725em;
+							}
+
+							#fade {
+								margin-bottom: 18px;
+								.control {
+									display: flex;
+									align-items: center;
+									justify-content: space-between;
+									margin-bottom: 5px;
+
+									label {
+										margin-bottom: 0;
+									}
+
+									#fade-timeout {
+										width: 50%;
+										margin-bottom: 0;
+									}
+								}
+							}
+
 							#button-area {
 								display: flex;
 								justify-content: center;
@@ -169,7 +218,6 @@ body {
 								button {
 									margin-top: 10px;
 									width: 50%;
-									margin-bottom: 10px;
 								}
 							}
 						}

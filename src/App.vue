@@ -13,16 +13,16 @@
 		<MenuButtons :store="store" :is-chat="showChat" @back="setShowMain" />
 	</header>
 	<main class="container-fluid">
-		<Main v-if="showMain" @channel="enableChat" />
+		<Main v-if="showMain" :store="store" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
 		<Settings v-else-if="showSettings" :key="rerenderKey" />
 	</main>
 </template>
 
 <script setup lang="ts">
-import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 
 import { IpcConstants } from '../shared/constants';
 import { AppStore } from '../shared/types';
@@ -42,11 +42,11 @@ const showSettings = ref(false);
 const rerenderKey = ref(0);
 const checkingVersion = ref(true);
 
-let savedWindowState = ref(props.store.get('savedWindowState'));
-let channelOptions = ref(props.store.get('channelOptions'));
-let settings = ref(props.store.get('settings'));
+let savedWindowState = shallowRef(props.store.get('savedWindowState'));
+let channelOptions = shallowRef(props.store.get('channelOptions'));
+let settings = shallowRef(props.store.get('settings'));
 
-const forceRerender = (_event: IpcRendererEvent, _args: any) => {
+const forceRerender = () => {
 	rerenderKey.value++;
 };
 

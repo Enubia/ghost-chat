@@ -26,8 +26,14 @@ import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }>();
 
+const theme = props.store.get('savedWindowState').theme;
+
 let code = ref();
-const extensions = [oneDark];
+const extensions: any[] = [];
+
+if (theme === 'dark') {
+	extensions.push(oneDark);
+}
 
 if (props.type === 'css') {
 	extensions.push(css());

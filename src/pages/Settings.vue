@@ -4,9 +4,9 @@
 			<aside>
 				<nav>
 					<ul>
-						<li><a class="contrast" @click="setShowOptions">Chat</a></li>
-						<li><a class="contrast" @click="setShowCSS">Custom CSS</a></li>
-						<li><a class="contrast" @click="setShowJS">Custom JavaScript</a></li>
+						<li><a id="options" active class="contrast" @click="setShowOptions">Options</a></li>
+						<li><a id="css" class="contrast" @click="setShowCSS">Custom CSS</a></li>
+						<li><a id="js" class="contrast" @click="setShowJS">Custom JavaScript</a></li>
 					</ul>
 				</nav>
 			</aside>
@@ -43,21 +43,33 @@ const showOptions = ref(true);
 const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 
-const setShowJS = () => {
-	showJSEditor.value = true;
-	showOptions.value = false;
-	showCSSEditor.value = false;
-};
-
 const setShowOptions = () => {
+	document.querySelector('#options')?.setAttribute('active', 'true');
+	document.querySelector('#css')?.removeAttribute('active');
+	document.querySelector('#js')?.removeAttribute('active');
+
 	showJSEditor.value = false;
 	showOptions.value = true;
 	showCSSEditor.value = false;
 };
 
 const setShowCSS = () => {
+	document.querySelector('#options')?.removeAttribute('active');
+	document.querySelector('#css')?.setAttribute('active', 'true');
+	document.querySelector('#js')?.removeAttribute('active');
+
 	showJSEditor.value = false;
 	showOptions.value = false;
 	showCSSEditor.value = true;
+};
+
+const setShowJS = () => {
+	document.querySelector('#options')?.removeAttribute('active');
+	document.querySelector('#css')?.removeAttribute('active');
+	document.querySelector('#js')?.setAttribute('active', 'true');
+
+	showJSEditor.value = true;
+	showOptions.value = false;
+	showCSSEditor.value = false;
 };
 </script>

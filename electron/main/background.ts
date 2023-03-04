@@ -34,22 +34,22 @@ const trayIconPath = `${PUBLIC}/${trayIcnName}`;
 
 const indexHtml = join(DIST, 'index.html');
 
-let mainWindow: BrowserWindow | null;
+let overlay: BrowserWindow | null;
 
 app.on('ready', () => {
 	setTimeout(
 		() => {
-			mainWindow = new Overlay(store).buildWindow(indexHtml);
-			new TrayIcon(store, mainWindow).buildTray(trayIconPath);
-			new IpcEvents(store).registerEvents(mainWindow, indexHtml);
+			overlay = new Overlay(store).buildWindow(indexHtml);
+			new TrayIcon(store, overlay).buildTray(trayIconPath);
+			new IpcEvents(store).registerEvents(overlay, indexHtml);
 		},
 		process.platform === 'linux' ? 1000 : 0,
 	);
 });
 
 app.on('activate', () => {
-	if (mainWindow?.isMinimized()) {
-		mainWindow.restore();
+	if (overlay?.isMinimized()) {
+		overlay.restore();
 	} else {
 		const allWindows = BrowserWindow.getAllWindows();
 		if (allWindows.length) {
@@ -61,6 +61,6 @@ app.on('activate', () => {
 });
 
 app.on('window-all-closed', () => {
-	mainWindow = null;
+	overlay = null;
 	app.quit();
 });
