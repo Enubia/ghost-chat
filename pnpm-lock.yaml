@@ -14,7 +14,7 @@ specifiers:
   '@typescript-eslint/parser': 5.54.0
   '@vitejs/plugin-vue': 4.0.0
   codemirror: 6.0.1
-  electron: 23.1.1
+  electron: 23.1.2
   electron-builder: 23.6.0
   electron-context-menu: 3.6.1
   electron-store: 8.1.0
@@ -52,7 +52,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.54.0_ycpbpc6yetojsgtrx3mwntkhsu
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
   codemirror: 6.0.1
-  electron: 23.1.1
+  electron: 23.1.2
   electron-builder: 23.6.0
   electron-context-menu: 3.6.1
   electron-store: 8.1.0
@@ -1892,8 +1892,8 @@ packages:
       type-fest: 2.19.0
     dev: true
 
-  /electron/23.1.1:
-    resolution: {integrity: sha512-junV1NzPx5T8Mx9+o8fMWK1Q5WOtG5vggiM09PGYg/6zTcGDL3DjGVHeUa/97gx7ErXL37DrFnxNg6+ePWprDg==}
+  /electron/23.1.2:
+    resolution: {integrity: sha512-ajE6xzIwH7swf8TlTU5WklDqpI3mPj4Am6690YrpCXzcp+E+dmMBXIajUUNt4joDrFhJC/lC6ZqDS2Q1BApKgQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
