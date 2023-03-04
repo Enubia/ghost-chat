@@ -4,7 +4,7 @@
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
 
-import { AppStore } from '../../../../shared/types';
+import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 

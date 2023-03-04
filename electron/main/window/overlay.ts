@@ -1,12 +1,10 @@
-import { join } from 'node:path';
-
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import ElectronStore from 'electron-store';
 
 import { StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
-export default class MainWindow {
+export default class Overlay {
 	constructor(private store: ElectronStore<AppStore>) {}
 
 	buildWindow(indexHtml: string) {
@@ -16,10 +14,6 @@ export default class MainWindow {
 			nodeIntegration: true,
 			contextIsolation: false,
 		};
-
-		if (!windowState.isTransparent) {
-			webPreferences.preload = join(__dirname, '../preload/index.js');
-		}
 
 		const window = new BrowserWindow({
 			title: 'Ghost Chat',
@@ -31,6 +25,7 @@ export default class MainWindow {
 			frame: false,
 			resizable: true,
 			maximizable: false,
+			show: false,
 			webPreferences,
 		});
 
@@ -56,9 +51,9 @@ export default class MainWindow {
 		if (process.env.VITE_DEV_SERVER_URL) {
 			window.loadURL(process.env.VITE_DEV_SERVER_URL);
 			if (!windowState.isTransparent) {
-				window.webContents.openDevTools({
-					mode: 'bottom',
-				});
+				// window.webContents.openDevTools({
+				// 	mode: 'bottom',
+				// });
 			}
 		} else {
 			window.loadFile(indexHtml);
@@ -67,6 +62,10 @@ export default class MainWindow {
 		window.webContents.on('will-navigate', (event, url) => {
 			event.preventDefault();
 			shell.openExternal(url);
+		});
+
+		window.once('ready-to-show', () => {
+			window.show();
 		});
 
 		window.on('close', () => {

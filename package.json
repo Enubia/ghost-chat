@@ -6,7 +6,7 @@
 	"author": {
 		"name": "Marco Schuster"
 	},
-	"main": "dist-electron/main/index.js",
+	"main": "dist-electron/main/background.js",
 	"license": "MIT",
 	"keywords": [
 		"electron",

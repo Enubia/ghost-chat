@@ -8,7 +8,7 @@
 import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import type { AppStore } from '../../../shared/types';
+import type { AppStore } from '../../shared/types';
 
 const SearchParams = {
 	THEME: 'theme',

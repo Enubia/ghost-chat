@@ -4,7 +4,7 @@ import ElectronStore from 'electron-store';
 import { IpcConstants, StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
-import SettingsWindow from './window/settingsWindow';
+import Settings from './window/settings';
 
 export default class IpcEvents {
 	private settingsWindow: BrowserWindow | null;
@@ -76,7 +76,7 @@ export default class IpcEvents {
 			if (this.settingsWindow) {
 				this.settingsWindow.focus();
 			} else {
-				const _settingsWindow = new SettingsWindow(this.store, this.destroyWindow.bind(this));
+				const _settingsWindow = new Settings(this.store, this.destroyWindow.bind(this));
 				_settingsWindow.buildWindow(indexHtml, args);
 				this.settingsWindow = _settingsWindow.window;
 			}

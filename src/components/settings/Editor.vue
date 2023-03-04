@@ -22,7 +22,7 @@ import ElectronStore from 'electron-store';
 import { ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
-import { AppStore } from '../../../../shared/types';
+import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }>();
 

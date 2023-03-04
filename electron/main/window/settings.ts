@@ -4,7 +4,7 @@ import ElectronStore from 'electron-store';
 import { StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
-export default class SettingsWindow {
+export default class Settings {
 	window: BrowserWindow | null;
 
 	constructor(private store: ElectronStore<AppStore>, private destroyWindow: () => void) {}
@@ -20,6 +20,7 @@ export default class SettingsWindow {
 			height: savedWindowState.height || 900,
 			resizable: true,
 			maximizable: false,
+			show: false,
 			webPreferences: {
 				nodeIntegration: true,
 				contextIsolation: false,
@@ -43,6 +44,10 @@ export default class SettingsWindow {
 		} else {
 			this.window.loadFile(indexHtml, { hash: arg });
 		}
+
+		this.window.once('ready-to-show', () => {
+			this.window?.show();
+		});
 
 		this.window.on('close', () => {
 			if (this.window) {

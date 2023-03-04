@@ -1,4 +1,5 @@
 <template>
+	<VersionCheck v-if="checkingVersion" @remove-loading="checkingVersion = !checkingVersion" />
 	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
 		<DropDownMenu
 			:is-chat-page="showChat"
@@ -7,7 +8,7 @@
 			:store="store"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
-			@vanish="vanishWindow"
+			@vanish="ipcRenderer.send(IpcConstants.Vanish)"
 		/>
 		<MenuButtons :store="store" :is-chat="showChat" @back="setShowMain" />
 	</header>
@@ -26,11 +27,12 @@ import { ref } from 'vue';
 import { IpcConstants } from '../shared/constants';
 import { AppStore } from '../shared/types';
 
-import Chat from './components/chat/Chat.vue';
-import DropDownMenu from './components/header/DropDownMenu.vue';
-import MenuButtons from './components/header/MenuButtons.vue';
-import Main from './components/main/Main.vue';
-import Settings from './components/settings/Settings.vue';
+import MenuButtons from './components/header/Buttons.vue';
+import DropDownMenu from './components/header/Dropdown.vue';
+import Chat from './pages/Chat.vue';
+import Main from './pages/Main.vue';
+import Settings from './pages/Settings.vue';
+import VersionCheck from './pages/VersionCheck.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
@@ -38,6 +40,7 @@ const showMain = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
 const rerenderKey = ref(0);
+const checkingVersion = ref(true);
 
 let savedWindowState = ref(props.store.get('savedWindowState'));
 let channelOptions = ref(props.store.get('channelOptions'));
@@ -72,10 +75,7 @@ const setShowSettings = () => {
 	showChat.value = false;
 	showMain.value = false;
 	showSettings.value = true;
-};
-
-const vanishWindow = () => {
-	ipcRenderer.send(IpcConstants.Vanish);
+	checkingVersion.value = false;
 };
 
 const enableChat = (channel: string) => {

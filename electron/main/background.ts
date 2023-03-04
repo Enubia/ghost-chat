@@ -6,7 +6,7 @@ import { app, BrowserWindow, crashReporter } from 'electron';
 import IpcEvents from './ipcEvents';
 import createStore from './store';
 import TrayIcon from './trayIcon';
-import MainWindow from './window/mainWindow';
+import Overlay from './window/overlay';
 
 crashReporter.start({ submitURL: '', uploadToServer: false });
 
@@ -39,7 +39,7 @@ let mainWindow: BrowserWindow | null;
 app.on('ready', () => {
 	setTimeout(
 		() => {
-			mainWindow = new MainWindow(store).buildWindow(indexHtml);
+			mainWindow = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, mainWindow).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(mainWindow, indexHtml);
 		},
@@ -55,7 +55,7 @@ app.on('activate', () => {
 		if (allWindows.length) {
 			allWindows[0].focus();
 		} else {
-			new MainWindow(store).buildWindow(indexHtml);
+			new Overlay(store).buildWindow(indexHtml);
 		}
 	}
 });
