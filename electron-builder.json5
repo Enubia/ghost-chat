@@ -3,7 +3,7 @@
  */
 {
 	"productName": "Ghost-Chat",
-	"appId": "ghost-chat",
+	"appId": "com.github.enubia.ghost-chat",
 	"asar": true,
 	"icon": "public/favicon.ico",
 	"directories": {
@@ -16,29 +16,42 @@
 	"mac": {
 		"artifactName": "${productName}_${version}.${ext}",
 		"icon": "dist/favicon.png",
-		"target": [
-			"dmg"
+		"target": "dmg",
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "Marco Schuster"
+			}
 		]
 	},
 	"win": {
-		"target": [
-			"nsis"
-			// portable disabled for now, won't restart on app.relaunch() app.quit()
-			// probably related to this issue https://github.com/electron/electron/issues/22293
-			// "portable"
-		],
-		"artifactName": "${productName}_${version}.${ext}"
+		"artifactName": "${productName}_${version}.${ext}",
+		"target": "nsis",
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "Marco Schuster"
+			}
+		]
+		// portable disabled for now, won't restart on app.relaunch() app.quit()
+		// probably related to this issue https://github.com/electron/electron/issues/22293
+		// "target": ["nsis", "portable"]
+		
+	},
+	"linux": {
+		"artifactName": "${productName}_${version}.${ext}",
+		"target": "AppImage",
+		"publish": [
+			{
+				"provider": "github",
+				"owner": "Marco Schuster"
+			}
+		]
 	},
 	"nsis": {
 		"oneClick": false,
 		"perMachine": false,
 		"allowToChangeInstallationDirectory": true,
 		"deleteAppDataOnUninstall": false
-	},
-	"publish": [
-		{
-			"provider": "github",
-			"owner": "Marco Schuster"
-		}
-	]
+	}
 }

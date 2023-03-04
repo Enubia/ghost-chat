@@ -24,9 +24,9 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
+		"build": "vue-tsc --noEmit && vite build && electron-builder",
 		"preview": "vite preview",
-		"publish": "vue-tsc --noEmit && vite build && electron-builder",
+		"release": "vue-tsc --noEmit && vite build && electron-builder",
 		"clean": "rimraf dist-electron dist release",
 		"lint:src": "eslint --cache --ext .ts --ignore-path .eslintignore src/",
 		"lint:electron": "eslint --cache --ext .ts --ignore-path .eslintignore electron/",
