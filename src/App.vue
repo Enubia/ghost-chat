@@ -8,7 +8,7 @@
 			:store="store"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
-			@vanish="ipcRenderer.send(IpcConstants.Vanish)"
+			@vanish="vanish"
 		/>
 		<MenuButtons :store="store" :is-chat="showChat" @back="setShowMain" />
 	</header>
@@ -59,6 +59,8 @@ if (!$html?.getAttribute('data-theme')) {
 	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 }
 
+document.querySelector('#app')?.removeAttribute('vanished');
+
 const setShowMain = () => {
 	showChat.value = false;
 	showMain.value = true;
@@ -78,12 +80,17 @@ const setShowSettings = () => {
 	checkingVersion.value = false;
 };
 
+const vanish = () => {
+	ipcRenderer.send(IpcConstants.Vanish);
+};
+
 const enableChat = (channel: string) => {
 	props.store.set('channelOptions.channel', channel);
 	setShowChat();
 };
 
 if (savedWindowState.value.isTransparent && channelOptions.value.channel !== '') {
+	document.querySelector('#app')?.setAttribute('vanished', 'true');
 	setShowChat();
 }
 

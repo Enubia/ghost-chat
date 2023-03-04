@@ -24,6 +24,7 @@
 
 html,
 body {
+	background-color: rgba(0,0,0,0);
 	height: 100%;
 	overflow: hidden;
 	margin: 0;
@@ -37,6 +38,11 @@ body {
 	}
 
 	#app {
+
+		&:not([vanished]) {
+			background-color: var(--background-color);
+		}
+
 		font-family: 'Ubuntu', sans-serif;
 		border-radius: 10px;
 		height: 100%;
@@ -44,7 +50,6 @@ body {
 			height: 100%;
 
 		#version-check {
-			background-color: var(--background-color);
 			height: 100%;
 			display: flex;
 			justify-content: center;
