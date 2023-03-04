@@ -1,6 +1,6 @@
 {
 	"name": "ghost-chat",
-	"version": "2.0.0-beta-0.0.1",
+	"version": "2.0.0-beta-0.0.2",
 	"private": true,
 	"description": "Standalone twitch chat overlay",
 	"author": {
@@ -24,8 +24,9 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build && electron-builder",
+		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
+		"publish": "vue-tsc --noEmit && vite build && electron-builder",
 		"clean": "rimraf dist-electron dist release",
 		"lint:src": "eslint --cache --ext .ts --ignore-path .eslintignore src/",
 		"lint:electron": "eslint --cache --ext .ts --ignore-path .eslintignore electron/",
@@ -77,6 +78,9 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Enubia/ghost-chat.git"
+	},
+	"engines": {
+		"node": "18"
 	},
 	"lint-staged": {
 		"src/**/*.ts": "eslint",
