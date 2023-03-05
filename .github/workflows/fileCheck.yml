@@ -2,10 +2,9 @@ name: File Check
 
 on:
   pull_request:
-    types:
-      - opened
     branches:
       - master
+    types: [opened, synchronize]
 
 permissions:
   pull-requests: write
