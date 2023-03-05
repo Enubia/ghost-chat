@@ -22,7 +22,7 @@ export default class AutoUpdater {
 		this.init();
 	}
 
-	private async init() {
+	private init() {
 		this.autoUpdater.logger = log;
 
 		// this.autoUpdater.channel = this.channel;
@@ -32,7 +32,7 @@ export default class AutoUpdater {
 		}
 
 		try {
-			await this.autoUpdater.checkForUpdatesAndNotify();
+			this.autoUpdater.checkForUpdatesAndNotify();
 		} catch (error) {
 			this.sendStatusToWindow(IpcEvent.Error);
 		}
