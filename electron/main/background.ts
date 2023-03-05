@@ -43,8 +43,7 @@ const DIST_ELECTRON = join(__dirname, '..');
 const DIST = join(DIST_ELECTRON, '../dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
 
-const trayIcnName = 'trayicon.png';
-const trayIconPath = `${PUBLIC}/${trayIcnName}`;
+const trayIconPath = `${PUBLIC}/trayicon.png`;
 
 const indexHtml = join(DIST, 'index.html');
 

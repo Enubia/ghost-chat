@@ -1,7 +1,7 @@
 <template>
 	<div id="main">
 		<div class="center-elements">
-			<img src="/img/icons/icon-128x128.png" />
+			<img src="/icons/icon-128x128.png" />
 		</div>
 		<div class="center-elements">
 			<input

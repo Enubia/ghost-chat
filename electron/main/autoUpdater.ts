@@ -22,7 +22,7 @@ export default class AutoUpdater {
 		this.init();
 	}
 
-	private init() {
+	private async init() {
 		this.autoUpdater.logger = log;
 
 		// this.autoUpdater.channel = this.channel;
@@ -31,7 +31,11 @@ export default class AutoUpdater {
 			this.autoUpdater.forceDevUpdateConfig = true;
 		}
 
-		this.autoUpdater.checkForUpdatesAndNotify();
+		try {
+			await this.autoUpdater.checkForUpdatesAndNotify();
+		} catch (error) {
+			this.sendStatusToWindow(IpcEvent.Error);
+		}
 
 		this.autoUpdater.on('checking-for-update', () => {
 			this.sendStatusToWindow(IpcEvent.CheckingForUpdate);
@@ -51,7 +55,7 @@ export default class AutoUpdater {
 		});
 
 		this.autoUpdater.on('update-downloaded', (_info) => {
-			this.sendStatusToWindow('Update downloaded');
+			this.sendStatusToWindow(IpcEvent.UpdateDownloaded);
 		});
 	}
 

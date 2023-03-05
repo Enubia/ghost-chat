@@ -13,7 +13,9 @@
 					<div></div>
 				</div>
 			</div>
-			<div>{{ message }}</div>
+			<div class="center-elements">
+				<span id="message">{{ message }}</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -49,8 +51,8 @@ ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
 
 ipcRenderer.on(IpcEvent.Error, () => {
 	message.value = 'Some error happened during download, please report this in the discord!';
-	setTimeout(() => {
-		emit('removeLoading');
-	}, 3000);
+	// setTimeout(() => {
+	// 	emit('removeLoading');
+	// }, 3000);
 });
 </script>

@@ -7,7 +7,7 @@
 						<li><a id="options" active class="contrast" @click="setShowOptions">Options</a></li>
 						<li><a id="css" class="contrast" @click="setShowCSS">Custom CSS</a></li>
 						<li><a id="js" class="contrast" @click="setShowJS">Custom JavaScript</a></li>
-						<li><a id="updates" class="contrast" @click="setShowUpdates">Updates</a></li>
+						<!-- <li><a id="updates" class="contrast" @click="setShowUpdates">Updates</a></li> -->
 					</ul>
 				</nav>
 			</aside>
@@ -21,11 +21,11 @@
 				<article v-else-if="showJSEditor">
 					<Editor :store="store" :type="'js'" />
 				</article>
-				<div v-else-if="showUpdates" id="updates-container">
+				<!-- <div v-else-if="showUpdates" id="updates-container">
 					<article>
 						<Updates :store="store" />
 					</article>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -38,7 +38,7 @@ import { ref } from 'vue';
 import { AppStore } from '../../shared/types';
 import Editor from '../components/settings/Editor.vue';
 import Chat from '../components/settings/Options.vue';
-import Updates from '../components/settings/Updates.vue';
+// import Updates from '../components/settings/Updates.vue';
 
 const store = new ElectronStore<AppStore>();
 
@@ -87,15 +87,15 @@ const setShowJS = () => {
 	showUpdates.value = false;
 };
 
-const setShowUpdates = () => {
-	document.querySelector('#options')?.removeAttribute('active');
-	document.querySelector('#css')?.removeAttribute('active');
-	document.querySelector('#js')?.removeAttribute('active');
-	document.querySelector('#updates')?.setAttribute('active', 'true');
+// const setShowUpdates = () => {
+// 	document.querySelector('#options')?.removeAttribute('active');
+// 	document.querySelector('#css')?.removeAttribute('active');
+// 	document.querySelector('#js')?.removeAttribute('active');
+// 	document.querySelector('#updates')?.setAttribute('active', 'true');
 
-	showJSEditor.value = false;
-	showOptions.value = false;
-	showCSSEditor.value = false;
-	showUpdates.value = true;
-};
+// 	showJSEditor.value = false;
+// 	showOptions.value = false;
+// 	showCSSEditor.value = false;
+// 	showUpdates.value = true;
+// };
 </script>
