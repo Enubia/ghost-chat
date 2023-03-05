@@ -53,14 +53,25 @@
 				<option value="s0n0s_1440">S0N0S' 1440P Theme</option>
 			</select>
 		</label>
+		<div v-if="chatTheme !== oldTheme">
+			<small class="info">
+				Please note that in order for the theme to apply you'll need to exit the chat and join again.
+			</small>
+			<br />
+		</div>
 		<small>
 			You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning
 			you know CSS), you can also choose to use "None" and style chat yourself in the Custom CSS section on the
-			left.
+			left. The selectors available can be found on the
+			<a
+				href="https://nightdev.com/hosted/obschat?theme=undefined&channel=esamarathon&fade=false&bot_activity=false&prevent_clipping=false"
+			>
+				KapChat generated page</a
+			>, just open the developer tools and inspect the page.
 		</small>
 	</div>
 	<div id="button-area">
-		<button class="contrast" @click="save">Save</button>
+		<button id="save" class="contrast" @click="save">Save</button>
 	</div>
 </template>
 <script setup lang="ts">
@@ -80,9 +91,15 @@ const fadeMessages = ref(channelOptions.fadeMessages);
 const fadeTimeout = ref(channelOptions.fadeTimeout);
 const showBotActivity = ref(channelOptions.showBotActivity);
 const preventClipping = ref(channelOptions.preventClipping);
+const oldTheme = channelOptions.chatTheme;
 const chatTheme = ref(channelOptions.chatTheme);
 
 const save = () => {
+	const $saveButton = document.querySelector('#save') as HTMLElement;
+
+	$saveButton.setAttribute('aria-busy', 'true');
+	$saveButton.innerText = 'Saving...';
+
 	props.store.set('channelOptions.showBotActivity', showBotActivity.value);
 	props.store.set('channelOptions.fadeMessages', fadeMessages.value);
 
@@ -95,5 +112,10 @@ const save = () => {
 	props.store.set('channelOptions.chatTheme', chatTheme.value);
 
 	ipcRenderer.send(IpcEvent.Rerender, 'parent');
+
+	setTimeout(() => {
+		$saveButton?.removeAttribute('aria-busy');
+		$saveButton.innerText = 'Save';
+	}, 500);
 };
 </script>

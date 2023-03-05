@@ -52,6 +52,10 @@ let overlay: BrowserWindow | null;
 app.on('ready', () => {
 	setTimeout(
 		async () => {
+			if (process.platform === 'darwin') {
+				app.dock.hide();
+			}
+
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(overlay, indexHtml);
@@ -76,6 +80,14 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
 	overlay = null;
+
 	log.info('App closing...');
-	app.quit();
+
+	if (process.platform === 'darwin') {
+		if (store.get('general').quitOnClose) {
+			app.quit();
+		}
+	} else {
+		app.quit();
+	}
 });

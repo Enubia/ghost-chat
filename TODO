@@ -1,0 +1,37 @@
+
+Todo:
+  general:
+      ✔ upgrade all dependencies @done(23-03-05 15:13)
+      ✔ rewrite core logic @done(23-03-05 15:13)
+      ✔ fix window management @done(23-03-05 15:13)
+      ✔ replace tailwind with pico @done(23-03-05 15:13)
+      ✔ rework config logic @done(23-03-05 15:13)
+      ✔ add logger for crash reporting @done(23-03-05 15:13)
+      ✔ [auto updater](https://www.electron.build/auto-update.html) @done(23-03-05 15:13)
+      ✔ automate build pipelines (mac support is coming back, makes it easier to publish) @done(23-03-05 15:13)
+      ☐ think about analytics @created(23-03-05 15:18)
+      ☐ research linux support @created(23-03-05 15:18)
+
+  chat:
+    ✔ add [Kapchat](https://nightdev.com/kapchat) instead of a custom chat implementation @done(23-03-05 15:13)
+    ☐ add an option to load any browser source (like streamlabs chat) @created(23-03-05 15:18)
+
+  settings:
+    ✔ add a popout settings page @done(23-03-05 15:13)
+    ✔ default chat option @done(23-03-05 15:13)
+    ✔ chat options for kapchat (check what can be customized) @done(23-03-05 15:13)
+    ✔ CSS editor (needed for the user to inject custom CSS if needed into the browser source) @done(23-03-05 15:13)
+    ✔ JS injection @created(23-03-05 15:18) @done(23-03-05 15:50)
+    ☐ custom colors? @created(23-03-05 15:18)
+
+  beta testing issues:
+    general:
+      ✔ `open config` tray menu option should open folder and not the config in the default editor @created(23-03-05 15:18) @done(23-03-05 16:08)
+      ✔ notify user about chat theme change to start the chat again @created(23-03-05 15:18) @done(23-03-05 15:45)
+      ✔ add info about KapChat css classes @created(23-03-05 15:18) @done(23-03-05 16:08)
+
+    mac:
+      ☐ check default channel not applying @created(23-03-05 15:18)
+      ✔ add option to minimize instead of closing the app (simply, add default behavior on mac back) @created(23-03-05 15:18) @done(23-03-05 16:44)
+      ✔ check event order, icon is created in dock and removed once window is launched @created(23-03-05 15:18) @done(23-03-05 16:49)
+      ☐ check brew.sh support @created(23-03-05 15:18)

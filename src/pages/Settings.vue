@@ -4,16 +4,21 @@
 			<aside>
 				<nav>
 					<ul>
-						<li><a id="options" active class="contrast" @click="setShowOptions">Options</a></li>
+						<li><a id="general" class="contrast" @click="setShowGeneral">General</a></li>
+						<li><a id="options" active class="contrast" @click="setShowOptions">KapChat</a></li>
 						<li><a id="css" class="contrast" @click="setShowCSS">Custom CSS</a></li>
 						<li><a id="js" class="contrast" @click="setShowJS">Custom JavaScript</a></li>
-						<!-- <li><a id="updates" class="contrast" @click="setShowUpdates">Updates</a></li> -->
 					</ul>
 				</nav>
 			</aside>
 			<div role="document">
-				<article v-if="showOptions">
-					<Chat :store="store" />
+				<div v-if="showGeneral" id="general-container">
+					<article>
+						<General :store="store" />
+					</article>
+				</div>
+				<article v-else-if="showOptions">
+					<KapChat :store="store" />
 				</article>
 				<article v-else-if="showCSSEditor">
 					<Editor :store="store" :type="'css'" />
@@ -21,11 +26,6 @@
 				<article v-else-if="showJSEditor">
 					<Editor :store="store" :type="'js'" />
 				</article>
-				<!-- <div v-else-if="showUpdates" id="updates-container">
-					<article>
-						<Updates :store="store" />
-					</article>
-				</div> -->
 			</div>
 		</div>
 	</div>
@@ -37,8 +37,8 @@ import { ref } from 'vue';
 
 import { AppStore } from '../../shared/types';
 import Editor from '../components/settings/Editor.vue';
-import Chat from '../components/settings/Options.vue';
-// import Updates from '../components/settings/Updates.vue';
+import General from '../components/settings/General.vue';
+import KapChat from '../components/settings/KapChat.vue';
 
 const store = new ElectronStore<AppStore>();
 
@@ -46,53 +46,76 @@ const theme = store.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
+const showGeneral = ref(false);
 const showOptions = ref(true);
 const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 const showUpdates = ref(false);
 
-const setShowOptions = () => {
-	document.querySelector('#options')?.setAttribute('active', 'true');
+const setShowGeneral = () => {
+	document.querySelector('#options')?.removeAttribute('active');
 	document.querySelector('#css')?.removeAttribute('active');
 	document.querySelector('#js')?.removeAttribute('active');
 	document.querySelector('#updates')?.removeAttribute('active');
+	document.querySelector('#general')?.setAttribute('active', 'true');
 
 	showJSEditor.value = false;
-	showOptions.value = true;
 	showCSSEditor.value = false;
 	showUpdates.value = false;
+	showOptions.value = false;
+	showGeneral.value = true;
+};
+
+const setShowOptions = () => {
+	document.querySelector('#general')?.removeAttribute('active');
+	document.querySelector('#css')?.removeAttribute('active');
+	document.querySelector('#js')?.removeAttribute('active');
+	document.querySelector('#updates')?.removeAttribute('active');
+	document.querySelector('#options')?.setAttribute('active', 'true');
+
+	showGeneral.value = false;
+	showJSEditor.value = false;
+	showCSSEditor.value = false;
+	showUpdates.value = false;
+	showOptions.value = true;
 };
 
 const setShowCSS = () => {
+	document.querySelector('#general')?.removeAttribute('active');
 	document.querySelector('#options')?.removeAttribute('active');
-	document.querySelector('#css')?.setAttribute('active', 'true');
 	document.querySelector('#js')?.removeAttribute('active');
 	document.querySelector('#updates')?.removeAttribute('active');
+	document.querySelector('#css')?.setAttribute('active', 'true');
 
+	showGeneral.value = false;
 	showJSEditor.value = false;
 	showOptions.value = false;
-	showCSSEditor.value = true;
 	showUpdates.value = false;
+	showCSSEditor.value = true;
 };
 
 const setShowJS = () => {
+	document.querySelector('#general')?.removeAttribute('active');
 	document.querySelector('#options')?.removeAttribute('active');
 	document.querySelector('#css')?.removeAttribute('active');
-	document.querySelector('#js')?.setAttribute('active', 'true');
 	document.querySelector('#updates')?.removeAttribute('active');
+	document.querySelector('#js')?.setAttribute('active', 'true');
 
-	showJSEditor.value = true;
+	showGeneral.value = false;
 	showOptions.value = false;
 	showCSSEditor.value = false;
 	showUpdates.value = false;
+	showJSEditor.value = true;
 };
 
 // const setShowUpdates = () => {
+// 	document.querySelector('#general')?.removeAttribute('active');
 // 	document.querySelector('#options')?.removeAttribute('active');
 // 	document.querySelector('#css')?.removeAttribute('active');
 // 	document.querySelector('#js')?.removeAttribute('active');
 // 	document.querySelector('#updates')?.setAttribute('active', 'true');
 
+// 	showGeneral.value = false;
 // 	showJSEditor.value = false;
 // 	showOptions.value = false;
 // 	showCSSEditor.value = false;

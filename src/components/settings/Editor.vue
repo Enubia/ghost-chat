@@ -10,7 +10,7 @@
 		@ready="handleReady"
 	/>
 	<div id="button-area">
-		<button class="contrast" @click="save">Save</button>
+		<button id="save" class="contrast" @click="save">Save</button>
 	</div>
 </template>
 
@@ -51,6 +51,11 @@ const handleReady = (payload: { view: any }) => {
 };
 
 const save = () => {
+	const $saveButton = document.querySelector('#save') as HTMLElement;
+
+	$saveButton.setAttribute('aria-busy', 'true');
+	$saveButton.innerText = 'Saving...';
+
 	if (props.type === 'css') {
 		props.store.set('channelOptions.customCSS', code.value);
 	}
@@ -58,5 +63,10 @@ const save = () => {
 	if (props.type === 'js') {
 		props.store.set('channelOptions.customJS', code.value);
 	}
+
+	setTimeout(() => {
+		$saveButton?.removeAttribute('aria-busy');
+		$saveButton.innerText = 'Save';
+	}, 500);
 };
 </script>

@@ -8,7 +8,7 @@
 import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import type { AppStore } from '../../shared/types';
+import type { AppStore, WebviewTag } from '../../shared/types';
 
 const SearchParams = {
 	THEME: 'theme',
@@ -35,15 +35,14 @@ if (channelOptions.fadeMessages) {
 link.searchParams.append(SearchParams.BOT_ACTIVITY, channelOptions.showBotActivity.toString());
 link.searchParams.append(SearchParams.PREVENT_CLIPPING, channelOptions.preventClipping.toString());
 
-let webView: Element;
+let webView: WebviewTag;
 
 onMounted(() => {
 	if (channelOptions.customCSS !== '') {
-		webView = document.querySelector('webview') as Element;
+		webView = document.querySelector('webview') as WebviewTag;
 		webView.addEventListener('dom-ready', async () => {
-			// WebviewTag type is not exposed from electron
-			// @ts-ignore
 			await webView.insertCSS(channelOptions.customCSS);
+			await webView.executeJavaScript(channelOptions.customJS);
 		});
 	}
 });

@@ -42,7 +42,11 @@ export default class AutoUpdater {
 		});
 
 		this.autoUpdater.on('update-available', (info) => {
-			this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
+			if (info.version.includes('beta') && this.store.get('updater').channel !== 'beta') {
+				this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
+			} else {
+				this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
+			}
 		});
 
 		this.autoUpdater.on('update-not-available', (_info) => {

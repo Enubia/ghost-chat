@@ -1,4 +1,4 @@
-import { Tray, Menu, app, BrowserWindow } from 'electron';
+import { Tray, Menu, app, BrowserWindow, shell } from 'electron';
 import ElectronStore from 'electron-store';
 
 import { StoreKeys } from '../../shared/constants';
@@ -23,7 +23,7 @@ export default class TrayIcon {
 				label: 'Open config',
 				type: 'normal',
 				click: () => {
-					this.store.openInEditor();
+					shell.showItemInFolder(this.store.path);
 				},
 			},
 			{

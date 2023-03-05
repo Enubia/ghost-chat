@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme, shell } from 'electron';
+import { BrowserWindow, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -32,13 +32,12 @@ export default class Overlay {
 			webPreferences,
 		});
 
-		window.setAlwaysOnTop(true, 'pop-up-menu');
-		window.setFullScreenable(false);
-
 		if (process.platform === 'darwin') {
 			window.setVisibleOnAllWorkspaces(true);
-			app.dock.hide();
 		}
+
+		window.setAlwaysOnTop(true, 'pop-up-menu');
+		window.setFullScreenable(false);
 
 		if (windowState.x === 0 && windowState.y === 0) {
 			window.center();

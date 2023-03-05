@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -47,6 +47,12 @@ export default class Settings {
 		} else {
 			this.window.loadFile(indexHtml, { hash: arg });
 		}
+
+		this.window.webContents.on('will-navigate', (event, url) => {
+			log.info(`Opening external link to ${url}`);
+			event.preventDefault();
+			shell.openExternal(url);
+		});
 
 		this.window.once('ready-to-show', () => {
 			this.window?.show();

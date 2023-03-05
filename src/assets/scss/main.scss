@@ -196,7 +196,7 @@ body {
 						width: 100%;
 						overflow-y: auto;
 
-						#updates-container {
+						#general-container {
 							height: 100%;
 							@extend %align-items;
 						}
@@ -215,6 +215,14 @@ body {
 
 							small {
 								font-size: 0.725em;
+
+								&.info {
+									color: var(--primary-hover);
+								}
+							}
+
+							.cm-editor {
+								font-size: 12pt;
 							}
 
 							#fade {

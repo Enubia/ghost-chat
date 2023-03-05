@@ -25,6 +25,10 @@ export type Settings = {
 	savedWindowState: Omit<WindowState, 'isClickThrough' | 'isTransparent'>;
 };
 
+export type General = {
+	quitOnClose: boolean;
+};
+
 export type Updater = {
 	channel: 'latest' | 'beta' | 'alpa';
 };
@@ -33,5 +37,6 @@ export type AppStore = {
 	channelOptions: ChannelOptions;
 	savedWindowState: WindowState;
 	settings: Settings;
+	general: General;
 	updater: Updater;
 };
