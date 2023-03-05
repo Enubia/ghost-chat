@@ -24,8 +24,7 @@ export default class AutoUpdater {
 
 	private init() {
 		this.autoUpdater.logger = log;
-
-		// this.autoUpdater.channel = this.channel;
+		this.autoUpdater.autoDownload = false;
 
 		if (this.forceDevUpdateConfig) {
 			this.autoUpdater.forceDevUpdateConfig = true;
@@ -45,6 +44,7 @@ export default class AutoUpdater {
 			if (info.version.includes('beta') && this.store.get('updater').channel !== 'beta') {
 				this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
 			} else {
+				this.autoUpdater.downloadUpdate();
 				this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
 			}
 		});
