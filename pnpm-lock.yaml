@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@codemirror/lang-css': 6.0.2
+  '@codemirror/lang-css': 6.1.0
   '@codemirror/lang-javascript': 6.1.4
   '@codemirror/theme-one-dark': 6.1.1
   '@fortawesome/fontawesome-svg-core': 6.3.0
@@ -44,7 +44,7 @@ specifiers:
   vue-tsc: 1.2.0
 
 devDependencies:
-  '@codemirror/lang-css': 6.0.2
+  '@codemirror/lang-css': 6.1.0
   '@codemirror/lang-javascript': 6.1.4
   '@codemirror/theme-one-dark': 6.1.1
   '@fortawesome/fontawesome-svg-core': 6.3.0
@@ -153,8 +153,8 @@ packages:
       '@lezer/common': 1.0.2
     dev: true
 
-  /@codemirror/lang-css/6.0.2:
-    resolution: {integrity: sha512-4V4zmUOl2Glx0GWw0HiO1oGD4zvMlIQ3zx5hXOE6ipCjhohig2bhWRAasrZylH9pRNTcl1VMa59Lsl8lZWlTzw==}
+  /@codemirror/lang-css/6.1.0:
+    resolution: {integrity: sha512-GYn4TyMvQLrkrhdisFh8HCTDAjPY/9pzwN12hG9UdrTUxRUMicF+8GS24sFEYaleaG1KZClIFLCj0Rol/WO24w==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2
       '@codemirror/language': 6.6.0
