@@ -1,4 +1,4 @@
-export type ChannelOptions = {
+export type ChatOptions = {
 	channel: string;
 	showBotActivity: boolean;
 	fadeMessages: boolean;
@@ -34,7 +34,7 @@ export type Updater = {
 };
 
 export type AppStore = {
-	channelOptions: ChannelOptions;
+	chatOptions: ChatOptions;
 	savedWindowState: WindowState;
 	settings: Settings;
 	general: General;

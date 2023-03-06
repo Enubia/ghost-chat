@@ -20,29 +20,29 @@ const SearchParams = {
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const channelOptions = props.store.get('channelOptions');
+const chatOptions = props.store.get('chatOptions');
 
 const link = new URL('https://nightdev.com/hosted/obschat');
-link.searchParams.append(SearchParams.THEME, channelOptions.chatTheme);
-link.searchParams.append(SearchParams.CHANNEL, channelOptions.channel);
+link.searchParams.append(SearchParams.THEME, chatOptions.chatTheme);
+link.searchParams.append(SearchParams.CHANNEL, chatOptions.channel);
 
-if (channelOptions.fadeMessages) {
-	link.searchParams.append(SearchParams.FADE, channelOptions.fadeTimeout.toString());
+if (chatOptions.fadeMessages) {
+	link.searchParams.append(SearchParams.FADE, chatOptions.fadeTimeout.toString());
 } else {
 	link.searchParams.append(SearchParams.FADE, 'false');
 }
 
-link.searchParams.append(SearchParams.BOT_ACTIVITY, channelOptions.showBotActivity.toString());
-link.searchParams.append(SearchParams.PREVENT_CLIPPING, channelOptions.preventClipping.toString());
+link.searchParams.append(SearchParams.BOT_ACTIVITY, chatOptions.showBotActivity.toString());
+link.searchParams.append(SearchParams.PREVENT_CLIPPING, chatOptions.preventClipping.toString());
 
 let webView: WebviewTag;
 
 onMounted(() => {
-	if (channelOptions.customCSS !== '') {
+	if (chatOptions.customCSS !== '') {
 		webView = document.querySelector('webview') as WebviewTag;
 		webView.addEventListener('dom-ready', async () => {
-			await webView.insertCSS(channelOptions.customCSS);
-			await webView.executeJavaScript(channelOptions.customJS);
+			await webView.insertCSS(chatOptions.customCSS);
+			await webView.executeJavaScript(chatOptions.customJS);
 		});
 	}
 });

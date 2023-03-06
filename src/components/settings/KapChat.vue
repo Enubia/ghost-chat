@@ -84,15 +84,15 @@ import { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const channelOptions = props.store.get('channelOptions');
+const chatOptions = props.store.get('chatOptions');
 
-const defaultChannel = ref(channelOptions.defaultChannel);
-const fadeMessages = ref(channelOptions.fadeMessages);
-const fadeTimeout = ref(channelOptions.fadeTimeout);
-const showBotActivity = ref(channelOptions.showBotActivity);
-const preventClipping = ref(channelOptions.preventClipping);
-const oldTheme = channelOptions.chatTheme;
-const chatTheme = ref(channelOptions.chatTheme);
+const defaultChannel = ref(chatOptions.defaultChannel);
+const fadeMessages = ref(chatOptions.fadeMessages);
+const fadeTimeout = ref(chatOptions.fadeTimeout);
+const showBotActivity = ref(chatOptions.showBotActivity);
+const preventClipping = ref(chatOptions.preventClipping);
+const oldTheme = chatOptions.chatTheme;
+const chatTheme = ref(chatOptions.chatTheme);
 
 const save = () => {
 	const $saveButton = document.querySelector('#save') as HTMLElement;
@@ -100,16 +100,16 @@ const save = () => {
 	$saveButton.setAttribute('aria-busy', 'true');
 	$saveButton.innerText = 'Saving...';
 
-	props.store.set('channelOptions.showBotActivity', showBotActivity.value);
-	props.store.set('channelOptions.fadeMessages', fadeMessages.value);
+	props.store.set('chatOptions.showBotActivity', showBotActivity.value);
+	props.store.set('chatOptions.fadeMessages', fadeMessages.value);
 
 	if (fadeMessages.value) {
-		props.store.set('channelOptions.fadeTimeout', fadeTimeout.value);
+		props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
 	}
 
-	props.store.set('channelOptions.defaultChannel', defaultChannel.value);
-	props.store.set('channelOptions.preventClipping', preventClipping.value);
-	props.store.set('channelOptions.chatTheme', chatTheme.value);
+	props.store.set('chatOptions.defaultChannel', defaultChannel.value);
+	props.store.set('chatOptions.preventClipping', preventClipping.value);
+	props.store.set('chatOptions.chatTheme', chatTheme.value);
 
 	ipcRenderer.send(IpcEvent.Rerender, 'parent');
 

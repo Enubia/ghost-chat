@@ -17,7 +17,7 @@ export default class IpcEvents {
 		this.setClickThrough(overlay);
 		this.minimize(overlay);
 		this.vanish(overlay);
-		this.openSettings(indexHtml);
+		this.openSettings(overlay, indexHtml);
 	}
 
 	private rerender(overlay: BrowserWindow | null) {
@@ -71,12 +71,12 @@ export default class IpcEvents {
 		});
 	}
 
-	private openSettings(indexHtml: string) {
+	private openSettings(overlay: BrowserWindow | null, indexHtml: string) {
 		ipcMain.on(IpcEvent.OpenSettings, () => {
 			if (this.settings) {
 				this.settings.focus();
 			} else {
-				const _settings = new Settings(this.store, this.destroyWindow.bind(this));
+				const _settings = new Settings(overlay, this.store, this.destroyWindow.bind(this));
 				_settings.buildWindow(indexHtml, 'settings');
 				this.settings = _settings.window;
 			}

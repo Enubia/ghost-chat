@@ -1,4 +1,3 @@
-
 Todo:
   general:
       ✔ upgrade all dependencies @done(23-03-05 15:13)
@@ -9,6 +8,7 @@ Todo:
       ✔ add logger for crash reporting @done(23-03-05 15:13)
       ✔ [auto updater](https://www.electron.build/auto-update.html) @done(23-03-05 15:13)
       ✔ automate build pipelines (mac support is coming back, makes it easier to publish) @done(23-03-05 15:13)
+      ☐ i18n support @created(23-03-06 08:48)
       ☐ think about analytics @created(23-03-05 15:18)
       ☐ research linux support @created(23-03-05 15:18)
 
@@ -29,9 +29,11 @@ Todo:
       ✔ `open config` tray menu option should open folder and not the config in the default editor @created(23-03-05 15:18) @done(23-03-05 16:08)
       ✔ notify user about chat theme change to start the chat again @created(23-03-05 15:18) @done(23-03-05 15:45)
       ✔ add info about KapChat css classes @created(23-03-05 15:18) @done(23-03-05 16:08)
+      ✔ disable vanish and clickthrough if settings page is open @created(23-03-06 08:48) @done(23-03-06 10:34)
+      ✔ update `quit on close` button description @created(23-03-06 08:51) @done(23-03-06 10:17)
 
     mac:
-      ☐ check default channel not applying @created(23-03-05 15:18)
+      ✔ check default channel not applying @created(23-03-05 15:18) @done(23-03-06 10:14)
       ✔ add option to minimize instead of closing the app (simply, add default behavior on mac back) @created(23-03-05 15:18) @done(23-03-05 16:44)
       ✔ check event order, icon is created in dock and removed once window is launched @created(23-03-05 15:18) @done(23-03-05 16:49)
       ☐ check brew.sh support @created(23-03-05 15:18)

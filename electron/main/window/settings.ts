@@ -2,13 +2,17 @@ import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
-import { StoreKeys } from '../../../shared/constants';
+import { IpcEvent, StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class Settings {
 	window: BrowserWindow | null;
 
-	constructor(private store: ElectronStore<AppStore>, private destroyWindow: () => void) {}
+	constructor(
+		private overlay: BrowserWindow | null,
+		private store: ElectronStore<AppStore>,
+		private destroyWindow: () => void,
+	) {}
 
 	buildWindow(indexHtml: string, arg: any) {
 		log.info('Building settings window');
@@ -41,9 +45,9 @@ export default class Settings {
 
 		if (process.env.VITE_DEV_SERVER_URL) {
 			this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
-			// this.window.webContents.openDevTools({
-			// 	mode: 'bottom',
-			// });
+			this.window.webContents.openDevTools({
+				mode: 'bottom',
+			});
 		} else {
 			this.window.loadFile(indexHtml, { hash: arg });
 		}
@@ -79,6 +83,7 @@ export default class Settings {
 
 			this.window = null;
 			this.destroyWindow();
+			this.overlay?.webContents.send(IpcEvent.Rerender);
 		});
 	}
 }

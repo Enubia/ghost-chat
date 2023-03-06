@@ -37,12 +37,12 @@ if (theme === 'dark') {
 
 if (props.type === 'css') {
 	extensions.push(css());
-	code.value = props.store.get('channelOptions').customCSS;
+	code.value = props.store.get('chatOptions').customCSS;
 }
 
 if (props.type === 'js') {
 	extensions.push(javascript());
-	code.value = props.store.get('channelOptions').customJS;
+	code.value = props.store.get('chatOptions').customJS;
 }
 
 const view = shallowRef();
@@ -57,11 +57,11 @@ const save = () => {
 	$saveButton.innerText = 'Saving...';
 
 	if (props.type === 'css') {
-		props.store.set('channelOptions.customCSS', code.value);
+		props.store.set('chatOptions.customCSS', code.value);
 	}
 
 	if (props.type === 'js') {
-		props.store.set('channelOptions.customJS', code.value);
+		props.store.set('chatOptions.customJS', code.value);
 	}
 
 	setTimeout(() => {

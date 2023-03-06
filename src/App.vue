@@ -2,9 +2,10 @@
 	<VersionCheck v-if="checkingVersion" @remove-loading="checkingVersion = !checkingVersion" />
 	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
 		<DropDownMenu
+			:key="rerenderKey"
 			:is-chat-page="showChat"
 			:is-main-page="showMain"
-			:channel="channelOptions.channel"
+			:channel="chatOptions.channel"
 			:store="store"
 			@show-main="setShowMain"
 			@show-chat="setShowChat"
@@ -43,7 +44,7 @@ const rerenderKey = ref(0);
 const checkingVersion = ref(true);
 
 let savedWindowState = shallowRef(props.store.get('savedWindowState'));
-let channelOptions = shallowRef(props.store.get('channelOptions'));
+let chatOptions = shallowRef(props.store.get('chatOptions'));
 let settings = shallowRef(props.store.get('settings'));
 
 const forceRerender = () => {
@@ -85,11 +86,11 @@ const vanish = () => {
 };
 
 const enableChat = (channel: string) => {
-	props.store.set('channelOptions.channel', channel);
+	props.store.set('chatOptions.channel', channel);
 	setShowChat();
 };
 
-if (savedWindowState.value.isTransparent && channelOptions.value.channel !== '') {
+if (savedWindowState.value.isTransparent && chatOptions.value.channel !== '') {
 	document.querySelector('#app')?.setAttribute('vanished', 'true');
 	setShowChat();
 }

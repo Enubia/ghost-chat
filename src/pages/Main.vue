@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
-import { ref, shallowRef } from 'vue';
+import { ref } from 'vue';
 
 import { AppStore } from '../../shared/types';
 
@@ -30,14 +30,14 @@ const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
 
-const channelOptions = shallowRef(props.store.get('channelOptions'));
+const chatOptions = ref(props.store.get('chatOptions'));
 const channel = ref('');
 
-if (channelOptions.value.channel !== '') {
-	channel.value = channelOptions.value.channel;
+if (chatOptions.value.channel !== '') {
+	channel.value = chatOptions.value.channel;
 }
 
-if (channelOptions.value.defaultChannel !== '') {
-	channel.value === channelOptions.value.defaultChannel;
+if (chatOptions.value.defaultChannel !== '') {
+	channel.value = chatOptions.value.defaultChannel;
 }
 </script>

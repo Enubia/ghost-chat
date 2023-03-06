@@ -1,5 +1,5 @@
 export const StoreKeys = {
-	ChannelOptions: 'channelOptions',
+	ChatOptions: 'chatOptions',
 	SavedWindowState: 'savedWindowState',
 	Settings: 'settings',
 	Updater: 'updater',

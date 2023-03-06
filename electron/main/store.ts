@@ -1,3 +1,5 @@
+import { unlinkSync } from 'node:fs';
+
 import ElectronStore from 'electron-store';
 
 import { AppStore } from '../../shared/types';
@@ -5,7 +7,7 @@ import { AppStore } from '../../shared/types';
 export default function createStore() {
 	return new ElectronStore<AppStore>({
 		defaults: {
-			channelOptions: {
+			chatOptions: {
 				channel: '',
 				fadeMessages: false,
 				fadeTimeout: 30,
@@ -48,7 +50,12 @@ export default function createStore() {
 		watch: true,
 		migrations: {
 			'2.0.0': (store) => {
-				store.clear();
+				// delete store file initially
+				// there are old keys that might conflict with some of the new stuff
+				unlinkSync(store.path);
+			},
+			'2.0.0-beta': (store) => {
+				unlinkSync(store.path);
 			},
 		},
 	});

@@ -18,12 +18,9 @@
 		<hr />
 		<label for="close-option-input" class="align-elements">
 			<input id="close-option-input" v-model="quitOnClose" type="checkbox" @change="setQuitOnClose" />
-			<span>Quit on close button click</span>
+			<span>Quit on close</span>
 		</label>
-		<small>
-			Select if you want to participate in pre-release versions. Those will also be downloaded automatically if
-			set.
-		</small>
+		<small>Quits the application immediately if set instead of just closing the window.</small>
 	</div>
 </template>
 <script setup lang="ts">
@@ -37,7 +34,7 @@ const props = defineProps<{ store: ElectronStore<AppStore> }>();
 const updater = shallowRef(props.store.get('updater'));
 
 const participateInPreRelease = ref(false);
-const quitOnClose = ref(false);
+const quitOnClose = ref(props.store.get('general').quitOnClose);
 
 const showCloseOption = process.platform === 'darwin';
 

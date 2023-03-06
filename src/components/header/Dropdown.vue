@@ -9,9 +9,9 @@
 				<a @click="emit('showChat')">Chat</a>
 			</li>
 			<li><a @click="showSettings">Settings</a></li>
-			<li><a @click="setClickThrough">Set click-through</a></li>
+			<li v-if="!isSettingsOpen"><a @click="setClickThrough">Set click-through</a></li>
 			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
-			<li v-if="isChatPage" id="vanish">
+			<li v-if="!isSettingsOpen && isChatPage" id="vanish">
 				<a @click="emit('vanish')">
 					<font-awesome-icon icon="fa-solid fa-ghost" />
 					<span>Vanish</span>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
+import { ref } from 'vue';
 
 import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
@@ -36,10 +37,13 @@ const props = defineProps<{
 	store: ElectronStore<AppStore>;
 }>();
 
-const emit = defineEmits(['showChat', 'showMain', 'vanish']);
+const emit = defineEmits(['showChat', 'showMain', 'showSettings', 'vanish']);
+
+const isSettingsOpen = ref(false);
 
 const showSettings = () => {
 	document.querySelector('details')?.removeAttribute('open');
+	isSettingsOpen.value = true;
 	ipcRenderer.send(IpcEvent.OpenSettings);
 };
 

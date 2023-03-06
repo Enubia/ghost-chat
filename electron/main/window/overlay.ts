@@ -52,11 +52,11 @@ export default class Overlay {
 
 		if (process.env.VITE_DEV_SERVER_URL) {
 			window.loadURL(process.env.VITE_DEV_SERVER_URL);
-			// if (!windowState.isTransparent) {
-			// 	window.webContents.openDevTools({
-			// 		mode: 'bottom',
-			// 	});
-			// }
+			if (!windowState.isTransparent) {
+				window.webContents.openDevTools({
+					mode: 'bottom',
+				});
+			}
 		} else {
 			window.loadFile(indexHtml);
 		}
@@ -94,7 +94,7 @@ export default class Overlay {
 
 		window.on('closed', () => {
 			if (!this.store.get('savedWindowState').isTransparent) {
-				this.store.set('channelOptions.channel', '');
+				this.store.set('chatOptions.channel', '');
 			}
 		});
 

@@ -10,6 +10,10 @@ import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 
+if (app.isPackaged) {
+	log.transports.file.level = 'info';
+}
+
 /* 
 	Log locations:
 		on Linux: ~/.config/ghost-chat/logs/main.log
@@ -52,11 +56,14 @@ let overlay: BrowserWindow | null;
 app.on('ready', () => {
 	setTimeout(
 		async () => {
+			overlay = new Overlay(store).buildWindow(indexHtml);
+
 			if (process.platform === 'darwin') {
+				// hide the dock icon AFTER the window is created
+				// otherwise it will show up again and be persistent
 				app.dock.hide();
 			}
 
-			overlay = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(overlay, indexHtml);
 			new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
