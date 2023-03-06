@@ -34,6 +34,8 @@ const message = ref(loadingMessages[Math.floor(Math.random() * loadingMessages.l
 
 // ipcRenderer.on(IpcEvent.CheckingForUpdate, () => {});
 
+ipcRenderer.on(IpcEvent.Recreated, () => emit('removeLoading'));
+
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, version) => {
 	message.value = `Version ${version} is available, download will start automagically`;
 });

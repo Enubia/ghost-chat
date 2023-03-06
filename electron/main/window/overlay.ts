@@ -1,4 +1,4 @@
-import { BrowserWindow, nativeTheme, shell } from 'electron';
+import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -45,6 +45,12 @@ export default class Overlay {
 
 		if (windowState.isClickThrough) {
 			window.setIgnoreMouseEvents(true);
+		}
+
+		if (process.platform === 'darwin') {
+			// hide the dock icon AFTER the window is created
+			// otherwise it will show up again and be persistent
+			app.dock.hide();
 		}
 
 		this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');

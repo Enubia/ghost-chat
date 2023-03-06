@@ -7,6 +7,7 @@ export const IpcEvent = {
 	OpenSettings: 'open-settings',
 	GetVersion: 'get-version',
 	Rerender: 'rerender',
+	Recreated: 'recreated',
 
 	// updater
 	CheckingForUpdate: 'checking-for-update',

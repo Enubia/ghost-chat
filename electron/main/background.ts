@@ -4,6 +4,8 @@ import { join } from 'node:path';
 import { app, BrowserWindow, crashReporter } from 'electron';
 import log from 'electron-log';
 
+import { IpcEvent } from '../../shared/constants';
+
 import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
 import createStore from './store';
@@ -53,13 +55,6 @@ app.on('ready', () => {
 	setTimeout(
 		async () => {
 			overlay = new Overlay(store).buildWindow(indexHtml);
-
-			if (process.platform === 'darwin') {
-				// hide the dock icon AFTER the window is created
-				// otherwise it will show up again and be persistent
-				app.dock.hide();
-			}
-
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			new IpcEvents(store).registerEvents(overlay, indexHtml);
 			new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
@@ -76,7 +71,11 @@ app.on('activate', () => {
 		if (allWindows.length) {
 			allWindows[0].focus();
 		} else {
-			new Overlay(store).buildWindow(indexHtml);
+			overlay = new Overlay(store).buildWindow(indexHtml);
+			// wait a second for the window to be created again so that it can handle events
+			setTimeout(() => {
+				overlay?.webContents.send(IpcEvent.Recreated);
+			}, 1000);
 		}
 	}
 });
@@ -89,6 +88,8 @@ app.on('window-all-closed', () => {
 	if (process.platform === 'darwin') {
 		if (store.get('general').quitOnClose) {
 			app.quit();
+		} else {
+			app.dock.show();
 		}
 	} else {
 		app.quit();
