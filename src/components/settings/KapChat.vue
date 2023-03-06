@@ -1,86 +1,102 @@
 <template>
 	<div id="default-channel">
 		<label for="default-channel-input">
-			<span>Default Channel</span>
+			<span>{{ t('settings.document.kap-chat.default-channel.input-label') }}</span>
 			<input id="default-channel-input" v-model="defaultChannel" type="text" />
 		</label>
-		<small>In case a default channel is set the app will auto apply it for you.</small>
+		<small>{{ t('settings.document.kap-chat.default-channel.info') }}</small>
 	</div>
 	<hr />
 	<div id="fade">
 		<div class="control">
 			<label class="align-elements" for="fade-input">
 				<input id="fade-input" v-model="fadeMessages" type="checkbox" />
-				<span>Fade</span>
+				<span>{{ t('settings.document.kap-chat.fade.checkbox-label') }}</span>
 			</label>
 			<input v-if="fadeMessages" id="fade-timeout" v-model="fadeTimeout" type="number" />
 		</div>
 		<small>
-			You can fade out old chat lines after a set number of seconds to keep stale content from remaining on
-			screen.
+			{{ t('settings.document.kap-chat.fade.info') }}
 		</small>
 	</div>
 	<hr />
 	<div id="show-bots">
 		<label class="align-elements" for="show-bots-input">
 			<input id="show-bots-input" v-model="showBotActivity" type="checkbox" />
-			<span>Show Bots</span>
+			<span>{{ t('settings.document.kap-chat.show-bots.checkbox-label') }}</span>
 		</label>
-		<small>KapChat hides bot messages by default, but you can turn them back on.</small>
+		<small>{{ t('settings.document.kap-chat.show-bots.info') }}</small>
 	</div>
 	<hr />
 	<div id="prevent-clipping">
 		<label class="align-elements" for="prevent-clipping-input">
 			<input id="prevent-clipping-input" v-model="preventClipping" type="checkbox" />
-			<span>Prevent Clipping</span>
+			<span>{{ t('settings.document.kap-chat.prevent-clipping.checkbox-label') }}</span>
 		</label>
 		<small>
-			You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you
-			have a large channel, you might not want to enable this.
+			{{ t('settings.document.kap-chat.prevent-clipping.info') }}
 		</small>
 	</div>
 	<hr />
 	<div id="chat-theme">
 		<label for="theme-select">
-			Chat Theme
+			{{ t('settings.document.kap-chat.chat-theme.label') }}
 			<select id="theme-select" v-model="chatTheme">
-				<option value="undefined" selected>None</option>
-				<option value="dark">Dark</option>
-				<option value="light">Light</option>
-				<option value="bttv_light">BetterTTV Light</option>
-				<option value="bttv_dark">BetterTTV Dark</option>
-				<option value="s0n0s_1080">S0N0S' 1080P Theme</option>
-				<option value="s0n0s_1440">S0N0S' 1440P Theme</option>
+				<option value="undefined" selected>
+					{{ t('settings.document.kap-chat.chat-theme.select-options.none') }}
+				</option>
+				<option value="dark">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.dark') }}
+				</option>
+				<option value="light">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.light') }}
+				</option>
+				<option value="bttv_light">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Light') }}
+				</option>
+				<option value="bttv_dark">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Dark') }}
+				</option>
+				<option value="s0n0s_1080">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1080P-Theme') }}
+				</option>
+				<option value="s0n0s_1440">
+					{{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1440P-Theme') }}
+				</option>
 			</select>
 		</label>
 		<div v-if="chatTheme !== oldTheme">
 			<small class="info">
-				Please note that in order for the theme to apply you'll need to exit the chat and join again.
+				{{ t('settings.document.kap-chat.chat-theme.notification') }}
 			</small>
 			<br />
 		</div>
 		<small>
-			You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning
-			you know CSS), you can also choose to use "None" and style chat yourself in the Custom CSS section on the
-			left. The selectors available can be found on the
+			{{ t('settings.document.kap-chat.chat-theme.info.before-link') }}
 			<a
 				href="https://nightdev.com/hosted/obschat?theme=undefined&channel=esamarathon&fade=false&bot_activity=false&prevent_clipping=false"
 			>
-				KapChat generated page</a
-			>, just open the developer tools and inspect the page.
+				{{ t('settings.document.kap-chat.chat-theme.info.link') }}
+			</a>
+			{{ t('settings.document.kap-chat.chat-theme.info.after-link') }}
 		</small>
 	</div>
 	<div id="button-area">
-		<button id="save" class="contrast" @click="save">Save</button>
+		<button id="save" class="contrast" @click="save">
+			{{ t('settings.document.kap-chat.chat-theme.button') }}
+		</button>
 	</div>
 </template>
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
+
+const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 

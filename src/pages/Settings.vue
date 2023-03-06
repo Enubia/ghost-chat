@@ -4,10 +4,20 @@
 			<aside>
 				<nav>
 					<ul>
-						<li><a id="general" class="contrast" @click="setShowGeneral">General</a></li>
-						<li><a id="options" active class="contrast" @click="setShowOptions">KapChat</a></li>
-						<li><a id="css" class="contrast" @click="setShowCSS">Custom CSS</a></li>
-						<li><a id="js" class="contrast" @click="setShowJS">Custom JavaScript</a></li>
+						<li>
+							<a id="general" class="contrast" @click="setShowGeneral">{{ t('settings.aside.1') }}</a>
+						</li>
+						<li>
+							<a id="options" active class="contrast" @click="setShowOptions">
+								{{ t('settings.aside.2') }}
+							</a>
+						</li>
+						<li>
+							<a id="css" class="contrast" @click="setShowCSS">{{ t('settings.aside.3') }}</a>
+						</li>
+						<li>
+							<a id="js" class="contrast" @click="setShowJS">{{ t('settings.aside.4') }}</a>
+						</li>
 					</ul>
 				</nav>
 			</aside>
@@ -34,11 +44,14 @@
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../shared/types';
 import Editor from '../components/settings/Editor.vue';
 import General from '../components/settings/General.vue';
 import KapChat from '../components/settings/KapChat.vue';
+
+const { t } = useI18n();
 
 const store = new ElectronStore<AppStore>();
 

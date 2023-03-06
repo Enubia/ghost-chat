@@ -3,6 +3,9 @@
 	"compilerOptions": {
 		"isolatedModules": true,
 		"noEmit": true,
+		"types": [
+			"@intlify/unplugin-vue-i18n/messages"
+		]
 	},
 	"include": [
 		"src",

@@ -10,7 +10,7 @@
 		@ready="handleReady"
 	/>
 	<div id="button-area">
-		<button id="save" class="contrast" @click="save">Save</button>
+		<button id="save" class="contrast" @click="save">{{ t('settings.document.editor.button') }}</button>
 	</div>
 </template>
 
@@ -21,8 +21,11 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import ElectronStore from 'electron-store';
 import { ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
+import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../../shared/types';
+
+const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }>();
 

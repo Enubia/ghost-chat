@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+// eslint-disable-next-line import/no-unresolved
+import messages from '@intlify/unplugin-vue-i18n/messages';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
 
 import { AppStore } from '../shared/types';
 
@@ -11,4 +14,11 @@ import App from './App.vue';
 
 const store = new ElectronStore<AppStore>();
 
-createApp(App, { store }).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');
+const i18n = createI18n<false>({
+	locale: store.get('general').language,
+	// fallbackLocale: 'en',
+	messages,
+	legacy: false,
+});
+
+createApp(App, { store }).use(i18n).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');

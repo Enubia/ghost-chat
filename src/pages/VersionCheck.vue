@@ -23,21 +23,22 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../shared/constants';
 
-const loadingMessages = ['Loading hot chat actions', 'Crunching latest numbers', 'Preparing new followers'];
+const { t, tm } = useI18n();
+
+const loadingMessages = tm('version-check.loading-messages');
 
 const emit = defineEmits(['removeLoading']);
 
-const message = ref(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
-
-// ipcRenderer.on(IpcEvent.CheckingForUpdate, () => {});
+const message = ref((loadingMessages[Math.floor(Math.random() * loadingMessages.length)] as any).source);
 
 ipcRenderer.on(IpcEvent.Recreated, () => emit('removeLoading'));
 
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, version) => {
-	message.value = `Version ${version} is available, download will start automagically`;
+	message.value = t('version-check.update-available', { version });
 });
 
 ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
@@ -45,16 +46,21 @@ ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
 });
 
 ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
-	message.value = 'Download finished, new version will be applied on restart';
+	message.value = t('version-check.download-finished');
 	setTimeout(() => {
 		emit('removeLoading');
 	}, 3000);
 });
 
 ipcRenderer.on(IpcEvent.Error, () => {
-	message.value = 'Some error happened during download, please report this in the discord!';
+	message.value = t('version-check.error');
 	setTimeout(() => {
 		emit('removeLoading');
 	}, 3000);
 });
+
+// fallback in case something unpredictable happens
+setTimeout(() => {
+	emit('removeLoading');
+}, 10000);
 </script>

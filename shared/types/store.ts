@@ -27,6 +27,7 @@ export type Settings = {
 
 export type General = {
 	quitOnClose: boolean;
+	language: string;
 };
 
 export type Updater = {

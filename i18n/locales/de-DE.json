@@ -1,0 +1,94 @@
+{
+    "header": {
+        "dropdown": {
+            "main": "Main",
+            "chat": "Chat",
+            "settings": "Settings",
+            "set-click-through": "Set click-through",
+            "toggle-color-theme": "Toggle Color Theme",
+            "vanish": {
+                "title": "Vanish",
+                "tooltip": "transparent and click-through"
+            }
+        }
+    },
+    "main": {
+        "input": {
+            "info": "Enter a channel, e.g. enubia1"
+        },
+        "button": "Go!"
+    },
+    "settings": {
+        "aside": {
+            "1": "General",
+            "2": "KapChat",
+            "3": "Custom CSS",
+            "4": "Custom JavaScript"
+        },
+        "document": {
+            "editor": {
+                "button": "Save"
+            },
+            "general": {
+                "locale-change": {
+                    "label": "Wähle deine bevorzugte Sprache"
+                },
+                "pre-release": {
+                    "checkbox-label": "Participate in pre-release versions",
+                    "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
+                },
+                "close-option": {
+                    "checkbox-label": "Quit on close",
+                    "info": "Quits the application immediately if set instead of just closing the window."
+                }
+            },
+            "kap-chat": {
+                "default-channel": {
+                    "input-label": "Default Channel",
+                    "info": "In case a default channel is set the app will auto apply it for you."
+                },
+                "fade": {
+                    "checkbox-label": "Fade",
+                    "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen."
+                },
+                "show-bots": {
+                    "checkbox-label": "Show Bots",
+                    "info": "KapChat hides bot messages by default, but you can turn them back on."
+                },
+                "prevent-clipping": {
+                    "checkbox-label": "Prevent Clipping",
+                    "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
+                },
+                "chat-theme": {
+                    "label": "Chat Theme",
+                    "select-options": {
+                        "none": "None",
+                        "dark": "Dark",
+                        "light": "Light",
+                        "betterTTV-Light": "BetterTTV Light",
+                        "betterTTV-Dark": "BetterTTV Dark",
+                        "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
+                        "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
+                    },
+                    "notification": "Please note that in order for the theme to apply you'll need to exit the chat and join again.",
+                    "info": {
+                        "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
+                        "link": "KapChat generated page",
+                        "after-link": ", just open the developer tools and inspect the page."
+                    },
+                    "button": "Save"
+                }
+            }
+        }
+    },
+    "version-check": {
+        "loading-messages": [
+            "Loading hot chat actions",
+            "Crunching latest numbers",
+            "Preparing new followers"
+        ],
+        "update-available": "Version {version} is available, download will start automagically",
+        "download-finished": "Download finished, new version will be applied on restart",
+        "error": "Some error happened during download, please report this in the discord!"
+    }
+}

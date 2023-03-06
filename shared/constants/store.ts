@@ -3,4 +3,5 @@ export const StoreKeys = {
 	SavedWindowState: 'savedWindowState',
 	Settings: 'settings',
 	Updater: 'updater',
+	General: 'general',
 } as const;

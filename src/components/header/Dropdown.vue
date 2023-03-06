@@ -4,19 +4,27 @@
 			<span><font-awesome-icon icon="fa-solid fa-bars" /></span>
 		</summary>
 		<ul role="listbox">
-			<li v-if="!isMainPage"><a @click="emit('showMain')">Main</a></li>
-			<li v-if="!props.isChatPage && props.channel !== ''">
-				<a @click="emit('showChat')">Chat</a>
+			<li v-if="!isMainPage">
+				<a @click="emit('showMain')">{{ t('header.dropdown.main') }}</a>
 			</li>
-			<li><a @click="showSettings">Settings</a></li>
-			<li v-if="!isSettingsOpen"><a @click="setClickThrough">Set click-through</a></li>
-			<li><a @click="toggleTheme">Toggle Color Theme</a></li>
+			<li v-if="!props.isChatPage && props.channel !== ''">
+				<a @click="emit('showChat')">{{ t('header.dropdown.chat') }}</a>
+			</li>
+			<li>
+				<a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
+			</li>
+			<li v-if="!isSettingsOpen">
+				<a @click="setClickThrough">{{ t('header.dropdown.set-click-through') }}</a>
+			</li>
+			<li>
+				<a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
+			</li>
 			<li v-if="!isSettingsOpen && isChatPage" id="vanish">
 				<a @click="emit('vanish')">
 					<font-awesome-icon icon="fa-solid fa-ghost" />
-					<span>Vanish</span>
+					<span>{{ t('header.dropdown.vanish.title') }}</span>
 				</a>
-				<span data-tooltip="transparent and click-through" data-placement="bottom">?</span>
+				<span :data-tooltip="t('header.dropdown.vanish.tooltip')" data-placement="bottom">?</span>
 			</li>
 		</ul>
 	</details>
@@ -26,9 +34,12 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
+
+const { t } = useI18n();
 
 const props = defineProps<{
 	isChatPage: boolean;

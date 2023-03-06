@@ -39,6 +39,7 @@ export default function createStore() {
 			},
 			general: {
 				quitOnClose: false,
+				language: 'en-US',
 			},
 			updater: {
 				channel: 'latest',
@@ -56,6 +57,9 @@ export default function createStore() {
 			},
 			'2.0.0-beta': (store) => {
 				unlinkSync(store.path);
+			},
+			'2.0.0-beta.8': (store) => {
+				store.set('general.language', 'en');
 			},
 		},
 	});
