@@ -4,18 +4,18 @@ import type ElectronStore from 'electron-store';
 import { AppUpdater, autoUpdater } from 'electron-updater';
 
 import { IpcEvent } from '../../shared/constants';
-import { AppStore } from '../../shared/types';
+import { AppStore, Updater } from '../../shared/types';
 
 export default class AutoUpdater {
 	private autoUpdater: AppUpdater;
-	private channel: string;
+	private updater: Updater;
 
 	constructor(
 		private store: ElectronStore<AppStore>,
 		private overlay: BrowserWindow,
 		private forceDevUpdateConfig: boolean,
 	) {
-		this.channel = this.store.get('updater').channel;
+		this.updater = this.store.get('updater');
 
 		this.autoUpdater = autoUpdater;
 
@@ -41,7 +41,7 @@ export default class AutoUpdater {
 		});
 
 		this.autoUpdater.on('update-available', (info) => {
-			if (info.version.includes('beta') && this.store.get('updater').channel !== 'beta') {
+			if (info.version.includes('beta') && this.updater.channel !== 'beta') {
 				this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
 			} else {
 				this.autoUpdater.downloadUpdate();

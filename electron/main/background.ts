@@ -10,10 +10,6 @@ import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 
-if (app.isPackaged) {
-	log.transports.file.level = 'info';
-}
-
 /* 
 	Log locations:
 		on Linux: ~/.config/ghost-chat/logs/main.log
