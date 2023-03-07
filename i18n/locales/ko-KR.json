@@ -35,7 +35,7 @@
             "general": {
                 "locale-change": {
                     "label": "원하는 언어 선택",
-                    "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
+                    "info": "이 변경 사항을 앱 전체에 적용하려면 앱을 한 번 다시 시작해야 합니다."
                 },
                 "pre-release": {
                     "checkbox-label": "사전 릴리즈 버전에 참여하기",
