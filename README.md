@@ -19,6 +19,9 @@
   <a href="https://www.buymeacoffee.com/enubia" target="_blank">
     <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important" >
   </a>
+  <a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
+    <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" style="height: 42px !important;" />
+  </a>
 </p>
 
 ---
