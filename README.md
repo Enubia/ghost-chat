@@ -15,9 +15,11 @@
   </a>
 </p>
 
-### V2 is in development and the roadmap can be tracked here [#426](https://github.com/Enubia/ghost-chat/issues/426)
-
-### For (feature) suggestions I'd recommend joining the [Discord](https://discord.gg/UVMX32dDcy) and post it in the appropriate channel or create a new [issue](https://github.com/Enubia/ghost-chat/issues/new/choose)
+<p align="center">
+  <a href="https://www.buymeacoffee.com/enubia" target="_blank">
+    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important" >
+  </a>
+</p>
 
 ---
 
