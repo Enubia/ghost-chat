@@ -59,7 +59,7 @@ export default function createStore() {
 				unlinkSync(store.path);
 			},
 			'2.0.0-beta.8': (store) => {
-				store.set('general.language', 'en');
+				store.set('general.language', 'en-US');
 			},
 		},
 	});

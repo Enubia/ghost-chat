@@ -42,7 +42,7 @@ const loadingMessages = tm('version-check.loading-messages');
 
 const emit = defineEmits(['removeLoading']);
 
-const message = ref((loadingMessages[Math.floor(Math.random() * loadingMessages.length)] as any).source);
+const message = ref(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
 const showManualDownloadMessage = ref(false);
 const version = ref('');
 
