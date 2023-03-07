@@ -17,10 +17,10 @@
 				type="checkbox"
 				@change="setParticipateInPreRelease"
 			/>
-			<span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
+			<span>{{ t('settings.document.general.pre-release.checkbox-label') }}</span>
 		</label>
 		<small>
-			{{ t('settings.document.general.close-option.info') }}
+			{{ t('settings.document.general.pre-release.info') }}
 		</small>
 	</div>
 	<div v-if="showCloseOption" id="close-option">
