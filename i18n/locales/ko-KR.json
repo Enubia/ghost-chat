@@ -34,7 +34,8 @@
             },
             "general": {
                 "locale-change": {
-                    "label": "원하는 언어 선택"
+                    "label": "원하는 언어 선택",
+                    "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
                 },
                 "pre-release": {
                     "checkbox-label": "사전 릴리즈 버전에 참여하기",
@@ -88,11 +89,7 @@
         }
     },
     "version-check": {
-        "loading-messages": [
-            "Loading hot chat actions",
-            "Crunching latest numbers",
-            "Preparing new followers"
-        ],
+        "loading-message": "업데이트 확인 중",
         "update-available": "Version {version} is available, download will start automagically",
         "download-finished": "다운로드 완료, 재시작 시 새 버전이 적용됩니다",
         "error": "다운로드 중에 오류가 발생했습니다, Discord에 제보해주세요!",

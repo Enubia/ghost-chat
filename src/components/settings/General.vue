@@ -8,7 +8,12 @@
 				</option>
 			</select>
 		</label>
+		<div></div>
+		<small v-if="store.get('general.language') !== $i18n.locale" class="info">
+			{{ t('settings.document.general.locale-change.info') }}
+		</small>
 	</div>
+	<hr />
 	<div id="beta-updates">
 		<label for="beta-updates-input" class="align-elements">
 			<input

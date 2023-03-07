@@ -34,7 +34,8 @@
             },
             "general": {
                 "locale-change": {
-                    "label": "Wähle deine bevorzugte Sprache"
+                    "label": "Wähle deine bevorzugte Sprache",
+                    "info": "Um die Sprache der ganzen App zu ändern musst du GhostChat einmal neu starten."
                 },
                 "pre-release": {
                     "checkbox-label": "Nimm teil an frühen Versionen",
@@ -88,11 +89,7 @@
         }
     },
     "version-check": {
-        "loading-messages": [
-            "Loading hot chat actions",
-            "Crunching latest numbers",
-            "Preparing new followers"
-        ],
+        "loading-message": "Suche nach Updates",
         "update-available": "Version {version} ist verfügbar, der Download startet automatisch!",
         "download-finished": "Der Download ist fertig, die neue Version wird mit beenden der App installiert!",
         "error": "Ein fehler ist aufgetreten während des Downloads, bitte melde das in Discord!",

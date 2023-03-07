@@ -36,13 +36,11 @@ import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../shared/constants';
 
-const { t, tm } = useI18n();
-
-const loadingMessages = tm('version-check.loading-messages');
+const { t } = useI18n();
 
 const emit = defineEmits(['removeLoading']);
 
-const message = ref(loadingMessages[Math.floor(Math.random() * loadingMessages.length)]);
+const message = ref(t('version-check.loading-message'));
 const showManualDownloadMessage = ref(false);
 const version = ref('');
 

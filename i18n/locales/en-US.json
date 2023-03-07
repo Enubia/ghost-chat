@@ -34,7 +34,8 @@
             },
             "general": {
                 "locale-change": {
-                    "label": "Select your preferred language"
+                    "label": "Select your preferred language",
+                    "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
                 },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",
@@ -88,11 +89,7 @@
         }
     },
     "version-check": {
-        "loading-messages": [
-            "Loading hot chat actions",
-            "Crunching latest numbers",
-            "Preparing new followers"
-        ],
+        "loading-message": "Checking for updates",
         "update-available": "Version {version} is available, download will start automagically",
         "download-finished": "Download finished, new version will be applied on restart",
         "error": "Some error happened during download, please report this in the discord!",
