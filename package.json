@@ -30,8 +30,9 @@
 		"publish": "release-it",
 		"clean": "rimraf dist-electron dist release",
 		"lint:src": "eslint --cache --ext .ts --ignore-path .eslintignore src/",
+		"lint:shared": "eslint --cache --ext .ts --ignore-path .eslintignore shared/",
 		"lint:electron": "eslint --cache --ext .ts --ignore-path .eslintignore electron/",
-		"lint": "pnpm run lint:src && pnpm run lint:electron",
+		"lint": "pnpm run lint:src && pnpm run lint:shared && pnpm run lint:electron",
 		"prepare": "test -d node_modules/husky && husky install"
 	},
 	"devDependencies": {
