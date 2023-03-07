@@ -8,7 +8,7 @@ Todo:
       ✔ add logger for crash reporting @done(23-03-05 15:13)
       ✔ [auto updater](https://www.electron.build/auto-update.html) @done(23-03-05 15:13)
       ✔ automate build pipelines (mac support is coming back, makes it easier to publish) @done(23-03-05 15:13)
-      ☐ i18n support @created(23-03-06 08:48)
+      ✔ i18n support @created(23-03-06 08:48) @done(23-03-07 08:54)
       ☐ think about analytics @created(23-03-05 15:18)
       ☐ research linux support @created(23-03-05 15:18)
 
