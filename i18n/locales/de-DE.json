@@ -1,82 +1,88 @@
 {
     "header": {
         "dropdown": {
-            "main": "Main",
+            "main": "Start",
             "chat": "Chat",
-            "settings": "Settings",
-            "set-click-through": "Set click-through",
-            "toggle-color-theme": "Toggle Color Theme",
+            "settings": "Einstellungen",
+            "set-click-through": "Ignoriere Cursor",
+            "toggle-color-theme": "Ändere das Theme",
             "vanish": {
                 "title": "Vanish",
-                "tooltip": "transparent and click-through"
+                "tooltip": "transparent und keine cursor interaktion"
             }
         }
     },
     "main": {
         "input": {
-            "info": "Enter a channel, e.g. enubia1"
+            "info": "Gib einen channel namen ein, z.B. enubia1"
         },
-        "button": "Go!"
+        "button": "Start!"
     },
     "settings": {
         "aside": {
-            "1": "General",
+            "1": "Allgemein",
             "2": "KapChat",
-            "3": "Custom CSS",
-            "4": "Custom JavaScript"
+            "3": "Eigenes CSS",
+            "4": "Eigenes JavaScript"
         },
         "document": {
             "editor": {
-                "button": "Save"
+                "button": {
+                    "label": "Speichern",
+                    "loading": "Speichert..."
+                }
             },
             "general": {
                 "locale-change": {
                     "label": "Wähle deine bevorzugte Sprache"
                 },
                 "pre-release": {
-                    "checkbox-label": "Participate in pre-release versions",
-                    "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
+                    "checkbox-label": "Nimm teil an frühen Versionen",
+                    "info": "Wähle, ob du an Versionen vor der Veröffentlichung teilnehmen möchtest. Diese werden auch automatisch heruntergeladen."
                 },
                 "close-option": {
-                    "checkbox-label": "Quit on close",
-                    "info": "Quits the application immediately if set instead of just closing the window."
+                    "checkbox-label": "Schliesse die app",
+                    "info": "Beendet die Anwendung sofort, wenn diese Options festgelegt ist, anstatt nur das Fenster zu schließen."
                 }
             },
             "kap-chat": {
                 "default-channel": {
-                    "input-label": "Default Channel",
-                    "info": "In case a default channel is set the app will auto apply it for you."
+                    "input-label": "Standardkanal",
+                    "info": "Wenn ein Standardkanal festgelegt ist, wird dieser automatisch für dich angewendet."
                 },
                 "fade": {
-                    "checkbox-label": "Fade",
-                    "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen."
+                    "checkbox-label": "Verblassen von nachrichten",
+                    "info": "Du kannst alte Chat-Nachrichten nach einer festgelegten Anzahl von Sekunden verblassen lassen, um veraltete Nachrichten zu verhindern."
                 },
                 "show-bots": {
-                    "checkbox-label": "Show Bots",
-                    "info": "KapChat hides bot messages by default, but you can turn them back on."
+                    "checkbox-label": "Zeige Bot Nachrichten",
+                    "info": "Kapchat verbirgt standardmäßig Bot-Nachrichten, aber du kannst sie wieder einschalten."
                 },
                 "prevent-clipping": {
-                    "checkbox-label": "Prevent Clipping",
-                    "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
+                    "checkbox-label": "Abschneiden verhindern",
+                    "info": "Du kannst das Abschneiden von Chat-Zeilen verhindern, es ist jedoch standardmäßig aus Leistungsgründen deaktiviert. Wenn du einen großen Kanal hast, möchtest due dies möglicherweise nicht aktivieren."
                 },
                 "chat-theme": {
                     "label": "Chat Theme",
                     "select-options": {
-                        "none": "None",
-                        "dark": "Dark",
-                        "light": "Light",
+                        "none": "Keines",
+                        "dark": "Dunkel",
+                        "light": "Hell",
                         "betterTTV-Light": "BetterTTV Light",
                         "betterTTV-Dark": "BetterTTV Dark",
                         "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
                         "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
                     },
-                    "notification": "Please note that in order for the theme to apply you'll need to exit the chat and join again.",
+                    "notification": "Bitte beachte, dass due damit den Chat beenden und erneut beitreten musst.",
                     "info": {
-                        "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
-                        "link": "KapChat generated page",
-                        "after-link": ", just open the developer tools and inspect the page."
+                        "before-link": "Du solltes einen Stil auswählen, der zum Spiel passt, das du spielen wirst. Wenn du ein fortgeschrittener Benutzer bist (dh du kennst CSS), kannst du dich auch dafür entscheiden, im Bereich Eigenes CSS links ein benutzerdefiniertes CSS styling zu erzeugen. Die verfügbaren Selektoren findest du auf der",
+                        "link": "KapChat generierten Seite",
+                        "after-link": ", öffne einfach die Entwickler-Tools uns inspiziere die Seite."
                     },
-                    "button": "Save"
+                    "button": {
+                        "label": "Speichern",
+                        "loading": "Speichert..."
+                    }
                 }
             }
         }
@@ -87,8 +93,8 @@
             "Crunching latest numbers",
             "Preparing new followers"
         ],
-        "update-available": "Version {version} is available, download will start automagically",
-        "download-finished": "Download finished, new version will be applied on restart",
-        "error": "Some error happened during download, please report this in the discord!"
+        "update-available": "Version {version} ist verfügbar, der Download startet automatisch!",
+        "download-finished": "Der Download ist fertig, die neue Version wird mit beenden der App installiert!",
+        "error": "Ein fehler ist aufgetreten während des Downloads, bitte melde das in Discord!"
     }
 }

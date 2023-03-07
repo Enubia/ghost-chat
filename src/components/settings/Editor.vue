@@ -10,7 +10,7 @@
 		@ready="handleReady"
 	/>
 	<div id="button-area">
-		<button id="save" class="contrast" @click="save">{{ t('settings.document.editor.button') }}</button>
+		<button id="save" class="contrast" @click="save">{{ t('settings.document.editor.button.label') }}</button>
 	</div>
 </template>
 
@@ -57,7 +57,7 @@ const save = () => {
 	const $saveButton = document.querySelector('#save') as HTMLElement;
 
 	$saveButton.setAttribute('aria-busy', 'true');
-	$saveButton.innerText = 'Saving...';
+	$saveButton.innerText = t('settings.document.editor.button.loading');
 
 	if (props.type === 'css') {
 		props.store.set('chatOptions.customCSS', code.value);
@@ -69,7 +69,7 @@ const save = () => {
 
 	setTimeout(() => {
 		$saveButton?.removeAttribute('aria-busy');
-		$saveButton.innerText = 'Save';
+		$saveButton.innerText = t('settings.document.editor.button.label');
 	}, 500);
 };
 </script>

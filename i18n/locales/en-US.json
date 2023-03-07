@@ -27,7 +27,10 @@
         },
         "document": {
             "editor": {
-                "button": "Save"
+                "button": {
+                    "label": "Save",
+                    "loading": "Saving..."
+                }
             },
             "general": {
                 "locale-change": {
@@ -76,7 +79,10 @@
                         "link": "KapChat generated page",
                         "after-link": ", just open the developer tools and inspect the page."
                     },
-                    "button": "Save"
+                    "button": {
+                        "label": "Save",
+                        "loading": "Saving..."
+                    }
                 }
             }
         }
