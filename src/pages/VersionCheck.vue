@@ -13,8 +13,17 @@
 					<div></div>
 				</div>
 			</div>
-			<div class="center-elements">
+			<div v-if="!showManualDownloadMessage" class="center-elements">
 				<span id="message">{{ message }}</span>
+			</div>
+			<div v-else class="center-elements">
+				<span id="message">
+					{{ t('version-check.manual-update-required.before-link', { version }) }}
+					<a href="https://github.com/enubia/ghost-chat/releases">
+						{{ t('version-check.manual-update-required.link') }}
+					</a>
+					{{ t('version-check.manual-update-required.after-link') }}
+				</span>
 			</div>
 		</div>
 	</div>
@@ -34,11 +43,18 @@ const loadingMessages = tm('version-check.loading-messages');
 const emit = defineEmits(['removeLoading']);
 
 const message = ref((loadingMessages[Math.floor(Math.random() * loadingMessages.length)] as any).source);
+const showManualDownloadMessage = ref(false);
+const version = ref('');
 
 ipcRenderer.on(IpcEvent.Recreated, () => emit('removeLoading'));
 
-ipcRenderer.on(IpcEvent.UpdateAvailable, (_, version) => {
-	message.value = t('version-check.update-available', { version });
+ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
+	message.value = t('version-check.update-available', { version: versionNumber });
+});
+
+ipcRenderer.on(IpcEvent.ManualUpdateRequired, (_, versionNumber) => {
+	showManualDownloadMessage.value = true;
+	version.value = versionNumber;
 });
 
 ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {

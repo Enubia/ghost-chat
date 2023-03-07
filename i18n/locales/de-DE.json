@@ -95,6 +95,11 @@
         ],
         "update-available": "Version {version} ist verfügbar, der Download startet automatisch!",
         "download-finished": "Der Download ist fertig, die neue Version wird mit beenden der App installiert!",
-        "error": "Ein fehler ist aufgetreten während des Downloads, bitte melde das in Discord!"
+        "error": "Ein fehler ist aufgetreten während des Downloads, bitte melde das in Discord!",
+        "manual-update-required": {
+            "before-link": "Version {version} ist verfügbar aber dein System erlaubt keine automatischen updates. Bitte besuche die",
+            "link": "GhostChat Release-Seite",
+            "after-link": "und lade das Update manuell herunter."
+        }
     }
 }

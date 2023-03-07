@@ -44,9 +44,11 @@ export default class AutoUpdater {
 		this.autoUpdater.on('update-available', (info) => {
 			if (info.version.includes('beta') && this.updater.channel !== 'beta') {
 				this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
-			} else {
+			} else if (process.platform !== 'darwin') {
 				this.autoUpdater.downloadUpdate();
 				this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
+			} else {
+				this.sendStatusToWindow(IpcEvent.ManualUpdateRequired, info.version);
 			}
 		});
 

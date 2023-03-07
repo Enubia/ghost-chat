@@ -95,6 +95,11 @@
         ],
         "update-available": "Version {version} is available, download will start automagically",
         "download-finished": "Download finished, new version will be applied on restart",
-        "error": "Some error happened during download, please report this in the discord!"
+        "error": "Some error happened during download, please report this in the discord!",
+        "manual-update-required": {
+            "before-link": "Version {version} is available but your system does not allow auto updates. Please visit the",
+            "link": "GhostChat release page",
+            "after-link": "and download the update manually."
+        }
     }
 }
