@@ -14,7 +14,7 @@
 	],
 	"mac": {
 		"artifactName": "${productName}_${version}.${ext}",
-		"target": "dmg",
+		"target": "default",
 		"publish": ["github"]
 	},
 	"win": {

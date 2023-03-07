@@ -33,6 +33,7 @@ export default class AutoUpdater {
 		try {
 			this.autoUpdater.checkForUpdatesAndNotify();
 		} catch (error) {
+			log.error(error);
 			this.sendStatusToWindow(IpcEvent.Error);
 		}
 
