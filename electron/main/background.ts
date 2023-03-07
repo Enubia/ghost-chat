@@ -50,13 +50,15 @@ const trayIconPath = `${PUBLIC}/trayicon.png`;
 const indexHtml = join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
+let ipcEvents: IpcEvents;
 
 app.on('ready', () => {
 	setTimeout(
 		async () => {
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
-			new IpcEvents(store).registerEvents(overlay, indexHtml);
+			ipcEvents = new IpcEvents(store);
+			ipcEvents.registerEvents(overlay, indexHtml);
 			new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
 		},
 		process.platform === 'linux' ? 1000 : 0,
@@ -72,6 +74,9 @@ app.on('activate', () => {
 			allWindows[0].focus();
 		} else {
 			overlay = new Overlay(store).buildWindow(indexHtml);
+			// register the events and overlay again since they still hold a reference to a null object in case the overlay was recreated
+			ipcEvents.registerWindow(overlay);
+			ipcEvents.registerEvents(overlay, indexHtml);
 			// wait a second for the window to be created again so that it can handle events
 			setTimeout(() => {
 				overlay?.webContents.send(IpcEvent.Recreated);

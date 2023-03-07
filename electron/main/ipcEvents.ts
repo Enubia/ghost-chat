@@ -8,26 +8,33 @@ import Settings from './window/settings';
 
 export default class IpcEvents {
 	private settings: BrowserWindow | null;
+	private overlay: BrowserWindow | null;
 
 	constructor(private store: ElectronStore<AppStore>) {}
 
 	registerEvents(overlay: BrowserWindow | null, indexHtml: string) {
-		this.rerender(overlay);
+		this.registerWindow(overlay);
+
+		this.rerender();
 		this.close();
-		this.setClickThrough(overlay);
-		this.minimize(overlay);
-		this.vanish(overlay);
-		this.openSettings(overlay, indexHtml);
+		this.setClickThrough();
+		this.minimize();
+		this.vanish();
+		this.openSettings(indexHtml);
 	}
 
-	private rerender(overlay: BrowserWindow | null) {
+	registerWindow(overlay: BrowserWindow | null) {
+		this.overlay = overlay;
+	}
+
+	private rerender() {
 		ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: any) => {
 			if (args === 'child' && this.settings) {
 				this.settings.webContents.send(IpcEvent.Rerender);
 			}
 
-			if (args === 'parent' && overlay) {
-				overlay.webContents.send(IpcEvent.Rerender);
+			if (args === 'parent' && this.overlay) {
+				this.overlay.webContents.send(IpcEvent.Rerender);
 			}
 		});
 	}
@@ -40,22 +47,22 @@ export default class IpcEvents {
 		});
 	}
 
-	private setClickThrough(overlay: BrowserWindow | null) {
+	private setClickThrough() {
 		ipcMain.on(IpcEvent.SetClickThrough, () => {
 			this.store.set('savedWindowState.isClickThrough', true);
-			overlay?.setIgnoreMouseEvents(true);
+			this.overlay?.setIgnoreMouseEvents(true);
 		});
 	}
 
-	private minimize(overlay: BrowserWindow | null) {
+	private minimize() {
 		ipcMain.on(IpcEvent.Minimize, () => {
-			overlay?.minimize();
+			this.overlay?.minimize();
 		});
 	}
 
-	private vanish(overlay: BrowserWindow | null) {
+	private vanish() {
 		ipcMain.on(IpcEvent.Vanish, () => {
-			const windowBounds = overlay?.getBounds() as Electron.Rectangle;
+			const windowBounds = this.overlay?.getBounds() as Electron.Rectangle;
 			this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 				x: windowBounds.x,
 				y: windowBounds.y,
@@ -71,12 +78,12 @@ export default class IpcEvents {
 		});
 	}
 
-	private openSettings(overlay: BrowserWindow | null, indexHtml: string) {
+	private openSettings(indexHtml: string) {
 		ipcMain.on(IpcEvent.OpenSettings, () => {
 			if (this.settings) {
 				this.settings.focus();
 			} else {
-				const _settings = new Settings(overlay, this.store, this.destroyWindow.bind(this));
+				const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
 				_settings.buildWindow(indexHtml, 'settings');
 				this.settings = _settings.window;
 			}
