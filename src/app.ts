@@ -16,7 +16,7 @@ const store = new ElectronStore<AppStore>();
 
 const i18n = createI18n<false>({
 	locale: store.get('general').language,
-	// fallbackLocale: 'en',
+	fallbackLocale: 'en',
 	messages,
 	legacy: false,
 });
