@@ -13,12 +13,12 @@
 		"dist"
 	],
 	"mac": {
-		"artifactName": "${productName}_${version}.${ext}",
+		"artifactName": "${productName}-${version}-mac.${ext}",
 		"target": "default",
 		"publish": ["github"]
 	},
 	"win": {
-		"artifactName": "${productName}_${version}.${ext}",
+		"artifactName": "${productName}-${version}-win.${ext}",
 		"target": "nsis",
 		"publish": ["github"]
 		// portable disabled for now, won't restart on app.relaunch() app.quit()
@@ -26,7 +26,7 @@
 		// "target": ["nsis", "portable"]
 	},
 	"linux": {
-		"artifactName": "${productName}_${version}.${ext}",
+		"artifactName": "${productName}-${version}-linux.${ext}",
 		"target": ["AppImage", "deb"],
 		"publish": ["github"],
 		"desktop": {
