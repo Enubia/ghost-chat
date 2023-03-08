@@ -28,7 +28,7 @@
 
 # Ghost Chat
 
-Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed full screen applications written in Electron and Vue.
+Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed full screen applications written in Typescript with the help of Electron and Vue.
 
 It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
 or you just want to have your chat on your main screen.
