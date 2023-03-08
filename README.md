@@ -42,22 +42,26 @@ or you just want to have your chat on your main screen.
 - If you want to resize it, just click and drag the borders to whatever size you want.
 - GhostChat will remember the position and size of the window and will spawn in the same exact location again once you launch it the next time. 
 
-![png](insert main image)
+<p align="center">
+  <img src="images/main.png" alt="Donate with PayPal" style="height: 600px !important;" />
+</p>
 
 - The menu bar holds a dropdown for you which can be used to access the settings, navigate back and forth between chat and launch page as well as interaction with the window.
+- The settings page has a lot of configurations that you can apply, so if you don't know exactly what to click/insert I'd suggest to leave the defaults and ask for help in the [Discord](https://discord.gg/UVMX32dDcy).
 
-![png](insert menubar images)
 
-- Chat window showcase
-
-![png](insert chat image)
+<p align="center">
+  <img src="images/settings.png" alt="Donate with PayPal" style="height: 400px !important;" />
+  <img src="images/settings-opened.png" alt="Donate with PayPal" style="height: 400px !important;" />
+</p>
 
 - With a click on vanish, you'll set the window to transparent and make it click through. This can be reverted by clicking `Disable Vanish` in the tray icon menu.
 - Likewise you can only make it click-through with the corresponding menu option. To revert this behavior just click `Disable Click-through` in the tray icon menu.
 
-![png](instert vanish and click-through images)
-
-- The settings page can be reached through the menu as well. There are a lot of configurations to apply, so if you don't know exactly what to click/insert I'd suggest to leave the defaults and ask for help in the [Discord](https://discord.gg/UVMX32dDcy).
+<p align="center">
+  <img src="images/vanished.png" alt="Donate with PayPal" style="height: 400px !important;" />
+  <img src="images/tray.png" alt="Donate with PayPal" style="height: 300px !important;" />
+</p>
 
 ## Additional info
 
