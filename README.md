@@ -11,7 +11,7 @@
     <img alt="" src="https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=for-the-badge">
   </a> -->
   <a href="https://discord.gg/UVMX32dDcy" target="_blank">
-    <img alt="Discord" src="https://img.shields.io/discord/1078447787252916234?label=Discord&logo=Discord&style=for-the-badge">
+    <img alt="Discord" src="https://img.shields.io/discord/1078447787252916234?color=%237289DA&label=DISCORD&style=for-the-badge">
   </a>
 </p>
 
