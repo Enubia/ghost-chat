@@ -10,7 +10,6 @@ Todo:
         ✔ [auto updater](https://www.electron.build/auto-update.html) @done(23-03-05 15:13)
         ✔ automate build pipelines (mac support is coming back, makes it easier to publish) @done(23-03-05 15:13)
         ✔ i18n support @created(23-03-06 08:48) @done(23-03-07 08:54)
-        ☐ add opt-in analytics @created(23-03-05 15:18)
 
     chat:
       ✔ add [Kapchat](https://nightdev.com/kapchat) instead of a custom chat implementation @done(23-03-05 15:13)
@@ -40,3 +39,4 @@ Todo:
     ☐ linux support @created(23-03-05 15:18)
     ☐ add an option to load any browser source (like streamlabs chat) @created(23-03-05 15:18) @started(23-03-07 10:34)
     ☐ custom colors? @created(23-03-05 15:18)
+    ☐ add opt-in analytics @created(23-03-05 15:18)
