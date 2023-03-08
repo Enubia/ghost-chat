@@ -35,7 +35,7 @@
             "general": {
                 "locale-change": {
                     "label": "Seleccionar tu idioma preferido",
-                    "info": "Tenga en cuenta que para que este cambio surta efecto en toda la aplicación, deberá reiniciarla una vez."
+                    "info": "Tener presente que para que este cambio tenga efecto en toda la aplicación vas a necesitar reiniciarla una vez."
                 },
                 "pre-release": {
                     "checkbox-label": "Participa en las versiones previas al lanzamiento",
@@ -89,7 +89,7 @@
         }
     },
     "version-check": {
-        "loading-message": "Comprobando actualizaciones",
+        "loading-message": "Buscando actualizaciones",
         "update-available": "La versión {version} está disponible, la descarga va a comenzar automaticamente",
         "download-finished": "La descarga finalizó, la nueva versión va a ser aplicada al reiniciar",
         "error": "Se produjeron algunos errores durante la descarga, por favor reportá esto en el discord!",
