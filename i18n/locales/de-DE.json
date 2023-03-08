@@ -44,6 +44,10 @@
                 "close-option": {
                     "checkbox-label": "Schliesse die app",
                     "info": "Beendet die Anwendung sofort, wenn diese Options festgelegt ist, anstatt nur das Fenster zu schließen."
+                },
+                "hide-dock-icon-options": {
+                    "checkbox-label": "Verberge das App Icon",
+                    "info": "Lässt die app nicht in deiner dock aufscheinene."
                 }
             },
             "kap-chat": {

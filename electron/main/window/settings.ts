@@ -39,6 +39,8 @@ export default class Settings {
 			savedWindowState,
 		});
 
+		this.window.setAlwaysOnTop(true, 'pop-up-menu');
+
 		if (savedWindowState.x === 0 && savedWindowState.y === 0) {
 			this.window.center();
 		}

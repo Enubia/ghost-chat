@@ -44,6 +44,10 @@
                 "close-option": {
                     "checkbox-label": "Quit on close",
                     "info": "Quits the application immediately if set instead of just closing the window."
+                },
+                "hide-dock-icon-options": {
+                    "checkbox-label": "Hide dock icon",
+                    "info": "If set the app will not appear on the dock once it's launched."
                 }
             },
             "kap-chat": {

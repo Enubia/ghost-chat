@@ -91,7 +91,7 @@ app.on('window-all-closed', () => {
 	log.info('App closing...');
 
 	if (process.platform === 'darwin') {
-		if (store.get('general').quitOnClose) {
+		if (store.get('general').mac.quitOnClose) {
 			app.quit();
 		} else {
 			app.dock.show();

@@ -26,7 +26,10 @@ export type Settings = {
 };
 
 export type General = {
-	quitOnClose: boolean;
+	mac: {
+		quitOnClose: boolean;
+		hideDockIcon: boolean;
+	};
 	language: string;
 };
 

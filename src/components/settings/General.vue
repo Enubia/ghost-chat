@@ -28,18 +28,33 @@
 			{{ t('settings.document.general.pre-release.info') }}
 		</small>
 	</div>
-	<div v-if="showCloseOption" id="close-option">
+	<div v-if="showMacOptions">
+		<div id="close-option">
+			<hr />
+			<label for="close-option-input" class="align-elements">
+				<input id="close-option-input" v-model="quitOnClose" type="checkbox" @change="setQuitOnClose" />
+				<span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
+			</label>
+			<small>{{ t('settings.document.general.close-option.info') }}</small>
+		</div>
 		<hr />
-		<label for="close-option-input" class="align-elements">
-			<input id="close-option-input" v-model="quitOnClose" type="checkbox" @change="setQuitOnClose" />
-			<span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
-		</label>
-		<small>{{ t('settings.document.general.close-option.info') }}</small>
+		<div id="hide-dock-icon-options">
+			<label for="hide-dock-icon-options-input" class="align-elements">
+				<input
+					id="hide-dock-icon-options-input"
+					v-model="hideDockIcon"
+					type="checkbox"
+					@change="setHideDockIcon"
+				/>
+				<span>{{ t('settings.document.general.hide-dock-icon-options.checkbox-label') }}</span>
+			</label>
+			<small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
+		</div>
 	</div>
 </template>
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
-import { ref, shallowRef } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../../shared/types';
@@ -49,14 +64,15 @@ const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const updater = shallowRef(props.store.get('updater'));
+const updater = props.store.get('updater');
 
 const participateInPreRelease = ref(false);
-const quitOnClose = ref(props.store.get('general').quitOnClose);
+const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
+const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
 
-const showCloseOption = process.platform === 'darwin';
+const showMacOptions = process.platform === 'darwin';
 
-if (updater.value.channel !== 'latest') {
+if (updater.channel !== 'latest') {
 	participateInPreRelease.value = true;
 }
 
@@ -65,6 +81,10 @@ const setParticipateInPreRelease = () => {
 };
 
 const setQuitOnClose = () => {
-	props.store.set('general.quitOnClose', quitOnClose.value);
+	props.store.set('general.mac.quitOnClose', quitOnClose.value);
+};
+
+const setHideDockIcon = () => {
+	props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
 };
 </script>

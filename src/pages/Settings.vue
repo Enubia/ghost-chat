@@ -21,19 +21,23 @@
 					</ul>
 				</nav>
 			</aside>
-			<div role="document">
-				<div v-if="showGeneral" id="general-container">
-					<article>
-						<General :store="store" />
-					</article>
-				</div>
-				<article v-else-if="showOptions">
+			<div v-if="showGeneral">
+				<article>
+					<General :store="store" />
+				</article>
+			</div>
+			<div v-else-if="showOptions">
+				<article class="scroll-content">
 					<KapChat :store="store" />
 				</article>
-				<article v-else-if="showCSSEditor">
+			</div>
+			<div v-else-if="showCSSEditor">
+				<article>
 					<Editor :store="store" :type="'css'" />
 				</article>
-				<article v-else-if="showJSEditor">
+			</div>
+			<div v-else-if="showJSEditor">
+				<article>
 					<Editor :store="store" :type="'js'" />
 				</article>
 			</div>

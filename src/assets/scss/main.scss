@@ -167,19 +167,18 @@ body {
 			}
 
 			#settings {
-				height: 100%;
 				display: flex;
 				justify-content: center;
-				align-items: center;
+				height: 100%;
+				padding-top: 20px;
+				padding-bottom: 20px;
 
 				#content {
 					display: flex;
-					align-items: center;
-					height: 80%;
+					// align-items: center;
 
 					aside {
 						width: 30%;
-						margin-right: 3px;
 
 						ul {
 							font-weight: 300;
@@ -191,17 +190,16 @@ body {
 						}
 					}
 
-					div[role='document'] {
-						height: 100%;
-						width: 100%;
-						overflow-y: auto;
-
-						#general-container {
-							height: 100%;
-							@extend %align-items;
-						}
+					div {
+						width: inherit;
 
 						article {
+							
+							&.scroll-content {
+								height: 100%;
+								overflow-y: auto;
+							}
+
 							margin: 0;
 
 							input {

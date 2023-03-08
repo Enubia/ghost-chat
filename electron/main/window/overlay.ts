@@ -48,9 +48,11 @@ export default class Overlay {
 		}
 
 		if (process.platform === 'darwin') {
-			// hide the dock icon AFTER the window is created
-			// otherwise it will show up again and be persistent
-			app.dock.hide();
+			if (this.store.get('general.mac.hideDockIcon')) {
+				// hide the dock icon AFTER the window is created
+				// otherwise it will show up again and be persistent
+				app.dock.hide();
+			}
 		}
 
 		this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');

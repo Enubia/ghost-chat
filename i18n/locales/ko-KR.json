@@ -44,6 +44,10 @@
                 "close-option": {
                     "checkbox-label": "창을 닫을 때 종료",
                     "info": "설정할 경우 창만 닫는 대신 앱을 즉시 종료합니다."
+                },
+                "hide-dock-icon-options": {
+                    "checkbox-label": "Hide dock icon",
+                    "info": "If set the app will not appear on the dock once it's launched."
                 }
             },
             "kap-chat": {

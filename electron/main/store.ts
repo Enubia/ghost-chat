@@ -2,6 +2,7 @@ import { unlinkSync } from 'node:fs';
 
 import ElectronStore from 'electron-store';
 
+import { StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 export default function createStore() {
@@ -38,7 +39,10 @@ export default function createStore() {
 				},
 			},
 			general: {
-				quitOnClose: false,
+				mac: {
+					quitOnClose: false,
+					hideDockIcon: false,
+				},
 				language: 'en-US',
 			},
 			updater: {
@@ -60,6 +64,15 @@ export default function createStore() {
 			},
 			'2.0.0-beta.8': (store) => {
 				store.set('general.language', 'en-US');
+			},
+			'2.0.0-beta.11': (store) => {
+				store.set<typeof StoreKeys.General>('general', {
+					language: 'en-US',
+					mac: {
+						quitOnClose: false,
+						hideDockIcon: false,
+					},
+				});
 			},
 		},
 	});
