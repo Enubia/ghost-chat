@@ -36,7 +36,7 @@
 		"prepare": "test -d node_modules/husky && husky install"
 	},
 	"devDependencies": {
-		"@codemirror/lang-css": "6.1.0",
+		"@codemirror/lang-css": "6.1.1",
 		"@codemirror/lang-javascript": "6.1.4",
 		"@codemirror/theme-one-dark": "6.1.1",
 		"@fortawesome/fontawesome-svg-core": "6.3.0",
