@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   job1:
+    if: ${{ github.event.pull_request.user.login != 'renovate'}}
     name: Check Not Allowed File Changes
     runs-on: ubuntu-latest
     steps:
@@ -52,13 +53,3 @@ jobs:
             console.log("Error creating comment.", err)
             }
             core.setFailed(workflowFailMessage)
-
-      - name: Check Not Linted Markdown
-        if: ${{ always() }}
-        uses: dorny/paths-filter@v2
-        id: filter_markdown
-        with:
-          list-files: shell
-          filters: |
-            change:
-            - added|modified: '*.md'
