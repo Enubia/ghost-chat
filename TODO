@@ -48,3 +48,4 @@ Todo:
   
   bugs:
       ☐ revert settings state when 'Revert Vanish' is clicked from the tray icon @created(23-03-14 10:14)
+      ☐ fix vanish option being visible if settings are opened and you leave and join chat again @created(23-03-14 10:21)
