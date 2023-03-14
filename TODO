@@ -45,3 +45,6 @@ Todo:
     add hotkey toggling:
       ☐ click-through @created(23-03-08 18:17)
       ☐ vanish @created(23-03-08 18:17)
+  
+  bugs:
+      ☐ revert settings state when 'Revert Vanish' is clicked from the tray icon @created(23-03-14 10:14)
