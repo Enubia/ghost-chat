@@ -36,8 +36,10 @@ export default class TrayIcon {
 						isTransparent: false,
 					});
 
-					app.relaunch();
-					app.exit();
+					if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
+						app.relaunch();
+						app.exit();
+					}
 				},
 			},
 			{
