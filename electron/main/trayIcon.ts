@@ -30,13 +30,12 @@ export default class TrayIcon {
 				label: 'Disable Vanish',
 				type: 'normal',
 				click: () => {
-					this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-						...this.store.get('savedWindowState'),
-						isClickThrough: false,
-						isTransparent: false,
-					});
-
 					if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
+						this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+							...this.store.get('savedWindowState'),
+							isClickThrough: false,
+							isTransparent: false,
+						});
 						app.relaunch();
 						app.exit();
 					}
