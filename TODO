@@ -47,5 +47,5 @@ Todo:
       ☐ vanish @created(23-03-08 18:17)
   
   bugs:
-      ☐ revert settings state when 'Revert Vanish' is clicked from the tray icon @created(23-03-14 10:14)
-      ☐ fix vanish option being visible if settings are opened and you leave and join chat again @created(23-03-14 10:21)
+      ✔ revert settings state when 'Revert Vanish' is clicked from the tray icon @created(23-03-14 10:14) @done(23-03-15 07:41)
+      ✔ fix vanish option being visible if settings are opened and you leave and join chat again, happens when the overlay is rerendered after clicking the save button @created(23-03-14 10:21) @done(23-03-15 07:56)

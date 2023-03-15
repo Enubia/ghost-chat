@@ -10,7 +10,7 @@
 			<li v-if="!props.isChatPage && props.channel !== ''">
 				<a @click="emit('showChat')">{{ t('header.dropdown.chat') }}</a>
 			</li>
-			<li>
+			<li v-if="!isSettingsOpen">
 				<a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
 			</li>
 			<li v-if="!isSettingsOpen">
@@ -51,6 +51,10 @@ const props = defineProps<{
 const emit = defineEmits(['showChat', 'showMain', 'showSettings', 'vanish']);
 
 const isSettingsOpen = ref(false);
+
+if (props.store.get('settings').isOpen) {
+	isSettingsOpen.value = true;
+}
 
 const showSettings = () => {
 	document.querySelector('details')?.removeAttribute('open');

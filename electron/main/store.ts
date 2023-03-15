@@ -2,7 +2,6 @@ import { unlinkSync } from 'node:fs';
 
 import ElectronStore from 'electron-store';
 
-import { StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 export default function createStore() {
@@ -58,21 +57,6 @@ export default function createStore() {
 				// delete store file initially
 				// there are old keys that might conflict with some of the new stuff
 				unlinkSync(store.path);
-			},
-			'2.0.0-beta': (store) => {
-				unlinkSync(store.path);
-			},
-			'2.0.0-beta.8': (store) => {
-				store.set('general.language', 'en-US');
-			},
-			'2.0.0-beta.11': (store) => {
-				store.set<typeof StoreKeys.General>('general', {
-					language: 'en-US',
-					mac: {
-						quitOnClose: false,
-						hideDockIcon: false,
-					},
-				});
 			},
 		},
 	});
