@@ -4,17 +4,17 @@
 		<DropDownMenu
 			:key="rerenderKey"
 			:is-chat-page="showChat"
-			:is-main-page="showMain"
+			:is-start-page="showStart"
 			:channel="chatOptions.channel"
 			:store="store"
-			@show-main="setShowMain"
+			@show-start="setShowStart"
 			@show-chat="setShowChat"
 			@vanish="vanish"
 		/>
-		<MenuButtons :store="store" :is-chat="showChat" @back="setShowMain" />
+		<MenuButtons :store="store" :is-chat="showChat" @back="setShowStart" />
 	</header>
 	<main class="container-fluid">
-		<Main v-if="showMain" :store="store" @channel="enableChat" />
+		<Start v-if="showStart" :store="store" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
 		<Settings v-else-if="showSettings" :key="rerenderKey" />
 	</main>
@@ -31,13 +31,13 @@ import { AppStore } from '../shared/types';
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import Chat from './pages/Chat.vue';
-import Main from './pages/Main.vue';
 import Settings from './pages/Settings.vue';
+import Start from './pages/Start.vue';
 import VersionCheck from './pages/VersionCheck.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const showMain = ref(true);
+const showStart = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
 const rerenderKey = ref(0);
@@ -62,21 +62,21 @@ if (!$html?.getAttribute('data-theme')) {
 
 document.querySelector('#app')?.removeAttribute('vanished');
 
-const setShowMain = () => {
+const setShowStart = () => {
 	showChat.value = false;
-	showMain.value = true;
+	showStart.value = true;
 	showSettings.value = false;
 };
 
 const setShowChat = () => {
 	showChat.value = true;
-	showMain.value = false;
+	showStart.value = false;
 	showSettings.value = false;
 };
 
 const setShowSettings = () => {
 	showChat.value = false;
-	showMain.value = false;
+	showStart.value = false;
 	showSettings.value = true;
 	checkingVersion.value = false;
 };

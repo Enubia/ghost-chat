@@ -4,8 +4,8 @@
 			<span><font-awesome-icon icon="fa-solid fa-bars" /></span>
 		</summary>
 		<ul role="listbox">
-			<li v-if="!isMainPage">
-				<a @click="emit('showMain')">{{ t('header.dropdown.main') }}</a>
+			<li v-if="!isStartPage">
+				<a @click="emit('showStart')">{{ t('header.dropdown.start') }}</a>
 			</li>
 			<li v-if="!props.isChatPage && props.channel !== ''">
 				<a @click="emit('showChat')">{{ t('header.dropdown.chat') }}</a>
@@ -43,12 +43,12 @@ const { t } = useI18n();
 
 const props = defineProps<{
 	isChatPage: boolean;
-	isMainPage: boolean;
+	isStartPage: boolean;
 	channel: string;
 	store: ElectronStore<AppStore>;
 }>();
 
-const emit = defineEmits(['showChat', 'showMain', 'showSettings', 'vanish']);
+const emit = defineEmits(['showChat', 'showStart', 'showSettings', 'vanish']);
 
 const isSettingsOpen = ref(false);
 

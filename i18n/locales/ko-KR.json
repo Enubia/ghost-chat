@@ -1,7 +1,7 @@
 {
     "header": {
         "dropdown": {
-            "main": "메인",
+            "start": "메인",
             "chat": "채팅",
             "settings": "설정",
             "set-click-through": "클릭 통과 모드 사용",
@@ -12,7 +12,7 @@
             }
         }
     },
-    "main": {
+    "start": {
         "input": {
             "info": "채널을 입력하세요, 예: enubia1"
         },

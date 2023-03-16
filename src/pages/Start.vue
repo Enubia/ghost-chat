@@ -1,5 +1,5 @@
 <template>
-	<div id="main">
+	<div id="start">
 		<div class="center-elements">
 			<img src="/icons/icon-128x128.png" />
 		</div>
@@ -12,10 +12,10 @@
 			/>
 		</div>
 		<div class="center-elements">
-			<small id="info">{{ t('main.input.info') }}</small>
+			<small id="info">{{ t('start.input.info') }}</small>
 		</div>
 		<div class="center-elements">
-			<button @click="channel !== '' && emit('channel', channel)">{{ t('main.button') }}</button>
+			<button @click="channel !== '' && emit('channel', channel)">{{ t('start.button') }}</button>
 		</div>
 	</div>
 </template>

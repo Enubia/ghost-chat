@@ -1,7 +1,7 @@
 {
     "header": {
         "dropdown": {
-            "main": "Start",
+            "start": "Start",
             "chat": "Chat",
             "settings": "Einstellungen",
             "set-click-through": "Ignoriere Cursor",
@@ -12,7 +12,7 @@
             }
         }
     },
-    "main": {
+    "start": {
         "input": {
             "info": "Gib einen channel namen ein, z.B. enubia1"
         },

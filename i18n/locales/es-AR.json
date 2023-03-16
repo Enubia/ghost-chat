@@ -1,7 +1,7 @@
 {
     "header": {
         "dropdown": {
-            "main": "Principal",
+            "start": "Principal",
             "chat": "Chat",
             "settings": "Configuración",
             "set-click-through": "Seleccionar atravesar clic",
@@ -12,7 +12,7 @@
             }
         }
     },
-    "main": {
+    "start": {
         "input": {
             "info": "Entrar a un canal, ej. enubia1"
         },
