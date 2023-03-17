@@ -9,7 +9,7 @@
 			:store="store"
 			@show-start="setShowStart"
 			@show-chat="setShowChat"
-			@vanish="vanish"
+			@vanish="ipcRenderer.send(IpcEvent.Vanish)"
 		/>
 		<MenuButtons :store="store" :is-chat="showChat" @back="setShowStart" />
 	</header>
@@ -47,11 +47,7 @@ let savedWindowState = shallowRef(props.store.get('savedWindowState'));
 let chatOptions = shallowRef(props.store.get('chatOptions'));
 let settings = shallowRef(props.store.get('settings'));
 
-const forceRerender = () => {
-	rerenderKey.value++;
-};
-
-ipcRenderer.on(IpcEvent.Rerender, forceRerender);
+ipcRenderer.on(IpcEvent.Rerender, () => rerenderKey.value++);
 
 const $html = document.querySelector('html');
 
@@ -79,10 +75,6 @@ const setShowSettings = () => {
 	showStart.value = false;
 	showSettings.value = true;
 	checkingVersion.value = false;
-};
-
-const vanish = () => {
-	ipcRenderer.send(IpcEvent.Vanish);
 };
 
 const enableChat = (channel: string) => {

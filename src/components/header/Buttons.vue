@@ -3,10 +3,10 @@
 		<button v-if="isChat" id="back" class="secondary" @click="emit('back')">
 			<font-awesome-icon icon="fa-solid fa-chevron-left" />
 		</button>
-		<button id="minimize" class="secondary" @click="minimize">
+		<button id="minimize" class="secondary" @click="ipcRenderer.send(IpcEvent.Minimize)">
 			<font-awesome-icon icon="fa-solid fa-down-left-and-up-right-to-center" />
 		</button>
-		<button id="close" class="secondary" @click="close">
+		<button id="close" class="secondary" @click="ipcRenderer.send(IpcEvent.Close)">
 			<font-awesome-icon icon="fa-solid fa-xmark" />
 		</button>
 	</div>
@@ -21,12 +21,4 @@ import { IpcEvent } from '../../../shared/constants';
 defineProps<{ store: ElectronStore; isChat: boolean }>();
 
 const emit = defineEmits(['back']);
-
-function close() {
-	ipcRenderer.send(IpcEvent.Close);
-}
-
-function minimize() {
-	ipcRenderer.send(IpcEvent.Minimize);
-}
 </script>

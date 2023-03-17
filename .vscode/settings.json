@@ -19,6 +19,7 @@
 		"**/bower_components": true,
 		"**/*.code-search": true,
 		"dist-electron": true,
-		"dist": true
+		"dist": true,
+		".eslintcache": true
 	}
 }
