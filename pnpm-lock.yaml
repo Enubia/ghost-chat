@@ -33,7 +33,7 @@ specifiers:
   prettier: 2.8.4
   release-it: 15.8.0
   rimraf: 4.4.0
-  sass: 1.59.2
+  sass: 1.59.3
   typescript: 4.9.5
   vite: 4.1.4
   vite-plugin-electron: 0.11.1
@@ -76,9 +76,9 @@ devDependencies:
   prettier: 2.8.4
   release-it: 15.8.0
   rimraf: 4.4.0
-  sass: 1.59.2
+  sass: 1.59.3
   typescript: 4.9.5
-  vite: 4.1.4_sass@1.59.2
+  vite: 4.1.4_sass@1.59.3
   vite-plugin-electron: 0.11.1
   vite-plugin-electron-renderer: 0.12.1
   vue: 3.2.47
@@ -1199,7 +1199,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.1.4_sass@1.59.2
+      vite: 4.1.4_sass@1.59.3
       vue: 3.2.47
     dev: true
 
@@ -5320,8 +5320,8 @@ packages:
       truncate-utf8-bytes: 1.0.2
     dev: true
 
-  /sass/1.59.2:
-    resolution: {integrity: sha512-jJyO6SmbzkJexF8MUorHx5tAilcgabioYxT/BHbY4+OvoqmbHxsYlrjZ8Adhqcgl6Zqwie0TgMXLCAmPFxXOuw==}
+  /sass/1.59.3:
+    resolution: {integrity: sha512-QCq98N3hX1jfTCoUAsF3eyGuXLsY7BCnCEg9qAact94Yc21npG2/mVOqoDvE0fCbWDqiM4WlcJQla0gWG2YlxQ==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -5992,7 +5992,7 @@ packages:
     resolution: {integrity: sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==}
     dev: true
 
-  /vite/4.1.4_sass@1.59.2:
+  /vite/4.1.4_sass@1.59.3:
     resolution: {integrity: sha512-3knk/HsbSTKEin43zHu7jTwYWv81f8kgAL99G5NWBcA1LKvtvcVAC4JjBH1arBunO9kQka+1oGbrMKOjk4ZrBg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6021,7 +6021,7 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.17.2
-      sass: 1.59.2
+      sass: 1.59.3
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
