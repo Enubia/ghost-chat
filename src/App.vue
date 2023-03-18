@@ -30,6 +30,7 @@ import { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
+import Show from './helper/show';
 import Chat from './pages/Chat.vue';
 import Settings from './pages/Settings.vue';
 import Start from './pages/Start.vue';
@@ -59,35 +60,24 @@ if (!$html?.getAttribute('data-theme')) {
 document.querySelector('#app')?.removeAttribute('vanished');
 
 const setShowStart = () => {
-	showChat.value = false;
-	showStart.value = true;
-	showSettings.value = false;
+	Show.Start({ showChat, showStart, showSettings });
 };
 
 const setShowChat = () => {
-	showChat.value = true;
-	showStart.value = false;
-	showSettings.value = false;
-};
-
-const setShowSettings = () => {
-	showChat.value = false;
-	showStart.value = false;
-	showSettings.value = true;
-	checkingVersion.value = false;
+	Show.Chat({ showChat, showStart, showSettings });
 };
 
 const enableChat = (channel: string) => {
 	props.store.set('chatOptions.channel', channel);
-	setShowChat();
+	Show.Chat({ showChat, showStart, showSettings });
 };
 
 if (savedWindowState.value.isTransparent && chatOptions.value.channel !== '') {
 	document.querySelector('#app')?.setAttribute('vanished', 'true');
-	setShowChat();
+	Show.Chat({ showChat, showStart, showSettings });
 }
 
 if (settings.value.isOpen) {
-	setShowSettings();
+	Show.Settings({ showChat, showStart, showSettings, checkingVersion });
 }
 </script>

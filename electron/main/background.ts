@@ -59,7 +59,13 @@ app.on('ready', () => {
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			ipcEvents = new IpcEvents(store);
 			ipcEvents.registerEvents(overlay, indexHtml);
-			new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
+
+			// only call auto-updater for prod environment
+			if (!process.env.VITE_DEV_SERVER_URL) {
+				new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
+			} else {
+				overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+			}
 		},
 		process.platform === 'linux' ? 1000 : 0,
 	);
