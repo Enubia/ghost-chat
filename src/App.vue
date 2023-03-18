@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref, shallowRef } from 'vue';
+import { ref } from 'vue';
 
 import { IpcEvent } from '../shared/constants';
 import { AppStore } from '../shared/types';
@@ -44,16 +44,16 @@ const showSettings = ref(false);
 const rerenderKey = ref(0);
 const checkingVersion = ref(true);
 
-let savedWindowState = shallowRef(props.store.get('savedWindowState'));
-let chatOptions = shallowRef(props.store.get('chatOptions'));
-let settings = shallowRef(props.store.get('settings'));
+const savedWindowState = ref(props.store.get('savedWindowState'));
+const chatOptions = ref(props.store.get('chatOptions'));
+const settings = ref(props.store.get('settings'));
 
 ipcRenderer.on(IpcEvent.Rerender, () => rerenderKey.value++);
 
 const $html = document.querySelector('html');
 
 if (!$html?.getAttribute('data-theme')) {
-	const theme = props.store.get('savedWindowState.theme');
+	const theme = savedWindowState.value.theme;
 	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 }
 
