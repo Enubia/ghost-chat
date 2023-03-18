@@ -4,21 +4,14 @@
         "helpers:pinGitHubActionDigests"
     ],
     "dependencyDashboard": true,
-    "ignorePaths": [
-        "v1/package.json"
-    ],
     "packageRules": [
         {
-            "description": "v2 dependencies",
-            "matchPaths": [
-                "v2/**"
-            ],
-            "groupName": "v2 dependencies"
+            "packageNames": ["node"],
+            "enabled": false
         }
     ],
     "pinVersions": true,
     "schedule": [
-        "on Monday",
         "every weekend"
     ]
 }
