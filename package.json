@@ -87,7 +87,7 @@
 		"url": "git+https://github.com/Enubia/ghost-chat.git"
 	},
 	"engines": {
-		"node": ">=18"
+		"node": "19.8.1"
 	},
 	"lint-staged": {
 		"src/**/*.ts": "eslint",
