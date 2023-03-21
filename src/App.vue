@@ -42,7 +42,7 @@ const showStart = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
 const rerenderKey = ref(0);
-const checkingVersion = ref(true);
+const checkingVersion = ref(!props.store.get('savedWindowState').isTransparent);
 
 const savedWindowState = ref(props.store.get('savedWindowState'));
 const chatOptions = ref(props.store.get('chatOptions'));
