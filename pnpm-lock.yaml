@@ -35,7 +35,7 @@ specifiers:
   rimraf: 4.4.0
   sass: 1.60.0
   typescript: 5.0.2
-  vite: 4.2.0
+  vite: 4.2.1
   vite-plugin-electron: 0.11.1
   vite-plugin-electron-renderer: 0.12.1
   vue: 3.2.47
@@ -56,7 +56,7 @@ devDependencies:
   '@picocss/pico': 1.5.7
   '@typescript-eslint/eslint-plugin': 5.55.0_qsnvknysi52qtaxqdyqyohkcku
   '@typescript-eslint/parser': 5.55.0_j4766f7ecgqbon3u7zlxn5zszu
-  '@vitejs/plugin-vue': 4.1.0_vite@4.2.0+vue@3.2.47
+  '@vitejs/plugin-vue': 4.1.0_vite@4.2.1+vue@3.2.47
   codemirror: 6.0.1
   electron: 23.1.4
   electron-builder: 23.6.0
@@ -78,7 +78,7 @@ devDependencies:
   rimraf: 4.4.0
   sass: 1.60.0
   typescript: 5.0.2
-  vite: 4.2.0_sass@1.60.0
+  vite: 4.2.1_sass@1.60.0
   vite-plugin-electron: 0.11.1
   vite-plugin-electron-renderer: 0.12.1
   vue: 3.2.47
@@ -1192,14 +1192,14 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/4.1.0_vite@4.2.0+vue@3.2.47:
+  /@vitejs/plugin-vue/4.1.0_vite@4.2.1+vue@3.2.47:
     resolution: {integrity: sha512-++9JOAFdcXI3lyer9UKUV4rfoQ3T1RN8yDqoCLar86s0xQct5yblxAE+yWgRnU5/0FOlVCpTZpYSBV/bGWrSrQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.2.0_sass@1.60.0
+      vite: 4.2.1_sass@1.60.0
       vue: 3.2.47
     dev: true
 
@@ -6006,8 +6006,8 @@ packages:
     resolution: {integrity: sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==}
     dev: true
 
-  /vite/4.2.0_sass@1.60.0:
-    resolution: {integrity: sha512-AbDTyzzwuKoRtMIRLGNxhLRuv1FpRgdIw+1y6AQG73Q5+vtecmvzKo/yk8X/vrHDpETRTx01ABijqUHIzBXi0g==}
+  /vite/4.2.1_sass@1.60.0:
+    resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
