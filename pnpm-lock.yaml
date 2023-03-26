@@ -37,7 +37,7 @@ specifiers:
   typescript: 5.0.2
   vite: 4.2.1
   vite-plugin-electron: 0.11.1
-  vite-plugin-electron-renderer: 0.12.1
+  vite-plugin-electron-renderer: 0.13.8
   vue: 3.2.47
   vue-codemirror: 6.1.1
   vue-i18n: 9.2.2
@@ -80,7 +80,7 @@ devDependencies:
   typescript: 5.0.2
   vite: 4.2.1_sass@1.60.0
   vite-plugin-electron: 0.11.1
-  vite-plugin-electron-renderer: 0.12.1
+  vite-plugin-electron-renderer: 0.13.8
   vue: 3.2.47
   vue-codemirror: 6.1.1_bxcxcy6q5ryy5ccenljp75aexa
   vue-i18n: 9.2.2_vue@3.2.47
@@ -6137,8 +6137,9 @@ packages:
     dev: true
     optional: true
 
-  /vite-plugin-electron-renderer/0.12.1:
-    resolution: {integrity: sha512-n0w8vrQFafaY1tmIPIQAck4zLanGLYcthvGttH00KRJg47Sjh2mp5Hb8VJ3l8FmpnYTobnl949+N4sunTR1WBA==}
+  /vite-plugin-electron-renderer/0.13.8:
+    resolution: {integrity: sha512-yGYVwiBhNW3RaiDXsk926wenT0jgP1cAfysleHuxYMpsqCm8mbvrGEn2fEDVP705kA8Zz7/1pxs11L5Zw4suqA==}
+    requiresBuild: true
     dependencies:
       lib-esm: 0.3.0
     dev: true
