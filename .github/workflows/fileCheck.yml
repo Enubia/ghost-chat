@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   job1:
-    if: ${{ github.event.pull_request.user.login != 'renovate'}}
+    if: ${{ github.event.pull_request.title }} != *"deps"*
     name: Check Not Allowed File Changes
     runs-on: ubuntu-latest
     steps:
