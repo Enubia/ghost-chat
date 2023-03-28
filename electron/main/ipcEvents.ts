@@ -1,8 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { IpcEvent, StoreKeys } from '../../shared/constants';
-import { AppStore } from '../../shared/types';
+import { IpcEvent } from '../../shared/constants';
+import { AppStore, WindowState } from '../../shared/types';
 
 import Settings from './window/settings';
 
@@ -63,18 +63,22 @@ export default class IpcEvents {
 	private vanish() {
 		ipcMain.on(IpcEvent.Vanish, () => {
 			const windowBounds = this.overlay?.getBounds() as Electron.Rectangle;
-			this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+			const theme = this.store.get('savedWindowState').theme;
+
+			const data: WindowState = {
 				x: windowBounds.x,
 				y: windowBounds.y,
 				width: windowBounds.width,
 				height: windowBounds.height,
 				isClickThrough: true,
 				isTransparent: true,
-				theme: this.store.get('savedWindowState.theme'),
-			});
+				theme,
+			};
 
-			app.relaunch();
-			app.exit();
+			this.store.set('savedWindowState', data);
+			
+			this.overlay?.setIgnoreMouseEvents(true);
+			this.overlay?.webContents.send(IpcEvent.Vanish);
 		});
 	}
 

@@ -12,12 +12,11 @@ import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 
-/* 
-	Log locations:
-		on Linux: ~/.config/ghost-chat/logs/main.log
-		on macOS: ~/Library/Logs /ghost-chat/ main.log
-		on Windows: %appdata%\Roaming\ghost-chat\logs\main.log
-*/
+// Log locations:
+// 	on Linux: ~/.config/ghost-chat/logs/app.log
+// 	on macOS: ~/Library/Logs/ghost-chat/app.log
+// 	on Windows: %appdata%\Roaming\ghost-chat\logs\app.log
+
 log.info('App starting...');
 
 crashReporter.start({ submitURL: '', uploadToServer: false });
@@ -25,14 +24,17 @@ crashReporter.start({ submitURL: '', uploadToServer: false });
 log.info('Crash reporter started');
 
 if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
+	log.info('called disableHardwareAcceleration');
 	app.disableHardwareAcceleration();
 }
 
 if (process.platform === 'win32') {
+	log.info('called setAppUserModelId');
 	app.setAppUserModelId(app.getName());
 }
 
 if (!app.requestSingleInstanceLock()) {
+	log.error('quit due to requestSingleInstanceLock');
 	app.quit();
 	process.exit(0);
 }

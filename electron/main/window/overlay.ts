@@ -24,7 +24,7 @@ export default class Overlay {
 			y: windowState.y,
 			width: windowState.width || 400,
 			height: windowState.height || 800,
-			transparent: windowState.isTransparent,
+			transparent: true,
 			frame: false,
 			resizable: true,
 			maximizable: false,
@@ -43,10 +43,6 @@ export default class Overlay {
 			window.center();
 		}
 
-		if (windowState.isClickThrough) {
-			window.setIgnoreMouseEvents(true);
-		}
-
 		if (process.platform === 'darwin') {
 			if (this.store.get('general.mac.hideDockIcon')) {
 				// hide the dock icon AFTER the window is created
@@ -60,11 +56,9 @@ export default class Overlay {
 
 		if (process.env.VITE_DEV_SERVER_URL) {
 			window.loadURL(process.env.VITE_DEV_SERVER_URL);
-			if (!windowState.isTransparent) {
-				window.webContents.openDevTools({
-					mode: 'bottom',
-				});
-			}
+			// window.webContents.openDevTools({
+			// 	mode: 'bottom',
+			// });
 		} else {
 			window.loadFile(indexHtml);
 		}

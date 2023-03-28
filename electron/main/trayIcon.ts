@@ -1,13 +1,13 @@
 import { Tray, Menu, app, BrowserWindow, shell } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { StoreKeys } from '../../shared/constants';
+import { IpcEvent, StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 export default class TrayIcon {
 	private tray: Tray;
 
-	constructor(private store: ElectronStore<AppStore>, private window: BrowserWindow) {}
+	constructor(private store: ElectronStore<AppStore>, private overlay: BrowserWindow) {}
 
 	buildTray(trayIconPath: string) {
 		this.tray = new Tray(trayIconPath);
@@ -36,8 +36,9 @@ export default class TrayIcon {
 							isClickThrough: false,
 							isTransparent: false,
 						});
-						app.relaunch();
-						app.exit();
+
+						this.overlay.setIgnoreMouseEvents(false);
+						this.overlay.webContents.send(IpcEvent.ShowApp);
 					}
 				},
 			},
@@ -47,7 +48,7 @@ export default class TrayIcon {
 				click: () => {
 					this.store.set('savedWindowState.isClickThrough', false);
 
-					this.window.setIgnoreMouseEvents(false);
+					this.overlay.setIgnoreMouseEvents(false);
 				},
 			},
 			{

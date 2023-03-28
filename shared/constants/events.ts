@@ -8,6 +8,7 @@ export const IpcEvent = {
 	GetVersion: 'get-version',
 	Rerender: 'rerender',
 	Recreated: 'recreated',
+	ShowApp: 'show-app',
 
 	// updater
 	CheckingForUpdate: 'checking-for-update',

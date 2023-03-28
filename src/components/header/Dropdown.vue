@@ -20,7 +20,7 @@
 				<a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
 			</li>
 			<li v-if="!isSettingsOpen && isChatPage" id="vanish">
-				<a @click="emit('vanish')">
+				<a @click="emitVanish">
 					<font-awesome-icon icon="fa-solid fa-ghost" />
 					<span>{{ t('header.dropdown.vanish.title') }}</span>
 				</a>
@@ -82,5 +82,10 @@ const toggleTheme = () => {
 const setClickThrough = () => {
 	document.querySelector('details')?.removeAttribute('open');
 	ipcRenderer.send(IpcEvent.SetClickThrough);
+};
+
+const emitVanish = () => {
+	document.querySelector('details')?.removeAttribute('open');
+	emit('vanish');
 };
 </script>

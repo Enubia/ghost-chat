@@ -42,13 +42,12 @@ const showStart = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
 const rerenderKey = ref(0);
-const checkingVersion = ref(!props.store.get('savedWindowState').isTransparent);
 
 const savedWindowState = ref(props.store.get('savedWindowState'));
 const chatOptions = ref(props.store.get('chatOptions'));
 const settings = ref(props.store.get('settings'));
 
-ipcRenderer.on(IpcEvent.Rerender, () => rerenderKey.value++);
+const checkingVersion = ref(savedWindowState.value.isTransparent);
 
 const $html = document.querySelector('html');
 
@@ -57,7 +56,9 @@ if (!$html?.getAttribute('data-theme')) {
 	$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 }
 
-document.querySelector('#app')?.removeAttribute('vanished');
+const showApp = () => {
+	document.querySelector('#app')?.removeAttribute('vanished');
+};
 
 const setShowStart = () => {
 	Show.Start({ showChat, showStart, showSettings });
@@ -72,12 +73,18 @@ const enableChat = (channel: string) => {
 	Show.Chat({ showChat, showStart, showSettings });
 };
 
-if (savedWindowState.value.isTransparent && chatOptions.value.channel !== '') {
-	document.querySelector('#app')?.setAttribute('vanished', 'true');
-	Show.Chat({ showChat, showStart, showSettings });
-}
+const vanish = () => {
+	if (savedWindowState.value.isTransparent && chatOptions.value.channel !== '') {
+		document.querySelector('#app')?.setAttribute('vanished', 'true');
+		Show.Chat({ showChat, showStart, showSettings });
+	}
+};
 
 if (settings.value.isOpen) {
 	Show.Settings({ showChat, showStart, showSettings, checkingVersion });
 }
+
+ipcRenderer.on(IpcEvent.Rerender, () => rerenderKey.value++);
+ipcRenderer.on(IpcEvent.Vanish, vanish);
+ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>
