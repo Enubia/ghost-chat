@@ -64,7 +64,7 @@
 		"eslint-plugin-unused-imports": "2.0.0",
 		"eslint-plugin-vue": "9.10.0",
 		"husky": "8.0.3",
-		"lint-staged": "13.2.0",
+		"lint-staged": "13.2.1",
 		"prettier": "2.8.7",
 		"release-it": "15.10.0",
 		"rimraf": "4.4.1",
