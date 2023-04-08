@@ -50,7 +50,7 @@
 		"@typescript-eslint/parser": "5.57.1",
 		"@vitejs/plugin-vue": "4.1.0",
 		"codemirror": "6.0.1",
-		"electron": "23.2.1",
+		"electron": "23.2.2",
 		"electron-builder": "23.6.0",
 		"electron-context-menu": "3.6.1",
 		"electron-log": "4.4.8",
