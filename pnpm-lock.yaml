@@ -92,8 +92,8 @@ devDependencies:
     specifier: 2.8.7
     version: 2.8.7
   release-it:
-    specifier: 15.10.0
-    version: 15.10.0
+    specifier: 15.10.1
+    version: 15.10.1
   rimraf:
     specifier: 4.4.1
     version: 4.4.1
@@ -5273,8 +5273,8 @@ packages:
       jsesc: 0.5.0
     dev: true
 
-  /release-it@15.10.0:
-    resolution: {integrity: sha512-cXY7cZyXjZ/e8TPUjzM7AHvnOKzNmj2NwNT3gREmZIdnDRmuX3DSnS3S3SLbVF8S3SmM88WfHVifGxFaFjNthQ==}
+  /release-it@15.10.1:
+    resolution: {integrity: sha512-Wkk4aFHSo27vQwHIlcEy77lJwnQlh4UDQckc53gh5tKo7F22mAUEAe8SYQZJcFh7icdkf0OV70onhB1dDmeClA==}
     engines: {node: '>=14.9'}
     hasBin: true
     dependencies:
