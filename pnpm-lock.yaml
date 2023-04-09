@@ -29,8 +29,8 @@ devDependencies:
     specifier: 0.10.0
     version: 0.10.0(vue-i18n@9.2.2)
   '@picocss/pico':
-    specifier: 1.5.8
-    version: 1.5.8
+    specifier: 1.5.9
+    version: 1.5.9
   '@typescript-eslint/eslint-plugin':
     specifier: 5.57.1
     version: 5.57.1(@typescript-eslint/parser@5.57.1)(eslint@8.37.0)(typescript@5.0.4)
@@ -932,8 +932,8 @@ packages:
       '@octokit/openapi-types': 16.0.0
     dev: true
 
-  /@picocss/pico@1.5.8:
-    resolution: {integrity: sha512-4WGNcpjUbWVdqaOzbMaB0rCO8qrUUeySniHI0pls11tFpIMWrRPU0sIvhlEGH3JxCzMvih52SOaTXOUB/zg9lg==}
+  /@picocss/pico@1.5.9:
+    resolution: {integrity: sha512-zgckSi9Fy2LQ+OIEGo/o7hZzgCf28ldRb2k/wrWV1Y/7LHNMYilc5Z2MbQBb1cvO8U2a94vSF8jh80HQNFLwdg==}
     dev: true
 
   /@pnpm/network.ca-file@1.0.2:
