@@ -1,14 +1,14 @@
 {
     "header": {
         "dropdown": {
-            "start": "메인",
+            "start": "시작",
             "chat": "채팅",
             "settings": "설정",
             "set-click-through": "클릭 통과 모드 사용",
             "toggle-color-theme": "색상 테마 전환",
             "vanish": {
                 "title": "Vanish",
-                "tooltip": "창을 투명화하고 클릭 통과 모드를 사용합니다."
+                "tooltip": "창을 투명화하고 클릭 통과 모드를 사용합니다"
             }
         }
     },
@@ -16,7 +16,7 @@
         "input": {
             "info": "채널을 입력하세요, 예: enubia1"
         },
-        "button": "Go!"
+        "button": "이동!"
     },
     "settings": {
         "aside": {
@@ -46,8 +46,8 @@
                     "info": "설정할 경우 창만 닫는 대신 앱을 즉시 종료합니다."
                 },
                 "hide-dock-icon-options": {
-                    "checkbox-label": "Hide dock icon",
-                    "info": "If set the app will not appear on the dock once it's launched."
+                    "checkbox-label": "독 아이콘 숨기기",
+                    "info": "설정할 경우 앱이 실행되면 독에 표시되지 않습니다."
                 }
             },
             "kap-chat": {
@@ -80,9 +80,9 @@
                     },
                     "notification": "테마를 적용하려면 채팅을 종료하고 다시 참여해야 합니다.",
                     "info": {
-                        "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
-                        "link": "KapChat generated page",
-                        "after-link": ", just open the developer tools and inspect the page."
+                        "before-link": "플레이할 게임에 맞는 스타일을 선택해야 합니다. 고급 사용자 (CSS를 아는)라면 \"None\"을 선택하고 왼쪽의 사용자 지정 CSS 섹션에서 채팅을 직접 꾸밀 수 있습니다. 사용할 수 있는 선택자는",
+                        "link": "KapChat에서 생성한 페이지",
+                        "after-link": "에서 찾을 수 있습니다, 개발자 도구를 열고 페이지를 검사하세요."
                     },
                     "button": {
                         "label": "저장",
@@ -94,13 +94,13 @@
     },
     "version-check": {
         "loading-message": "업데이트 확인 중",
-        "update-available": "Version {version} is available, download will start automagically",
-        "download-finished": "다운로드 완료, 재시작 시 새 버전이 적용됩니다",
-        "error": "다운로드 중에 오류가 발생했습니다, Discord에 제보해주세요!",
+        "update-available": "버전 {version}을(를) 사용할 수 있습니다, 다운로드가 자동으로 시작됩니다",
+        "download-finished": "다운로드 완료, 다시 시작할 때 새 버전이 적용됩니다",
+        "error": "다운로드 중에 오류가 발생했습니다, Discord에 제보해 주세요!",
         "manual-update-required": {
-            "before-link": "Version {version} is available but your system does not allow auto updates. Please visit the",
-            "link": "GhostChat release page",
-            "after-link": "and download the update manually."
+            "before-link": "버전 {version}을(를) 사용할 수 있으나 시스템이 자동 업데이트를 허용하지 않습니다.",
+            "link": "GhostChat 릴리즈 페이지",
+            "after-link": "를 방문하고 업데이트를 수동으로 다운로드하세요."
         }
     }
 }
