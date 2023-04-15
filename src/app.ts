@@ -24,4 +24,4 @@ const i18n = createI18n<false>({
 // TODO: figure out how to refresh the store once vanish is sent to the client
 // needed to rerender the app without a background
 
-createApp(App, { store }).use(i18n).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');
+createApp(App).use(i18n).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');

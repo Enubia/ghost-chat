@@ -76,7 +76,7 @@ export default class IpcEvents {
 			};
 
 			this.store.set('savedWindowState', data);
-			
+
 			this.overlay?.setIgnoreMouseEvents(true);
 			this.overlay?.webContents.send(IpcEvent.Vanish);
 		});

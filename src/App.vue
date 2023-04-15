@@ -1,8 +1,8 @@
 <template>
 	<VersionCheck v-if="checkingVersion" @remove-loading="checkingVersion = !checkingVersion" />
-	<header v-if="!savedWindowState.isTransparent && !settings.isOpen">
+	<header v-if="showMenuBar">
 		<DropDownMenu
-			:key="rerenderKey"
+			:key="settingsKey"
 			:is-chat-page="showChat"
 			:is-start-page="showStart"
 			:channel="chatOptions.channel"
@@ -16,7 +16,7 @@
 	<main class="container-fluid">
 		<Start v-if="showStart" :store="store" @channel="enableChat" />
 		<Chat v-else-if="showChat" :store="store" />
-		<Settings v-else-if="showSettings" :key="rerenderKey" />
+		<Settings v-else-if="showSettings" :key="settingsKey" />
 	</main>
 </template>
 
@@ -36,16 +36,17 @@ import Settings from './pages/Settings.vue';
 import Start from './pages/Start.vue';
 import VersionCheck from './pages/VersionCheck.vue';
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const store = new ElectronStore<AppStore>();
 
 const showStart = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
-const rerenderKey = ref(0);
+const settingsKey = ref(0);
 
-const savedWindowState = ref(props.store.get('savedWindowState'));
-const chatOptions = ref(props.store.get('chatOptions'));
-const settings = ref(props.store.get('settings'));
+const savedWindowState = ref(store.get('savedWindowState'));
+const chatOptions = ref(store.get('chatOptions'));
+const settings = ref(store.get('settings'));
+const showMenuBar = ref(true);
 
 const checkingVersion = ref(savedWindowState.value.isTransparent);
 
@@ -58,6 +59,7 @@ if (!$html?.getAttribute('data-theme')) {
 
 const showApp = () => {
 	document.querySelector('#app')?.removeAttribute('vanished');
+	showMenuBar.value = !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
 };
 
 const setShowStart = () => {
@@ -69,14 +71,18 @@ const setShowChat = () => {
 };
 
 const enableChat = (channel: string) => {
-	props.store.set('chatOptions.channel', channel);
-	Show.Chat({ showChat, showStart, showSettings });
+	store.set('chatOptions.channel', channel);
+	setShowChat();
 };
 
 const vanish = () => {
-	if (savedWindowState.value.isTransparent && chatOptions.value.channel !== '') {
+	const storeWindowState = store.get('savedWindowState');
+	const storeChatOptions = store.get('chatOptions');
+
+	if (storeWindowState.isTransparent && storeChatOptions.channel !== '') {
 		document.querySelector('#app')?.setAttribute('vanished', 'true');
-		Show.Chat({ showChat, showStart, showSettings });
+		setShowChat();
+		showMenuBar.value = false;
 	}
 };
 
@@ -84,7 +90,7 @@ if (settings.value.isOpen) {
 	Show.Settings({ showChat, showStart, showSettings, checkingVersion });
 }
 
-ipcRenderer.on(IpcEvent.Rerender, () => rerenderKey.value++);
+ipcRenderer.on(IpcEvent.Rerender, () => settingsKey.value++);
 ipcRenderer.on(IpcEvent.Vanish, vanish);
 ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>

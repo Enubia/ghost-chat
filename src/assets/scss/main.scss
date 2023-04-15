@@ -49,13 +49,14 @@ body {
 		cursor: pointer;
 	}
 
+	border-radius: 5px;
+
 	#app {
 		&:not([vanished]) {
 			background-color: var(--background-color);
 		}
 
 		font-family: 'Ubuntu', sans-serif;
-		border-radius: 10px;
 		height: 100%;
 
 		height: 100%;
