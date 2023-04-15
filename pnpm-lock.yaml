@@ -5,8 +5,8 @@ devDependencies:
     specifier: 6.1.1
     version: 6.1.1(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
   '@codemirror/lang-javascript':
-    specifier: 6.1.5
-    version: 6.1.5
+    specifier: 6.1.6
+    version: 6.1.6
   '@codemirror/theme-one-dark':
     specifier: 6.1.1
     version: 6.1.1
@@ -217,8 +217,8 @@ packages:
       - '@lezer/common'
     dev: true
 
-  /@codemirror/lang-javascript@6.1.5:
-    resolution: {integrity: sha512-BS2SmI1IXxWqMPhbJ0DC3eAHAK9V9XvdHMSqwvTBnmh5xFALt+cVDg7XE/A1dxdxzXYXyeqGddgqx1rQv7AYaw==}
+  /@codemirror/lang-javascript@6.1.6:
+    resolution: {integrity: sha512-TTK28z+vJQY9GAefLTDDptI2LMqMfAiuTpt8s9SsNwocjVQ1v9yTzfReMf1hYhspQCdhfa7fdKnQJ78mKe/bHQ==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2(@codemirror/language@6.6.0)(@codemirror/state@6.2.0)(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
       '@codemirror/language': 6.6.0
