@@ -107,8 +107,8 @@ devDependencies:
     specifier: 4.2.1
     version: 4.2.1(sass@1.62.0)
   vite-plugin-electron:
-    specifier: 0.11.1
-    version: 0.11.1
+    specifier: 0.11.2
+    version: 0.11.2
   vite-plugin-electron-renderer:
     specifier: 0.14.1
     version: 0.14.1
@@ -6146,8 +6146,8 @@ packages:
       lib-esm: 0.3.0
     dev: true
 
-  /vite-plugin-electron@0.11.1:
-    resolution: {integrity: sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==}
+  /vite-plugin-electron@0.11.2:
+    resolution: {integrity: sha512-umQRmSuA80JVxKB3PfO55o8mFTrW+sEtu7kZ5TYKAnkuYpKw7qgxl4f/65gp8x5BGHJjYh/iIRIE26x3Xqc4mQ==}
     dev: true
 
   /vite@4.2.1(sass@1.62.0):
