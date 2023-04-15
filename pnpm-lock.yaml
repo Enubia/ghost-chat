@@ -98,14 +98,14 @@ devDependencies:
     specifier: 4.4.1
     version: 4.4.1
   sass:
-    specifier: 1.61.0
-    version: 1.61.0
+    specifier: 1.62.0
+    version: 1.62.0
   typescript:
     specifier: 5.0.4
     version: 5.0.4
   vite:
     specifier: 4.2.1
-    version: 4.2.1(sass@1.61.0)
+    version: 4.2.1(sass@1.62.0)
   vite-plugin-electron:
     specifier: 0.11.1
     version: 0.11.1
@@ -1248,7 +1248,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.2.1(sass@1.61.0)
+      vite: 4.2.1(sass@1.62.0)
       vue: 3.2.47
     dev: true
 
@@ -5465,8 +5465,8 @@ packages:
       truncate-utf8-bytes: 1.0.2
     dev: true
 
-  /sass@1.61.0:
-    resolution: {integrity: sha512-PDsN7BrVkNZK2+dj/dpKQAWZavbAQ87IXqVvw2+oEYI+GwlTWkvbQtL7F2cCNbMqJEYKPh1EcjSxsnqIb/kyaQ==}
+  /sass@1.62.0:
+    resolution: {integrity: sha512-Q4USplo4pLYgCi+XlipZCWUQz5pkg/ruSSgJ0WRDSb/+3z9tXUOkQ7QPYn4XrhZKYAK4HlpaQecRwKLJX6+DBg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -6155,7 +6155,7 @@ packages:
     resolution: {integrity: sha512-pi9Wy4KCGjKIRvp7/5VUOT8BYEAJdZrpy3gI+GhGc5vYs2V9yPxLOtfCqNfSTYqH3uM6hYY6MyifFVku3Wg+2A==}
     dev: true
 
-  /vite@4.2.1(sass@1.61.0):
+  /vite@4.2.1(sass@1.62.0):
     resolution: {integrity: sha512-7MKhqdy0ISo4wnvwtqZkjke6XN4taqQ2TBaTccLIpOKv7Vp2h4Y+NpmWCnGDeSvvn45KxvWgGyb0MkHvY1vgbg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6184,7 +6184,7 @@ packages:
       postcss: 8.4.21
       resolve: 1.22.1
       rollup: 3.19.1
-      sass: 1.61.0
+      sass: 1.62.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
