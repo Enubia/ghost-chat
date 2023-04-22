@@ -37,8 +37,8 @@
 	},
 	"devDependencies": {
 		"@codemirror/lang-css": "6.1.1",
-		"@codemirror/lang-javascript": "6.1.6",
-		"@codemirror/theme-one-dark": "6.1.1",
+		"@codemirror/lang-javascript": "6.1.7",
+		"@codemirror/theme-one-dark": "6.1.2",
 		"@fortawesome/fontawesome-svg-core": "6.4.0",
 		"@fortawesome/free-brands-svg-icons": "6.4.0",
 		"@fortawesome/free-regular-svg-icons": "6.4.0",
