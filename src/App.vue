@@ -1,5 +1,5 @@
 <template>
-	<VersionCheck v-if="checkingVersion" @remove-loading="checkingVersion = !checkingVersion" />
+	<VersionCheck v-if="checkingVersion" @remove-loading="checkingVersion = false" />
 	<header v-if="showMenuBar">
 		<DropDownMenu
 			:key="settingsKey"
@@ -48,7 +48,7 @@ const chatOptions = ref(store.get('chatOptions'));
 const settings = ref(store.get('settings'));
 const showMenuBar = ref(true);
 
-const checkingVersion = ref(savedWindowState.value.isTransparent);
+const checkingVersion = ref(!store.get('savedWindowState').isTransparent);
 
 const $html = document.querySelector('html');
 

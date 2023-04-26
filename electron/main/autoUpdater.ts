@@ -38,21 +38,25 @@ export default class AutoUpdater {
 		}
 
 		this.autoUpdater.on('checking-for-update', () => {
-			this.sendStatusToWindow(IpcEvent.CheckingForUpdate);
+			log.debug('checking for update');
 		});
 
 		this.autoUpdater.on('update-available', (info) => {
+			log.debug('update-available', info.version);
+
 			if (info.version.includes('beta') && this.updater.channel !== 'beta') {
 				this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
 			} else if (process.platform !== 'darwin') {
 				this.autoUpdater.downloadUpdate();
 				this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
 			} else {
+				log.debug('manual update called');
 				this.sendStatusToWindow(IpcEvent.ManualUpdateRequired, info.version);
 			}
 		});
 
-		this.autoUpdater.on('update-not-available', (_info) => {
+		this.autoUpdater.on('update-not-available', (info) => {
+			log.debug('update-not-available', info.version);
 			this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
 		});
 

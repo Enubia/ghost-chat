@@ -44,7 +44,7 @@ Todo:
 		☐ linux support @created(23-03-05 15:18)
 		☐ custom colors? @created(23-03-05 15:18)
 		☐ add opt-in analytics @created(23-03-05 15:18)
-		✘ vanish without the need of redrawing the overlay (should be achieveable by just setting the background color to transparent) @created(23-03-08 18:17) @cancelled(23-03-13 21:56)
+		✔ vanish without the need of redrawing the overlay (should be achieveable by just setting the background color to transparent) @created(23-03-08 18:17) @done(23-04-26 08:27)
 
 		add hotkey toggling:
 			☐ click-through @created(23-03-08 18:17)

@@ -64,9 +64,11 @@ app.on('ready', () => {
 
 			// only call auto-updater for prod environment
 			if (!process.env.VITE_DEV_SERVER_URL) {
-				new AutoUpdater(store, overlay, !!process.env.VITE_DEV_SERVER_URL);
+				new AutoUpdater(store, overlay, false);
 			} else {
+				// if you want to test the autoupdater and loading screen comment the line below and uncomment the autoupdater init
 				overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+				// new AutoUpdater(store, overlay, true);
 			}
 		},
 		process.platform === 'linux' ? 1000 : 0,
