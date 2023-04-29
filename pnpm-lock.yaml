@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 devDependencies:
   '@codemirror/lang-css':
-    specifier: 6.1.1
-    version: 6.1.1(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
+    specifier: 6.2.0
+    version: 6.2.0(@codemirror/view@6.9.1)
   '@codemirror/lang-javascript':
     specifier: 6.1.7
     version: 6.1.7
@@ -205,16 +205,16 @@ packages:
       '@lezer/common': 1.0.2
     dev: true
 
-  /@codemirror/lang-css@6.1.1(@codemirror/view@6.9.1)(@lezer/common@1.0.2):
-    resolution: {integrity: sha512-P6jdNEHyRcqqDgbvHYyC9Wxkek0rnG3a9aVSRi4a7WrjPbQtBTaOmvYpXmm13zZMAatO4Oqpac+0QZs7sy+LnQ==}
+  /@codemirror/lang-css@6.2.0(@codemirror/view@6.9.1):
+    resolution: {integrity: sha512-oyIdJM29AyRPM3+PPq1I2oIk8NpUfEN3kAM05XWDDs6o3gSneIKaVJifT2P+fqONLou2uIgXynFyMUDQvo/szA==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2(@codemirror/language@6.6.0)(@codemirror/state@6.2.0)(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
       '@codemirror/language': 6.6.0
       '@codemirror/state': 6.2.0
+      '@lezer/common': 1.0.2
       '@lezer/css': 1.1.1
     transitivePeerDependencies:
       - '@codemirror/view'
-      - '@lezer/common'
     dev: true
 
   /@codemirror/lang-javascript@6.1.7:
