@@ -38,10 +38,15 @@ link.searchParams.append(SearchParams.PREVENT_CLIPPING, chatOptions.preventClipp
 let webView: WebviewTag;
 
 onMounted(() => {
+	webView = document.querySelector('webview') as WebviewTag;
 	if (chatOptions.customCSS !== '') {
-		webView = document.querySelector('webview') as WebviewTag;
 		webView.addEventListener('dom-ready', async () => {
 			await webView.insertCSS(chatOptions.customCSS);
+		});
+	}
+
+	if (chatOptions.customJS !== '') {
+		webView.addEventListener('dom-ready', async () => {
 			await webView.executeJavaScript(chatOptions.customJS);
 		});
 	}

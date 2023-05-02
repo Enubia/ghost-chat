@@ -1,6 +1,12 @@
 <template>
 	<div class="center-elements">
-		<button @click="source !== '' && emit('source', source)">{{ t('start.external.button') }}</button>
+		<input id="channel" v-model="source" type="text" @keydown.enter="emitSource" />
+	</div>
+	<div class="center-elements">
+		<small id="info">{{ t('start.external.input.info') }}</small>
+	</div>
+	<div class="center-elements">
+		<button @click="emitSource">{{ t('start.external.button') }}</button>
 	</div>
 </template>
 
@@ -17,4 +23,10 @@ const source = ref('');
 defineProps<{ store: ElectronStore<AppStore> }>();
 
 const emit = defineEmits<{ (event: 'source', source: string): void }>();
+
+const emitSource = () => {
+	if (source.value !== '') {
+		emit('source', source.value);
+	}
+};
 </script>

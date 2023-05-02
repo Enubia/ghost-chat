@@ -4,6 +4,7 @@
 		<DropDownMenu
 			:key="settingsKey"
 			:is-chat-page="showChat"
+			:is-external-page="showExternalSource"
 			:is-start-page="showStart"
 			:channel="chatOptions.channel"
 			:store="store"
@@ -11,11 +12,12 @@
 			@show-chat="setShowChat"
 			@vanish="ipcRenderer.send(IpcEvent.Vanish)"
 		/>
-		<MenuButtons :store="store" :is-chat="showChat" @back="setShowStart" />
+		<MenuButtons :store="store" :is-chat="showChat" :is-external="showExternalSource" @back="setShowStart" />
 	</header>
 	<main class="container-fluid">
-		<Start v-if="showStart" :store="store" @channel="enableChat" />
+		<Start v-if="showStart" :store="store" @channel="enableChat" @source="enableExternalSource" />
 		<Chat v-else-if="showChat" :store="store" />
+		<ExternalSource v-else-if="showExternalSource" :store="store" :external-source="externalSource" />
 		<Settings v-else-if="showSettings" :key="settingsKey" />
 	</main>
 </template>
@@ -32,6 +34,7 @@ import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import Show from './helper/show';
 import Chat from './pages/Chat.vue';
+import ExternalSource from './pages/ExternalSource.vue';
 import Settings from './pages/Settings.vue';
 import Start from './pages/Start.vue';
 import VersionCheck from './pages/VersionCheck.vue';
@@ -41,12 +44,15 @@ const store = new ElectronStore<AppStore>();
 const showStart = ref(true);
 const showChat = ref(false);
 const showSettings = ref(false);
+const showExternalSource = ref(false);
 const settingsKey = ref(0);
 
 const savedWindowState = ref(store.get('savedWindowState'));
 const chatOptions = ref(store.get('chatOptions'));
 const settings = ref(store.get('settings'));
 const showMenuBar = ref(true);
+
+const externalSource = ref('');
 
 const checkingVersion = ref(!store.get('savedWindowState').isTransparent);
 
@@ -63,11 +69,15 @@ const showApp = () => {
 };
 
 const setShowStart = () => {
-	Show.Start({ showChat, showStart, showSettings });
+	Show.Start({ showChat, showStart, showSettings, showExternalSource });
 };
 
 const setShowChat = () => {
-	Show.Chat({ showChat, showStart, showSettings });
+	Show.Chat({ showChat, showStart, showSettings, showExternalSource });
+};
+
+const setShowExternalSource = () => {
+	Show.ExternalSource({ showChat, showStart, showSettings, showExternalSource });
 };
 
 const enableChat = (channel: string) => {
@@ -75,19 +85,30 @@ const enableChat = (channel: string) => {
 	setShowChat();
 };
 
+const enableExternalSource = (source: string) => {
+	externalSource.value = source;
+	setShowExternalSource();
+};
+
 const vanish = () => {
 	const storeWindowState = store.get('savedWindowState');
 	const storeChatOptions = store.get('chatOptions');
 
-	if (storeWindowState.isTransparent && storeChatOptions.channel !== '') {
+	if (storeWindowState.isTransparent) {
 		document.querySelector('#app')?.setAttribute('vanished', 'true');
-		setShowChat();
+
+		if (showExternalSource.value) {
+			setShowExternalSource();
+		} else if (storeChatOptions.channel !== '') {
+			setShowChat();
+		}
+
 		showMenuBar.value = false;
 	}
 };
 
 if (settings.value.isOpen) {
-	Show.Settings({ showChat, showStart, showSettings, checkingVersion });
+	Show.Settings({ showChat, showStart, showSettings, checkingVersion, showExternalSource });
 }
 
 ipcRenderer.on(IpcEvent.Rerender, () => settingsKey.value++);

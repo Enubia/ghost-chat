@@ -13,13 +13,16 @@
         }
     },
     "start": {
-        "input": {
-            "info": "Enter a channel, e.g. enubia1"
-        },
         "twitch": {
+            "input": {
+                "info": "Enter a channel, e.g. enubia1"
+            },
             "button": "Go!"
         },
         "external": {
+            "input": {
+                "info": "Input any browser source you'd like to load"
+            },
             "button": "Go!"
         }
     },

@@ -37,7 +37,7 @@ Todo:
 
 	2.1.0:
 		add an option to load any browser source (like streamlabs chat):
-			☐ Allow replacing KapChat with something else in main window @created(23-03-15 15:45)
+			✔ Allow replacing KapChat with something else in main window @created(23-03-15 15:45) @done(23-05-02 09:50)
 			☐ Allow using custom URL in extra windows. If KapChat is not used in main window, allow using it as well, but only in one of those windows. @created(23-03-15 15:44)
 			☐ Only allow using vanish mode when there is no extra window open, for now. @created(23-03-15 15:45)
 

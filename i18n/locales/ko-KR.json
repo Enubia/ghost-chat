@@ -13,10 +13,18 @@
         }
     },
     "start": {
-        "input": {
-            "info": "채널을 입력하세요, 예: enubia1"
+        "twitch": {
+            "input": {
+                "info": "채널을 입력하세요, 예: enubia1"
+            },
+            "button": "이동!"
         },
-        "button": "이동!"
+        "external": {
+            "input": {
+                "info": "Input any browser source you'd like to load"
+            },
+            "button": "Go!"
+        }
     },
     "settings": {
         "aside": {

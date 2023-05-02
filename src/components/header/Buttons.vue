@@ -1,6 +1,6 @@
 <template>
 	<div id="menu-buttons">
-		<button v-if="isChat" id="back" class="secondary" @click="emit('back')">
+		<button v-if="isChat || isExternal" id="back" class="secondary" @click="emit('back')">
 			<font-awesome-icon icon="fa-solid fa-chevron-left" />
 		</button>
 		<button id="minimize" class="secondary" @click="ipcRenderer.send(IpcEvent.Minimize)">
@@ -18,7 +18,7 @@ import ElectronStore from 'electron-store';
 
 import { IpcEvent } from '../../../shared/constants';
 
-defineProps<{ store: ElectronStore; isChat: boolean }>();
+defineProps<{ store: ElectronStore; isChat: boolean; isExternal: boolean }>();
 
 const emit = defineEmits(['back']);
 </script>

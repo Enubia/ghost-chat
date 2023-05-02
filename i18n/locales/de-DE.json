@@ -13,10 +13,18 @@
         }
     },
     "start": {
-        "input": {
-            "info": "Gib einen channel namen ein, z.B. enubia1"
+        "twitch": {
+            "input": {
+                "info": "Gib einen channel namen ein, z.B. enubia1"
+            },
+            "button": "Start!"
         },
-        "button": "Start!"
+        "external": {
+            "input": {
+                "info": "Gib eine browser source ein die du laden möchtest"
+            },
+            "button": "Start!"
+        }
     },
     "settings": {
         "aside": {

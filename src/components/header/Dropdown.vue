@@ -19,7 +19,7 @@
 			<li>
 				<a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
 			</li>
-			<li v-if="!isSettingsOpen && isChatPage" id="vanish">
+			<li v-if="!isSettingsOpen && (isChatPage || isExternalPage)" id="vanish">
 				<a @click="emitVanish">
 					<font-awesome-icon icon="fa-solid fa-ghost" />
 					<span>{{ t('header.dropdown.vanish.title') }}</span>
@@ -43,6 +43,7 @@ const { t } = useI18n();
 
 const props = defineProps<{
 	isChatPage: boolean;
+	isExternalPage: boolean;
 	isStartPage: boolean;
 	channel: string;
 	store: ElectronStore<AppStore>;

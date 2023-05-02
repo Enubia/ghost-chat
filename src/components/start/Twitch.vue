@@ -1,12 +1,12 @@
 <template>
 	<div class="center-elements">
-		<input id="channel" v-model="channel" type="text" @keydown.enter="channel !== '' && emit('channel', channel)" />
+		<input id="channel" v-model="channel" type="text" @keydown.enter="emitChannel" />
 	</div>
 	<div class="center-elements">
-		<small id="info">{{ t('start.input.info') }}</small>
+		<small id="info">{{ t('start.twitch.input.info') }}</small>
 	</div>
 	<div class="center-elements">
-		<button @click="channel !== '' && emit('channel', channel)">{{ t('start.twitch.button') }}</button>
+		<button @click="emitChannel">{{ t('start.twitch.button') }}</button>
 	</div>
 </template>
 
@@ -33,4 +33,10 @@ if (chatOptions.value.channel !== '') {
 if (chatOptions.value.defaultChannel !== '') {
 	channel.value = chatOptions.value.defaultChannel;
 }
+
+const emitChannel = () => {
+	if (channel.value !== '') {
+		emit('channel', channel.value);
+	}
+};
 </script>
