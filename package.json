@@ -27,7 +27,7 @@
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
 		"try-release": "vue-tsc --noEmit && vite build && electron-builder",
-		"release": "release-it",
+		"publish": "release-it",
 		"clean": "rimraf dist-electron dist release",
 		"lint:src": "eslint --cache --ext .ts --ignore-path .eslintignore src/",
 		"lint:shared": "eslint --cache --ext .ts --ignore-path .eslintignore shared/",
