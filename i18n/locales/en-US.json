@@ -16,7 +16,12 @@
         "input": {
             "info": "Enter a channel, e.g. enubia1"
         },
-        "button": "Go!"
+        "twitch": {
+            "button": "Go!"
+        },
+        "external": {
+            "button": "Go!"
+        }
     },
     "settings": {
         "aside": {

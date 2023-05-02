@@ -3,44 +3,19 @@
 		<div class="center-elements">
 			<img src="/icons/icon-128x128.png" />
 		</div>
-		<div class="center-elements">
-			<input
-				id="channel"
-				v-model="channel"
-				type="text"
-				@keydown.enter="channel !== '' && emit('channel', channel)"
-			/>
-		</div>
-		<div class="center-elements">
-			<small id="info">{{ t('start.input.info') }}</small>
-		</div>
-		<div class="center-elements">
-			<button @click="channel !== '' && emit('channel', channel)">{{ t('start.button') }}</button>
-		</div>
+		<Twitch :store="store" @channel="($event) => $emit('channel', $event)" />
+		<External :store="store" />
 	</div>
 </template>
 
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../shared/types';
+import External from '../components/start/External.vue';
+import Twitch from '../components/start/Twitch.vue';
 
-const { t } = useI18n();
+defineProps<{ store: ElectronStore<AppStore> }>();
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
-
-const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
-
-const chatOptions = ref(props.store.get('chatOptions'));
-const channel = ref('');
-
-if (chatOptions.value.channel !== '') {
-	channel.value = chatOptions.value.channel;
-}
-
-if (chatOptions.value.defaultChannel !== '') {
-	channel.value = chatOptions.value.defaultChannel;
-}
+defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
 </script>
