@@ -47,9 +47,9 @@ export default class Settings {
 
 		if (process.env.VITE_DEV_SERVER_URL) {
 			this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
-			this.window.webContents.openDevTools({
-				mode: 'bottom',
-			});
+			// this.window.webContents.openDevTools({
+			// 	mode: 'bottom',
+			// });
 		} else {
 			this.window.loadFile(indexHtml, { hash: arg });
 		}

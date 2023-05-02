@@ -30,6 +30,10 @@ export default class AutoUpdater {
 			this.autoUpdater.forceDevUpdateConfig = true;
 		}
 
+		if (this.updater.channel === 'beta') {
+			this.autoUpdater.allowPrerelease = true;
+		}
+
 		try {
 			this.autoUpdater.checkForUpdatesAndNotify();
 		} catch (error) {
