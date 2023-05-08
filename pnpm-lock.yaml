@@ -80,8 +80,8 @@ devDependencies:
     specifier: 2.0.0
     version: 2.0.0(@typescript-eslint/eslint-plugin@5.59.2)(eslint@8.39.0)
   eslint-plugin-vue:
-    specifier: 9.11.0
-    version: 9.11.0(eslint@8.39.0)
+    specifier: 9.11.1
+    version: 9.11.1(eslint@8.39.0)
   husky:
     specifier: 8.0.3
     version: 8.0.3
@@ -2949,8 +2949,8 @@ packages:
       eslint-rule-composer: 0.3.0
     dev: true
 
-  /eslint-plugin-vue@9.11.0(eslint@8.39.0):
-    resolution: {integrity: sha512-bBCJAZnkBV7ATH4Z1E7CvN3nmtS4H7QUU3UBxPdo8WohRU+yHjnQRALpTbxMVcz0e4Mx3IyxIdP5HYODMxK9cQ==}
+  /eslint-plugin-vue@9.11.1(eslint@8.39.0):
+    resolution: {integrity: sha512-SNtBGDrRkPUFsREswPceqdvZ7YVdWY+iCYiDC+RoxwVieeQ7GJU1FLDlkcaYTOD2os/YuVgI1Fdu8YGM7fmoow==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -2960,7 +2960,7 @@ packages:
       natural-compare: 1.4.0
       nth-check: 2.1.1
       postcss-selector-parser: 6.0.11
-      semver: 7.3.8
+      semver: 7.5.0
       vue-eslint-parser: 9.1.0(eslint@8.39.0)
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
