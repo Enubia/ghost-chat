@@ -42,7 +42,7 @@ Todo:
 			☐ Only allow using vanish mode when there is no extra window open, for now. @created(23-03-15 15:45)
 
 		☐ linux support @created(23-03-05 15:18)
-		☐ custom colors? @created(23-03-05 15:18)
+		✘ custom colors? @created(23-03-05 15:18) @cancelled(23-05-10 15:44)
 		☐ add opt-in analytics @created(23-03-05 15:18)
 		✔ vanish without the need of redrawing the overlay (should be achieveable by just setting the background color to transparent) @created(23-03-08 18:17) @done(23-04-26 08:27)
 
