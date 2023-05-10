@@ -34,7 +34,7 @@ export type General = {
 };
 
 export type Updater = {
-	channel: 'latest' | 'beta' | 'alpa';
+	channel: 'latest' | 'beta';
 };
 
 export type AppStore = {

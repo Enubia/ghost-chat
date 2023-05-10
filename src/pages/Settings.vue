@@ -5,18 +5,20 @@
 				<nav>
 					<ul>
 						<li>
-							<a id="general" class="contrast" @click="setShowGeneral">{{ t('settings.aside.1') }}</a>
+							<a id="general" class="contrast" @click="showView('general')">
+								{{ t('settings.aside.1') }}
+							</a>
 						</li>
 						<li>
-							<a id="options" active class="contrast" @click="setShowOptions">
+							<a id="options" active class="contrast" @click="showView('options')">
 								{{ t('settings.aside.2') }}
 							</a>
 						</li>
 						<li>
-							<a id="css" class="contrast" @click="setShowCSS">{{ t('settings.aside.3') }}</a>
+							<a id="css" class="contrast" @click="showView('css')">{{ t('settings.aside.3') }}</a>
 						</li>
 						<li>
-							<a id="js" class="contrast" @click="setShowJS">{{ t('settings.aside.4') }}</a>
+							<a id="js" class="contrast" @click="showView('js')">{{ t('settings.aside.4') }}</a>
 						</li>
 					</ul>
 				</nav>
@@ -69,73 +71,76 @@ const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 const showUpdates = ref(false);
 
-const setShowGeneral = () => {
-	document.querySelector('#options')?.removeAttribute('active');
-	document.querySelector('#css')?.removeAttribute('active');
-	document.querySelector('#js')?.removeAttribute('active');
-	document.querySelector('#updates')?.removeAttribute('active');
-	document.querySelector('#general')?.setAttribute('active', 'true');
+const showView = <T = 'general' | 'options' | 'css' | 'js' | 'updates'>(view: T) => {
+	switch (view) {
+		case 'general':
+			document.querySelector('#options')?.removeAttribute('active');
+			document.querySelector('#css')?.removeAttribute('active');
+			document.querySelector('#js')?.removeAttribute('active');
+			document.querySelector('#updates')?.removeAttribute('active');
+			document.querySelector('#general')?.setAttribute('active', 'true');
 
-	showJSEditor.value = false;
-	showCSSEditor.value = false;
-	showUpdates.value = false;
-	showOptions.value = false;
-	showGeneral.value = true;
+			showJSEditor.value = false;
+			showCSSEditor.value = false;
+			showUpdates.value = false;
+			showOptions.value = false;
+			showGeneral.value = true;
+			break;
+
+		case 'options':
+			document.querySelector('#general')?.removeAttribute('active');
+			document.querySelector('#css')?.removeAttribute('active');
+			document.querySelector('#js')?.removeAttribute('active');
+			document.querySelector('#updates')?.removeAttribute('active');
+			document.querySelector('#options')?.setAttribute('active', 'true');
+
+			showGeneral.value = false;
+			showJSEditor.value = false;
+			showCSSEditor.value = false;
+			showUpdates.value = false;
+			showOptions.value = true;
+			break;
+
+		case 'css':
+			document.querySelector('#general')?.removeAttribute('active');
+			document.querySelector('#options')?.removeAttribute('active');
+			document.querySelector('#js')?.removeAttribute('active');
+			document.querySelector('#updates')?.removeAttribute('active');
+			document.querySelector('#css')?.setAttribute('active', 'true');
+
+			showGeneral.value = false;
+			showJSEditor.value = false;
+			showOptions.value = false;
+			showUpdates.value = false;
+			showCSSEditor.value = true;
+			break;
+
+		case 'js':
+			document.querySelector('#general')?.removeAttribute('active');
+			document.querySelector('#options')?.removeAttribute('active');
+			document.querySelector('#css')?.removeAttribute('active');
+			document.querySelector('#updates')?.removeAttribute('active');
+			document.querySelector('#js')?.setAttribute('active', 'true');
+
+			showGeneral.value = false;
+			showOptions.value = false;
+			showCSSEditor.value = false;
+			showUpdates.value = false;
+			showJSEditor.value = true;
+			break;
+
+		case 'updates':
+			// 	document.querySelector('#general')?.removeAttribute('active');
+			// 	document.querySelector('#options')?.removeAttribute('active');
+			// 	document.querySelector('#css')?.removeAttribute('active');
+			// 	document.querySelector('#js')?.removeAttribute('active');
+			// 	document.querySelector('#updates')?.setAttribute('active', 'true');
+			// 	showGeneral.value = false;
+			// 	showJSEditor.value = false;
+			// 	showOptions.value = false;
+			// 	showCSSEditor.value = false;
+			// 	showUpdates.value = true;
+			break;
+	}
 };
-
-const setShowOptions = () => {
-	document.querySelector('#general')?.removeAttribute('active');
-	document.querySelector('#css')?.removeAttribute('active');
-	document.querySelector('#js')?.removeAttribute('active');
-	document.querySelector('#updates')?.removeAttribute('active');
-	document.querySelector('#options')?.setAttribute('active', 'true');
-
-	showGeneral.value = false;
-	showJSEditor.value = false;
-	showCSSEditor.value = false;
-	showUpdates.value = false;
-	showOptions.value = true;
-};
-
-const setShowCSS = () => {
-	document.querySelector('#general')?.removeAttribute('active');
-	document.querySelector('#options')?.removeAttribute('active');
-	document.querySelector('#js')?.removeAttribute('active');
-	document.querySelector('#updates')?.removeAttribute('active');
-	document.querySelector('#css')?.setAttribute('active', 'true');
-
-	showGeneral.value = false;
-	showJSEditor.value = false;
-	showOptions.value = false;
-	showUpdates.value = false;
-	showCSSEditor.value = true;
-};
-
-const setShowJS = () => {
-	document.querySelector('#general')?.removeAttribute('active');
-	document.querySelector('#options')?.removeAttribute('active');
-	document.querySelector('#css')?.removeAttribute('active');
-	document.querySelector('#updates')?.removeAttribute('active');
-	document.querySelector('#js')?.setAttribute('active', 'true');
-
-	showGeneral.value = false;
-	showOptions.value = false;
-	showCSSEditor.value = false;
-	showUpdates.value = false;
-	showJSEditor.value = true;
-};
-
-// const setShowUpdates = () => {
-// 	document.querySelector('#general')?.removeAttribute('active');
-// 	document.querySelector('#options')?.removeAttribute('active');
-// 	document.querySelector('#css')?.removeAttribute('active');
-// 	document.querySelector('#js')?.removeAttribute('active');
-// 	document.querySelector('#updates')?.setAttribute('active', 'true');
-
-// 	showGeneral.value = false;
-// 	showJSEditor.value = false;
-// 	showOptions.value = false;
-// 	showCSSEditor.value = false;
-// 	showUpdates.value = true;
-// };
 </script>

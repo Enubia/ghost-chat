@@ -12,9 +12,7 @@ export default class IpcEvents {
 
 	constructor(private store: ElectronStore<AppStore>) {}
 
-	registerEvents(overlay: BrowserWindow | null, indexHtml: string) {
-		this.registerWindow(overlay);
-
+	registerEvents(indexHtml: string) {
 		this.rerender();
 		this.close();
 		this.setClickThrough();
@@ -28,7 +26,7 @@ export default class IpcEvents {
 	}
 
 	private rerender() {
-		ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: any) => {
+		ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: 'child' | 'parent') => {
 			if (args === 'child' && this.settings) {
 				this.settings.webContents.send(IpcEvent.Rerender);
 			}

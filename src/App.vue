@@ -8,11 +8,11 @@
 			:is-start-page="showStart"
 			:channel="chatOptions.channel"
 			:store="store"
-			@show-start="setShowStart"
-			@show-chat="setShowChat"
+			@show-start="showView('start')"
+			@show-chat="showView('chat')"
 			@vanish="ipcRenderer.send(IpcEvent.Vanish)"
 		/>
-		<MenuButtons :store="store" :is-chat="showChat" :is-external="showExternalSource" @back="setShowStart" />
+		<MenuButtons :store="store" :is-chat="showChat" :is-external="showExternalSource" @back="showView('start')" />
 	</header>
 	<main class="container-fluid">
 		<Start v-if="showStart" :store="store" @channel="enableChat" @source="enableExternalSource" />
@@ -32,7 +32,6 @@ import { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
-import Show from './helper/show';
 import Chat from './pages/Chat.vue';
 import ExternalSource from './pages/ExternalSource.vue';
 import Settings from './pages/Settings.vue';
@@ -68,26 +67,47 @@ const showApp = () => {
 	showMenuBar.value = !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
 };
 
-const setShowStart = () => {
-	Show.Start({ showChat, showStart, showSettings, showExternalSource });
-};
+const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(view: T) => {
+	switch (view) {
+		case 'chat':
+			showChat.value = true;
+			showStart.value = false;
+			showSettings.value = false;
+			showExternalSource.value = false;
+			break;
 
-const setShowChat = () => {
-	Show.Chat({ showChat, showStart, showSettings, showExternalSource });
-};
+		case 'start':
+			showChat.value = false;
+			showStart.value = true;
+			showSettings.value = false;
+			showExternalSource.value = false;
+			break;
 
-const setShowExternalSource = () => {
-	Show.ExternalSource({ showChat, showStart, showSettings, showExternalSource });
+		case 'settings':
+			showChat.value = false;
+			showStart.value = false;
+			showSettings.value = true;
+			showExternalSource.value = false;
+			checkingVersion.value = false;
+			break;
+
+		case 'externalSource':
+			showChat.value = false;
+			showStart.value = false;
+			showSettings.value = false;
+			showExternalSource.value = true;
+			break;
+	}
 };
 
 const enableChat = (channel: string) => {
 	store.set('chatOptions.channel', channel);
-	setShowChat();
+	showView('chat');
 };
 
 const enableExternalSource = (source: string) => {
 	externalSource.value = source;
-	setShowExternalSource();
+	showView('externalSource');
 };
 
 const vanish = () => {
@@ -98,9 +118,9 @@ const vanish = () => {
 		document.querySelector('#app')?.setAttribute('vanished', 'true');
 
 		if (showExternalSource.value) {
-			setShowExternalSource();
+			showView('externalSource');
 		} else if (storeChatOptions.channel !== '') {
-			setShowChat();
+			showView('chat');
 		}
 
 		showMenuBar.value = false;
@@ -108,7 +128,7 @@ const vanish = () => {
 };
 
 if (settings.value.isOpen) {
-	Show.Settings({ showChat, showStart, showSettings, checkingVersion, showExternalSource });
+	showView('settings');
 }
 
 ipcRenderer.on(IpcEvent.Rerender, () => settingsKey.value++);

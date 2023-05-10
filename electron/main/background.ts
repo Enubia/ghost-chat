@@ -60,7 +60,8 @@ app.on('ready', () => {
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			new TrayIcon(store, overlay).buildTray(trayIconPath);
 			ipcEvents = new IpcEvents(store);
-			ipcEvents.registerEvents(overlay, indexHtml);
+			ipcEvents.registerWindow(overlay);
+			ipcEvents.registerEvents(indexHtml);
 
 			// only call auto-updater for prod environment
 			if (!process.env.VITE_DEV_SERVER_URL) {
@@ -86,7 +87,7 @@ app.on('activate', () => {
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			// register the events and overlay again since they still hold a reference to a null object in case the overlay was recreated
 			ipcEvents.registerWindow(overlay);
-			ipcEvents.registerEvents(overlay, indexHtml);
+			ipcEvents.registerEvents(indexHtml);
 			// wait a second for the window to be created again so that it can handle events
 			setTimeout(() => {
 				overlay?.webContents.send(IpcEvent.Recreated);
