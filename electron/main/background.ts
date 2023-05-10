@@ -99,15 +99,15 @@ app.on('activate', () => {
 app.on('window-all-closed', () => {
 	overlay = null;
 
-	log.info('App closing...');
-
 	if (process.platform === 'darwin') {
 		if (store.get('general').mac.quitOnClose) {
+			log.info('App closing...');
 			app.quit();
 		} else {
 			app.dock.show();
 		}
 	} else {
+		log.info('App closing...');
 		app.quit();
 	}
 });
