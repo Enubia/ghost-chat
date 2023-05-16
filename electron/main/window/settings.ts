@@ -19,6 +19,8 @@ export default class Settings {
 
 		const { savedWindowState } = this.store.get('settings');
 
+		log.info('Settings window state', savedWindowState);
+
 		this.window = new BrowserWindow({
 			title: 'Ghost Chat - Settings',
 			x: savedWindowState.x,
@@ -67,6 +69,8 @@ export default class Settings {
 		this.window.on('close', () => {
 			if (this.window) {
 				const windowBounds = this.window.getBounds();
+
+				log.info('Closing, saved settings window state', windowBounds);
 
 				this.store.set<typeof StoreKeys.Settings>('settings', {
 					isOpen: false,

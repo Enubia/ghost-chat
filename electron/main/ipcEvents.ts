@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain } from 'electron';
+import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
 import { IpcEvent } from '../../shared/constants';
@@ -27,6 +28,8 @@ export default class IpcEvents {
 
 	private rerender() {
 		ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: 'child' | 'parent') => {
+			log.info('Rerendering', args);
+
 			if (args === 'child' && this.settings) {
 				this.settings.webContents.send(IpcEvent.Rerender);
 			}
@@ -39,6 +42,8 @@ export default class IpcEvents {
 
 	private close() {
 		ipcMain.on(IpcEvent.Close, () => {
+			log.info('Closing all windows');
+
 			for (const window of BrowserWindow.getAllWindows()) {
 				window.close();
 			}
@@ -47,6 +52,8 @@ export default class IpcEvents {
 
 	private setClickThrough() {
 		ipcMain.on(IpcEvent.SetClickThrough, () => {
+			log.info('Setting click through to true');
+
 			this.store.set('savedWindowState.isClickThrough', true);
 			this.overlay?.setIgnoreMouseEvents(true);
 		});
@@ -54,13 +61,20 @@ export default class IpcEvents {
 
 	private minimize() {
 		ipcMain.on(IpcEvent.Minimize, () => {
+			log.info('Minimizing overlay');
+
 			this.overlay?.minimize();
 		});
 	}
 
 	private vanish() {
 		ipcMain.on(IpcEvent.Vanish, () => {
+			log.info('Vanishing overlay');
+
 			const windowBounds = this.overlay?.getBounds() as Electron.Rectangle;
+
+			log.info('Saved window state', windowBounds);
+
 			const theme = this.store.get('savedWindowState').theme;
 
 			const data: WindowState = {
@@ -82,9 +96,15 @@ export default class IpcEvents {
 
 	private openSettings(indexHtml: string) {
 		ipcMain.on(IpcEvent.OpenSettings, () => {
+			log.info('Opening settings window');
+
 			if (this.settings) {
+				log.info('Focusing settings window');
+
 				this.settings.focus();
 			} else {
+				log.info('Creating settings window');
+
 				const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
 				_settings.buildWindow(indexHtml, 'settings');
 				this.settings = _settings.window;

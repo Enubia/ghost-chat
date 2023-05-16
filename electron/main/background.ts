@@ -12,10 +12,12 @@ import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 
-// Log locations:
-// 	on Linux: ~/.config/ghost-chat/logs/app.log
-// 	on macOS: ~/Library/Logs/ghost-chat/app.log
-// 	on Windows: %appdata%\Roaming\ghost-chat\logs\app.log
+log.transports.file.level = 'info';
+
+const date = new Date();
+const logFileDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+
+log.transports.file.fileName = `app-${logFileDate}.log`;
 
 log.info('App starting...');
 
@@ -77,13 +79,18 @@ app.on('ready', () => {
 });
 
 app.on('activate', () => {
+	log.info('App activated');
+
 	if (overlay?.isMinimized()) {
+		log.info('Restoring overlay');
 		overlay.restore();
 	} else {
 		const allWindows = BrowserWindow.getAllWindows();
 		if (allWindows.length) {
+			log.info('Focusing overlay');
 			allWindows[0].focus();
 		} else {
+			log.info('Recreating overlay');
 			overlay = new Overlay(store).buildWindow(indexHtml);
 			// register the events and overlay again since they still hold a reference to a null object in case the overlay was recreated
 			ipcEvents.registerWindow(overlay);

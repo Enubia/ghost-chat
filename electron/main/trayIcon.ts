@@ -1,4 +1,5 @@
 import { Tray, Menu, app, BrowserWindow, shell } from 'electron';
+import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
 import { IpcEvent, StoreKeys } from '../../shared/constants';
@@ -20,17 +21,33 @@ export default class TrayIcon {
 				enabled: false,
 			},
 			{
-				label: 'Open config',
-				type: 'normal',
-				click: () => {
-					shell.showItemInFolder(this.store.path);
-				},
+				label: 'Miscellaneous',
+				type: 'submenu',
+				submenu: [
+					{
+						label: 'Open logs',
+						type: 'normal',
+						click: () => {
+							log.info('Opening logs folder');
+							shell.showItemInFolder(log.transports.file.getFile().path);
+						},
+					},
+					{
+						label: 'Open config',
+						type: 'normal',
+						click: () => {
+							log.info('Opening config folder');
+							shell.showItemInFolder(this.store.path);
+						},
+					},
+				],
 			},
 			{
 				label: 'Disable Vanish',
 				type: 'normal',
 				click: () => {
 					if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
+						log.info('Disabling Vanish');
 						this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 							...this.store.get('savedWindowState'),
 							isClickThrough: false,
@@ -46,6 +63,7 @@ export default class TrayIcon {
 				label: 'Disable Click-Through',
 				type: 'normal',
 				click: () => {
+					log.info('Disabling Click-Through');
 					this.store.set('savedWindowState.isClickThrough', false);
 
 					this.overlay.setIgnoreMouseEvents(false);

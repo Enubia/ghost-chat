@@ -12,6 +12,9 @@ export default class Overlay {
 		log.info('Building overlay window');
 
 		const windowState = this.store.get('savedWindowState');
+
+		log.info('Overlay window state', windowState);
+
 		const webPreferences: Electron.WebPreferences = {
 			webviewTag: true,
 			nodeIntegration: true,
@@ -76,6 +79,8 @@ export default class Overlay {
 		window.on('close', () => {
 			if (window) {
 				const windowBounds = window.getBounds();
+
+				log.info('Closing, saved overlay window state', windowBounds);
 
 				this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
 					x: windowBounds.x,
