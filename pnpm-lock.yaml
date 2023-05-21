@@ -110,8 +110,8 @@ devDependencies:
     specifier: 0.11.2
     version: 0.11.2
   vite-plugin-electron-renderer:
-    specifier: 0.14.2
-    version: 0.14.2
+    specifier: 0.14.4
+    version: 0.14.4
   vue:
     specifier: 3.3.4
     version: 3.3.4
@@ -4359,10 +4359,6 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /lib-esm@0.3.0:
-    resolution: {integrity: sha512-P7YcG7OnoaGL2h4j46g/m0P2xHMXlYf+0iCDvVrEfzUVxLe+abytgd2VjUhj9puqEgqRGEDbT504YWj75jHacA==}
-    dev: true
-
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
@@ -6241,10 +6237,8 @@ packages:
     dev: true
     optional: true
 
-  /vite-plugin-electron-renderer@0.14.2:
-    resolution: {integrity: sha512-fhp1cnez2qvL90UuHrvfI+mEzKAfn4u31wnZpndxU+s12DfCjFMtgNkV4QBJatueuw53IK1jQAvGUUhz0+d3qA==}
-    dependencies:
-      lib-esm: 0.3.0
+  /vite-plugin-electron-renderer@0.14.4:
+    resolution: {integrity: sha512-aDrQMAqjn+SKDNx1BGAqpgORy7MX8O8oQZciu3Qc1N1t4i5Lh2beiwUtXOv+twn4x3VqsZxjhfNFcvgmroO3gw==}
     dev: true
 
   /vite-plugin-electron@0.11.2:
