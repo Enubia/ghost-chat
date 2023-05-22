@@ -6,7 +6,7 @@
   <a href="https://github.com/Enubia/ghost-chat/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat?style=for-the-badge">
   </a>
-  <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=for-the-badge">
+  <!-- <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=for-the-badge"> -->
   <!-- <a href="https://www.twitch.tv/enubia1" target="_blank">
     <img alt="" src="https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=for-the-badge">
   </a> -->
