@@ -9,8 +9,8 @@ devDependencies:
     specifier: 6.2.0
     version: 6.2.0(@codemirror/view@6.9.1)
   '@codemirror/lang-javascript':
-    specifier: 6.1.8
-    version: 6.1.8
+    specifier: 6.1.9
+    version: 6.1.9
   '@codemirror/theme-one-dark':
     specifier: 6.1.2
     version: 6.1.2
@@ -213,8 +213,8 @@ packages:
       - '@codemirror/view'
     dev: true
 
-  /@codemirror/lang-javascript@6.1.8:
-    resolution: {integrity: sha512-5cIA6IOkslTu1DtldcYnj7hsBm3p+cD37qSaKvW1kV16M6q9ysKvKrveCOWgbrj4+ilSWRL2JtSLudbeB158xg==}
+  /@codemirror/lang-javascript@6.1.9:
+    resolution: {integrity: sha512-z3jdkcqOEBT2txn2a87A0jSy6Te3679wg/U8QzMeftFt+4KA6QooMwfdFzJiuC3L6fXKfTXZcDocoaxMYfGz0w==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2(@codemirror/language@6.6.0)(@codemirror/state@6.2.0)(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
       '@codemirror/language': 6.6.0
