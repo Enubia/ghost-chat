@@ -48,8 +48,8 @@ devDependencies:
     specifier: 6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
   electron:
-    specifier: 24.4.1
-    version: 24.4.1
+    specifier: 25.0.1
+    version: 25.0.1
   electron-builder:
     specifier: 23.6.0
     version: 23.6.0
@@ -2584,8 +2584,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@24.4.1:
-    resolution: {integrity: sha512-tVZw5/dKGJbU1h8bdY0gfz4Y7ANYi8VddnIiLg/sPidJWc4CdshCZhLfU0lW1ySjtEt35JYxGHfmerkJJqUSTw==}
+  /electron@25.0.1:
+    resolution: {integrity: sha512-YD3xCrH01LiPeLlG90DWgMXJK69UxY4NiXKqXT12HOiXLqEaKrLWap+CiiS7J7SWUXz+4XOItQI8g1dtG7zkkA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -3482,7 +3482,7 @@ packages:
       es6-error: 4.1.1
       matcher: 3.0.0
       roarr: 2.15.4
-      semver: 7.5.0
+      semver: 7.5.1
       serialize-error: 7.0.1
     dev: true
     optional: true
@@ -5476,16 +5476,9 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /rxjs@7.8.0:
-    resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
-    requiresBuild: true
-    dependencies:
-      tslib: 2.5.0
-    dev: true
-    optional: true
-
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
+    requiresBuild: true
     dependencies:
       tslib: 2.5.0
     dev: true
@@ -6061,7 +6054,7 @@ packages:
   /typed-emitter@2.1.0:
     resolution: {integrity: sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==}
     optionalDependencies:
-      rxjs: 7.8.0
+      rxjs: 7.8.1
     dev: true
 
   /typedarray-to-buffer@3.1.5:
