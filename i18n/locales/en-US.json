@@ -17,13 +17,15 @@
             "input": {
                 "info": "Enter a channel, e.g. enubia1"
             },
-            "button": "Go!"
+            "button": "Go!",
+            "sourceSwitcher": "Want to load something else? Click here"
         },
         "external": {
             "input": {
                 "info": "Input any browser source you'd like to load"
             },
-            "button": "Go!"
+            "button": "Go!",
+            "sourceSwitcher": "Want to load twitch chat? Click here!"
         }
     },
     "settings": {

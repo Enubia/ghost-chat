@@ -7,10 +7,10 @@
 		<External v-else :store="store" @source="($event) => $emit('source', $event)" />
 		<div class="center-elements">
 			<small v-if="showTwitchInput" class="source-loader-info" @click="showTwitchInput = !showTwitchInput">
-				Want to load something else? Click here
+				{{ t('start.twitch.sourceSwitcher') }}
 			</small>
 			<small v-else class="source-loader-info" @click="showTwitchInput = !showTwitchInput">
-				Want to load twitch chat? Click here
+				{{ t('start.external.sourceSwitcher') }}
 			</small>
 		</div>
 	</div>
@@ -19,10 +19,13 @@
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../shared/types';
 import External from '../components/start/External.vue';
 import Twitch from '../components/start/Twitch.vue';
+
+const { t } = useI18n();
 
 const showTwitchInput = ref(true);
 

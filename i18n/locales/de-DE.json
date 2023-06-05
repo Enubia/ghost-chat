@@ -17,13 +17,15 @@
             "input": {
                 "info": "Gib einen channel namen ein, z.B. enubia1"
             },
-            "button": "Start!"
+            "button": "Start!",
+            "sourceSwitcher": "Möchtest du etwas anderes laden? Klick hier!"
         },
         "external": {
             "input": {
                 "info": "Gib eine browser source ein die du laden möchtest"
             },
-            "button": "Start!"
+            "button": "Start!",
+            "sourceSwitcher": "Möchtest du Twitch laden? Klick hier!"
         }
     },
     "settings": {
