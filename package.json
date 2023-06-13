@@ -4,7 +4,8 @@
 	"private": true,
 	"description": "Standalone twitch chat overlay",
 	"author": {
-		"name": "Marco Schuster"
+		"name": "Marco Schuster",
+		"email": "dev.enubia@mailbox.org"
 	},
 	"main": "dist-electron/main/background.js",
 	"license": "MIT",
