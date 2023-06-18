@@ -74,6 +74,7 @@ const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(view: T)
 			showStart.value = false;
 			showSettings.value = false;
 			showExternalSource.value = false;
+			showMenuBar.value = true;
 			break;
 
 		case 'start':
@@ -81,6 +82,7 @@ const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(view: T)
 			showStart.value = true;
 			showSettings.value = false;
 			showExternalSource.value = false;
+			showMenuBar.value = true;
 			break;
 
 		case 'settings':
@@ -88,6 +90,7 @@ const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(view: T)
 			showStart.value = false;
 			showSettings.value = true;
 			showExternalSource.value = false;
+			showMenuBar.value = false;
 			checkingVersion.value = false;
 			break;
 
@@ -96,6 +99,7 @@ const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(view: T)
 			showStart.value = false;
 			showSettings.value = false;
 			showExternalSource.value = true;
+			showMenuBar.value = true;
 			break;
 	}
 };

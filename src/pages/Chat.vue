@@ -1,6 +1,6 @@
 <template>
 	<div id="webview-tag">
-		<webview :src="link.toString()" style="display: inline-flex; width: 99%; height: 95%" />
+		<webview :src="link.toString()" style="display: inline-flex; width: 100%; height: 100%" />
 	</div>
 </template>
 
