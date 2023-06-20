@@ -8,7 +8,7 @@
 		"email": "dev.enubia@mailbox.org"
 	},
 	"main": "dist-electron/main/background.js",
-	"license": "MIT",
+	"license": "Zlib",
 	"keywords": [
 		"electron",
 		"typescript",
