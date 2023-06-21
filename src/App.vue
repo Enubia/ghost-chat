@@ -116,16 +116,9 @@ const enableExternalSource = (source: string) => {
 
 const vanish = () => {
 	const storeWindowState = store.get('savedWindowState');
-	const storeChatOptions = store.get('chatOptions');
 
 	if (storeWindowState.isTransparent) {
 		document.querySelector('#app')?.setAttribute('vanished', 'true');
-
-		if (showExternalSource.value) {
-			showView('externalSource');
-		} else if (storeChatOptions.channel !== '') {
-			showView('chat');
-		}
 
 		showMenuBar.value = false;
 	}

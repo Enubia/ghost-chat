@@ -1,7 +1,5 @@
 <template>
-	<div id="webview-tag">
-		<webview :src="externalSource" style="display: inline-flex; width: 100%; height: 100%" />
-	</div>
+	<WebView :tag-source="props.externalSource" />
 </template>
 
 <script setup lang="ts">
@@ -9,6 +7,7 @@ import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
 import { AppStore, WebviewTag } from '../../shared/types';
+import WebView from '../components/WebView.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; externalSource: string }>();
 

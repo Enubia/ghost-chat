@@ -1,7 +1,5 @@
 <template>
-	<div id="webview-tag">
-		<webview :src="link.toString()" style="display: inline-flex; width: 100%; height: 100%" />
-	</div>
+	<WebView :tag-source="link.toString()" />
 </template>
 
 <script setup lang="ts">
@@ -9,6 +7,7 @@ import ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '../../shared/types';
+import WebView from '../components/WebView.vue';
 
 const SearchParams = {
 	THEME: 'theme',
