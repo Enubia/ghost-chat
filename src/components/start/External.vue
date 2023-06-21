@@ -26,6 +26,12 @@ const emit = defineEmits<{ (event: 'source', source: string): void }>();
 
 const emitSource = () => {
 	if (source.value !== '') {
+		const regex = new RegExp(/(http(s)?:\/\/).+/);
+
+		if (!regex.test(source.value)) {
+			source.value = `https://${source.value}`;
+		}
+
 		emit('source', source.value);
 	}
 };
