@@ -60,7 +60,7 @@ export default class Overlay {
 		if (process.env.VITE_DEV_SERVER_URL) {
 			window.loadURL(process.env.VITE_DEV_SERVER_URL);
 			// window.webContents.openDevTools({
-			// 	mode: 'bottom',
+			// 	mode: 'detach',
 			// });
 		} else {
 			window.loadFile(indexHtml);
