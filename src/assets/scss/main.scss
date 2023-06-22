@@ -12,6 +12,30 @@
 	justify-content: center;
 }
 
+.error {
+	&-input {
+		border-color: var(--del-color);
+	}
+
+	&-text {
+		color: var(--del-color);
+	}
+}
+
+.success {
+	&-input {
+		border-color: var(--ins-color);
+	}
+
+	&-text {
+		color: var(--ins-color);
+	}
+}
+
+.text-center {
+	text-align: center;
+}
+
 .align-elements {
 	@extend %align-items;
 }
@@ -154,7 +178,7 @@ body {
 				#channel {
 					margin-top: 10px;
 					margin-bottom: 0;
-					width: 50%;
+					width: 57%;
 				}
 
 				#info {

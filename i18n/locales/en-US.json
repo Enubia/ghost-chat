@@ -22,7 +22,8 @@
         },
         "external": {
             "input": {
-                "info": "Input any browser source you'd like to load"
+                "info": "Input any browser source you'd like to load",
+                "error": "This is not a valid URL, it should look like this: http(s)://(www.)twitch.tv"
             },
             "button": "Go!",
             "sourceSwitcher": "Want to load twitch chat? Click here!"

@@ -94,7 +94,6 @@
 		"unicorn/escape-case": "error",
 		"unicorn/no-instanceof-array": "error",
 		"unicorn/no-new-buffer": "error",
-		"unicorn/no-unsafe-regex": "error",
 		"unicorn/number-literal-case": "error",
 		"unicorn/prefer-includes": "error",
 		"unicorn/prefer-string-starts-ends-with": "error",
