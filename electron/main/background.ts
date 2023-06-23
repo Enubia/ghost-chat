@@ -19,7 +19,7 @@ const logFileDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 
 log.transports.file.fileName = `app-${logFileDate}.log`;
 
-log.info('App starting...');
+log.info('App starting');
 
 crashReporter.start({ submitURL: '', uploadToServer: false });
 
@@ -108,13 +108,13 @@ app.on('window-all-closed', () => {
 
 	if (process.platform === 'darwin') {
 		if (store.get('general').mac.quitOnClose) {
-			log.info('App closing...');
+			log.info('App closing');
 			app.quit();
 		} else {
 			app.dock.show();
 		}
 	} else {
-		log.info('App closing...');
+		log.info('App closing');
 		app.quit();
 	}
 });

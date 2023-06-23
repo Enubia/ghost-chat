@@ -72,6 +72,7 @@ export default class TrayIcon {
 			{
 				label: 'Exit',
 				click: () => {
+					log.info('App closing via tray menu');
 					app.quit();
 				},
 			},

@@ -25,6 +25,7 @@ export default class AutoUpdater {
 	private init() {
 		this.autoUpdater.logger = log;
 		this.autoUpdater.autoDownload = false;
+		this.autoUpdater.disableWebInstaller = true;
 
 		if (this.forceDevUpdateConfig) {
 			this.autoUpdater.forceDevUpdateConfig = true;
