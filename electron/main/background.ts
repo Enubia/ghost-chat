@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 import { app, BrowserWindow, crashReporter } from 'electron';
 import log from 'electron-log';
+import unhandled from 'electron-unhandled';
 
 import { IpcEvent } from '../../shared/constants';
 
@@ -24,6 +25,31 @@ log.info('App starting');
 crashReporter.start({ submitURL: '', uploadToServer: false });
 
 log.info('Crash reporter started');
+
+unhandled({
+	logger: (error) => {
+		log.error(error);
+	},
+	showDialog: true,
+	reportButton: async (error) => {
+		await fetch(
+			'https://discord.com/api/webhooks/1122136288783511612/IdvCR475_AuhXajrJ9DsOf805ypacPOUwt2bFp1fn9tpbjhEMcqVvPVtL6eMtG3nvDIM',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					content: `
+						App crash report for ${process.platform} <@277132742087671808>\n**${error.name}**\n${error.message}\n\`\`\`${error.stack}\`\`\`
+					`,
+				}),
+			},
+		);
+
+		log.info('Crash report sent');
+	},
+});
 
 if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
 	log.info('called disableHardwareAcceleration');
