@@ -33,7 +33,7 @@ unhandled({
 	showDialog: true,
 	reportButton: async (error) => {
 		await fetch(
-			'https://discord.com/api/webhooks/1122136288783511612/IdvCR475_AuhXajrJ9DsOf805ypacPOUwt2bFp1fn9tpbjhEMcqVvPVtL6eMtG3nvDIM',
+			'https://discord.com/api/webhooks/1122184754465341570/9EjYJkd5zgwdAq_rQlNeX5PYZBHenE9ZCN-ZddlFbgOcIcKGJJrxlxGBiZeS3OzkjOOp',
 			{
 				method: 'POST',
 				headers: {
@@ -47,7 +47,8 @@ unhandled({
 			},
 		);
 
-		log.info('Crash report sent');
+		log.info('Crash report sent, exiting app');
+		process.exit(1);
 	},
 });
 
