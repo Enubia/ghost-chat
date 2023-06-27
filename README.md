@@ -43,7 +43,7 @@ or you just want to have your chat on your main screen.
 - GhostChat will remember the position and size of the window and will spawn in the same exact location again once you launch it the next time. 
 
 <p align="center">
-  <img src="images/main.png" alt="Donate with PayPal" style="height: 600px !important;" />
+  <img src="markdown-images/main.png" alt="Donate with PayPal" style="height: 600px !important;" />
 </p>
 
 - The menu bar holds a dropdown for you which can be used to access the settings, navigate back and forth between chat and launch page as well as interaction with the window.
@@ -51,16 +51,16 @@ or you just want to have your chat on your main screen.
 
 
 <p align="center">
-  <img src="images/settings.png" alt="Donate with PayPal" style="height: 400px !important;" />
-  <img src="images/settings-opened.png" alt="Donate with PayPal" style="height: 400px !important;" />
+  <img src="markdown-images/settings.png" alt="Donate with PayPal" style="height: 400px !important;" />
+  <img src="markdown-images/settings-opened.png" alt="Donate with PayPal" style="height: 400px !important;" />
 </p>
 
 - With a click on vanish, you'll set the window to transparent and make it click through. This can be reverted by clicking `Disable Vanish` in the tray icon menu.
 - Likewise you can only make it click-through with the corresponding menu option. To revert this behavior just click `Disable Click-through` in the tray icon menu.
 
 <p align="center">
-  <img src="images/vanished.png" alt="Donate with PayPal" style="height: 400px !important;" />
-  <img src="images/tray.png" alt="Donate with PayPal" style="height: 300px !important;" />
+  <img src="markdown-images/vanished.png" alt="Donate with PayPal" style="height: 400px !important;" />
+  <img src="markdown-images/tray.png" alt="Donate with PayPal" style="height: 300px !important;" />
 </p>
 
 ## Additional info
