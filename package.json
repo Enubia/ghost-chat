@@ -49,7 +49,7 @@
 		"@picocss/pico": "1.5.10",
 		"@vitejs/plugin-vue": "4.2.3",
 		"codemirror": "6.0.1",
-		"electron": "25.2.0",
+		"electron": "25.3.0",
 		"electron-builder": "24.4.0",
 		"electron-context-menu": "3.6.1",
 		"electron-log": "4.4.8",
