@@ -37,7 +37,7 @@
 		"prepare": "husky install | chmod ug+x .husky/*"
 	},
 	"devDependencies": {
-		"@codemirror/lang-css": "6.2.0",
+		"@codemirror/lang-css": "6.2.1",
 		"@codemirror/lang-javascript": "6.1.9",
 		"@codemirror/theme-one-dark": "6.1.2",
 		"@fortawesome/fontawesome-svg-core": "6.4.0",

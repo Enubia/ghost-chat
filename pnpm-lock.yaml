@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@codemirror/lang-css':
-    specifier: 6.2.0
-    version: 6.2.0(@codemirror/view@6.9.1)
+    specifier: 6.2.1
+    version: 6.2.1(@codemirror/view@6.9.1)
   '@codemirror/lang-javascript':
     specifier: 6.1.9
     version: 6.1.9
@@ -182,8 +182,8 @@ packages:
       '@lezer/common': 1.0.2
     dev: true
 
-  /@codemirror/lang-css@6.2.0(@codemirror/view@6.9.1):
-    resolution: {integrity: sha512-oyIdJM29AyRPM3+PPq1I2oIk8NpUfEN3kAM05XWDDs6o3gSneIKaVJifT2P+fqONLou2uIgXynFyMUDQvo/szA==}
+  /@codemirror/lang-css@6.2.1(@codemirror/view@6.9.1):
+    resolution: {integrity: sha512-/UNWDNV5Viwi/1lpr/dIXJNWiwDxpw13I4pTUAsNxZdg6E0mI2kTQb0P2iHczg1Tu+H4EBgJR+hYhKiHKko7qg==}
     dependencies:
       '@codemirror/autocomplete': 6.4.2(@codemirror/language@6.6.0)(@codemirror/state@6.2.0)(@codemirror/view@6.9.1)(@lezer/common@1.0.2)
       '@codemirror/language': 6.6.0
