@@ -47,7 +47,7 @@
 		"@fortawesome/vue-fontawesome": "3.0.3",
 		"@intlify/unplugin-vue-i18n": "0.12.3",
 		"@picocss/pico": "1.5.10",
-		"@vitejs/plugin-vue": "4.2.3",
+		"@vitejs/plugin-vue": "4.3.1",
 		"codemirror": "6.0.1",
 		"electron": "25.5.0",
 		"electron-builder": "24.6.3",
