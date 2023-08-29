@@ -41,7 +41,7 @@
 	<div id="chat-theme">
 		<label for="theme-select">
 			{{ t('settings.document.kap-chat.chat-theme.label') }}
-			<select id="theme-select" v-model="chatTheme">
+			<select id="theme-select" v-model="chatTheme" @change="preview">
 				<option value="undefined" selected>
 					{{ t('settings.document.kap-chat.chat-theme.select-options.none') }}
 				</option>
@@ -66,10 +66,11 @@
 			</select>
 		</label>
 		<div v-if="chatTheme !== oldTheme">
+			<iframe id="preview" :key="rerender" :src="previewLink" />
+			<br />
 			<small class="info">
 				{{ t('settings.document.kap-chat.chat-theme.notification') }}
 			</small>
-			<br />
 		</div>
 		<small>
 			{{ t('settings.document.kap-chat.chat-theme.info.before-link') }}
@@ -109,6 +110,42 @@ const showBotActivity = ref(chatOptions.showBotActivity);
 const preventClipping = ref(chatOptions.preventClipping);
 const oldTheme = chatOptions.chatTheme;
 const chatTheme = ref(chatOptions.chatTheme);
+const previewLink = ref('');
+const rerender = ref(0);
+
+const SearchParams = {
+	THEME: 'theme',
+	CHANNEL: 'channel',
+	FADE: 'fade',
+	BOT_ACTIVITY: 'bot_activity',
+	PREVENT_CLIPPING: 'prevent_clipping',
+};
+
+const preview = () => {
+	let previewChannel = 'zackrawrr';
+
+	if (chatOptions.channel !== '') {
+		previewChannel = chatOptions.channel;
+	} else if (defaultChannel.value !== '') {
+		previewChannel = defaultChannel.value;
+	}
+
+	const link = new URL('https://nightdev.com/hosted/obschat');
+	link.searchParams.append(SearchParams.THEME, chatTheme.value);
+	link.searchParams.append(SearchParams.CHANNEL, previewChannel);
+
+	if (fadeTimeout.value) {
+		link.searchParams.append(SearchParams.FADE, fadeTimeout.value.toString());
+	} else {
+		link.searchParams.append(SearchParams.FADE, 'false');
+	}
+
+	link.searchParams.append(SearchParams.BOT_ACTIVITY, showBotActivity.value.toString());
+	link.searchParams.append(SearchParams.PREVENT_CLIPPING, preventClipping.value.toString());
+
+	previewLink.value = link.toString();
+	rerender.value += 1;
+};
 
 const save = () => {
 	const $saveButton = document.querySelector('#save') as HTMLElement;
@@ -135,3 +172,16 @@ const save = () => {
 	}, 500);
 };
 </script>
+
+<style lang="scss">
+#preview {
+	height: 300px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.info {
+	text-decoration: underline;
+	text-transform: uppercase;
+}
+</style>

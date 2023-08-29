@@ -54,8 +54,10 @@ export default class Overlay {
 			}
 		}
 
-		this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
-		this.store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		if (!this.store.has('savedWindowState.theme')) {
+			this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+			this.store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		}
 
 		if (process.env.VITE_DEV_SERVER_URL) {
 			window.loadURL(process.env.VITE_DEV_SERVER_URL);

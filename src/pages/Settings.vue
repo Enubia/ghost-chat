@@ -71,7 +71,7 @@ const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 const showUpdates = ref(false);
 
-const showView = <T = 'general' | 'options' | 'css' | 'js' | 'updates'>(view: T) => {
+const showView = <T = 'general' | 'options' | 'css' | 'js' | 'updates',>(view: T) => {
 	switch (view) {
 		case 'general':
 			document.querySelector('#options')?.removeAttribute('active');

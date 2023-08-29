@@ -63,8 +63,8 @@ devDependencies:
     specifier: 6.1.1
     version: 6.1.1
   eslint-config-slurp-config:
-    specifier: 1.0.5
-    version: 1.0.5(@typescript-eslint/eslint-plugin@6.4.1)(@typescript-eslint/parser@6.4.1)(eslint-config-prettier@9.0.0)(eslint-plugin-import@2.28.1)(eslint-plugin-prettier@5.0.0)(eslint-plugin-unicorn@48.0.1)(eslint-plugin-unused-imports@3.0.0)(eslint-plugin-vue@9.17.0)(eslint@8.48.0)(prettier@3.0.2)(vue-eslint-parser@9.3.1)
+    specifier: 1.1.2
+    version: 1.1.2(@typescript-eslint/eslint-plugin@6.4.1)(@typescript-eslint/parser@6.4.1)(eslint-config-prettier@9.0.0)(eslint-plugin-import@2.28.1)(eslint-plugin-prettier@5.0.0)(eslint-plugin-unicorn@48.0.1)(eslint-plugin-unused-imports@3.0.0)(eslint-plugin-vue@9.17.0)(eslint@8.48.0)(prettier@3.0.2)(vue-eslint-parser@9.3.1)
   husky:
     specifier: 8.0.3
     version: 8.0.3
@@ -2810,8 +2810,8 @@ packages:
       eslint: 8.48.0
     dev: true
 
-  /eslint-config-slurp-config@1.0.5(@typescript-eslint/eslint-plugin@6.4.1)(@typescript-eslint/parser@6.4.1)(eslint-config-prettier@9.0.0)(eslint-plugin-import@2.28.1)(eslint-plugin-prettier@5.0.0)(eslint-plugin-unicorn@48.0.1)(eslint-plugin-unused-imports@3.0.0)(eslint-plugin-vue@9.17.0)(eslint@8.48.0)(prettier@3.0.2)(vue-eslint-parser@9.3.1):
-    resolution: {integrity: sha512-H9WUd2Dmc6FR+ipZPsBwg3E9ixF8i9+g531P7NXKEbm5S7jQh9PDKoTTunkFGBzhWj/3gjmk/QYdmXu7KfA/Tg==}
+  /eslint-config-slurp-config@1.1.2(@typescript-eslint/eslint-plugin@6.4.1)(@typescript-eslint/parser@6.4.1)(eslint-config-prettier@9.0.0)(eslint-plugin-import@2.28.1)(eslint-plugin-prettier@5.0.0)(eslint-plugin-unicorn@48.0.1)(eslint-plugin-unused-imports@3.0.0)(eslint-plugin-vue@9.17.0)(eslint@8.48.0)(prettier@3.0.2)(vue-eslint-parser@9.3.1):
+    resolution: {integrity: sha512-qPv82ecw6mog+56xCjDVkTFKQYIQCwIPbLEgcL2VTRiGcXoGzB03MDGqr2VkGFUbtQAkBGQoDENO2kaP77SxBA==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': 6.4.1
       '@typescript-eslint/parser': 6.4.1
