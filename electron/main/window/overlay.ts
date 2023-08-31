@@ -6,14 +6,28 @@ import { StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class Overlay {
-	constructor(private store: ElectronStore<AppStore>) {}
+	constructor(
+		private store: ElectronStore<AppStore>,
+		private childOptions?: {
+			parent: BrowserWindow;
+		},
+	) {}
 
 	buildWindow(indexHtml: string) {
 		log.info('Building overlay window');
 
-		const windowState = this.store.get('savedWindowState');
+		let windowState: Electron.Rectangle = {
+			x: 0,
+			y: 0,
+			width: 400,
+			height: 800,
+		};
 
-		log.info('Overlay window state', windowState);
+		if (!this.childOptions) {
+			windowState = this.store.get('savedWindowState');
+		}
+
+		log.info(`Overlay window  ${this.childOptions ? 'child' : 'parent'}`, windowState);
 
 		const webPreferences: Electron.WebPreferences = {
 			webviewTag: true,
@@ -35,6 +49,10 @@ export default class Overlay {
 			webPreferences,
 		});
 
+		if (this.childOptions) {
+			window.setParentWindow(this.childOptions.parent);
+		}
+
 		if (process.platform === 'darwin') {
 			window.setVisibleOnAllWorkspaces(true);
 		}
@@ -54,9 +72,11 @@ export default class Overlay {
 			}
 		}
 
-		if (!this.store.has('savedWindowState.theme')) {
-			this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
-			this.store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+		if (!this.childOptions) {
+			if (!this.store.has('savedWindowState.theme')) {
+				this.store.set('savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+				this.store.set('settings.savedWindowState.theme', nativeTheme.shouldUseDarkColors ? 'dark' : 'light');
+			}
 		}
 
 		if (process.env.VITE_DEV_SERVER_URL) {
@@ -80,21 +100,23 @@ export default class Overlay {
 
 		window.on('close', () => {
 			if (window) {
-				const windowBounds = window.getBounds();
+				if (!this.childOptions) {
+					const windowBounds = window.getBounds();
 
-				log.info('Closing, saved overlay window state', windowBounds);
+					log.info('Closing, saved overlay window state', windowBounds);
 
-				this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-					x: windowBounds.x,
-					y: windowBounds.y,
-					width: windowBounds.width,
-					height: windowBounds.height,
-					isClickThrough: false,
-					isTransparent: false,
-					theme: this.store.get('savedWindowState.theme'),
-				});
+					this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+						x: windowBounds.x,
+						y: windowBounds.y,
+						width: windowBounds.width,
+						height: windowBounds.height,
+						isClickThrough: false,
+						isTransparent: false,
+						theme: this.store.get('savedWindowState.theme'),
+					});
 
-				this.store.set('settings.isOpen', false);
+					this.store.set('settings.isOpen', false);
+				}
 			} else {
 				log.error('Overlay closed but reference is already gone');
 				this.store.reset('savedWindowState');
@@ -102,8 +124,10 @@ export default class Overlay {
 		});
 
 		window.on('closed', () => {
-			if (!this.store.get('savedWindowState').isTransparent) {
-				this.store.set('chatOptions.channel', '');
+			if (!this.childOptions) {
+				if (!this.store.get('savedWindowState').isTransparent) {
+					this.store.set('chatOptions.channel', '');
+				}
 			}
 		});
 

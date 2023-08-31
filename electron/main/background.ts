@@ -80,7 +80,9 @@ const trayIconPath = `${PUBLIC}/trayicon.png`;
 
 const indexHtml = join(DIST, 'index.html');
 
-let overlay: BrowserWindow | null;
+let overlay: BrowserWindow | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let child: BrowserWindow | null = null;
 let ipcEvents: IpcEvents;
 
 app.on('ready', () => {
@@ -114,8 +116,11 @@ app.on('activate', () => {
 	} else {
 		const allWindows = BrowserWindow.getAllWindows();
 		if (allWindows.length) {
-			log.info('Focusing overlay');
-			allWindows[0].focus();
+			// log.info('Focusing overlay');
+			// allWindows[0].focus();
+			if (overlay) {
+				child = new Overlay(store, { parent: overlay }).buildWindow(indexHtml);
+			}
 		} else {
 			log.info('Recreating overlay');
 			overlay = new Overlay(store).buildWindow(indexHtml);
@@ -132,6 +137,7 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
 	overlay = null;
+	child = null;
 
 	if (process.platform === 'darwin') {
 		if (store.get('general').mac.quitOnClose) {
