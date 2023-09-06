@@ -46,6 +46,19 @@ or you just want to have your chat on your main screen.
 
 - Download the latest release (mac or windows) from [the release page](https://github.com/Enubia/ghost-chat/releases).
 - The first time you launch it on Windows, `Windows protected your PC` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click `More info` and then `Run anyway`. You'll only have to do this once.
+
+
+## "GhostChat Cannot Be Opened Because the Developer Cannot be Verified" Error on Mac
+
+- Open Finder.
+- Locate GhostChat.
+- Control+Click the app.
+- Select Open.
+- Click Open.
+- The app should be saved as an exception in your security settings, allowing you to open it in the future.
+
+---
+
 - After launching the application, enter the channel you want to receive chat messages from and click go / press enter.
 - You can move the window around by clicking and dragging the menu bar.
 - If you want to resize it, just click and drag the borders to whatever size you want.
