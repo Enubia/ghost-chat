@@ -55,7 +55,7 @@
 		"electron-log": "4.4.8",
 		"electron-store": "8.1.0",
 		"electron-unhandled": "4.0.1",
-		"electron-updater": "6.1.1",
+		"electron-updater": "6.1.4",
 		"eslint-config-slurp-config": "1.1.2",
 		"husky": "8.0.3",
 		"lint-staged": "14.0.1",
