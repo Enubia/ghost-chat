@@ -78,14 +78,14 @@ devDependencies:
     specifier: 5.0.1
     version: 5.0.1
   sass:
-    specifier: 1.66.1
-    version: 1.66.1
+    specifier: 1.67.0
+    version: 1.67.0
   typescript:
     specifier: 5.2.2
     version: 5.2.2
   vite:
     specifier: 4.4.9
-    version: 4.4.9(sass@1.66.1)
+    version: 4.4.9(sass@1.67.0)
   vite-plugin-electron:
     specifier: 0.14.1
     version: 0.14.1(vite-plugin-electron-renderer@0.14.5)
@@ -1292,7 +1292,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.9(sass@1.66.1)
+      vite: 4.4.9(sass@1.67.0)
       vue: 3.3.4
     dev: true
 
@@ -5559,8 +5559,8 @@ packages:
       truncate-utf8-bytes: 1.0.2
     dev: true
 
-  /sass@1.66.1:
-    resolution: {integrity: sha512-50c+zTsZOJVgFfTgwwEzkjA3/QACgdNsKueWPyAR0mRINIvLAStVQBbPg14iuqEQ74NPDbXzJARJ/O4SI1zftA==}
+  /sass@1.67.0:
+    resolution: {integrity: sha512-SVrO9ZeX/QQyEGtuZYCVxoeAL5vGlYjJ9p4i4HFuekWl8y/LtJ7tJc10Z+ck1c8xOuoBm2MYzcLfTAffD0pl/A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -6279,7 +6279,7 @@ packages:
       vite-plugin-electron-renderer: 0.14.5
     dev: true
 
-  /vite@4.4.9(sass@1.66.1):
+  /vite@4.4.9(sass@1.67.0):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6310,7 +6310,7 @@ packages:
       esbuild: 0.18.11
       postcss: 8.4.27
       rollup: 3.28.0
-      sass: 1.66.1
+      sass: 1.67.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
