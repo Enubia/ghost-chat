@@ -30,7 +30,7 @@ jobs:
         run: pnpm run build-production
   
   release-mac:
-    needs: release-mac
+    needs: windows-latest
 
     runs-on: macos-latest
 
