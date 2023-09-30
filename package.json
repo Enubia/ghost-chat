@@ -60,7 +60,7 @@
 		"husky": "8.0.3",
 		"lint-staged": "14.0.1",
 		"release-it": "16.2.1",
-		"rimraf": "5.0.1",
+		"rimraf": "5.0.5",
 		"sass": "1.68.0",
 		"typescript": "5.2.2",
 		"vite": "4.4.9",
