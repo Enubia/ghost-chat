@@ -30,8 +30,8 @@ devDependencies:
     specifier: 3.0.3
     version: 3.0.3(@fortawesome/fontawesome-svg-core@6.4.2)(vue@3.3.4)
   '@intlify/unplugin-vue-i18n':
-    specifier: 1.2.0
-    version: 1.2.0(vue-i18n@9.4.1)
+    specifier: 1.4.0
+    version: 1.4.0(vue-i18n@9.4.1)
   '@picocss/pico':
     specifier: 1.5.10
     version: 1.5.10
@@ -660,8 +660,8 @@ packages:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
 
-  /@intlify/bundle-utils@7.3.0(vue-i18n@9.4.1):
-    resolution: {integrity: sha512-lcnfsLA5Dyd3TbvfoLS0ejLr1vAJYyT6VRYtE4LGNexy1ZD/GEcbXrC33fI9oQp7t2hDlHbCn2o4BBVgXaJFqg==}
+  /@intlify/bundle-utils@7.4.0(vue-i18n@9.4.1):
+    resolution: {integrity: sha512-AQfjBe2HUxzyN8ignIk3WhhSuVcSuirgzOzkd17nb337rCbI4Gv/t1R60UUyIqFoFdviLb/wLcDUzTD/xXjv9w==}
     engines: {node: '>= 14.16'}
     peerDependencies:
       petite-vue-i18n: '*'
@@ -706,8 +706,8 @@ packages:
     engines: {node: '>= 16'}
     dev: true
 
-  /@intlify/unplugin-vue-i18n@1.2.0(vue-i18n@9.4.1):
-    resolution: {integrity: sha512-AzjlMZKj9DG10ICDR2VWjfJudHJ1XK2GNSHxw+VmOUYpUm4S0L/a7OAdvgnuY7S4plk1VnPdT4YilpZk+uQcqg==}
+  /@intlify/unplugin-vue-i18n@1.4.0(vue-i18n@9.4.1):
+    resolution: {integrity: sha512-RGDchCRBlDTyVVFgPA1C1XC1uD4xYN81Ma+3EnU6GQ8pBEreraX/PWdPXXzOB6k9GWCQHuqii3atYXhcH3rpSg==}
     engines: {node: '>= 14.16'}
     peerDependencies:
       petite-vue-i18n: '*'
@@ -721,7 +721,7 @@ packages:
       vue-i18n-bridge:
         optional: true
     dependencies:
-      '@intlify/bundle-utils': 7.3.0(vue-i18n@9.4.1)
+      '@intlify/bundle-utils': 7.4.0(vue-i18n@9.4.1)
       '@intlify/shared': 9.4.1
       '@rollup/pluginutils': 5.0.2
       '@vue/compiler-sfc': 3.3.4
