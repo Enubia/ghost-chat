@@ -42,8 +42,8 @@ devDependencies:
     specifier: 6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
   electron:
-    specifier: 26.3.0
-    version: 26.3.0
+    specifier: 26.4.0
+    version: 26.4.0
   electron-builder:
     specifier: 24.6.4
     version: 24.6.4
@@ -2548,8 +2548,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@26.3.0:
-    resolution: {integrity: sha512-7ZpvSHu+jmqialSvywTZnOQZZGLqlyj+yV5HGDrEzFnMiFaXBRpbByHgoUhaExJ/8t/0xKQjKlMRAY65w+zNZQ==}
+  /electron@26.4.0:
+    resolution: {integrity: sha512-FUEFwmIlflLxImRtTmDp8CWpH4KqlyAwga6vauaz6+882SmyC3bJRhgqOIT5s6rMbW25WezNiaqfKqHDJjz3pw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
