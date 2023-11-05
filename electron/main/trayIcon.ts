@@ -8,10 +8,7 @@ import { AppStore } from '../../shared/types';
 export default class TrayIcon {
 	private tray: Tray;
 
-	constructor(
-		private store: ElectronStore<AppStore>,
-		private overlay: BrowserWindow,
-	) {}
+	constructor(private store: ElectronStore<AppStore>, private overlay: BrowserWindow) {}
 
 	buildTray(trayIconPath: string) {
 		this.tray = new Tray(trayIconPath);
