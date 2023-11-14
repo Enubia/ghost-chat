@@ -3,293 +3,293 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 
 %align-items {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .center-elements {
-	@extend %align-items;
-	justify-content: center;
+    @extend %align-items;
+    justify-content: center;
 }
 
 .error {
-	&-input {
-		border-color: var(--del-color);
-	}
+    &-input {
+        border-color: var(--del-color);
+    }
 
-	&-text {
-		color: var(--del-color);
-	}
+    &-text {
+        color: var(--del-color);
+    }
 }
 
 .success {
-	&-input {
-		border-color: var(--ins-color);
-	}
+    &-input {
+        border-color: var(--ins-color);
+    }
 
-	&-text {
-		color: var(--ins-color);
-	}
+    &-text {
+        color: var(--ins-color);
+    }
 }
 
 .text-center {
-	text-align: center;
+    text-align: center;
 }
 
 .align-elements {
-	@extend %align-items;
+    @extend %align-items;
 }
 
 :root {
-	--primary: hsl(264, 80%, 54%);
-	--primary-hover: hsl(264, 80%, 60%);
+    --primary: hsl(264, 80%, 54%);
+    --primary-hover: hsl(264, 80%, 60%);
 }
 
 ::-webkit-scrollbar {
-	width: 3px;
+    width: 3px;
 }
 
 ::-webkit-scrollbar-track {
-	background: var(--secondary);
+    background: var(--secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--primary);
+    background: var(--primary);
 }
 
 html,
 body {
-	background-color: rgba(0, 0, 0, 0);
-	height: 100%;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	button,
-	a {
-		-webkit-app-region: no-drag;
-		cursor: pointer;
-	}
+    button,
+    a {
+        -webkit-app-region: no-drag;
+        cursor: pointer;
+    }
 
-	border-radius: 5px;
+    border-radius: 5px;
 
-	#app {
-		&:not([vanished]) {
-			background-color: var(--background-color);
-		}
+    #app {
+        &:not([vanished]) {
+            background-color: var(--background-color);
+        }
 
-		font-family: 'Ubuntu', sans-serif;
-		height: 100%;
+        font-family: 'Ubuntu', sans-serif;
+        height: 100%;
 
-		#version-check {
-			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+        #version-check {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-			.spinner {
-				display: flex;
-				justify-content: center;
-			}
+            .spinner {
+                display: flex;
+                justify-content: center;
+            }
 
-			#message {
-				width: 80%;
-				text-align: center;
-			}
-		}
+            #message {
+                width: 80%;
+                text-align: center;
+            }
+        }
 
-		header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			-webkit-app-region: drag;
-			border-bottom: 1px solid var(--secondary);
-			background-color: var(--secondary);
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            -webkit-app-region: drag;
+            border-bottom: 1px solid var(--secondary);
+            background-color: var(--secondary);
 
-			#app-menu {
-				margin: 0;
-				width: 10%;
-				-webkit-app-region: no-drag;
+            #app-menu {
+                margin: 0;
+                width: 10%;
+                -webkit-app-region: no-drag;
 
-				summary {
-					padding: 0;
-					height: inherit;
-					border-radius: 0%;
-					border: none;
-					display: flex;
-					justify-content: center;
+                summary {
+                    padding: 0;
+                    height: inherit;
+                    border-radius: 0%;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
 
-					&::after {
-						content: none;
-					}
-				}
+                    &::after {
+                        content: none;
+                    }
+                }
 
-				ul[role='listbox'] {
-					right: inherit;
+                ul[role='listbox'] {
+                    right: inherit;
 
-					#vanish {
-						display: flex;
-						justify-content: space-between;
-						width: 100%;
+                    #vanish {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
 
-						a {
-							span {
-								margin-left: 10px;
-							}
-						}
-					}
-				}
-			}
+                        a {
+                            span {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
 
-			#menu-buttons {
-				display: flex;
-				align-items: center;
+            #menu-buttons {
+                display: flex;
+                align-items: center;
 
-				button {
-					margin-bottom: 0;
-					padding: 0 15px 0 15px;
-					border-radius: 0%;
-					border: none;
+                button {
+                    margin-bottom: 0;
+                    padding: 0 15px 0 15px;
+                    border-radius: 0%;
+                    border: none;
 
-					&#close {
-						&:hover {
-							background-color: var(--del-color);
-						}
-					}
-				}
-			}
-		}
+                    &#close {
+                        &:hover {
+                            background-color: var(--del-color);
+                        }
+                    }
+                }
+            }
+        }
 
-		main {
-			height: 100%;
-			padding: 0%;
+        main {
+            height: 100%;
+            padding: 0%;
 
-			#webview-tag {
-				height: 97%;
-				display: flex;
-				align-items: center;
-			}
+            #webview-tag {
+                height: 97%;
+                display: flex;
+                align-items: center;
+            }
 
-			#start {
-				height: 100%;
+            #start {
+                height: 100%;
 
-				#channel {
-					margin-top: 10px;
-					margin-bottom: 0;
-					width: 57%;
-				}
+                #channel {
+                    margin-top: 10px;
+                    margin-bottom: 0;
+                    width: 57%;
+                }
 
-				#info {
-					margin-top: 5px;
-					margin-bottom: 10px;
-				}
+                #info {
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+                }
 
-				button {
-					width: 40%;
-				}
+                button {
+                    width: 40%;
+                }
 
-				.source-loader-info {
-					color: var(--primary);
-					cursor: pointer;
-					
-					&:hover {
-						color: var(--primary-hover);
-						text-decoration: underline;
-					}
-				}
-			}
+                .source-loader-info {
+                    color: var(--primary);
+                    cursor: pointer;
+                    
+                    &:hover {
+                        color: var(--primary-hover);
+                        text-decoration: underline;
+                    }
+                }
+            }
 
-			#settings {
-				display: flex;
-				justify-content: center;
-				height: 100%;
-				padding-top: 20px;
-				padding-bottom: 20px;
+            #settings {
+                display: flex;
+                justify-content: center;
+                height: 100%;
+                padding-top: 20px;
+                padding-bottom: 20px;
 
-				#content {
-					display: flex;
-					// align-items: center;
+                #content {
+                    display: flex;
+                    // align-items: center;
 
-					aside {
-						width: 30%;
+                    aside {
+                        width: 30%;
 
-						ul {
-							font-weight: 300;
-							text-transform: uppercase;
+                        ul {
+                            font-weight: 300;
+                            text-transform: uppercase;
 
-							a[active] {
-								color: var(--primary);
-							}
-						}
-					}
+                            a[active] {
+                                color: var(--primary);
+                            }
+                        }
+                    }
 
-					div {
-						width: inherit;
+                    div {
+                        width: inherit;
 
-						article {
-							
-							&.scroll-content {
-								height: 100%;
-								overflow-y: auto;
-							}
+                        article {
+                            
+                            &.scroll-content {
+                                height: 100%;
+                                overflow-y: auto;
+                            }
 
-							margin: 0;
+                            margin: 0;
 
-							input {
-								margin-bottom: 0;
-							}
+                            input {
+                                margin-bottom: 0;
+                            }
 
-							hr {
-								margin-top: 18px;
-								margin-bottom: 18px;
-							}
+                            hr {
+                                margin-top: 18px;
+                                margin-bottom: 18px;
+                            }
 
-							small {
-								font-size: 0.725em;
+                            small {
+                                font-size: 0.725em;
 
-								&.info {
-									color: var(--primary-hover);
-								}
-							}
+                                &.info {
+                                    color: var(--primary-hover);
+                                }
+                            }
 
-							.cm-editor {
-								font-size: 12pt;
-							}
+                            .cm-editor {
+                                font-size: 12pt;
+                            }
 
-							#fade {
-								margin-bottom: 18px;
-								.control {
-									display: flex;
-									align-items: center;
-									justify-content: space-between;
-									margin-bottom: 5px;
+                            #fade {
+                                margin-bottom: 18px;
+                                .control {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    margin-bottom: 5px;
 
-									label {
-										margin-bottom: 0;
-									}
+                                    label {
+                                        margin-bottom: 0;
+                                    }
 
-									#fade-timeout {
-										width: 50%;
-										margin-bottom: 0;
-									}
-								}
-							}
+                                    #fade-timeout {
+                                        width: 50%;
+                                        margin-bottom: 0;
+                                    }
+                                }
+                            }
 
-							#button-area {
-								display: flex;
-								justify-content: center;
+                            #button-area {
+                                display: flex;
+                                justify-content: center;
 
-								button {
-									margin-top: 10px;
-									width: 50%;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                                button {
+                                    margin-top: 10px;
+                                    width: 50%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

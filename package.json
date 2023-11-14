@@ -56,7 +56,7 @@
 		"electron-store": "8.1.0",
 		"electron-unhandled": "4.0.1",
 		"electron-updater": "6.1.4",
-		"eslint-config-slurp-config": "1.1.4",
+		"eslint-config-slurp-config": "2.0.0",
 		"husky": "8.0.3",
 		"lint-staged": "15.1.0",
 		"release-it": "17.0.0",
@@ -83,7 +83,7 @@
 		"node": ">=20"
 	},
 	"lint-staged": {
-		"src/**/*.ts": "eslint",
+		"src/**/*.{ts,vue}": "eslint",
 		"electron/**/*.ts": "eslint"
 	}
 }

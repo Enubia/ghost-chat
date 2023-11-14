@@ -6,81 +6,81 @@ import { IpcEvent, StoreKeys } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 export default class TrayIcon {
-	private tray: Tray;
+    private tray: Tray;
 
-	constructor(
-		private store: ElectronStore<AppStore>,
-		private overlay: BrowserWindow,
-	) {}
+    constructor(
+        private store: ElectronStore<AppStore>,
+        private overlay: BrowserWindow,
+    ) {}
 
-	buildTray(trayIconPath: string) {
-		this.tray = new Tray(trayIconPath);
+    buildTray(trayIconPath: string) {
+        this.tray = new Tray(trayIconPath);
 
-		this.tray.setToolTip(`GhostChat v${app.getVersion()}`);
+        this.tray.setToolTip(`GhostChat v${app.getVersion()}`);
 
-		const trayIconMenu = Menu.buildFromTemplate([
-			{
-				label: `GhostChat v${app.getVersion()}`,
-				enabled: false,
-			},
-			{
-				label: 'Miscellaneous',
-				type: 'submenu',
-				submenu: [
-					{
-						label: 'Open logs',
-						type: 'normal',
-						click: () => {
-							log.info('Opening logs folder');
-							shell.showItemInFolder(log.transports.file.getFile().path);
-						},
-					},
-					{
-						label: 'Open config',
-						type: 'normal',
-						click: () => {
-							log.info('Opening config folder');
-							shell.showItemInFolder(this.store.path);
-						},
-					},
-				],
-			},
-			{
-				label: 'Disable Vanish',
-				type: 'normal',
-				click: () => {
-					if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
-						log.info('Disabling Vanish');
-						this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-							...this.store.get('savedWindowState'),
-							isClickThrough: false,
-							isTransparent: false,
-						});
+        const trayIconMenu = Menu.buildFromTemplate([
+            {
+                label: `GhostChat v${app.getVersion()}`,
+                enabled: false,
+            },
+            {
+                label: 'Miscellaneous',
+                type: 'submenu',
+                submenu: [
+                    {
+                        label: 'Open logs',
+                        type: 'normal',
+                        click: () => {
+                            log.info('Opening logs folder');
+                            shell.showItemInFolder(log.transports.file.getFile().path);
+                        },
+                    },
+                    {
+                        label: 'Open config',
+                        type: 'normal',
+                        click: () => {
+                            log.info('Opening config folder');
+                            shell.showItemInFolder(this.store.path);
+                        },
+                    },
+                ],
+            },
+            {
+                label: 'Disable Vanish',
+                type: 'normal',
+                click: () => {
+                    if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
+                        log.info('Disabling Vanish');
+                        this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+                            ...this.store.get('savedWindowState'),
+                            isClickThrough: false,
+                            isTransparent: false,
+                        });
 
-						this.overlay.setIgnoreMouseEvents(false);
-						this.overlay.webContents.send(IpcEvent.ShowApp);
-					}
-				},
-			},
-			{
-				label: 'Disable Click-Through',
-				type: 'normal',
-				click: () => {
-					log.info('Disabling Click-Through');
-					this.store.set('savedWindowState.isClickThrough', false);
+                        this.overlay.setIgnoreMouseEvents(false);
+                        this.overlay.webContents.send(IpcEvent.ShowApp);
+                    }
+                },
+            },
+            {
+                label: 'Disable Click-Through',
+                type: 'normal',
+                click: () => {
+                    log.info('Disabling Click-Through');
+                    this.store.set('savedWindowState.isClickThrough', false);
 
-					this.overlay.setIgnoreMouseEvents(false);
-				},
-			},
-			{
-				label: 'Exit',
-				click: () => {
-					log.info('App closing via tray menu');
-					app.quit();
-				},
-			},
-		]);
+                    this.overlay.setIgnoreMouseEvents(false);
+                },
+            },
+            {
+                label: 'Exit',
+                click: () => {
+                    log.info('App closing via tray menu');
+                    app.quit();
+                },
+            },
+        ]);
 
-		this.tray.setContextMenu(trayIconMenu);
-	}
+        this.tray.setContextMenu(trayIconMenu);
+    }
 }

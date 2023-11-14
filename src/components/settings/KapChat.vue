@@ -1,92 +1,137 @@
 <template>
-	<div id="default-channel">
-		<label for="default-channel-input">
-			<span>{{ t('settings.document.kap-chat.default-channel.input-label') }}</span>
-			<input id="default-channel-input" v-model="defaultChannel" type="text" />
-		</label>
-		<small>{{ t('settings.document.kap-chat.default-channel.info') }}</small>
-	</div>
-	<hr />
-	<div id="fade">
-		<div class="control">
-			<label class="align-elements" for="fade-input">
-				<input id="fade-input" v-model="fadeMessages" type="checkbox" />
-				<span>{{ t('settings.document.kap-chat.fade.checkbox-label') }}</span>
-			</label>
-			<input v-if="fadeMessages" id="fade-timeout" v-model="fadeTimeout" type="number" />
-		</div>
-		<small>
-			{{ t('settings.document.kap-chat.fade.info') }}
-		</small>
-	</div>
-	<hr />
-	<div id="show-bots">
-		<label class="align-elements" for="show-bots-input">
-			<input id="show-bots-input" v-model="showBotActivity" type="checkbox" />
-			<span>{{ t('settings.document.kap-chat.show-bots.checkbox-label') }}</span>
-		</label>
-		<small>{{ t('settings.document.kap-chat.show-bots.info') }}</small>
-	</div>
-	<hr />
-	<div id="prevent-clipping">
-		<label class="align-elements" for="prevent-clipping-input">
-			<input id="prevent-clipping-input" v-model="preventClipping" type="checkbox" />
-			<span>{{ t('settings.document.kap-chat.prevent-clipping.checkbox-label') }}</span>
-		</label>
-		<small>
-			{{ t('settings.document.kap-chat.prevent-clipping.info') }}
-		</small>
-	</div>
-	<hr />
-	<div id="chat-theme">
-		<label for="theme-select">
-			{{ t('settings.document.kap-chat.chat-theme.label') }}
-			<select id="theme-select" v-model="chatTheme" @change="preview">
-				<option value="undefined" selected>
-					{{ t('settings.document.kap-chat.chat-theme.select-options.none') }}
-				</option>
-				<option value="dark">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.dark') }}
-				</option>
-				<option value="light">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.light') }}
-				</option>
-				<option value="bttv_light">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Light') }}
-				</option>
-				<option value="bttv_dark">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Dark') }}
-				</option>
-				<option value="s0n0s_1080">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1080P-Theme') }}
-				</option>
-				<option value="s0n0s_1440">
-					{{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1440P-Theme') }}
-				</option>
-			</select>
-		</label>
-		<div v-if="chatTheme !== oldTheme">
-			<iframe id="preview" :key="rerender" :src="previewLink" />
-			<br />
-			<small class="info">
-				{{ t('settings.document.kap-chat.chat-theme.notification') }}
-			</small>
-		</div>
-		<small>
-			{{ t('settings.document.kap-chat.chat-theme.info.before-link') }}
-			<a
-				href="https://nightdev.com/hosted/obschat?theme=undefined&channel=esamarathon&fade=false&bot_activity=false&prevent_clipping=false"
-			>
-				{{ t('settings.document.kap-chat.chat-theme.info.link') }}
-			</a>
-			{{ t('settings.document.kap-chat.chat-theme.info.after-link') }}
-		</small>
-	</div>
-	<div id="button-area">
-		<button id="save" class="contrast" @click="save">
-			{{ t('settings.document.kap-chat.chat-theme.button.label') }}
-		</button>
-	</div>
+    <div id="default-channel">
+        <label for="default-channel-input">
+            <span>{{ t('settings.document.kap-chat.default-channel.input-label') }}</span>
+            <input
+                id="default-channel-input"
+                v-model="defaultChannel"
+                type="text"
+            >
+        </label>
+        <small>{{ t('settings.document.kap-chat.default-channel.info') }}</small>
+    </div>
+    <hr>
+    <div id="fade">
+        <div class="control">
+            <label
+                class="align-elements"
+                for="fade-input"
+            >
+                <input
+                    id="fade-input"
+                    v-model="fadeMessages"
+                    type="checkbox"
+                >
+                <span>{{ t('settings.document.kap-chat.fade.checkbox-label') }}</span>
+            </label>
+            <input
+                v-if="fadeMessages"
+                id="fade-timeout"
+                v-model="fadeTimeout"
+                type="number"
+            >
+        </div>
+        <small>
+            {{ t('settings.document.kap-chat.fade.info') }}
+        </small>
+    </div>
+    <hr>
+    <div id="show-bots">
+        <label
+            class="align-elements"
+            for="show-bots-input"
+        >
+            <input
+                id="show-bots-input"
+                v-model="showBotActivity"
+                type="checkbox"
+            >
+            <span>{{ t('settings.document.kap-chat.show-bots.checkbox-label') }}</span>
+        </label>
+        <small>{{ t('settings.document.kap-chat.show-bots.info') }}</small>
+    </div>
+    <hr>
+    <div id="prevent-clipping">
+        <label
+            class="align-elements"
+            for="prevent-clipping-input"
+        >
+            <input
+                id="prevent-clipping-input"
+                v-model="preventClipping"
+                type="checkbox"
+            >
+            <span>{{ t('settings.document.kap-chat.prevent-clipping.checkbox-label') }}</span>
+        </label>
+        <small>
+            {{ t('settings.document.kap-chat.prevent-clipping.info') }}
+        </small>
+    </div>
+    <hr>
+    <div id="chat-theme">
+        <label for="theme-select">
+            {{ t('settings.document.kap-chat.chat-theme.label') }}
+            <select
+                id="theme-select"
+                v-model="chatTheme"
+                @change="preview"
+            >
+                <option
+                    value="undefined"
+                    selected
+                >
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.none') }}
+                </option>
+                <option value="dark">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.dark') }}
+                </option>
+                <option value="light">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.light') }}
+                </option>
+                <option value="bttv_light">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Light') }}
+                </option>
+                <option value="bttv_dark">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.betterTTV-Dark') }}
+                </option>
+                <option value="s0n0s_1080">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1080P-Theme') }}
+                </option>
+                <option value="s0n0s_1440">
+                    {{ t('settings.document.kap-chat.chat-theme.select-options.s0N0S-1440P-Theme') }}
+                </option>
+            </select>
+        </label>
+        <div v-if="chatTheme !== oldTheme">
+            <iframe
+                id="preview"
+                :key="rerender"
+                :src="previewLink"
+            />
+            <br>
+            <small class="info">
+                {{ t('settings.document.kap-chat.chat-theme.notification') }}
+            </small>
+        </div>
+        <small>
+            {{ t('settings.document.kap-chat.chat-theme.info.before-link') }}
+            <a
+                href="https://nightdev.com/hosted/obschat?theme=undefined&channel=esamarathon&fade=false&bot_activity=false&prevent_clipping=false"
+            >
+                {{ t('settings.document.kap-chat.chat-theme.info.link') }}
+            </a>
+            {{ t('settings.document.kap-chat.chat-theme.info.after-link') }}
+        </small>
+    </div>
+    <div id="button-area">
+        <button
+            id="save"
+            class="contrast"
+            @click="save"
+        >
+            {{ t('settings.document.kap-chat.chat-theme.button.label') }}
+        </button>
+    </div>
 </template>
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
@@ -114,74 +159,74 @@ const previewLink = ref('');
 const rerender = ref(0);
 
 const SearchParams = {
-	THEME: 'theme',
-	CHANNEL: 'channel',
-	FADE: 'fade',
-	BOT_ACTIVITY: 'bot_activity',
-	PREVENT_CLIPPING: 'prevent_clipping',
+    THEME: 'theme',
+    CHANNEL: 'channel',
+    FADE: 'fade',
+    BOT_ACTIVITY: 'bot_activity',
+    PREVENT_CLIPPING: 'prevent_clipping',
 };
 
 const preview = () => {
-	let previewChannel = 'zackrawrr';
+    let previewChannel = 'zackrawrr';
 
-	if (chatOptions.channel !== '') {
-		previewChannel = chatOptions.channel;
-	} else if (defaultChannel.value !== '') {
-		previewChannel = defaultChannel.value;
-	}
+    if (chatOptions.channel !== '') {
+        previewChannel = chatOptions.channel;
+    } else if (defaultChannel.value !== '') {
+        previewChannel = defaultChannel.value;
+    }
 
-	const link = new URL('https://nightdev.com/hosted/obschat');
-	link.searchParams.append(SearchParams.THEME, chatTheme.value);
-	link.searchParams.append(SearchParams.CHANNEL, previewChannel);
+    const link = new URL('https://nightdev.com/hosted/obschat');
+    link.searchParams.append(SearchParams.THEME, chatTheme.value);
+    link.searchParams.append(SearchParams.CHANNEL, previewChannel);
 
-	if (fadeTimeout.value) {
-		link.searchParams.append(SearchParams.FADE, fadeTimeout.value.toString());
-	} else {
-		link.searchParams.append(SearchParams.FADE, 'false');
-	}
+    if (fadeTimeout.value) {
+        link.searchParams.append(SearchParams.FADE, fadeTimeout.value.toString());
+    } else {
+        link.searchParams.append(SearchParams.FADE, 'false');
+    }
 
-	link.searchParams.append(SearchParams.BOT_ACTIVITY, showBotActivity.value.toString());
-	link.searchParams.append(SearchParams.PREVENT_CLIPPING, preventClipping.value.toString());
+    link.searchParams.append(SearchParams.BOT_ACTIVITY, showBotActivity.value.toString());
+    link.searchParams.append(SearchParams.PREVENT_CLIPPING, preventClipping.value.toString());
 
-	previewLink.value = link.toString();
-	rerender.value += 1;
+    previewLink.value = link.toString();
+    rerender.value += 1;
 };
 
 const save = () => {
-	const $saveButton = document.querySelector('#save') as HTMLElement;
+    const $saveButton = document.querySelector('#save') as HTMLElement;
 
-	$saveButton.setAttribute('aria-busy', 'true');
-	$saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.loading');
+    $saveButton.setAttribute('aria-busy', 'true');
+    $saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.loading');
 
-	props.store.set('chatOptions.showBotActivity', showBotActivity.value);
-	props.store.set('chatOptions.fadeMessages', fadeMessages.value);
+    props.store.set('chatOptions.showBotActivity', showBotActivity.value);
+    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
 
-	if (fadeMessages.value) {
-		props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
-	}
+    if (fadeMessages.value) {
+        props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
+    }
 
-	props.store.set('chatOptions.defaultChannel', defaultChannel.value);
-	props.store.set('chatOptions.preventClipping', preventClipping.value);
-	props.store.set('chatOptions.chatTheme', chatTheme.value);
+    props.store.set('chatOptions.defaultChannel', defaultChannel.value);
+    props.store.set('chatOptions.preventClipping', preventClipping.value);
+    props.store.set('chatOptions.chatTheme', chatTheme.value);
 
-	ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 
-	setTimeout(() => {
-		$saveButton?.removeAttribute('aria-busy');
-		$saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.label');
-	}, 500);
+    setTimeout(() => {
+        $saveButton?.removeAttribute('aria-busy');
+        $saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.label');
+    }, 500);
 };
 </script>
 
 <style lang="scss">
 #preview {
-	height: 300px;
-	width: 100%;
-	overflow: hidden;
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .info {
-	text-decoration: underline;
-	text-transform: uppercase;
+    text-decoration: underline;
+    text-transform: uppercase;
 }
 </style>

@@ -3,3 +3,4 @@
 !constants
 !@types
 !vite.config.ts
+**/*.d.ts

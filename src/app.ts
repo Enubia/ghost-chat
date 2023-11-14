@@ -15,10 +15,13 @@ import App from './App.vue';
 const store = new ElectronStore<AppStore>();
 
 const i18n = createI18n<false>({
-	locale: store.get('general').language,
-	fallbackLocale: 'en-US',
-	messages,
-	legacy: false,
+    locale: store.get('general').language,
+    fallbackLocale: 'en-US',
+    messages,
+    legacy: false,
 });
 
-createApp(App).use(i18n).component('FontAwesomeIcon', FontAwesomeIcon).mount('#app');
+createApp(App)
+    .use(i18n)
+    .component('FontAwesomeIcon', FontAwesomeIcon)
+    .mount('#app');

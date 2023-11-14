@@ -1,21 +1,40 @@
 <template>
-	<div id="start" class="center-elements">
-		<div>
-			<div class="center-elements">
-				<img src="/icons/icon-128x128.png" />
-			</div>
-			<Twitch v-if="showTwitchInput" :store="store" @channel="($event) => $emit('channel', $event)" />
-			<External v-else :store="store" @source="($event) => $emit('source', $event)" />
-			<div class="center-elements">
-				<small v-if="showTwitchInput" class="source-loader-info" @click="showTwitchInput = !showTwitchInput">
-					{{ t('start.twitch.sourceSwitcher') }}
-				</small>
-				<small v-else class="source-loader-info" @click="showTwitchInput = !showTwitchInput">
-					{{ t('start.external.sourceSwitcher') }}
-				</small>
-			</div>
-		</div>
-	</div>
+    <div
+        id="start"
+        class="center-elements"
+    >
+        <div>
+            <div class="center-elements">
+                <img src="/icons/icon-128x128.png">
+            </div>
+            <Twitch
+                v-if="showTwitchInput"
+                :store="store"
+                @channel="($event) => $emit('channel', $event)"
+            />
+            <External
+                v-else
+                :store="store"
+                @source="($event) => $emit('source', $event)"
+            />
+            <div class="center-elements">
+                <small
+                    v-if="showTwitchInput"
+                    class="source-loader-info"
+                    @click="showTwitchInput = !showTwitchInput"
+                >
+                    {{ t('start.twitch.sourceSwitcher') }}
+                </small>
+                <small
+                    v-else
+                    class="source-loader-info"
+                    @click="showTwitchInput = !showTwitchInput"
+                >
+                    {{ t('start.external.sourceSwitcher') }}
+                </small>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">

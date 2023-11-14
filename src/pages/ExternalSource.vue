@@ -1,5 +1,5 @@
 <template>
-	<WebView :tag-source="props.externalSource" />
+    <WebView :tag-source="props.externalSource" />
 </template>
 
 <script setup lang="ts">
@@ -16,17 +16,17 @@ const chatOptions = props.store.get('chatOptions');
 let webView: WebviewTag;
 
 onMounted(() => {
-	webView = document.querySelector('webview') as WebviewTag;
-	if (chatOptions.customCSS !== '') {
-		webView.addEventListener('dom-ready', async () => {
-			await webView.insertCSS(chatOptions.customCSS);
-		});
-	}
+    webView = document.querySelector('webview') as WebviewTag;
+    if (chatOptions.customCSS !== '') {
+        webView.addEventListener('dom-ready', async () => {
+            await webView.insertCSS(chatOptions.customCSS);
+        });
+    }
 
-	if (chatOptions.customJS !== '') {
-		webView.addEventListener('dom-ready', async () => {
-			await webView.executeJavaScript(chatOptions.customJS);
-		});
-	}
+    if (chatOptions.customJS !== '') {
+        webView.addEventListener('dom-ready', async () => {
+            await webView.executeJavaScript(chatOptions.customJS);
+        });
+    }
 });
 </script>

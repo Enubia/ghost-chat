@@ -6,90 +6,91 @@ import { IpcEvent, StoreKeys } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 
 export default class Settings {
-	window: BrowserWindow | null;
+    window: BrowserWindow | null;
 
-	constructor(
-		private overlay: BrowserWindow | null,
-		private store: ElectronStore<AppStore>,
-		private destroyWindow: () => void,
-	) {}
+    constructor(
+        private overlay: BrowserWindow | null,
+        private store: ElectronStore<AppStore>,
+        private destroyWindow: () => void,
+    ) {}
 
-	buildWindow(indexHtml: string, arg: any) {
-		log.info('Building settings window');
+    buildWindow(indexHtml: string, arg: any) {
+        log.info('Building settings window');
 
-		const { savedWindowState } = this.store.get('settings');
+        const { savedWindowState } = this.store.get('settings');
 
-		log.info('Settings window state', savedWindowState);
+        log.info('Settings window state', savedWindowState);
 
-		this.window = new BrowserWindow({
-			title: 'Ghost Chat - Settings',
-			x: savedWindowState.x,
-			y: savedWindowState.y,
-			width: savedWindowState.width || 900,
-			height: savedWindowState.height || 900,
-			resizable: true,
-			maximizable: false,
-			show: false,
-			webPreferences: {
-				nodeIntegration: true,
-				contextIsolation: false,
-			},
-		});
+        this.window = new BrowserWindow({
+            title: 'Ghost Chat - Settings',
+            x: savedWindowState.x,
+            y: savedWindowState.y,
+            width: savedWindowState.width || 900,
+            height: savedWindowState.height || 900,
+            resizable: true,
+            maximizable: false,
+            show: false,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false,
+            },
+        });
 
-		this.store.set<typeof StoreKeys.Settings>('settings', {
-			isOpen: true,
-			savedWindowState,
-		});
+        this.store.set<typeof StoreKeys.Settings>('settings', {
+            isOpen: true,
+            savedWindowState,
+        });
 
-		this.window.setAlwaysOnTop(true, 'pop-up-menu');
+        this.window.setAlwaysOnTop(true, 'pop-up-menu');
 
-		if (savedWindowState.x === 0 && savedWindowState.y === 0) {
-			this.window.center();
-		}
+        if (savedWindowState.x === 0 && savedWindowState.y === 0) {
+            this.window.center();
+        }
 
-		if (process.env.VITE_DEV_SERVER_URL) {
-			this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
-			// this.window.webContents.openDevTools({
-			// 	mode: 'bottom',
-			// });
-		} else {
-			this.window.loadFile(indexHtml, { hash: arg });
-		}
+        if (process.env.VITE_DEV_SERVER_URL) {
+            this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
 
-		this.window.webContents.on('will-navigate', (event, url) => {
-			log.info(`Opening external link to ${url}`);
-			event.preventDefault();
-			shell.openExternal(url);
-		});
+            // this.window.webContents.openDevTools({
+            //     mode: 'bottom',
+            // });
+        } else {
+            this.window.loadFile(indexHtml, { hash: arg });
+        }
 
-		this.window.once('ready-to-show', () => {
-			this.window?.show();
-		});
+        this.window.webContents.on('will-navigate', (event, url) => {
+            log.info(`Opening external link to ${url}`);
+            event.preventDefault();
+            shell.openExternal(url);
+        });
 
-		this.window.on('close', () => {
-			if (this.window) {
-				const windowBounds = this.window.getBounds();
+        this.window.once('ready-to-show', () => {
+            this.window?.show();
+        });
 
-				log.info('Closing, saved settings window state', windowBounds);
+        this.window.on('close', () => {
+            if (this.window) {
+                const windowBounds = this.window.getBounds();
 
-				this.store.set<typeof StoreKeys.Settings>('settings', {
-					isOpen: false,
-					savedWindowState: {
-						x: windowBounds.x,
-						y: windowBounds.y,
-						width: windowBounds.width,
-						height: windowBounds.height,
-						theme: this.store.get('settings.theme'),
-					},
-				});
-			} else {
-				log.error('Settings closed but reference is already gone');
-				this.store.reset('settings');
-			}
+                log.info('Closing, saved settings window state', windowBounds);
 
-			this.window = null;
-			this.destroyWindow();
-			this.overlay?.webContents.send(IpcEvent.Rerender);
-		});
-	}
+                this.store.set<typeof StoreKeys.Settings>('settings', {
+                    isOpen: false,
+                    savedWindowState: {
+                        x: windowBounds.x,
+                        y: windowBounds.y,
+                        width: windowBounds.width,
+                        height: windowBounds.height,
+                        theme: this.store.get('settings.theme'),
+                    },
+                });
+            } else {
+                log.error('Settings closed but reference is already gone');
+                this.store.reset('settings');
+            }
+
+            this.window = null;
+            this.destroyWindow();
+            this.overlay?.webContents.send(IpcEvent.Rerender);
+        });
+    }
 }

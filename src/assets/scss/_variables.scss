@@ -55,18 +55,18 @@ $enable-important: true !default;
 // Breakpoints
 // 'null' disable the breakpoint
 $breakpoints: (
-	xs: 0,
-	sm: 576px,
-	md: 768px,
-	lg: 992px,
-	xl: 1200px,
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
 ) !default;
 
 // Viewports
 $viewports: (
-	// 'null' disable the viewport on a breakpoint
-	sm: 510px,
-	md: 700px,
-	lg: 920px,
-	xl: 1130px
+    // 'null' disable the viewport on a breakpoint
+    sm: 510px,
+    md: 700px,
+    lg: 920px,
+    xl: 1130px
 ) !default;

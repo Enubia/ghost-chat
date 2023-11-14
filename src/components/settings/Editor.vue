@@ -1,17 +1,23 @@
 <template>
-	<codemirror
-		v-model="code"
-		placeholder="Code goes here..."
-		:style="{ height: '400px' }"
-		:autofocus="true"
-		:indent-with-tab="true"
-		:tab-size="4"
-		:extensions="extensions"
-		@ready="handleReady"
-	/>
-	<div id="button-area">
-		<button id="save" class="contrast" @click="save">{{ t('settings.document.editor.button.label') }}</button>
-	</div>
+    <codemirror
+        v-model="code"
+        placeholder="Code goes here..."
+        :style="{ height: '400px' }"
+        :autofocus="true"
+        :indent-with-tab="true"
+        :tab-size="4"
+        :extensions="extensions"
+        @ready="handleReady"
+    />
+    <div id="button-area">
+        <button
+            id="save"
+            class="contrast"
+            @click="save"
+        >
+            {{ t('settings.document.editor.button.label') }}
+        </button>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -35,41 +41,41 @@ let code = ref();
 const extensions: any[] = [];
 
 if (theme === 'dark') {
-	extensions.push(oneDark);
+    extensions.push(oneDark);
 }
 
 if (props.type === 'css') {
-	extensions.push(css());
-	code.value = props.store.get('chatOptions').customCSS;
+    extensions.push(css());
+    code.value = props.store.get('chatOptions').customCSS;
 }
 
 if (props.type === 'js') {
-	extensions.push(javascript());
-	code.value = props.store.get('chatOptions').customJS;
+    extensions.push(javascript());
+    code.value = props.store.get('chatOptions').customJS;
 }
 
 const view = shallowRef();
 const handleReady = (payload: { view: any }) => {
-	view.value = payload.view;
+    view.value = payload.view;
 };
 
 const save = () => {
-	const $saveButton = document.querySelector('#save') as HTMLElement;
+    const $saveButton = document.querySelector('#save') as HTMLElement;
 
-	$saveButton.setAttribute('aria-busy', 'true');
-	$saveButton.innerText = t('settings.document.editor.button.loading');
+    $saveButton.setAttribute('aria-busy', 'true');
+    $saveButton.innerText = t('settings.document.editor.button.loading');
 
-	if (props.type === 'css') {
-		props.store.set('chatOptions.customCSS', code.value);
-	}
+    if (props.type === 'css') {
+        props.store.set('chatOptions.customCSS', code.value);
+    }
 
-	if (props.type === 'js') {
-		props.store.set('chatOptions.customJS', code.value);
-	}
+    if (props.type === 'js') {
+        props.store.set('chatOptions.customJS', code.value);
+    }
 
-	setTimeout(() => {
-		$saveButton?.removeAttribute('aria-busy');
-		$saveButton.innerText = t('settings.document.editor.button.label');
-	}, 500);
+    setTimeout(() => {
+        $saveButton?.removeAttribute('aria-busy');
+        $saveButton.innerText = t('settings.document.editor.button.label');
+    }, 500);
 };
 </script>
