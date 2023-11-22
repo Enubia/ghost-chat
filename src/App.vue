@@ -91,7 +91,7 @@ const showApp = () => {
         !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
 };
 
-const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource',>(
+const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(
     view: T,
 ) => {
     switch (view) {

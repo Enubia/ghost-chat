@@ -1,4 +1,3 @@
 {
-	"extends": ["slurp-config", "slurp-config/vue"],
-	"parser": "vue-eslint-parser"
+	"extends": ["slurp-config", "slurp-config/vue"]
 }
