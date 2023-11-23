@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain, IpcMainEvent, Rectangle } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -27,7 +27,7 @@ export default class IpcEvents {
     }
 
     private rerender() {
-        ipcMain.on(IpcEvent.Rerender, (_event: Electron.IpcMainEvent, args: 'child' | 'parent') => {
+        ipcMain.on(IpcEvent.Rerender, (_event: IpcMainEvent, args: 'child' | 'parent') => {
             log.info('Rerendering', args);
 
             if (args === 'child' && this.settings) {
@@ -71,7 +71,7 @@ export default class IpcEvents {
         ipcMain.on(IpcEvent.Vanish, () => {
             log.info('Vanishing overlay');
 
-            const windowBounds = this.overlay?.getBounds() as Electron.Rectangle;
+            const windowBounds = this.overlay?.getBounds() as Rectangle;
 
             log.info('Saved window state', windowBounds);
 

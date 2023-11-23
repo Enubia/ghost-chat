@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme, shell } from 'electron';
+import { app, BrowserWindow, nativeTheme, shell, WebPreferences } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -15,7 +15,7 @@ export default class Overlay {
 
         log.info('Overlay window state', windowState);
 
-        const webPreferences: Electron.WebPreferences = {
+        const webPreferences: WebPreferences = {
             webviewTag: true,
             nodeIntegration: true,
             contextIsolation: false,
