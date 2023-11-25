@@ -51,8 +51,8 @@ devDependencies:
     specifier: 3.6.1
     version: 3.6.1
   electron-log:
-    specifier: 5.0.0
-    version: 5.0.0
+    specifier: 5.0.1
+    version: 5.0.1
   electron-store:
     specifier: 8.1.0
     version: 8.1.0
@@ -2771,9 +2771,9 @@ packages:
     resolution: {integrity: sha512-3X99K852Yoqu9AcW50qz3ibYBWY79/pBhlMCab8ToEWS48R0T9tyxRiQhwylE7zQdXrMnx2JKqUJyMPmt5FBqA==}
     dev: true
 
-  /electron-log@5.0.0:
-    resolution: {integrity: sha512-vB3akupmQvA8jAyNL9rULZtf6WoP8vsabjXsRtiqXS6/D37SwN/4LEyj4JD+9Bv6xoTcx/LrVnsIKEEWdq5ClQ==}
-    engines: {electron: '>= 13', node: '>= 14'}
+  /electron-log@5.0.1:
+    resolution: {integrity: sha512-x4wnwHg00h/onWQgjmvcdLV7Mrd9TZjxNs8LmXVpqvANDf4FsSs5wLlzOykWLcaFzR3+5hdVEQ8ctmrUxgHlPA==}
+    engines: {node: '>= 14'}
     dev: true
 
   /electron-publish@24.5.0:
