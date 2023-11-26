@@ -39,6 +39,7 @@ export default function createStore() {
                 },
             },
             general: {
+                externalBrowserSources: [],
                 mac: {
                     quitOnClose: false,
                     hideDockIcon: false,

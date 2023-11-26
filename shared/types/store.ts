@@ -26,6 +26,7 @@ export type Settings = {
 };
 
 export type General = {
+    externalBrowserSources: string[];
     mac: {
         quitOnClose: boolean;
         hideDockIcon: boolean;

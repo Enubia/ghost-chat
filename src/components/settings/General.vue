@@ -75,6 +75,25 @@
             <small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
         </div>
     </div>
+    <div id="external-sources" v-if="externalBrowserSources?.length">
+        <hr>
+        <span>{{ t('settings.document.general.external-sources.heading') }}</span>
+        <div id="external-sources-list">
+            <div
+                v-for="(source, index) in externalBrowserSources"
+                :key="`external-source-${index}`"
+                class="align-elements space-between"
+            >
+                <span>{{ source }}</span>
+                <button
+                    class="outline"
+                    @click="removeExternalBrowserSource(index)"
+                >
+                    <font-awesome-icon icon="fas fa-trash-alt" />
+                </button>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
@@ -93,6 +112,7 @@ const updater = props.store.get('updater');
 const participateInPreRelease = ref(false);
 const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
 const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
+const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -110,5 +130,10 @@ const setQuitOnClose = () => {
 
 const setHideDockIcon = () => {
     props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
+};
+
+const removeExternalBrowserSource = (sourceIndex: number) => {
+    externalBrowserSources.value.splice(sourceIndex, 1);
+    props.store.set('general.externalBrowserSources', externalBrowserSources.value);
 };
 </script>

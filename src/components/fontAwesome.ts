@@ -5,6 +5,8 @@ import {
     faXmark,
     faGhost,
     faBars,
+    faTimes,
+    faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost, faBars);
+library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost, faBars, faTimes, faTrashAlt);

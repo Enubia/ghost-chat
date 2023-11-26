@@ -59,6 +59,9 @@
                 "hide-dock-icon-options": {
                     "checkbox-label": "Hide dock icon",
                     "info": "If set the app will not appear on the dock once it's launched."
+                },
+                "external-sources": {
+                    "heading": "External Sources"
                 }
             },
             "kap-chat": {

@@ -136,6 +136,13 @@ const enableChat = (channel: string) => {
 };
 
 const enableExternalSource = (source: string) => {
+    const externalSources = store.get('general').externalBrowserSources || [];
+
+    if (!externalSources.includes(source)) {
+        externalSources.push(source);
+        store.set('general.externalBrowserSources', externalSources);
+    }
+
     externalSource.value = source;
     showView('externalSource');
 };

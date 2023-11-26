@@ -40,9 +40,14 @@
     @extend %align-items;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
 :root {
     --primary: hsl(264, 80%, 54%);
     --primary-hover: hsl(264, 80%, 60%);
+    --del-color-hover: hsl(0, 80%, 60%);
 }
 
 ::-webkit-scrollbar {
@@ -175,10 +180,10 @@ body {
             #start {
                 height: 100%;
 
-                #channel {
+                #channel, #external-source {
                     margin-top: 10px;
                     margin-bottom: 0;
-                    width: 57%;
+                    width: 80%;
                 }
 
                 #info {
@@ -221,6 +226,26 @@ body {
 
                             a[active] {
                                 color: var(--primary);
+                            }
+                        }
+                    }
+
+                    #external-sources {
+                        &-list {
+                            margin-top: 15px;
+                        }
+
+                        button {
+                            width: 15%;
+                            text-align: center;
+                            font-size: 10pt;
+                            color: var(--del-color);
+                            border: var(--border-width) solid var(--del-color);
+                            margin: 0;
+
+                            &:hover {
+                                color: var(--del-color-hover);
+                                border-color: var(--del-color-hover);
                             }
                         }
                     }
