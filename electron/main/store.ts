@@ -50,7 +50,7 @@ export default function createStore() {
                 channel: 'latest',
             },
 
-            // Hack to make sure the store is always up to date at first init,
+            // Hack to make sure the store is always up-to-date at first init,
             // default behavior of electron-store
             // being to consider the store in version '0.0.0' by default
             // @ts-ignore https://github.com/sindresorhus/electron-store/issues/256
