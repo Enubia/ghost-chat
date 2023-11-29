@@ -6,21 +6,21 @@
             class="secondary"
             @click="emit('back')"
         >
-            <font-awesome-icon icon="fa-solid fa-chevron-left" />
+            <font-awesome-icon icon="fas fa-chevron-left" />
         </button>
         <button
             id="minimize"
             class="secondary"
             @click="ipcRenderer.send(IpcEvent.Minimize)"
         >
-            <font-awesome-icon icon="fa-solid fa-down-left-and-up-right-to-center" />
+            <font-awesome-icon icon="fas fa-down-left-and-up-right-to-center" />
         </button>
         <button
             id="close"
             class="secondary"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >
-            <font-awesome-icon icon="fa-solid fa-xmark" />
+            <font-awesome-icon icon="fas fa-xmark" />
         </button>
     </div>
 </template>

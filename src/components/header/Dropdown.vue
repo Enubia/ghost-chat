@@ -9,7 +9,7 @@
             role="button"
             class="secondary"
         >
-            <span><font-awesome-icon icon="fa-solid fa-bars" /></span>
+            <span><font-awesome-icon icon="fas fa-bars" /></span>
         </summary>
         <ul role="listbox">
             <li v-if="!isStartPage">
@@ -32,7 +32,7 @@
                 id="vanish"
             >
                 <a @click="emitVanish">
-                    <font-awesome-icon icon="fa-solid fa-ghost" />
+                    <font-awesome-icon icon="fas fa-ghost" />
                     <span>{{ t('header.dropdown.vanish.title') }}</span>
                 </a>
                 <span

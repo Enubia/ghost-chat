@@ -1,6 +1,6 @@
 {
 	"name": "ghost-chat",
-	"version": "2.3.3",
+	"version": "2.4.0",
 	"private": true,
 	"description": "Standalone twitch chat overlay",
 	"author": {
@@ -56,13 +56,13 @@
 		"electron-store": "8.1.0",
 		"electron-unhandled": "4.0.1",
 		"electron-updater": "6.1.7",
-		"eslint-config-slurp-config": "2.3.0",
+		"eslint-config-slurp-config": "2.3.1",
 		"husky": "8.0.3",
 		"lint-staged": "15.1.0",
 		"release-it": "17.0.0",
 		"rimraf": "5.0.5",
 		"sass": "1.69.5",
-		"typescript": "5.2.2",
+		"typescript": "5.3.2",
 		"vite": "5.0.2",
 		"vite-plugin-electron": "0.15.4",
 		"vite-plugin-electron-renderer": "0.14.5",

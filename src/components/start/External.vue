@@ -1,7 +1,8 @@
 <template>
     <div class="center-elements">
         <input
-            id="channel"
+            id="external-source"
+            list="external-sources"
             v-model="source"
             :class="hasRegexError ? 'error-input' : ''"
             placeholder="https://twitch.tv"
@@ -9,23 +10,27 @@
             @change="enableStartButton"
             @keydown.enter="emitSource"
         >
+        <datalist v-if="externalBrowserSources?.length > 0" id="external-sources">
+            <option
+                v-for="source in externalBrowserSources"
+                :key="source"
+                :value="source"
+            />
+        </datalist>
     </div>
     <div
-        v-if="hasRegexError"
         class="center-elements"
     >
         <small
+            v-if="hasRegexError"
             id="info"
             class="error-text text-center"
         >
             {{ t('start.external.input.error') }}
         </small>
-    </div>
-    <div
-        v-else
-        class="center-elements"
-    >
-        <small id="info">{{ t('start.external.input.info') }}</small>
+        <small
+            v-else
+            id="info">{{ t('start.external.input.info') }}</small>
     </div>
     <div class="center-elements">
         <button
@@ -46,10 +51,11 @@ import { useI18n } from 'vue-i18n';
 import { AppStore } from '../../../shared/types';
 const { t } = useI18n();
 
-defineProps<{ store: ElectronStore<AppStore> }>();
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const source = ref('');
 const hasRegexError = ref(false);
+const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
 
 const emits = defineEmits<{ (event: 'source', source: string): void }>();
 
