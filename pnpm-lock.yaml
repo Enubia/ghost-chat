@@ -72,8 +72,8 @@ devDependencies:
     specifier: 15.2.0
     version: 15.2.0
   release-it:
-    specifier: 17.0.0
-    version: 17.0.0(typescript@5.3.2)
+    specifier: 17.0.1
+    version: 17.0.1(typescript@5.3.2)
   rimraf:
     specifier: 5.0.5
     version: 5.0.5
@@ -2788,10 +2788,6 @@ packages:
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /emoji-regex@10.2.1:
-    resolution: {integrity: sha512-97g6QgOk8zlDRdgq1WxwgTMgEWGVAQvB5Fdpgc1MkNy56la5SKP9GsMXKDOdqwn90/41a8yPwIGk1Y6WVbeMQA==}
     dev: true
 
   /emoji-regex@10.3.0:
@@ -5676,8 +5672,8 @@ packages:
       jsesc: 0.5.0
     dev: true
 
-  /release-it@17.0.0(typescript@5.3.2):
-    resolution: {integrity: sha512-1A1sSQy8VXuAJcslZGhKtOD/LVBuf1sH4XqhKsQuh+2EIksC2STx/MdKmVE86jFd/zorHTXOpl7Lr/isD0dDrg==}
+  /release-it@17.0.1(typescript@5.3.2):
+    resolution: {integrity: sha512-XHeirIW8ptkkrH1+uCg+ditclZJbSKeovrtIb42v3s2S/icF2xCTwFHpbvAKQGqBVJ5Zm49If8bwsryi247KdQ==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
@@ -6197,7 +6193,7 @@ packages:
     engines: {node: '>=16'}
     dependencies:
       eastasianwidth: 0.2.0
-      emoji-regex: 10.2.1
+      emoji-regex: 10.3.0
       strip-ansi: 7.1.0
     dev: true
 
