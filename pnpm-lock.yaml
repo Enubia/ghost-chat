@@ -87,8 +87,8 @@ devDependencies:
     specifier: 5.0.10
     version: 5.0.10(sass@1.69.5)
   vite-plugin-electron:
-    specifier: 0.15.4
-    version: 0.15.4(vite-plugin-electron-renderer@0.14.5)
+    specifier: 0.15.5
+    version: 0.15.5(vite-plugin-electron-renderer@0.14.5)
   vite-plugin-electron-renderer:
     specifier: 0.14.5
     version: 0.14.5
@@ -6655,8 +6655,8 @@ packages:
     resolution: {integrity: sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==}
     dev: true
 
-  /vite-plugin-electron@0.15.4(vite-plugin-electron-renderer@0.14.5):
-    resolution: {integrity: sha512-aXGDjTXebJxNX+cf+KSZEsa9BcMrTbNhjZJaUhU5999/ATYZq4PlZpebfyeslyuYpjk6OdyA/pNC+fTeDYK5Kw==}
+  /vite-plugin-electron@0.15.5(vite-plugin-electron-renderer@0.14.5):
+    resolution: {integrity: sha512-GD2JkJJSsP3kyJlyCH4ep3spelkyzOVSWHswv5nwYhS8GfsojPxUjhs9U4tuDb5mZ2XDYyTN+nBSB/abRnTmYQ==}
     peerDependencies:
       tree-kill: '*'
       vite-plugin-electron-renderer: '*'
