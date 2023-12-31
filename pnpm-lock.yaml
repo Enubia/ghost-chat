@@ -36,8 +36,8 @@ devDependencies:
     specifier: 1.5.10
     version: 1.5.10
   '@vitejs/plugin-vue':
-    specifier: 4.5.2
-    version: 4.5.2(vite@5.0.10)(vue@3.3.13)
+    specifier: 4.6.2
+    version: 4.6.2(vite@5.0.10)(vue@3.3.13)
   codemirror:
     specifier: 6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
@@ -1389,8 +1389,8 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-vue@4.5.2(vite@5.0.10)(vue@3.3.13):
-    resolution: {integrity: sha512-UGR3DlzLi/SaVBPX0cnSyE37vqxU3O6chn8l0HJNzQzDia6/Au2A4xKv+iIJW8w2daf80G7TYHhi1pAUjdZ0bQ==}
+  /@vitejs/plugin-vue@4.6.2(vite@5.0.10)(vue@3.3.13):
+    resolution: {integrity: sha512-kqf7SGFoG+80aZG6Pf+gsZIVvGSCKE98JbiWqcCV9cThtg91Jav0yvYFC9Zb+jKetNGF6ZKeoaxgZfND21fWKw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.0.0 || ^5.0.0
