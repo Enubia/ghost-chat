@@ -33,8 +33,8 @@ devDependencies:
     specifier: 2.0.0
     version: 2.0.0(vue-i18n@9.8.0)
   '@picocss/pico':
-    specifier: 1.5.10
-    version: 1.5.10
+    specifier: 1.5.11
+    version: 1.5.11
   '@vitejs/plugin-vue':
     specifier: 5.0.2
     version: 5.0.2(vite@5.0.10)(vue@3.4.3)
@@ -945,8 +945,8 @@ packages:
       '@octokit/openapi-types': 19.0.2
     dev: true
 
-  /@picocss/pico@1.5.10:
-    resolution: {integrity: sha512-+LafMsrwPxXQMk6sI///TmSInCwwZmq+K7SikyL3N/4GhhwzyPC+TQLUEqmrLyjluR+uIpFFcqjty30Rtr6GxQ==}
+  /@picocss/pico@1.5.11:
+    resolution: {integrity: sha512-cDaFiSyNPtuSTwSQt/05xsw8+g2ek4/S58tgh9Nc7miJCCdUrY9PAyl4OPWRJtYgJDdEvkUA9GuGj0J4nDP4Cw==}
     dev: true
 
   /@pkgjs/parseargs@0.11.0:
