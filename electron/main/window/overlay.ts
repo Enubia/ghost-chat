@@ -29,8 +29,8 @@ export default class Overlay {
             height: windowState.height || 800,
             transparent: true,
             frame: false,
-            resizable: true,
             maximizable: false,
+            titleBarStyle: 'hidden',
             show: false,
             webPreferences,
         });
@@ -61,9 +61,9 @@ export default class Overlay {
 
         if (process.env.VITE_DEV_SERVER_URL) {
             window.loadURL(process.env.VITE_DEV_SERVER_URL);
-            window.webContents.openDevTools({
-                mode: 'detach',
-            });
+            // window.webContents.openDevTools({
+            //     mode: 'detach',
+            // });
         } else {
             window.loadFile(indexHtml);
         }
@@ -77,6 +77,18 @@ export default class Overlay {
         window.once('ready-to-show', () => {
             window.show();
         });
+
+        // workaround for this issue https://github.com/electron/electron/issues/39959
+        // https://github.com/electron/electron/pull/40749
+        // ---------------------
+        window.on('blur', () => {
+            window.setBackgroundColor('#00000000');
+        });
+
+        window.on('focus', () => {
+            window.setBackgroundColor('#00000000');
+        });
+        // ---------------------
 
         window.on('close', () => {
             if (window) {
