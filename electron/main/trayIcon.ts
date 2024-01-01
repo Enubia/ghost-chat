@@ -62,16 +62,17 @@ export default class TrayIcon {
                     }
                 },
             },
-            {
-                label: 'Disable Click-Through',
-                type: 'normal',
-                click: () => {
-                    log.info('Disabling Click-Through');
-                    this.store.set('savedWindowState.isClickThrough', false);
+            // should not be needed anymore, the previous menu item should be enough
+            // {
+            //     label: 'Disable Click-Through',
+            //     type: 'normal',
+            //     click: () => {
+            //         log.info('Disabling Click-Through');
+            //         this.store.set('savedWindowState.isClickThrough', false);
 
-                    this.overlay.setIgnoreMouseEvents(false);
-                },
-            },
+            //         this.overlay.setIgnoreMouseEvents(false);
+            //     },
+            // },
             {
                 label: 'Exit',
                 click: () => {

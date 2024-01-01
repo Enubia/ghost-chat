@@ -21,9 +21,9 @@
             <li v-if="!isSettingsOpen">
                 <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
             </li>
-            <li v-if="!isSettingsOpen">
+            <!-- <li v-if="!isSettingsOpen">
                 <a @click="setClickThrough">{{ t('header.dropdown.set-click-through') }}</a>
-            </li>
+            </li> -->
             <li>
                 <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
             </li>
@@ -94,10 +94,10 @@ const toggleTheme = () => {
     ipcRenderer.send(IpcEvent.Rerender, 'child');
 };
 
-const setClickThrough = () => {
-    document.querySelector('details')?.removeAttribute('open');
-    ipcRenderer.send(IpcEvent.SetClickThrough);
-};
+// const setClickThrough = () => {
+//     document.querySelector('details')?.removeAttribute('open');
+//     ipcRenderer.send(IpcEvent.SetClickThrough);
+// };
 
 const emitVanish = () => {
     document.querySelector('details')?.removeAttribute('open');

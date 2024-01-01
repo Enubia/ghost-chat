@@ -1,5 +1,3 @@
-// eslint-disable-next-line max-len
-// eslint-disable-next-line unused-imports/no-unused-imports, @typescript-eslint/no-unused-vars
 import { DefineLocaleMessage } from 'vue-i18n';
 
 import { MessageSchema } from '../i18n/schema';
