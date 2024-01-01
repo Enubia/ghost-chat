@@ -89,7 +89,7 @@ or you just want to have your chat on your main screen.
 
 ### Translators needed
 Since GhostChat makes use of i18n, it's easy to add new language support but for that I need you as a community.
-So ff you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language id as the name.
+So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language id as the name.
 
 
 A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
