@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme, shell, WebPreferences } from 'electron';
+import { app, BrowserWindow, BrowserWindowConstructorOptions, nativeTheme, shell, WebPreferences } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -21,7 +21,7 @@ export default class Overlay {
             contextIsolation: false,
         };
 
-        const window = new BrowserWindow({
+        let options: BrowserWindowConstructorOptions = {
             title: 'Ghost Chat',
             x: windowState.x,
             y: windowState.y,
@@ -33,7 +33,16 @@ export default class Overlay {
             titleBarStyle: 'hidden',
             show: false,
             webPreferences,
-        });
+        };
+
+        if (process.platform === 'darwin') {
+            options = {
+                ...options,
+                titleBarStyle: undefined,
+            };
+        }
+
+        const window = new BrowserWindow(options);
 
         if (process.platform === 'darwin') {
             window.setVisibleOnAllWorkspaces(true);
