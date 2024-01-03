@@ -1,3 +1,4 @@
+import { release } from 'node:os';
 import { join } from 'node:path';
 
 import { app, BrowserWindow, crashReporter } from 'electron';
@@ -24,7 +25,7 @@ crashReporter.start({ submitURL: '', uploadToServer: false });
 
 log.info('Crash reporter started');
 
-if (process.platform === 'win32' || process.platform === 'linux') {
+if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
     log.info('called disableHardwareAcceleration');
     // disabled due to issues with transparency when there are multiple gpu's on windows
     app.disableHardwareAcceleration();
