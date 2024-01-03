@@ -54,7 +54,6 @@
 		"electron-context-menu": "3.6.1",
 		"electron-log": "5.0.3",
 		"electron-store": "8.1.0",
-		"electron-unhandled": "4.0.1",
 		"electron-updater": "6.1.7",
 		"eslint-config-slurp-config": "2.3.1",
 		"husky": "8.0.3",
