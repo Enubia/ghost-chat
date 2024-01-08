@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 
 import { IpcEvent } from '../shared/constants';
 import { AppStore } from '../shared/types';
@@ -91,43 +91,38 @@ const showApp = () => {
         !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
 };
 
-const showView = <T = 'chat' | 'start' | 'settings' | 'externalSource'>(
+type Views = 'chat' | 'start' | 'settings' | 'externalSource';
+
+const showView = <T = Views>(
     view: T,
 ) => {
-    switch (view) {
-        case 'chat':
-            showChat.value = true;
-            showStart.value = false;
-            showSettings.value = false;
-            showExternalSource.value = false;
-            showMenuBar.value = true;
-            break;
+    const views: {
+        [key in Views]: {
+            ref: Ref<boolean>;
+        };
+    } = {
+        chat: {
+            ref: showChat,
+        },
+        start: {
+            ref: showStart,
+        },
+        settings: {
+            ref: showSettings,
+        },
+        externalSource: {
+            ref: showExternalSource,
+        },
+    };
 
-        case 'start':
-            showChat.value = false;
-            showStart.value = true;
-            showSettings.value = false;
-            showExternalSource.value = false;
-            showMenuBar.value = true;
-            break;
-
-        case 'settings':
-            showChat.value = false;
-            showStart.value = false;
-            showSettings.value = true;
-            showExternalSource.value = false;
-            showMenuBar.value = false;
-            checkingVersion.value = false;
-            break;
-
-        case 'externalSource':
-            showChat.value = false;
-            showStart.value = false;
-            showSettings.value = false;
-            showExternalSource.value = true;
-            showMenuBar.value = true;
-            break;
-    }
+    Object.keys(views).forEach((key) => {
+        const viewKey = key as keyof typeof views;
+        if (viewKey === view) {
+            views[viewKey].ref.value = true;
+        } else {
+            views[viewKey].ref.value = false;
+        }
+    });
 };
 
 const enableChat = (channel: string) => {

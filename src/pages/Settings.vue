@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../shared/types';
@@ -100,7 +100,7 @@ const showUpdates = ref(false);
 type Views = 'general' | 'options' | 'css' | 'js' | 'updates';
 const views: {
     [key in Views]: {
-        ref: typeof showGeneral;
+        ref: Ref<boolean>;
     };
 } = {
     general: {
