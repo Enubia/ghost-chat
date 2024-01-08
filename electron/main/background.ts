@@ -1,7 +1,7 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, crashReporter } from 'electron';
+import { app, BrowserWindow, crashReporter, globalShortcut } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '../../shared/constants';
@@ -79,6 +79,11 @@ app.on('ready', () => {
         },
         process.platform === 'linux' ? 1000 : 0,
     );
+    globalShortcut.register('Control+I', () => {
+        console.log('Electron loves global shortcuts!');
+    });
+    // Check whether a shortcut is registered.
+    console.log(globalShortcut.isRegistered('Control+I'));
 });
 
 app.on('activate', () => {
@@ -111,7 +116,8 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
-
+    globalShortcut.unregisterAll();
+    console.log('unregistering all shortcut');
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
             log.info('App closing');
