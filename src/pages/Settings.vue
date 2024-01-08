@@ -97,76 +97,39 @@ const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 const showUpdates = ref(false);
 
-const showView = <T = 'general' | 'options' | 'css' | 'js' | 'updates'>(view: T) => {
-    switch (view) {
-        case 'general':
-            document.querySelector('#options')?.removeAttribute('active');
-            document.querySelector('#css')?.removeAttribute('active');
-            document.querySelector('#js')?.removeAttribute('active');
-            document.querySelector('#updates')?.removeAttribute('active');
-            document.querySelector('#general')?.setAttribute('active', 'true');
+type Views = 'general' | 'options' | 'css' | 'js' | 'updates';
+const views: {
+    [key in Views]: {
+        ref: typeof showGeneral;
+    };
+} = {
+    general: {
+        ref: showGeneral,
+    },
+    options: {
+        ref: showOptions,
+    },
+    css: {
+        ref: showCSSEditor,
+    },
+    js: {
+        ref: showJSEditor,
+    },
+    updates: {
+        ref: showUpdates,
+    },
+};
 
-            showJSEditor.value = false;
-            showCSSEditor.value = false;
-            showUpdates.value = false;
-            showOptions.value = false;
-            showGeneral.value = true;
-            break;
-
-        case 'options':
-            document.querySelector('#general')?.removeAttribute('active');
-            document.querySelector('#css')?.removeAttribute('active');
-            document.querySelector('#js')?.removeAttribute('active');
-            document.querySelector('#updates')?.removeAttribute('active');
-            document.querySelector('#options')?.setAttribute('active', 'true');
-
-            showGeneral.value = false;
-            showJSEditor.value = false;
-            showCSSEditor.value = false;
-            showUpdates.value = false;
-            showOptions.value = true;
-            break;
-
-        case 'css':
-            document.querySelector('#general')?.removeAttribute('active');
-            document.querySelector('#options')?.removeAttribute('active');
-            document.querySelector('#js')?.removeAttribute('active');
-            document.querySelector('#updates')?.removeAttribute('active');
-            document.querySelector('#css')?.setAttribute('active', 'true');
-
-            showGeneral.value = false;
-            showJSEditor.value = false;
-            showOptions.value = false;
-            showUpdates.value = false;
-            showCSSEditor.value = true;
-            break;
-
-        case 'js':
-            document.querySelector('#general')?.removeAttribute('active');
-            document.querySelector('#options')?.removeAttribute('active');
-            document.querySelector('#css')?.removeAttribute('active');
-            document.querySelector('#updates')?.removeAttribute('active');
-            document.querySelector('#js')?.setAttribute('active', 'true');
-
-            showGeneral.value = false;
-            showOptions.value = false;
-            showCSSEditor.value = false;
-            showUpdates.value = false;
-            showJSEditor.value = true;
-            break;
-
-        case 'updates':
-            // document.querySelector('#general')?.removeAttribute('active');
-            // document.querySelector('#options')?.removeAttribute('active');
-            // document.querySelector('#css')?.removeAttribute('active');
-            // document.querySelector('#js')?.removeAttribute('active');
-            // document.querySelector('#updates')?.setAttribute('active', 'true');
-            // showGeneral.value = false;
-            // showJSEditor.value = false;
-            // showOptions.value = false;
-            // showCSSEditor.value = false;
-            // showUpdates.value = true;
-            break;
-    }
+const showView = <T = Views>(view: T) => {
+    Object.keys(views).forEach((key) => {
+        const viewKey = key as keyof typeof views;
+        if (viewKey === view) {
+            document.querySelector(`#${view}`)?.setAttribute('active', 'true');
+            views[viewKey].ref.value = true;
+        } else {
+            document.querySelector(`#${viewKey}`)?.removeAttribute('active');
+            views[viewKey].ref.value = false;
+        }
+    });
 };
 </script>
