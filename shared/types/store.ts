@@ -8,6 +8,7 @@ export type ChatOptions = {
     defaultChannel: string;
     preventClipping: boolean;
     chatTheme: string;
+    vanishKeybind: string;
 };
 
 export type WindowState = {

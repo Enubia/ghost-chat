@@ -18,7 +18,7 @@ export default function createStore() {
                 defaultChannel: '',
                 preventClipping: false,
                 chatTheme: 'undefined',
-                vanishKeybind: ''
+                vanishKeybind: '',
             },
             savedWindowState: {
                 x: 0,
