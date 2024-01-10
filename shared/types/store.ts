@@ -8,7 +8,6 @@ export type ChatOptions = {
     defaultChannel: string;
     preventClipping: boolean;
     chatTheme: string;
-    vanishKeybind: string;
 };
 
 export type WindowState = {
@@ -39,10 +38,15 @@ export type Updater = {
     channel: 'latest' | 'beta';
 };
 
+export type Keybind = {
+    vanishKeybind: string;
+};
+
 export type AppStore = {
     chatOptions: ChatOptions;
     savedWindowState: WindowState;
     settings: Settings;
     general: General;
     updater: Updater;
+    keybind: Keybind;
 };

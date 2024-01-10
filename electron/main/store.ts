@@ -18,7 +18,6 @@ export default function createStore() {
                 defaultChannel: '',
                 preventClipping: false,
                 chatTheme: 'undefined',
-                vanishKeybind: '',
             },
             savedWindowState: {
                 x: 0,
@@ -49,6 +48,9 @@ export default function createStore() {
             },
             updater: {
                 channel: 'latest',
+            },
+            keybind: {
+                vanishKeybind: 'Control+I',
             },
 
             // Hack to make sure the store is always up-to-date at first init,

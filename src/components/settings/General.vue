@@ -24,6 +24,22 @@
         </small>
     </div>
     <hr>
+    <div class="keybind-changer">
+        <label for="keybind-input">
+            {{  t('settings.document.general.keybind-change.label') }}
+        </label>
+        <input type="text" id="keybind-input" name="keybind-setting" v-model="props.store.get('keybind').vanishKeybind">
+        <div id="button-area">
+            <button
+                id="save"
+                class="contrast"
+                @click="save"
+            >
+                {{ t('settings.document.kap-chat.chat-theme.button.label') }}
+            </button>
+        </div>
+    </div>
+    <hr>
     <div id="beta-updates">
         <label
             for="beta-updates-input"
@@ -135,5 +151,9 @@ const setHideDockIcon = () => {
 const removeExternalBrowserSource = (sourceIndex: number) => {
     externalBrowserSources.value.splice(sourceIndex, 1);
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
+};
+
+const save = () => {
+
 };
 </script>

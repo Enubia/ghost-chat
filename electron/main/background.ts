@@ -8,6 +8,7 @@ import { IpcEvent } from '../../shared/constants';
 
 import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
+import KeyBinds from './keybinds';
 import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
@@ -56,6 +57,7 @@ const indexHtml = join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
 let ipcEvents: IpcEvents;
+let keybinds: KeyBinds;
 
 app.on('ready', () => {
     setTimeout(
@@ -79,11 +81,9 @@ app.on('ready', () => {
         },
         process.platform === 'linux' ? 1000 : 0,
     );
-    globalShortcut.register('Control+I', () => {
+    globalShortcut.register(store.get('keybind').vanishKeybind, () => {
         console.log('Electron loves global shortcuts!');
     });
-    // Check whether a shortcut is registered.
-    console.log(globalShortcut.isRegistered('Control+I'));
 });
 
 app.on('activate', () => {

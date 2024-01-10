@@ -48,6 +48,10 @@
                     "label": "Select your preferred language",
                     "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
                 },
+                "keybind-change": {
+                    "label": "Change the Vanish Keybind",
+                    "info": "Please follow the Keybind Examples"
+                },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",
                     "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
