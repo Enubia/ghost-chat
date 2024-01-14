@@ -28,7 +28,7 @@
         <label for="keybind-input">
             {{  t('settings.document.general.keybind-change.label') }}
         </label>
-        <input type="text" id="keybind-input" name="keybind-setting" v-model="props.store.get('keybind').vanishKeybind">
+        <input type="text" id="keybind-input" name="keybind-setting" v-model="keybindVanish">
         <div id="button-area">
             <button
                 id="save"
@@ -112,10 +112,13 @@
     </div>
 </template>
 <script setup lang="ts">
+
+import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 import { languageMappingList } from '../languageMappingList';
 
@@ -123,12 +126,15 @@ const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
+const emit = defineEmits(['register-new-shortcut']);
+
 const updater = props.store.get('updater');
 
 const participateInPreRelease = ref(false);
 const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
 const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
 const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
+const keybindVanish = ref(props.store.get('keybind').vanishKeybind);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -154,6 +160,7 @@ const removeExternalBrowserSource = (sourceIndex: number) => {
 };
 
 const save = () => {
-
+    props.store.set('keybind.vanishKeybind', keybindVanish.value);
+    ipcRenderer.send(IpcEvent.RegisterNewShortcut);
 };
 </script>

@@ -8,7 +8,6 @@ import { IpcEvent } from '../../shared/constants';
 
 import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
-import KeyBinds from './keybinds';
 import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
@@ -57,7 +56,6 @@ const indexHtml = join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
 let ipcEvents: IpcEvents;
-let keybinds: KeyBinds;
 
 app.on('ready', () => {
     setTimeout(
@@ -117,7 +115,7 @@ app.on('activate', () => {
 app.on('window-all-closed', () => {
     overlay = null;
     globalShortcut.unregisterAll();
-    console.log('unregistering all shortcut');
+    log.info('unregistering all shortcut');
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
             log.info('App closing');

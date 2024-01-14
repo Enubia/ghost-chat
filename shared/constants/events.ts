@@ -9,6 +9,7 @@ export const IpcEvent = {
     Rerender: 'rerender',
     Recreated: 'recreated',
     ShowApp: 'show-app',
+    RegisterNewShortcut: 'register-new-shortcut',
 
     // updater
     CheckingForUpdate: 'checking-for-update',

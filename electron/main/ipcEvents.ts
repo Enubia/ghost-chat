@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, IpcMainEvent, Rectangle } from 'electron';
+import { BrowserWindow, ipcMain, IpcMainEvent, Rectangle, globalShortcut } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -20,6 +20,7 @@ export default class IpcEvents {
         this.minimize();
         this.vanish();
         this.openSettings(indexHtml);
+        this.registerNewShortcut();
     }
 
     registerWindow(overlay: BrowserWindow | null) {
@@ -91,6 +92,16 @@ export default class IpcEvents {
 
             this.overlay?.setIgnoreMouseEvents(true);
             this.overlay?.webContents.send(IpcEvent.Vanish);
+        });
+    }
+
+    private registerNewShortcut() {
+        ipcMain.on(IpcEvent.RegisterNewShortcut, () => {
+            log.info('Registering new Shortcut');
+            globalShortcut.unregisterAll();
+            globalShortcut.register(this.store.get('keybind').vanishKeybind, () => {
+                log.info('Electron loves global shortcuts!');
+            });
         });
     }
 
