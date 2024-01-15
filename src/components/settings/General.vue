@@ -33,7 +33,7 @@
             <button
                 id="save"
                 class="contrast"
-                @click="save"
+                @click="keybindSave"
             >
                 {{ t('settings.document.kap-chat.chat-theme.button.label') }}
             </button>
@@ -159,7 +159,7 @@ const removeExternalBrowserSource = (sourceIndex: number) => {
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
 };
 
-const save = () => {
+const keybindSave = () => {
     props.store.set('keybind.vanishKeybind', keybindVanish.value);
     ipcRenderer.send(IpcEvent.RegisterNewShortcut);
 };
