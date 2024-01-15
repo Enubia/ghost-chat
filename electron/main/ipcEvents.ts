@@ -20,7 +20,7 @@ export default class IpcEvents {
         this.minimize();
         this.vanish();
         this.openSettings(indexHtml);
-        this.registerNewShortcut();
+        this.registerNewKeybind();
     }
 
     registerWindow(overlay: BrowserWindow | null) {
@@ -114,12 +114,13 @@ export default class IpcEvents {
         });
     }
 
-    private registerNewShortcut() {
-        ipcMain.on(IpcEvent.RegisterNewShortcut, () => {
+    // IPC Event called in Settings->General->Keybinds Save
+    private registerNewKeybind() {
+        ipcMain.on(IpcEvent.RegisterNewKeybind, () => {
             log.info('Registering new Shortcut');
             globalShortcut.unregisterAll();
             globalShortcut.register(this.store.get('keybind').vanishKeybind, () => {
-                log.info('Changed Shortcut');
+                log.info('Registered New Keybind');
                 ipcMain.emit(IpcEvent.Vanish);
             });
         });

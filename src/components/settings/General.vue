@@ -161,6 +161,6 @@ const removeExternalBrowserSource = (sourceIndex: number) => {
 
 const keybindSave = () => {
     props.store.set('keybind.vanishKeybind', keybindVanish.value);
-    ipcRenderer.send(IpcEvent.RegisterNewShortcut);
+    ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 };
 </script>
