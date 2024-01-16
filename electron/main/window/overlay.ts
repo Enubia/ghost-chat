@@ -87,18 +87,6 @@ export default class Overlay {
             window.show();
         });
 
-        // workaround for this issue https://github.com/electron/electron/issues/39959
-        // https://github.com/electron/electron/pull/40749
-        // ---------------------
-        window.on('blur', () => {
-            window.setBackgroundColor('#00000000');
-        });
-
-        window.on('focus', () => {
-            window.setBackgroundColor('#00000000');
-        });
-        // ---------------------
-
         window.on('close', () => {
             if (window) {
                 const windowBounds = window.getBounds();
