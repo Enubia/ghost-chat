@@ -34,7 +34,7 @@
 		"lint:shared": "eslint --cache --ext .ts --ignore-path .eslintignore shared/",
 		"lint:electron": "eslint --cache --ext .ts --ignore-path .eslintignore electron/",
 		"lint": "pnpm run lint:src && pnpm run lint:shared && pnpm run lint:electron",
-		"prepare": "husky install | chmod ug+x .husky/*" 
+		"prepare": "husky install | chmod ug+x .husky/*"
 	},
 	"devDependencies": {
 		"@codemirror/lang-css": "6.2.1",
