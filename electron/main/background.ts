@@ -116,20 +116,20 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
-    // --- Unregister All globalShortcuts that were registered
-    // with globalshortcut.register
-    globalShortcut.unregisterAll();
-    log.info('unregistering all shortcut');
-    // end globalshortcut Part                              ---
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
             log.info('App closing');
+            // Unregistering all Shortcuts that were registered with globalShortcut
+            globalShortcut.unregisterAll();
+            log.info('unregistering all shortcut');
             app.quit();
         } else {
             app.dock.show();
         }
     } else {
         log.info('App closing');
+        globalShortcut.unregisterAll();
+        log.info('unregistering all shortcut');
         app.quit();
     }
 });

@@ -67,25 +67,6 @@ export default class IpcEvents {
             this.overlay?.minimize();
         });
     }
-    // todo Vanish State
-    // Referenz:
-    // label: 'Disable Vanish',
-    /*
-    type: 'normal',
-    click: () => {
-        if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
-            log.info('Disabling Vanish');
-            this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-                ...this.store.get('savedWindowState'),
-                isClickThrough: false,
-                isTransparent: false,
-            });
-
-            this.overlay.setIgnoreMouseEvents(false);
-            this.overlay.webContents.send(IpcEvent.ShowApp);
-        }
-    },
-    */
 
     private vanish() {
         ipcMain.on(IpcEvent.Vanish, () => {
@@ -103,7 +84,7 @@ export default class IpcEvents {
                 this.overlay?.webContents.send(IpcEvent.ShowApp);
             } else if (!this.store.get('settings').isOpen && !this.store.get('savedWindowState').isTransparent) {
                 // ENABLING VANISH CASE
-                // Settings are CLOSED and Window IS transparent
+                // Settings are CLOSED and Window IS NOT transparent
                 log.info('Vanishing overlay');
 
                 const windowBounds = this.overlay?.getBounds() as Rectangle;

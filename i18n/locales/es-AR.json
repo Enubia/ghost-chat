@@ -45,10 +45,6 @@
                     "label": "Seleccionar tu idioma preferido",
                     "info": "Tener presente que para que este cambio tenga efecto en toda la aplicación vas a necesitar reiniciarla una vez."
                 },
-                "keybind-change": {
-                    "label": "Cambiar el grupo de teclas Desaparecer",
-                    "info": "Control utilizado para CTRL en Windows/Linux, Comando para el MacOS comúnmente utilizado Keybind CMD. Por ejemplo: Alt+ComandoOrControl+I será Alt+CTRL+I en Win/Linux y Alt+CMD+I en MacOS. Otros ejemplos: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
-                },
                 "pre-release": {
                     "checkbox-label": "Participa en las versiones previas al lanzamiento",
                     "info": "Elegí si querés participar de las versiones previas al lanzamiento. Estas también van a ser descargadas automáticamente si se eliget."

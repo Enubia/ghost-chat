@@ -31,12 +31,12 @@
         <small>
             {{  t('settings.document.general.keybind-change.info') }}
         </small>
-        <input type="text" id="keybind-input" name="keybind-setting" v-model="keybindVanish">
+        <input type="text" id="keybind-input" name="keybind-setting" v-model="vanishKeybind">
         <div id="button-area">
             <button
                 id="save"
                 class="contrast"
-                @click="keybindSave"
+                @click="saveKeybind"
             >
                 {{ t('settings.document.kap-chat.chat-theme.button.label') }}
             </button>
@@ -129,15 +129,13 @@ const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const emit = defineEmits(['register-new-shortcut']);
-
 const updater = props.store.get('updater');
 
 const participateInPreRelease = ref(false);
 const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
 const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
 const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
-const keybindVanish = ref(props.store.get('keybind').vanishKeybind);
+const vanishKeybind = ref(props.store.get('keybind').vanishKeybind);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -162,8 +160,8 @@ const removeExternalBrowserSource = (sourceIndex: number) => {
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
 };
 
-const keybindSave = () => {
-    props.store.set('keybind.vanishKeybind', keybindVanish.value);
+const saveKeybind = () => {
+    props.store.set('keybind.vanishKeybind', vanishKeybind.value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 };
 </script>
