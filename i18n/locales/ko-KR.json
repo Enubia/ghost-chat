@@ -47,6 +47,10 @@
                     "label": "원하는 언어 선택",
                     "info": "이 변경 사항을 앱 전체에 적용하려면 앱을 한 번 다시 시작해야 합니다."
                 },
+                "keybind-change": {
+                    "label": "사라짐 키 바인딩 변경",
+                    "info": "Windows/Linux에서는 CTRL에 사용되는 컨트롤, MacOS에서는 일반적으로 사용되는 키 바인드 CMD에 사용되는 명령입니다. 예시: Alt+CommandOrControl+I는 Win/Linux에서는 Alt+CTRL+I, MacOS에서는 Alt+CMD+I가 됩니다. 추가 예제: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
+                },
                 "pre-release": {
                     "checkbox-label": "사전 릴리즈 버전에 참여하기",
                     "info": "사전 릴리즈 버전에 참여하고 싶으면 선택하세요. 설정할 경우 자동으로 다운로드됩니다."
