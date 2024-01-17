@@ -28,6 +28,9 @@
         <label for="keybind-input">
             {{  t('settings.document.general.keybind-change.label') }}
         </label>
+        <small>
+            {{  t('settings.document.general.keybind-change.info') }}
+        </small>
         <input type="text" id="keybind-input" name="keybind-setting" v-model="keybindVanish">
         <div id="button-area">
             <button

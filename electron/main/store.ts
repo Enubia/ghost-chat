@@ -50,7 +50,7 @@ export default function createStore() {
                 channel: 'latest',
             },
             keybind: {
-                vanishKeybind: 'Control+I',
+                vanishKeybind: 'CommandOrControl+I',
             },
 
             // Hack to make sure the store is always up-to-date at first init,
