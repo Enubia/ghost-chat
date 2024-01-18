@@ -50,7 +50,7 @@
                 },
                 "keybind-change": {
                     "label": "Change the Vanish Keybind",
-                    "info": "Control used for CTRL on Windows/Linux, Command for the MacOS commonly used Keybind CMD. For Example: Alt+CommandOrControl+I will be Alt+CTRL+I on Win/Linux and Alt+CMD+I on MacOS. Further Examples: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
+                    "info": "Control used for CTRL on Windows/Linux, Command for the MacOS commonly used Keybind CMD.\nExample: Alt+CommandOrControl+I will be Alt+CTRL+I on Win/Linux and Alt+CMD+I on MacOS.\nFurther Examples: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
                 },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",

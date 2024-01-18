@@ -110,7 +110,7 @@ export default class IpcEvents {
             } else {
                 // Settings are OPEN and Vanish Call is activated
                 // Just logged, nothing happens for the User
-                log.info('OOPS! Out of Case, how did that happen?');
+                log.info('Settings are Open and Vanish Called.');
             }
         });
     }
