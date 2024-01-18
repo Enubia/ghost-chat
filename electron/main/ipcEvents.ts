@@ -70,7 +70,7 @@ export default class IpcEvents {
 
     private vanish() {
         ipcMain.on(IpcEvent.Vanish, () => {
-            if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
+            if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent && this.store.get('chatOptions').channel != '') {
                 // DISABLING VANISH CASE
                 // Settings are CLOSED and the Window IS transparent
                 log.info('Disabling Vanish');
@@ -82,7 +82,7 @@ export default class IpcEvents {
 
                 this.overlay?.setIgnoreMouseEvents(false);
                 this.overlay?.webContents.send(IpcEvent.ShowApp);
-            } else if (!this.store.get('settings').isOpen && !this.store.get('savedWindowState').isTransparent) {
+            } else if (!this.store.get('settings').isOpen && !this.store.get('savedWindowState').isTransparent && this.store.get('chatOptions').channel != '') {
                 // ENABLING VANISH CASE
                 // Settings are CLOSED and Window IS NOT transparent
                 log.info('Vanishing overlay');
@@ -110,7 +110,7 @@ export default class IpcEvents {
             } else {
                 // Settings are OPEN and Vanish Call is activated
                 // Just logged, nothing happens for the User
-                log.info('Settings are Open and Vanish Called.');
+                log.info('Settings are Open and Vanish Called OR Not in the Channel');
             }
         });
     }
