@@ -1,8 +1,8 @@
-import { Tray, Menu, app, BrowserWindow, shell } from 'electron';
+import { Tray, Menu, app, BrowserWindow, shell, ipcMain } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
-import { IpcEvent, StoreKeys } from '../../shared/constants';
+import { IpcEvent } from '../../shared/constants';
 import { AppStore } from '../../shared/types';
 
 export default class TrayIcon {
@@ -46,9 +46,11 @@ export default class TrayIcon {
                 ],
             },
             {
-                label: 'Disable Vanish',
+                label: 'Toggle Vanish',
                 type: 'normal',
                 click: () => {
+                    /* ###################### REFACTORED INTO IPC EVENT VANISH ##################################
+                    ################### Commented out for reference, get rid of in the future
                     if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
                         log.info('Disabling Vanish');
                         this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
@@ -58,8 +60,10 @@ export default class TrayIcon {
                         });
 
                         this.overlay.setIgnoreMouseEvents(false);
-                        this.overlay.webContents.send(IpcEvent.ShowApp);
-                    }
+                        */
+                    // this.overlay.webContents.send(IpcEvent.Vanish);
+                    ipcMain.emit(IpcEvent.Vanish);
+                    // } #######################################################################################
                 },
             },
             // should not be needed anymore, the previous menu item should be enough

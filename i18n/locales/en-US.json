@@ -48,6 +48,10 @@
                     "label": "Select your preferred language",
                     "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
                 },
+                "keybind-change": {
+                    "label": "Change the Vanish Keybind",
+                    "info": "Control used for CTRL on Windows/Linux, Command for the MacOS commonly used Keybind CMD.\nExample: Alt+CommandOrControl+I will be Alt+CTRL+I on Win/Linux and Alt+CMD+I on MacOS.\nFurther Examples: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
+                },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",
                     "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."

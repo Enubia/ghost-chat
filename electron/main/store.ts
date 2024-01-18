@@ -49,6 +49,9 @@ export default function createStore() {
             updater: {
                 channel: 'latest',
             },
+            keybind: {
+                vanishKeybind: 'CommandOrControl+I',
+            },
 
             // Hack to make sure the store is always up-to-date at first init,
             // default behavior of electron-store

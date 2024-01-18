@@ -1,7 +1,7 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, crashReporter } from 'electron';
+import { app, BrowserWindow, crashReporter, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '../../shared/constants';
@@ -79,6 +79,11 @@ app.on('ready', () => {
         },
         process.platform === 'linux' ? 1000 : 0,
     );
+    // Registering the Keybind on the start of the App
+    // Since all Keys are unregistered at close
+    globalShortcut.register(store.get('keybind').vanishKeybind, () => {
+        ipcMain.emit(IpcEvent.Vanish);
+    });
 });
 
 app.on('activate', () => {
@@ -111,16 +116,20 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
-
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
             log.info('App closing');
+            // Unregistering all Shortcuts that were registered with globalShortcut
+            globalShortcut.unregisterAll();
+            log.info('unregistering all shortcut');
             app.quit();
         } else {
             app.dock.show();
         }
     } else {
         log.info('App closing');
+        globalShortcut.unregisterAll();
+        log.info('unregistering all shortcut');
         app.quit();
     }
 });

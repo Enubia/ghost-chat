@@ -4,4 +4,5 @@ export const StoreKeys = {
     Settings: 'settings',
     Updater: 'updater',
     General: 'general',
+    Keybind: 'keybind',
 } as const;

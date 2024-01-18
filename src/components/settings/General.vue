@@ -24,6 +24,25 @@
         </small>
     </div>
     <hr>
+    <div class="keybind-changer">
+        <label for="keybind-input">
+            {{  t('settings.document.general.keybind-change.label') }}
+        </label>
+        <small>
+            {{  t('settings.document.general.keybind-change.info') }}
+        </small>
+        <input type="text" id="keybind-input" name="keybind-setting" v-model="vanishKeybind">
+        <div id="button-area">
+            <button
+                id="save"
+                class="contrast"
+                @click="saveKeybind"
+            >
+                {{ t('settings.document.kap-chat.chat-theme.button.label') }}
+            </button>
+        </div>
+    </div>
+    <hr>
     <div id="beta-updates">
         <label
             for="beta-updates-input"
@@ -96,10 +115,13 @@
     </div>
 </template>
 <script setup lang="ts">
+
+import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 import { languageMappingList } from '../languageMappingList';
 
@@ -113,6 +135,7 @@ const participateInPreRelease = ref(false);
 const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
 const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
 const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
+const vanishKeybind = ref(props.store.get('keybind').vanishKeybind);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -135,5 +158,10 @@ const setHideDockIcon = () => {
 const removeExternalBrowserSource = (sourceIndex: number) => {
     externalBrowserSources.value.splice(sourceIndex, 1);
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
+};
+
+const saveKeybind = () => {
+    props.store.set('keybind.vanishKeybind', vanishKeybind.value);
+    ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 };
 </script>

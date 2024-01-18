@@ -9,6 +9,7 @@ export const IpcEvent = {
     Rerender: 'rerender',
     Recreated: 'recreated',
     ShowApp: 'show-app',
+    RegisterNewKeybind: 'register-new-keybind',
 
     // updater
     CheckingForUpdate: 'checking-for-update',
