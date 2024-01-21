@@ -30,6 +30,7 @@ export default class Settings {
             resizable: true,
             maximizable: false,
             show: false,
+            autoHideMenuBar: true,
             webPreferences: {
                 nodeIntegration: true,
                 contextIsolation: false,

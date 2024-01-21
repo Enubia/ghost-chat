@@ -7,6 +7,7 @@
                 id="default-channel-input"
                 v-model="defaultChannel"
                 type="text"
+                @change="saveDefaultChannel"
             >
         </label>
         <small>{{ t('settings.document.kap-chat.default-channel.info') }}</small>
@@ -22,6 +23,7 @@
                     id="fade-input"
                     v-model="fadeMessages"
                     type="checkbox"
+                    @change="saveFadeMessages"
                 >
                 <span>{{ t('settings.document.kap-chat.fade.checkbox-label') }}</span>
             </label>
@@ -30,6 +32,7 @@
                 id="fade-timeout"
                 v-model="fadeTimeout"
                 type="number"
+                @change="saveFadeTimeout"
             >
         </div>
         <small>
@@ -46,6 +49,7 @@
                 id="show-bots-input"
                 v-model="showBotActivity"
                 type="checkbox"
+                @change="saveShowBotActivity"
             >
             <span>{{ t('settings.document.kap-chat.show-bots.checkbox-label') }}</span>
         </label>
@@ -61,6 +65,7 @@
                 id="prevent-clipping-input"
                 v-model="preventClipping"
                 type="checkbox"
+                @change="savePreventClipping"
             >
             <span>{{ t('settings.document.kap-chat.prevent-clipping.checkbox-label') }}</span>
         </label>
@@ -124,15 +129,6 @@
             {{ t('settings.document.kap-chat.chat-theme.info.after-link') }}
         </small>
     </div>
-    <div id="button-area">
-        <button
-            id="save"
-            class="contrast"
-            @click="save"
-        >
-            {{ t('settings.document.kap-chat.chat-theme.button.label') }}
-        </button>
-    </div>
 </template>
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
@@ -191,31 +187,36 @@ const preview = () => {
 
     previewLink.value = link.toString();
     rerender.value += 1;
+
+    props.store.set('chatOptions.chatTheme', chatTheme.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 };
 
-const save = () => {
-    const $saveButton = document.querySelector('#save') as HTMLElement;
-
-    $saveButton.setAttribute('aria-busy', 'true');
-    $saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.loading');
-
+const saveShowBotActivity = () => {
     props.store.set('chatOptions.showBotActivity', showBotActivity.value);
-    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+};
 
+const saveFadeMessages = () => {
+    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+};
+
+const saveFadeTimeout = () => {
     if (fadeMessages.value) {
         props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
+        ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }
+};
 
+const saveDefaultChannel = () => {
     props.store.set('chatOptions.defaultChannel', defaultChannel.value);
-    props.store.set('chatOptions.preventClipping', preventClipping.value);
-    props.store.set('chatOptions.chatTheme', chatTheme.value);
-
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
+};
 
-    setTimeout(() => {
-        $saveButton?.removeAttribute('aria-busy');
-        $saveButton.innerText = t('settings.document.kap-chat.chat-theme.button.label');
-    }, 500);
+const savePreventClipping = () => {
+    props.store.set('chatOptions.preventClipping', preventClipping.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 };
 </script>
 

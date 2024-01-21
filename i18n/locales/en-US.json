@@ -27,7 +27,8 @@
             },
             "button": "Go!",
             "sourceSwitcher": "Want to load twitch chat? Click here!"
-        }
+        },
+        "supportButtonsInfo": "Like the app? Consider supporting me via PayPal or buying me a coffee!"
     },
     "settings": {
         "aside": {
@@ -50,7 +51,8 @@
                 },
                 "keybind-change": {
                     "label": "Change the Vanish Keybind",
-                    "info": "Control used for CTRL on Windows/Linux, Command for the MacOS commonly used Keybind CMD.\nExample: Alt+CommandOrControl+I will be Alt+CTRL+I on Win/Linux and Alt+CMD+I on MacOS.\nFurther Examples: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
+                    "no-key": "No keybind set",
+                    "error": "Meta keys are not allowed"
                 },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",

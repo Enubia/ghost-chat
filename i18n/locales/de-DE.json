@@ -49,7 +49,8 @@
                 },
                 "keybind-change": {
                     "label": "Setze einen neue Vanish Tastenkombination",
-                    "info": "Control wird für STRG auf Windows/Linux verwendet, Command auf MacOS für die CMD Tate.\nBeispiel: Alt+CommandOrControl+I wird Alt+CTRL+I auf Win/Linux und Alt+CMD+I auf MacOS.\nWeitere Kombinationen: CommandOrControl+I, Control+Alt+F9, Command+Alt+Shift+I."
+                    "no-key": "Keine Tastenkombination festgelegt",
+                    "error": "Meta-Taste ist nicht erlaubt"
                 },
                 "pre-release": {
                     "checkbox-label": "Nimm teil an frühen Versionen",

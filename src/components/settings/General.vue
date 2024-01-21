@@ -25,22 +25,10 @@
     </div>
     <hr>
     <div class="keybind-changer">
-        <label for="keybind-input">
-            {{  t('settings.document.general.keybind-change.label') }}
-        </label>
-        <small>
-            {{  t('settings.document.general.keybind-change.info') }}
-        </small>
-        <input type="text" id="keybind-input" name="keybind-setting" v-model="vanishKeybind">
-        <div id="button-area">
-            <button
-                id="save"
-                class="contrast"
-                @click="saveKeybind"
-            >
-                {{ t('settings.document.kap-chat.chat-theme.button.label') }}
-            </button>
-        </div>
+        <HotKeyInput
+            :modelValue="vanishKeybind"
+            @update:modelValue="saveKeybind"
+        />
     </div>
     <hr>
     <div id="beta-updates">
@@ -125,17 +113,22 @@ import { IpcEvent } from '../../../shared/constants';
 import { AppStore } from '../../../shared/types';
 import { languageMappingList } from '../languageMappingList';
 
+import HotKeyInput from './HotKeyInput.vue';
+
 const { t } = useI18n();
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const updater = props.store.get('updater');
+const mac = props.store.get('general').mac;
+const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
+const keybind = props.store.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
-const quitOnClose = ref(props.store.get('general').mac.quitOnClose);
-const hideDockIcon = ref(props.store.get('general').mac.hideDockIcon);
-const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
-const vanishKeybind = ref(props.store.get('keybind').vanishKeybind);
+const quitOnClose = ref(mac.quitOnClose);
+const hideDockIcon = ref(mac.hideDockIcon);
+const externalBrowserSources = ref(storedExternanlBrowserSources);
+const vanishKeybind = ref(keybind);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -160,8 +153,8 @@ const removeExternalBrowserSource = (sourceIndex: number) => {
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
 };
 
-const saveKeybind = () => {
-    props.store.set('keybind.vanishKeybind', vanishKeybind.value);
+const saveKeybind = (value: string) => {
+    props.store.set('keybind.vanishKeybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 };
 </script>

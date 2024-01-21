@@ -119,15 +119,17 @@ export default class IpcEvents {
         });
     }
 
-    // IPC Event called in Settings->General->Keybinds Save
     private registerNewKeybind() {
         ipcMain.on(IpcEvent.RegisterNewKeybind, () => {
             log.info('Registering new Shortcut');
             globalShortcut.unregisterAll();
-            globalShortcut.register(this.store.get('keybind').vanishKeybind, () => {
-                log.info('Registered New Keybind');
-                ipcMain.emit(IpcEvent.Vanish);
-            });
+
+            if (this.store.get('keybind').vanishKeybind) {
+                globalShortcut.register(this.store.get('keybind').vanishKeybind, () => {
+                    log.info('Registered New Keybind');
+                    ipcMain.emit(IpcEvent.Vanish);
+                });
+            }
         });
     }
 

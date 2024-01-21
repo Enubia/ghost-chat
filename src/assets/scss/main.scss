@@ -204,6 +204,22 @@ body {
                         text-decoration: underline;
                     }
                 }
+
+                #support-buttons {
+                    #support-buttons-info {
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        text-align: center;
+                        max-width: 80%;
+                    }
+
+                    #icons {
+                        a {
+                            margin: 0 10px 0 10px;
+                        }
+                    }
+                }
+
             }
 
             #settings {

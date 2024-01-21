@@ -81,9 +81,11 @@ app.on('ready', () => {
     );
     // Registering the Keybind on the start of the App
     // Since all Keys are unregistered at close
-    globalShortcut.register(store.get('keybind').vanishKeybind, () => {
-        ipcMain.emit(IpcEvent.Vanish);
-    });
+    if (store.get('keybind').vanishKeybind) {
+        globalShortcut.register(store.get('keybind').vanishKeybind, () => {
+            ipcMain.emit(IpcEvent.Vanish);
+        });
+    }
 });
 
 app.on('activate', () => {
