@@ -13,6 +13,7 @@
             :store="store"
             @show-start="showView('start')"
             @show-chat="showView('chat')"
+            @show-changelog="showView('changelog')"
             @vanish="ipcRenderer.send(IpcEvent.Vanish)"
         />
         <MenuButtons
@@ -42,6 +43,7 @@
             v-else-if="showSettings"
             :key="settingsKey"
         />
+        <ChangeLog v-else-if="showChangelog" />
     </main>
 </template>
 
@@ -55,6 +57,7 @@ import { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
+import ChangeLog from './pages/Changelog.vue';
 import Chat from './pages/Chat.vue';
 import ExternalSource from './pages/ExternalSource.vue';
 import Settings from './pages/Settings.vue';
@@ -63,10 +66,11 @@ import VersionCheck from './pages/VersionCheck.vue';
 
 const store = new ElectronStore<AppStore>();
 
-const showStart = ref(true);
+const showChangelog = ref(false);
 const showChat = ref(false);
-const showSettings = ref(false);
 const showExternalSource = ref(false);
+const showSettings = ref(false);
+const showStart = ref(true);
 const settingsKey = ref(0);
 
 const savedWindowState = ref(store.get('savedWindowState'));
@@ -91,7 +95,7 @@ const showApp = () => {
         !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
 };
 
-type Views = 'chat' | 'start' | 'settings' | 'externalSource';
+type Views = 'changelog' | 'chat' | 'start' | 'settings' | 'externalSource';
 
 const showView = <T = Views>(
     view: T,
@@ -101,6 +105,9 @@ const showView = <T = Views>(
             ref: Ref<boolean>;
         };
     } = {
+        changelog: {
+            ref: showChangelog,
+        },
         chat: {
             ref: showChat,
         },

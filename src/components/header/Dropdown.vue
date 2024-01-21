@@ -13,7 +13,7 @@
         </summary>
         <ul role="listbox">
             <li v-if="!isStartPage">
-                <a @click="emit('showStart')">{{ t('header.dropdown.start') }}</a>
+                <a @click="showStart">{{ t('header.dropdown.start') }}</a>
             </li>
             <li v-if="!props.isChatPage && props.channel !== ''">
                 <a @click="emit('showChat')">{{ t('header.dropdown.chat') }}</a>
@@ -21,11 +21,11 @@
             <li v-if="!isSettingsOpen">
                 <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
             </li>
-            <!-- <li v-if="!isSettingsOpen">
-                <a @click="setClickThrough">{{ t('header.dropdown.set-click-through') }}</a>
-            </li> -->
             <li>
                 <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
+            </li>
+            <li>
+                <a @click="showChangelog" >{{ t('header.dropdown.changelog') }}</a>
             </li>
             <li
                 v-if="!isSettingsOpen && (isChatPage || isExternalPage)"
@@ -63,7 +63,7 @@ const props = defineProps<{
     store: ElectronStore<AppStore>;
 }>();
 
-const emit = defineEmits(['showChat', 'showStart', 'showSettings', 'vanish']);
+const emit = defineEmits(['showChat', 'showStart', 'showSettings', 'showChangelog', 'vanish']);
 
 const isSettingsOpen = ref(false);
 
@@ -94,10 +94,24 @@ const toggleTheme = () => {
     ipcRenderer.send(IpcEvent.Rerender, 'child');
 };
 
-// const setClickThrough = () => {
-//     document.querySelector('details')?.removeAttribute('open');
-//     ipcRenderer.send(IpcEvent.SetClickThrough);
-// };
+type Page = 'chat' | 'start' | 'changelog';
+type EmitKey = 'showChat' | 'showStart' | 'showChangelog';
+
+const showPageAndCloseMenu = (page: Page) => {
+    document.querySelector('details')?.removeAttribute('open');
+    const emitKey = `show${page.charAt(0).toUpperCase() + page.slice(1)}`;
+    emit(emitKey as EmitKey);
+};
+
+const showStart = () => {
+    document.querySelector('details')?.removeAttribute('open');
+    emit('showStart');
+};
+
+const showChangelog = () => {
+    document.querySelector('details')?.removeAttribute('open');
+    emit('showChangelog');
+};
 
 const emitVanish = () => {
     document.querySelector('details')?.removeAttribute('open');

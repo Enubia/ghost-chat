@@ -11,6 +11,7 @@
                             <a
                                 id="general"
                                 class="contrast"
+                                active
                                 @click="showView('general')"
                             >
                                 {{ t('settings.aside.1') }}
@@ -19,7 +20,6 @@
                         <li>
                             <a
                                 id="options"
-                                active
                                 class="contrast"
                                 @click="showView('options')"
                             >
@@ -91,8 +91,8 @@ const theme = store.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
-const showGeneral = ref(false);
-const showOptions = ref(true);
+const showGeneral = ref(true);
+const showOptions = ref(false);
 const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
 const showUpdates = ref(false);

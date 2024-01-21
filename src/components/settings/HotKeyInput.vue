@@ -2,16 +2,17 @@
     <label for="keybind-input">
         {{ t('settings.document.general.keybind-change.label') }}
     </label>
+    <small v-if="showError" class="error-text">
+        {{ t('settings.document.general.keybind-change.error') }}
+    </small>
     <input
         @keyup="handleKeyup"
         @keydown.prevent
         :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
         id="keybind-input"
         name="keybind-setting"
+        :aria-invalid="showError ? 'true' : undefined"
     />
-    <small v-if="showError" class="error-text">
-        {{ t('settings.document.general.keybind-change.error') }}
-    </small>
 </template>
 
 <script setup lang="ts">
@@ -34,17 +35,11 @@ const handleKeyup = (event: KeyboardEvent) => {
     event.stopPropagation();
 
     if (event.code === 'Backspace') {
+        inputValue.value = null;
         return emit('update:modelValue', null);
     }
 
     let { code, ctrlKey, shiftKey, altKey, metaKey } = event;
-
-    if (metaKey) {
-        showError.value = true;
-        return;
-    } else {
-        showError.value = false;
-    }
 
     if (code.startsWith('Key')) {
         code = code.slice('Key'.length);
@@ -62,6 +57,13 @@ const handleKeyup = (event: KeyboardEvent) => {
         }
 
         inputValue.value = code;
+
+        if (metaKey) {
+            showError.value = true;
+            return;
+        } else {
+            showError.value = false;
+        }
 
         emit('update:modelValue', code);
     }

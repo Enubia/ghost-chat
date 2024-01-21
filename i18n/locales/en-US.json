@@ -4,8 +4,8 @@
             "start": "Start",
             "chat": "Chat",
             "settings": "Settings",
-            "set-click-through": "Set click-through",
             "toggle-color-theme": "Toggle Color Theme",
+            "changelog": "Changelog",
             "vanish": {
                 "title": "Vanish",
                 "tooltip": "transparent and click-through"
@@ -52,7 +52,7 @@
                 "keybind-change": {
                     "label": "Change the Vanish Keybind",
                     "no-key": "No keybind set",
-                    "error": "Meta keys are not allowed"
+                    "error": "Meta keys (Win or CMD) are not allowed"
                 },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",

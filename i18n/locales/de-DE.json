@@ -4,8 +4,8 @@
             "start": "Start",
             "chat": "Chat",
             "settings": "Einstellungen",
-            "set-click-through": "Ignoriere Cursor",
             "toggle-color-theme": "Ändere das Theme",
+            "changelog": "Changelog",
             "vanish": {
                 "title": "Vanish",
                 "tooltip": "transparent und keine cursor interaktion"
@@ -50,7 +50,7 @@
                 "keybind-change": {
                     "label": "Setze einen neue Vanish Tastenkombination",
                     "no-key": "Keine Tastenkombination festgelegt",
-                    "error": "Meta-Taste ist nicht erlaubt"
+                    "error": "Meta-Taste (Win oder CMD) ist nicht erlaubt"
                 },
                 "pre-release": {
                     "checkbox-label": "Nimm teil an frühen Versionen",

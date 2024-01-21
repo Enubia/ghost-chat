@@ -39,7 +39,7 @@ export type Updater = {
 };
 
 export type Keybind = {
-    vanishKeybind: string;
+    vanishKeybind: string | null;
 };
 
 export type AppStore = {

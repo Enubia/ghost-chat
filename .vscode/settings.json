@@ -15,6 +15,10 @@
 		"source.fixAll.eslint": "explicit"
 	},
 	"search.exclude": {
-		".eslintcache": true
+		".eslintcache": true,
+		"**/node_modules": true,
+		"**/dist": true,
+		"**/dist-electron": true,
+		"**/release": true,
 	}
 }
