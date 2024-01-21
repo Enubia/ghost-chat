@@ -239,7 +239,9 @@ export function hotkeyToString(keys: string[], ctrl = false, shift = false, alt 
         alt = true;
     }
 
-    keys = keys.filter(key => !isModKey(key));
+    keys = keys
+        .filter(key => !isModKey(key))
+        .map(key => KeyToElectron[key] || key);
 
     let mod = '';
 

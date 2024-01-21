@@ -124,11 +124,18 @@ export default class IpcEvents {
             log.info('Registering new Shortcut');
             globalShortcut.unregisterAll();
 
-            if (this.store.get('keybind').vanishKeybind) {
-                globalShortcut.register(this.store.get('keybind').vanishKeybind, () => {
-                    log.info('Registered New Keybind');
-                    ipcMain.emit(IpcEvent.Vanish);
-                });
+            const keybind = this.store.get('keybind').vanishKeybind;
+
+            if (keybind) {
+                log.info('Registering new Keybind', keybind);
+                try {
+                    globalShortcut.register(keybind, () => {
+                        log.info('Registered New Keybind');
+                        ipcMain.emit(IpcEvent.Vanish);
+                    });
+                } catch (error) {
+                    log.error('ipcEvents', error);
+                }
             }
         });
     }
