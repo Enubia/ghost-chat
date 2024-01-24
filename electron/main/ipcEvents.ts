@@ -70,7 +70,8 @@ export default class IpcEvents {
 
     private vanish() {
         ipcMain.on(IpcEvent.Vanish, () => {
-            if (!this.store.get('settings').isOpen &&
+            if (
+                !this.store.get('settings').isOpen &&
                 this.store.get('savedWindowState').isTransparent
             ) {
                 // DISABLING VANISH CASE
@@ -84,7 +85,8 @@ export default class IpcEvents {
 
                 this.overlay?.setIgnoreMouseEvents(false);
                 this.overlay?.webContents.send(IpcEvent.ShowApp);
-            } else if (!this.store.get('settings').isOpen &&
+            } else if (
+                !this.store.get('settings').isOpen &&
                 !this.store.get('savedWindowState').isTransparent
             ) {
                 // ENABLING VANISH CASE
