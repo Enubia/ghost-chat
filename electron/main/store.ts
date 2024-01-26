@@ -13,7 +13,7 @@ export default function createStore() {
                 fadeMessages: false,
                 fadeTimeout: 30,
                 showBotActivity: false,
-                customCSS: '.chat_line {\n    font-size: 14px;\n}',
+                customCSS: '.chat_line {\n    font-size: 14px !important;\n}',
                 customJS: '',
                 defaultChannel: '',
                 preventClipping: false,
