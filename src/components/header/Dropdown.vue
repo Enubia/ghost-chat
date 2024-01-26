@@ -13,10 +13,7 @@
         </summary>
         <ul role="listbox">
             <li v-if="!isStartPage">
-                <a @click="showStart">{{ t('header.dropdown.start') }}</a>
-            </li>
-            <li v-if="!props.isChatPage && props.channel !== ''">
-                <a @click="emit('showChat')">{{ t('header.dropdown.chat') }}</a>
+                <a @click="emitAndCloseMenu('start')">{{ t('header.dropdown.start') }}</a>
             </li>
             <li v-if="!isSettingsOpen">
                 <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
@@ -25,13 +22,13 @@
                 <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
             </li>
             <li>
-                <a @click="showChangelog" >{{ t('header.dropdown.changelog') }}</a>
+                <a @click="emitAndCloseMenu('changelog')" >{{ t('header.dropdown.changelog') }}</a>
             </li>
             <li
                 v-if="!isSettingsOpen && (isChatPage || isExternalPage)"
                 id="vanish"
             >
-                <a @click="emitVanish">
+                <a @click="emitAndCloseMenu('vanish')">
                     <font-awesome-icon icon="fas fa-ghost" />
                     <span>{{ t('header.dropdown.vanish.title') }}</span>
                 </a>
@@ -63,13 +60,22 @@ const props = defineProps<{
     store: ElectronStore<AppStore>;
 }>();
 
-const emit = defineEmits(['showChat', 'showStart', 'showSettings', 'showChangelog', 'vanish']);
+type EmitType = 'chat' | 'start' | 'changelog' | 'vanish';
+type EmitKey = | 'showStart' | 'showSettings' | 'showChangelog' | 'vanish';
+
+const emit = defineEmits(['showStart', 'showSettings', 'showChangelog', 'vanish']);
 
 const isSettingsOpen = ref(false);
 
 if (props.store.get('settings').isOpen) {
     isSettingsOpen.value = true;
 }
+
+const emitAndCloseMenu = (emitType: EmitType) => {
+    document.querySelector('details')?.removeAttribute('open');
+    const emitKey = emitType === 'vanish' ? emitType : `show${emitType.charAt(0).toUpperCase() + emitType.slice(1)}`;
+    emit(emitKey as EmitKey);
+};
 
 const showSettings = () => {
     document.querySelector('details')?.removeAttribute('open');
@@ -94,27 +100,4 @@ const toggleTheme = () => {
     ipcRenderer.send(IpcEvent.Rerender, 'child');
 };
 
-type Page = 'chat' | 'start' | 'changelog';
-type EmitKey = 'showChat' | 'showStart' | 'showChangelog';
-
-const showPageAndCloseMenu = (page: Page) => {
-    document.querySelector('details')?.removeAttribute('open');
-    const emitKey = `show${page.charAt(0).toUpperCase() + page.slice(1)}`;
-    emit(emitKey as EmitKey);
-};
-
-const showStart = () => {
-    document.querySelector('details')?.removeAttribute('open');
-    emit('showStart');
-};
-
-const showChangelog = () => {
-    document.querySelector('details')?.removeAttribute('open');
-    emit('showChangelog');
-};
-
-const emitVanish = () => {
-    document.querySelector('details')?.removeAttribute('open');
-    emit('vanish');
-};
 </script>
