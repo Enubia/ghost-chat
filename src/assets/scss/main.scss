@@ -208,6 +208,11 @@ body {
                         text-decoration: underline;
                     }
                 }
+            }
+
+            #changelog {
+                height: 100%;
+                overflow-y: auto;
 
                 #support-buttons {
                     #support-buttons-info {
@@ -220,10 +225,16 @@ body {
                     #icons {
                         a {
                             margin: 0 10px 0 10px;
+                            width: 50%;
+                            height: 100%;
                         }
+
+                        display: flex;
+                        width: 100%;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
-
             }
 
             #settings {
