@@ -1,4 +1,7 @@
-import { Tray, Menu, app, BrowserWindow, shell, ipcMain } from 'electron';
+import fs from 'node:fs';
+import path from 'node:path';
+
+import { Tray, Menu, app, shell, ipcMain, clipboard } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
@@ -10,7 +13,6 @@ export default class TrayIcon {
 
     constructor(
         private store: ElectronStore<AppStore>,
-        private overlay: BrowserWindow,
     ) {}
 
     buildTray(trayIconPath: string) {
@@ -43,40 +45,85 @@ export default class TrayIcon {
                             shell.showItemInFolder(this.store.path);
                         },
                     },
+                    {
+                        label: 'Clear logs',
+                        type: 'normal',
+                        click: () => {
+                            try {
+                                log.info('Clearing logs');
+                                const filePath = log.transports.file.getFile().path;
+                                const directory = path.dirname(filePath);
+                                const files = fs.readdirSync(directory);
+
+                                for (const file of files) {
+                                    if (!file.endsWith('.log')) {
+                                        continue;
+                                    }
+
+                                    log.info(`Deleting ${file}`);
+                                    fs.unlinkSync(path.join(directory, file));
+                                }
+                            } catch (error) {
+                                log.error('Failed to clear logs');
+                                log.error(error);
+                            }
+                        },
+                    },
+                    {
+                        label: 'Reset config',
+                        type: 'normal',
+                        click: () => {
+                            log.info('Resetting config');
+                            this.store.clear();
+                        },
+                    },
+                    {
+                        label: 'Copy System Debug Information',
+                        type: 'normal',
+                        click: () => {
+                            log.info('Copying system debug information to clipboard');
+
+                            const appVersion = app.getVersion();
+                            const electronVersion = process.versions.electron;
+                            const chromeVersion = process.versions.chrome;
+                            const nodeVersion = process.versions.node;
+                            const platform = process.platform;
+                            const arch = process.arch;
+                            const locale = app.getLocale();
+                            const store = this.store.store;
+
+                            log.info(JSON.stringify({
+                                appVersion,
+                                electronVersion,
+                                chromeVersion,
+                                nodeVersion,
+                                platform,
+                                arch,
+                                locale,
+                                store,
+                            }, null, 4));
+
+                            let clipboardText = `**App Version:** ${appVersion}\n\n`;
+                            clipboardText += `**Electron Version:** ${electronVersion}\n\n`;
+                            clipboardText += `**Chrome Version:** ${chromeVersion}\n\n`;
+                            clipboardText += `**Node Version:** ${nodeVersion}\n\n`;
+                            clipboardText += `**Platform:** ${platform}\n\n`;
+                            clipboardText += `**Arch:** ${arch}\n\n`;
+                            clipboardText += `**Locale:** ${locale}\n\n`;
+                            clipboardText += '**Store:**\n\n';
+                            clipboardText += '```json\n' + JSON.stringify(store, null, 4) + '\n```';
+                            clipboard.writeText(clipboardText);
+                        },
+                    },
                 ],
             },
             {
                 label: 'Toggle Vanish',
                 type: 'normal',
                 click: () => {
-                    /* ###################### REFACTORED INTO IPC EVENT VANISH ##################################
-                    ################### Commented out for reference, get rid of in the future
-                    if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
-                        log.info('Disabling Vanish');
-                        this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
-                            ...this.store.get('savedWindowState'),
-                            isClickThrough: false,
-                            isTransparent: false,
-                        });
-
-                        this.overlay.setIgnoreMouseEvents(false);
-                        */
-                    // this.overlay.webContents.send(IpcEvent.Vanish);
                     ipcMain.emit(IpcEvent.Vanish);
-                    // } #######################################################################################
                 },
             },
-            // should not be needed anymore, the previous menu item should be enough
-            // {
-            //     label: 'Disable Click-Through',
-            //     type: 'normal',
-            //     click: () => {
-            //         log.info('Disabling Click-Through');
-            //         this.store.set('savedWindowState.isClickThrough', false);
-
-            //         this.overlay.setIgnoreMouseEvents(false);
-            //     },
-            // },
             {
                 label: 'Exit',
                 click: () => {
