@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 // credits to @SnosMe, shamelessly stolen from https://github.com/SnosMe/awakened-poe-trade/blob/master/ipc/KeyToCode.ts
 
 export const KeyToCode = {
@@ -243,6 +244,10 @@ export function hotkeyToString(keys: string[], ctrl = false, shift = false, alt 
         .filter(key => !isModKey(key))
         .map(key => KeyToElectron[key] || key);
 
+    if (keys.length === 1 && isFunctionKey(keys[0]) && !ctrl && !shift && !alt) {
+        return keys[0];
+    }
+
     let mod = '';
 
     if (ctrl && shift && alt) {
@@ -261,9 +266,7 @@ export function hotkeyToString(keys: string[], ctrl = false, shift = false, alt 
         mod = 'Shift';
     }
 
-    return (mod && keys.length) ?
-        `${mod} + ${keys.join(' + ')}` :
-        (keys.join(' + ') || mod);
+    return (mod && keys.length) ? `${mod} + ${keys.join(' + ')}` : (keys.join(' + ') || mod);
 }
 
 export function mergeTwoHotkeys(str1: string, str2: string): string {
@@ -279,4 +282,8 @@ export function isModKey(key: string) {
         key === 'Shift' ||
         key === 'Alt'
     );
+}
+
+export function isFunctionKey(key: string) {
+    return key.startsWith('F') && key.length > 1 && key.length < 4;
 }

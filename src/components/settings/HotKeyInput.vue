@@ -19,7 +19,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { KeyToCode, hotkeyToString } from '../../../shared/utils/keyToCode';
+import { KeyToCode, hotkeyToString, isFunctionKey } from '../../../shared/utils/keyToCode';
 
 const { t } = useI18n();
 const emit = defineEmits(['update:modelValue']);
@@ -52,7 +52,7 @@ const handleKeyup = (event: KeyboardEvent) => {
     if ((KeyToCode as Record<string, number>)[code]) {
         code = hotkeyToString([code], ctrlKey, shiftKey, altKey);
 
-        if (!code.includes('+')) {
+        if (!isFunctionKey(code) && !code.includes('+')) {
             return;
         }
 

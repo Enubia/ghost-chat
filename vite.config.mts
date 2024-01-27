@@ -1,8 +1,7 @@
 import { rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-// eslint-disable-next-line import/no-unresolved
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig, UserConfigFn } from 'vite';
 import electron from 'vite-plugin-electron';
@@ -27,7 +26,7 @@ export default defineConfig((({ command }) => {
                     },
                 },
             }),
-            VueI18nPlugin({
+            VueI18nPlugin.vite({
                 include: resolve(__dirname, './i18n/locales/**'),
                 runtimeOnly: false,
             }),
