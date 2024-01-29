@@ -1,4 +1,3 @@
-<!-- eslint-disable @stylistic/max-len -->
 <template>
     <div id="default-channel">
         <label for="default-channel-input">

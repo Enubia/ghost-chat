@@ -60,8 +60,8 @@ devDependencies:
     specifier: 6.1.7
     version: 6.1.7
   eslint-config-slurp-config:
-    specifier: 2.3.3
-    version: 2.3.3(eslint@8.56.0)(typescript@5.3.3)
+    specifier: 2.3.4
+    version: 2.3.4(eslint@8.56.0)(typescript@5.3.3)
   husky:
     specifier: 9.0.6
     version: 9.0.6
@@ -2967,8 +2967,8 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-config-slurp-config@2.3.3(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-0OEPd6IgVZ3Z1D9NAjLvwgLAisRUBFx+Q3MvF6hLjOXpgKjd16wZrWiZcs7OWHOIo/rhp8qQJLEElHjyic4sgw==}
+  /eslint-config-slurp-config@2.3.4(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-54CJgZ5bcAtSrvCb37r7zOoIZ5u4Vvqsx1booLe/9pP0m+mR7+2X2TK1oty/OOicqevrTavaTZhFQbuVT6vVog==}
     engines: {node: '>=20'}
     peerDependencies:
       eslint: ^8.54.0
