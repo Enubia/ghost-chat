@@ -85,9 +85,9 @@ import KapChat from '../components/settings/KapChat.vue';
 
 const { t } = useI18n();
 
-const store = new ElectronStore<AppStore>();
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
-const theme = store.get('savedWindowState.theme');
+const theme = props.store.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
