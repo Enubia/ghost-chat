@@ -26,7 +26,6 @@
     <main class="container-fluid">
         <Start
             v-if="showStart"
-            :store="store"
             @channel="enableChat"
             @source="enableExternalSource"
         />
@@ -42,6 +41,7 @@
         <Settings
             v-else-if="showSettings"
             :key="settingsKey"
+            :store="store"
         />
         <ChangeLog v-else-if="showChangelog" />
     </main>
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref, Ref } from 'vue';
+import { ref, Ref, provide } from 'vue';
 
 import { IpcEvent } from '../shared/constants';
 import { AppStore } from '../shared/types';
@@ -65,6 +65,8 @@ import Start from './pages/Start.vue';
 import VersionCheck from './pages/VersionCheck.vue';
 
 const store = new ElectronStore<AppStore>();
+
+provide('store', store);
 
 const showChangelog = ref(false);
 const showChat = ref(false);

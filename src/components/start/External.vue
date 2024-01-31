@@ -46,16 +46,17 @@
 <script setup lang="ts">
 import ElectronStore from 'electron-store';
 import { ref } from 'vue';
+import { inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { AppStore } from '../../../shared/types';
 const { t } = useI18n();
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const store = inject('store') as ElectronStore<AppStore>;
 
 const source = ref('');
 const hasRegexError = ref(false);
-const externalBrowserSources = ref(props.store.get('general').externalBrowserSources);
+const externalBrowserSources = ref(store.get('general').externalBrowserSources);
 
 const emits = defineEmits<{ (event: 'source', source: string): void }>();
 
