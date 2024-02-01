@@ -1,10 +1,11 @@
-import { BrowserWindow } from 'electron';
+import type { BrowserWindow } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
-import { AppUpdater, autoUpdater } from 'electron-updater';
+import type { AppUpdater } from 'electron-updater';
+import { autoUpdater } from 'electron-updater';
 
 import { IpcEvent } from '../../shared/constants';
-import { AppStore, Updater } from '../../shared/types';
+import type { AppStore, Updater } from '../../shared/types';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;

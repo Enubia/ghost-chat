@@ -1,4 +1,4 @@
-export type ChatOptions = {
+export interface ChatOptions {
     channel: string;
     showBotActivity: boolean;
     fadeMessages: boolean;
@@ -8,9 +8,9 @@ export type ChatOptions = {
     defaultChannel: string;
     preventClipping: boolean;
     chatTheme: string;
-};
+}
 
-export type WindowState = {
+export interface WindowState {
     x: number;
     y: number;
     width: number;
@@ -18,35 +18,35 @@ export type WindowState = {
     isClickThrough: boolean;
     isTransparent: boolean;
     theme: 'dark' | 'light' | null;
-};
+}
 
-export type Settings = {
+export interface Settings {
     isOpen: boolean;
     savedWindowState: Omit<WindowState, 'isClickThrough' | 'isTransparent'>;
-};
+}
 
-export type General = {
+export interface General {
     externalBrowserSources: string[];
     mac: {
         quitOnClose: boolean;
         hideDockIcon: boolean;
     };
     language: string;
-};
+}
 
-export type Updater = {
+export interface Updater {
     channel: 'latest' | 'beta';
-};
+}
 
-export type Keybind = {
+export interface Keybind {
     vanishKeybind: string | null;
-};
+}
 
-export type AppStore = {
+export interface AppStore {
     chatOptions: ChatOptions;
     savedWindowState: WindowState;
     settings: Settings;
     general: General;
     updater: Updater;
     keybind: Keybind;
-};
+}

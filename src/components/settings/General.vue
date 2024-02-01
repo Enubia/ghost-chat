@@ -26,8 +26,8 @@
     <hr>
     <div class="keybind-changer">
         <HotKeyInput
-            :modelValue="vanishKeybind"
-            @update:modelValue="saveKeybind"
+            :model-value="vanishKeybind"
+            @update:model-value="saveKeybind"
         />
     </div>
     <hr>
@@ -82,7 +82,7 @@
             <small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
         </div>
     </div>
-    <div id="external-sources" v-if="externalBrowserSources?.length">
+    <div v-if="externalBrowserSources?.length" id="external-sources">
         <hr>
         <span>{{ t('settings.document.general.external-sources.heading') }}</span>
         <div id="external-sources-list">
@@ -102,22 +102,22 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
 
+<script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
-import { AppStore } from '../../../shared/types';
+import type { AppStore } from '../../../shared/types';
 import { languageMappingList } from '../languageMappingList';
 
 import HotKeyInput from './HotKeyInput.vue';
 
-const { t } = useI18n();
-
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
+
+const { t } = useI18n();
 
 const updater = props.store.get('updater');
 const mac = props.store.get('general').mac;
@@ -136,25 +136,25 @@ if (updater.channel !== 'latest') {
     participateInPreRelease.value = true;
 }
 
-const setParticipateInPreRelease = () => {
+function setParticipateInPreRelease() {
     props.store.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
-};
+}
 
-const setQuitOnClose = () => {
+function setQuitOnClose() {
     props.store.set('general.mac.quitOnClose', quitOnClose.value);
-};
+}
 
-const setHideDockIcon = () => {
+function setHideDockIcon() {
     props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
-};
+}
 
-const removeExternalBrowserSource = (sourceIndex: number) => {
+function removeExternalBrowserSource(sourceIndex: number) {
     externalBrowserSources.value.splice(sourceIndex, 1);
     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
-};
+}
 
-const saveKeybind = (value: string) => {
+function saveKeybind(value: string) {
     props.store.set('keybind.vanishKeybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
-};
+}
 </script>

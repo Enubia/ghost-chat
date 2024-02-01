@@ -22,7 +22,7 @@
                 <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
             </li>
             <li>
-                <a @click="emitAndCloseMenu('changelog')" >{{ t('header.dropdown.changelog') }}</a>
+                <a @click="emitAndCloseMenu('changelog')">{{ t('header.dropdown.changelog') }}</a>
             </li>
             <li
                 v-if="!isSettingsOpen && (isChatPage || isExternalPage)"
@@ -43,14 +43,12 @@
 
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
-import { AppStore } from '../../../shared/types';
-
-const { t } = useI18n();
+import type { AppStore } from '../../../shared/types';
 
 const props = defineProps<{
     isChatPage: boolean;
@@ -60,10 +58,12 @@ const props = defineProps<{
     store: ElectronStore<AppStore>;
 }>();
 
+const emit = defineEmits(['showStart', 'showSettings', 'showChangelog', 'vanish']);
+
+const { t } = useI18n();
+
 type EmitType = 'chat' | 'start' | 'changelog' | 'vanish';
 type EmitKey = | 'showStart' | 'showSettings' | 'showChangelog' | 'vanish';
-
-const emit = defineEmits(['showStart', 'showSettings', 'showChangelog', 'vanish']);
 
 const isSettingsOpen = ref(false);
 
@@ -71,19 +71,19 @@ if (props.store.get('settings').isOpen) {
     isSettingsOpen.value = true;
 }
 
-const emitAndCloseMenu = (emitType: EmitType) => {
+function emitAndCloseMenu(emitType: EmitType) {
     document.querySelector('details')?.removeAttribute('open');
     const emitKey = emitType === 'vanish' ? emitType : `show${emitType.charAt(0).toUpperCase() + emitType.slice(1)}`;
     emit(emitKey as EmitKey);
-};
+}
 
-const showSettings = () => {
+function showSettings() {
     document.querySelector('details')?.removeAttribute('open');
     isSettingsOpen.value = true;
     ipcRenderer.send(IpcEvent.OpenSettings);
-};
+}
 
-const toggleTheme = () => {
+function toggleTheme() {
     const $html = document.querySelector('html');
     const theme = $html?.getAttribute('data-theme');
 
@@ -98,6 +98,5 @@ const toggleTheme = () => {
     }
 
     ipcRenderer.send(IpcEvent.Rerender, 'child');
-};
-
+}
 </script>

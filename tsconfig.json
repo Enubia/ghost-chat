@@ -1,14 +1,14 @@
 {
-	"extends": "./tsconfig.shared.json",
-	"compilerOptions": {
-		"isolatedModules": true,
-		"noEmit": true,
-		"types": [
-			"@intlify/unplugin-vue-i18n/messages"
-		]
-	},
-	"include": [
-		"src",
-		"shared"
-	],
+    "extends": "./tsconfig.shared.json",
+    "compilerOptions": {
+        "types": [
+            "@intlify/unplugin-vue-i18n/messages"
+        ],
+        "noEmit": true,
+        "isolatedModules": true
+    },
+    "include": [
+        "src",
+        "shared"
+    ]
 }

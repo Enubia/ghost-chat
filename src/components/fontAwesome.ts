@@ -3,13 +3,13 @@ import {
     faPaypal,
 } from '@fortawesome/free-brands-svg-icons';
 import {
+    faBars,
     faChevronLeft,
     faDownLeftAndUpRightToCenter,
-    faXmark,
     faGhost,
-    faBars,
     faTimes,
     faTrashAlt,
+    faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost, faBars, faTimes, faTrashAlt, faPaypal);

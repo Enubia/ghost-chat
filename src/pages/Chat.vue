@@ -3,11 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '../../shared/types';
 import WebView from '../components/WebView.vue';
+
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const SearchParams = {
     THEME: 'theme',
@@ -16,8 +18,6 @@ const SearchParams = {
     BOT_ACTIVITY: 'bot_activity',
     PREVENT_CLIPPING: 'prevent_clipping',
 };
-
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
 
 const chatOptions = props.store.get('chatOptions');
 

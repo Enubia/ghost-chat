@@ -1,9 +1,11 @@
-import { BrowserWindow, ipcMain, IpcMainEvent, Rectangle, globalShortcut } from 'electron';
+import type { IpcMainEvent, Rectangle } from 'electron';
+import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 
-import { IpcEvent, StoreKeys } from '../../shared/constants';
-import { AppStore, WindowState } from '../../shared/types';
+import type { StoreKeys } from '../../shared/constants';
+import { IpcEvent } from '../../shared/constants';
+import type { AppStore, WindowState } from '../../shared/types';
 
 import Settings from './window/settings';
 
@@ -71,8 +73,8 @@ export default class IpcEvents {
     private vanish() {
         ipcMain.on(IpcEvent.Vanish, () => {
             if (
-                !this.store.get('settings').isOpen &&
-                this.store.get('savedWindowState').isTransparent
+                !this.store.get('settings').isOpen
+                && this.store.get('savedWindowState').isTransparent
             ) {
                 // DISABLING VANISH CASE
                 // Settings are CLOSED and the Window IS transparent
@@ -86,8 +88,8 @@ export default class IpcEvents {
                 this.overlay?.setIgnoreMouseEvents(false);
                 this.overlay?.webContents.send(IpcEvent.ShowApp);
             } else if (
-                !this.store.get('settings').isOpen &&
-                !this.store.get('savedWindowState').isTransparent
+                !this.store.get('settings').isOpen
+                && !this.store.get('savedWindowState').isTransparent
             ) {
                 // ENABLING VANISH CASE
                 // Settings are CLOSED and Window IS NOT transparent

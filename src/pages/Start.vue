@@ -42,9 +42,9 @@ import { useI18n } from 'vue-i18n';
 import External from '../components/start/External.vue';
 import Twitch from '../components/start/Twitch.vue';
 
+defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
+
 const { t } = useI18n();
 
 const showTwitchInput = ref(true);
-
-defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
 </script>

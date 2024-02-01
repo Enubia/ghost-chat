@@ -1,6 +1,0 @@
-!src
-!electron
-!constants
-!@types
-!vite.config.ts
-**/*.d.ts

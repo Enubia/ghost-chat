@@ -1,5 +1,5 @@
 <template>
-    <codemirror
+    <Codemirror
         v-model="code"
         placeholder="Code goes here..."
         :style="{ height: '400px' }"
@@ -24,20 +24,20 @@
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useI18n } from 'vue-i18n';
 
-import { AppStore } from '../../../shared/types';
-
-const { t } = useI18n();
+import type { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }>();
 
+const { t } = useI18n();
+
 const theme = props.store.get('savedWindowState').theme;
 
-let code = ref();
+const code = ref();
 const extensions: any[] = [];
 
 if (theme === 'dark') {
@@ -55,15 +55,15 @@ if (props.type === 'js') {
 }
 
 const view = shallowRef();
-const handleReady = (payload: { view: any }) => {
+function handleReady(payload: { view: any }) {
     view.value = payload.view;
-};
+}
 
-const save = () => {
+function save() {
     const $saveButton = document.querySelector('#save') as HTMLElement;
 
     $saveButton.setAttribute('aria-busy', 'true');
-    $saveButton.innerText = t('settings.document.editor.button.loading');
+    $saveButton.textContent = t('settings.document.editor.button.loading');
 
     if (props.type === 'css') {
         props.store.set('chatOptions.customCSS', code.value);
@@ -75,7 +75,7 @@ const save = () => {
 
     setTimeout(() => {
         $saveButton?.removeAttribute('aria-busy');
-        $saveButton.innerText = t('settings.document.editor.button.label');
+        $saveButton.textContent = t('settings.document.editor.button.label');
     }, 500);
-};
+}
 </script>

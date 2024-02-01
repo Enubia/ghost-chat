@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 // credits to @SnosMe, shamelessly stolen from https://github.com/SnosMe/awakened-poe-trade/blob/master/ipc/KeyToCode.ts
 
 export const KeyToCode = {
@@ -278,9 +277,9 @@ export function mergeTwoHotkeys(str1: string, str2: string): string {
 
 export function isModKey(key: string) {
     return (
-        key === 'Ctrl' ||
-        key === 'Shift' ||
-        key === 'Alt'
+        key === 'Ctrl'
+        || key === 'Shift'
+        || key === 'Alt'
     );
 }
 

@@ -7,10 +7,10 @@
         ],
         "module": "ESNext",
         "moduleResolution": "Node",
-        "strict": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
+        "strict": true,
         "noImplicitAny": false,
+        "esModuleInterop": true,
+        "skipLibCheck": true
     }
 }

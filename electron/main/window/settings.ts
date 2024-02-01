@@ -1,9 +1,10 @@
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 
-import { IpcEvent, StoreKeys } from '../../../shared/constants';
-import { AppStore } from '../../../shared/types';
+import type { StoreKeys } from '../../../shared/constants';
+import { IpcEvent } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
 
 export default class Settings {
     window: BrowserWindow | null;

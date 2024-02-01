@@ -57,7 +57,7 @@
                 <article>
                     <Editor
                         :store="store"
-                        :type="'css'"
+                        type="css"
                     />
                 </article>
             </div>
@@ -65,7 +65,7 @@
                 <article>
                     <Editor
                         :store="store"
-                        :type="'js'"
+                        type="js"
                     />
                 </article>
             </div>
@@ -74,18 +74,19 @@
 </template>
 
 <script setup lang="ts">
-import ElectronStore from 'electron-store';
-import { ref, Ref } from 'vue';
+import type ElectronStore from 'electron-store';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { AppStore } from '../../shared/types';
+import type { AppStore } from '../../shared/types';
 import Editor from '../components/settings/Editor.vue';
 import General from '../components/settings/General.vue';
 import KapChat from '../components/settings/KapChat.vue';
 
-const { t } = useI18n();
-
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
+
+const { t } = useI18n();
 
 const theme = props.store.get('savedWindowState.theme');
 const $html = document.querySelector('html');
@@ -120,7 +121,7 @@ const views: {
     },
 };
 
-const showView = <T = Views>(view: T) => {
+function showView<T = Views>(view: T) {
     Object.keys(views).forEach((key) => {
         const viewKey = key as keyof typeof views;
         if (viewKey === view) {
@@ -131,5 +132,5 @@ const showView = <T = Views>(view: T) => {
             views[viewKey].ref.value = false;
         }
     });
-};
+}
 </script>

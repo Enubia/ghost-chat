@@ -18,18 +18,17 @@
 </template>
 
 <script setup lang="ts">
-import ElectronStore from 'electron-store';
-import { ref } from 'vue';
-import { inject } from 'vue';
+import type ElectronStore from 'electron-store';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { AppStore } from '../../../shared/types';
+import type { AppStore } from '../../../shared/types';
+
+const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
 
 const { t } = useI18n();
 
 const store = inject('store') as ElectronStore<AppStore>;
-
-const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
 
 const chatOptions = ref(store.get('chatOptions'));
 const channel = ref('');
@@ -42,9 +41,9 @@ if (chatOptions.value.defaultChannel !== '') {
     channel.value = chatOptions.value.defaultChannel;
 }
 
-const emitChannel = () => {
+function emitChannel() {
     if (channel.value !== '') {
         emit('channel', channel.value);
     }
-};
+}
 </script>

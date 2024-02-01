@@ -3,7 +3,7 @@
         <h2>Current</h2>
         <div>
             <h3>2.5.2</h3>
-            <hr />
+            <hr>
             <ul>
                 <li>
                     <span>Added new tray icon menu options.</span>
@@ -16,7 +16,7 @@
                 <li>Updated default font size to always apply.</li>
             </ul>
         </div>
-        <hr />
+        <hr>
         <div id="support-buttons">
             <div class="center-elements">
                 <small id="support-buttons-info">
@@ -40,11 +40,11 @@
                 </a>
             </div>
         </div>
-        <hr />
+        <hr>
         <h2>Previous</h2>
         <div>
             <h3>2.5.0</h3>
-            <hr />
+            <hr>
             <ul>
                 <li>Added an in app changelog</li>
                 <li>Added hotkey toggle option for vanish mode</li>
@@ -59,5 +59,6 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+
 const { t } = useI18n();
 </script>

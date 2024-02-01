@@ -3,7 +3,8 @@ import { resolve } from 'node:path';
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
-import { defineConfig, UserConfigFn } from 'vite';
+import type { UserConfigFn } from 'vite';
+import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
 
@@ -36,6 +37,7 @@ export default defineConfig((({ command }) => {
                     entry: 'electron/main/background.ts',
                     onstart(options) {
                         if (process.env.VSCODE_DEBUG) {
+                            // eslint-disable-next-line no-console
                             console.log(/* For `.vscode/.debug.script.mjs` */ '[startup] Electron App');
                         } else {
                             options.startup();
@@ -60,8 +62,8 @@ export default defineConfig((({ command }) => {
             renderer(),
         ],
         server:
-            process.env.VSCODE_DEBUG &&
-            (() => {
+            process.env.VSCODE_DEBUG
+            && (() => {
                 const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL);
                 return {
                     host: url.hostname,

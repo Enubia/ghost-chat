@@ -1,9 +1,10 @@
-import { app, BrowserWindow, BrowserWindowConstructorOptions, nativeTheme, shell, WebPreferences } from 'electron';
+import type { BrowserWindowConstructorOptions, WebPreferences } from 'electron';
+import { BrowserWindow, app, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 
-import { StoreKeys } from '../../../shared/constants';
-import { AppStore } from '../../../shared/types';
+import type { StoreKeys } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
 
 export default class Overlay {
     constructor(private store: ElectronStore<AppStore>) {}

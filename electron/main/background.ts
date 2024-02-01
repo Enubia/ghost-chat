@@ -1,7 +1,7 @@
 import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { app, BrowserWindow, crashReporter, globalShortcut, ipcMain } from 'electron';
+import { BrowserWindow, app, crashReporter, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '../../shared/constants';
@@ -61,20 +61,19 @@ app.on('ready', () => {
     setTimeout(
         async () => {
             overlay = new Overlay(store).buildWindow(indexHtml);
-            new TrayIcon(store, overlay).buildTray(trayIconPath);
+            new TrayIcon(store).buildTray(trayIconPath);
             ipcEvents = new IpcEvents(store);
             ipcEvents.registerWindow(overlay);
             ipcEvents.registerEvents(indexHtml);
 
             // only call auto-updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
+                // eslint-disable-next-line no-new
                 new AutoUpdater(store, overlay, false);
             } else {
                 // if you want to test the autoupdater and loading screen
                 // comment the line below and uncomment the autoupdater init
                 overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
-
-                // new AutoUpdater(store, overlay, true);
             }
         },
         process.platform === 'linux' ? 1000 : 0,

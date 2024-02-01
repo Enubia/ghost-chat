@@ -44,7 +44,12 @@
     justify-content: space-between;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-bottom: 0;
 }
 
@@ -184,7 +189,8 @@ body {
             #start {
                 height: 100%;
 
-                #channel, #external-source {
+                #channel,
+                #external-source {
                     margin-top: 10px;
                     margin-bottom: 0;
                     width: 80%;
@@ -202,7 +208,7 @@ body {
                 .source-loader-info {
                     color: var(--primary);
                     cursor: pointer;
-                    
+
                     &:hover {
                         color: var(--primary-hover);
                         text-decoration: underline;
@@ -285,7 +291,6 @@ body {
                         width: inherit;
 
                         article {
-                            
                             &.scroll-content {
                                 height: 100%;
                                 overflow-y: auto;
@@ -316,6 +321,7 @@ body {
 
                             #fade {
                                 margin-bottom: 18px;
+
                                 .control {
                                     display: flex;
                                     align-items: center;

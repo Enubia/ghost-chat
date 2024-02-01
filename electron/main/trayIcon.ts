@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { Tray, Menu, app, shell, ipcMain, clipboard } from 'electron';
+import { Menu, Tray, app, clipboard, ipcMain, shell } from 'electron';
 import log from 'electron-log';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 
 import { IpcEvent } from '../../shared/constants';
-import { AppStore } from '../../shared/types';
+import type { AppStore } from '../../shared/types';
 
 export default class TrayIcon {
     private tray: Tray;
@@ -111,7 +111,7 @@ export default class TrayIcon {
                             clipboardText += `**Arch:** ${arch}\n\n`;
                             clipboardText += `**Locale:** ${locale}\n\n`;
                             clipboardText += '**Store:**\n\n';
-                            clipboardText += '```json\n' + JSON.stringify(store, null, 4) + '\n```';
+                            clipboardText += `\`\`\`json\n${JSON.stringify(store, null, 4)}\n\`\`\``;
                             clipboard.writeText(clipboardText);
                         },
                     },

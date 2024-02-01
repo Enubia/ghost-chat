@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import { AppStore, WebviewTag } from '../../shared/types';
+import type { AppStore, WebviewTag } from '../../shared/types';
 import WebView from '../components/WebView.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; externalSource: string }>();

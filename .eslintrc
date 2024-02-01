@@ -1,8 +1,0 @@
-{
-	"extends": ["slurp-config", "slurp-config/ts", "slurp-config/vue"],
-
-	"env": {
-		"browser": true,
-		"node": true
-	}
-}

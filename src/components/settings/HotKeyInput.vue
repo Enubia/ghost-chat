@@ -6,13 +6,13 @@
         {{ t('settings.document.general.keybind-change.error') }}
     </small>
     <input
-        @keyup="handleKeyup"
-        @keydown.prevent
-        :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
         id="keybind-input"
+        :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
         name="keybind-setting"
         :aria-invalid="showError ? 'true' : undefined"
-    />
+        @keyup="handleKeyup"
+        @keydown.prevent
+    >
 </template>
 
 <script setup lang="ts">
@@ -21,16 +21,16 @@ import { useI18n } from 'vue-i18n';
 
 import { KeyToCode, hotkeyToString, isFunctionKey } from '../../../shared/utils/keyToCode';
 
-const { t } = useI18n();
-const emit = defineEmits(['update:modelValue']);
 const props = defineProps<{
     modelValue: string | null;
 }>();
+const emit = defineEmits(['update:modelValue']);
+const { t } = useI18n();
 
 const showError = ref(false);
 const inputValue = ref(props.modelValue);
 
-const handleKeyup = (event: KeyboardEvent) => {
+function handleKeyup(event: KeyboardEvent) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -67,5 +67,5 @@ const handleKeyup = (event: KeyboardEvent) => {
 
         emit('update:modelValue', code);
     }
-};
+}
 </script>

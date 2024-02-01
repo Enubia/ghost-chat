@@ -2,40 +2,40 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-	"productName": "Ghost-Chat",
-	"appId": "com.github.enubia.ghost-chat",
-	"asar": true,
-	"directories": {
-		"output": "release/${version}"
-	},
-	"files": [
-		"dist-electron",
-		"dist"
-	],
-	"mac": {
-		"artifactName": "${productName}-${version}-mac.${ext}",
-		"target": "default",
-		"publish": ["github"]
-	},
-	"win": {
-		"artifactName": "${productName}-${version}-win.${ext}",
-		"target": "nsis",
-		"publish": ["github"]
-		// portable disabled for now, won't restart on app.relaunch() app.quit()
-		// probably related to this issue https://github.com/electron/electron/issues/22293
-		// "target": ["nsis", "portable"]
-	},
-	"linux": {
-		"artifactName": "${productName}-${version}-linux.${ext}",
-		"target": ["AppImage", "deb"],
-		"publish": ["github"],
-		"desktop": {
-			"Name": "GhostChat",
-			"Terminal": false
-		}
-	},
-	"nsis": {
-		"oneClick": false,
-		"allowToChangeInstallationDirectory": true
-	}
+    "productName": "Ghost-Chat",
+    "appId": "com.github.enubia.ghost-chat",
+    "asar": true,
+    "directories": {
+        "output": "release/${version}"
+    },
+    "files": [
+        "dist-electron",
+        "dist"
+    ],
+    "mac": {
+        "artifactName": "${productName}-${version}-mac.${ext}",
+        "target": "default",
+        "publish": ["github"]
+    },
+    "win": {
+        "artifactName": "${productName}-${version}-win.${ext}",
+        "target": "nsis",
+        "publish": ["github"]
+        // portable disabled for now, won't restart on app.relaunch() app.quit()
+        // probably related to this issue https://github.com/electron/electron/issues/22293
+        // "target": ["nsis", "portable"]
+    },
+    "linux": {
+        "artifactName": "${productName}-${version}-linux.${ext}",
+        "target": ["AppImage", "deb"],
+        "publish": ["github"],
+        "desktop": {
+            "Name": "GhostChat",
+            "Terminal": false
+        }
+    },
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true
+    }
 }

@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-// eslint-disable-next-line import/no-unresolved
+
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 
-import { AppStore } from '../shared/types';
+import type { AppStore } from '../shared/types';
 
 import './assets/scss/main.scss';
 import './components/fontAwesome';

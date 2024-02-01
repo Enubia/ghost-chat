@@ -47,7 +47,6 @@ or you just want to have your chat on your main screen.
 - Download the latest release (mac or windows) from [the release page](https://github.com/Enubia/ghost-chat/releases).
 - The first time you launch it on Windows, `Windows protected your PC` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click `More info` and then `Run anyway`. You'll only have to do this once.
 
-
 ## "GhostChat Cannot Be Opened Because the Developer Cannot be Verified" Error on Mac
 
 - Open Finder.
@@ -62,7 +61,7 @@ or you just want to have your chat on your main screen.
 - After launching the application, enter the channel you want to receive chat messages from and click go / press enter.
 - You can move the window around by clicking and dragging the menu bar.
 - If you want to resize it, just click and drag the borders to whatever size you want.
-- GhostChat will remember the position and size of the window and will spawn in the same exact location again once you launch it the next time. 
+- GhostChat will remember the position and size of the window and will spawn in the same exact location again once you launch it the next time.
 
 <p align="center">
   <img src="markdown-images/main.png" alt="Donate with PayPal" style="height: 600px !important;" />
@@ -70,7 +69,6 @@ or you just want to have your chat on your main screen.
 
 - The menu bar holds a dropdown for you which can be used to access the settings, navigate back and forth between chat and launch page as well as interaction with the window.
 - The settings page has a lot of configurations that you can apply, so if you don't know exactly what to click/insert I'd suggest to leave the defaults and ask for help in the [Discord](https://discord.gg/UVMX32dDcy).
-
 
 <p align="center">
   <img src="markdown-images/settings.png" alt="Donate with PayPal" style="height: 400px !important;" />
@@ -91,13 +89,12 @@ or you just want to have your chat on your main screen.
 Since GhostChat makes use of i18n, it's easy to add new language support but for that I need you as a community.
 So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language id as the name.
 
-
 A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
 
 Just search for your language and choose the key as the filename for the JSON file.
 If the file already exists and it's just missing some translations you'd like to add then please add them in there, otherwise copy over the parts of en-US.json that you want to translate and replace the English text with your language-specific translations.
 
-Once you are done with the translations, create a PR here on GitHub or post them in the #feature-request channel so that we can add them. 
+Once you are done with the translations, create a PR here on GitHub or post them in the #feature-request channel so that we can add them.
 
 If you have any other suggestions for features, or you've found a bug, feel free to go to create an issue/new feature request either [here on github](https://github.com/Enubia/ghost-chat/issues/new/choose) or in [Discord](https://discord.gg/UVMX32dDcy).
 

@@ -1,10 +1,10 @@
 {
-	"extends": "./tsconfig.shared.json",
-	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
-	},
-	"include": [
-		"electron",
-		"shared"
-	],
+    "extends": "./tsconfig.shared.json",
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "electron",
+        "shared"
+    ]
 }

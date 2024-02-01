@@ -3,7 +3,7 @@ import { unlinkSync } from 'node:fs';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import { AppStore } from '../../shared/types';
+import type { AppStore } from '../../shared/types';
 
 export default function createStore() {
     return new ElectronStore<AppStore>({
@@ -56,7 +56,7 @@ export default function createStore() {
             // Hack to make sure the store is always up-to-date at first init,
             // default behavior of electron-store
             // being to consider the store in version '0.0.0' by default
-            // @ts-ignore https://github.com/sindresorhus/electron-store/issues/256
+            // @ts-expect-error https://github.com/sindresorhus/electron-store/issues/256
             __internal__: {
                 migrations: {
                     version: app.getVersion(),

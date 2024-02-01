@@ -129,18 +129,19 @@
         </small>
     </div>
 </template>
+
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import ElectronStore from 'electron-store';
+import type ElectronStore from 'electron-store';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
-import { AppStore } from '../../../shared/types';
-
-const { t } = useI18n();
+import type { AppStore } from '../../../shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
+
+const { t } = useI18n();
 
 const chatOptions = props.store.get('chatOptions');
 
@@ -162,7 +163,7 @@ const SearchParams = {
     PREVENT_CLIPPING: 'prevent_clipping',
 };
 
-const preview = () => {
+function preview() {
     let previewChannel = 'zackrawrr';
 
     if (chatOptions.channel !== '') {
@@ -189,34 +190,34 @@ const preview = () => {
 
     props.store.set('chatOptions.chatTheme', chatTheme.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-};
+}
 
-const saveShowBotActivity = () => {
+function saveShowBotActivity() {
     props.store.set('chatOptions.showBotActivity', showBotActivity.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-};
+}
 
-const saveFadeMessages = () => {
+function saveFadeMessages() {
     props.store.set('chatOptions.fadeMessages', fadeMessages.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-};
+}
 
-const saveFadeTimeout = () => {
+function saveFadeTimeout() {
     if (fadeMessages.value) {
         props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
         ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }
-};
+}
 
-const saveDefaultChannel = () => {
+function saveDefaultChannel() {
     props.store.set('chatOptions.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-};
+}
 
-const savePreventClipping = () => {
+function savePreventClipping() {
     props.store.set('chatOptions.preventClipping', preventClipping.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-};
+}
 </script>
 
 <style lang="scss">

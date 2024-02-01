@@ -50,10 +50,11 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { ref, Ref, provide } from 'vue';
+import type { Ref } from 'vue';
+import { provide, ref } from 'vue';
 
 import { IpcEvent } from '../shared/constants';
-import { AppStore } from '../shared/types';
+import type { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
@@ -91,17 +92,15 @@ if (!$html?.getAttribute('data-theme')) {
     $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 }
 
-const showApp = () => {
+function showApp() {
     document.querySelector('#app')?.removeAttribute('vanished');
-    showMenuBar.value =
-        !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
-};
+    showMenuBar.value
+        = !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
+}
 
 type Views = 'changelog' | 'chat' | 'start' | 'settings' | 'externalSource';
 
-const showView = <T = Views>(
-    view: T,
-) => {
+function showView<T = Views>(view: T) {
     const views: {
         [key in Views]: {
             ref: Ref<boolean>;
@@ -132,14 +131,14 @@ const showView = <T = Views>(
             views[viewKey].ref.value = false;
         }
     });
-};
+}
 
-const enableChat = (channel: string) => {
+function enableChat(channel: string) {
     store.set('chatOptions.channel', channel);
     showView('chat');
-};
+}
 
-const enableExternalSource = (source: string) => {
+function enableExternalSource(source: string) {
     const externalSources = store.get('general').externalBrowserSources || [];
 
     if (!externalSources.includes(source)) {
@@ -149,9 +148,9 @@ const enableExternalSource = (source: string) => {
 
     externalSource.value = source;
     showView('externalSource');
-};
+}
 
-const vanish = () => {
+function vanish() {
     const storeWindowState = store.get('savedWindowState');
 
     if (storeWindowState.isTransparent) {
@@ -159,7 +158,7 @@ const vanish = () => {
 
         showMenuBar.value = false;
     }
-};
+}
 
 if (settings.value.isOpen) {
     showView('settings');
