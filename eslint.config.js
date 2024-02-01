@@ -2,11 +2,12 @@ const antfu = require('@antfu/eslint-config').default;
 
 module.exports = antfu({
     rules: {
-        'style/comma-dangle': ['error', 'always-multiline'],
         'no-console': ['warn', { allow: ['warn', 'error'] }],
         'node/prefer-global/process': 'off',
         'style/brace-style': ['error', '1tbs'],
+        'style/comma-dangle': ['error', 'always-multiline'],
         'style/eol-last': ['error', 'always'],
+        'style/linebreak-style': ['error', 'unix'],
         'style/quote-props': ['error', 'as-needed'],
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         'vue/block-order': ['error', {
