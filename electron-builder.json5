@@ -21,19 +21,16 @@
         "artifactName": "${productName}-${version}-win.${ext}",
         "target": "nsis",
         "publish": ["github"]
-        // portable disabled for now, won't restart on app.relaunch() app.quit()
-        // probably related to this issue https://github.com/electron/electron/issues/22293
-        // "target": ["nsis", "portable"]
     },
-    "linux": {
-        "artifactName": "${productName}-${version}-linux.${ext}",
-        "target": ["AppImage", "deb"],
-        "publish": ["github"],
-        "desktop": {
-            "Name": "GhostChat",
-            "Terminal": false
-        }
-    },
+    // "linux": {
+    //     "artifactName": "${productName}-${version}-linux.${ext}",
+    //     "target": ["AppImage"],
+    //     "publish": ["github"],
+    //     "desktop": {
+    //         "Name": "GhostChat",
+    //         "Terminal": false
+    //     }
+    // },
     "nsis": {
         "oneClick": false,
         "allowToChangeInstallationDirectory": true
