@@ -13,11 +13,12 @@ export default function createStore() {
                 fadeMessages: false,
                 fadeTimeout: 30,
                 showBotActivity: false,
-                customCSS: '.chat_line {\n    font-size: 14px !important;\n}',
+                customCSS: '',
                 customJS: '',
                 defaultChannel: '',
                 preventClipping: false,
                 chatTheme: 'undefined',
+                fontSize: 14,
             },
             savedWindowState: {
                 x: 0,

@@ -108,6 +108,10 @@
                         "label": "Save",
                         "loading": "Saving..."
                     }
+                },
+                "font-size": {
+                    "label": "Chat Font Size",
+                    "small": "Selected size: {fontSize}px"
                 }
             }
         }

@@ -36,13 +36,17 @@ link.searchParams.append(SearchParams.PREVENT_CLIPPING, chatOptions.preventClipp
 
 let webView: WebviewTag;
 
+function constructInjectableCSS() {
+    const fontSize = `.chat_line { font-size: ${chatOptions.fontSize}px !important; }`;
+    return [fontSize, chatOptions.customCSS].join('\n');
+}
+
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
-    if (chatOptions.customCSS !== '') {
-        webView.addEventListener('dom-ready', async () => {
-            await webView.insertCSS(chatOptions.customCSS);
-        });
-    }
+
+    webView.addEventListener('dom-ready', async () => {
+        await webView.insertCSS(constructInjectableCSS());
+    });
 
     if (chatOptions.customJS !== '') {
         webView.addEventListener('dom-ready', async () => {

@@ -8,6 +8,7 @@ export interface ChatOptions {
     defaultChannel: string;
     preventClipping: boolean;
     chatTheme: string;
+    fontSize: number;
 }
 
 export interface WindowState {

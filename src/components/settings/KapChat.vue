@@ -128,6 +128,16 @@
             {{ t('settings.document.kap-chat.chat-theme.info.after-link') }}
         </small>
     </div>
+    <hr>
+    <div id="font-size">
+        <label for="range">
+            <span>{{ t('settings.document.kap-chat.font-size.label') }}</span>
+            <input id="range" v-model="fontSize" type="range" min="10" max="50" value="50" name="range" @change="saveFontSize">
+        </label>
+        <span :style="`font-size: ${fontSize}px`">
+            {{ t('settings.document.kap-chat.font-size.small', { fontSize }) }}
+        </span>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -154,6 +164,7 @@ const oldTheme = chatOptions.chatTheme;
 const chatTheme = ref(chatOptions.chatTheme);
 const previewLink = ref('');
 const rerender = ref(0);
+const fontSize = ref(chatOptions.fontSize);
 
 const SearchParams = {
     THEME: 'theme',
@@ -217,6 +228,13 @@ function saveDefaultChannel() {
 function savePreventClipping() {
     props.store.set('chatOptions.preventClipping', preventClipping.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function saveFontSize() {
+    setTimeout(() => {
+        props.store.set('chatOptions.fontSize', fontSize.value);
+        ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    }, 200);
 }
 </script>
 
