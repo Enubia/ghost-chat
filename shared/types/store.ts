@@ -8,7 +8,8 @@ export interface ChatOptions {
     defaultChannel: string;
     preventClipping: boolean;
     chatTheme: string;
-    fontSize: number;
+    fontSize: string;
+    userBlacklist: string[];
 }
 
 export interface WindowState {

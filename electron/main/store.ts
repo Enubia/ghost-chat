@@ -18,7 +18,8 @@ export default function createStore() {
                 defaultChannel: '',
                 preventClipping: false,
                 chatTheme: 'undefined',
-                fontSize: 14,
+                fontSize: '14',
+                userBlacklist: [],
             },
             savedWindowState: {
                 x: 0,
