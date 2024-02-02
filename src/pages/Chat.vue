@@ -41,6 +41,31 @@ function constructInjectableCSS() {
     return [fontSize, chatOptions.customCSS].join('\n');
 }
 
+function constructInjectableJS() {
+    if (!chatOptions.userBlacklist || chatOptions.userBlacklist.length === 0) {
+        return chatOptions.customJS;
+    }
+
+    const preparedBlacklist = JSON.stringify(chatOptions.userBlacklist).toLowerCase();
+    const blackList = `
+        const observer = new MutationObserver((changes) => {
+            for (const change of changes) {
+                for (const node of change.addedNodes) {
+                    if (${preparedBlacklist}.includes(node.attributes['data-nick'].value)) {
+                        node.remove();
+                    }
+                }
+            }
+        });
+
+        observer.observe(document.querySelector('#chat_box'), {
+            childList: true,
+        });    
+    `;
+
+    return [blackList, chatOptions.customJS].join('\n');
+}
+
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
@@ -48,10 +73,8 @@ onMounted(() => {
         await webView.insertCSS(constructInjectableCSS());
     });
 
-    if (chatOptions.customJS !== '') {
-        webView.addEventListener('dom-ready', async () => {
-            await webView.executeJavaScript(chatOptions.customJS);
-        });
-    }
+    webView.addEventListener('dom-ready', async () => {
+        await webView.executeJavaScript(constructInjectableJS());
+    });
 });
 </script>

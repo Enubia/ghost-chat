@@ -138,6 +138,14 @@
             {{ t('settings.document.kap-chat.font-size.small', { fontSize }) }}
         </span>
     </div>
+    <hr>
+    <div id="user-blacklist">
+        <label for="user-blacklist-input">
+            <span>{{ t('settings.document.kap-chat.user-blacklist.label') }}</span>
+            <input id="user-blacklist-input" type="text" :value="userBlacklist.join(', ')" @change="updateBlacklist">
+        </label>
+        <small>{{ t('settings.document.kap-chat.user-blacklist.info') }}</small>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -164,7 +172,8 @@ const oldTheme = chatOptions.chatTheme;
 const chatTheme = ref(chatOptions.chatTheme);
 const previewLink = ref('');
 const rerender = ref(0);
-const fontSize = ref(chatOptions.fontSize);
+const fontSize = ref(chatOptions.fontSize || '14');
+const userBlacklist = ref(chatOptions.userBlacklist || []);
 
 const SearchParams = {
     THEME: 'theme',
@@ -235,6 +244,13 @@ function saveFontSize() {
         props.store.set('chatOptions.fontSize', fontSize.value);
         ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }, 200);
+}
+
+function updateBlacklist(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const blacklist = target.value.split(',').map(user => user.trim());
+    props.store.set('chatOptions.userBlacklist', blacklist);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 </script>
 

@@ -112,6 +112,10 @@
                 "font-size": {
                     "label": "Chat Font Size",
                     "small": "Selected size: {fontSize}px"
+                },
+                "user-blacklist": {
+                    "label": "User Blacklist",
+                    "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
                 }
             }
         }
