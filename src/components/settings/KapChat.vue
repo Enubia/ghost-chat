@@ -131,10 +131,25 @@
     <hr>
     <div id="font-size">
         <label for="range">
-            <span>{{ t('settings.document.kap-chat.font-size.label') }}</span>
-            <input id="range" v-model="fontSize" type="range" min="10" max="50" value="50" name="range" @change="saveFontSize">
+            <span :style="fontSizeChanged ? 'color: green;' : ''">{{ t('settings.document.kap-chat.font-size.label') }}</span>
+            <font-awesome-icon
+                v-if="fontSizeChanged"
+                id="slider-check"
+                :icon="['far', 'circle-check']"
+            />
+            <input
+                id="range"
+                v-model="fontSize"
+                type="range"
+                min="10"
+                max="50"
+                value="50"
+                name="range"
+                @mousedown="fontSizeChanged = false"
+                @change="saveFontSize"
+            >
         </label>
-        <span :style="`font-size: ${fontSize}px`">
+        <span class="center-elements" :style="`font-size: ${fontSize}px`">
             {{ t('settings.document.kap-chat.font-size.small', { fontSize }) }}
         </span>
     </div>
@@ -142,7 +157,14 @@
     <div id="user-blacklist">
         <label for="user-blacklist-input">
             <span>{{ t('settings.document.kap-chat.user-blacklist.label') }}</span>
-            <input id="user-blacklist-input" type="text" :value="userBlacklist.join(', ')" @change="updateBlacklist">
+            <input
+                id="user-blacklist-input"
+                type="text"
+                :value="userBlacklist.join(', ')"
+                :aria-invalid="blacklistChanged ? false : undefined"
+                @change="updateBlacklist"
+                @input="blacklistChanged = false"
+            >
         </label>
         <small>{{ t('settings.document.kap-chat.user-blacklist.info') }}</small>
     </div>
@@ -174,6 +196,8 @@ const previewLink = ref('');
 const rerender = ref(0);
 const fontSize = ref(chatOptions.fontSize || '14');
 const userBlacklist = ref(chatOptions.userBlacklist || []);
+const fontSizeChanged = ref(false);
+const blacklistChanged = ref(false);
 
 const SearchParams = {
     THEME: 'theme',
@@ -242,6 +266,7 @@ function savePreventClipping() {
 function saveFontSize() {
     setTimeout(() => {
         props.store.set('chatOptions.fontSize', fontSize.value);
+        fontSizeChanged.value = true;
         ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }, 200);
 }
@@ -250,6 +275,8 @@ function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
     props.store.set('chatOptions.userBlacklist', blacklist);
+    userBlacklist.value = blacklist;
+    blacklistChanged.value = true;
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 </script>
@@ -264,5 +291,10 @@ function updateBlacklist(event: Event) {
 .info {
     text-decoration: underline;
     text-transform: uppercase;
+}
+
+#slider-check {
+    color: green;
+    margin-left: 8px;
 }
 </style>

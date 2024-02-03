@@ -11,5 +11,18 @@ import {
     faTrashAlt,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCheckCircle,
+} from '@fortawesome/free-regular-svg-icons';
 
-library.add(faChevronLeft, faDownLeftAndUpRightToCenter, faXmark, faGhost, faBars, faTimes, faTrashAlt, faPaypal);
+library.add(
+    faChevronLeft,
+    faDownLeftAndUpRightToCenter,
+    faXmark,
+    faGhost,
+    faBars,
+    faTimes,
+    faTrashAlt,
+    faPaypal,
+    faCheckCircle,
+);
