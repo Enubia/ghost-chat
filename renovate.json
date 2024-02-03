@@ -6,7 +6,16 @@
     "dependencyDashboard": true,
     "packageRules": [
         {
-            "packageNames": ["node"],
+            "description": "Disable Node.js updates",
+            "matchPackageNames": [
+                "node"
+            ],
+            "matchManagers": [
+                "pnpm"
+            ],
+            "matchDepTypes": [
+                "engines"
+            ],
             "enabled": false
         }
     ],
