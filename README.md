@@ -12,19 +12,19 @@
 
 <p align="center">
   <a href="https://www.buymeacoffee.com/enubia" target="_blank">
-    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important" >
+    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" width="200">
   </a>
   <a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
-    <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" style="height: 41px !important;" />
+    <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" width="145" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-2.4.1-win.exe" target="_blank">
-    <img src="./markdown-images/windows-button.png" alt="Buy Me A Coffee" style="height: 60px !important;" >
+  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-2.6.0-win.exe" target="_blank">
+    <img src="./markdown-images/windows-button.png" alt="Buy Me A Coffee" width="350" >
   </a>
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-2.4.1-mac.dmg">
-    <img src="./markdown-images/mac-download-button.png" alt="Donate with PayPal" style="height: 60px !important;" />
+  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-2.6.0-mac.dmg">
+    <img src="./markdown-images/mac-download-button.png" alt="Donate with PayPal" width="350" />
   </a>
 </p>
 
