@@ -6,12 +6,8 @@
     "dependencyDashboard": true,
     "packageRules": [
         {
-            "description": "Disable Node.js updates",
             "matchPackageNames": [
                 "node"
-            ],
-            "matchManagers": [
-                "pnpm"
             ],
             "matchDepTypes": [
                 "engines"
