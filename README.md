@@ -1,15 +1,10 @@
 <p align="center">
-  <!-- <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge"> -->
   <a href="https://github.com/Enubia/ghost-chat/releases/latest">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/enubia/ghost-chat?style=for-the-badge">
   </a>
   <a href="https://github.com/Enubia/ghost-chat/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat?style=for-the-badge">
   </a>
-  <!-- <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/enubia/ghost-chat/total?color=brightgreen&style=for-the-badge"> -->
-  <!-- <a href="https://www.twitch.tv/enubia1" target="_blank">
-    <img alt="" src="https://img.shields.io/twitch/status/enubia1?color=%23a85fff&style=for-the-badge">
-  </a> -->
   <a href="https://discord.gg/UVMX32dDcy" target="_blank">
     <img alt="Discord" src="https://img.shields.io/discord/1078447787252916234?color=%237289DA&label=DISCORD&style=for-the-badge">
   </a>
