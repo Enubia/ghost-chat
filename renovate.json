@@ -4,17 +4,6 @@
         "helpers:pinGitHubActionDigests"
     ],
     "dependencyDashboard": true,
-    "packageRules": [
-        {
-            "matchPackageNames": [
-                "node"
-            ],
-            "matchDepTypes": [
-                "engines"
-            ],
-            "enabled": false
-        }
-    ],
     "pinVersions": true,
     "schedule": [
         "every weekend"
