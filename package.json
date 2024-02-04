@@ -50,7 +50,7 @@
         "publish": "pnpm run generate-changelog && release-it"
     },
     "devDependencies": {
-        "@antfu/eslint-config": "2.6.3",
+        "@antfu/eslint-config": "2.6.4",
         "@codemirror/lang-css": "6.2.1",
         "@codemirror/lang-javascript": "6.2.1",
         "@codemirror/theme-one-dark": "6.1.2",
