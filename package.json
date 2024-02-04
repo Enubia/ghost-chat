@@ -40,6 +40,7 @@
         "build": "vue-tsc --noEmit && vite build",
         "clean": "rimraf dist-electron dist release",
         "dev": "vite",
+        "generate-changelog": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
         "lint:electron": "eslint electron/",
         "lint:shared": "eslint shared/",
         "lint:src": "eslint src/",

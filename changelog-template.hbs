@@ -17,6 +17,8 @@
 {{#each releases}}
     {{#if tag}}
         ### {{tag}} | {{niceDate}}
+    {{else}}
+        ## Latest | {{niceDate}}
     {{/if}}
 
     {{#if summary}}
