@@ -1,0 +1,37 @@
+<p align="center">
+    Like the app? Consider supporting me via PayPal or buying me a coffee!
+</p>
+<p align="center">
+    <a href="https://www.buymeacoffee.com/enubia" target="_blank">
+        <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"
+            width="200">
+    </a>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
+        <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
+            alt="Donate with PayPal" width="145" />
+    </a>
+</p>
+
+---
+
+{{#each releases}}
+    {{#if tag}}
+        ### {{tag}} | {{niceDate}}
+    {{/if}}
+
+    {{#if summary}}
+        {{summary}}
+    {{/if}}
+
+    {{#each merges}}
+        - {{#if commit.breaking}}**Breaking change:** {{/if}}{{message}}{{#if href}} [`#{{id}}`]({{href}}){{/if}}
+    {{/each}}
+    {{#each fixes}}
+        - {{#if commit.breaking}}**Breaking change:** {{/if}}{{commit.subject}}{{#each fixes}}{{#if href}}
+                [`#{{id}}`]({{href}}){{/if}}{{/each}}
+    {{/each}}
+    {{#each commits}}
+        - {{#if breaking}}**Breaking change:** {{/if}}{{subject}}{{#if href}} [`{{shorthash}}`]({{href}}){{/if}}
+    {{/each}}
+    ---
+{{/each}}

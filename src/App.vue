@@ -125,11 +125,7 @@ function showView<T = Views>(view: T) {
 
     Object.keys(views).forEach((key) => {
         const viewKey = key as keyof typeof views;
-        if (viewKey === view) {
-            views[viewKey].ref.value = true;
-        } else {
-            views[viewKey].ref.value = false;
-        }
+        views[viewKey].ref.value = viewKey === view;
     });
 }
 

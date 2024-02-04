@@ -219,28 +219,7 @@ body {
             #changelog {
                 height: 100%;
                 overflow-y: auto;
-
-                #support-buttons {
-                    #support-buttons-info {
-                        margin-top: 10px;
-                        margin-bottom: 10px;
-                        text-align: center;
-                        max-width: 80%;
-                    }
-
-                    #icons {
-                        a {
-                            margin: 0 10px 0 10px;
-                            width: 50%;
-                            height: 100%;
-                        }
-
-                        display: flex;
-                        width: 100%;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                }
+                padding-top: 10px;
             }
 
             #settings {

@@ -1,8 +1,12 @@
 {
     "git": {
-        "commitMessage": "chore: release v${version}"
+        "commitMessage": "chore: release v${version}",
+        "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --hidecredit --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
     },
     "npm": {
         "publish": false
+    },
+    "hooks": {
+        "after:bump": "npx auto-changelog -p"
     }
 }
