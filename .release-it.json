@@ -1,12 +1,11 @@
 {
     "git": {
-        "commitMessage": "chore: release v${version}",
-        "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --hidecredit --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
+        "commitMessage": "chore: release v${version}"
     },
     "npm": {
         "publish": false
     },
     "hooks": {
-        "after:bump": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0"
+        "after:version:bump": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0"
     }
 }
