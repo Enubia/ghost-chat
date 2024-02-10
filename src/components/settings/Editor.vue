@@ -12,10 +12,18 @@
     <div id="button-area">
         <button
             id="save"
-            class="contrast"
+            class="outline contrast"
             @click="save"
         >
-            {{ t('settings.document.editor.button.label') }}
+            <span id="text">
+                {{ t('settings.document.editor.button.label') }}
+            </span>
+            <font-awesome-icon
+                id="icon"
+                :class="success ? 'success-text' : 'contrast'"
+                :icon="`far ${success ? 'fa-circle-check' : 'fa-floppy-disk'}`"
+                :aria-hidden="true"
+            />
         </button>
     </div>
 </template>
@@ -35,14 +43,13 @@ const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }
 
 const { t } = useI18n();
 
-const theme = props.store.get('savedWindowState').theme;
-
 const code = ref();
+const success = ref<boolean | undefined>(undefined);
 const extensions: any[] = [];
 
-if (theme === 'dark') {
-    extensions.push(oneDark);
-}
+const view = shallowRef();
+
+extensions.push(oneDark);
 
 if (props.type === 'css') {
     extensions.push(css());
@@ -54,16 +61,19 @@ if (props.type === 'js') {
     code.value = props.store.get('chatOptions').customJS;
 }
 
-const view = shallowRef();
 function handleReady(payload: { view: any }) {
     view.value = payload.view;
 }
 
-function save() {
-    const $saveButton = document.querySelector('#save') as HTMLElement;
+function enableSuccess() {
+    success.value = true;
+    setTimeout(() => {
+        success.value = false;
+    }, 2000);
+}
 
-    $saveButton.setAttribute('aria-busy', 'true');
-    $saveButton.textContent = t('settings.document.editor.button.loading');
+function save() {
+    enableSuccess();
 
     if (props.type === 'css') {
         props.store.set('chatOptions.customCSS', code.value);
@@ -72,10 +82,5 @@ function save() {
     if (props.type === 'js') {
         props.store.set('chatOptions.customJS', code.value);
     }
-
-    setTimeout(() => {
-        $saveButton?.removeAttribute('aria-busy');
-        $saveButton.textContent = t('settings.document.editor.button.label');
-    }, 500);
 }
 </script>

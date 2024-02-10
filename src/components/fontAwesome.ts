@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {
     faCheckCircle,
+    faFloppyDisk,
 } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
@@ -25,4 +26,5 @@ library.add(
     faTrashAlt,
     faPaypal,
     faCheckCircle,
+    faFloppyDisk,
 );
