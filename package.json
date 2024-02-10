@@ -64,7 +64,7 @@
         "@vitejs/plugin-vue": "5.0.3",
         "auto-changelog": "2.4.0",
         "codemirror": "6.0.1",
-        "electron": "28.2.1",
+        "electron": "28.2.2",
         "electron-builder": "24.9.1",
         "electron-context-menu": "3.6.1",
         "electron-log": "5.1.1",

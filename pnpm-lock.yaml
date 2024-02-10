@@ -48,8 +48,8 @@ devDependencies:
     specifier: 6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
   electron:
-    specifier: 28.2.1
-    version: 28.2.1
+    specifier: 28.2.2
+    version: 28.2.2
   electron-builder:
     specifier: 24.9.1
     version: 24.9.1
@@ -97,7 +97,7 @@ devDependencies:
     version: 5.0.12(sass@1.70.0)
   vite-plugin-electron:
     specifier: 0.28.0
-    version: 0.28.0(electron@28.2.1)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
+    version: 0.28.0(electron@28.2.2)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
   vite-plugin-electron-renderer:
     specifier: 0.14.5
     version: 0.14.5
@@ -2898,8 +2898,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@28.2.1:
-    resolution: {integrity: sha512-wlzXf+OvOiVlBf9dcSeMMf7Q+N6DG+wtgFbMK0sA/JpIJcdosRbLMQwLg/LTwNVKIbmayqFLDp4FmmFkEMhbYA==}
+  /electron@28.2.2:
+    resolution: {integrity: sha512-8UcvIGFcjplHdjPFNAHVFg5bS0atDyT3Zx21WwuE4iLfxcAMsyMEOgrQX3im5LibA8srwsUZs7Cx0JAUfcQRpw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -6943,7 +6943,7 @@ packages:
     resolution: {integrity: sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==}
     dev: true
 
-  /vite-plugin-electron@0.28.0(electron@28.2.1)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
+  /vite-plugin-electron@0.28.0(electron@28.2.2)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
     resolution: {integrity: sha512-0sAgFKQnMHR1o8iTM/rs1D6VUmeUiyc/RNUFhN5uq13LONv6Ss3grX3PwJztczxMWVSr6rp2gpAhfKQQJM3Kvg==}
     peerDependencies:
       electron: ^28.0.0
@@ -6957,7 +6957,7 @@ packages:
       vite-plugin-electron-renderer:
         optional: true
     dependencies:
-      electron: 28.2.1
+      electron: 28.2.2
       tree-kill: 1.2.2
       vite-plugin-electron-renderer: 0.14.5
     dev: true
