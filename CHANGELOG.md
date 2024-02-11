@@ -20,6 +20,9 @@ alt="Donate with PayPal" width="145" />
 - update: save button styling, added icon indicator [`f0b3f2e`](https://github.com/Enubia/ghost-chat/commit/f0b3f2ec44973b14e227a7be196a9ee66e69ce16)
 - chore: update scripts [`145e34d`](https://github.com/Enubia/ghost-chat/commit/145e34db890b48510c66fac6b78cc1f7eb75e16e)
 - fix: downgrade vite-plugin-electron [`e4e622c`](https://github.com/Enubia/ghost-chat/commit/e4e622c21857bdda4a8d888e9aca78c1478de667)
+- chore: update changelog [`d062413`](https://github.com/Enubia/ghost-chat/commit/d0624137cb576e67fb772c0ef410a47e0dffb013)
+- chore: update changelog scripts [`d0f038e`](https://github.com/Enubia/ghost-chat/commit/d0f038e82878769c92d2d6fd89180f0adf1b5d3d)
+- fix: version check loader color [`c998c0f`](https://github.com/Enubia/ghost-chat/commit/c998c0f4b762d9b7ef5a4565836422c9569dfc0d)
 ---
 ### v2.6.1 | 4 February 2024
 
