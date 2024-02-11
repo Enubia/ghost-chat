@@ -29,7 +29,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: lint
-        run: pnpm run lint
+        run: pnpm lint
 
   build:
     runs-on: ${{ matrix.os }}
@@ -53,4 +53,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: build
-        run: pnpm run build
+        run: pnpm build
