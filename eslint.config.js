@@ -26,10 +26,5 @@ module.exports = antfu({
         'node_modules',
     ],
 
-    formatters: {
-        css: true,
-        html: true,
-    },
-
     yaml: false,
 });

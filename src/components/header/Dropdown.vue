@@ -61,6 +61,7 @@ function toggleTheme() {
 <template>
     <details
         id="app-menu"
+        class="dropdown"
         role="list"
     >
         <summary

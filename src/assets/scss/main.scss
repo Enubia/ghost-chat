@@ -2,6 +2,18 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--pico-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--pico-primary);
+}
+
 %align-items {
     display: flex;
     align-items: center;
@@ -14,21 +26,21 @@
 
 .error {
     &-input {
-        border-color: var(--del-color);
+        border-color: var(--pico-del-color);
     }
 
     &-text {
-        color: var(--del-color);
+        color: var(--pico-del-color);
     }
 }
 
 .success {
     &-input {
-        border-color: var(--ins-color);
+        border-color: var(--pico-ins-color);
     }
 
     &-text {
-        color: var(--ins-color);
+        color: var(--pico-ins-color);
     }
 }
 
@@ -53,24 +65,6 @@ h6 {
     margin-bottom: 0;
 }
 
-:root {
-    --primary: hsl(264, 80%, 54%);
-    --primary-hover: hsl(264, 80%, 60%);
-    --del-color-hover: hsl(0, 80%, 60%);
-}
-
-::-webkit-scrollbar {
-    width: 3px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--secondary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-}
-
 html,
 body {
     background-color: rgba(0, 0, 0, 0);
@@ -91,7 +85,7 @@ body {
 
     #app {
         &:not([vanished]) {
-            background-color: var(--background-color);
+            background-color: var(--pico-background-color);
         }
 
         font-family: 'Ubuntu', sans-serif;
@@ -119,8 +113,7 @@ body {
             align-items: center;
             justify-content: space-between;
             -webkit-app-region: drag;
-            border-bottom: 1px solid var(--secondary);
-            background-color: var(--secondary);
+            background-color: var(--pico-secondary-background);
 
             #app-menu {
                 margin: 0;
@@ -169,7 +162,7 @@ body {
 
                     &#close {
                         &:hover {
-                            background-color: var(--del-color);
+                            background-color: var(--pico-del-color);
                         }
                     }
                 }
@@ -206,11 +199,12 @@ body {
                 }
 
                 .source-loader-info {
-                    color: var(--primary);
+                    margin-top: 10px;
+                    color: var(--pico-primary);
                     cursor: pointer;
 
                     &:hover {
-                        color: var(--primary-hover);
+                        color: var(--pico-primary-hover);
                         text-decoration: underline;
                     }
                 }
@@ -241,7 +235,7 @@ body {
                             text-transform: uppercase;
 
                             a[active] {
-                                color: var(--primary);
+                                color: var(--pico-primary);
                             }
                         }
                     }
@@ -255,13 +249,13 @@ body {
                             width: 15%;
                             text-align: center;
                             font-size: 10pt;
-                            color: var(--del-color);
-                            border: var(--border-width) solid var(--del-color);
                             margin: 0;
+                            color: var(--pico-del-color);
+                            border: var(--pico-border-width) solid var(--pico-del-color);
 
                             &:hover {
-                                color: var(--del-color-hover);
-                                border-color: var(--del-color-hover);
+                                color: var(--pico-del-color-hover);
+                                border-color: var(--pico-del-color-hover);
                             }
                         }
                     }
@@ -271,7 +265,7 @@ body {
 
                         article {
                             &.scroll-content {
-                                height: 100%;
+                                height: 95%;
                                 overflow-y: auto;
                             }
 
@@ -290,7 +284,7 @@ body {
                                 font-size: 0.725em;
 
                                 &.info {
-                                    color: var(--primary-hover);
+                                    color: var(--pico-primary-hover);
                                 }
                             }
 

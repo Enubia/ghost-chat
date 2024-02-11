@@ -1,6 +1,7 @@
-// custom
-@import 'variables';
-@import 'versionCheck';
-
 // pico import
-@import '@picocss/pico/scss/pico';
+@use '@picocss/pico/scss/pico' with (
+    $theme-color: 'indigo'
+);
+
+// custom
+@import 'versionCheck';
