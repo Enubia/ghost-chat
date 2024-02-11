@@ -39,6 +39,7 @@
         "build": "vue-tsc --noEmit && vite build",
         "changelog:generate": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
         "changelog:push": "git add CHANGELOG.md && git commit -m \"chore: update changelog\" && git push",
+        "changelog:update": "pnpm changelog:generate && pnpm changelog:push",
         "clean": "rimraf dist-electron dist release node_modules",
         "dev": "vite",
         "lint:electron": "eslint electron/",
@@ -47,7 +48,7 @@
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
         "release": "pnpm build && electron-builder",
         "prepare": "husky",
-        "publish": "pnpm changelog:generate && pnpm changelog:push && release-it"
+        "publish": "pnpm changelog:update && release-it"
     },
     "devDependencies": {
         "@antfu/eslint-config": "2.6.4",
