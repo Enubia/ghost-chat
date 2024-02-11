@@ -1,40 +1,3 @@
-<template>
-    <div id="version-check">
-        <div>
-            <div class="spinner">
-                <div class="lds-roller">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                </div>
-            </div>
-            <div
-                v-if="!showManualDownloadMessage"
-                class="center-elements"
-            >
-                <span id="message">{{ message }}</span>
-            </div>
-            <div
-                v-else
-                class="center-elements"
-            >
-                <span id="message">
-                    {{ t('version-check.manual-update-required.before-link', { version }) }}
-                    <a href="https://github.com/enubia/ghost-chat/releases">
-                        {{ t('version-check.manual-update-required.link') }}
-                    </a>
-                    {{ t('version-check.manual-update-required.after-link') }}
-                </span>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import { ref } from 'vue';
@@ -84,3 +47,40 @@ setTimeout(() => {
     emit('removeLoading');
 }, 10000);
 </script>
+
+<template>
+    <div id="version-check">
+        <div>
+            <div class="spinner">
+                <div class="lds-roller">
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                </div>
+            </div>
+            <div
+                v-if="!showManualDownloadMessage"
+                class="center-elements"
+            >
+                <span id="message">{{ message }}</span>
+            </div>
+            <div
+                v-else
+                class="center-elements"
+            >
+                <span id="message">
+                    {{ t('version-check.manual-update-required.before-link', { version }) }}
+                    <a href="https://github.com/enubia/ghost-chat/releases">
+                        {{ t('version-check.manual-update-required.link') }}
+                    </a>
+                    {{ t('version-check.manual-update-required.after-link') }}
+                </span>
+            </div>
+        </div>
+    </div>
+</template>

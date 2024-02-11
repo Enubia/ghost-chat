@@ -1,22 +1,3 @@
-<template>
-    <div class="center-elements">
-        <input
-            id="channel"
-            v-model="channel"
-            type="text"
-            @keydown.enter="emitChannel"
-        >
-    </div>
-    <div class="center-elements">
-        <small id="info">{{ t('start.twitch.input.info') }}</small>
-    </div>
-    <div class="center-elements">
-        <button @click="emitChannel">
-            {{ t('start.twitch.button') }}
-        </button>
-    </div>
-</template>
-
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 import { inject, ref } from 'vue';
@@ -47,3 +28,22 @@ function emitChannel() {
     }
 }
 </script>
+
+<template>
+    <div class="center-elements">
+        <input
+            id="channel"
+            v-model="channel"
+            type="text"
+            @keydown.enter="emitChannel"
+        >
+    </div>
+    <div class="center-elements">
+        <small id="info">{{ t('start.twitch.input.info') }}</small>
+    </div>
+    <div class="center-elements">
+        <button @click="emitChannel">
+            {{ t('start.twitch.button') }}
+        </button>
+    </div>
+</template>

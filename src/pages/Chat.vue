@@ -1,7 +1,3 @@
-<template>
-    <WebView :tag-source="link.toString()" />
-</template>
-
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
@@ -78,3 +74,7 @@ onMounted(() => {
     });
 });
 </script>
+
+<template>
+    <WebView :tag-source="link.toString()" />
+</template>

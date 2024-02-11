@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const props = defineProps<{ tagSource: string }>();
+</script>
+
 <template>
     <div id="webview-tag">
         <webview
@@ -6,7 +10,3 @@
         />
     </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps<{ tagSource: string }>();
-</script>

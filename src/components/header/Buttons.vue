@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { ipcRenderer } from 'electron';
+import type ElectronStore from 'electron-store';
+
+import { IpcEvent } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
+
+defineProps<{ store: ElectronStore<AppStore>; isChat: boolean; isExternal: boolean }>();
+
+const emit = defineEmits(['back']);
+</script>
+
 <template>
     <div id="menu-buttons">
         <button
@@ -24,15 +36,3 @@
         </button>
     </div>
 </template>
-
-<script setup lang="ts">
-import { ipcRenderer } from 'electron';
-import type ElectronStore from 'electron-store';
-
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
-
-defineProps<{ store: ElectronStore<AppStore>; isChat: boolean; isExternal: boolean }>();
-
-const emit = defineEmits(['back']);
-</script>

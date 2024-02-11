@@ -1,20 +1,3 @@
-<template>
-    <label for="keybind-input">
-        {{ t('settings.document.general.keybind-change.label') }}
-    </label>
-    <small v-if="showError" class="error-text">
-        {{ t('settings.document.general.keybind-change.error') }}
-    </small>
-    <input
-        id="keybind-input"
-        :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
-        name="keybind-setting"
-        :aria-invalid="showError ? 'true' : undefined"
-        @keyup="handleKeyup"
-        @keydown.prevent
-    >
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -69,3 +52,20 @@ function handleKeyup(event: KeyboardEvent) {
     }
 }
 </script>
+
+<template>
+    <label for="keybind-input">
+        {{ t('settings.document.general.keybind-change.label') }}
+    </label>
+    <small v-if="showError" class="error-text">
+        {{ t('settings.document.general.keybind-change.error') }}
+    </small>
+    <input
+        id="keybind-input"
+        :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
+        name="keybind-setting"
+        :aria-invalid="showError ? 'true' : undefined"
+        @keyup="handleKeyup"
+        @keydown.prevent
+    >
+</template>

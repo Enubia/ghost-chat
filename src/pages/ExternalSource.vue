@@ -1,7 +1,3 @@
-<template>
-    <WebView :tag-source="props.externalSource" />
-</template>
-
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
@@ -30,3 +26,7 @@ onMounted(() => {
     }
 });
 </script>
+
+<template>
+    <WebView :tag-source="props.externalSource" />
+</template>

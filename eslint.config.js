@@ -10,9 +10,6 @@ module.exports = antfu({
         'style/linebreak-style': ['error', 'unix'],
         'style/quote-props': ['error', 'as-needed'],
         'style/quotes': ['error', 'single', { avoidEscape: true }],
-        'vue/block-order': ['error', {
-            order: [['template', 'script'], 'style'],
-        }],
         curly: ['error', 'all'],
     },
 
@@ -24,7 +21,9 @@ module.exports = antfu({
     ignores: [
         '.vscode',
         '.husky',
+        'dist',
         'dist-electron',
+        'node_modules',
     ],
 
     formatters: {

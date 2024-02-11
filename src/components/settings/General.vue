@@ -1,3 +1,59 @@
+<script setup lang="ts">
+import { ipcRenderer } from 'electron';
+import type ElectronStore from 'electron-store';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import { IpcEvent } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
+import { languageMappingList } from '../languageMappingList';
+
+import HotKeyInput from './HotKeyInput.vue';
+
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
+
+const { t } = useI18n();
+
+const updater = props.store.get('updater');
+const mac = props.store.get('general').mac;
+const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
+const keybind = props.store.get('keybind').vanishKeybind;
+
+const participateInPreRelease = ref(false);
+const quitOnClose = ref(mac.quitOnClose);
+const hideDockIcon = ref(mac.hideDockIcon);
+const externalBrowserSources = ref(storedExternanlBrowserSources);
+const vanishKeybind = ref(keybind);
+
+const showMacOptions = process.platform === 'darwin';
+
+if (updater.channel !== 'latest') {
+    participateInPreRelease.value = true;
+}
+
+function setParticipateInPreRelease() {
+    props.store.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
+}
+
+function setQuitOnClose() {
+    props.store.set('general.mac.quitOnClose', quitOnClose.value);
+}
+
+function setHideDockIcon() {
+    props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
+}
+
+function removeExternalBrowserSource(sourceIndex: number) {
+    externalBrowserSources.value.splice(sourceIndex, 1);
+    props.store.set('general.externalBrowserSources', externalBrowserSources.value);
+}
+
+function saveKeybind(value: string) {
+    props.store.set('keybind.vanishKeybind', value);
+    ipcRenderer.send(IpcEvent.RegisterNewKeybind);
+}
+</script>
+
 <template>
     <div id="locale-changer">
         <label for="locale-change-select">
@@ -102,59 +158,3 @@
         </div>
     </div>
 </template>
-
-<script setup lang="ts">
-import { ipcRenderer } from 'electron';
-import type ElectronStore from 'electron-store';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
-import { languageMappingList } from '../languageMappingList';
-
-import HotKeyInput from './HotKeyInput.vue';
-
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
-
-const { t } = useI18n();
-
-const updater = props.store.get('updater');
-const mac = props.store.get('general').mac;
-const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
-const keybind = props.store.get('keybind').vanishKeybind;
-
-const participateInPreRelease = ref(false);
-const quitOnClose = ref(mac.quitOnClose);
-const hideDockIcon = ref(mac.hideDockIcon);
-const externalBrowserSources = ref(storedExternanlBrowserSources);
-const vanishKeybind = ref(keybind);
-
-const showMacOptions = process.platform === 'darwin';
-
-if (updater.channel !== 'latest') {
-    participateInPreRelease.value = true;
-}
-
-function setParticipateInPreRelease() {
-    props.store.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
-}
-
-function setQuitOnClose() {
-    props.store.set('general.mac.quitOnClose', quitOnClose.value);
-}
-
-function setHideDockIcon() {
-    props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
-}
-
-function removeExternalBrowserSource(sourceIndex: number) {
-    externalBrowserSources.value.splice(sourceIndex, 1);
-    props.store.set('general.externalBrowserSources', externalBrowserSources.value);
-}
-
-function saveKeybind(value: string) {
-    props.store.set('keybind.vanishKeybind', value);
-    ipcRenderer.send(IpcEvent.RegisterNewKeybind);
-}
-</script>

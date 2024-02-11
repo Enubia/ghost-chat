@@ -1,52 +1,3 @@
-<template>
-    <VersionCheck
-        v-if="checkingVersion"
-        @remove-loading="checkingVersion = false"
-    />
-    <header v-if="showMenuBar">
-        <DropDownMenu
-            :key="settingsKey"
-            :is-chat-page="showChat"
-            :is-external-page="showExternalSource"
-            :is-start-page="showStart"
-            :channel="chatOptions.channel"
-            :store="store"
-            @show-start="showView('start')"
-            @show-chat="showView('chat')"
-            @show-changelog="showView('changelog')"
-            @vanish="ipcRenderer.send(IpcEvent.Vanish)"
-        />
-        <MenuButtons
-            :store="store"
-            :is-chat="showChat"
-            :is-external="showExternalSource"
-            @back="showView('start')"
-        />
-    </header>
-    <main class="container-fluid">
-        <Start
-            v-if="showStart"
-            @channel="enableChat"
-            @source="enableExternalSource"
-        />
-        <Chat
-            v-else-if="showChat"
-            :store="store"
-        />
-        <ExternalSource
-            v-else-if="showExternalSource"
-            :store="store"
-            :external-source="externalSource"
-        />
-        <Settings
-            v-else-if="showSettings"
-            :key="settingsKey"
-            :store="store"
-        />
-        <ChangeLog v-else-if="showChangelog" />
-    </main>
-</template>
-
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
@@ -164,3 +115,52 @@ ipcRenderer.on(IpcEvent.Rerender, () => settingsKey.value++);
 ipcRenderer.on(IpcEvent.Vanish, vanish);
 ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>
+
+<template>
+    <VersionCheck
+        v-if="checkingVersion"
+        @remove-loading="checkingVersion = false"
+    />
+    <header v-if="showMenuBar">
+        <DropDownMenu
+            :key="settingsKey"
+            :is-chat-page="showChat"
+            :is-external-page="showExternalSource"
+            :is-start-page="showStart"
+            :channel="chatOptions.channel"
+            :store="store"
+            @show-start="showView('start')"
+            @show-chat="showView('chat')"
+            @show-changelog="showView('changelog')"
+            @vanish="ipcRenderer.send(IpcEvent.Vanish)"
+        />
+        <MenuButtons
+            :store="store"
+            :is-chat="showChat"
+            :is-external="showExternalSource"
+            @back="showView('start')"
+        />
+    </header>
+    <main class="container-fluid">
+        <Start
+            v-if="showStart"
+            @channel="enableChat"
+            @source="enableExternalSource"
+        />
+        <Chat
+            v-else-if="showChat"
+            :store="store"
+        />
+        <ExternalSource
+            v-else-if="showExternalSource"
+            :store="store"
+            :external-source="externalSource"
+        />
+        <Settings
+            v-else-if="showSettings"
+            :key="settingsKey"
+            :store="store"
+        />
+        <ChangeLog v-else-if="showChangelog" />
+    </main>
+</template>

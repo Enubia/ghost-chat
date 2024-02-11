@@ -1,3 +1,114 @@
+<script setup lang="ts">
+import { ipcRenderer } from 'electron';
+import type ElectronStore from 'electron-store';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import { IpcEvent } from '../../../shared/constants';
+import type { AppStore } from '../../../shared/types';
+
+const props = defineProps<{ store: ElectronStore<AppStore> }>();
+
+const { t } = useI18n();
+
+const chatOptions = props.store.get('chatOptions');
+
+const defaultChannel = ref(chatOptions.defaultChannel);
+const fadeMessages = ref(chatOptions.fadeMessages);
+const fadeTimeout = ref(chatOptions.fadeTimeout);
+const showBotActivity = ref(chatOptions.showBotActivity);
+const preventClipping = ref(chatOptions.preventClipping);
+const oldTheme = chatOptions.chatTheme;
+const chatTheme = ref(chatOptions.chatTheme);
+const previewLink = ref('');
+const rerender = ref(0);
+const fontSize = ref(chatOptions.fontSize || '14');
+const userBlacklist = ref(chatOptions.userBlacklist || []);
+const fontSizeChanged = ref(false);
+const blacklistChanged = ref(false);
+
+const SearchParams = {
+    THEME: 'theme',
+    CHANNEL: 'channel',
+    FADE: 'fade',
+    BOT_ACTIVITY: 'bot_activity',
+    PREVENT_CLIPPING: 'prevent_clipping',
+};
+
+function preview() {
+    let previewChannel = 'zackrawrr';
+
+    if (chatOptions.channel !== '') {
+        previewChannel = chatOptions.channel;
+    } else if (defaultChannel.value !== '') {
+        previewChannel = defaultChannel.value;
+    }
+
+    const link = new URL('https://nightdev.com/hosted/obschat');
+    link.searchParams.append(SearchParams.THEME, chatTheme.value);
+    link.searchParams.append(SearchParams.CHANNEL, previewChannel);
+
+    if (fadeTimeout.value) {
+        link.searchParams.append(SearchParams.FADE, fadeTimeout.value.toString());
+    } else {
+        link.searchParams.append(SearchParams.FADE, 'false');
+    }
+
+    link.searchParams.append(SearchParams.BOT_ACTIVITY, showBotActivity.value.toString());
+    link.searchParams.append(SearchParams.PREVENT_CLIPPING, preventClipping.value.toString());
+
+    previewLink.value = link.toString();
+    rerender.value += 1;
+
+    props.store.set('chatOptions.chatTheme', chatTheme.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function saveShowBotActivity() {
+    props.store.set('chatOptions.showBotActivity', showBotActivity.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function saveFadeMessages() {
+    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function saveFadeTimeout() {
+    if (fadeMessages.value) {
+        props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
+        ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    }
+}
+
+function saveDefaultChannel() {
+    props.store.set('chatOptions.defaultChannel', defaultChannel.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function savePreventClipping() {
+    props.store.set('chatOptions.preventClipping', preventClipping.value);
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+
+function saveFontSize() {
+    setTimeout(() => {
+        props.store.set('chatOptions.fontSize', fontSize.value);
+        fontSizeChanged.value = true;
+        ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    }, 200);
+}
+
+function updateBlacklist(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const blacklist = target.value.split(',').map(user => user.trim());
+    props.store.set('chatOptions.userBlacklist', blacklist);
+    userBlacklist.value = blacklist;
+    blacklistChanged.value = true;
+    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+}
+</script>
+
 <template>
     <div id="default-channel">
         <label for="default-channel-input">
@@ -169,117 +280,6 @@
         <small>{{ t('settings.document.kap-chat.user-blacklist.info') }}</small>
     </div>
 </template>
-
-<script setup lang="ts">
-import { ipcRenderer } from 'electron';
-import type ElectronStore from 'electron-store';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
-
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
-
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
-
-const { t } = useI18n();
-
-const chatOptions = props.store.get('chatOptions');
-
-const defaultChannel = ref(chatOptions.defaultChannel);
-const fadeMessages = ref(chatOptions.fadeMessages);
-const fadeTimeout = ref(chatOptions.fadeTimeout);
-const showBotActivity = ref(chatOptions.showBotActivity);
-const preventClipping = ref(chatOptions.preventClipping);
-const oldTheme = chatOptions.chatTheme;
-const chatTheme = ref(chatOptions.chatTheme);
-const previewLink = ref('');
-const rerender = ref(0);
-const fontSize = ref(chatOptions.fontSize || '14');
-const userBlacklist = ref(chatOptions.userBlacklist || []);
-const fontSizeChanged = ref(false);
-const blacklistChanged = ref(false);
-
-const SearchParams = {
-    THEME: 'theme',
-    CHANNEL: 'channel',
-    FADE: 'fade',
-    BOT_ACTIVITY: 'bot_activity',
-    PREVENT_CLIPPING: 'prevent_clipping',
-};
-
-function preview() {
-    let previewChannel = 'zackrawrr';
-
-    if (chatOptions.channel !== '') {
-        previewChannel = chatOptions.channel;
-    } else if (defaultChannel.value !== '') {
-        previewChannel = defaultChannel.value;
-    }
-
-    const link = new URL('https://nightdev.com/hosted/obschat');
-    link.searchParams.append(SearchParams.THEME, chatTheme.value);
-    link.searchParams.append(SearchParams.CHANNEL, previewChannel);
-
-    if (fadeTimeout.value) {
-        link.searchParams.append(SearchParams.FADE, fadeTimeout.value.toString());
-    } else {
-        link.searchParams.append(SearchParams.FADE, 'false');
-    }
-
-    link.searchParams.append(SearchParams.BOT_ACTIVITY, showBotActivity.value.toString());
-    link.searchParams.append(SearchParams.PREVENT_CLIPPING, preventClipping.value.toString());
-
-    previewLink.value = link.toString();
-    rerender.value += 1;
-
-    props.store.set('chatOptions.chatTheme', chatTheme.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-
-function saveShowBotActivity() {
-    props.store.set('chatOptions.showBotActivity', showBotActivity.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-
-function saveFadeMessages() {
-    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-
-function saveFadeTimeout() {
-    if (fadeMessages.value) {
-        props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
-        ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    }
-}
-
-function saveDefaultChannel() {
-    props.store.set('chatOptions.defaultChannel', defaultChannel.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-
-function savePreventClipping() {
-    props.store.set('chatOptions.preventClipping', preventClipping.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-
-function saveFontSize() {
-    setTimeout(() => {
-        props.store.set('chatOptions.fontSize', fontSize.value);
-        fontSizeChanged.value = true;
-        ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    }, 200);
-}
-
-function updateBlacklist(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const blacklist = target.value.split(',').map(user => user.trim());
-    props.store.set('chatOptions.userBlacklist', blacklist);
-    userBlacklist.value = blacklist;
-    blacklistChanged.value = true;
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
-}
-</script>
 
 <style lang="scss">
 #preview {

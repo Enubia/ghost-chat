@@ -1,7 +1,3 @@
-<template>
-    <div id="changelog" class="container" v-html="html" />
-</template>
-
 <script setup lang="ts">
 import fs from 'node:fs/promises';
 import { ref } from 'vue';
@@ -23,3 +19,7 @@ fs.readFile('CHANGELOG.md', 'utf-8')
         console.error(error);
     });
 </script>
+
+<template>
+    <div id="changelog" class="container" v-html="html" />
+</template>

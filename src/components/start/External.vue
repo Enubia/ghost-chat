@@ -1,49 +1,3 @@
-<template>
-    <div class="center-elements">
-        <input
-            id="external-source"
-            v-model="source"
-            list="external-sources"
-            :class="hasRegexError ? 'error-input' : ''"
-            placeholder="https://twitch.tv"
-            type="text"
-            @change="enableStartButton"
-            @keydown.enter="emitSource"
-        >
-        <datalist v-if="externalBrowserSources?.length > 0" id="external-sources">
-            <option
-                v-for="externalSource in externalBrowserSources"
-                :key="externalSource"
-                :value="externalSource"
-            />
-        </datalist>
-    </div>
-    <div
-        class="center-elements"
-    >
-        <small
-            v-if="hasRegexError"
-            id="info"
-            class="error-text text-center"
-        >
-            {{ t('start.external.input.error') }}
-        </small>
-        <small
-            v-else
-            id="info"
-        >{{ t('start.external.input.info') }}</small>
-    </div>
-    <div class="center-elements">
-        <button
-            id="submit"
-            disabled
-            @click="() => $emit('source', source)"
-        >
-            {{ t('start.external.button') }}
-        </button>
-    </div>
-</template>
-
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 import { inject, ref } from 'vue';
@@ -91,3 +45,49 @@ function emitSource() {
     }
 }
 </script>
+
+<template>
+    <div class="center-elements">
+        <input
+            id="external-source"
+            v-model="source"
+            list="external-sources"
+            :class="hasRegexError ? 'error-input' : ''"
+            placeholder="https://twitch.tv"
+            type="text"
+            @change="enableStartButton"
+            @keydown.enter="emitSource"
+        >
+        <datalist v-if="externalBrowserSources?.length > 0" id="external-sources">
+            <option
+                v-for="externalSource in externalBrowserSources"
+                :key="externalSource"
+                :value="externalSource"
+            />
+        </datalist>
+    </div>
+    <div
+        class="center-elements"
+    >
+        <small
+            v-if="hasRegexError"
+            id="info"
+            class="error-text text-center"
+        >
+            {{ t('start.external.input.error') }}
+        </small>
+        <small
+            v-else
+            id="info"
+        >{{ t('start.external.input.info') }}</small>
+    </div>
+    <div class="center-elements">
+        <button
+            id="submit"
+            disabled
+            @click="() => $emit('source', source)"
+        >
+            {{ t('start.external.button') }}
+        </button>
+    </div>
+</template>
