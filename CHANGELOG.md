@@ -14,9 +14,17 @@ alt="Donate with PayPal" width="145" />
 
 ---
 
-## Latest | 4 February 2024
+## Latest | 11 February 2024
+
+- chore: update linter [`5210f52`](https://github.com/Enubia/ghost-chat/commit/5210f52df243a1e9510a43393e0c3bcbc044ffc9)
+- update: save button styling, added icon indicator [`f0b3f2e`](https://github.com/Enubia/ghost-chat/commit/f0b3f2ec44973b14e227a7be196a9ee66e69ce16)
+- chore: update scripts [`145e34d`](https://github.com/Enubia/ghost-chat/commit/145e34db890b48510c66fac6b78cc1f7eb75e16e)
+- fix: downgrade vite-plugin-electron [`e4e622c`](https://github.com/Enubia/ghost-chat/commit/e4e622c21857bdda4a8d888e9aca78c1478de667)
+---
+### v2.6.1 | 4 February 2024
 
 - new: automate changelog [`f519cc5`](https://github.com/Enubia/ghost-chat/commit/f519cc55b164e31ca01d79632d24fcdefd6cb39d)
+- chore: update configs [`a7ccc7f`](https://github.com/Enubia/ghost-chat/commit/a7ccc7f2cd9c3b2571ea877783bbf5e7d27b70dc)
 - Update donation links and download buttons [`41e4ea8`](https://github.com/Enubia/ghost-chat/commit/41e4ea87509fafb655b69f43dbfccdf4ed6c38e5)
 - chore: update configs [`7212de1`](https://github.com/Enubia/ghost-chat/commit/7212de108661868b3233b2abc5328e94c9d87529)
 - chore: update configs [`d43fdcd`](https://github.com/Enubia/ghost-chat/commit/d43fdcd035eae4a350748945f8d8bb012408a7d7)
