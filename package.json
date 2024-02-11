@@ -80,7 +80,7 @@
         "tree-kill": "1.2.2",
         "typescript": "5.3.3",
         "vite": "5.1.1",
-        "vite-plugin-electron": "0.28.0",
+        "vite-plugin-electron": "0.28.2",
         "vite-plugin-electron-renderer": "0.14.5",
         "vue": "3.4.18",
         "vue-codemirror": "6.1.1",
