@@ -74,7 +74,7 @@
         "husky": "9.0.10",
         "lint-staged": "15.2.2",
         "markdown-it": "14.0.0",
-        "release-it": "17.0.3",
+        "release-it": "17.0.5",
         "rimraf": "5.0.5",
         "sass": "1.70.0",
         "tree-kill": "1.2.2",
