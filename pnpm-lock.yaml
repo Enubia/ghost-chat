@@ -75,8 +75,8 @@ devDependencies:
     specifier: 14.0.0
     version: 14.0.0
   release-it:
-    specifier: 17.1.0
-    version: 17.1.0(typescript@5.3.3)
+    specifier: 17.1.1
+    version: 17.1.1(typescript@5.3.3)
   rimraf:
     specifier: 5.0.5
     version: 5.0.5
@@ -5932,8 +5932,8 @@ packages:
       jsesc: 0.5.0
     dev: true
 
-  /release-it@17.1.0(typescript@5.3.3):
-    resolution: {integrity: sha512-1/vS82JuEVQt2mENqq9/9HQo48R/ECSxYDKhNd3JHnmoyYGaHQdN3ojHNvHgUD4mwJsxGANYNXZR7SCD6G/c6Q==}
+  /release-it@17.1.1(typescript@5.3.3):
+    resolution: {integrity: sha512-b+4Tu2eb5f2wIdIe5E9hre0evbMQrXp/kRq0natHsHYJVqu1Bd4/h2a+swFi0faGmC3cJdB16uYR6LscG9SchQ==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
