@@ -7,10 +7,17 @@
     "pinVersions": true,
     "packageRules": [
         {
-            "excludePackageNames": [
-                "node",
+            "description": "Ignore Node.js version specified in package.json",
+            "matchManagers": [
                 "pnpm"
-            ]
+            ],
+            "matchPackageNames": [
+                "node"
+            ],
+            "matchDepTypes": [
+                "engines"
+            ],
+            "enabled": false
         }
     ],
     "schedule": [
