@@ -1,8 +1,7 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:base",
-        "helpers:pinGitHubActionDigests"
+        "config:base"
     ],
     "dependencyDashboard": true,
     "pinVersions": true,
