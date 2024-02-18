@@ -1,10 +1,19 @@
 {
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         "config:base",
         "helpers:pinGitHubActionDigests"
     ],
     "dependencyDashboard": true,
     "pinVersions": true,
+    "packageRules": [
+        {
+            "excludeDepPatterns": [
+                "node",
+                "pnpm"
+            ]
+        }
+    ],
     "schedule": [
         "every weekend"
     ]
