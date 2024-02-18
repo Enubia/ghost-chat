@@ -7,7 +7,7 @@
     "pinVersions": true,
     "packageRules": [
         {
-            "excludeDepPatterns": [
+            "excludePackageNames": [
                 "node",
                 "pnpm"
             ]
