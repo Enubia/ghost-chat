@@ -46,6 +46,7 @@ const store = createStore();
 
 log.info('Store created');
 
+// paths relative to the output directory (dist, dist-electron)
 const DIST_ELECTRON = join(__dirname, '..');
 const DIST = join(DIST_ELECTRON, '../dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
@@ -78,9 +79,11 @@ app.on('ready', () => {
         },
         process.platform === 'linux' ? 1000 : 0,
     );
+
     // Registering the Keybind on the start of the App
     // Since all Keys are unregistered at close
     const keybind = store.get('keybind').vanishKeybind;
+
     if (keybind) {
         try {
             globalShortcut.register(keybind, () => {
@@ -122,21 +125,24 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
+
+    const quit = () => {
+        if (store.get('keybind').vanishKeybind) {
+            log.info('unregistering all shortcuts');
+            globalShortcut.unregisterAll();
+        }
+
+        log.info('App closing');
+        app.quit();
+    };
+
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
-            log.info('unregistering all shortcut');
-            globalShortcut.unregisterAll();
-
-            log.info('App closing');
-            app.quit();
+            quit();
         } else {
             app.dock.show();
         }
     } else {
-        log.info('unregistering all shortcut');
-        globalShortcut.unregisterAll();
-
-        log.info('App closing');
-        app.quit();
+        quit();
     }
 });
