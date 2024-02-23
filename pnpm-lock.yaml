@@ -65,9 +65,6 @@ devDependencies:
   electron-updater:
     specifier: 6.1.7
     version: 6.1.7
-  husky:
-    specifier: 9.0.11
-    version: 9.0.11
   lint-staged:
     specifier: 15.2.2
     version: 15.2.2
@@ -83,6 +80,9 @@ devDependencies:
   sass:
     specifier: 1.71.0
     version: 1.71.0
+  simple-git-hooks:
+    specifier: ^2.9.0
+    version: 2.9.0
   tree-kill:
     specifier: 1.2.2
     version: 1.2.2
@@ -4233,12 +4233,6 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /husky@9.0.11:
-    resolution: {integrity: sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==}
-    engines: {node: '>=18'}
-    hasBin: true
-    dev: true
-
   /iconv-corefoundation@1.1.7:
     resolution: {integrity: sha512-T10qvkw0zz4wnm560lOEg0PovVqUXuOFhhHAkixw8/sycy7TJt7v/RrkEKEQnAw2viPSJu6iAkErxnzR0g8PpQ==}
     engines: {node: ^8.11.2 || >=10}
@@ -6264,6 +6258,12 @@ packages:
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+    dev: true
+
+  /simple-git-hooks@2.9.0:
+    resolution: {integrity: sha512-waSQ5paUQtyGC0ZxlHmcMmD9I1rRXauikBwX31bX58l5vTOhCEcBC5Bi+ZDkPXTjDnZAF8TbCqKBY+9+sVPScw==}
+    hasBin: true
+    requiresBuild: true
     dev: true
 
   /simple-update-notifier@2.0.0:
