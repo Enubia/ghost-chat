@@ -48,7 +48,7 @@
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
         "release": "pnpm build && electron-builder",
         "publish": "pnpm changelog:update && release-it",
-        "prepare": "simple-git-hooks"
+        "postinstall": "simple-git-hooks"
     },
     "devDependencies": {
         "@antfu/eslint-config": "2.6.4",
