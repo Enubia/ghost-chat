@@ -11,13 +11,12 @@ const md = markdownIt({
     typographer: true,
 });
 
-fs.readFile('CHANGELOG.md', 'utf-8')
-    .then((file) => {
-        html.value = md.render(file);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+try {
+    const file = await fs.readFile('CHANGELOG.md', 'utf-8');
+    html.value = md.render(file);
+} catch (error) {
+    console.error(error);
+}
 </script>
 
 <template>

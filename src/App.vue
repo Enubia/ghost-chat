@@ -9,12 +9,12 @@ import type { AppStore } from '../shared/types';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
-import ChangeLog from './pages/Changelog.vue';
-import Chat from './pages/Chat.vue';
-import ExternalSource from './pages/ExternalSource.vue';
-import Settings from './pages/Settings.vue';
-import Start from './pages/Start.vue';
-import VersionCheck from './pages/VersionCheck.vue';
+import ChangeLog from './pages/changelog.vue';
+import Chat from './pages/chat.vue';
+import ExternalSource from './pages/externalsource.vue';
+import Settings from './pages/settings.vue';
+import Start from './pages/start.vue';
+import VersionCheck from './pages/versioncheck.vue';
 
 const store = new ElectronStore<AppStore>();
 
@@ -161,6 +161,8 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
             :key="settingsKey"
             :store="store"
         />
-        <ChangeLog v-else-if="showChangelog" />
+        <Suspense v-else-if="showChangelog">
+            <ChangeLog />
+        </Suspense>
     </main>
 </template>
