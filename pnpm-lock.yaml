@@ -48,8 +48,8 @@ devDependencies:
     specifier: 6.0.1
     version: 6.0.1(@lezer/common@1.0.2)
   electron:
-    specifier: 28.2.4
-    version: 28.2.4
+    specifier: 29.1.0
+    version: 29.1.0
   electron-builder:
     specifier: 24.12.0
     version: 24.12.0
@@ -94,7 +94,7 @@ devDependencies:
     version: 5.1.4(sass@1.71.1)
   vite-plugin-electron:
     specifier: 0.28.2
-    version: 0.28.2(electron@28.2.4)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
+    version: 0.28.2(electron@29.1.0)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
   vite-plugin-electron-renderer:
     specifier: 0.14.5
     version: 0.14.5
@@ -1323,7 +1323,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.14.0
+      '@types/node': 20.11.21
       '@types/responselike': 1.0.0
     dev: true
 
@@ -1354,7 +1354,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.14.0
+      '@types/node': 20.11.21
     dev: true
 
   /@types/mdast@3.0.15:
@@ -1369,6 +1369,12 @@ packages:
 
   /@types/node@18.14.0:
     resolution: {integrity: sha512-5EWrvLmglK+imbCJY0+INViFWUHg1AHel1sq4ZVSfdcNqGy9Edv3UB9IIzzg+xPaUcAgZYcfVs2fBcwDeZzU0A==}
+    dev: true
+
+  /@types/node@20.11.21:
+    resolution: {integrity: sha512-/ySDLGscFPNasfqStUuWWPfL78jompfIoVzLJPVVAHBh6rpG68+pI2Gk+fNLeI8/f1yPYL4s46EleVIc20F1Ow==}
+    dependencies:
+      undici-types: 5.26.5
     dev: true
 
   /@types/normalize-package-data@2.4.4:
@@ -1387,7 +1393,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.14.0
+      '@types/node': 20.11.21
     dev: true
 
   /@types/semver@7.5.6:
@@ -1408,7 +1414,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.14.0
+      '@types/node': 20.11.21
     dev: true
     optional: true
 
@@ -2883,14 +2889,14 @@ packages:
       - supports-color
     dev: true
 
-  /electron@28.2.4:
-    resolution: {integrity: sha512-XrSsqKCmpGwz1pqzmdLhdGonYvatDXor60rBd+TfURMQQRSxyTaSwrds9kV0aab9YRpeYUH6NJDAOwBhQYDDkA==}
+  /electron@29.1.0:
+    resolution: {integrity: sha512-giJVIm0sWVp+8V1GXrKqKTb+h7no0P3ooYqEd34AD9wMJzGnAeL+usj+R0155/0pdvvP1mgydnA7lcaFA2M9lw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@electron/get': 2.0.2
-      '@types/node': 18.14.0
+      '@types/node': 20.11.21
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -6782,6 +6788,10 @@ packages:
       which-boxed-primitive: 1.0.2
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+    dev: true
+
   /unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
@@ -6901,7 +6911,7 @@ packages:
     resolution: {integrity: sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==}
     dev: true
 
-  /vite-plugin-electron@0.28.2(electron@28.2.4)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
+  /vite-plugin-electron@0.28.2(electron@29.1.0)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5):
     resolution: {integrity: sha512-RSYvChUSIMN7L4yxW5hqtF8VutJWLRPukxrSWtefEATCZ/PGAf+9l8VQ84UTIk/gbYJghRMOd5139Byhx5pfIw==}
     peerDependencies:
       electron: ^28.0.0
@@ -6915,7 +6925,7 @@ packages:
       vite-plugin-electron-renderer:
         optional: true
     dependencies:
-      electron: 28.2.4
+      electron: 29.1.0
       tree-kill: 1.2.2
       vite-plugin-electron-renderer: 0.14.5
     dev: true
