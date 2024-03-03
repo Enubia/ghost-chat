@@ -51,7 +51,7 @@
         "postinstall": "simple-git-hooks"
     },
     "devDependencies": {
-        "@antfu/eslint-config": "2.6.4",
+        "@antfu/eslint-config": "2.7.0",
         "@codemirror/lang-css": "6.2.1",
         "@codemirror/lang-javascript": "6.2.2",
         "@codemirror/theme-one-dark": "6.1.2",
