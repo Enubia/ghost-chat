@@ -2,8 +2,8 @@
 import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
 
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 
 defineProps<{ store: ElectronStore<AppStore>; isChat: boolean; isExternal: boolean }>();
 
@@ -12,27 +12,27 @@ const emit = defineEmits(['back']);
 
 <template>
     <div id="menu-buttons">
-        <button
+        <Button
             v-if="isChat || isExternal"
             id="back"
-            class="secondary"
+            variant="ghost"
             @click="emit('back')"
         >
             <font-awesome-icon icon="fas fa-chevron-left" />
-        </button>
-        <button
+        </Button>
+        <Button
             id="minimize"
-            class="secondary"
+            variant="ghost"
             @click="ipcRenderer.send(IpcEvent.Minimize)"
         >
             <font-awesome-icon icon="fas fa-down-left-and-up-right-to-center" />
-        </button>
-        <button
+        </Button>
+        <Button
             id="close"
-            class="secondary"
+            variant="destructive"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >
             <font-awesome-icon icon="fas fa-xmark" />
-        </button>
+        </Button>
     </div>
 </template>

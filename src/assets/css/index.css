@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --gradient: #6441A5;
+        
+        --background: hsl(277 4.4% 97.25%);
+        --foreground: hsl(277 28.6% 3.6%);
+        
+        --muted: hsl(277 22% 13.5%);
+        --muted-foreground: hsl(277 4.4% 54.5%);
+        
+        --popover: hsl(277 56.2% 5.8500000000000005%);
+        --popover-foreground: hsl(277 4.4% 97.25%);
+        
+        --card: hsl(277 56.2% 5.8500000000000005%);
+        --card-foreground: hsl(277 4.4% 97.25%);
+        
+        --border: hsl(277 22% 13.5%);
+        --input: hsl(277 22% 13.5%);
+        
+        --primary: hsl(277 44% 45%);
+        --primary-foreground: hsl(277 4.4% 97.25%);
+        
+        --secondary: hsl(277 22% 13.5%);
+        --secondary-foreground: hsl(277 4.4% 97.25%);
+        
+        --accent: hsl(277 22% 13.5%);
+        --accent-foreground: hsl(277 4.4% 97.25%);
+        
+        --destructive: hsl(0 62.8% 30.6%);
+        --destructive-foreground: hsl(277 4.4% 97.25%);
+        
+        --ring: hsl(277 44% 45%);
+    }
+    
+    .dark {
+        --gradient: #6441A5;
+        
+        --background: hsl(277 28.6% 3.6%);
+        --foreground: hsl(277 4.4% 97.25%);
+        
+        --muted: hsl(277 22% 13.5%);
+        --muted-foreground: hsl(277 4.4% 54.5%);
+        
+        --popover: hsl(277 56.2% 5.8500000000000005%);
+        --popover-foreground: hsl(277 4.4% 97.25%);
+        
+        --card: hsl(277 56.2% 5.8500000000000005%);
+        --card-foreground: hsl(277 4.4% 97.25%);
+        
+        --border: hsl(277 22% 13.5%);
+        --input: hsl(277 22% 13.5%);
+        
+        --primary: hsl(277 44% 45%);
+        --primary-foreground: hsl(277 4.4% 97.25%);
+        
+        --secondary: hsl(277 22% 13.5%);
+        --secondary-foreground: hsl(277 4.4% 97.25%);
+        
+        --accent: hsl(277 22% 13.5%);
+        --accent-foreground: hsl(277 4.4% 97.25%);
+        
+        --destructive: hsl(0 62.8% 30.6%);
+        --destructive-foreground: hsl(277 4.4% 97.25%);
+        
+        --ring: hsl(277 44% 45%);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+}
+
+html,
+body {
+    background-color: rgba(0, 0, 0, 0);
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    
+    button,
+    a {
+        -webkit-app-region: no-drag;
+        cursor: pointer;
+    }
+
+    header {
+        -webkit-app-region: drag;
+    }
+    
+    #app {
+        &:not([vanished]) {
+            background-color: var(--background);
+        }
+        
+        font-family: 'Ubuntu', sans-serif;
+        height: 100%;
+        
+        #version-check {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            .spinner {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}

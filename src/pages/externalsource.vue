@@ -2,8 +2,7 @@
 import type ElectronStore from 'electron-store';
 import { onMounted } from 'vue';
 
-import type { AppStore, WebviewTag } from '../../shared/types';
-import WebView from '../components/WebView.vue';
+import type { AppStore, WebviewTag } from '@shared/types';
 
 const props = defineProps<{ store: ElectronStore<AppStore>; externalSource: string }>();
 

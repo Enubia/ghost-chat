@@ -4,11 +4,9 @@ import ElectronStore from 'electron-store';
 import type { Ref } from 'vue';
 import { provide, ref } from 'vue';
 
-import { IpcEvent } from '../shared/constants';
-import type { AppStore } from '../shared/types';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 
-import MenuButtons from './components/header/Buttons.vue';
-import DropDownMenu from './components/header/Dropdown.vue';
 import ChangeLog from './pages/changelog.vue';
 import Chat from './pages/chat.vue';
 import ExternalSource from './pages/externalsource.vue';
@@ -36,11 +34,11 @@ const externalSource = ref('');
 
 const checkingVersion = ref(!store.get('savedWindowState').isTransparent);
 
-const $html = document.querySelector('html');
+const $html = document.documentElement;
 
-if (!$html?.getAttribute('data-theme')) {
+if (!$html.classList.contains('dark')) {
     const theme = savedWindowState.value.theme;
-    $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    $html.classList.add(theme === 'dark' ? 'dark' : 'light');
 }
 
 function showApp() {
@@ -121,8 +119,8 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
         v-if="checkingVersion"
         @remove-loading="checkingVersion = false"
     />
-    <header v-if="showMenuBar">
-        <DropDownMenu
+    <header v-if="showMenuBar" class="flex justify-between">
+        <Menu
             :key="settingsKey"
             :is-chat-page="showChat"
             :is-external-page="showExternalSource"
@@ -134,7 +132,7 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
             @show-changelog="showView('changelog')"
             @vanish="ipcRenderer.send(IpcEvent.Vanish)"
         />
-        <MenuButtons
+        <ActionButtons
             :store="store"
             :is-chat="showChat"
             :is-external="showExternalSource"

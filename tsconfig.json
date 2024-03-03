@@ -9,6 +9,7 @@
     },
     "include": [
         "src",
-        "shared"
+        "shared",
+        "components.d.ts"
     ]
 }

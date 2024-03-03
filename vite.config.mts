@@ -1,5 +1,5 @@
-import { rmSync } from 'node:fs';
-import { resolve } from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
@@ -7,14 +7,30 @@ import type { UserConfigFn } from 'vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
+import Components from 'unplugin-vue-components/vite';
+
+import tailwind from 'tailwindcss';
+import nesting from 'tailwindcss/nesting';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig((({ command }) => {
-    rmSync('dist-electron', { recursive: true, force: true });
+    fs.rmSync('dist-electron', { recursive: true, force: true });
 
     const isServe = command === 'serve';
     const isBuild = command === 'build';
 
     return {
+        css: {
+            postcss: {
+                plugins: [nesting, tailwind, autoprefixer],
+            },
+        },
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, './src'),
+                '@shared': path.resolve(__dirname, './shared'),
+            },
+        },
         plugins: [
             vue({
                 template: {
@@ -23,10 +39,13 @@ export default defineConfig((({ command }) => {
                     },
                 },
             }),
+
             VueI18nPlugin.vite({
-                include: resolve(__dirname, './i18n/locales/**'),
+                include: path.resolve(__dirname, './i18n/locales/**'),
                 runtimeOnly: false,
             }),
+
+            Components({}),
 
             electron([
                 {

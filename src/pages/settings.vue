@@ -1,13 +1,9 @@
 <script setup lang="ts">
+import type { AppStore } from '@shared/types';
 import type ElectronStore from 'electron-store';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { AppStore } from '../../shared/types';
-import Editor from '../components/settings/Editor.vue';
-import General from '../components/settings/General.vue';
-import KapChat from '../components/settings/KapChat.vue';
 
 const props = defineProps<{ store: ElectronStore<AppStore> }>();
 

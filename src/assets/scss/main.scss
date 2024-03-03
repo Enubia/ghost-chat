@@ -65,21 +65,9 @@ h6 {
     margin-bottom: 0;
 }
 
-html,
-body {
-    background-color: rgba(0, 0, 0, 0);
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
 
 body {
-    button,
-    a {
-        -webkit-app-region: no-drag;
-        cursor: pointer;
-    }
+    
 
     border-radius: 5px;
 

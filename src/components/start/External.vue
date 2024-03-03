@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore } from '../../../shared/types';
-
-const emits = defineEmits<{ (event: 'source', source: string): void }>();
+defineEmits<{ (event: 'source', source: string): void }>();
 
 const { t } = useI18n();
 
-const store = inject('store') as ElectronStore<AppStore>;
-
 const source = ref('');
 const hasRegexError = ref(false);
-const externalBrowserSources = ref(store.get('general').externalBrowserSources);
 
 function checkRegex() {
     if (source.value === '') {
@@ -26,45 +20,18 @@ function checkRegex() {
 
     hasRegexError.value = !regex.test(source.value);
 }
-
-function enableStartButton() {
-    checkRegex();
-
-    if (source.value !== '' && !hasRegexError.value) {
-        document.querySelector('#submit')?.removeAttribute('disabled');
-    } else {
-        document.querySelector('#submit')?.setAttribute('disabled', 'true');
-    }
-}
-
-function emitSource() {
-    checkRegex();
-
-    if (source.value !== '' && !hasRegexError.value) {
-        emits('source', source.value);
-    }
-}
 </script>
 
 <template>
     <div class="center-elements">
-        <input
-            id="external-source"
+        <Input
             v-model="source"
-            list="external-sources"
-            :class="hasRegexError ? 'error-input' : ''"
+            :class="hasRegexError ? 'border-destructive' : ''"
             placeholder="https://twitch.tv"
             type="text"
-            @change="enableStartButton"
-            @keydown.enter="emitSource"
-        >
-        <datalist v-if="externalBrowserSources?.length > 0" id="external-sources">
-            <option
-                v-for="externalSource in externalBrowserSources"
-                :key="externalSource"
-                :value="externalSource"
-            />
-        </datalist>
+            @change="checkRegex"
+            @keydown.enter="$emit('source', source)"
+        />
     </div>
     <div
         class="center-elements"
@@ -72,22 +39,20 @@ function emitSource() {
         <small
             v-if="hasRegexError"
             id="info"
-            class="error-text text-center"
+            class="text-center text-destructive"
         >
             {{ t('start.external.input.error') }}
         </small>
-        <small
-            v-else
-            id="info"
-        >{{ t('start.external.input.info') }}</small>
+        <small v-else>
+            {{ t('start.external.input.info') }}
+        </small>
     </div>
     <div class="center-elements">
-        <button
-            id="submit"
-            disabled
-            @click="() => $emit('source', source)"
+        <Button
+            :disabled="!hasRegexError ? false : true"
+            @click="$emit('source', source)"
         >
             {{ t('start.external.button') }}
-        </button>
+        </Button>
     </div>
 </template>

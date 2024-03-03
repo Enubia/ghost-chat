@@ -5,9 +5,10 @@ import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 
-import type { AppStore } from '../shared/types';
+import type { AppStore } from '@shared/types';
 
-import './assets/scss/main.scss';
+// import './assets/scss/main.scss';
+import './assets/css/index.css';
 import './components/fontAwesome';
 
 import App from './App.vue';

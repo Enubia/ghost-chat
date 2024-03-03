@@ -5,8 +5,17 @@
             "ESNext",
             "DOM"
         ],
+        "baseUrl": ".",
         "module": "ESNext",
         "moduleResolution": "Node",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@shared/*": [
+                "./shared/*"
+            ]
+        },
         "resolveJsonModule": true,
         "strict": true,
         "noImplicitAny": false,

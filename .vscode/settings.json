@@ -40,6 +40,8 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/dist-electron": true,
-        "**/release": true
+        "**/release": true,
+        "**/markdown-images": true,
+        "**/*.md": true
     }
 }
