@@ -49,10 +49,10 @@ setTimeout(() => {
 </script>
 
 <template>
-    <div id="version-check">
+    <div class="h-full flex justify-center items-center">
         <div>
-            <div class="spinner">
-                <div class="lds-roller">
+            <div class="flex justify-center">
+                <div id="lds-roller">
                     <div />
                     <div />
                     <div />

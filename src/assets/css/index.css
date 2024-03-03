@@ -105,7 +105,6 @@ body {
     button,
     a {
         -webkit-app-region: no-drag;
-        cursor: pointer;
     }
 
     header {
@@ -119,17 +118,5 @@ body {
         
         font-family: 'Ubuntu', sans-serif;
         height: 100%;
-        
-        #version-check {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            .spinner {
-                display: flex;
-                justify-content: center;
-            }
-        }
     }
 }

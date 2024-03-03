@@ -7,8 +7,8 @@ import { createI18n } from 'vue-i18n';
 
 import type { AppStore } from '@shared/types';
 
-// import './assets/scss/main.scss';
 import './assets/css/index.css';
+import './assets/css/versioncheck.css';
 import './components/fontAwesome';
 
 import App from './App.vue';
