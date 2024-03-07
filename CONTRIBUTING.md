@@ -23,7 +23,6 @@ Setup
 
 Prerequisites:
    - Ensure that [pnpm](https://pnpm.io/) is installed
-   - The node version used to run and build the project is set to v18.4.2
 
 Install dependencies with `pnpm install`
 
