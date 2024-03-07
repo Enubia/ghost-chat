@@ -32,56 +32,23 @@
 
 # Ghost Chat
 
-Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv) chat as overlay on windowed/windowed full screen applications written in Typescript with the help of Electron and Vue.
+Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv) chat as an overlay on windowed/windowed full-screen applications written in Typescript with the help of Electron and Vue.
 
-It lets you connect to a channel without the need of opening twitch in your browser which comes in handy if you happen to have only one monitor,
-or you just want to have your chat on your main screen.
+It lets you connect to a channel without the need to open Twitch in your browser which comes in handy if you happen to have only one monitor,
+or you want to have your chat on your main screen.
 
 ## Installation / Usage
 
-- Download the latest release (mac or windows) from [the release page](https://github.com/Enubia/ghost-chat/releases).
-- The first time you launch it on Windows, `Windows protected your PC` will appear. This is due to the fact that Windows Defender Smart Screen can't find the code signing certificate. Just click `More info` and then `Run anyway`. You'll only have to do this once.
-
-## "GhostChat Cannot Be Opened Because the Developer Cannot be Verified" Error on Mac
-
-- Open Finder.
-- Locate GhostChat.
-- Control+Click the app.
-- Select Open.
-- Click Open.
-- The app should be saved as an exception in your security settings, allowing you to open it in the future.
-
----
-
-- After launching the application, enter the channel you want to receive chat messages from and click go / press enter.
-- You can move the window around by clicking and dragging the menu bar.
-- If you want to resize it, just click and drag the borders to whatever size you want.
-- GhostChat will remember the position and size of the window and will spawn in the same exact location again once you launch it the next time.
+A detailed description can be found in our discord server's faq section.
 
 <p align="center">
-  <img src="markdown-images/main.png" alt="Donate with PayPal" style="height: 600px !important;" />
-</p>
-
-- The menu bar holds a dropdown for you which can be used to access the settings, navigate back and forth between chat and launch page as well as interaction with the window.
-- The settings page has a lot of configurations that you can apply, so if you don't know exactly what to click/insert I'd suggest to leave the defaults and ask for help in the [Discord](https://discord.gg/UVMX32dDcy).
-
-<p align="center">
-  <img src="markdown-images/settings.png" alt="Donate with PayPal" style="height: 400px !important;" />
-  <img src="markdown-images/settings-opened.png" alt="Donate with PayPal" style="height: 400px !important;" />
-</p>
-
-- With a click on vanish, you'll set the window to transparent and make it click through. This can be reverted by clicking `Disable Vanish` in the tray icon menu.
-- Likewise you can only make it click-through with the corresponding menu option. To revert this behavior just click `Disable Click-through` in the tray icon menu.
-
-<p align="center">
-  <img src="markdown-images/vanished.png" alt="Donate with PayPal" style="height: 400px !important;" />
-  <img src="markdown-images/tray.png" alt="Donate with PayPal" style="height: 300px !important;" />
+  <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
 </p>
 
 ## Additional info
 
 ### Translators needed
-Since GhostChat makes use of i18n, it's easy to add new language support but for that I need you as a community.
+Since GhostChat uses i18n, it's easy to add new language support, but I need you as a community.
 So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language id as the name.
 
 A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
@@ -95,4 +62,22 @@ If you have any other suggestions for features, or you've found a bug, feel free
 
 # Contributing
 
-Please refer to our [contributing guidlines](CONTRIBUTING.md).
+Please refer to our [contributing guidelines](CONTRIBUTING.md).
+
+<p align="center">
+  <a href="https://github.com/enubia/ghost-chat/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=enubia/ghost-chat" />
+  </a>
+</p>
+
+<p align="center">
+    <a href="https://star-history.com/#enubia/ghost-chat&Date">
+        <picture>
+            <source media="(prefers-color-scheme: dark)"
+                srcset="https://api.star-history.com/svg?repos=enubia/ghost-chat&type=Date&theme=dark" />
+            <source media="(prefers-color-scheme: light)"
+                srcset="https://api.star-history.com/svg?repos=enubia/ghost-chat&type=Date" />
+            <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=enubia/ghost-chat&type=Date" />
+        </picture>
+    </p>
+</a>
