@@ -5,9 +5,6 @@
   <a href="https://github.com/Enubia/ghost-chat/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat?style=for-the-badge">
   </a>
-  <a href="https://discord.gg/UVMX32dDcy" target="_blank">
-    <img alt="Discord" src="https://img.shields.io/discord/1078447787252916234?color=%237289DA&label=DISCORD&style=for-the-badge">
-  </a>
 </p>
 
 <p align="center">
