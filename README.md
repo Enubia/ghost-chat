@@ -64,7 +64,11 @@ If you have any other suggestions for features, or you've found a bug, feel free
 
 Please refer to our [contributing guidelines](CONTRIBUTING.md).
 
-## Star History
+<p align="center">
+  <a href="https://github.com/enubia/ghost-chat/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=enubia/ghost-chat" />
+  </a>
+</p>
 
 <p align="center">
     <a href="https://star-history.com/#enubia/ghost-chat&Date">
