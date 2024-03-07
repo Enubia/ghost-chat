@@ -14,14 +14,14 @@
         --muted: hsl(277 22% 13.5%);
         --muted-foreground: hsl(277 4.4% 54.5%);
         
-        --popover: hsl(277 56.2% 5.8500000000000005%);
-        --popover-foreground: hsl(277 4.4% 97.25%);
+        --popover: hsl(277 4.4% 97.25%);
+        --popover-foreground: hsl(277 56.2% 5.8500000000000005%);
         
-        --card: hsl(277 56.2% 5.8500000000000005%);
-        --card-foreground: hsl(277 4.4% 97.25%);
+        --card: hsl(277 4.4% 97.25%);
+        --card-foreground: hsl(277 56.2% 5.8500000000000005%);
         
-        --border: hsl(277 22% 13.5%);
-        --input: hsl(277 22% 13.5%);
+        --border: hsl(277 4.4% 97.25%);
+        --input: hsl(277 4.4% 97.25%);
         
         --primary: hsl(277 44% 45%);
         --primary-foreground: hsl(277 4.4% 97.25%);

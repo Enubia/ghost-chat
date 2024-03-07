@@ -12,10 +12,10 @@ const showTwitchInput = ref(true);
 <template>
     <div
         id="start"
-        class="center-elements"
+        class="flex justify-center items-center"
     >
         <div>
-            <div class="center-elements">
+            <div class="flex justify-center items-center">
                 <img src="/icons/icon-128x128.png">
             </div>
             <Twitch
@@ -26,7 +26,7 @@ const showTwitchInput = ref(true);
                 v-else
                 @source="($event) => $emit('source', $event)"
             />
-            <div class="center-elements">
+            <div class="flex justify-center items-center">
                 <small
                     v-if="showTwitchInput"
                     class="source-loader-info"

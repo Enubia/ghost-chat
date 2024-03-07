@@ -139,7 +139,7 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
             @back="showView('start')"
         />
     </header>
-    <main class="container-fluid">
+    <main class="container">
         <Start
             v-if="showStart"
             @channel="enableChat"

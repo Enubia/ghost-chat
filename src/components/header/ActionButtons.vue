@@ -29,7 +29,8 @@ const emit = defineEmits(['back']);
         </Button>
         <Button
             id="close"
-            variant="destructive"
+            class="hover:bg-destructive"
+            variant="ghost"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >
             <font-awesome-icon icon="fas fa-xmark" />

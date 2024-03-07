@@ -30,20 +30,19 @@ function emitChannel() {
 </script>
 
 <template>
-    <div class="center-elements">
-        <input
+    <div class="flex justify-center content-center mb-3">
+        <Input
             id="channel"
             v-model="channel"
             type="text"
+            class="rounded border-2 border-gray-300 w-80"
+            :placeholder="t('start.twitch.input.info')"
             @keydown.enter="emitChannel"
-        >
+        />
     </div>
-    <div class="center-elements">
-        <small id="info">{{ t('start.twitch.input.info') }}</small>
-    </div>
-    <div class="center-elements">
-        <button @click="emitChannel">
+    <div class="flex justify-center content-center">
+        <Button size="lg" class="rounded" @click="emitChannel">
             {{ t('start.twitch.button') }}
-        </button>
+        </Button>
     </div>
 </template>

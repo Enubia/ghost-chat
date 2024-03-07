@@ -23,7 +23,7 @@ function checkRegex() {
 </script>
 
 <template>
-    <div class="center-elements">
+    <div class="flex justify-center content-center">
         <Input
             v-model="source"
             :class="hasRegexError ? 'border-destructive' : ''"
@@ -34,7 +34,7 @@ function checkRegex() {
         />
     </div>
     <div
-        class="center-elements"
+        class="flex justify-center content-center"
     >
         <small
             v-if="hasRegexError"
@@ -47,7 +47,7 @@ function checkRegex() {
             {{ t('start.external.input.info') }}
         </small>
     </div>
-    <div class="center-elements">
+    <div class="flex justify-center content-center">
         <Button
             :disabled="!hasRegexError ? false : true"
             @click="$emit('source', source)"
