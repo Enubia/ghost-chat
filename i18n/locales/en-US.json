@@ -15,7 +15,7 @@
     "start": {
         "twitch": {
             "input": {
-                "info": "Enter a channel, e.g. enubia1"
+                "info": "Enter a channel, e.g. enubia_"
             },
             "button": "Go!",
             "sourceSwitcher": "Want to load something else? Click here"

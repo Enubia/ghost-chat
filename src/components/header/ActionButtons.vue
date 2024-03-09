@@ -14,22 +14,22 @@ const emit = defineEmits(['back']);
     <div id="menu-buttons">
         <Button
             v-if="isChat || isExternal"
-            id="back"
+            rounded="none"
             variant="ghost"
             @click="emit('back')"
         >
             <font-awesome-icon icon="fas fa-chevron-left" />
         </Button>
         <Button
-            id="minimize"
+            rounded="none"
             variant="ghost"
             @click="ipcRenderer.send(IpcEvent.Minimize)"
         >
             <font-awesome-icon icon="fas fa-down-left-and-up-right-to-center" />
         </Button>
         <Button
-            id="close"
             class="hover:bg-destructive"
+            rounded="none"
             variant="ghost"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >

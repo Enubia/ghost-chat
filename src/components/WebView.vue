@@ -3,7 +3,7 @@ const props = defineProps<{ tagSource: string }>();
 </script>
 
 <template>
-    <div id="webview-tag">
+    <div class="h-screen w-screen">
         <webview
             :src="props.tagSource"
             style="display: inline-flex; width: 100%; height: 100%"

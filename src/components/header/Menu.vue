@@ -66,6 +66,7 @@ function toggleTheme() {
             <DropdownMenuTrigger>
                 <Button
                     variant="ghost"
+                    rounded="none"
                 >
                     <font-awesome-icon icon="fas fa-bars" />
                 </Button>

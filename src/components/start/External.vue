@@ -6,7 +6,7 @@ defineEmits<{ (event: 'source', source: string): void }>();
 
 const { t } = useI18n();
 
-const source = ref('');
+const source = ref();
 const hasRegexError = ref(false);
 
 function checkRegex() {
@@ -29,12 +29,13 @@ function checkRegex() {
             :class="hasRegexError ? 'border-destructive' : ''"
             placeholder="https://twitch.tv"
             type="text"
+            class="w-52"
             @change="checkRegex"
             @keydown.enter="$emit('source', source)"
         />
     </div>
     <div
-        class="flex justify-center content-center"
+        class="container flex mt-1"
     >
         <small
             v-if="hasRegexError"
@@ -47,9 +48,10 @@ function checkRegex() {
             {{ t('start.external.input.info') }}
         </small>
     </div>
-    <div class="flex justify-center content-center">
+    <div class="flex justify-center content-center mt-3">
         <Button
-            :disabled="!hasRegexError ? false : true"
+            size="lg"
+            :disabled="!hasRegexError && source !== '' ? false : true"
             @click="$emit('source', source)"
         >
             {{ t('start.external.button') }}

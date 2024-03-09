@@ -139,28 +139,30 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
             @back="showView('start')"
         />
     </header>
-    <main class="container">
-        <Start
-            v-if="showStart"
-            @channel="enableChat"
-            @source="enableExternalSource"
-        />
+    <main class="h-screen flex justify-center content-center flex-wrap">
+        <div v-if="!showChat">
+            <Start
+                v-if="showStart"
+                @channel="enableChat"
+                @source="enableExternalSource"
+            />
+            <ExternalSource
+                v-else-if="showExternalSource"
+                :store="store"
+                :external-source="externalSource"
+            />
+            <Settings
+                v-else-if="showSettings"
+                :key="settingsKey"
+                :store="store"
+            />
+            <Suspense v-else-if="showChangelog">
+                <ChangeLog />
+            </Suspense>
+        </div>
         <Chat
-            v-else-if="showChat"
+            v-else
             :store="store"
         />
-        <ExternalSource
-            v-else-if="showExternalSource"
-            :store="store"
-            :external-source="externalSource"
-        />
-        <Settings
-            v-else-if="showSettings"
-            :key="settingsKey"
-            :store="store"
-        />
-        <Suspense v-else-if="showChangelog">
-            <ChangeLog />
-        </Suspense>
     </main>
 </template>
