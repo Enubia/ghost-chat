@@ -78,7 +78,7 @@
         "sass": "1.71.1",
         "simple-git-hooks": "2.10.0",
         "tree-kill": "1.2.2",
-        "typescript": "5.3.3",
+        "typescript": "5.4.2",
         "vite": "5.1.5",
         "vite-plugin-electron": "0.28.2",
         "vite-plugin-electron-renderer": "0.14.5",
