@@ -40,6 +40,7 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/dist-electron": true,
-        "**/release": true
+        "**/release": true,
+        "**/.pnpm-store": true
     }
 }

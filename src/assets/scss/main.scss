@@ -44,6 +44,26 @@
     }
 }
 
+.ghost {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: var(--pico-primary);
+    cursor: pointer;
+    font-size: 12pt;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: underline;
+
+    &:hover {
+        color: var(--pico-primary-hover);
+    }
+}
+
+.d-none {
+    display: none;
+}
+
 .text-center {
     text-align: center;
 }
@@ -206,6 +226,29 @@ body {
                     &:hover {
                         color: var(--pico-primary-hover);
                         text-decoration: underline;
+                    }
+                }
+
+                #donate {
+                    article {
+                        position: absolute;
+                        top: 0;
+                        left: 50%;
+                        transform: translate(-50%, 15%);
+
+                        #close {
+                            display: flex;
+                            justify-content: end;
+
+                            button {
+                                width: inherit;
+                            }
+                        }
+
+                        img {
+                            margin: 2px 0;
+                            height: 35px;
+                        }
                     }
                 }
             }

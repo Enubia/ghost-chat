@@ -17,14 +17,16 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
+    faBars,
     faChevronLeft,
     faDownLeftAndUpRightToCenter,
-    faXmark,
     faGhost,
-    faBars,
     faTimes,
     faTrashAlt,
+    faXmark,
+    // -------------- Brand Icons --------------
     faPaypal,
+    // -------------- Regular Icons --------------
     faCheckCircle,
     faFloppyDisk,
 );
