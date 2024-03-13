@@ -2,11 +2,11 @@
 Like the app? Consider supporting me via PayPal or buying me a coffee!
 </p>
 <p align="center">
-<a href="https://www.buymeacoffee.com/enubia" target="_blank">
+<a href="https://www.buymeacoffee.com/enubia">
 <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"
 width="200">
 </a>
-<a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
+<a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW">
 <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
 alt="Donate with PayPal" width="145" />
 </a>
@@ -14,13 +14,39 @@ alt="Donate with PayPal" width="145" />
 
 ---
 
-## Latest | 11 February 2024
+## Latest | 13 March 2024
+
+- update(ui): replace checkboxes with switches [`c595f2b`](https://github.com/Enubia/ghost-chat/commit/c595f2b8d6e612fb94096613c15f63d2c3e191f7)
+- refactor: dev configs [`4c51197`](https://github.com/Enubia/ghost-chat/commit/4c51197a63e081d69dfdfd2eb173c47fbad4750a)
+- feat(ui): support box [`78208e1`](https://github.com/Enubia/ghost-chat/commit/78208e1694a7a2956061cf9bdc47019f2134650c)
+- chore(build): update builder config [`a517539`](https://github.com/Enubia/ghost-chat/commit/a517539810c8d3f46d5b630f279929630c326c67)
+- Update README.md [`ec61084`](https://github.com/Enubia/ghost-chat/commit/ec610846e930ed0560eca32435f4bb100914df09)
+- chore: purge husky [`8a661ea`](https://github.com/Enubia/ghost-chat/commit/8a661ea48575a56bd209b28ed3bffbf1de11787d)
+- refactor: renamed pages [`71aa7cd`](https://github.com/Enubia/ghost-chat/commit/71aa7cdf5f316dd5cb4c99c353c1b10c9e439d18)
+- update(ui): made support box dismissable [`02bd020`](https://github.com/Enubia/ghost-chat/commit/02bd02022d768a9c2218629d91bbf72e9bfa4372)
+- chore: Update GitHub Actions and Node.js versions [`c352158`](https://github.com/Enubia/ghost-chat/commit/c352158fcd1d203b880955e9ba415b47dfc1f2fc)
+- chore: Update Node and pnpm versions [`624e65f`](https://github.com/Enubia/ghost-chat/commit/624e65f2bd41eb4a6a46fcf59c38c8eb4c54db5d)
+- chore: update renovate [`31c2996`](https://github.com/Enubia/ghost-chat/commit/31c29965b2b363e95f84c43856443b27f9bf43fc)
+- Update README.md [`4663864`](https://github.com/Enubia/ghost-chat/commit/46638647c082c9332c4deb53916b2b8b8fefe0ad)
+- chore: update renovate [`9074cae`](https://github.com/Enubia/ghost-chat/commit/9074cae59f24918df2f26e625ee72156fac66c27)
+- chore: update scripts [`42c82b9`](https://github.com/Enubia/ghost-chat/commit/42c82b9b289f717fac681836dacf156f134b18cb)
+- chore: Update Node.js versions [`57da323`](https://github.com/Enubia/ghost-chat/commit/57da323f210f428ef6366662cbe8150cb27df9a3)
+- chore: update readme [`a704fec`](https://github.com/Enubia/ghost-chat/commit/a704fecfbfa551cd553abf5f262914378c3c1e7f)
+- Update README.md [`750a9d4`](https://github.com/Enubia/ghost-chat/commit/750a9d4ad734fb21c81cf360b80718aed88d03b0)
+- chore: update settings [`c30f2d9`](https://github.com/Enubia/ghost-chat/commit/c30f2d9c687e2583ce47aae28a76339fb79ea487)
+- chore: update scripts [`41b7d68`](https://github.com/Enubia/ghost-chat/commit/41b7d684b073d70dfd35ce480ea861a018d9dde6)
+- chore: update renovate [`4c02c7e`](https://github.com/Enubia/ghost-chat/commit/4c02c7e944ac4e7e78f631c783ca19f8a01932c6)
+- Update CONTRIBUTING.md [`b89be4d`](https://github.com/Enubia/ghost-chat/commit/b89be4d9b36021198c6149ebb74e09cf33037db9)
+- chore: update renovate [`3acc12c`](https://github.com/Enubia/ghost-chat/commit/3acc12c0c920f81cf512f2e2dbcb789d967f2b40)
+---
+### v2.7.0 | 11 February 2024
 
 - chore: update linter [`5210f52`](https://github.com/Enubia/ghost-chat/commit/5210f52df243a1e9510a43393e0c3bcbc044ffc9)
 - update: save button styling, added icon indicator [`f0b3f2e`](https://github.com/Enubia/ghost-chat/commit/f0b3f2ec44973b14e227a7be196a9ee66e69ce16)
 - chore: update scripts [`145e34d`](https://github.com/Enubia/ghost-chat/commit/145e34db890b48510c66fac6b78cc1f7eb75e16e)
 - fix: downgrade vite-plugin-electron [`e4e622c`](https://github.com/Enubia/ghost-chat/commit/e4e622c21857bdda4a8d888e9aca78c1478de667)
 - chore: update changelog [`d062413`](https://github.com/Enubia/ghost-chat/commit/d0624137cb576e67fb772c0ef410a47e0dffb013)
+- chore: update changelog [`bd0613b`](https://github.com/Enubia/ghost-chat/commit/bd0613b75dc5de2ad6482828e79815e9b658d6e4)
 - chore: update changelog scripts [`d0f038e`](https://github.com/Enubia/ghost-chat/commit/d0f038e82878769c92d2d6fd89180f0adf1b5d3d)
 - fix: version check loader color [`c998c0f`](https://github.com/Enubia/ghost-chat/commit/c998c0f4b762d9b7ef5a4565836422c9569dfc0d)
 ---
@@ -171,6 +197,9 @@ alt="Donate with PayPal" width="145" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
+---
+### v2.2.0 | 3 May 2023
+
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
