@@ -46,7 +46,7 @@
         "lint:shared": "eslint shared/",
         "lint:src": "eslint src/",
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
-        "release": "pnpm build && electron-builder",
+        "release": "pnpm build && electron-builder --config electron-builder.config.js",
         "publish": "pnpm changelog:update && release-it",
         "postinstall": "simple-git-hooks"
     },
