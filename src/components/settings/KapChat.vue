@@ -133,6 +133,7 @@ function updateBlacklist(event: Event) {
                     id="fade-input"
                     v-model="fadeMessages"
                     type="checkbox"
+                    role="switch"
                     @change="saveFadeMessages"
                 >
                 <span>{{ t('settings.document.kap-chat.fade.checkbox-label') }}</span>
@@ -159,6 +160,7 @@ function updateBlacklist(event: Event) {
                 id="show-bots-input"
                 v-model="showBotActivity"
                 type="checkbox"
+                role="switch"
                 @change="saveShowBotActivity"
             >
             <span>{{ t('settings.document.kap-chat.show-bots.checkbox-label') }}</span>
@@ -175,6 +177,7 @@ function updateBlacklist(event: Event) {
                 id="prevent-clipping-input"
                 v-model="preventClipping"
                 type="checkbox"
+                role="switch"
                 @change="savePreventClipping"
             >
             <span>{{ t('settings.document.kap-chat.prevent-clipping.checkbox-label') }}</span>

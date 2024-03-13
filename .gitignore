@@ -30,3 +30,5 @@ release
 # lockfile
 package-lock.json
 yarn.lock
+
+.pnpm-store

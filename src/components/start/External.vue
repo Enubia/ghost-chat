@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { AppStore } from '../../../shared/types';
 
 const emits = defineEmits<{ (event: 'source', source: string): void }>();
 
 const { t } = useI18n();
 
-const store = inject('store') as ElectronStore<AppStore>;
-
 const source = ref('');
 const hasRegexError = ref(false);
-const externalBrowserSources = ref(store.get('general').externalBrowserSources);
 
 function checkRegex() {
     if (source.value === '') {
@@ -51,20 +45,12 @@ function emitSource() {
         <input
             id="external-source"
             v-model="source"
-            list="external-sources"
             :class="hasRegexError ? 'error-input' : ''"
             placeholder="https://twitch.tv"
             type="text"
             @change="enableStartButton"
             @keydown.enter="emitSource"
         >
-        <datalist v-if="externalBrowserSources?.length > 0" id="external-sources">
-            <option
-                v-for="externalSource in externalBrowserSources"
-                :key="externalSource"
-                :value="externalSource"
-            />
-        </datalist>
     </div>
     <div
         class="center-elements"

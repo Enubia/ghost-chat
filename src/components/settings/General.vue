@@ -16,13 +16,13 @@ const { t } = useI18n();
 
 const updater = props.store.get('updater');
 const mac = props.store.get('general').mac;
-const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
+// const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
 const keybind = props.store.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
 const quitOnClose = ref(mac.quitOnClose);
 const hideDockIcon = ref(mac.hideDockIcon);
-const externalBrowserSources = ref(storedExternanlBrowserSources);
+// const externalBrowserSources = ref(storedExternanlBrowserSources);
 const vanishKeybind = ref(keybind);
 
 const showMacOptions = process.platform === 'darwin';
@@ -43,10 +43,10 @@ function setHideDockIcon() {
     props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
 }
 
-function removeExternalBrowserSource(sourceIndex: number) {
-    externalBrowserSources.value.splice(sourceIndex, 1);
-    props.store.set('general.externalBrowserSources', externalBrowserSources.value);
-}
+// function removeExternalBrowserSource(sourceIndex: number) {
+//     externalBrowserSources.value.splice(sourceIndex, 1);
+//     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
+// }
 
 function saveKeybind(value: string) {
     props.store.set('keybind.vanishKeybind', value);
@@ -80,12 +80,10 @@ function saveKeybind(value: string) {
         </small>
     </div>
     <hr>
-    <div class="keybind-changer">
-        <HotKeyInput
-            :model-value="vanishKeybind"
-            @update:model-value="saveKeybind"
-        />
-    </div>
+    <HotKeyInput
+        :model-value="vanishKeybind"
+        @update:model-value="saveKeybind"
+    />
     <hr>
     <div id="beta-updates">
         <label
@@ -96,6 +94,7 @@ function saveKeybind(value: string) {
                 id="beta-updates-input"
                 v-model="participateInPreRelease"
                 type="checkbox"
+                role="switch"
                 @change="setParticipateInPreRelease"
             >
             <span>{{ t('settings.document.general.pre-release.checkbox-label') }}</span>
@@ -115,6 +114,7 @@ function saveKeybind(value: string) {
                     id="close-option-input"
                     v-model="quitOnClose"
                     type="checkbox"
+                    role="switch"
                     @change="setQuitOnClose"
                 >
                 <span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
@@ -131,6 +131,7 @@ function saveKeybind(value: string) {
                     id="hide-dock-icon-options-input"
                     v-model="hideDockIcon"
                     type="checkbox"
+                    role="switch"
                     @change="setHideDockIcon"
                 >
                 <span>{{ t('settings.document.general.hide-dock-icon-options.checkbox-label') }}</span>
@@ -138,7 +139,7 @@ function saveKeybind(value: string) {
             <small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
         </div>
     </div>
-    <div v-if="externalBrowserSources?.length" id="external-sources">
+    <!-- <div v-if="externalBrowserSources?.length" id="external-sources">
         <hr>
         <span>{{ t('settings.document.general.external-sources.heading') }}</span>
         <div id="external-sources-list">
@@ -156,5 +157,5 @@ function saveKeybind(value: string) {
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
