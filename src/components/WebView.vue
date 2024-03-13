@@ -3,10 +3,10 @@ const props = defineProps<{ tagSource: string }>();
 </script>
 
 <template>
-    <div class="h-screen w-screen">
+    <div class="min-h-dvh w-full">
         <webview
             :src="props.tagSource"
-            style="display: inline-flex; width: 100%; height: 100%"
+            class="w-full h-full inline-flex pb-9"
         />
     </div>
 </template>

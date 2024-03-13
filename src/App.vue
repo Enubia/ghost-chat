@@ -115,54 +115,54 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>
 
 <template>
-    <VersionCheck
-        v-if="checkingVersion"
-        @remove-loading="checkingVersion = false"
-    />
-    <header v-if="showMenuBar" class="flex justify-between">
-        <Menu
-            :key="settingsKey"
-            :is-chat-page="showChat"
-            :is-external-page="showExternalSource"
-            :is-start-page="showStart"
-            :channel="chatOptions.channel"
-            :store="store"
-            @show-start="showView('start')"
-            @show-chat="showView('chat')"
-            @show-changelog="showView('changelog')"
-            @vanish="ipcRenderer.send(IpcEvent.Vanish)"
+    <div v-if="!showSettings">
+        <VersionCheck
+            v-if="checkingVersion"
+            @remove-loading="checkingVersion = false"
         />
-        <ActionButtons
-            :store="store"
-            :is-chat="showChat"
-            :is-external="showExternalSource"
-            @back="showView('start')"
-        />
-    </header>
-    <main class="h-screen flex justify-center content-center flex-wrap">
-        <div v-if="!showChat">
-            <Start
-                v-if="showStart"
-                @channel="enableChat"
-                @source="enableExternalSource"
-            />
-            <ExternalSource
-                v-else-if="showExternalSource"
-                :store="store"
-                :external-source="externalSource"
-            />
-            <Settings
-                v-else-if="showSettings"
+        <header v-if="showMenuBar" class="flex justify-between">
+            <Menu
                 :key="settingsKey"
+                :is-chat-page="showChat"
+                :is-external-page="showExternalSource"
+                :is-start-page="showStart"
+                :channel="chatOptions.channel"
                 :store="store"
+                @show-start="showView('start')"
+                @show-chat="showView('chat')"
+                @show-changelog="showView('changelog')"
+                @vanish="ipcRenderer.send(IpcEvent.Vanish)"
             />
-            <Suspense v-else-if="showChangelog">
-                <ChangeLog />
-            </Suspense>
-        </div>
-        <Chat
-            v-else
+            <ActionButtons
+                :store="store"
+                :is-chat="showChat"
+                :is-external="showExternalSource"
+                @back="showView('start')"
+            />
+        </header>
+    </div>
+    <main class="flex justify-center content-center flex-wrap">
+        <Start
+            v-if="showStart"
+            @channel="enableChat"
+            @source="enableExternalSource"
+        />
+        <Settings
+            v-if="showSettings"
+            :key="settingsKey"
             :store="store"
+        />
+        <Suspense v-else-if="showChangelog">
+            <ChangeLog />
+        </Suspense>
+        <Chat
+            v-if="showChat"
+            :store="store"
+        />
+        <ExternalSource
+            v-else-if="showExternalSource"
+            :store="store"
+            :external-source="externalSource"
         />
     </main>
 </template>

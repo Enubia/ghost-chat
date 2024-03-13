@@ -20,5 +20,7 @@ try {
 </script>
 
 <template>
-    <div id="changelog" class="container" v-html="html" />
+    <div id="changelog" class="min-h-dvh">
+        <div class="h-dvh overflow-y-scroll container pb-10" v-html="html" />
+    </div>
 </template>

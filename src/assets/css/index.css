@@ -78,7 +78,6 @@
 html,
 body {
     background-color: rgba(0, 0, 0, 0);
-    height: 100%;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -98,6 +97,41 @@ body {
         }
         
         font-family: 'Ubuntu', sans-serif;
-        height: 100%;
+    }
+
+    #changelog {
+        hr {
+            margin: 1rem 0;
+            border-color: var(--muted);
+        }
+
+        h2 {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            margin: 0.5rem 0;
+            font-size: 1.25rem;
+        }
+
+        p[align="center"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            padding-left: 1rem;
+
+            li {
+                margin: 0.5rem 0;
+
+                a {
+                    color: var(--primary);
+                }
+            }
+        }
     }
 }

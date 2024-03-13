@@ -10,31 +10,33 @@ const showTwitchInput = ref(true);
 </script>
 
 <template>
-    <div class="flex justify-center items-center">
-        <img src="/icons/icon-128x128.png">
-    </div>
-    <Twitch
-        v-if="showTwitchInput"
-        @channel="($event) => $emit('channel', $event)"
-    />
-    <External
-        v-else
-        @source="($event) => $emit('source', $event)"
-    />
-    <div class="flex justify-center items-center">
-        <small
+    <div>
+        <div class="flex justify-center items-center">
+            <img src="/icons/icon-128x128.png">
+        </div>
+        <Twitch
             v-if="showTwitchInput"
-            class="mt-3 cursor-pointer underline"
-            @click="showTwitchInput = !showTwitchInput"
-        >
-            {{ t('start.twitch.sourceSwitcher') }}
-        </small>
-        <small
+            @channel="($event) => $emit('channel', $event)"
+        />
+        <External
             v-else
-            class="mt-3 cursor-pointer underline"
-            @click="showTwitchInput = !showTwitchInput"
-        >
-            {{ t('start.external.sourceSwitcher') }}
-        </small>
+            @source="($event) => $emit('source', $event)"
+        />
+        <div class="flex justify-center items-center">
+            <small
+                v-if="showTwitchInput"
+                class="mt-3 cursor-pointer underline"
+                @click="showTwitchInput = !showTwitchInput"
+            >
+                {{ t('start.twitch.sourceSwitcher') }}
+            </small>
+            <small
+                v-else
+                class="mt-3 cursor-pointer underline"
+                @click="showTwitchInput = !showTwitchInput"
+            >
+                {{ t('start.external.sourceSwitcher') }}
+            </small>
+        </div>
     </div>
 </template>
