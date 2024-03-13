@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import type ElectronStore from 'electron-store';
 import External from '../components/start/External.vue';
 import Twitch from '../components/start/Twitch.vue';
+import type { AppStore } from '../../shared/types';
 
 defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
 
 const { t } = useI18n();
+const store = inject<ElectronStore<AppStore>>('store');
+
+const supportBoxThreshold = 5;
 
 const showTwitchInput = ref(true);
 
 function closeSupport() {
+    store?.set('general', {
+        ...store.get('general'),
+        showSupportBox: false,
+    });
     document.querySelector('#donate')?.classList.add('d-none');
 }
 </script>
@@ -49,7 +58,11 @@ function closeSupport() {
                     {{ t('start.external.sourceSwitcher') }}
                 </small>
             </div>
-            <div id="donate" class="center-elements">
+            <div
+                v-if="store?.get('general').showSupportBox && store?.get('general').launchCounter === supportBoxThreshold"
+                id="donate"
+                class="center-elements"
+            >
                 <article>
                     <div id="close">
                         <button class="ghost" @click="closeSupport">

@@ -47,6 +47,8 @@ export default function createStore() {
                     hideDockIcon: false,
                 },
                 language: 'en-US',
+                showSupportBox: true,
+                launchCounter: 0,
             },
             updater: {
                 channel: 'latest',
@@ -73,6 +75,10 @@ export default function createStore() {
                 // delete store file initially
                 // there are old keys that might conflict with some of the new stuff
                 unlinkSync(store.path);
+            },
+            '2.8.0': (store) => {
+                store.set('general.showSupportBox', true);
+                store.set('general.launchCounter', 0);
             },
         },
     });
