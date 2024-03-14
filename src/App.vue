@@ -16,9 +16,9 @@ import Settings from './pages/settings.vue';
 import Start from './pages/start.vue';
 import VersionCheck from './pages/versioncheck.vue';
 
-const store = new ElectronStore<AppStore>();
+const electronStore = new ElectronStore<AppStore>();
 
-provide('store', store);
+provide('electronStore', electronStore);
 
 const showChangelog = ref(false);
 const showChat = ref(false);
@@ -27,14 +27,14 @@ const showSettings = ref(false);
 const showStart = ref(true);
 const settingsKey = ref(0);
 
-const savedWindowState = ref(store.get('savedWindowState'));
-const chatOptions = ref(store.get('chatOptions'));
-const settings = ref(store.get('settings'));
+const savedWindowState = ref(electronStore.get('savedWindowState'));
+const chatOptions = ref(electronStore.get('chatOptions'));
+const settings = ref(electronStore.get('settings'));
 const showMenuBar = ref(true);
 
 const externalSource = ref('');
 
-const checkingVersion = ref(!store.get('savedWindowState').isTransparent);
+const checkingVersion = ref(!electronStore.get('savedWindowState').isTransparent);
 
 const $html = document.querySelector('html');
 
@@ -46,7 +46,7 @@ if (!$html?.getAttribute('data-theme')) {
 function showApp() {
     document.querySelector('#app')?.removeAttribute('vanished');
     showMenuBar.value
-        = !store.get('savedWindowState').isTransparent && !settings.value.isOpen;
+        = !electronStore.get('savedWindowState').isTransparent && !settings.value.isOpen;
 }
 
 type Views = 'changelog' | 'chat' | 'start' | 'settings' | 'externalSource';
@@ -81,16 +81,16 @@ function showView<T = Views>(view: T) {
 }
 
 function enableChat(channel: string) {
-    store.set('chatOptions.channel', channel);
+    electronStore.set('chatOptions.channel', channel);
     showView('chat');
 }
 
 function enableExternalSource(source: string) {
-    const externalSources = store.get('general').externalBrowserSources || [];
+    const externalSources = electronStore.get('general').externalBrowserSources || [];
 
     if (!externalSources.includes(source)) {
         externalSources.push(source);
-        store.set('general.externalBrowserSources', externalSources);
+        electronStore.set('general.externalBrowserSources', externalSources);
     }
 
     externalSource.value = source;
@@ -98,7 +98,7 @@ function enableExternalSource(source: string) {
 }
 
 function vanish() {
-    const storeWindowState = store.get('savedWindowState');
+    const storeWindowState = electronStore.get('savedWindowState');
 
     if (storeWindowState.isTransparent) {
         document.querySelector('#app')?.setAttribute('vanished', 'true');
@@ -128,14 +128,14 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
             :is-external-page="showExternalSource"
             :is-start-page="showStart"
             :channel="chatOptions.channel"
-            :store="store"
+            :store="electronStore"
             @show-start="showView('start')"
             @show-chat="showView('chat')"
             @show-changelog="showView('changelog')"
             @vanish="ipcRenderer.send(IpcEvent.Vanish)"
         />
         <MenuButtons
-            :store="store"
+            :store="electronStore"
             :is-chat="showChat"
             :is-external="showExternalSource"
             @back="showView('start')"
@@ -149,17 +149,14 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
         />
         <Chat
             v-else-if="showChat"
-            :store="store"
         />
         <ExternalSource
             v-else-if="showExternalSource"
-            :store="store"
             :external-source="externalSource"
         />
         <Settings
             v-else-if="showSettings"
             :key="settingsKey"
-            :store="store"
         />
         <Suspense v-else-if="showChangelog">
             <ChangeLog />

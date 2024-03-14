@@ -28,7 +28,10 @@
             "button": "Go!",
             "sourceSwitcher": "Want to load twitch chat? Click here!"
         },
-        "supportButtonsInfo": "Like the app? Consider supporting me via PayPal or buying me a coffee!"
+        "supportBox": {
+            "messageStart": "Like the app?",
+            "messageEnd": "Consider supporting the developement!"
+        }
     },
     "settings": {
         "aside": {

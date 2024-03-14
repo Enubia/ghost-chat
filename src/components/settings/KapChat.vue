@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
 import type { AppStore } from '../../../shared/types';
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
-const chatOptions = props.store.get('chatOptions');
+const chatOptions = electronStore.get('chatOptions');
 
 const defaultChannel = ref(chatOptions.defaultChannel);
 const fadeMessages = ref(chatOptions.fadeMessages);
@@ -60,40 +60,40 @@ function preview() {
     previewLink.value = link.toString();
     rerender.value += 1;
 
-    props.store.set('chatOptions.chatTheme', chatTheme.value);
+    electronStore.set('chatOptions.chatTheme', chatTheme.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveShowBotActivity() {
-    props.store.set('chatOptions.showBotActivity', showBotActivity.value);
+    electronStore.set('chatOptions.showBotActivity', showBotActivity.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFadeMessages() {
-    props.store.set('chatOptions.fadeMessages', fadeMessages.value);
+    electronStore.set('chatOptions.fadeMessages', fadeMessages.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFadeTimeout() {
     if (fadeMessages.value) {
-        props.store.set('chatOptions.fadeTimeout', fadeTimeout.value);
+        electronStore.set('chatOptions.fadeTimeout', fadeTimeout.value);
         ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }
 }
 
 function saveDefaultChannel() {
-    props.store.set('chatOptions.defaultChannel', defaultChannel.value);
+    electronStore.set('chatOptions.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function savePreventClipping() {
-    props.store.set('chatOptions.preventClipping', preventClipping.value);
+    electronStore.set('chatOptions.preventClipping', preventClipping.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFontSize() {
     setTimeout(() => {
-        props.store.set('chatOptions.fontSize', fontSize.value);
+        electronStore.set('chatOptions.fontSize', fontSize.value);
         fontSizeChanged.value = true;
         ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }, 200);
@@ -102,7 +102,7 @@ function saveFontSize() {
 function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
-    props.store.set('chatOptions.userBlacklist', blacklist);
+    electronStore.set('chatOptions.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
     blacklistChanged.value = true;
     ipcRenderer.send(IpcEvent.Rerender, 'parent');

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 import type { Ref } from 'vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '../../shared/types';
@@ -9,11 +9,11 @@ import Editor from '../components/settings/Editor.vue';
 import General from '../components/settings/General.vue';
 import KapChat from '../components/settings/KapChat.vue';
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
-const theme = props.store.get('savedWindowState.theme');
+const theme = electronStore.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
@@ -107,28 +107,22 @@ function showView<T = Views>(view: T) {
             </aside>
             <div v-if="showGeneral">
                 <article>
-                    <General :store="store" />
+                    <General />
                 </article>
             </div>
             <div v-else-if="showOptions">
                 <article class="scroll-content">
-                    <KapChat :store="store" />
+                    <KapChat />
                 </article>
             </div>
             <div v-else-if="showCSSEditor">
                 <article>
-                    <Editor
-                        :store="store"
-                        type="css"
-                    />
+                    <Editor type="css" />
                 </article>
             </div>
             <div v-else-if="showJSEditor">
                 <article>
-                    <Editor
-                        :store="store"
-                        type="js"
-                    />
+                    <Editor type="js" />
                 </article>
             </div>
         </div>

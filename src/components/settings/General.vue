@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
@@ -10,14 +10,14 @@ import { languageMappingList } from '../languageMappingList';
 
 import HotKeyInput from './HotKeyInput.vue';
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
-const updater = props.store.get('updater');
-const mac = props.store.get('general').mac;
-// const storedExternanlBrowserSources = props.store.get('general').externalBrowserSources;
-const keybind = props.store.get('keybind').vanishKeybind;
+const updater = electronStore.get('updater');
+const mac = electronStore.get('general').mac;
+// const storedExternanlBrowserSources = electronStore.get('general').externalBrowserSources;
+const keybind = electronStore.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
 const quitOnClose = ref(mac.quitOnClose);
@@ -32,24 +32,24 @@ if (updater.channel !== 'latest') {
 }
 
 function setParticipateInPreRelease() {
-    props.store.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
+    electronStore.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
 }
 
 function setQuitOnClose() {
-    props.store.set('general.mac.quitOnClose', quitOnClose.value);
+    electronStore.set('general.mac.quitOnClose', quitOnClose.value);
 }
 
 function setHideDockIcon() {
-    props.store.set('general.mac.hideDockIcon', hideDockIcon.value);
+    electronStore.set('general.mac.hideDockIcon', hideDockIcon.value);
 }
 
 // function removeExternalBrowserSource(sourceIndex: number) {
 //     externalBrowserSources.value.splice(sourceIndex, 1);
-//     props.store.set('general.externalBrowserSources', externalBrowserSources.value);
+//     electronStore.set('general.externalBrowserSources', externalBrowserSources.value);
 // }
 
 function saveKeybind(value: string) {
-    props.store.set('keybind.vanishKeybind', value);
+    electronStore.set('keybind.vanishKeybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 </script>
@@ -60,7 +60,7 @@ function saveKeybind(value: string) {
             {{ t('settings.document.general.locale-change.label') }}
             <select
                 v-model="$i18n.locale"
-                @change="store.set('general.language', $i18n.locale)"
+                @change="electronStore.set('general.language', $i18n.locale)"
             >
                 <option
                     v-for="locale in $i18n.availableLocales"
@@ -73,7 +73,7 @@ function saveKeybind(value: string) {
         </label>
         <div />
         <small
-            v-if="store.get('general.language') !== $i18n.locale"
+            v-if="electronStore.get('general.language') !== $i18n.locale"
             class="info"
         >
             {{ t('settings.document.general.locale-change.info') }}

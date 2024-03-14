@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
-import { onMounted } from 'vue';
+import { inject, onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '../../shared/types';
 import WebView from '../components/WebView.vue';
 
-const props = defineProps<{ store: ElectronStore<AppStore>; externalSource: string }>();
-
-const chatOptions = props.store.get('chatOptions');
+const props = defineProps<{ externalSource: string }>();
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+const chatOptions = electronStore.get('chatOptions');
 
 let webView: WebviewTag;
 

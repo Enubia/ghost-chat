@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
-import { onMounted } from 'vue';
+import { inject, onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '../../shared/types';
 import WebView from '../components/WebView.vue';
 
-const props = defineProps<{ store: ElectronStore<AppStore> }>();
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const SearchParams = {
     THEME: 'theme',
@@ -15,7 +15,7 @@ const SearchParams = {
     PREVENT_CLIPPING: 'prevent_clipping',
 };
 
-const chatOptions = props.store.get('chatOptions');
+const chatOptions = electronStore.get('chatOptions');
 
 const link = new URL('https://nightdev.com/hosted/obschat');
 link.searchParams.append(SearchParams.THEME, chatOptions.chatTheme);

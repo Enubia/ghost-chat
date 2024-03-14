@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '../../../shared/constants';
 import type { AppStore } from '../../../shared/types';
 
-const props = defineProps<{
+defineProps<{
     isChatPage: boolean;
     isExternalPage: boolean;
     isStartPage: boolean;
     channel: string;
-    store: ElectronStore<AppStore>;
 }>();
 
 const emit = defineEmits(['showStart', 'showSettings', 'showChangelog', 'vanish']);
+
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
@@ -24,7 +25,7 @@ type EmitKey = | 'showStart' | 'showSettings' | 'showChangelog' | 'vanish';
 
 const isSettingsOpen = ref(false);
 
-if (props.store.get('settings').isOpen) {
+if (electronStore.get('settings').isOpen) {
     isSettingsOpen.value = true;
 }
 
@@ -46,12 +47,12 @@ function toggleTheme() {
 
     if (theme && theme === 'dark') {
         $html?.setAttribute('data-theme', 'light');
-        props.store.set('savedWindowState.theme', 'light');
-        props.store.set('settings.savedWindowState.theme', 'light');
+        electronStore.set('savedWindowState.theme', 'light');
+        electronStore.set('settings.savedWindowState.theme', 'light');
     } else {
         $html?.setAttribute('data-theme', 'dark');
-        props.store.set('savedWindowState.theme', 'dark');
-        props.store.set('settings.savedWindowState.theme', 'dark');
+        electronStore.set('savedWindowState.theme', 'dark');
+        electronStore.set('settings.savedWindowState.theme', 'dark');
     }
 
     ipcRenderer.send(IpcEvent.Rerender, 'child');

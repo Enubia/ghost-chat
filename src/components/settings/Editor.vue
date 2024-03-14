@@ -3,13 +3,15 @@ import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import type ElectronStore from 'electron-store';
-import { ref, shallowRef } from 'vue';
+import { inject, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '../../../shared/types';
 
-const props = defineProps<{ store: ElectronStore<AppStore>; type: 'js' | 'css' }>();
+const props = defineProps<{ type: 'js' | 'css' }>();
+
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
@@ -23,12 +25,12 @@ extensions.push(oneDark);
 
 if (props.type === 'css') {
     extensions.push(css());
-    code.value = props.store.get('chatOptions').customCSS;
+    code.value = electronStore.get('chatOptions').customCSS;
 }
 
 if (props.type === 'js') {
     extensions.push(javascript());
-    code.value = props.store.get('chatOptions').customJS;
+    code.value = electronStore.get('chatOptions').customJS;
 }
 
 function handleReady(payload: { view: any }) {
@@ -46,11 +48,11 @@ function save() {
     enableSuccess();
 
     if (props.type === 'css') {
-        props.store.set('chatOptions.customCSS', code.value);
+        electronStore.set('chatOptions.customCSS', code.value);
     }
 
     if (props.type === 'js') {
-        props.store.set('chatOptions.customJS', code.value);
+        electronStore.set('chatOptions.customJS', code.value);
     }
 }
 </script>

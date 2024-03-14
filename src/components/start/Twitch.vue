@@ -9,9 +9,9 @@ const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
 
 const { t } = useI18n();
 
-const store = inject('store') as ElectronStore<AppStore>;
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const chatOptions = ref(store.get('chatOptions'));
+const chatOptions = ref(electronStore.get('chatOptions'));
 const channel = ref('');
 
 if (chatOptions.value.channel !== '') {
