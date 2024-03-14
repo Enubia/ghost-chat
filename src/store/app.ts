@@ -1,23 +1,30 @@
 import { defineStore } from 'pinia';
 
-import type ElectronStore from 'electron-store';
-import { inject } from 'vue';
+import ElectronStore from 'electron-store';
 import { StoreDefaults } from '@shared/constants';
 import type { AppStore } from '@shared/types';
+
+const electronStore = new ElectronStore<AppStore>();
+
+const initialState = {
+    ...StoreDefaults,
+    ...electronStore.store,
+};
 
 export const useAppStore = defineStore({
     id: 'app',
     state: () => ({
-        ...StoreDefaults,
+        ...initialState,
 
         /**
-         * @summary The file store, do not use directly, use the `saveToElectronStore` action instead
+         * @summary The file store, do not use directly if you can avoid it.
          */
-        $electronStore: inject<ElectronStore<AppStore>>('electronStore'),
+        $electronStore: electronStore,
     }),
     actions: {
-        setLanguage(language: string) {
-            this.general.language = language;
+        resetSettings() {
+            this.$reset();
+            this.saveToElectronStore();
         },
 
         saveToElectronStore() {
