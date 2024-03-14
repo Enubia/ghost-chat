@@ -73,6 +73,7 @@
         "electron-updater": "6.1.8",
         "lint-staged": "15.2.2",
         "markdown-it": "14.0.0",
+        "pinia": "2.1.7",
         "release-it": "17.1.1",
         "rimraf": "5.0.5",
         "sass": "1.71.1",
