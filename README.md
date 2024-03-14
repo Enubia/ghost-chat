@@ -36,7 +36,7 @@ or you want to have your chat on your main screen.
 
 ## Installation / Usage
 
-A detailed description can be found in our discord server's faq section.
+A detailed description can be found in our discord server's faq section and on our [wiki](https://github.com/Enubia/ghost-chat/wiki).
 
 <p align="center">
   <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
