@@ -4,11 +4,11 @@ import ElectronStore from 'electron-store';
 import type { Ref } from 'vue';
 import { provide, ref } from 'vue';
 
-import { IpcEvent } from '../shared/constants';
-import type { AppStore } from '../shared/types';
+import MenuButtons from '@components/header/Buttons.vue';
+import DropDownMenu from '@components/header/Dropdown.vue';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 
-import MenuButtons from './components/header/Buttons.vue';
-import DropDownMenu from './components/header/Dropdown.vue';
 import ChangeLog from './pages/changelog.vue';
 import Chat from './pages/chat.vue';
 import ExternalSource from './pages/externalsource.vue';

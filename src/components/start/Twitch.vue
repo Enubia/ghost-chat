@@ -3,7 +3,7 @@ import type ElectronStore from 'electron-store';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore } from '../../../shared/types';
+import type { AppStore } from '@shared/types';
 
 const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
 

@@ -3,15 +3,15 @@ import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
 
-import type { StoreKeys } from '../../shared/constants';
-import { IpcEvent } from '../../shared/constants';
-import type { AppStore, WindowState } from '../../shared/types';
+import type { StoreKeys } from '@shared/constants';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore, WindowState } from '@shared/types';
 
 import Settings from './window/settings';
 
 export default class IpcEvents {
-    private settings: BrowserWindow | null;
-    private overlay: BrowserWindow | null;
+    private settings: BrowserWindow | null = null;
+    private overlay: BrowserWindow | null = null;
 
     constructor(private store: ElectronStore<AppStore>) {}
 

@@ -7,6 +7,17 @@
         ],
         "module": "ESNext",
         "moduleResolution": "Node",
+        "paths": {
+            "@shared/*": [
+                "./shared/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@store/*": [
+                "./src/store/*"
+            ]
+        },
         "resolveJsonModule": true,
         "strict": true,
         "noImplicitAny": false,

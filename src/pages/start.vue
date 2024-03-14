@@ -3,9 +3,9 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type ElectronStore from 'electron-store';
-import External from '../components/start/External.vue';
-import Twitch from '../components/start/Twitch.vue';
-import type { AppStore } from '../../shared/types';
+import External from '@components/start/External.vue';
+import Twitch from '@components/start/Twitch.vue';
+import type { AppStore } from '@shared/types';
 
 defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
 

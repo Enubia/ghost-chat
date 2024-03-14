@@ -4,8 +4,8 @@ import type ElectronStore from 'electron-store';
 import type { AppUpdater } from 'electron-updater';
 import { autoUpdater } from 'electron-updater';
 
-import { IpcEvent } from '../../shared/constants';
-import type { AppStore, Updater } from '../../shared/types';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore, Updater } from '@shared/types';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;

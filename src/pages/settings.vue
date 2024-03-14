@@ -4,10 +4,10 @@ import type { Ref } from 'vue';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore } from '../../shared/types';
-import Editor from '../components/settings/Editor.vue';
-import General from '../components/settings/General.vue';
-import KapChat from '../components/settings/KapChat.vue';
+import type { AppStore } from '@shared/types';
+import Editor from '@components/settings/Editor.vue';
+import General from '@components/settings/General.vue';
+import KapChat from '@components/settings/KapChat.vue';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 

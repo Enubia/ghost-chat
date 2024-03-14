@@ -5,11 +5,11 @@ import { Menu, Tray, app, clipboard, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
 
-import { IpcEvent } from '../../shared/constants';
-import type { AppStore } from '../../shared/types';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 
 export default class TrayIcon {
-    private tray: Tray;
+    private tray: Tray | null = null;
 
     constructor(
         private store: ElectronStore<AppStore>,

@@ -35,6 +35,11 @@ export default defineConfig((({ command }) => {
                         options.startup();
                     },
                     vite: {
+                        resolve: {
+                            alias: {
+                                '@shared': resolve(__dirname, 'shared'),
+                            },
+                        },
                         build: {
                             sourcemap: isServe,
                             minify: isBuild,
@@ -48,5 +53,12 @@ export default defineConfig((({ command }) => {
             renderer(),
         ],
         clearScreen: false,
+        resolve: {
+            alias: {
+                '@shared': resolve(__dirname, 'shared'),
+                '@components': resolve(__dirname, 'src/components'),
+                '@store': resolve(__dirname, 'src/store'),
+            },
+        },
     };
 }) as UserConfigFn);

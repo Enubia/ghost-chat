@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { KeyToCode, hotkeyToString, isFunctionKey } from '../../../shared/utils/keyToCode';
+import { KeyToCode, hotkeyToString, isFunctionKey } from '@shared/utils/keyToCode';
 
 const props = defineProps<{
     modelValue: string | null;

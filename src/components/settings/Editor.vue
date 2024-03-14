@@ -7,7 +7,7 @@ import { inject, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore } from '../../../shared/types';
+import type { AppStore } from '@shared/types';
 
 const props = defineProps<{ type: 'js' | 'css' }>();
 

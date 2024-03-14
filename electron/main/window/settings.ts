@@ -2,12 +2,12 @@ import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
 
-import type { StoreKeys } from '../../../shared/constants';
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
+import type { StoreKeys } from '@shared/constants';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 
 export default class Settings {
-    window: BrowserWindow | null;
+    public window: BrowserWindow | null = null;
 
     constructor(
         private overlay: BrowserWindow | null,

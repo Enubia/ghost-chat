@@ -4,8 +4,8 @@ import type ElectronStore from 'electron-store';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { IpcEvent } from '../../../shared/constants';
-import type { AppStore } from '../../../shared/types';
+import { IpcEvent } from '@shared/constants';
+import type { AppStore } from '@shared/types';
 import { languageMappingList } from '../languageMappingList';
 
 import HotKeyInput from './HotKeyInput.vue';

@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { BrowserWindow, app, crashReporter, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '../../shared/constants';
+import { IpcEvent } from '@shared/constants';
 
 import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
