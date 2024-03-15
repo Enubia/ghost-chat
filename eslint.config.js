@@ -11,6 +11,7 @@ module.exports = antfu({
         'style/quote-props': ['error', 'as-needed'],
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         curly: ['error', 'all'],
+        'no-new': 'off',
     },
 
     stylistic: {

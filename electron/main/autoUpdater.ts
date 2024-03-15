@@ -9,14 +9,15 @@ import type { AppStore, Updater } from '@shared/types';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;
-    private updater: Updater;
+    private updaterSettings: Updater;
+    private logPrefix = this.constructor.name;
 
     constructor(
         private store: ElectronStore<AppStore>,
         private overlay: BrowserWindow,
         private forceDevUpdateConfig: boolean,
     ) {
-        this.updater = this.store.get('updater');
+        this.updaterSettings = this.store.get('updater');
 
         this.autoUpdater = autoUpdater;
 
@@ -32,37 +33,37 @@ export default class AutoUpdater {
             this.autoUpdater.forceDevUpdateConfig = true;
         }
 
-        if (this.updater.channel === 'beta') {
+        if (this.updaterSettings.channel === 'beta') {
             this.autoUpdater.allowPrerelease = true;
         }
 
         try {
             this.autoUpdater.checkForUpdatesAndNotify();
         } catch (error) {
-            log.error(error);
+            log.error(`[${this.logPrefix}]`, error);
             this.sendStatusToWindow(IpcEvent.Error);
         }
 
         this.autoUpdater.on('checking-for-update', () => {
-            log.debug('checking for update');
+            log.info(`[${this.logPrefix}] checking for update`);
         });
 
         this.autoUpdater.on('update-available', (info) => {
-            log.debug('update-available', info.version);
+            log.info(`[${this.logPrefix}] update-available`, info.version);
 
-            if (info.version.includes('beta') && this.updater.channel !== 'beta') {
+            if (info.version.includes('beta') && this.updaterSettings.channel !== 'beta') {
                 this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
             } else if (process.platform !== 'darwin') {
                 this.autoUpdater.downloadUpdate();
                 this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
             } else {
-                log.debug('manual update called');
+                log.info(`[${this.logPrefix}] manual update called`);
                 this.sendStatusToWindow(IpcEvent.ManualUpdateRequired, info.version);
             }
         });
 
         this.autoUpdater.on('update-not-available', (info) => {
-            log.debug('update-not-available', info.version);
+            log.info(`[${this.logPrefix}] update-not-available`, info.version);
             this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
         });
 
@@ -76,7 +77,7 @@ export default class AutoUpdater {
         });
     }
 
-    private sendStatusToWindow(message: string, version?: string) {
-        this.overlay.webContents.send(message, version);
+    private sendStatusToWindow(message: string, args?: string | Record<string, unknown>) {
+        this.overlay.webContents.send(message, args);
     }
 }

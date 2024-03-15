@@ -8,10 +8,13 @@ import { IpcEvent } from '@shared/constants';
 import type { AppStore, WindowState } from '@shared/types';
 
 import Settings from './window/settings';
+import type ManualUpdater from './manualUpdater';
 
 export default class IpcEvents {
     private settings: BrowserWindow | null = null;
     private overlay: BrowserWindow | null = null;
+
+    private manualUpdater: ManualUpdater | null = null;
 
     constructor(private store: ElectronStore<AppStore>) {}
 
@@ -27,6 +30,10 @@ export default class IpcEvents {
 
     registerWindow(overlay: BrowserWindow | null) {
         this.overlay = overlay;
+    }
+
+    registerManualUpdater(manualUpdater: ManualUpdater) {
+        this.manualUpdater = manualUpdater;
     }
 
     private rerender() {
@@ -158,6 +165,9 @@ export default class IpcEvents {
                 const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
                 _settings.buildWindow(indexHtml, 'settings');
                 this.settings = _settings.window;
+                if (this.settings && this.manualUpdater) {
+                    this.manualUpdater.registerWindow(this.settings);
+                }
             }
         });
     }

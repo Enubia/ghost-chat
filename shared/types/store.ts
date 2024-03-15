@@ -40,6 +40,7 @@ export interface General {
 
 export interface Updater {
     channel: 'latest' | 'beta';
+    disableAutoUpdates: boolean;
 }
 
 export interface Keybind {

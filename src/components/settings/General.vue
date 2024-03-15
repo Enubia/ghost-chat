@@ -16,13 +16,13 @@ const { t } = useI18n();
 
 const updater = electronStore.get('updater');
 const mac = electronStore.get('general').mac;
-// const storedExternanlBrowserSources = electronStore.get('general').externalBrowserSources;
 const keybind = electronStore.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
+const disableAutoUpdates = ref(updater.disableAutoUpdates);
+const updaterStatus = ref('init');
 const quitOnClose = ref(mac.quitOnClose);
 const hideDockIcon = ref(mac.hideDockIcon);
-// const externalBrowserSources = ref(storedExternanlBrowserSources);
 const vanishKeybind = ref(keybind);
 
 const showMacOptions = process.platform === 'darwin';
@@ -31,27 +31,39 @@ if (updater.channel !== 'latest') {
     participateInPreRelease.value = true;
 }
 
-function setParticipateInPreRelease() {
-    electronStore.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
-}
-
-function setQuitOnClose() {
-    electronStore.set('general.mac.quitOnClose', quitOnClose.value);
-}
-
-function setHideDockIcon() {
-    electronStore.set('general.mac.hideDockIcon', hideDockIcon.value);
-}
-
-// function removeExternalBrowserSource(sourceIndex: number) {
-//     externalBrowserSources.value.splice(sourceIndex, 1);
-//     electronStore.set('general.externalBrowserSources', externalBrowserSources.value);
-// }
-
 function saveKeybind(value: string) {
     electronStore.set('keybind.vanishKeybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
+
+function checkForUpdates() {
+    updaterStatus.value = 'checking';
+    ipcRenderer.send(IpcEvent.CheckForUpdates);
+}
+
+function restart() {
+    ipcRenderer.send(IpcEvent.Close);
+}
+
+ipcRenderer.on(IpcEvent.Error, () => {
+    updaterStatus.value = 'error';
+});
+
+ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
+    updaterStatus.value = 'update-downloaded';
+});
+
+ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
+    updaterStatus.value = 'update-not-available';
+});
+
+ipcRenderer.on(IpcEvent.UpdateAvailable, () => {
+    updaterStatus.value = 'update-available';
+});
+
+ipcRenderer.on(IpcEvent.ManualUpdateRequired, () => {
+    updaterStatus.value = 'manual-update-required';
+});
 </script>
 
 <template>
@@ -95,7 +107,7 @@ function saveKeybind(value: string) {
                 v-model="participateInPreRelease"
                 type="checkbox"
                 role="switch"
-                @change="setParticipateInPreRelease"
+                @change="electronStore.set('updater.channel', participateInPreRelease ? 'beta' : 'latest')"
             >
             <span>{{ t('settings.document.general.pre-release.checkbox-label') }}</span>
         </label>
@@ -103,9 +115,55 @@ function saveKeybind(value: string) {
             {{ t('settings.document.general.pre-release.info') }}
         </small>
     </div>
+    <hr>
+    <div id="auto-updates">
+        <div id="disable-auto-updates">
+            <label
+                for="disable-auto-updates-input"
+                class="align-elements"
+            >
+                <input
+                    id="disable-auto-updates-input"
+                    v-model="disableAutoUpdates"
+                    type="checkbox"
+                    role="switch"
+                    @change="electronStore.set('updater.disableAutoUpdates', disableAutoUpdates)"
+                >
+                <span>
+                    {{ t('settings.document.general.auto-updates.disable-label') }}
+                </span>
+            </label>
+            <small v-if="!disableAutoUpdates">
+                {{ t('settings.document.general.auto-updates.disable-info') }}
+            </small>
+        </div>
+        <div v-if="disableAutoUpdates" id="check-for-updates" class="text-center">
+            <hr>
+            <div class="center-elements">
+                <button
+                    class="outline"
+                    :aria-busy="updaterStatus === 'checking' || updaterStatus === 'update-available'"
+                    :disabled="updaterStatus === 'checking' || updaterStatus === 'update-available'"
+                    v-on="{ click: updaterStatus === 'update-downloaded' ? restart : checkForUpdates }"
+                >
+                    {{ t(`settings.document.general.auto-updates.button.${updaterStatus}`) }}
+                </button>
+            </div>
+            <small v-if="updaterStatus === 'manual-update-required'">
+                {{ t('settings.document.general.auto-updates.manual-update-required.before-link') }}
+                <a href="https://github.com/Enubia/ghost-chat/releases">
+                    {{ t('settings.document.general.auto-updates.manual-update-required.link') }}
+                </a>
+                {{ t('settings.document.general.auto-updates.manual-update-required.after-link') }}
+            </small>
+            <small v-else-if="updaterStatus !== ''">
+                {{ t(`settings.document.general.auto-updates.${updaterStatus}`) }}
+            </small>
+        </div>
+    </div>
+    <hr>
     <div v-if="showMacOptions">
         <div id="close-option">
-            <hr>
             <label
                 for="close-option-input"
                 class="align-elements"
@@ -115,7 +173,7 @@ function saveKeybind(value: string) {
                     v-model="quitOnClose"
                     type="checkbox"
                     role="switch"
-                    @change="setQuitOnClose"
+                    @change="electronStore.set('general.mac.quitOnClose', quitOnClose)"
                 >
                 <span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
             </label>
@@ -132,30 +190,11 @@ function saveKeybind(value: string) {
                     v-model="hideDockIcon"
                     type="checkbox"
                     role="switch"
-                    @change="setHideDockIcon"
+                    @change="electronStore.set('general.mac.hideDockIcon', hideDockIcon)"
                 >
                 <span>{{ t('settings.document.general.hide-dock-icon-options.checkbox-label') }}</span>
             </label>
             <small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
         </div>
     </div>
-    <!-- <div v-if="externalBrowserSources?.length" id="external-sources">
-        <hr>
-        <span>{{ t('settings.document.general.external-sources.heading') }}</span>
-        <div id="external-sources-list">
-            <div
-                v-for="(source, index) in externalBrowserSources"
-                :key="`external-source-${index}`"
-                class="align-elements space-between"
-            >
-                <span>{{ source }}</span>
-                <button
-                    class="outline"
-                    @click="removeExternalBrowserSource(index)"
-                >
-                    <font-awesome-icon icon="fas fa-trash-alt" />
-                </button>
-            </div>
-        </div>
-    </div> -->
 </template>
