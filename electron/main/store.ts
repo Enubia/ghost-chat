@@ -35,7 +35,7 @@ export default function createStore() {
                 store.set('general.launchCounter', 0);
             },
             '2.8.1': (store) => {
-                store.set('updater.disableAutoUpdate', false);
+                store.set('updater.disableAutoUpdates', false);
             },
         },
     });
