@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-
 import { IpcEvent } from '@shared/constants';
 
 defineProps<{ isChat: boolean; isExternal: boolean }>();
 
-const emit = defineEmits(['back']);
+defineEmits(['back']);
 </script>
 
 <template>
@@ -14,7 +13,7 @@ const emit = defineEmits(['back']);
             v-if="isChat || isExternal"
             id="back"
             class="secondary"
-            @click="emit('back')"
+            @click="$emit('back')"
         >
             <font-awesome-icon icon="fas fa-chevron-left" />
         </button>
