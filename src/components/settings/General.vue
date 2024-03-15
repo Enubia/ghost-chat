@@ -20,6 +20,8 @@ const mac = electronStore.get('general').mac;
 const keybind = electronStore.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
+const disableAutoUpdate = ref(updater.disableAutoUpdate);
+const updaterStatus = ref({ status: '', message: '' });
 const quitOnClose = ref(mac.quitOnClose);
 const hideDockIcon = ref(mac.hideDockIcon);
 // const externalBrowserSources = ref(storedExternanlBrowserSources);
@@ -31,27 +33,35 @@ if (updater.channel !== 'latest') {
     participateInPreRelease.value = true;
 }
 
-function setParticipateInPreRelease() {
-    electronStore.set('updater.channel', participateInPreRelease.value ? 'beta' : 'latest');
-}
-
-function setQuitOnClose() {
-    electronStore.set('general.mac.quitOnClose', quitOnClose.value);
-}
-
-function setHideDockIcon() {
-    electronStore.set('general.mac.hideDockIcon', hideDockIcon.value);
-}
-
-// function removeExternalBrowserSource(sourceIndex: number) {
-//     externalBrowserSources.value.splice(sourceIndex, 1);
-//     electronStore.set('general.externalBrowserSources', externalBrowserSources.value);
-// }
-
 function saveKeybind(value: string) {
     electronStore.set('keybind.vanishKeybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
+
+function checkForUpdates() {
+    updaterStatus.value = { status: 'checking', message: t('settings.document.general.auto-updates.checking') };
+    ipcRenderer.send(IpcEvent.CheckForUpdates);
+}
+
+ipcRenderer.on(IpcEvent.Error, () => {
+    console.log('Error');
+    updaterStatus.value = { status: 'error', message: t('settings.document.general.auto-updates.error') };
+});
+
+ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
+    console.log('Update downloaded');
+    updaterStatus.value = { status: 'update-downloaded', message: t('settings.document.general.auto-updates.update-downloaded') };
+});
+
+ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
+    console.log('Update not available');
+    updaterStatus.value = { status: 'update-not-available', message: t('settings.document.general.auto-updates.update-not-available') };
+});
+
+ipcRenderer.on(IpcEvent.UpdateAvailable, () => {
+    console.log('Update available');
+    updaterStatus.value = { status: 'update-available', message: t('settings.document.general.auto-updates.update-available') };
+});
 </script>
 
 <template>
@@ -95,7 +105,7 @@ function saveKeybind(value: string) {
                 v-model="participateInPreRelease"
                 type="checkbox"
                 role="switch"
-                @change="setParticipateInPreRelease"
+                @change="electronStore.set('updater.channel', participateInPreRelease ? 'beta' : 'latest')"
             >
             <span>{{ t('settings.document.general.pre-release.checkbox-label') }}</span>
         </label>
@@ -103,9 +113,48 @@ function saveKeybind(value: string) {
             {{ t('settings.document.general.pre-release.info') }}
         </small>
     </div>
+    <hr>
+    <div id="auto-updates">
+        <div id="disable-auto-updates">
+            <label
+                for="disable-auto-updates-input"
+                class="align-elements"
+            >
+                <input
+                    id="disable-auto-updates-input"
+                    v-model="disableAutoUpdate"
+                    type="checkbox"
+                    role="switch"
+                    @click="electronStore.set('updater.disableAutoUpdate', true)"
+                >
+                <span>
+                    {{ t('settings.document.general.auto-updates.disable-label') }}
+                </span>
+            </label>
+            <small v-if="disableAutoUpdate">
+                {{ t('settings.document.general.auto-updates.disable-info') }}
+            </small>
+        </div>
+        <div v-if="disableAutoUpdate" id="check-for-updates">
+            <hr>
+            <div class="center-elements">
+                <button
+                    class="outline"
+                    :aria-busy="updaterStatus.status === 'checking' || updaterStatus.status === 'update-available'"
+                    :disabled="updaterStatus.status === 'checking' || updaterStatus.status === 'update-available'"
+                    @click="checkForUpdates"
+                >
+                    Check for updates
+                </button>
+            </div>
+            <small>
+                {{ updaterStatus.message }}
+            </small>
+        </div>
+    </div>
+    <hr>
     <div v-if="showMacOptions">
         <div id="close-option">
-            <hr>
             <label
                 for="close-option-input"
                 class="align-elements"
@@ -115,7 +164,7 @@ function saveKeybind(value: string) {
                     v-model="quitOnClose"
                     type="checkbox"
                     role="switch"
-                    @change="setQuitOnClose"
+                    @change="electronStore.set('general.mac.quitOnClose', quitOnClose)"
                 >
                 <span>{{ t('settings.document.general.close-option.checkbox-label') }}</span>
             </label>
@@ -132,30 +181,11 @@ function saveKeybind(value: string) {
                     v-model="hideDockIcon"
                     type="checkbox"
                     role="switch"
-                    @change="setHideDockIcon"
+                    @change="electronStore.set('general.mac.hideDockIcon', hideDockIcon)"
                 >
                 <span>{{ t('settings.document.general.hide-dock-icon-options.checkbox-label') }}</span>
             </label>
             <small>{{ t('settings.document.general.hide-dock-icon-options.info') }}</small>
         </div>
     </div>
-    <!-- <div v-if="externalBrowserSources?.length" id="external-sources">
-        <hr>
-        <span>{{ t('settings.document.general.external-sources.heading') }}</span>
-        <div id="external-sources-list">
-            <div
-                v-for="(source, index) in externalBrowserSources"
-                :key="`external-source-${index}`"
-                class="align-elements space-between"
-            >
-                <span>{{ source }}</span>
-                <button
-                    class="outline"
-                    @click="removeExternalBrowserSource(index)"
-                >
-                    <font-awesome-icon icon="fas fa-trash-alt" />
-                </button>
-            </div>
-        </div>
-    </div> -->
 </template>

@@ -18,4 +18,7 @@ export const IpcEvent = {
     Error: 'error',
     UpdateDownloaded: 'update-downloaded',
     ManualUpdateRequired: 'manual-update-required',
+    AutoUpdateDisabled: 'auto-update-disabled',
+    CheckForUpdates: 'check-for-updates',
+    UpdateStatus: 'update-status',
 } as const;

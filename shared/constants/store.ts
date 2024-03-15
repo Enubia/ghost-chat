@@ -52,6 +52,7 @@ export const StoreDefaults = {
     },
     updater: {
         channel: 'latest',
+        disableAutoUpdate: false,
     },
     keybind: {
         vanishKeybind: null,

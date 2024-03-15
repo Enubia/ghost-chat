@@ -37,18 +37,23 @@ export default class AutoUpdater {
         }
 
         try {
-            this.autoUpdater.checkForUpdatesAndNotify();
+            this.checkForUpdates();
         } catch (error) {
             log.error(error);
             this.sendStatusToWindow(IpcEvent.Error);
         }
 
         this.autoUpdater.on('checking-for-update', () => {
-            log.debug('checking for update');
+            log.info('checking for update');
         });
 
         this.autoUpdater.on('update-available', (info) => {
-            log.debug('update-available', info.version);
+            log.info('update-available', info.version);
+
+            if (this.updater.disableAutoUpdate) {
+                log.info('auto update disabled');
+                return;
+            }
 
             if (info.version.includes('beta') && this.updater.channel !== 'beta') {
                 this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
@@ -56,13 +61,13 @@ export default class AutoUpdater {
                 this.autoUpdater.downloadUpdate();
                 this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
             } else {
-                log.debug('manual update called');
+                log.info('manual update called');
                 this.sendStatusToWindow(IpcEvent.ManualUpdateRequired, info.version);
             }
         });
 
         this.autoUpdater.on('update-not-available', (info) => {
-            log.debug('update-not-available', info.version);
+            log.info('update-not-available', info.version);
             this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
         });
 
@@ -76,7 +81,11 @@ export default class AutoUpdater {
         });
     }
 
-    private sendStatusToWindow(message: string, version?: string) {
-        this.overlay.webContents.send(message, version);
+    private sendStatusToWindow(message: string, args?: string | Record<string, unknown>) {
+        this.overlay.webContents.send(message, args);
+    }
+
+    public checkForUpdates() {
+        this.autoUpdater.checkForUpdatesAndNotify();
     }
 }

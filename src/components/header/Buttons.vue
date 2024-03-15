@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import type ElectronStore from 'electron-store';
 
 import { IpcEvent } from '@shared/constants';
-import type { AppStore } from '@shared/types';
 
-defineProps<{ store: ElectronStore<AppStore>; isChat: boolean; isExternal: boolean }>();
+defineProps<{ isChat: boolean; isExternal: boolean }>();
 
 const emit = defineEmits(['back']);
 </script>

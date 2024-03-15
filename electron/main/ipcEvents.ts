@@ -8,6 +8,7 @@ import { IpcEvent } from '@shared/constants';
 import type { AppStore, WindowState } from '@shared/types';
 
 import Settings from './window/settings';
+import type AutoUpdater from './autoUpdater';
 
 export default class IpcEvents {
     private settings: BrowserWindow | null = null;
@@ -27,6 +28,13 @@ export default class IpcEvents {
 
     registerWindow(overlay: BrowserWindow | null) {
         this.overlay = overlay;
+    }
+
+    registerAutoUpdaterEvents(updater: AutoUpdater) {
+        ipcMain.on(IpcEvent.CheckForUpdates, () => {
+            log.info('manual check for updates');
+            updater.checkForUpdates();
+        });
     }
 
     private rerender() {

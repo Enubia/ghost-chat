@@ -35,12 +35,12 @@ const showMenuBar = ref(true);
 const externalSource = ref('');
 
 const checkingVersion = ref(!electronStore.get('savedWindowState').isTransparent);
+const autoUpdatesDisabled = ref(electronStore.get('updater').disableAutoUpdate);
 
 const $html = document.querySelector('html');
 
 if (!$html?.getAttribute('data-theme')) {
-    const theme = savedWindowState.value.theme;
-    $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    $html?.setAttribute('data-theme', savedWindowState.value.theme === 'dark' ? 'dark' : 'light');
 }
 
 function showApp() {
@@ -118,7 +118,7 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
 
 <template>
     <VersionCheck
-        v-if="checkingVersion"
+        v-if="!autoUpdatesDisabled && checkingVersion"
         @remove-loading="checkingVersion = false"
     />
     <header v-if="showMenuBar">

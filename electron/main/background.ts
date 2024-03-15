@@ -71,12 +71,14 @@ app.on('ready', () => {
 
             // only call auto-updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
-                // eslint-disable-next-line no-new
-                new AutoUpdater(store, overlay, false);
+                const updater = new AutoUpdater(store, overlay, false);
+                ipcEvents.registerAutoUpdaterEvents(updater);
             } else {
+                const updater = new AutoUpdater(store, overlay, true);
+                ipcEvents.registerAutoUpdaterEvents(updater);
                 // if you want to test the autoupdater and loading screen
                 // comment the line below and uncomment the autoupdater init
-                overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+                // overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
             }
         },
         process.platform === 'linux' ? 1000 : 0,
