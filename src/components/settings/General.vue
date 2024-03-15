@@ -16,15 +16,13 @@ const { t } = useI18n();
 
 const updater = electronStore.get('updater');
 const mac = electronStore.get('general').mac;
-// const storedExternanlBrowserSources = electronStore.get('general').externalBrowserSources;
 const keybind = electronStore.get('keybind').vanishKeybind;
 
 const participateInPreRelease = ref(false);
-const disableAutoUpdate = ref(updater.disableAutoUpdate);
-const updaterStatus = ref({ status: '', message: '' });
+const disableAutoUpdates = ref(updater.disableAutoUpdates);
+const updaterStatus = ref('init');
 const quitOnClose = ref(mac.quitOnClose);
 const hideDockIcon = ref(mac.hideDockIcon);
-// const externalBrowserSources = ref(storedExternanlBrowserSources);
 const vanishKeybind = ref(keybind);
 
 const showMacOptions = process.platform === 'darwin';
@@ -39,28 +37,32 @@ function saveKeybind(value: string) {
 }
 
 function checkForUpdates() {
-    updaterStatus.value = { status: 'checking', message: t('settings.document.general.auto-updates.checking') };
+    updaterStatus.value = 'checking';
     ipcRenderer.send(IpcEvent.CheckForUpdates);
 }
 
+function restart() {
+    ipcRenderer.send(IpcEvent.Close);
+}
+
 ipcRenderer.on(IpcEvent.Error, () => {
-    console.log('Error');
-    updaterStatus.value = { status: 'error', message: t('settings.document.general.auto-updates.error') };
+    updaterStatus.value = 'error';
 });
 
 ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
-    console.log('Update downloaded');
-    updaterStatus.value = { status: 'update-downloaded', message: t('settings.document.general.auto-updates.update-downloaded') };
+    updaterStatus.value = 'update-downloaded';
 });
 
 ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
-    console.log('Update not available');
-    updaterStatus.value = { status: 'update-not-available', message: t('settings.document.general.auto-updates.update-not-available') };
+    updaterStatus.value = 'update-not-available';
 });
 
 ipcRenderer.on(IpcEvent.UpdateAvailable, () => {
-    console.log('Update available');
-    updaterStatus.value = { status: 'update-available', message: t('settings.document.general.auto-updates.update-available') };
+    updaterStatus.value = 'update-available';
+});
+
+ipcRenderer.on(IpcEvent.ManualUpdateRequired, () => {
+    updaterStatus.value = 'manual-update-required';
 });
 </script>
 
@@ -122,33 +124,40 @@ ipcRenderer.on(IpcEvent.UpdateAvailable, () => {
             >
                 <input
                     id="disable-auto-updates-input"
-                    v-model="disableAutoUpdate"
+                    v-model="disableAutoUpdates"
                     type="checkbox"
                     role="switch"
-                    @click="electronStore.set('updater.disableAutoUpdate', true)"
+                    @change="electronStore.set('updater.disableAutoUpdates', disableAutoUpdates)"
                 >
                 <span>
                     {{ t('settings.document.general.auto-updates.disable-label') }}
                 </span>
             </label>
-            <small v-if="disableAutoUpdate">
+            <small v-if="!disableAutoUpdates">
                 {{ t('settings.document.general.auto-updates.disable-info') }}
             </small>
         </div>
-        <div v-if="disableAutoUpdate" id="check-for-updates">
+        <div v-if="disableAutoUpdates" id="check-for-updates" class="text-center">
             <hr>
             <div class="center-elements">
                 <button
                     class="outline"
-                    :aria-busy="updaterStatus.status === 'checking' || updaterStatus.status === 'update-available'"
-                    :disabled="updaterStatus.status === 'checking' || updaterStatus.status === 'update-available'"
-                    @click="checkForUpdates"
+                    :aria-busy="updaterStatus === 'checking' || updaterStatus === 'update-available'"
+                    :disabled="updaterStatus === 'checking' || updaterStatus === 'update-available'"
+                    v-on="{ click: updaterStatus === 'update-downloaded' ? restart : checkForUpdates }"
                 >
-                    Check for updates
+                    {{ t(`settings.document.general.auto-updates.button.${updaterStatus}`) }}
                 </button>
             </div>
-            <small>
-                {{ updaterStatus.message }}
+            <small v-if="updaterStatus === 'manual-update-required'">
+                {{ t('settings.document.general.auto-updates.manual-update-required.before-link') }}
+                <a href="https://github.com/Enubia/ghost-chat/releases">
+                    {{ t('settings.document.general.auto-updates.manual-update-required.link') }}
+                </a>
+                {{ t('settings.document.general.auto-updates.manual-update-required.after-link') }}
+            </small>
+            <small v-else-if="updaterStatus !== ''">
+                {{ t(`settings.document.general.auto-updates.${updaterStatus}`) }}
             </small>
         </div>
     </div>

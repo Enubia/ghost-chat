@@ -75,11 +75,24 @@
                 "auto-updates": {
                     "disable-label": "Disable Auto Updates",
                     "disable-info": "If you disable auto updates you'll have to check for updates manually from time to time.",
+                    "init": "Click to check for updates now",
                     "checking": "Checking for updates...",
                     "error": "The updater encountered an error, please report this in the discord!",
                     "update-downloaded": "A new version has been downloaded, update will be applied upon restart.",
                     "update-not-available": "No updates available",
-                    "update-available": "A new version is available, download will start in the backround."
+                    "update-available": "A new version is available, download will start in the backround.",
+                    "manual-update-required": {
+                        "before-link": "Your system does not allow auto updates. Please visit the",
+                        "link": "GhostChat release page",
+                        "after-link": "and download the update manually."
+                    },
+                    "button": {
+                        "init": "Check for updates",
+                        "checking": "Checking...",
+                        "update-available": "Downloading...",
+                        "update-not-available": "Check for updates",
+                        "update-downloaded": "Restart to apply"
+                    }
                 }
             },
             "kap-chat": {

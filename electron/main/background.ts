@@ -11,6 +11,7 @@ import IpcEvents from './ipcEvents';
 import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
+import ManualUpdater from './manualUpdater';
 
 log.transports.file.level = 'info';
 
@@ -57,6 +58,7 @@ const indexHtml = join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
 let ipcEvents: IpcEvents;
+let manualUpdater: ManualUpdater;
 
 app.on('ready', () => {
     setTimeout(
@@ -69,16 +71,25 @@ app.on('ready', () => {
 
             store.set('general.launchCounter', store.get('general').launchCounter + 1);
 
-            // only call auto-updater for prod environment
+            // only call updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
-                const updater = new AutoUpdater(store, overlay, false);
-                ipcEvents.registerAutoUpdaterEvents(updater);
+                if (store.get('updater').disableAutoUpdates) {
+                    manualUpdater = new ManualUpdater(store, false);
+                } else {
+                    new AutoUpdater(store, overlay, false);
+                }
             } else {
-                const updater = new AutoUpdater(store, overlay, true);
-                ipcEvents.registerAutoUpdaterEvents(updater);
-                // if you want to test the autoupdater and loading screen
-                // comment the line below and uncomment the autoupdater init
-                // overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+                // if (store.get('updater').disableAutoUpdate) {
+                //     manualUpdater = new ManualUpdater(store, true);
+                // } else {
+                //     new AutoUpdater(store, overlay, true);
+                // }
+
+                overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+            }
+
+            if (manualUpdater) {
+                ipcEvents.registerManualUpdater(manualUpdater);
             }
         },
         process.platform === 'linux' ? 1000 : 0,

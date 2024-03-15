@@ -35,7 +35,7 @@ const showMenuBar = ref(true);
 const externalSource = ref('');
 
 const checkingVersion = ref(!electronStore.get('savedWindowState').isTransparent);
-const autoUpdatesDisabled = ref(electronStore.get('updater').disableAutoUpdate);
+const autoUpdatesDisabled = ref(electronStore.get('updater').disableAutoUpdates);
 
 const $html = document.querySelector('html');
 
