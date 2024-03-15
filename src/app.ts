@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { createPinia } from 'pinia';
 
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import ElectronStore from 'electron-store';
@@ -22,10 +21,7 @@ const i18n = createI18n<false>({
     legacy: false,
 });
 
-const pinia = createPinia();
-
 createApp(App)
     .use(i18n)
-    .use(pinia)
     .component('FontAwesomeIcon', FontAwesomeIcon)
     .mount('#app');
