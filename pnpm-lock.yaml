@@ -40,7 +40,7 @@ devDependencies:
     version: 2.0.6
   '@vitejs/plugin-vue':
     specifier: 5.0.4
-    version: 5.0.4(vite@5.1.5)(vue@3.4.21)
+    version: 5.0.4(vite@5.1.6)(vue@3.4.21)
   auto-changelog:
     specifier: 2.4.0
     version: 2.4.0
@@ -90,8 +90,8 @@ devDependencies:
     specifier: 5.4.2
     version: 5.4.2
   vite:
-    specifier: 5.1.5
-    version: 5.1.5(sass@1.71.1)
+    specifier: 5.1.6
+    version: 5.1.6(sass@1.71.1)
   vite-plugin-electron:
     specifier: 0.28.2
     version: 0.28.2(electron@29.1.4)(tree-kill@1.2.2)(vite-plugin-electron-renderer@0.14.5)
@@ -1689,14 +1689,14 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-vue@5.0.4(vite@5.1.5)(vue@3.4.21):
+  /@vitejs/plugin-vue@5.0.4(vite@5.1.6)(vue@3.4.21):
     resolution: {integrity: sha512-WS3hevEszI6CEVEx28F8RjTX97k3KsrcY6kvTg7+Whm5y3oYvcqzVeGCU3hxSAn4uY2CLCkeokkGKpoctccilQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.1.5(sass@1.71.1)
+      vite: 5.1.6(sass@1.71.1)
       vue: 3.4.21(typescript@5.4.2)
     dev: true
 
@@ -7164,8 +7164,8 @@ packages:
       vite-plugin-electron-renderer: 0.14.5
     dev: true
 
-  /vite@5.1.5(sass@1.71.1):
-    resolution: {integrity: sha512-BdN1xh0Of/oQafhU+FvopafUp6WaYenLU/NFoL5WyJL++GxkNfieKzBhM24H3HVsPQrlAqB7iJYTHabzaRed5Q==}
+  /vite@5.1.6(sass@1.71.1):
+    resolution: {integrity: sha512-yYIAZs9nVfRJ/AiOLCA91zzhjsHUgMjB+EigzFb6W2XTLO8JixBCKCjvhKZaye+NKYHCrkv3Oh50dH9EdLU2RA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
