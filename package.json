@@ -76,7 +76,7 @@
         "release-it": "17.1.1",
         "rimraf": "5.0.5",
         "sass": "1.72.0",
-        "simple-git-hooks": "2.10.0",
+        "simple-git-hooks": "2.11.0",
         "tree-kill": "1.2.2",
         "typescript": "5.4.2",
         "vite": "5.1.6",
