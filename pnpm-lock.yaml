@@ -78,8 +78,8 @@ devDependencies:
     specifier: 5.0.5
     version: 5.0.5
   sass:
-    specifier: 1.71.1
-    version: 1.71.1
+    specifier: 1.72.0
+    version: 1.72.0
   simple-git-hooks:
     specifier: 2.10.0
     version: 2.10.0
@@ -91,7 +91,7 @@ devDependencies:
     version: 5.4.2
   vite:
     specifier: 5.1.6
-    version: 5.1.6(sass@1.71.1)
+    version: 5.1.6(sass@1.72.0)
   vite-plugin-electron:
     specifier: 0.28.3
     version: 0.28.3
@@ -1709,7 +1709,7 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.1.6(sass@1.71.1)
+      vite: 5.1.6(sass@1.72.0)
       vue: 3.4.21(typescript@5.4.2)
     dev: true
 
@@ -6373,8 +6373,8 @@ packages:
       truncate-utf8-bytes: 1.0.2
     dev: true
 
-  /sass@1.71.1:
-    resolution: {integrity: sha512-wovtnV2PxzteLlfNzbgm1tFXPLoZILYAMJtvoXXkD7/+1uP41eKkIt1ypWq5/q2uT94qHjXehEYfmjKOvjL9sg==}
+  /sass@1.72.0:
+    resolution: {integrity: sha512-Gpczt3WA56Ly0Mn8Sl21Vj94s1axi9hDIzDFn9Ph9x3C3p4nNyvsqJoQyVXKou6cBlfFWEgRW4rT8Tb4i3XnVA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -7162,7 +7162,7 @@ packages:
     resolution: {integrity: sha512-xPKCdKAGeCscFG/CsbC63ia7Bljq8JjxFW62g2PdIVj0xNpZyWZd/pxk28HyazOcDzaca97KRTJ5zefqLrI/QA==}
     dev: true
 
-  /vite@5.1.6(sass@1.71.1):
+  /vite@5.1.6(sass@1.72.0):
     resolution: {integrity: sha512-yYIAZs9nVfRJ/AiOLCA91zzhjsHUgMjB+EigzFb6W2XTLO8JixBCKCjvhKZaye+NKYHCrkv3Oh50dH9EdLU2RA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -7193,7 +7193,7 @@ packages:
       esbuild: 0.19.5
       postcss: 8.4.35
       rollup: 4.5.0
-      sass: 1.71.1
+      sass: 1.72.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
