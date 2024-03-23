@@ -14,7 +14,19 @@ alt="Donate with PayPal" width="145" />
 
 ---
 
-## Latest | 13 March 2024
+## Latest | 23 March 2024
+
+- new(ui/electron): allow updater disableing [`#853`](https://github.com/Enubia/ghost-chat/pull/853)
+- refactor(ui): rename store [`0f4e88c`](https://github.com/Enubia/ghost-chat/commit/0f4e88cdf971e3f9cefb52e8b058bd43716a5843)
+- refactor(ui/electron): use path alias [`1ff6790`](https://github.com/Enubia/ghost-chat/commit/1ff679011b08e015b4f7ac953835a4b567f528cf)
+- update(ui): remove pinia [`96e52fa`](https://github.com/Enubia/ghost-chat/commit/96e52fa43d2131d1c248cff223ab40ad87c0e654)
+- feat(ui): added pinia [`fc0e201`](https://github.com/Enubia/ghost-chat/commit/fc0e20176371e4083d3c96c5b8680b1c9a9fa450)
+- fix: disable hardware acceleration for all platforms [`dfca5e1`](https://github.com/Enubia/ghost-chat/commit/dfca5e1773ced5898ca60ec1554871bdef4e28bf)
+- update(ui): init state for pinia [`29571bb`](https://github.com/Enubia/ghost-chat/commit/29571bb5bc191a069e7b7110c2652459e57b014f)
+- fix(electron): typo in dev script [`802873e`](https://github.com/Enubia/ghost-chat/commit/802873e2574453f98a37d8d9f58ef25a2d36b108)
+- chore: update readme [`d392d53`](https://github.com/Enubia/ghost-chat/commit/d392d53886b7894ef2ec30b0bacb5e7232db136a)
+---
+### v2.8.0 | 13 March 2024
 
 - update(ui): replace checkboxes with switches [`c595f2b`](https://github.com/Enubia/ghost-chat/commit/c595f2b8d6e612fb94096613c15f63d2c3e191f7)
 - refactor: dev configs [`4c51197`](https://github.com/Enubia/ghost-chat/commit/4c51197a63e081d69dfdfd2eb173c47fbad4750a)
@@ -22,6 +34,7 @@ alt="Donate with PayPal" width="145" />
 - chore(build): update builder config [`a517539`](https://github.com/Enubia/ghost-chat/commit/a517539810c8d3f46d5b630f279929630c326c67)
 - Update README.md [`ec61084`](https://github.com/Enubia/ghost-chat/commit/ec610846e930ed0560eca32435f4bb100914df09)
 - chore: purge husky [`8a661ea`](https://github.com/Enubia/ghost-chat/commit/8a661ea48575a56bd209b28ed3bffbf1de11787d)
+- chore: update changelog [`d2b491e`](https://github.com/Enubia/ghost-chat/commit/d2b491e68b1135aae811d5c77efc223d5119637f)
 - refactor: renamed pages [`71aa7cd`](https://github.com/Enubia/ghost-chat/commit/71aa7cdf5f316dd5cb4c99c353c1b10c9e439d18)
 - update(ui): made support box dismissable [`02bd020`](https://github.com/Enubia/ghost-chat/commit/02bd02022d768a9c2218629d91bbf72e9bfa4372)
 - chore: Update GitHub Actions and Node.js versions [`c352158`](https://github.com/Enubia/ghost-chat/commit/c352158fcd1d203b880955e9ba415b47dfc1f2fc)
@@ -197,9 +210,6 @@ alt="Donate with PayPal" width="145" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
----
-### v2.2.0 | 3 May 2023
-
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
