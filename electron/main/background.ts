@@ -1,7 +1,6 @@
-import { release } from 'node:os';
 import { join } from 'node:path';
 
-import { BrowserWindow, app, crashReporter, globalShortcut, ipcMain } from 'electron';
+import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '@shared/constants';
@@ -13,6 +12,10 @@ import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
 import ManualUpdater from './manualUpdater';
 
+if (!app.requestSingleInstanceLock()) {
+    app.quit();
+}
+
 log.transports.file.level = 'info';
 
 const date = new Date();
@@ -22,26 +25,7 @@ log.transports.file.fileName = `app-${logFileDate}.log`;
 
 log.info('App starting');
 
-crashReporter.start({ submitURL: '', uploadToServer: false });
-
-log.info('Crash reporter started');
-
-if ((process.platform === 'win32' && release().startsWith('6.1')) || process.platform === 'linux') {
-    log.info('called disableHardwareAcceleration');
-    // disabled due to issues with transparency when there are multiple gpu's on windows
-    app.disableHardwareAcceleration();
-}
-
-if (process.platform === 'win32') {
-    log.info('called setAppUserModelId');
-    app.setAppUserModelId(app.getName());
-}
-
-if (!app.requestSingleInstanceLock()) {
-    log.error('quit due to requestSingleInstanceLock');
-    app.quit();
-    process.exit(0);
-}
+app.disableHardwareAcceleration();
 
 const store = createStore();
 
