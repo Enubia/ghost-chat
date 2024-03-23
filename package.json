@@ -72,7 +72,7 @@
         "electron-store": "8.2.0",
         "electron-updater": "6.1.8",
         "lint-staged": "15.2.2",
-        "markdown-it": "14.0.0",
+        "markdown-it": "14.1.0",
         "release-it": "17.1.1",
         "rimraf": "5.0.5",
         "sass": "1.72.0",
