@@ -63,7 +63,7 @@ app.on('ready', () => {
                     new AutoUpdater(store, overlay, false);
                 }
             } else {
-                // if (store.get('updater').disableAutoUpdate) {
+                // if (store.get('updater').disableAutoUpdates) {
                 //     manualUpdater = new ManualUpdater(store, true);
                 // } else {
                 //     new AutoUpdater(store, overlay, true);
