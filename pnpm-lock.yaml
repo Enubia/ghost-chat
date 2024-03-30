@@ -81,8 +81,8 @@ devDependencies:
     specifier: 1.72.0
     version: 1.72.0
   simple-git-hooks:
-    specifier: 2.11.0
-    version: 2.11.0
+    specifier: 2.11.1
+    version: 2.11.1
   tree-kill:
     specifier: 1.2.2
     version: 1.2.2
@@ -6497,8 +6497,8 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /simple-git-hooks@2.11.0:
-    resolution: {integrity: sha512-Wab2uzjGJEL8Kx+2UY8waUSfkiolt2RbaAJWvPCjaAEXrrKoS7JqPk4STiIVl/yt3asZRUzFoK2ryhwvgh5rYw==}
+  /simple-git-hooks@2.11.1:
+    resolution: {integrity: sha512-tgqwPUMDcNDhuf1Xf6KTUsyeqGdgKMhzaH4PAZZuzguOgTl5uuyeYe/8mWgAr6IBxB5V06uqEf6Dy37gIWDtDg==}
     hasBin: true
     requiresBuild: true
     dev: true
