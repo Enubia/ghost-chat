@@ -28,7 +28,7 @@ function routeChat() {
         channel: channel.value,
     });
 
-    router.push('/chat');
+    router.push('/twitch');
 }
 </script>
 

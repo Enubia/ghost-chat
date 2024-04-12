@@ -7,10 +7,10 @@ import { ref, watch } from 'vue';
 const router = useRouter();
 const route = useRoute();
 
-const showVanish = ref(route.name === '/chat' || route.name === '/externalsource');
+const showVanish = ref(route.name === '/twitch' || route.name === '/externalsource');
 
 watch(route, () => {
-    showVanish.value = route.name === '/chat' || route.name === '/externalsource';
+    showVanish.value = route.name === '/twitch' || route.name === '/externalsource';
 });
 </script>
 
