@@ -1,6 +1,10 @@
 {
     "extends": "./tsconfig.shared.json",
     "compilerOptions": {
+        "lib": [
+            "ESNext"
+        ],
+        "moduleResolution": "Node",
         "allowSyntheticDefaultImports": true
     },
     "include": [

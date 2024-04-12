@@ -1,6 +1,7 @@
 import { rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
+import VueRouter from 'unplugin-vue-router/vite';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
 import type { UserConfigFn } from 'vite';
@@ -16,6 +17,8 @@ export default defineConfig((({ command }) => {
 
     return {
         plugins: [
+            VueRouter(),
+
             vue({
                 template: {
                     compilerOptions: {
@@ -23,6 +26,7 @@ export default defineConfig((({ command }) => {
                     },
                 },
             }),
+
             VueI18nPlugin.vite({
                 include: resolve(__dirname, './i18n/locales/**'),
                 runtimeOnly: false,

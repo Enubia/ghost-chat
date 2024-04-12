@@ -1,13 +1,20 @@
 {
     "extends": "./tsconfig.shared.json",
     "compilerOptions": {
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "moduleResolution": "Bundler",
         "types": [
-            "@intlify/unplugin-vue-i18n/messages"
+            "@intlify/unplugin-vue-i18n/messages",
+            "unplugin-vue-router/client"
         ],
         "noEmit": true,
         "isolatedModules": true
     },
     "include": [
+        "./typed-router.d.ts",
         "src",
         "shared"
     ]

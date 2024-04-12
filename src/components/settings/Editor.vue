@@ -3,7 +3,7 @@ import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import type ElectronStore from 'electron-store';
-import { inject, ref, shallowRef } from 'vue';
+import { inject, ref } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useI18n } from 'vue-i18n';
 
@@ -19,9 +19,9 @@ const code = ref();
 const success = ref<boolean | undefined>(undefined);
 const extensions: any[] = [];
 
-const view = shallowRef();
-
-extensions.push(oneDark);
+if (electronStore.get('savedWindowState.theme') === 'dark') {
+    extensions.push(oneDark);
+}
 
 if (props.type === 'css') {
     extensions.push(css());
@@ -31,10 +31,6 @@ if (props.type === 'css') {
 if (props.type === 'js') {
     extensions.push(javascript());
     code.value = electronStore.get('chatOptions').customJS;
-}
-
-function handleReady(payload: { view: any }) {
-    view.value = payload.view;
 }
 
 function enableSuccess() {
@@ -60,26 +56,20 @@ function save() {
 <template>
     <Codemirror
         v-model="code"
-        placeholder="Code goes here..."
-        :style="{ height: '400px' }"
+        :placeholder="`${props.type.toUpperCase()} goes here...`"
+        :style="{ height: '85%' }"
         :autofocus="true"
         :indent-with-tab="true"
         :tab-size="4"
         :extensions="extensions"
-        @ready="handleReady"
     />
     <div id="button-area">
-        <button
-            id="save"
-            class="outline contrast"
-            @click="save"
-        >
+        <button id="save" class="outline contrast" @click="save">
             <span id="text">
                 {{ t('settings.document.editor.button.label') }}
             </span>
             <font-awesome-icon
-                id="icon"
-                :class="success ? 'success-text' : 'contrast'"
+                id="icon" :class="success ? 'success-text' : 'contrast'"
                 :icon="`far ${success ? 'fa-circle-check' : 'fa-floppy-disk'}`"
                 :aria-hidden="true"
             />

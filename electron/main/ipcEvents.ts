@@ -155,6 +155,10 @@ export default class IpcEvents {
         ipcMain.on(IpcEvent.OpenSettings, () => {
             log.info('Opening settings window');
 
+            if (!this.store.get('settings').isOpen) {
+                this.store.set('settings.isOpen', true);
+            }
+
             if (this.settings) {
                 log.info('Focusing settings window');
 
