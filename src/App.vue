@@ -38,10 +38,6 @@ if (!$html?.getAttribute('data-theme')) {
     $html?.setAttribute('data-theme', savedWindowState.theme === 'dark' ? 'dark' : 'light');
 }
 
-function enableVanish() {
-    ipcRenderer.send(IpcEvent.Vanish);
-}
-
 function showApp() {
     document.querySelector('#app')?.removeAttribute('vanished');
     showMenuBar.value = !isTransparent && !settings.isOpen;
@@ -62,7 +58,7 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
 <template>
     <header v-if="showMenuBar">
         <DropDownMenu />
-        <MenuButtons @enable-vanish="enableVanish" />
+        <MenuButtons />
     </header>
     <main class="container-fluid">
         <router-view />

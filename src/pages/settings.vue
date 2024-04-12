@@ -7,7 +7,7 @@ import { useI18n } from 'vue-i18n';
 import type { AppStore } from '@shared/types';
 import Editor from '@components/settings/Editor.vue';
 import General from '@components/settings/General.vue';
-import KapChat from '@components/settings/KapChat.vue';
+import Twitch from '@components/settings/Twitch.vue';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
@@ -112,7 +112,7 @@ function showView<T = Views>(view: T) {
             </div>
             <div v-else-if="showOptions">
                 <article class="scroll-content">
-                    <KapChat />
+                    <Twitch />
                 </article>
             </div>
             <div v-else-if="showCSSEditor">

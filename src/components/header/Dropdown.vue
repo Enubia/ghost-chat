@@ -58,7 +58,7 @@ function toggleTheme() {
 <template>
     <details id="app-menu" class="dropdown" role="list">
         <summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-            <span><font-awesome-icon icon="fas fa-bars" /></span>
+            <span><font-awesome-icon icon="fa fa-bars" /></span>
         </summary>
         <ul role="listbox">
             <li v-if="!isStartPage">

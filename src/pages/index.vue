@@ -59,7 +59,7 @@ function closeSupport() {
             <article>
                 <div id="close">
                     <button class="ghost" @click="closeSupport">
-                        <font-awesome-icon icon="fas fa-xmark" />
+                        <font-awesome-icon icon="fa fa-xmark" />
                     </button>
                 </div>
                 <small class="center-elements text-center">
