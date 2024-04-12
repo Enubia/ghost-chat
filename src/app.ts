@@ -10,7 +10,12 @@ import type { AppStore } from '@shared/types';
 import './assets/scss/main.scss';
 import './components/fontAwesome';
 
+import { createRouter, createWebHistory } from 'vue-router/auto';
 import App from './App.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+});
 
 const electronStore = new ElectronStore<AppStore>();
 
@@ -22,6 +27,7 @@ const i18n = createI18n<false>({
 });
 
 createApp(App)
+    .use(router)
     .use(i18n)
     .component('FontAwesomeIcon', FontAwesomeIcon)
     .mount('#app');

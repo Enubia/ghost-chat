@@ -3,11 +3,9 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type ElectronStore from 'electron-store';
-import External from '@components/start/External.vue';
-import Twitch from '@components/start/Twitch.vue';
+import External from '@components/index/External.vue';
+import Twitch from '@components/index/Twitch.vue';
 import type { AppStore } from '@shared/types';
-
-defineEmits<{ (event: 'channel', channel: string): void; (event: 'source', source: string): void }>();
 
 const { t } = useI18n();
 const electronStore = inject<ElectronStore<AppStore>>('electronStore');
@@ -34,14 +32,8 @@ function closeSupport() {
             <div class="center-elements">
                 <img src="/icons/icon-128x128.png">
             </div>
-            <Twitch
-                v-if="showTwitchInput"
-                @channel="($event) => $emit('channel', $event)"
-            />
-            <External
-                v-else
-                @source="($event) => $emit('source', $event)"
-            />
+            <Twitch v-if="showTwitchInput" />
+            <External v-else />
             <div class="center-elements">
                 <small
                     v-if="showTwitchInput"

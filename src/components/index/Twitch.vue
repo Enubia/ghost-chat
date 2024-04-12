@@ -4,9 +4,9 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '@shared/types';
+import { useRouter } from 'vue-router/auto';
 
-const emit = defineEmits<{ (event: 'channel', channel: string): void }>();
-
+const router = useRouter();
 const { t } = useI18n();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
@@ -22,27 +22,25 @@ if (chatOptions.value.defaultChannel !== '') {
     channel.value = chatOptions.value.defaultChannel;
 }
 
-function emitChannel() {
-    if (channel.value !== '') {
-        emit('channel', channel.value);
-    }
+function routeChat() {
+    electronStore.set('chatOptions', {
+        ...chatOptions.value,
+        channel: channel.value,
+    });
+
+    router.push('/chat');
 }
 </script>
 
 <template>
     <div class="center-elements">
-        <input
-            id="channel"
-            v-model="channel"
-            type="text"
-            @keydown.enter="emitChannel"
-        >
+        <input id="channel" v-model="channel" type="text" @keydown.enter="routeChat">
     </div>
     <div class="center-elements">
         <small id="info">{{ t('start.twitch.input.info') }}</small>
     </div>
     <div class="center-elements">
-        <button @click="emitChannel">
+        <button @click="routeChat">
             {{ t('start.twitch.button') }}
         </button>
     </div>

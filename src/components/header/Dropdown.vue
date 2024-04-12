@@ -6,22 +6,21 @@ import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '@shared/constants';
 import type { AppStore } from '@shared/types';
+import { useRoute, useRouter } from 'vue-router/auto';
 
-defineProps<{
-    isChatPage: boolean;
-    isExternalPage: boolean;
-    isStartPage: boolean;
-    channel: string;
-}>();
+defineEmits(['vanish']);
+const route = useRoute();
+const router = useRouter();
 
-const emit = defineEmits(['showStart', 'showSettings', 'showChangelog', 'vanish']);
+const isStartPage = route.name === '/';
+const isChatPage = route.name === '/chat';
+const isExternalPage = route.name === '/externalsource';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
-type EmitType = 'chat' | 'start' | 'changelog' | 'vanish';
-type EmitKey = | 'showStart' | 'showSettings' | 'showChangelog' | 'vanish';
+type EmitType = typeof route.name | 'vanish';
 
 const isSettingsOpen = ref(false);
 
@@ -29,10 +28,9 @@ if (electronStore.get('settings').isOpen) {
     isSettingsOpen.value = true;
 }
 
-function emitAndCloseMenu(emitType: EmitType) {
+function routeAndClose(emitType: EmitType) {
     document.querySelector('details')?.removeAttribute('open');
-    const emitKey = emitType === 'vanish' ? emitType : `show${emitType.charAt(0).toUpperCase() + emitType.slice(1)}`;
-    emit(emitKey as EmitKey);
+    router.push(emitType);
 }
 
 function showSettings() {
@@ -75,7 +73,7 @@ function toggleTheme() {
         </summary>
         <ul role="listbox">
             <li v-if="!isStartPage">
-                <a @click="emitAndCloseMenu('start')">{{ t('header.dropdown.start') }}</a>
+                <a @click="routeAndClose('/')">{{ t('header.dropdown.start') }}</a>
             </li>
             <li v-if="!isSettingsOpen">
                 <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
@@ -84,13 +82,13 @@ function toggleTheme() {
                 <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
             </li>
             <li>
-                <a @click="emitAndCloseMenu('changelog')">{{ t('header.dropdown.changelog') }}</a>
+                <a @click="routeAndClose('/changelog')">{{ t('header.dropdown.changelog') }}</a>
             </li>
             <li
                 v-if="!isSettingsOpen && (isChatPage || isExternalPage)"
                 id="vanish"
             >
-                <a @click="emitAndCloseMenu('vanish')">
+                <a @click="$emit('vanish')">
                     <font-awesome-icon icon="fas fa-ghost" />
                     <span>{{ t('header.dropdown.vanish.title') }}</span>
                 </a>

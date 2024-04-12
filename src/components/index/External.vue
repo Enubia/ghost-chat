@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import type { AppStore } from '@shared/types';
+import type ElectronStore from 'electron-store';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-const emits = defineEmits<{ (event: 'source', source: string): void }>();
-
+const router = useRouter();
 const { t } = useI18n();
 
 const source = ref('');
@@ -31,11 +33,9 @@ function enableStartButton() {
     }
 }
 
-function emitSource() {
-    checkRegex();
-
+function routeExternal() {
     if (source.value !== '' && !hasRegexError.value) {
-        emits('source', source.value);
+        router.push(`/externalsource?source=${source.value}`);
     }
 }
 </script>
@@ -43,36 +43,18 @@ function emitSource() {
 <template>
     <div class="center-elements">
         <input
-            id="external-source"
-            v-model="source"
-            :class="hasRegexError ? 'error-input' : ''"
-            placeholder="https://twitch.tv"
-            type="text"
-            @change="enableStartButton"
-            @keydown.enter="emitSource"
+            id="external-source" v-model="source" :class="hasRegexError ? 'error-input' : ''"
+            placeholder="https://twitch.tv" type="text" @change="enableStartButton" @keydown.enter="routeExternal"
         >
-    </div>
-    <div
-        class="center-elements"
-    >
-        <small
-            v-if="hasRegexError"
-            id="info"
-            class="error-text text-center"
-        >
-            {{ t('start.external.input.error') }}
-        </small>
-        <small
-            v-else
-            id="info"
-        >{{ t('start.external.input.info') }}</small>
     </div>
     <div class="center-elements">
-        <button
-            id="submit"
-            disabled
-            @click="() => $emit('source', source)"
-        >
+        <small v-if="hasRegexError" id="info" class="error-text text-center">
+            {{ t('start.external.input.error') }}
+        </small>
+        <small v-else id="info">{{ t('start.external.input.info') }}</small>
+    </div>
+    <div class="center-elements">
+        <button id="submit" disabled @click="routeExternal">
             {{ t('start.external.button') }}
         </button>
     </div>

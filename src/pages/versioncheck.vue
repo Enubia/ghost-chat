@@ -4,8 +4,9 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { IpcEvent } from '@shared/constants';
+import { useRouter } from 'vue-router/auto';
 
-const emit = defineEmits(['removeLoading']);
+const router = useRouter();
 
 const { t } = useI18n();
 
@@ -13,7 +14,9 @@ const message = ref(t('version-check.loading-message'));
 const showManualDownloadMessage = ref(false);
 const version = ref('');
 
-ipcRenderer.on(IpcEvent.Recreated, () => emit('removeLoading'));
+ipcRenderer.on(IpcEvent.Recreated, () => {
+    router.push('/');
+});
 
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     message.value = t('version-check.update-available', { version: versionNumber });
@@ -25,26 +28,26 @@ ipcRenderer.on(IpcEvent.ManualUpdateRequired, (_, versionNumber) => {
 });
 
 ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
-    emit('removeLoading');
+    router.push('/');
 });
 
 ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
     message.value = t('version-check.download-finished');
     setTimeout(() => {
-        emit('removeLoading');
+        router.push('/');
     }, 3000);
 });
 
 ipcRenderer.on(IpcEvent.Error, () => {
     message.value = t('version-check.error');
     setTimeout(() => {
-        emit('removeLoading');
+        router.push('/');
     }, 3000);
 });
 
 // fallback in case something unpredictable happens
 setTimeout(() => {
-    emit('removeLoading');
+    router.push('/');
 }, 10000);
 </script>
 

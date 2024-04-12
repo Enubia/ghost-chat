@@ -1,12 +1,7 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "lib": [
-            "ESNext",
-            "DOM"
-        ],
         "module": "ESNext",
-        "moduleResolution": "Node",
         "paths": {
             "@shared/*": [
                 "./shared/*"

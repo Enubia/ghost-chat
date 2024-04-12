@@ -4,8 +4,16 @@ import { inject, onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '@shared/types';
 import WebView from '@components/WebView.vue';
+import { useRoute, useRouter } from 'vue-router/auto';
 
-const props = defineProps<{ externalSource: string }>();
+const router = useRouter();
+const route = useRoute();
+const source = route.query.source?.toString();
+
+if (!source) {
+    router.push('/');
+}
+
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 const chatOptions = electronStore.get('chatOptions');
 
@@ -28,5 +36,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <WebView :tag-source="props.externalSource" />
+    <WebView :tag-source="source as string" />
 </template>
