@@ -48,9 +48,6 @@ function vanish() {
     showMenuBar.value = false;
 }
 
-// TODO: check why the app routes back to / sometimes without any reason
-console.log('------------------ dummy to check if rerendered');
-
 ipcRenderer.on(IpcEvent.Vanish, vanish);
 ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>

@@ -12,17 +12,11 @@ defineEmits(['vanish']);
 const route = useRoute();
 const router = useRouter();
 
-const isStartPage = route.name === '/';
-
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
 
-const isSettingsOpen = ref(false);
-
-if (electronStore.get('settings').isOpen) {
-    isSettingsOpen.value = true;
-}
+const isSettingsOpen = ref(electronStore.get('settings').isOpen);
 
 type RouteName = typeof route.name;
 
@@ -53,6 +47,10 @@ function toggleTheme() {
 
     ipcRenderer.send(IpcEvent.Rerender, 'child');
 }
+
+ipcRenderer.on(IpcEvent.CloseSettings, () => {
+    isSettingsOpen.value = false;
+});
 </script>
 
 <template>
@@ -61,7 +59,7 @@ function toggleTheme() {
             <span><font-awesome-icon icon="fa fa-bars" /></span>
         </summary>
         <ul role="listbox">
-            <li v-if="!isStartPage">
+            <li>
                 <a @click="routeAndClose('/')">{{ t('header.dropdown.start') }}</a>
             </li>
             <li v-if="!isSettingsOpen">

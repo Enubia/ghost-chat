@@ -10,6 +10,7 @@ export const IpcEvent = {
     Recreated: 'recreated',
     ShowApp: 'show-app',
     RegisterNewKeybind: 'register-new-keybind',
+    CloseSettings: 'close-settings',
 
     // updater
     CheckingForUpdate: 'checking-for-update',

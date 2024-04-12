@@ -18,12 +18,11 @@ const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
 
 const showGeneral = ref(true);
-const showOptions = ref(false);
+const showTwitch = ref(false);
 const showCSSEditor = ref(false);
 const showJSEditor = ref(false);
-const showUpdates = ref(false);
 
-type Views = 'general' | 'options' | 'css' | 'js' | 'updates';
+type Views = 'general' | 'twitch' | 'css' | 'js';
 const views: {
     [key in Views]: {
         ref: Ref<boolean>;
@@ -32,8 +31,8 @@ const views: {
     general: {
         ref: showGeneral,
     },
-    options: {
-        ref: showOptions,
+    twitch: {
+        ref: showTwitch,
     },
     css: {
         ref: showCSSEditor,
@@ -41,16 +40,13 @@ const views: {
     js: {
         ref: showJSEditor,
     },
-    updates: {
-        ref: showUpdates,
-    },
 };
 
 function showView<T = Views>(view: T) {
     Object.keys(views).forEach((key) => {
         const viewKey = key as keyof typeof views;
         if (viewKey === view) {
-            document.querySelector(`#${view}`)?.setAttribute('active', 'true');
+            document.querySelector(`#${viewKey}`)?.setAttribute('active', 'true');
             views[viewKey].ref.value = true;
         } else {
             document.querySelector(`#${viewKey}`)?.removeAttribute('active');
@@ -62,66 +58,50 @@ function showView<T = Views>(view: T) {
 
 <template>
     <div id="settings">
-        <div
-            id="content"
-            class="container"
-        >
+        <div id="content" class="container">
             <aside>
                 <nav>
                     <ul>
                         <li>
-                            <a
-                                id="general"
-                                class="contrast"
-                                active
-                                @click="showView('general')"
-                            >
+                            <a id="general" class="contrast" active @click="showView('general')">
                                 {{ t('settings.aside.1') }}
                             </a>
                         </li>
                         <li>
-                            <a
-                                id="options"
-                                class="contrast"
-                                @click="showView('options')"
-                            >
+                            <a id="twitch" class="contrast" @click="showView('twitch')">
                                 {{ t('settings.aside.2') }}
                             </a>
                         </li>
                         <li>
-                            <a
-                                id="css"
-                                class="contrast"
-                                @click="showView('css')"
-                            >{{ t('settings.aside.3') }}</a>
+                            <a id="css" class="contrast" @click="showView('css')">
+                                {{ t('settings.aside.3') }}
+                            </a>
                         </li>
                         <li>
-                            <a
-                                id="js"
-                                class="contrast"
-                                @click="showView('js')"
-                            >{{ t('settings.aside.4') }}</a>
+                            <a id="js" class="contrast" @click="showView('js')">
+                                {{ t('settings.aside.4') }}
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </aside>
             <div v-if="showGeneral">
-                <article>
+                <article class="scroll-content">
                     <General />
                 </article>
             </div>
-            <div v-else-if="showOptions">
+            <div v-else-if="showTwitch">
                 <article class="scroll-content">
                     <Twitch />
                 </article>
             </div>
             <div v-else-if="showCSSEditor">
-                <article>
+                <article class="h-full">
                     <Editor type="css" />
                 </article>
             </div>
             <div v-else-if="showJSEditor">
-                <article>
+                <article class="h-full">
                     <Editor type="js" />
                 </article>
             </div>

@@ -92,7 +92,7 @@ export default class Settings {
 
             this.window = null;
             this.destroyWindow();
-            this.overlay?.webContents.send(IpcEvent.Rerender);
+            this.overlay?.webContents.send(IpcEvent.CloseSettings);
         });
     }
 }

@@ -306,8 +306,12 @@ body {
                         width: inherit;
 
                         article {
+                            &.h-full {
+                                height: 100%;
+                            }
+
                             &.scroll-content {
-                                height: 95%;
+                                height: 100%;
                                 overflow-y: auto;
                             }
 
