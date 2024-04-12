@@ -48,7 +48,7 @@ ipcRenderer.on(IpcEvent.Error, () => {
 // fallback in case something unpredictable happens
 setTimeout(() => {
     router.push('/');
-}, 10000);
+}, 5000);
 </script>
 
 <template>

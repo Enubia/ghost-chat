@@ -8,7 +8,7 @@ import DropDownMenu from '@components/header/Dropdown.vue';
 import { IpcEvent } from '@shared/constants';
 import type { AppStore } from '@shared/types';
 
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router/auto';
 
 const electronStore = new ElectronStore<AppStore>();
 
