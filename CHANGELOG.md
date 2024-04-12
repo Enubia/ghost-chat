@@ -1,11 +1,7 @@
 <p align="center">
-Like the app? Consider supporting me via PayPal or buying me a coffee!
+Like the app? Consider supporting me via PayPal!
 </p>
 <p align="center">
-<a href="https://www.buymeacoffee.com/enubia">
-<img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"
-width="200">
-</a>
 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW">
 <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
 alt="Donate with PayPal" width="145" />

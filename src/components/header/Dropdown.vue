@@ -13,14 +13,10 @@ const route = useRoute();
 const router = useRouter();
 
 const isStartPage = route.name === '/';
-const isChatPage = route.name === '/chat';
-const isExternalPage = route.name === '/externalsource';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const { t } = useI18n();
-
-type EmitType = typeof route.name | 'vanish';
 
 const isSettingsOpen = ref(false);
 
@@ -28,9 +24,11 @@ if (electronStore.get('settings').isOpen) {
     isSettingsOpen.value = true;
 }
 
-function routeAndClose(emitType: EmitType) {
+type RouteName = typeof route.name;
+
+function routeAndClose(route: RouteName) {
     document.querySelector('details')?.removeAttribute('open');
-    router.push(emitType);
+    router.push(route);
 }
 
 function showSettings() {
@@ -58,17 +56,8 @@ function toggleTheme() {
 </script>
 
 <template>
-    <details
-        id="app-menu"
-        class="dropdown"
-        role="list"
-    >
-        <summary
-            id="menu"
-            aria-haspopup="listbox"
-            role="button"
-            class="secondary"
-        >
+    <details id="app-menu" class="dropdown" role="list">
+        <summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
             <span><font-awesome-icon icon="fas fa-bars" /></span>
         </summary>
         <ul role="listbox">
@@ -83,19 +72,6 @@ function toggleTheme() {
             </li>
             <li>
                 <a @click="routeAndClose('/changelog')">{{ t('header.dropdown.changelog') }}</a>
-            </li>
-            <li
-                v-if="!isSettingsOpen && (isChatPage || isExternalPage)"
-                id="vanish"
-            >
-                <a @click="$emit('vanish')">
-                    <font-awesome-icon icon="fas fa-ghost" />
-                    <span>{{ t('header.dropdown.vanish.title') }}</span>
-                </a>
-                <span
-                    :data-tooltip="t('header.dropdown.vanish.tooltip')"
-                    data-placement="bottom"
-                >?</span>
             </li>
         </ul>
     </details>
