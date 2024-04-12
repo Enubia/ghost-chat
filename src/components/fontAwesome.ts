@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-    faPaypal,
-} from '@fortawesome/free-brands-svg-icons';
+// import {
+//     faPaypal,
+// } from '@fortawesome/free-brands-svg-icons';
 import {
     faBars,
     faChevronLeft,
@@ -25,7 +25,7 @@ library.add(
     faTrashAlt,
     faXmark,
     // -------------- Brand Icons --------------
-    faPaypal,
+    // faPaypal,
     // -------------- Regular Icons --------------
     faCheckCircle,
     faFloppyDisk,

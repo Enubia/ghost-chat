@@ -8,9 +8,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/enubia" target="_blank">
+  <!-- <a href="https://www.buymeacoffee.com/enubia" target="_blank">
     <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" width="200">
-  </a>
+  </a> -->
   <a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
     <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" width="145" />
   </a>
