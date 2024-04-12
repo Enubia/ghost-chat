@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type { AppStore } from '@shared/types';
-import type ElectronStore from 'electron-store';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 

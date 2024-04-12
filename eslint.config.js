@@ -12,6 +12,7 @@ module.exports = antfu({
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         curly: ['error', 'all'],
         'no-new': 'off',
+        'unused-imports/no-unused-imports': 'warn',
     },
 
     stylistic: {
