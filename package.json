@@ -73,7 +73,7 @@
         "electron-updater": "6.1.8",
         "lint-staged": "15.2.2",
         "markdown-it": "14.1.0",
-        "release-it": "17.1.1",
+        "release-it": "17.2.0",
         "rimraf": "5.0.5",
         "sass": "1.74.1",
         "simple-git-hooks": "2.11.1",
