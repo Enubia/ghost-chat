@@ -1,0 +1,57 @@
+<template>
+    <p class="center-elements">
+        Like the app? Consider supporting me via PayPal!
+    </p>
+
+    <p class="center-elements">
+        <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW">
+            <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
+                alt="Donate with PayPal" width="145" />
+        </a>
+    </p>
+
+    <hr>
+
+    {{#each releases}}
+        {{#if tag}}
+            <h1>{{tag}} | {{niceDate}}</h1>
+        {{else}}
+            <h2>Latest | {{niceDate}}</h2>
+        {{/if}}
+
+        {{#if summary}}
+            {{summary}}
+        {{/if}}
+
+        <ul>
+            {{#each merges}}
+                <li>
+                    {{#if commit.breaking}}<b>Breaking change:</b> {{/if}}
+                    {{message}}
+                    {{#if href}}
+                        <a href={{href}}>#{{id}}</a>
+                    {{/if}}
+                </li>
+            {{/each}}
+            {{#each fixes}}
+                <li>
+                    {{#if commit.breaking}}<b>Breaking change:</b> {{/if}}
+                    {{commit.subject}}
+                    {{#if href}}
+                        <a href={{href}}>#{{id}}</a>
+                    {{/if}}
+                </li>
+            {{/each}}
+            {{#each commits}}
+                <li>
+                    {{#if breaking}}<b>Breaking change:</b> {{/if}}
+                    {{subject}}
+                    {{#if href}}
+                        <a href={{href}}>{{shorthash}}</a>
+                    {{/if}}
+                </li>
+            {{/each}}
+            <hr>
+        </ul>
+    {{/each}}
+</template>

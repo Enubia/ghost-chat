@@ -28,7 +28,7 @@ export default defineConfig((({ command }) => {
             }),
 
             VueI18nPlugin.vite({
-                include: resolve(__dirname, './i18n/locales/**'),
+                include: resolve(process.cwd(), './i18n/locales/**'),
                 runtimeOnly: false,
             }),
 
@@ -41,7 +41,7 @@ export default defineConfig((({ command }) => {
                     vite: {
                         resolve: {
                             alias: {
-                                '@shared': resolve(__dirname, 'shared'),
+                                '@shared': resolve(process.cwd(), 'shared'),
                             },
                         },
                         build: {
