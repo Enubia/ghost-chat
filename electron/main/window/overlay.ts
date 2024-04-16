@@ -1,7 +1,8 @@
 import type { BrowserWindowConstructorOptions, WebPreferences } from 'electron';
+import type ElectronStore from 'electron-store';
+
 import { BrowserWindow, app, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
-import type ElectronStore from 'electron-store';
 
 import type { StoreKeys } from '@shared/constants';
 import type { AppStore } from '@shared/types';

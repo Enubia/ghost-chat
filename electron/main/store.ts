@@ -4,6 +4,7 @@ import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
 import type { AppStore } from '@shared/types';
+
 import { StoreDefaults } from '@shared/constants';
 
 export default function createStore() {

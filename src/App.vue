@@ -2,13 +2,13 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { provide, ref } from 'vue';
+import { useRouter } from 'vue-router/auto';
+
+import type { AppStore } from '@shared/types';
 
 import MenuButtons from '@components/header/Buttons.vue';
 import DropDownMenu from '@components/header/Dropdown.vue';
 import { IpcEvent } from '@shared/constants';
-import type { AppStore } from '@shared/types';
-
-import { useRouter } from 'vue-router/auto';
 
 const electronStore = new ElectronStore<AppStore>();
 

@@ -2,9 +2,9 @@
 import { ipcRenderer } from 'electron';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router/auto';
 
 import { IpcEvent } from '@shared/constants';
-import { useRouter } from 'vue-router/auto';
 
 const router = useRouter();
 

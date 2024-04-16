@@ -1,14 +1,17 @@
 import type { IpcMainEvent, Rectangle } from 'electron';
-import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
-import log from 'electron-log';
 import type ElectronStore from 'electron-store';
 
+import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import log from 'electron-log';
+
 import type { StoreKeys } from '@shared/constants';
-import { IpcEvent } from '@shared/constants';
 import type { AppStore, WindowState } from '@shared/types';
 
-import Settings from './window/settings';
+import { IpcEvent } from '@shared/constants';
+
 import type ManualUpdater from './manualUpdater';
+
+import Settings from './window/settings';
 
 export default class IpcEvents {
     private settings: BrowserWindow | null = null;

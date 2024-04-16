@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import { IpcEvent } from '@shared/constants';
-import { useRoute, useRouter } from 'vue-router/auto';
 import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router/auto';
+
+import { IpcEvent } from '@shared/constants';
 
 const router = useRouter();
 const route = useRoute();

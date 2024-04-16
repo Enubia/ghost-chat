@@ -13,6 +13,30 @@ module.exports = antfu({
         curly: ['error', 'all'],
         'no-new': 'off',
         'unused-imports/no-unused-imports': 'warn',
+        'perfectionist/sort-imports': ['error', {
+            type: 'natural',
+            order: 'asc',
+            groups: [
+                'customTypes',
+                ['builtin-type', 'type'],
+                'builtin',
+                'external',
+                'internal-type',
+                'internal',
+                ['parent-type', 'sibling-type', 'index-type'],
+                ['parent', 'sibling', 'index'],
+                'side-effect',
+                'object',
+                'style',
+                'unknown',
+            ],
+            'newlines-between': 'always',
+            'internal-pattern': [
+                '@components/**',
+                '@shared/**',
+                '@utils/**',
+            ],
+        }],
     },
 
     stylistic: {
@@ -22,7 +46,6 @@ module.exports = antfu({
 
     ignores: [
         '.vscode',
-        '.husky',
         'dist',
         'dist-electron',
         'node_modules',

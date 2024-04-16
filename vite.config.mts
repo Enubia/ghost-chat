@@ -1,10 +1,12 @@
+// eslint-disable-next-line import/order
+import type { UserConfigFn } from 'vite';
+
 import { rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import VueRouter from 'unplugin-vue-router/vite';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
-import type { UserConfigFn } from 'vite';
+import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';

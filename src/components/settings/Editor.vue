@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type ElectronStore from 'electron-store';
+
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import type ElectronStore from 'electron-store';
 import { inject, ref } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useI18n } from 'vue-i18n';

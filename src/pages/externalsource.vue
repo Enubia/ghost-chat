@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
+
 import { inject, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router/auto';
 
 import type { AppStore, WebviewTag } from '@shared/types';
+
 import WebView from '@components/WebView.vue';
-import { useRoute, useRouter } from 'vue-router/auto';
 
 const router = useRouter();
 const route = useRoute();

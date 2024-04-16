@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
+
 import { inject, onMounted } from 'vue';
 
 import type { AppStore, WebviewTag } from '@shared/types';
+
 import WebView from '@components/WebView.vue';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;

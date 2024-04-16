@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
+
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
-import { useRouter } from 'vue-router/auto';
 
 const router = useRouter();
 const { t } = useI18n();

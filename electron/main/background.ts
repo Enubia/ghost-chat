@@ -7,10 +7,10 @@ import { IpcEvent } from '@shared/constants';
 
 import AutoUpdater from './autoUpdater';
 import IpcEvents from './ipcEvents';
+import ManualUpdater from './manualUpdater';
 import createStore from './store';
 import TrayIcon from './trayIcon';
 import Overlay from './window/overlay';
-import ManualUpdater from './manualUpdater';
 
 if (!app.requestSingleInstanceLock()) {
     app.quit();

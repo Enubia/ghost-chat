@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
+
+import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { IpcEvent } from '@shared/constants';
 import type { AppStore } from '@shared/types';
-import { languageMappingList } from '../languageMappingList';
 
+import { IpcEvent } from '@shared/constants';
+
+import { languageMappingList } from '../languageMappingList';
 import HotKeyInput from './HotKeyInput.vue';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;

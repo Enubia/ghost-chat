@@ -1,17 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
+import { createRouter, createWebHashHistory } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
 
+import App from './App.vue';
+
 import './assets/scss/main.scss';
 import './components/fontAwesome';
-
-import { createRouter, createWebHashHistory } from 'vue-router/auto';
-import App from './App.vue';
 
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),

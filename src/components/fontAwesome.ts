@@ -3,6 +3,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 //     faPaypal,
 // } from '@fortawesome/free-brands-svg-icons';
 import {
+    faCheckCircle,
+    faFloppyDisk,
+} from '@fortawesome/free-regular-svg-icons';
+import {
     faBars,
     faChevronLeft,
     faDownLeftAndUpRightToCenter,
@@ -11,10 +15,6 @@ import {
     faTrashAlt,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-    faCheckCircle,
-    faFloppyDisk,
-} from '@fortawesome/free-regular-svg-icons';
 
 library.add(
     faBars,

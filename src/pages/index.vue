@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type ElectronStore from 'electron-store';
+
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type ElectronStore from 'electron-store';
+import type { AppStore } from '@shared/types';
+
 import External from '@components/index/External.vue';
 import Twitch from '@components/index/Twitch.vue';
-import type { AppStore } from '@shared/types';
 
 const { t } = useI18n();
 const electronStore = inject<ElectronStore<AppStore>>('electronStore');

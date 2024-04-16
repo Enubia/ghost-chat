@@ -1,9 +1,12 @@
-import { IpcEvent } from '@shared/constants';
-import type { AppStore, Updater } from '@shared/types';
+import type ElectronStore from 'electron-store';
+
 import { type BrowserWindow, ipcMain } from 'electron';
 import log from 'electron-log';
-import type ElectronStore from 'electron-store';
 import { type AppUpdater, autoUpdater } from 'electron-updater';
+
+import type { AppStore, Updater } from '@shared/types';
+
+import { IpcEvent } from '@shared/constants';
 
 export default class ManualUpdater {
     private updater: AppUpdater;

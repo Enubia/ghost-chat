@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ipcRenderer } from 'electron';
 import type ElectronStore from 'electron-store';
+
+import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router/auto';
+
+import type { AppStore } from '@shared/types';
 
 import { IpcEvent } from '@shared/constants';
-import type { AppStore } from '@shared/types';
-import { useRoute, useRouter } from 'vue-router/auto';
 
 defineEmits(['vanish']);
 const route = useRoute();
