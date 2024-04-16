@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
-import { provide, ref } from 'vue';
-import { useRouter } from 'vue-router/auto';
+import { provide, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
 
@@ -15,8 +16,12 @@ const electronStore = new ElectronStore<AppStore>();
 provide('electronStore', electronStore);
 
 const router = useRouter();
+const route = useRoute();
+
+const { t } = useI18n();
 
 const showMenuBar = ref(true);
+const showFooter = ref(true);
 
 const savedWindowState = electronStore.get('savedWindowState');
 const settings = electronStore.get('settings');
@@ -25,7 +30,6 @@ const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
 
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {
-        showMenuBar.value = false;
         router.push('/settings');
     } else {
         router.push('/versioncheck');
@@ -48,6 +52,20 @@ function vanish() {
     showMenuBar.value = false;
 }
 
+watch(route, () => {
+    if (route.name === '/twitch' || route.name === '/externalsource') {
+        showFooter.value = false;
+    } else {
+        showFooter.value = true;
+    }
+
+    if (route.name === '/settings' || route.name === '/versioncheck') {
+        showMenuBar.value = false;
+    } else {
+        showMenuBar.value = true;
+    }
+});
+
 ipcRenderer.on(IpcEvent.Vanish, vanish);
 ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>
@@ -60,7 +78,17 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
         </header>
         <main>
             <router-view />
-            <div class="border-2 border-orange-400" />
         </main>
+        <footer v-if="showFooter" class="absolute bottom-0 w-full bg-background">
+            <div id="paypal" class="center-elements py-2">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
+                    <small class="me-2">
+                        {{ t('start.supportBox.messageStart') }}
+                        {{ t('start.supportBox.messageEnd') }}
+                    </small>
+                    <font-awesome-icon :icon="['fab', 'paypal']" style="color: #009cde" />
+                </a>
+            </div>
+        </footer>
     </div>
 </template>
