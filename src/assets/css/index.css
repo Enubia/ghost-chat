@@ -59,14 +59,10 @@
     }
 }
 
-* {
-    font-family: url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap')
-}
-
 html,
 body {
     background-color: rgba(0, 0, 0, 0);
-    height: 100%;
+    width: 100%;
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -77,11 +73,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--pico-secondary);
+    background: hsl(var(--secondary));
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--pico-primary);
+    background: hsl(var(--primary));
 }
 
 .center-elements {
@@ -99,6 +95,18 @@ body {
     #app {
         &:not([vanished]) {
             background-color: hsl(var(--background));
+
+            header {
+                background-color: hsl(var(--background));
+            }
+        }
+
+        header {
+            -webkit-app-region: drag;
+
+            #app-menu {
+                -webkit-app-region: no-drag;
+            }
         }
     }
 }
