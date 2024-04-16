@@ -53,7 +53,7 @@ ipcRenderer.on(IpcEvent.ShowApp, showApp);
 </script>
 
 <template>
-    <header v-if="showMenuBar">
+    <header v-if="showMenuBar" class="flex justify-between">
         <DropDownMenu />
         <MenuButtons />
     </header>

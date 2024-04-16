@@ -35,14 +35,14 @@ function showSettings() {
 
 function toggleTheme() {
     const $html = document.querySelector('html');
-    const theme = $html?.getAttribute('data-theme');
+    const isDarkTheme = $html?.classList.contains('dark');
 
-    if (theme && theme === 'dark') {
-        $html?.setAttribute('data-theme', 'light');
+    if (isDarkTheme) {
+        $html?.classList.remove('dark');
         electronStore.set('savedWindowState.theme', 'light');
         electronStore.set('settings.savedWindowState.theme', 'light');
     } else {
-        $html?.setAttribute('data-theme', 'dark');
+        $html?.classList.add('dark');
         electronStore.set('savedWindowState.theme', 'dark');
         electronStore.set('settings.savedWindowState.theme', 'dark');
     }

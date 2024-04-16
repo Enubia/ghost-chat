@@ -58,3 +58,47 @@
         @apply bg-background text-foreground;
     }
 }
+
+* {
+    font-family: url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap')
+}
+
+html,
+body {
+    background-color: rgba(0, 0, 0, 0);
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--pico-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--pico-primary);
+}
+
+.center-elements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button, a {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+body {
+    #app {
+        &:not([vanished]) {
+            background-color: hsl(var(--background));
+        }
+    }
+}
