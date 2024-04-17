@@ -37,10 +37,9 @@ if (!autoUpdatesDisabled && !isTransparent) {
 }
 
 const $html = document.querySelector('html');
+const $app = document.querySelector('#app');
 
-if (!$html?.getAttribute('data-theme')) {
-    $html?.setAttribute('data-theme', savedWindowState.theme === 'dark' ? 'dark' : 'light');
-}
+$html?.classList.add(savedWindowState.theme || '');
 
 watch(route, () => {
     showFooter.value = !(route.name === '/twitch' || route.name === '/externalsource');
@@ -48,11 +47,11 @@ watch(route, () => {
 });
 
 ipcRenderer.on(IpcEvent.Vanish, () => {
-    document.querySelector('#app')?.setAttribute('vanished', 'true');
+    $app?.setAttribute('vanished', 'true');
     showMenuBar.value = false;
 });
 ipcRenderer.on(IpcEvent.ShowApp, () => {
-    document.querySelector('#app')?.removeAttribute('vanished');
+    $app?.removeAttribute('vanished');
     showMenuBar.value = !isTransparent && !settings.isOpen;
 });
 </script>

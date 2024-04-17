@@ -4,14 +4,15 @@ import type ElectronStore from 'electron-store';
 import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router/auto';
+import { useRouter } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
 
+import { Button } from '@components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/ui/dropdown-menu';
 import { IpcEvent } from '@shared/constants';
 
 defineEmits(['vanish']);
-const route = useRoute();
 const router = useRouter();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
@@ -19,13 +20,6 @@ const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 const { t } = useI18n();
 
 const isSettingsOpen = ref(electronStore.get('settings').isOpen);
-
-type RouteName = typeof route.name;
-
-function routeAndClose(route: RouteName) {
-    document.querySelector('details')?.removeAttribute('open');
-    router.push(route);
-}
 
 function showSettings() {
     document.querySelector('details')?.removeAttribute('open');
@@ -56,23 +50,25 @@ ipcRenderer.on(IpcEvent.CloseSettings, () => {
 </script>
 
 <template>
-    <details id="app-menu" class="dropdown" role="list">
-        <summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-            <span><font-awesome-icon icon="fa fa-bars" /></span>
-        </summary>
-        <ul role="listbox">
-            <li>
-                <a @click="routeAndClose('/')">{{ t('header.dropdown.start') }}</a>
-            </li>
-            <li v-if="!isSettingsOpen">
-                <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
-            </li>
-            <li>
-                <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
-            </li>
-            <li>
-                <a @click="routeAndClose('/changelog')">{{ t('header.dropdown.changelog') }}</a>
-            </li>
-        </ul>
-    </details>
+    <DropdownMenu id="menu">
+        <DropdownMenuTrigger as-child>
+            <Button variant="ghost">
+                <font-awesome-icon :icon="['fa', 'bars']" size="xl" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+            <DropdownMenuItem @click="router.push('/')">
+                {{ t('header.dropdown.start') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem v-if="!isSettingsOpen" @click="showSettings">
+                {{ t('header.dropdown.settings') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="toggleTheme">
+                {{ t('header.dropdown.toggle-color-theme') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="router.push('/changelog')">
+                {{ t('header.dropdown.changelog') }}
+            </DropdownMenuItem>
+        </DropdownMenuContent>
+    </DropdownMenu>
 </template>

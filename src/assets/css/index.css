@@ -103,7 +103,7 @@ body {
         header {
             -webkit-app-region: drag;
 
-            #app-menu {
+            #menu {
                 -webkit-app-region: no-drag;
             }
         }

@@ -28,7 +28,7 @@ watch(route, () => {
             <font-awesome-icon icon="fa fa-down-left-and-up-right-to-center" />
         </Button>
         <Button
-            variant="ghost" class="rounded-none hover:bg-destructive"
+            variant="ghost" class="rounded-none hover:bg-destructive hover:text-background dark:hover:text-foreground"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >
             <font-awesome-icon icon="fa fa-xmark" />
