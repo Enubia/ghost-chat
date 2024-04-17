@@ -2,10 +2,10 @@
     "name": "ghost-chat",
     "version": "2.9.0",
     "private": true,
-    "description": "Standalone twitch chat overlay",
+    "description": "A Standalone chat overlay for Twitch.tv, Kick.tv and other streaming platforms",
     "author": {
         "name": "Marco Schuster",
-        "email": "dev.enubia@mailbox.org"
+        "email": "44695100+Enubia@users.noreply.github.com"
     },
     "license": "Zlib",
     "homepage": "https://github.com/Enubia/ghost-chat#readme",
@@ -21,6 +21,8 @@
         "typescript",
         "vue",
         "twitch",
+        "kick.tv",
+        "chat",
         "transparent-overlay",
         "streaming",
         "live-stream"
