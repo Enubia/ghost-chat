@@ -29,6 +29,8 @@ const settings = electronStore.get('settings');
 const isTransparent = electronStore.get('savedWindowState').isTransparent;
 const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
 
+const chatPages = ['/twitch', '/externalsource'];
+
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {
         router.push('/settings');
@@ -43,7 +45,7 @@ const $app = document.querySelector('#app');
 $html?.classList.add(savedWindowState.theme || '');
 
 watch(route, () => {
-    showFooter.value = !(route.name === '/twitch' || route.name === '/externalsource');
+    showFooter.value = !chatPages.includes(route.name);
     showMenuBar.value = !(route.name === '/settings' || route.name === '/versioncheck');
 });
 
@@ -59,14 +61,17 @@ ipcRenderer.on(IpcEvent.ShowApp, () => {
 
 <template>
     <div class="min-h-dvh">
-        <header v-if="showMenuBar" class="flex justify-between items-center absolute w-full top-0 z-10">
+        <header
+            v-if="showMenuBar" class="flex justify-between items-center w-full top-0 z-10"
+            :class="chatPages.includes(route.name) ? 'absolute' : 'sticky'"
+        >
             <DropDownMenu />
             <MenuButtons />
         </header>
         <main>
             <router-view />
         </main>
-        <footer v-if="showFooter" class="absolute bottom-0 w-full bg-background">
+        <footer v-if="showFooter" class="sticky bottom-0 w-full bg-background">
             <div id="paypal" class="center-elements py-2">
                 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
                     <small class="me-2">

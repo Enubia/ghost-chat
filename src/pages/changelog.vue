@@ -3,5 +3,7 @@ import Generated from '@components/changelog/Generated.vue';
 </script>
 
 <template>
-    <Generated />
+    <div class="px-3 overflow-y-auto">
+        <Generated />
+    </div>
 </template>
