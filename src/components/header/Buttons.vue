@@ -9,7 +9,7 @@ import { IpcEvent } from '@shared/constants';
 const router = useRouter();
 const route = useRoute();
 
-const showVanish = ref(route.name === '/twitch' || route.name === '/externalsource');
+const showVanish = ref(false);
 
 watch(route, () => {
     showVanish.value = route.name === '/twitch' || route.name === '/externalsource';

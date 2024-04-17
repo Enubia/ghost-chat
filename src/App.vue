@@ -42,32 +42,19 @@ if (!$html?.getAttribute('data-theme')) {
     $html?.setAttribute('data-theme', savedWindowState.theme === 'dark' ? 'dark' : 'light');
 }
 
-function showApp() {
-    document.querySelector('#app')?.removeAttribute('vanished');
-    showMenuBar.value = !isTransparent && !settings.isOpen;
-}
-
-function vanish() {
-    document.querySelector('#app')?.setAttribute('vanished', 'true');
-    showMenuBar.value = false;
-}
-
 watch(route, () => {
-    if (route.name === '/twitch' || route.name === '/externalsource') {
-        showFooter.value = false;
-    } else {
-        showFooter.value = true;
-    }
-
-    if (route.name === '/settings' || route.name === '/versioncheck') {
-        showMenuBar.value = false;
-    } else {
-        showMenuBar.value = true;
-    }
+    showFooter.value = !(route.name === '/twitch' || route.name === '/externalsource');
+    showMenuBar.value = !(route.name === '/settings' || route.name === '/versioncheck');
 });
 
-ipcRenderer.on(IpcEvent.Vanish, vanish);
-ipcRenderer.on(IpcEvent.ShowApp, showApp);
+ipcRenderer.on(IpcEvent.Vanish, () => {
+    document.querySelector('#app')?.setAttribute('vanished', 'true');
+    showMenuBar.value = false;
+});
+ipcRenderer.on(IpcEvent.ShowApp, () => {
+    document.querySelector('#app')?.removeAttribute('vanished');
+    showMenuBar.value = !isTransparent && !settings.isOpen;
+});
 </script>
 
 <template>
