@@ -75,8 +75,8 @@ ipcRenderer.on(IpcEvent.ShowApp, () => {
             <div id="paypal" class="center-elements py-2">
                 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
                     <small class="me-2">
-                        {{ t('start.supportBox.messageStart') }}
-                        {{ t('start.supportBox.messageEnd') }}
+                        {{ t('supportBox.messageStart') }}
+                        {{ t('supportBox.messageEnd') }}
                     </small>
                     <Icon icon="fa6-brands:paypal" style="color: #009cde" />
                 </a>

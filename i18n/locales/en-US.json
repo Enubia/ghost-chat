@@ -13,25 +13,28 @@
         }
     },
     "start": {
+        "channel": {
+            "info": "Enter a channel, e.g. enubia1",
+            "button": "Go!"
+        },
         "twitch": {
-            "input": {
-                "info": "Enter a channel, e.g. enubia1"
-            },
-            "button": "Go!",
-            "sourceSwitcher": "Want to load something else? Click here"
+            "title": "Twitch.tv"
+        },
+        "kick": {
+            "title": "kick.tv"
         },
         "external": {
+            "title": "External Source",
+            "info": "Input any browser source you'd like to load",
             "input": {
-                "info": "Input any browser source you'd like to load",
                 "error": "This is not a valid URL, it should look like this: http(s)://(www.)twitch.tv"
             },
-            "button": "Go!",
-            "sourceSwitcher": "Want to load twitch chat? Click here!"
-        },
-        "supportBox": {
-            "messageStart": "Like the app?",
-            "messageEnd": "Consider supporting the developement!"
+            "button": "Go!"
         }
+    },
+    "supportBox": {
+        "messageStart": "Like the app?",
+        "messageEnd": "Consider supporting the developement!"
     },
     "settings": {
         "aside": {

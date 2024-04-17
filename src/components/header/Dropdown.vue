@@ -51,7 +51,7 @@ ipcRenderer.on(IpcEvent.CloseSettings, () => {
 </script>
 
 <template>
-    <DropdownMenu id="menu">
+    <DropdownMenu>
         <DropdownMenuTrigger as-child>
             <Button variant="ghost" class="rounded-none">
                 <Icon icon="fa6-solid:bars" class="text-2xl" />

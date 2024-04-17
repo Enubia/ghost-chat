@@ -35,7 +35,7 @@
     },
     "engines": {
         "node": ">=20",
-        "pnpm": ">=9"
+        "pnpm": ">=8"
     },
     "scripts": {
         "build": "vue-tsc --noEmit && vite build",
@@ -63,6 +63,7 @@
         "@picocss/pico": "2.0.6",
         "@radix-icons/vue": "1.0.0",
         "@vitejs/plugin-vue": "5.0.4",
+        "@vueuse/core": "10.9.0",
         "auto-changelog": "2.4.0",
         "autoprefixer": "10.4.19",
         "class-variance-authority": "0.7.0",

@@ -33,7 +33,7 @@ function routeChat() {
         channel: channel.value,
     });
 
-    router.push('/twitch');
+    router.push('/kick');
 }
 </script>
 
@@ -41,13 +41,13 @@ function routeChat() {
     <Dialog>
         <DialogTrigger>
             <div class="flex justify-center rounded p-4 hover:cursor-pointer hover:scale-105 bg-secondary shadow-xl">
-                <img src="../../assets/brands/twitch.png" class="h-12">
+                <img src="../../assets/brands/kick.png" class="h-12">
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">
             <DialogHeader class="text-start">
                 <DialogTitle>
-                    {{ t('start.twitch.title') }}
+                    {{ t('start.kick.title') }}
                 </DialogTitle>
                 <DialogDescription class="grid gap-3">
                     {{ t('start.channel.info') }}
