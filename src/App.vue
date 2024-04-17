@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import ElectronStore from 'electron-store';
 import { provide, ref, watch } from 'vue';
@@ -72,7 +73,7 @@ ipcRenderer.on(IpcEvent.ShowApp, () => {
                         {{ t('start.supportBox.messageStart') }}
                         {{ t('start.supportBox.messageEnd') }}
                     </small>
-                    <font-awesome-icon :icon="['fab', 'paypal']" style="color: #009cde" />
+                    <Icon icon="fa6-brands:paypal" style="color: #009cde" />
                 </a>
             </div>
         </footer>

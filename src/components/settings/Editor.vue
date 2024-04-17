@@ -69,11 +69,6 @@ function save() {
             <span id="text">
                 {{ t('settings.document.editor.button.label') }}
             </span>
-            <font-awesome-icon
-                id="icon" :class="success ? 'success-text' : 'contrast'"
-                :icon="`far ${success ? 'fa-circle-check' : 'fa-floppy-disk'}`"
-                :aria-hidden="true"
-            />
         </button>
     </div>
 </template>

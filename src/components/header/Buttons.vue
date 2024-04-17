@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
@@ -19,19 +20,20 @@ watch(route, () => {
 <template>
     <div>
         <Button v-if="showVanish" variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Vanish)">
-            <font-awesome-icon icon="fa fa-ghost" />
+            <Icon icon="fa6-solid:ghost" />
         </Button>
         <Button variant="ghost" class="rounded-none" @click="router.push('/')">
-            <font-awesome-icon icon="fa fa-chevron-left" />
+            <Icon icon="fa6-solid:chevron-left" />
         </Button>
         <Button variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Minimize)">
-            <font-awesome-icon icon="fa fa-down-left-and-up-right-to-center" />
+            <Icon icon="fa6-solid:down-left-and-up-right-to-center" />
         </Button>
         <Button
-            variant="ghost" class="rounded-none hover:bg-destructive hover:text-background dark:hover:text-foreground"
+            variant="ghost"
+            class="rounded-none hover:bg-destructive hover:text-background dark:hover:text-foreground"
             @click="ipcRenderer.send(IpcEvent.Close)"
         >
-            <font-awesome-icon icon="fa fa-xmark" />
+            <Icon icon="fa6-solid:xmark" />
         </Button>
     </div>
 </template>

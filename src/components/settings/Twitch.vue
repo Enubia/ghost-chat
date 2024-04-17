@@ -248,11 +248,6 @@ function updateBlacklist(event: Event) {
     <div id="font-size">
         <label for="range">
             <span :style="fontSizeChanged ? 'color: green;' : ''">{{ t('settings.document.kap-chat.font-size.label') }}</span>
-            <font-awesome-icon
-                v-if="fontSizeChanged"
-                id="slider-check"
-                :icon="['far', 'circle-check']"
-            />
             <input
                 id="range"
                 v-model="fontSize"

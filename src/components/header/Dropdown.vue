@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -53,7 +54,7 @@ ipcRenderer.on(IpcEvent.CloseSettings, () => {
     <DropdownMenu id="menu">
         <DropdownMenuTrigger as-child>
             <Button variant="ghost">
-                <font-awesome-icon :icon="['fa', 'bars']" size="xl" />
+                <Icon icon="fa6-solid:bars" class="text-2xl" />
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
