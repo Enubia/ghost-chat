@@ -11,7 +11,7 @@ import App from './App.vue';
 import './assets/css/index.css';
 
 const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
 });
 
 const electronStore = new ElectronStore<AppStore>();

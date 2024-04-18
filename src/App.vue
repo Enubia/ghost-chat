@@ -33,7 +33,7 @@ const chatPages = ['/twitch', '/externalsource'];
 
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {
-        router.push('/settings');
+        router.push('/settings/general');
     } else {
         router.push('/versioncheck');
     }
@@ -46,7 +46,7 @@ $html?.classList.add(savedWindowState.theme || '');
 
 watch(route, () => {
     showFooter.value = !chatPages.includes(route.name);
-    showMenuBar.value = !(route.name === '/settings' || route.name === '/versioncheck');
+    showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
 });
 
 ipcRenderer.on(IpcEvent.Vanish, () => {

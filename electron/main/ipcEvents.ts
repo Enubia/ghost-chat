@@ -170,7 +170,7 @@ export default class IpcEvents {
                 log.info('Creating settings window');
 
                 const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
-                _settings.buildWindow(indexHtml, 'settings');
+                _settings.buildWindow(indexHtml, 'settings/general');
                 this.settings = _settings.window;
                 if (this.settings && this.manualUpdater) {
                     this.manualUpdater.registerWindow(this.settings);

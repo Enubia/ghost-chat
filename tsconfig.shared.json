@@ -11,6 +11,9 @@
             ],
             "@lib/*": [
                 "./src/lib/*"
+            ],
+            "@layouts/*": [
+                "./src/layouts/*"
             ]
         },
         "resolveJsonModule": true,

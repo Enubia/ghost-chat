@@ -28,6 +28,10 @@ if (chatOptions.value.defaultChannel !== '') {
 }
 
 function routeChat() {
+    if (!channel.value.length) {
+        return;
+    }
+
     electronStore.set('chatOptions', {
         ...chatOptions.value,
         channel: channel.value,
@@ -54,7 +58,7 @@ function routeChat() {
                 </DialogDescription>
             </DialogHeader>
             <Input v-model="channel" placeholder="Channel" @keydown.enter="routeChat" />
-            <Button @click="routeChat">
+            <Button :disabled="!channel.length" @click="routeChat">
                 {{ t('start.channel.button') }}
             </Button>
         </DialogContent>

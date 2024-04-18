@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
-import type { Ref } from 'vue';
 
-import { inject, ref } from 'vue';
+import { inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '@shared/types';
 
-import Editor from '@components/settings/Editor.vue';
-import General from '@components/settings/General.vue';
-import Twitch from '@components/settings/Twitch.vue';
+import SidebarNav from '@components/settings/SidebarNav.vue';
+import { Separator } from '@components/ui/separator';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
@@ -18,48 +16,10 @@ const { t } = useI18n();
 const theme = electronStore.get('savedWindowState.theme');
 const $html = document.querySelector('html');
 $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-
-const showGeneral = ref(true);
-const showTwitch = ref(false);
-const showCSSEditor = ref(false);
-const showJSEditor = ref(false);
-
-type Views = 'general' | 'twitch' | 'css' | 'js';
-const views: {
-    [key in Views]: {
-        ref: Ref<boolean>;
-    };
-} = {
-    general: {
-        ref: showGeneral,
-    },
-    twitch: {
-        ref: showTwitch,
-    },
-    css: {
-        ref: showCSSEditor,
-    },
-    js: {
-        ref: showJSEditor,
-    },
-};
-
-function showView<T = Views>(view: T) {
-    Object.keys(views).forEach((key) => {
-        const viewKey = key as keyof typeof views;
-        if (viewKey === view) {
-            document.querySelector(`#${viewKey}`)?.setAttribute('active', 'true');
-            views[viewKey].ref.value = true;
-        } else {
-            document.querySelector(`#${viewKey}`)?.removeAttribute('active');
-            views[viewKey].ref.value = false;
-        }
-    });
-}
 </script>
 
 <template>
-    <div id="settings">
+    <!-- <div id="settings">
         <div id="content" class="container">
             <aside>
                 <nav>
@@ -106,6 +66,27 @@ function showView<T = Views>(view: T) {
                 <article class="h-full">
                     <Editor type="js" />
                 </article>
+            </div>
+        </div>
+    </div> -->
+    <div class="space-y-6 p-10 pb-16 block">
+        <div class="space-y-0.5">
+            <h2 class="text-2xl font-bold tracking-tight">
+                {{ t('settings.title') }}
+            </h2>
+            <p class="text-muted-foreground">
+                {{ t('settings.info') }}
+            </p>
+        </div>
+        <Separator class="my-6" />
+        <div class="flex space-y-8 space-x-12">
+            <aside class="w-1/6">
+                <SidebarNav />
+            </aside>
+            <div class="w-5/6">
+                <div class="space-y-6">
+                    <slot />
+                </div>
             </div>
         </div>
     </div>

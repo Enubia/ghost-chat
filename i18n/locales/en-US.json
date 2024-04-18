@@ -14,7 +14,7 @@
     },
     "start": {
         "channel": {
-            "info": "Enter a channel, e.g. enubia1",
+            "info": "Enter a channel, e.g. enubia_",
             "button": "Go!"
         },
         "twitch": {
@@ -37,17 +37,13 @@
         "messageEnd": "Consider supporting the developement!"
     },
     "settings": {
-        "aside": {
-            "1": "General",
-            "2": "Twitch",
-            "3": "Custom CSS",
-            "4": "Custom JavaScript"
-        },
+        "title": "Settings",
+        "info": "Select a category on the left to get started.",
         "document": {
             "editor": {
                 "button": {
                     "label": "Save",
-                    "loading": "Saving..."
+                    "loading": "Saving"
                 }
             },
             "general": {
@@ -58,7 +54,8 @@
                 "keybind-change": {
                     "label": "Change the Vanish Keybind",
                     "no-key": "No keybind set",
-                    "error": "Meta keys (Win or CMD) are not allowed"
+                    "meta-error": "Meta keys (Win or CMD) are not allowed",
+                    "single-key-error": "Keybind requires at least one modifier key (e.g. Shift, Alt, Ctrl)"
                 },
                 "pre-release": {
                     "checkbox-label": "Participate in pre-release versions",
@@ -79,7 +76,7 @@
                     "disable-label": "Disable Auto Updates",
                     "disable-info": "If you disable auto updates you'll have to check for updates manually from time to time.",
                     "init": "Click to check for updates now",
-                    "checking": "Checking for updates...",
+                    "checking": "Checking for updates",
                     "error": "The updater encountered an error, please report this in the discord!",
                     "update-downloaded": "A new version has been downloaded, update will be applied upon restart.",
                     "update-not-available": "No updates available",
@@ -91,8 +88,8 @@
                     },
                     "button": {
                         "init": "Check for updates",
-                        "checking": "Checking...",
-                        "update-available": "Downloading...",
+                        "checking": "Checking",
+                        "update-available": "Downloading",
                         "update-not-available": "Check for updates",
                         "update-downloaded": "Restart to apply"
                     }
@@ -134,7 +131,7 @@
                     },
                     "button": {
                         "label": "Save",
-                        "loading": "Saving..."
+                        "loading": "Saving"
                     }
                 },
                 "font-size": {

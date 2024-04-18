@@ -65,7 +65,7 @@ function routeExternal() {
                 @change="enableStartButton" @keydown.enter="routeExternal"
             />
             <small v-if="hasRegexError" class="text-red-500 text-xs">{{ t('start.external.input.error') }}</small>
-            <Button :disabled="hasError" @click="routeExternal">
+            <Button :disabled="!source.length || hasError" @click="routeExternal">
                 {{ t('start.external.button') }}
             </Button>
         </DialogContent>

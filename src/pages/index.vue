@@ -5,7 +5,7 @@ import Twitch from '@components/index/Twitch.vue';
 </script>
 
 <template>
-    <div class="grid grid-cols-2 justify-center items-center pt-20 px-20 pb-10 gap-2 min-h-full">
+    <div class="grid grid-cols-2 justify-center items-center pt-20 px-20 pb-20 gap-2 min-h-full">
         <Twitch />
         <Kick />
         <External />

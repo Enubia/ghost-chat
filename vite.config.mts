@@ -71,6 +71,7 @@ export default defineConfig((({ command }) => {
                 '@shared': resolve(__dirname, 'shared'),
                 '@components': resolve(__dirname, 'src/components'),
                 '@lib': resolve(__dirname, 'src/lib'),
+                '@layouts': resolve(__dirname, 'src/layouts'),
             },
         },
     };
