@@ -59,11 +59,11 @@ function handleKeyup(event: KeyboardEvent) {
 <template>
     <div>
         <Label for="keybind-input">
-            {{ t('settings.document.general.keybind-change.label') }}
+            {{ t('settings.general.keybind-change.label') }}
         </Label>
         <Input
             id="keybind-input"
-            :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
+            :placeholder="inputValue || t('settings.general.keybind-change.no-key')"
             :class="{
                 'border-red-500': showSingleKeyError || showMetaError,
             }"
@@ -73,10 +73,10 @@ function handleKeyup(event: KeyboardEvent) {
         />
         <div class="flex flex-col">
             <small v-if="showMetaError" class="text-red-500">
-                {{ t('settings.document.general.keybind-change.meta-error') }}
+                {{ t('settings.general.keybind-change.meta-error') }}
             </small>
             <small v-if="showSingleKeyError" class="text-red-500">
-                {{ t('settings.document.general.keybind-change.single-key-error') }}
+                {{ t('settings.general.keybind-change.single-key-error') }}
             </small>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ipcRenderer } from 'electron';
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
@@ -49,6 +49,16 @@ ipcRenderer.on(IpcEvent.Error, () => {
 setTimeout(() => {
     router.push('/');
 }, 5000);
+
+// Cleanup, otherwise we'll have memory leaks (MaxListenersExceededWarning)
+onUnmounted(() => {
+    ipcRenderer.removeAllListeners(IpcEvent.Recreated);
+    ipcRenderer.removeAllListeners(IpcEvent.UpdateAvailable);
+    ipcRenderer.removeAllListeners(IpcEvent.ManualUpdateRequired);
+    ipcRenderer.removeAllListeners(IpcEvent.UpdateNotAvailable);
+    ipcRenderer.removeAllListeners(IpcEvent.UpdateDownloaded);
+    ipcRenderer.removeAllListeners(IpcEvent.Error);
+});
 </script>
 
 <template>

@@ -37,122 +37,115 @@
     },
     "settings": {
         "title": "Settings",
-        "info": "Select a category on the left to get started.",
+        "info": "All options are saved automatically.",
         "navigation": {
             "general": "General",
-            "twitch": "Twitch.tv",
-            "css": "Custom CSS",
-            "js": "Custom JS"
+            "twitch": "Twitch.tv"
         },
-        "document": {
-            "editor": {
+        "general": {
+            "locale-change": {
+                "label": "Select your preferred language",
+                "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
+            },
+            "keybind-change": {
+                "label": "Change the Vanish Keybind",
+                "no-key": "No keybind set",
+                "meta-error": "Meta keys (Win or CMD) are not allowed",
+                "single-key-error": "Keybind requires at least one modifier key (e.g. Shift, Alt, Ctrl)"
+            },
+            "pre-release": {
+                "checkbox-label": "Participate in pre-release versions",
+                "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
+            },
+            "close-option": {
+                "checkbox-label": "Quit on close",
+                "info": "Quits the application immediately if set instead of just closing the window."
+            },
+            "hide-dock-icon-options": {
+                "checkbox-label": "Hide dock icon",
+                "info": "If set the app will not appear on the dock once it's launched."
+            },
+            "external-sources": {
+                "heading": "External Sources"
+            },
+            "auto-updates": {
+                "disable-label": "Disable Auto Updates",
+                "disable-info": "If you disable auto updates you'll have to check for updates manually from time to time.",
+                "init": "Click to check for updates now",
+                "checking": "Checking for updates",
+                "error": "The updater encountered an error, please report this in the discord!",
+                "update-downloaded": "A new version has been downloaded, update will be applied upon restart.",
+                "update-not-available": "No updates available",
+                "update-available": "A new version is available, download will start in the backround.",
+                "manual-update-required": {
+                    "before-link": "Your system does not allow auto updates. Please visit the",
+                    "link": "GhostChat release page",
+                    "after-link": "and download the update manually."
+                },
+                "button": {
+                    "init": "Check for updates",
+                    "checking": "Checking",
+                    "update-available": "Downloading",
+                    "update-not-available": "Check for updates",
+                    "update-downloaded": "Restart to apply"
+                }
+            }
+        },
+        "twitch": {
+            "default-channel": {
+                "input-label": "Default Channel",
+                "info": "In case a default channel is set the app will auto apply it for you."
+            },
+            "fade": {
+                "checkbox-label": "Fade",
+                "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen.",
+                "timeout-label": "Fade after {seconds} (seconds)"
+            },
+            "show-bots": {
+                "checkbox-label": "Show Bots",
+                "info": "KapChat hides bot messages by default, but you can turn them back on."
+            },
+            "prevent-clipping": {
+                "checkbox-label": "Prevent Clipping",
+                "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
+            },
+            "chat-theme": {
+                "label": "Chat Theme",
+                "select-options": {
+                    "none": "None",
+                    "dark": "Dark",
+                    "light": "Light",
+                    "betterTTV-Light": "BetterTTV Light",
+                    "betterTTV-Dark": "BetterTTV Dark",
+                    "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
+                    "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
+                },
+                "notification": "Please note that in order for the theme to apply you'll need to exit the chat and join again.",
+                "info": {
+                    "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
+                    "link": "KapChat generated page",
+                    "after-link": ", just open the developer tools and inspect the page."
+                },
                 "button": {
                     "label": "Save",
                     "loading": "Saving"
                 }
             },
-            "general": {
-                "locale-change": {
-                    "label": "Select your preferred language",
-                    "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
-                },
-                "keybind-change": {
-                    "label": "Change the Vanish Keybind",
-                    "no-key": "No keybind set",
-                    "meta-error": "Meta keys (Win or CMD) are not allowed",
-                    "single-key-error": "Keybind requires at least one modifier key (e.g. Shift, Alt, Ctrl)"
-                },
-                "pre-release": {
-                    "checkbox-label": "Participate in pre-release versions",
-                    "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
-                },
-                "close-option": {
-                    "checkbox-label": "Quit on close",
-                    "info": "Quits the application immediately if set instead of just closing the window."
-                },
-                "hide-dock-icon-options": {
-                    "checkbox-label": "Hide dock icon",
-                    "info": "If set the app will not appear on the dock once it's launched."
-                },
-                "external-sources": {
-                    "heading": "External Sources"
-                },
-                "auto-updates": {
-                    "disable-label": "Disable Auto Updates",
-                    "disable-info": "If you disable auto updates you'll have to check for updates manually from time to time.",
-                    "init": "Click to check for updates now",
-                    "checking": "Checking for updates",
-                    "error": "The updater encountered an error, please report this in the discord!",
-                    "update-downloaded": "A new version has been downloaded, update will be applied upon restart.",
-                    "update-not-available": "No updates available",
-                    "update-available": "A new version is available, download will start in the backround.",
-                    "manual-update-required": {
-                        "before-link": "Your system does not allow auto updates. Please visit the",
-                        "link": "GhostChat release page",
-                        "after-link": "and download the update manually."
-                    },
-                    "button": {
-                        "init": "Check for updates",
-                        "checking": "Checking",
-                        "update-available": "Downloading",
-                        "update-not-available": "Check for updates",
-                        "update-downloaded": "Restart to apply"
-                    }
-                }
+            "font-size": {
+                "label": "Chat Font Size",
+                "small": "Selected size: {fontSize}px"
             },
-            "twitch": {
-                "default-channel": {
-                    "input-label": "Default Channel",
-                    "info": "In case a default channel is set the app will auto apply it for you."
-                },
-                "fade": {
-                    "checkbox-label": "Fade",
-                    "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen."
-                },
-                "show-bots": {
-                    "checkbox-label": "Show Bots",
-                    "info": "KapChat hides bot messages by default, but you can turn them back on."
-                },
-                "prevent-clipping": {
-                    "checkbox-label": "Prevent Clipping",
-                    "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
-                },
-                "chat-theme": {
-                    "label": "Chat Theme",
-                    "select-options": {
-                        "none": "None",
-                        "dark": "Dark",
-                        "light": "Light",
-                        "betterTTV-Light": "BetterTTV Light",
-                        "betterTTV-Dark": "BetterTTV Dark",
-                        "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
-                        "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
-                    },
-                    "notification": "Please note that in order for the theme to apply you'll need to exit the chat and join again.",
-                    "info": {
-                        "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
-                        "link": "KapChat generated page",
-                        "after-link": ", just open the developer tools and inspect the page."
-                    },
-                    "button": {
-                        "label": "Save",
-                        "loading": "Saving"
-                    }
-                },
-                "font-size": {
-                    "label": "Chat Font Size",
-                    "small": "Selected size: {fontSize}px"
-                },
-                "user-blacklist": {
-                    "label": "User Blacklist",
-                    "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
-                },
-                "css-editor": {
-                    "label": "Here you can add custom CSS to style the chat to your liking. You can find the selectors on the KapChat generated page, just open the developer tools and inspect the page."
-                },
-                "js-editor": {
-                    "label": "Here you can add custom JavaScript to manipulate the chat to your liking. You can find the selectors on the KapChat generated page, just open the developer tools and inspect the page."
-                }
+            "user-blacklist": {
+                "label": "User Blacklist",
+                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Your Custom CSS",
+                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+            },
+            "js-editor": {
+                "label": "Your Custom JS",
+                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
             }
         }
     },

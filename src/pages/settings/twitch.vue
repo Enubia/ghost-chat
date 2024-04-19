@@ -9,6 +9,11 @@ import { useI18n } from 'vue-i18n';
 import type { AppStore } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
+import { Slider } from '@components/ui/slider';
+import { Switch } from '@components/ui/switch';
 import { IpcEvent } from '@shared/constants';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
@@ -26,10 +31,11 @@ const oldTheme = chatOptions.chatTheme;
 const chatTheme = ref(chatOptions.chatTheme);
 const previewLink = ref('');
 const rerender = ref(0);
-const fontSize = ref(chatOptions.fontSize || '14');
+const fontSize = ref([Number.parseInt(chatOptions.fontSize || '14')]);
 const userBlacklist = ref(chatOptions.userBlacklist || []);
-const fontSizeChanged = ref(false);
-const blacklistChanged = ref(false);
+
+const channelSuccess = ref(false);
+const blacklistSuccess = ref(false);
 
 const SearchParams = {
     THEME: 'theme',
@@ -65,41 +71,35 @@ function preview() {
     rerender.value += 1;
 
     electronStore.set('chatOptions.chatTheme', chatTheme.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveShowBotActivity() {
     electronStore.set('chatOptions.showBotActivity', showBotActivity.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFadeMessages() {
     electronStore.set('chatOptions.fadeMessages', fadeMessages.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFadeTimeout() {
     if (fadeMessages.value) {
         electronStore.set('chatOptions.fadeTimeout', fadeTimeout.value);
-        ipcRenderer.send(IpcEvent.Rerender, 'parent');
     }
 }
 
 function saveDefaultChannel() {
     electronStore.set('chatOptions.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    enableChannelSuccess();
 }
 
 function savePreventClipping() {
     electronStore.set('chatOptions.preventClipping', preventClipping.value);
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 
 function saveFontSize() {
     setTimeout(() => {
-        electronStore.set('chatOptions.fontSize', fontSize.value);
-        fontSizeChanged.value = true;
-        ipcRenderer.send(IpcEvent.Rerender, 'parent');
+        electronStore.set('chatOptions.fontSize', fontSize.value[0]);
     }, 200);
 }
 
@@ -108,158 +108,155 @@ function updateBlacklist(event: Event) {
     const blacklist = target.value.split(',').map(user => user.trim());
     electronStore.set('chatOptions.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
-    blacklistChanged.value = true;
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    enableBlacklistSuccess();
+}
+
+function enableChannelSuccess() {
+    channelSuccess.value = true;
+    setTimeout(() => {
+        channelSuccess.value = false;
+    }, 2000);
+}
+
+function enableBlacklistSuccess() {
+    blacklistSuccess.value = true;
+    setTimeout(() => {
+        blacklistSuccess.value = false;
+    }, 2000);
 }
 </script>
 
 <template>
     <Settings>
-        <div id="default-channel">
-            <label for="default-channel-input">
-                <span>{{ t('settings.document.twitch.default-channel.input-label') }}</span>
-                <input id="default-channel-input" v-model="defaultChannel" type="text" @change="saveDefaultChannel">
-            </label>
-            <small>{{ t('settings.document.twitch.default-channel.info') }}</small>
+        <div class="flex flex-col gap-2">
+            <Label for="default-channel">
+                {{ t('settings.twitch.default-channel.input-label') }}
+            </Label>
+            <Input
+                id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'"
+                @change="saveDefaultChannel"
+            />
+            <small class="text-muted-foreground">{{ t('settings.twitch.default-channel.info') }}</small>
         </div>
-        <hr>
-        <div id="fade">
-            <div class="control">
-                <label class="align-elements" for="fade-input">
-                    <input id="fade-input" v-model="fadeMessages" type="checkbox" role="switch" @change="saveFadeMessages">
-                    <span>{{ t('settings.document.twitch.fade.checkbox-label') }}</span>
-                </label>
-                <input v-if="fadeMessages" id="fade-timeout" v-model="fadeTimeout" type="number" @change="saveFadeTimeout">
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <Switch id="fade" v-model:checked="fadeMessages" @update:checked="saveFadeMessages" />
+                    <Label class="cursor-pointer" for="fade">
+                        {{ t('settings.twitch.fade.checkbox-label') }}
+                    </Label>
+                </div>
+                <div v-if="fadeMessages">
+                    <Label class="cursor-pointer" for="fade">
+                        {{ t('settings.twitch.fade.timeout-label', { seconds: fadeTimeout }) }}
+                    </Label>
+                    <Input v-model="fadeTimeout" class="w-30 text-center" type="number" @change="saveFadeTimeout" />
+                </div>
             </div>
-            <small>
-                {{ t('settings.document.twitch.fade.info') }}
-            </small>
+            <small class="text-muted-foreground">{{ t('settings.twitch.fade.info') }}</small>
         </div>
-        <hr>
-        <div id="show-bots">
-            <label class="align-elements" for="show-bots-input">
-                <input
-                    id="show-bots-input" v-model="showBotActivity" type="checkbox" role="switch"
-                    @change="saveShowBotActivity"
-                >
-                <span>{{ t('settings.document.twitch.show-bots.checkbox-label') }}</span>
-            </label>
-            <small>{{ t('settings.document.twitch.show-bots.info') }}</small>
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+                <Switch id="show-bots" v-model:checked="showBotActivity" @update:checked="saveShowBotActivity" />
+                <Label class="align-elements" for="show-bots">
+                    {{ t('settings.twitch.show-bots.checkbox-label') }}
+                </Label>
+            </div>
+            <small class="text-muted-foreground">{{ t('settings.twitch.show-bots.info') }}</small>
         </div>
-        <hr>
-        <div id="prevent-clipping">
-            <label class="align-elements" for="prevent-clipping-input">
-                <input
-                    id="prevent-clipping-input" v-model="preventClipping" type="checkbox" role="switch"
-                    @change="savePreventClipping"
-                >
-                <span>{{ t('settings.document.twitch.prevent-clipping.checkbox-label') }}</span>
-            </label>
-            <small>
-                {{ t('settings.document.twitch.prevent-clipping.info') }}
-            </small>
+        <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-2">
+                <Switch id="prevent-clipping" v-model:checked="preventClipping" @update:checked="savePreventClipping" />
+                <Label class="align-elements" for="prevent-clipping">
+                    {{ t('settings.twitch.prevent-clipping.checkbox-label') }}
+                </Label>
+            </div>
+            <small class="text-muted-foreground">{{ t('settings.twitch.prevent-clipping.info') }}</small>
         </div>
-        <hr>
-        <div id="chat-theme">
-            <label for="theme-select">
-                {{ t('settings.document.twitch.chat-theme.label') }}
-                <select id="theme-select" v-model="chatTheme" @change="preview">
-                    <option value="undefined" selected>
-                        {{ t('settings.document.twitch.chat-theme.select-options.none') }}
-                    </option>
-                    <option value="dark">
-                        {{ t('settings.document.twitch.chat-theme.select-options.dark') }}
-                    </option>
-                    <option value="light">
-                        {{ t('settings.document.twitch.chat-theme.select-options.light') }}
-                    </option>
-                    <option value="bttv_light">
-                        {{ t('settings.document.twitch.chat-theme.select-options.betterTTV-Light') }}
-                    </option>
-                    <option value="bttv_dark">
-                        {{ t('settings.document.twitch.chat-theme.select-options.betterTTV-Dark') }}
-                    </option>
-                    <option value="s0n0s_1080">
-                        {{ t('settings.document.twitch.chat-theme.select-options.s0N0S-1080P-Theme') }}
-                    </option>
-                    <option value="s0n0s_1440">
-                        {{ t('settings.document.twitch.chat-theme.select-options.s0N0S-1440P-Theme') }}
-                    </option>
-                </select>
-            </label>
-            <div v-if="chatTheme !== oldTheme">
-                <iframe id="preview" :key="rerender" :src="previewLink" />
-                <br>
-                <small class="info">
-                    {{ t('settings.document.twitch.chat-theme.notification') }}
+        <div class="flex flex-col gap-2">
+            <Label for="chat-theme">
+                {{ t('settings.twitch.chat-theme.label') }}
+            </Label>
+            <Select id="chat-theme" v-model="chatTheme" @update:model-value="preview">
+                <SelectTrigger>
+                    <SelectValue :placeholder="t('settings.twitch.chat-theme.label')" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="undefined" selected>
+                        {{ t('settings.twitch.chat-theme.select-options.none') }}
+                    </SelectItem>
+                    <SelectItem value="dark">
+                        {{ t('settings.twitch.chat-theme.select-options.dark') }}
+                    </SelectItem>
+                    <SelectItem value="light">
+                        {{ t('settings.twitch.chat-theme.select-options.light') }}
+                    </SelectItem>
+                    <SelectItem value="bttv_light">
+                        {{ t('settings.twitch.chat-theme.select-options.betterTTV-Light') }}
+                    </SelectItem>
+                    <SelectItem value="bttv_dark">
+                        {{ t('settings.twitch.chat-theme.select-options.betterTTV-Dark') }}
+                    </SelectItem>
+                    <SelectItem value="s0n0s_1080">
+                        {{ t('settings.twitch.chat-theme.select-options.s0N0S-1080P-Theme') }}
+                    </SelectItem>
+                    <SelectItem value="s0n0s_1440">
+                        {{ t('settings.twitch.chat-theme.select-options.s0N0S-1440P-Theme') }}
+                    </SelectItem>
+                </SelectContent>
+            </Select>
+            <div v-if="chatTheme !== oldTheme" class="flex flex-col">
+                <iframe :key="rerender" :src="previewLink" />
+                <small class="text-primary underline">
+                    {{ t('settings.twitch.chat-theme.notification') }}
                 </small>
             </div>
-            <small>
-                {{ t('settings.document.twitch.chat-theme.info.before-link') }}
+            <small v-if="chatTheme === 'undefined'" class="text-muted-foreground">
+                {{ t('settings.twitch.chat-theme.info.before-link') }}
                 <a
                     href="https://nightdev.com/hosted/obschat?theme=undefined&channel=esamarathon&fade=false&bot_activity=false&prevent_clipping=false"
+                    class="text-primary underline"
                 >
-                    {{ t('settings.document.twitch.chat-theme.info.link') }}
+                    {{ t('settings.twitch.chat-theme.info.link') }}
                 </a>
-                {{ t('settings.document.twitch.chat-theme.info.after-link') }}
+                {{ t('settings.twitch.chat-theme.info.after-link') }}
             </small>
         </div>
-        <hr>
-        <div id="font-size">
-            <label for="range">
-                <span
-                    :style="fontSizeChanged ? 'color: green;' : ''"
-                >{{ t('settings.document.twitch.font-size.label') }}</span>
-                <input
-                    id="range" v-model="fontSize" type="range" min="10" max="50" value="50" name="range"
-                    @mousedown="fontSizeChanged = false" @change="saveFontSize"
-                >
-            </label>
-            <span class="center-elements" :style="`font-size: ${fontSize}px`">
-                {{ t('settings.document.twitch.font-size.small', { fontSize }) }}
+        <div class="flex flex-col gap-2">
+            <Label for="range">
+                {{ t('settings.twitch.font-size.label') }}
+            </Label>
+            <Slider
+                id="range" v-model="fontSize" :min="10" :max="50" :step="1" :default-value="[50]"
+                @update:model-value="saveFontSize"
+            />
+            <span class="text-muted-foreground" :style="`font-size: ${fontSize}px`">
+                {{ t('settings.twitch.font-size.small', { fontSize: fontSize[0] }) }}
             </span>
         </div>
-        <hr>
-        <div id="user-blacklist">
-            <label for="user-blacklist-input">
-                <span>{{ t('settings.document.twitch.user-blacklist.label') }}</span>
-                <input
-                    id="user-blacklist-input" type="text" :value="userBlacklist.join(', ')"
-                    :aria-invalid="blacklistChanged ? false : undefined" @change="updateBlacklist"
-                    @input="blacklistChanged = false"
-                >
-            </label>
-            <small>{{ t('settings.document.twitch.user-blacklist.info') }}</small>
+        <div class="flex flex-col gap-2">
+            <Label for="user-blacklist">
+                {{ t('settings.twitch.user-blacklist.label') }}
+            </Label>
+            <Input
+                id="user-blacklist" :default-value="userBlacklist.join(', ')"
+                :class="blacklistSuccess && 'border-green-600 border'" @change="updateBlacklist"
+            />
+            <small class="text-muted-foreground">{{ t('settings.twitch.user-blacklist.info') }}</small>
         </div>
-        <div>
-            <label for="css-editor">
-                <span>{{ t('settings.document.twitch.css-editor.label') }}</span>
-            </label>
+        <div class="flex flex-col gap-2">
+            <Label for="css-editor">
+                {{ t('settings.twitch.css-editor.label') }}
+            </Label>
+            <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
             <Editor id="css-editor" type="css" />
         </div>
-        <div>
-            <label for="js-editor">
-                <span>{{ t('settings.document.twitch.js-editor.label') }}</span>
-            </label>
+        <div class="flex flex-col gap-2">
+            <Label for="js-editor">
+                {{ t('settings.twitch.js-editor.label') }}
+            </Label>
+            <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
             <Editor id="js-editor" type="js" />
         </div>
     </Settings>
 </template>
-
-<style lang="scss">
-#preview {
-    height: 300px;
-    width: 100%;
-    overflow: hidden;
-}
-
-.info {
-    text-decoration: underline;
-    text-transform: uppercase;
-}
-
-#slider-check {
-    color: green;
-    margin-left: 8px;
-}
-</style>
