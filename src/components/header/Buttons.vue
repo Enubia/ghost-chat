@@ -13,7 +13,7 @@ const route = useRoute();
 const showVanish = ref(false);
 
 watch(route, () => {
-    showVanish.value = route.name === '/twitch' || route.name === '/externalsource';
+    showVanish.value = route.name === '/webview/twitch' || route.name === '/webview/externalsource';
 });
 </script>
 

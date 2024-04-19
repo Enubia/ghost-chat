@@ -10,6 +10,8 @@ import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '@shared/types';
 
+import { Button } from '@components/ui/button';
+
 const props = defineProps<{ type: 'js' | 'css' }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
@@ -55,20 +57,27 @@ function save() {
 </script>
 
 <template>
-    <Codemirror
-        v-model="code"
-        :placeholder="`${props.type.toUpperCase()} goes here...`"
-        :style="{ height: '85%' }"
-        :autofocus="true"
-        :indent-with-tab="true"
-        :tab-size="4"
-        :extensions="extensions"
-    />
-    <div id="button-area">
-        <button id="save" class="outline contrast" @click="save">
-            <span id="text">
-                {{ t('settings.document.editor.button.label') }}
-            </span>
-        </button>
+    <div class="flex flex-col gap-2">
+        <div class="border-secondary border-[1px]">
+            <Codemirror
+                v-model="code"
+                :placeholder="`${props.type.toUpperCase()} goes here...`"
+                :style="{ height: '400px' }"
+                :autofocus="false"
+                :indent-with-tab="true"
+                :tab-size="4"
+                :extensions="extensions"
+            />
+        </div>
+        <div class="center-elements">
+            <Button
+                class="w-1/3"
+                @click="save"
+            >
+                <span id="text">
+                    {{ t('settings.document.editor.button.label') }}
+                </span>
+            </Button>
+        </div>
     </div>
 </template>

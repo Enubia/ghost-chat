@@ -37,7 +37,7 @@ function routeChat() {
         channel: channel.value,
     });
 
-    router.push('/twitch');
+    router.push('/webview/twitch');
 }
 </script>
 

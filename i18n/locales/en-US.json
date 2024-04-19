@@ -12,6 +12,9 @@
             }
         }
     },
+    "footer": {
+        "support": "Like the app? Consider supporting the developement!"
+    },
     "start": {
         "channel": {
             "info": "Enter a channel, e.g. enubia_",
@@ -32,13 +35,15 @@
             "button": "Go!"
         }
     },
-    "supportBox": {
-        "messageStart": "Like the app?",
-        "messageEnd": "Consider supporting the developement!"
-    },
     "settings": {
         "title": "Settings",
         "info": "Select a category on the left to get started.",
+        "navigation": {
+            "general": "General",
+            "twitch": "Twitch.tv",
+            "css": "Custom CSS",
+            "js": "Custom JS"
+        },
         "document": {
             "editor": {
                 "button": {
@@ -95,7 +100,7 @@
                     }
                 }
             },
-            "kap-chat": {
+            "twitch": {
                 "default-channel": {
                     "input-label": "Default Channel",
                     "info": "In case a default channel is set the app will auto apply it for you."
@@ -141,6 +146,12 @@
                 "user-blacklist": {
                     "label": "User Blacklist",
                     "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+                },
+                "css-editor": {
+                    "label": "Here you can add custom CSS to style the chat to your liking. You can find the selectors on the KapChat generated page, just open the developer tools and inspect the page."
+                },
+                "js-editor": {
+                    "label": "Here you can add custom JavaScript to manipulate the chat to your liking. You can find the selectors on the KapChat generated page, just open the developer tools and inspect the page."
                 }
             }
         }

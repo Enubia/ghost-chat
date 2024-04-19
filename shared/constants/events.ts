@@ -7,6 +7,7 @@ export const IpcEvent = {
     OpenSettings: 'open-settings',
     GetVersion: 'get-version',
     Rerender: 'rerender',
+    ThemeChanged: 'theme-changed',
     Recreated: 'recreated',
     ShowApp: 'show-app',
     RegisterNewKeybind: 'register-new-keybind',

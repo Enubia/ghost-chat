@@ -23,13 +23,14 @@ const { t } = useI18n();
 
 const showMenuBar = ref(true);
 const showFooter = ref(true);
+const rerenderKey = ref(0);
 
 const savedWindowState = electronStore.get('savedWindowState');
 const settings = electronStore.get('settings');
 const isTransparent = electronStore.get('savedWindowState').isTransparent;
 const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
 
-const chatPages = ['/twitch', '/externalsource'];
+const chatPages = ['/webview/twitch', '/webview/externalsource'];
 
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {
@@ -57,10 +58,22 @@ ipcRenderer.on(IpcEvent.ShowApp, () => {
     $app?.removeAttribute('vanished');
     showMenuBar.value = !isTransparent && !settings.isOpen;
 });
+ipcRenderer.on(IpcEvent.Rerender, () => {
+    rerenderKey.value += 1;
+});
+ipcRenderer.on(IpcEvent.ThemeChanged, () => {
+    const isDarkTheme = $html?.classList.contains('dark');
+
+    if (isDarkTheme) {
+        $html?.classList.remove('dark');
+    } else {
+        $html?.classList.add('dark');
+    }
+});
 </script>
 
 <template>
-    <div class="min-h-dvh">
+    <div :key="rerenderKey" class="min-h-dvh">
         <header
             v-if="showMenuBar" class="flex justify-between items-center w-full top-0 z-10"
             :class="chatPages.includes(route.name) ? 'absolute' : 'sticky'"
@@ -75,8 +88,7 @@ ipcRenderer.on(IpcEvent.ShowApp, () => {
             <div id="paypal" class="center-elements py-2">
                 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
                     <small class="me-2">
-                        {{ t('supportBox.messageStart') }}
-                        {{ t('supportBox.messageEnd') }}
+                        {{ t('footer.support') }}
                     </small>
                     <Icon icon="fa6-brands:paypal" style="color: #009cde" />
                 </a>

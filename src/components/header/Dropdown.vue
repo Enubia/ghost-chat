@@ -31,18 +31,21 @@ function showSettings() {
 function toggleTheme() {
     const $html = document.querySelector('html');
     const isDarkTheme = $html?.classList.contains('dark');
+    let theme = '';
 
     if (isDarkTheme) {
         $html?.classList.remove('dark');
         electronStore.set('savedWindowState.theme', 'light');
         electronStore.set('settings.savedWindowState.theme', 'light');
+        theme = 'light';
     } else {
         $html?.classList.add('dark');
         electronStore.set('savedWindowState.theme', 'dark');
         electronStore.set('settings.savedWindowState.theme', 'dark');
+        theme = 'dark';
     }
 
-    ipcRenderer.send(IpcEvent.Rerender, 'child');
+    ipcRenderer.send(IpcEvent.ThemeChanged, theme);
 }
 
 ipcRenderer.on(IpcEvent.CloseSettings, () => {
