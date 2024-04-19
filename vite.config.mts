@@ -6,6 +6,8 @@ import { resolve } from 'node:path';
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import vue from '@vitejs/plugin-vue';
+import autoprefixer from 'autoprefixer';
+import tailwind from 'tailwindcss';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron';
@@ -18,6 +20,11 @@ export default defineConfig((({ command }) => {
     const isBuild = command === 'build';
 
     return {
+        css: {
+            postcss: {
+                plugins: [tailwind(), autoprefixer()],
+            },
+        },
         plugins: [
             VueRouter(),
 
@@ -63,7 +70,8 @@ export default defineConfig((({ command }) => {
             alias: {
                 '@shared': resolve(__dirname, 'shared'),
                 '@components': resolve(__dirname, 'src/components'),
-                '@store': resolve(__dirname, 'src/store'),
+                '@lib': resolve(__dirname, 'src/lib'),
+                '@layouts': resolve(__dirname, 'src/layouts'),
             },
         },
     };

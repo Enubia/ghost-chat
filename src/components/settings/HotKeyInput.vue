@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
 import { KeyToCode, hotkeyToString, isFunctionKey } from '@shared/utils/keyToCode';
 
 const props = defineProps<{
@@ -10,19 +12,24 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue']);
 const { t } = useI18n();
 
-const showError = ref(false);
+const showSingleKeyError = ref(false);
+const showMetaError = ref(false);
 const inputValue = ref(props.modelValue);
 
 function handleKeyup(event: KeyboardEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-
     if (event.code === 'Backspace') {
         inputValue.value = null;
         return emit('update:modelValue', null);
     }
 
     let { code, ctrlKey, shiftKey, altKey, metaKey } = event;
+
+    if (metaKey || code === 'MetaLeft' || code === 'MetaRight') {
+        showMetaError.value = true;
+        return;
+    } else {
+        showMetaError.value = false;
+    }
 
     if (code.startsWith('Key')) {
         code = code.slice('Key'.length);
@@ -36,17 +43,13 @@ function handleKeyup(event: KeyboardEvent) {
         code = hotkeyToString([code], ctrlKey, shiftKey, altKey);
 
         if (!isFunctionKey(code) && !code.includes('+')) {
+            showSingleKeyError.value = true;
             return;
+        } else {
+            showSingleKeyError.value = false;
         }
 
         inputValue.value = code;
-
-        if (metaKey) {
-            showError.value = true;
-            return;
-        } else {
-            showError.value = false;
-        }
 
         emit('update:modelValue', code);
     }
@@ -54,18 +57,27 @@ function handleKeyup(event: KeyboardEvent) {
 </script>
 
 <template>
-    <label for="keybind-input">
-        {{ t('settings.document.general.keybind-change.label') }}
-    </label>
-    <small v-if="showError" class="error-text">
-        {{ t('settings.document.general.keybind-change.error') }}
-    </small>
-    <input
-        id="keybind-input"
-        :placeholder="inputValue || t('settings.document.general.keybind-change.no-key')"
-        name="keybind-setting"
-        :aria-invalid="showError ? 'true' : undefined"
-        @keyup="handleKeyup"
-        @keydown.prevent
-    >
+    <div>
+        <Label for="keybind-input">
+            {{ t('settings.general.keybind-change.label') }}
+        </Label>
+        <Input
+            id="keybind-input"
+            :placeholder="inputValue || t('settings.general.keybind-change.no-key')"
+            :class="{
+                'border-red-500': showSingleKeyError || showMetaError,
+            }"
+            @focusout="() => showSingleKeyError = showMetaError = false"
+            @keyup="handleKeyup"
+            @keydown.prevent
+        />
+        <div class="flex flex-col">
+            <small v-if="showMetaError" class="text-red-500">
+                {{ t('settings.general.keybind-change.meta-error') }}
+            </small>
+            <small v-if="showSingleKeyError" class="text-red-500">
+                {{ t('settings.general.keybind-change.single-key-error') }}
+            </small>
+        </div>
+    </div>
 </template>

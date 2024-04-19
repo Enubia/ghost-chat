@@ -9,8 +9,11 @@
             "@components/*": [
                 "./src/components/*"
             ],
-            "@store/*": [
-                "./src/store/*"
+            "@lib/*": [
+                "./src/lib/*"
+            ],
+            "@layouts/*": [
+                "./src/layouts/*"
             ]
         },
         "resolveJsonModule": true,

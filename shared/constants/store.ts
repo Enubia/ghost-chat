@@ -47,8 +47,6 @@ export const StoreDefaults = {
             hideDockIcon: false,
         },
         language: 'en-US',
-        showSupportBox: true,
-        launchCounter: 0,
     },
     updater: {
         channel: 'latest',

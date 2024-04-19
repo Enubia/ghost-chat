@@ -6,15 +6,12 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { inject, ref } from 'vue';
 import { Codemirror } from 'vue-codemirror';
-import { useI18n } from 'vue-i18n';
 
 import type { AppStore } from '@shared/types';
 
 const props = defineProps<{ type: 'js' | 'css' }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-
-const { t } = useI18n();
 
 const code = ref();
 const success = ref<boolean | undefined>(undefined);
@@ -55,25 +52,16 @@ function save() {
 </script>
 
 <template>
-    <Codemirror
-        v-model="code"
-        :placeholder="`${props.type.toUpperCase()} goes here...`"
-        :style="{ height: '85%' }"
-        :autofocus="true"
-        :indent-with-tab="true"
-        :tab-size="4"
-        :extensions="extensions"
-    />
-    <div id="button-area">
-        <button id="save" class="outline contrast" @click="save">
-            <span id="text">
-                {{ t('settings.document.editor.button.label') }}
-            </span>
-            <font-awesome-icon
-                id="icon" :class="success ? 'success-text' : 'contrast'"
-                :icon="`far ${success ? 'fa-circle-check' : 'fa-floppy-disk'}`"
-                :aria-hidden="true"
-            />
-        </button>
+    <div class="border-2" :class="success ? 'border-green-600' : 'border-secondary'">
+        <Codemirror
+            v-model="code"
+            :placeholder="`${props.type.toUpperCase()} goes here...`"
+            :style="{ height: '400px' }"
+            :autofocus="false"
+            :indent-with-tab="true"
+            :tab-size="4"
+            :extensions="extensions"
+            @blur="save"
+        />
     </div>
 </template>

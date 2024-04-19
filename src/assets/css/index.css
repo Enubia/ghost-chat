@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root  {
+        --background: 200.4 0% 95%;
+        --foreground: 200.4 0% 0%;
+        --card: 200.4 0% 90%;
+        --card-foreground: 200.4 0% 10%;
+        --popover: 200.4 0% 95%;
+        --popover-foreground: 200.4 95% 0%;
+        --primary: 200.4 98% 39.4%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 200.4 10% 70%;
+        --secondary-foreground: 0 0% 0%;
+        --muted: 162.4 10% 85%;
+        --muted-foreground: 200.4 0% 35%;
+        --accent: 162.4 10% 80%;
+        --accent-foreground: 200.4 0% 10%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 200.4 0% 90%;
+        --border: 200.4 20% 50%;
+        --input: 200.4 20% 18%;
+        --ring: 200.4 98% 39.4%;
+        --radius: 0.3rem;
+    }
+
+    .dark  {
+        --background: 200.4 10% 5%;
+        --foreground: 200.4 0% 90%;
+        --card: 200.4 0% 0%;
+        --card-foreground: 200.4 0% 90%;
+        --popover: 200.4 10% 5%;
+        --popover-foreground: 200.4 0% 90%;
+        --primary: 200.4 98% 39.4%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 200.4 10% 10%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 162.4 10% 15%;
+        --muted-foreground: 200.4 0% 60%;
+        --accent: 162.4 10% 15%;
+        --accent-foreground: 200.4 0% 90%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 200.4 0% 90%;
+        --border: 200.4 20% 18%;
+        --input: 200.4 20% 18%;
+        --ring: 200.4 98% 39.4%;
+        --radius: 0.3rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+html,
+body {
+    background-color: rgba(0, 0, 0, 0);
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(var(--secondary));
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+}
+
+.center-elements {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button, a {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+body {
+    #app {
+        &:not([vanished]) {
+            background-color: hsl(var(--background));
+
+            header {
+                background-color: hsl(var(--background));
+            }
+        }
+
+        header {
+            -webkit-app-region: drag;
+
+            #menu {
+                -webkit-app-region: no-drag;
+            }
+        }
+    }
+}

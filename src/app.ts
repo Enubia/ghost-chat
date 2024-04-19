@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
@@ -9,11 +8,10 @@ import type { AppStore } from '@shared/types';
 
 import App from './App.vue';
 
-import './assets/scss/main.scss';
-import './components/fontAwesome';
+import './assets/css/index.css';
 
 const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
 });
 
 const electronStore = new ElectronStore<AppStore>();
@@ -28,5 +26,4 @@ const i18n = createI18n<false>({
 createApp(App)
     .use(router)
     .use(i18n)
-    .component('FontAwesomeIcon', FontAwesomeIcon)
     .mount('#app');

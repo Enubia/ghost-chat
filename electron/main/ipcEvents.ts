@@ -23,6 +23,7 @@ export default class IpcEvents {
 
     registerEvents(indexHtml: string) {
         this.rerender();
+        this.themeChanged();
         this.close();
         this.setClickThrough();
         this.minimize();
@@ -49,6 +50,16 @@ export default class IpcEvents {
 
             if (args === 'parent' && this.overlay) {
                 this.overlay.webContents.send(IpcEvent.Rerender);
+            }
+        });
+    }
+
+    private themeChanged() {
+        ipcMain.on(IpcEvent.ThemeChanged, (_event: IpcMainEvent, theme: string) => {
+            log.info('Theme changed', theme);
+
+            if (this.settings) {
+                this.settings.webContents.send(IpcEvent.ThemeChanged, theme);
             }
         });
     }
@@ -170,7 +181,7 @@ export default class IpcEvents {
                 log.info('Creating settings window');
 
                 const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
-                _settings.buildWindow(indexHtml, 'settings');
+                _settings.buildWindow(indexHtml, 'settings/general');
                 this.settings = _settings.window;
                 if (this.settings && this.manualUpdater) {
                     this.manualUpdater.registerWindow(this.settings);

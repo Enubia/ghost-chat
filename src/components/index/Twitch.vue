@@ -7,6 +7,10 @@ import { useRouter } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
 
+import { Button } from '@components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
+import { Input } from '@components/ui/input';
+
 const router = useRouter();
 const { t } = useI18n();
 
@@ -24,25 +28,39 @@ if (chatOptions.value.defaultChannel !== '') {
 }
 
 function routeChat() {
+    if (!channel.value.length) {
+        return;
+    }
+
     electronStore.set('chatOptions', {
         ...chatOptions.value,
         channel: channel.value,
     });
 
-    router.push('/twitch');
+    router.push('/webview/twitch');
 }
 </script>
 
 <template>
-    <div class="center-elements">
-        <input id="channel" v-model="channel" type="text" @keydown.enter="routeChat">
-    </div>
-    <div class="center-elements">
-        <small id="info">{{ t('start.twitch.input.info') }}</small>
-    </div>
-    <div class="center-elements">
-        <button @click="routeChat">
-            {{ t('start.twitch.button') }}
-        </button>
-    </div>
+    <Dialog>
+        <DialogTrigger>
+            <div class="flex justify-center rounded p-4 hover:cursor-pointer hover:scale-105 bg-secondary shadow-xl">
+                <img src="../../assets/brands/twitch.png" class="h-12">
+            </div>
+        </DialogTrigger>
+        <DialogContent class="w-3/4 rounded">
+            <DialogHeader class="text-start">
+                <DialogTitle>
+                    {{ t('start.twitch.title') }}
+                </DialogTitle>
+                <DialogDescription class="grid gap-3">
+                    {{ t('start.channel.info') }}
+                </DialogDescription>
+            </DialogHeader>
+            <Input v-model="channel" placeholder="Channel" @keydown.enter="routeChat" />
+            <Button :disabled="!channel.length" @click="routeChat">
+                {{ t('start.channel.button') }}
+            </Button>
+        </DialogContent>
+    </Dialog>
 </template>

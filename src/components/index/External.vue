@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
+
+import { Button } from '@components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
+import { Input } from '@components/ui/input';
 
 const router = useRouter();
 const { t } = useI18n();
 
 const source = ref('');
 const hasRegexError = ref(false);
+const hasError = ref(false);
 
 function checkRegex() {
     if (source.value === '') {
@@ -25,35 +31,43 @@ function enableStartButton() {
     checkRegex();
 
     if (source.value !== '' && !hasRegexError.value) {
-        document.querySelector('#submit')?.removeAttribute('disabled');
+        hasError.value = false;
     } else {
-        document.querySelector('#submit')?.setAttribute('disabled', 'true');
+        hasError.value = true;
     }
 }
 
 function routeExternal() {
     if (source.value !== '' && !hasRegexError.value) {
-        router.push(`/externalsource?source=${source.value}`);
+        router.push(`/webview/externalsource?source=${source.value}`);
     }
 }
 </script>
 
 <template>
-    <div class="center-elements">
-        <input
-            id="external-source" v-model="source" :class="hasRegexError ? 'error-input' : ''"
-            placeholder="https://twitch.tv" type="text" @change="enableStartButton" @keydown.enter="routeExternal"
-        >
-    </div>
-    <div class="center-elements">
-        <small v-if="hasRegexError" id="info" class="error-text text-center">
-            {{ t('start.external.input.error') }}
-        </small>
-        <small v-else id="info">{{ t('start.external.input.info') }}</small>
-    </div>
-    <div class="center-elements">
-        <button id="submit" disabled @click="routeExternal">
-            {{ t('start.external.button') }}
-        </button>
-    </div>
+    <Dialog>
+        <DialogTrigger>
+            <div class="flex justify-center rounded p-4 hover:cursor-pointer hover:scale-105 bg-secondary shadow-xl">
+                <Icon icon="pepicons-print:internet" class="w-10 h-12 text-blue-500" />
+            </div>
+        </DialogTrigger>
+        <DialogContent class="w-3/4 rounded">
+            <DialogHeader class="text-start">
+                <DialogTitle>
+                    {{ t('start.external.title') }}
+                </DialogTitle>
+                <DialogDescription class="grid gap-3">
+                    {{ t('start.external.info') }}
+                </DialogDescription>
+            </DialogHeader>
+            <Input
+                v-model="source" :class="hasRegexError ? 'border-red-500' : ''" placeholder="https://twitch.tv"
+                @change="enableStartButton" @keydown.enter="routeExternal"
+            />
+            <small v-if="hasRegexError" class="text-red-500 text-xs">{{ t('start.external.input.error') }}</small>
+            <Button :disabled="!source.length || hasError" @click="routeExternal">
+                {{ t('start.external.button') }}
+            </Button>
+        </DialogContent>
+    </Dialog>
 </template>

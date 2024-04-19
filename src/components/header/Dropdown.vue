@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import type ElectronStore from 'electron-store';
 
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router/auto';
+import { useRouter } from 'vue-router/auto';
 
 import type { AppStore } from '@shared/types';
 
+import { Button } from '@components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/ui/dropdown-menu';
 import { IpcEvent } from '@shared/constants';
 
 defineEmits(['vanish']);
-const route = useRoute();
 const router = useRouter();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
@@ -19,13 +21,6 @@ const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 const { t } = useI18n();
 
 const isSettingsOpen = ref(electronStore.get('settings').isOpen);
-
-type RouteName = typeof route.name;
-
-function routeAndClose(route: RouteName) {
-    document.querySelector('details')?.removeAttribute('open');
-    router.push(route);
-}
 
 function showSettings() {
     document.querySelector('details')?.removeAttribute('open');
@@ -35,19 +30,22 @@ function showSettings() {
 
 function toggleTheme() {
     const $html = document.querySelector('html');
-    const theme = $html?.getAttribute('data-theme');
+    const isDarkTheme = $html?.classList.contains('dark');
+    let theme = '';
 
-    if (theme && theme === 'dark') {
-        $html?.setAttribute('data-theme', 'light');
+    if (isDarkTheme) {
+        $html?.classList.remove('dark');
         electronStore.set('savedWindowState.theme', 'light');
         electronStore.set('settings.savedWindowState.theme', 'light');
+        theme = 'light';
     } else {
-        $html?.setAttribute('data-theme', 'dark');
+        $html?.classList.add('dark');
         electronStore.set('savedWindowState.theme', 'dark');
         electronStore.set('settings.savedWindowState.theme', 'dark');
+        theme = 'dark';
     }
 
-    ipcRenderer.send(IpcEvent.Rerender, 'child');
+    ipcRenderer.send(IpcEvent.ThemeChanged, theme);
 }
 
 ipcRenderer.on(IpcEvent.CloseSettings, () => {
@@ -56,23 +54,25 @@ ipcRenderer.on(IpcEvent.CloseSettings, () => {
 </script>
 
 <template>
-    <details id="app-menu" class="dropdown" role="list">
-        <summary id="menu" aria-haspopup="listbox" role="button" class="secondary">
-            <span><font-awesome-icon icon="fa fa-bars" /></span>
-        </summary>
-        <ul role="listbox">
-            <li>
-                <a @click="routeAndClose('/')">{{ t('header.dropdown.start') }}</a>
-            </li>
-            <li v-if="!isSettingsOpen">
-                <a @click="showSettings">{{ t('header.dropdown.settings') }}</a>
-            </li>
-            <li>
-                <a @click="toggleTheme">{{ t('header.dropdown.toggle-color-theme') }}</a>
-            </li>
-            <li>
-                <a @click="routeAndClose('/changelog')">{{ t('header.dropdown.changelog') }}</a>
-            </li>
-        </ul>
-    </details>
+    <DropdownMenu>
+        <DropdownMenuTrigger as-child>
+            <Button variant="ghost" class="rounded-none">
+                <Icon icon="fa6-solid:bars" class="text-2xl" />
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+            <DropdownMenuItem @click="router.push('/')">
+                {{ t('header.dropdown.start') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem v-if="!isSettingsOpen" @click="showSettings">
+                {{ t('header.dropdown.settings') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="toggleTheme">
+                {{ t('header.dropdown.toggle-color-theme') }}
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="router.push('/changelog')">
+                {{ t('header.dropdown.changelog') }}
+            </DropdownMenuItem>
+        </DropdownMenuContent>
+    </DropdownMenu>
 </template>

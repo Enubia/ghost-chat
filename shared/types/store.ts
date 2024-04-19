@@ -34,8 +34,6 @@ export interface General {
         hideDockIcon: boolean;
     };
     language: string;
-    showSupportBox: boolean;
-    launchCounter: number;
 }
 
 export interface Updater {

@@ -1,33 +1,39 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 
+import Button from '@components/ui/button/Button.vue';
 import { IpcEvent } from '@shared/constants';
 
 const router = useRouter();
 const route = useRoute();
 
-const showVanish = ref(route.name === '/twitch' || route.name === '/externalsource');
+const showVanish = ref(false);
 
 watch(route, () => {
-    showVanish.value = route.name === '/twitch' || route.name === '/externalsource';
+    showVanish.value = route.name === '/webview/twitch' || route.name === '/webview/externalsource';
 });
 </script>
 
 <template>
-    <div id="menu-buttons">
-        <button v-if="showVanish" id="back" class="secondary" @click="ipcRenderer.send(IpcEvent.Vanish)">
-            <font-awesome-icon icon="fa fa-ghost" />
-        </button>
-        <button id="back" class="secondary" @click="router.push('/')">
-            <font-awesome-icon icon="fa fa-chevron-left" />
-        </button>
-        <button id="minimize" class="secondary" @click="ipcRenderer.send(IpcEvent.Minimize)">
-            <font-awesome-icon icon="fa fa-down-left-and-up-right-to-center" />
-        </button>
-        <button id="close" class="secondary" @click="ipcRenderer.send(IpcEvent.Close)">
-            <font-awesome-icon icon="fa fa-xmark" />
-        </button>
+    <div>
+        <Button v-if="showVanish" variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Vanish)">
+            <Icon icon="fa6-solid:ghost" />
+        </Button>
+        <Button variant="ghost" class="rounded-none" @click="router.push('/')">
+            <Icon icon="fa6-solid:chevron-left" />
+        </Button>
+        <Button variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Minimize)">
+            <Icon icon="fa6-solid:down-left-and-up-right-to-center" />
+        </Button>
+        <Button
+            variant="ghost"
+            class="rounded-none hover:bg-destructive hover:text-background dark:hover:text-foreground"
+            @click="ipcRenderer.send(IpcEvent.Close)"
+        >
+            <Icon icon="fa6-solid:xmark" />
+        </Button>
     </div>
 </template>
