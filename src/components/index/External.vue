@@ -38,6 +38,8 @@ function enableStartButton() {
 }
 
 function routeExternal() {
+    checkRegex();
+
     if (source.value !== '' && !hasRegexError.value) {
         router.push(`/webview/externalsource?source=${source.value}`);
     }
