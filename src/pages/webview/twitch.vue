@@ -3,48 +3,69 @@ import type ElectronStore from 'electron-store';
 
 import { inject, onMounted } from 'vue';
 
-import type { AppStore, WebviewTag } from '@shared/types';
-
 import WebView from '@components/WebView.vue';
+import { type AppStore, TwitchSearchParams, type WebviewTag } from '@shared/types';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const SearchParams = {
-    THEME: 'theme',
-    CHANNEL: 'channel',
-    FADE: 'fade',
-    BOT_ACTIVITY: 'bot_activity',
-    PREVENT_CLIPPING: 'prevent_clipping',
-};
+const { twitch } = electronStore.get('options');
 
-const chatOptions = electronStore.get('chatOptions');
+const link = new URL('https://www.giambaj.it/twitch/jchat/v2/');
 
-const link = new URL('https://nightdev.com/hosted/obschat');
-link.searchParams.append(SearchParams.THEME, chatOptions.chatTheme);
-link.searchParams.append(SearchParams.CHANNEL, chatOptions.channel);
+let channel = '';
 
-if (chatOptions.fadeMessages) {
-    link.searchParams.append(SearchParams.FADE, chatOptions.fadeTimeout.toString());
-} else {
-    link.searchParams.append(SearchParams.FADE, 'false');
+if (twitch.channel !== '') {
+    channel = twitch.channel;
+} else if (twitch.defaultChannel !== '') {
+    channel = twitch.defaultChannel;
 }
 
-link.searchParams.append(SearchParams.BOT_ACTIVITY, chatOptions.showBotActivity.toString());
-link.searchParams.append(SearchParams.PREVENT_CLIPPING, chatOptions.preventClipping.toString());
+link.searchParams.append(TwitchSearchParams.CHANNEL, channel);
+
+link.searchParams.append(TwitchSearchParams.SIZE, twitch.size.toString());
+
+if (twitch.animate) {
+    link.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
+}
+
+if (twitch.bots) {
+    link.searchParams.append(TwitchSearchParams.BOTS, 'true');
+}
+
+if (twitch.fade) {
+    link.searchParams.append(TwitchSearchParams.FADE, twitch.fadeTimeout.toString());
+}
+
+if (twitch.hideCommands) {
+    link.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
+}
+
+if (twitch.hideBadges) {
+    link.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
+}
+
+link.searchParams.append(TwitchSearchParams.FONT, twitch.font.toString());
+
+if (twitch.stroke) {
+    link.searchParams.append(TwitchSearchParams.STROKE, twitch.stroke.toString());
+}
+
+if (twitch.shadow) {
+    link.searchParams.append(TwitchSearchParams.SHADOW, twitch.shadow.toString());
+}
+
+if (twitch.smallCaps) {
+    link.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
+}
 
 let webView: WebviewTag;
 
-function constructInjectableCSS() {
-    const fontSize = `.chat_line { font-size: ${chatOptions.fontSize}px !important; }`;
-    return [fontSize, chatOptions.customCSS].join('\n');
-}
-
 function constructInjectableJS() {
-    if (!chatOptions.userBlacklist || chatOptions.userBlacklist.length === 0) {
-        return chatOptions.customJS;
+    if (!twitch.userBlacklist || twitch.userBlacklist.length === 0) {
+        return twitch.js;
     }
 
-    const preparedBlacklist = JSON.stringify(chatOptions.userBlacklist).toLowerCase();
+    const preparedBlacklist = JSON.stringify(twitch.userBlacklist).toLowerCase();
     const blackList = `
         const observer = new MutationObserver((changes) => {
             for (const change of changes) {
@@ -61,14 +82,14 @@ function constructInjectableJS() {
         });    
     `;
 
-    return [blackList, chatOptions.customJS].join('\n');
+    return [blackList, twitch.js].join('\n');
 }
 
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
-        await webView.insertCSS(constructInjectableCSS());
+        await webView.insertCSS(twitch.css);
     });
 
     webView.addEventListener('dom-ready', async () => {

@@ -1,5 +1,7 @@
+import type { AppStore } from '@shared/types';
+
 export const StoreKeys = {
-    ChatOptions: 'chatOptions',
+    Options: 'options',
     SavedWindowState: 'savedWindowState',
     Settings: 'settings',
     Updater: 'updater',
@@ -7,19 +9,26 @@ export const StoreKeys = {
     Keybind: 'keybind',
 } as const;
 
-export const StoreDefaults = {
-    chatOptions: {
-        channel: '',
-        fadeMessages: false,
-        fadeTimeout: 30,
-        showBotActivity: false,
-        customCSS: '',
-        customJS: '',
-        defaultChannel: '',
-        preventClipping: false,
-        chatTheme: 'undefined',
-        fontSize: '14',
-        userBlacklist: [],
+export const StoreDefaults: AppStore = {
+    options: {
+        twitch: {
+            channel: '',
+            size: 1,
+            animate: false,
+            fade: false,
+            bots: false,
+            hideCommands: false,
+            hideBadges: false,
+            font: 0,
+            stroke: false,
+            shadow: false,
+            smallCaps: false,
+            fadeTimeout: 30,
+            css: '',
+            js: '',
+            defaultChannel: '',
+            userBlacklist: [],
+        },
     },
     savedWindowState: {
         x: 0,

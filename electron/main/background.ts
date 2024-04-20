@@ -53,8 +53,6 @@ app.on('ready', () => {
             ipcEvents.registerWindow(overlay);
             ipcEvents.registerEvents(indexHtml);
 
-            store.set('general.launchCounter', store.get('general').launchCounter + 1);
-
             // only call updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
                 if (store.get('updater').disableAutoUpdates) {
