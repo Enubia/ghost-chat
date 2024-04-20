@@ -9,7 +9,9 @@ import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
 
-const props = defineProps<{ type: 'js' | 'css' }>();
+type ChatType = keyof AppStore['options'];
+
+const props = defineProps<{ type: ChatType; css?: string; js?: string }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
@@ -21,14 +23,14 @@ if (electronStore.get('savedWindowState.theme') === 'dark') {
     extensions.push(oneDark);
 }
 
-if (props.type === 'css') {
+if (props.css) {
     extensions.push(css());
-    code.value = electronStore.get('chatOptions').customCSS;
+    code.value = props.css;
 }
 
-if (props.type === 'js') {
+if (props.js) {
     extensions.push(javascript());
-    code.value = electronStore.get('chatOptions').customJS;
+    code.value = props.js;
 }
 
 function enableSuccess() {
@@ -41,11 +43,11 @@ function enableSuccess() {
 function save() {
     enableSuccess();
 
-    if (props.type === 'css') {
+    if (props.css) {
         electronStore.set('chatOptions.customCSS', code.value);
     }
 
-    if (props.type === 'js') {
+    if (props.js) {
         electronStore.set('chatOptions.customJS', code.value);
     }
 }

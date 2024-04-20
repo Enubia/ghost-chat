@@ -29,6 +29,18 @@ export const StoreDefaults: AppStore = {
             defaultChannel: '',
             userBlacklist: [],
         },
+        kick: {
+            channel: '',
+            css: '',
+            js: '',
+            defaultChannel: '',
+            userBlacklist: [],
+        },
+        external: {
+            sources: [],
+            css: '',
+            js: '',
+        },
     },
     savedWindowState: {
         x: 0,
@@ -50,7 +62,6 @@ export const StoreDefaults: AppStore = {
         },
     },
     general: {
-        externalBrowserSources: [],
         mac: {
             quitOnClose: false,
             hideDockIcon: false,

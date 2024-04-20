@@ -462,7 +462,7 @@ function enableBlacklistSuccess() {
                 {{ t('settings.twitch.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
-            <Editor id="css-editor" type="css" />
+            <Editor id="css-editor" type="twitch" :css="twitch.css" />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -470,7 +470,7 @@ function enableBlacklistSuccess() {
                 {{ t('settings.twitch.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
-            <Editor id="js-editor" type="js" />
+            <Editor id="js-editor" type="twitch" :js="twitch.js" />
         </div>
     </Settings>
 </template>

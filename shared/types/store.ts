@@ -28,6 +28,12 @@ export interface Twitch extends Shared {
 export interface Kick extends Shared {
 }
 
+export interface ExternalBrowserSource {
+    sources: string[];
+    css: string;
+    js: string;
+}
+
 export interface WindowState {
     x: number;
     y: number;
@@ -44,7 +50,6 @@ export interface Settings {
 }
 
 export interface General {
-    externalBrowserSources: string[];
     mac: {
         quitOnClose: boolean;
         hideDockIcon: boolean;
@@ -69,6 +74,7 @@ export interface AppStore {
     options: {
         twitch: Twitch;
         kick: Kick;
+        external: ExternalBrowserSource;
     };
     savedWindowState: WindowState;
     settings: Settings;

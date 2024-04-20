@@ -17,21 +17,21 @@ if (!source) {
 }
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-const chatOptions = electronStore.get('chatOptions');
+const { external } = electronStore.get('options');
 
 let webView: WebviewTag;
 
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
-    if (chatOptions.customCSS !== '') {
+    if (external.css !== '') {
         webView.addEventListener('dom-ready', async () => {
-            await webView.insertCSS(chatOptions.customCSS);
+            await webView.insertCSS(external.css);
         });
     }
 
-    if (chatOptions.customJS !== '') {
+    if (external.js !== '') {
         webView.addEventListener('dom-ready', async () => {
-            await webView.executeJavaScript(chatOptions.customJS);
+            await webView.executeJavaScript(external.js);
         });
     }
 });
