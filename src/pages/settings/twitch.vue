@@ -6,8 +6,7 @@ import { ipcRenderer } from 'electron';
 import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { StoreKeys } from '@shared/constants';
-import type { AppStore } from '@shared/types';
+import type { AppStore, Twitch } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
 import { Input } from '@components/ui/input';
@@ -104,68 +103,68 @@ function preview() {
 }
 
 function saveDefaultChannel() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            defaultChannel: defaultChannel.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        defaultChannel: defaultChannel.value,
+    };
+
+    electronStore.set('options.twitch', data);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
 function saveAnimate() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            animate: animate.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        animate: animate.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveFadeMessages() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            fade: fade.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        fade: fade.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveShowBotActivity() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            bots: bots.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        bots: bots.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveHideCommands() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            hideCommands: hideCommands.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        hideCommands: hideCommands.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveHideBadges() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            hideBadges: hideBadges.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        hideBadges: hideBadges.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveFont() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            font: Number.parseInt(font.value) as typeof twitch.font,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        font: Number.parseInt(font.value) as typeof twitch.font,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveStroke() {
@@ -180,12 +179,12 @@ function saveStroke() {
             break;
     }
 
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            stroke: value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        stroke: value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveShadow() {
@@ -199,31 +198,31 @@ function saveShadow() {
             value = Number.parseInt(shadow.value) as typeof twitch.shadow;
             break;
     }
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            shadow: value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        shadow: value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveSmallCaps() {
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            smallCaps: smallCaps.value,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        smallCaps: smallCaps.value,
+    };
+
+    electronStore.set('options.twitch', data);
 }
 
 function saveSize() {
     setTimeout(() => {
-        electronStore.set<typeof StoreKeys.Options>('options', {
-            twitch: {
-                ...electronStore.get('options').twitch,
-                size: Number.parseInt(size.value) as typeof twitch.size,
-            },
-        });
+        const data: Twitch = {
+            ...electronStore.get('options').twitch,
+            size: Number.parseInt(size.value) as typeof twitch.size,
+        };
+
+        electronStore.set('options.twitch', data);
         preview();
     }, 200);
 }
@@ -231,24 +230,25 @@ function saveSize() {
 function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
-    electronStore.set<typeof StoreKeys.Options>('options', {
-        twitch: {
-            ...electronStore.get('options').twitch,
-            userBlacklist: blacklist,
-        },
-    });
+    const data: Twitch = {
+        ...electronStore.get('options').twitch,
+        userBlacklist: blacklist,
+    };
+
+    electronStore.set('options.twitch', data);
     userBlacklist.value = blacklist;
+
     enableBlacklistSuccess();
 }
 
 function saveFadeTimeout() {
     if (fade.value) {
-        electronStore.set<typeof StoreKeys.Options>('options', {
-            twitch: {
-                ...electronStore.get('options').twitch,
-                fadeTimeout: fadeTimeout.value,
-            },
-        });
+        const data: Twitch = {
+            ...electronStore.get('options').twitch,
+            fadeTimeout: fadeTimeout.value,
+        };
+
+        electronStore.set('options.twitch', data);
     }
 }
 
