@@ -5,7 +5,7 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore, Twitch } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
@@ -16,15 +16,15 @@ const { t } = useI18n();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const chatOptions = ref(electronStore.get('chatOptions'));
+const { twitch } = electronStore.get('options');
 const channel = ref('');
 
-if (chatOptions.value.channel !== '') {
-    channel.value = chatOptions.value.channel;
+if (twitch.channel !== '') {
+    channel.value = twitch.channel;
 }
 
-if (chatOptions.value.defaultChannel !== '') {
-    channel.value = chatOptions.value.defaultChannel;
+if (twitch.defaultChannel !== '') {
+    channel.value = twitch.defaultChannel;
 }
 
 function routeChat() {
@@ -32,10 +32,12 @@ function routeChat() {
         return;
     }
 
-    electronStore.set('chatOptions', {
-        ...chatOptions.value,
+    const data: Twitch = {
+        ...twitch,
         channel: channel.value,
-    });
+    };
+
+    electronStore.set('options.twitch', data);
 
     router.push('/webview/twitch');
 }

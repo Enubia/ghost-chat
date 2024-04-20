@@ -119,7 +119,7 @@ onUnmounted(() => {
                     @update:checked="(checked) => electronStore.set('updater.channel', checked ? 'beta' : 'latest')"
                 />
                 <Label for="beta-updates" class="cursor-pointer">
-                    {{ t('settings.general.pre-release.checkbox-label') }}
+                    {{ t('settings.general.pre-release.label') }}
                 </Label>
             </div>
             <small class="text-muted-foreground">
@@ -169,7 +169,7 @@ onUnmounted(() => {
                     @update:checked="(checked) => electronStore.set('general.mac.quitOnClose', checked)"
                 />
                 <Label for="quit-one-close">
-                    {{ t('settings.general.close-option.checkbox-label') }}
+                    {{ t('settings.general.close-option.label') }}
                 </Label>
             </div>
             <small class="text-muted-foreground">{{ t('settings.general.close-option.info') }}</small>
@@ -181,7 +181,7 @@ onUnmounted(() => {
                     @update:checked="(checked) => electronStore.set('general.mac.hideDockIcon', checked)"
                 />
                 <Label for="hide-dock-icon">
-                    {{ t('settings.general.hide-dock-icon-options.checkbox-label') }}
+                    {{ t('settings.general.hide-dock-icon-options.label') }}
                 </Label>
             </div>
             <small class="text-muted-foreground">{{ t('settings.general.hide-dock-icon-options.info') }}</small>
