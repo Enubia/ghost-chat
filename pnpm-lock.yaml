@@ -111,8 +111,8 @@ importers:
         specifier: 5.2.8
         version: 5.2.8(@types/node@20.11.21)(sass@1.75.0)
       vite-plugin-electron:
-        specifier: 0.28.4
-        version: 0.28.4(vite-plugin-electron-renderer@0.14.5)
+        specifier: 0.28.5
+        version: 0.28.5(vite-plugin-electron-renderer@0.14.5)
       vite-plugin-electron-renderer:
         specifier: 0.14.5
         version: 0.14.5
@@ -4091,8 +4091,8 @@ packages:
   vite-plugin-electron-renderer@0.14.5:
     resolution: {integrity: sha512-EQ7ORuPp8vFPCqfuGnVo7d36fXS0IFH4/RUlKb1drseix3TQEPcgwEuFADdXBxRgqMp70njz/1m0kdf5lEsm8w==}
 
-  vite-plugin-electron@0.28.4:
-    resolution: {integrity: sha512-OcWQQZk1ygkG4g/nj6cQ0zMu5q9yPcxEtDNcY8xagWqjQ3PxZbWuf1VyElZSo16GqPa71vBzoz+XAukia/TgNQ==}
+  vite-plugin-electron@0.28.5:
+    resolution: {integrity: sha512-Z7v+pLSKQ0XJtCh0BrrRJI7t82lljJeWkMy/oejTDtpl19HxwGQ3G+d2P8WGZtZbgj50v8ZHv7hG51AEB1ZFqA==}
     peerDependencies:
       vite-plugin-electron-renderer: '*'
     peerDependenciesMeta:
@@ -8807,7 +8807,7 @@ snapshots:
 
   vite-plugin-electron-renderer@0.14.5: {}
 
-  vite-plugin-electron@0.28.4(vite-plugin-electron-renderer@0.14.5):
+  vite-plugin-electron@0.28.5(vite-plugin-electron-renderer@0.14.5):
     optionalDependencies:
       vite-plugin-electron-renderer: 0.14.5
 
