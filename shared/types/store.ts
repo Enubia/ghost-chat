@@ -1,4 +1,12 @@
-export interface Twitch {
+interface Shared {
+    channel: string;
+    css: string;
+    js: string;
+    defaultChannel: string;
+    userBlacklist: string[];
+}
+
+export interface Twitch extends Shared {
     channel: string;
     size: 1 | 2 | 3;
     animate: boolean;
@@ -15,6 +23,9 @@ export interface Twitch {
     js: string;
     defaultChannel: string;
     userBlacklist: string[];
+}
+
+export interface Kick extends Shared {
 }
 
 export interface WindowState {
@@ -57,6 +68,7 @@ export interface AppStore {
     chatOptions?: Record<string, any>;
     options: {
         twitch: Twitch;
+        kick: Kick;
     };
     savedWindowState: WindowState;
     settings: Settings;
