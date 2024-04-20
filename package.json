@@ -81,7 +81,7 @@
         "rimraf": "5.0.5",
         "sass": "1.75.0",
         "simple-git-hooks": "2.11.1",
-        "tailwind-merge": "2.2.2",
+        "tailwind-merge": "2.3.0",
         "tailwindcss": "3.4.3",
         "tailwindcss-animate": "1.0.7",
         "tree-kill": "1.2.2",
