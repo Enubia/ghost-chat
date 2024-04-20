@@ -1,7 +1,0 @@
-// pico import
-@use '@picocss/pico/scss/pico' with (
-    $theme-color: 'indigo'
-);
-
-// custom
-@import 'versionCheck';
