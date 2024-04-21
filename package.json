@@ -88,7 +88,7 @@
         "typescript": "5.4.5",
         "unplugin-vue-router": "0.8.6",
         "vite": "5.2.10",
-        "vite-plugin-electron": "0.28.5",
+        "vite-plugin-electron": "0.28.6",
         "vite-plugin-electron-renderer": "0.14.5",
         "vue": "3.4.23",
         "vue-codemirror": "6.1.1",
