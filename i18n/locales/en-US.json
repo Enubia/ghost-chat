@@ -40,7 +40,8 @@
         "info": "All options are saved automatically.",
         "navigation": {
             "general": "General",
-            "twitch": "Twitch.tv"
+            "twitch": "Twitch.tv",
+            "kick": "kick.com"
         },
         "general": {
             "locale-change": {
@@ -172,6 +173,67 @@
             "small-caps": {
                 "label": "Caps",
                 "info": "Converts chat text to all capital letters."
+            },
+            "user-blacklist": {
+                "label": "User Blacklist",
+                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Your Custom CSS",
+                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+            },
+            "js-editor": {
+                "label": "Your Custom JS",
+                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+            }
+        },
+        "kick": {
+            "default-channel": {
+                "input-label": "Default Channel",
+                "info": "In case a default channel is set the app will auto apply it for you."
+            },
+            "font-size": {
+                "label": "Font Size",
+                "select-label": "Choose a font size",
+                "select-options": {
+                    "small": "Small",
+                    "medium": "Medium",
+                    "large": "Large"
+                },
+                "info": "Changes the size of the chat lines."
+            },
+            "animate": {
+                "label": "Animate",
+                "info": "Enables chat animations."
+            },
+            "fade": {
+                "label": "Fade",
+                "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen.",
+                "timeout-label": "Fade after {seconds} (seconds)"
+            },
+            "hide-bots": {
+                "label": "Show bots",
+                "info": "KapChat hides bot messages by default, but you can turn them back on."
+            },
+            "hide-commands": {
+                "label": "Hide commands",
+                "info": "Hides messages that start with a command character (e.g. !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Hide badges",
+                "info": "Hides badges from chat messages."
+            },
+            "stroke": {
+                "label": "Stroke",
+                "select-label": "Choose a stroke",
+                "select-options": {
+                    "off": "Off",
+                    "thin": "Thin",
+                    "medium": "Medium",
+                    "thick": "Thick",
+                    "thicker": "Thicker"
+                },
+                "info": "Adds a stroke to the chat text."
             },
             "user-blacklist": {
                 "label": "User Blacklist",

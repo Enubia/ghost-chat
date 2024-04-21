@@ -21,9 +21,11 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/changelog': RouteRecordInfo<'/changelog', '/changelog', Record<never, never>, Record<never, never>>,
     '/settings/general': RouteRecordInfo<'/settings/general', '/settings/general', Record<never, never>, Record<never, never>>,
+    '/settings/kick': RouteRecordInfo<'/settings/kick', '/settings/kick', Record<never, never>, Record<never, never>>,
     '/settings/twitch': RouteRecordInfo<'/settings/twitch', '/settings/twitch', Record<never, never>, Record<never, never>>,
     '/versioncheck': RouteRecordInfo<'/versioncheck', '/versioncheck', Record<never, never>, Record<never, never>>,
     '/webview/externalsource': RouteRecordInfo<'/webview/externalsource', '/webview/externalsource', Record<never, never>, Record<never, never>>,
+    '/webview/kick': RouteRecordInfo<'/webview/kick', '/webview/kick', Record<never, never>, Record<never, never>>,
     '/webview/twitch': RouteRecordInfo<'/webview/twitch', '/webview/twitch', Record<never, never>, Record<never, never>>,
   }
 }

@@ -30,7 +30,7 @@ const settings = electronStore.get('settings');
 const isTransparent = electronStore.get('savedWindowState').isTransparent;
 const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
 
-const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/versioncheck'];
+const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
 
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {

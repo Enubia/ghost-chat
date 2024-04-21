@@ -15,8 +15,8 @@ const props = defineProps<{ type: ChatType; css?: string; js?: string }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const code = ref();
-const success = ref<boolean | undefined>(undefined);
+const code = ref('');
+const success = ref<boolean>(false);
 const extensions: any[] = [];
 
 if (electronStore.get('savedWindowState.theme') === 'dark') {
@@ -43,12 +43,12 @@ function enableSuccess() {
 function save() {
     enableSuccess();
 
-    if (props.css) {
-        electronStore.set('chatOptions.customCSS', code.value);
+    if (typeof props.css === 'string') {
+        electronStore.set(`options.${props.type}.css`, code.value);
     }
 
-    if (props.js) {
-        electronStore.set('chatOptions.customJS', code.value);
+    if (typeof props.js === 'string') {
+        electronStore.set(`options.${props.type}.js`, code.value);
     }
 }
 </script>
@@ -57,7 +57,7 @@ function save() {
     <div class="border-2" :class="success ? 'border-green-600' : 'border-secondary'">
         <Codemirror
             v-model="code"
-            :placeholder="`${props.type.toUpperCase()} goes here...`"
+            :placeholder="`${Object.keys(props)[1].toUpperCase()} goes here...`"
             :style="{ height: '400px' }"
             :autofocus="false"
             :indent-with-tab="true"

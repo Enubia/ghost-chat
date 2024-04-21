@@ -77,9 +77,9 @@ function constructInjectableJS() {
             }
         });
 
-        observer.observe(document.querySelector('#chat_box'), {
+        observer.observe(document.querySelector('#chat_container'), {
             childList: true,
-        });    
+        });
     `;
 
     return [blackList, twitch.js].join('\n');
@@ -89,11 +89,13 @@ onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
-        await webView.insertCSS(twitch.css);
-    });
+        if (twitch.css.length) {
+            await webView.insertCSS(twitch.css);
+        }
 
-    webView.addEventListener('dom-ready', async () => {
-        await webView.executeJavaScript(constructInjectableJS());
+        if (twitch.js.length) {
+            await webView.executeJavaScript(constructInjectableJS());
+        }
     });
 });
 </script>
