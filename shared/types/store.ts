@@ -1,16 +1,16 @@
 interface Shared {
     channel: string;
+    fade: boolean;
     css: string;
     js: string;
     defaultChannel: string;
     userBlacklist: string[];
+    fadeTimeout: number;
 }
 
 export interface Twitch extends Shared {
-    channel: string;
     size: 1 | 2 | 3;
     animate: boolean;
-    fade: boolean;
     bots: boolean;
     hideCommands: boolean;
     hideBadges: boolean;
@@ -18,14 +18,15 @@ export interface Twitch extends Shared {
     stroke: false | 1 | 2 | 3 | 4;
     shadow: false | 1 | 2 | 3;
     smallCaps: boolean;
-    fadeTimeout: number;
-    css: string;
-    js: string;
-    defaultChannel: string;
-    userBlacklist: string[];
 }
 
 export interface Kick extends Shared {
+    fontSize: 'Small' | 'Medium' | 'Large';
+    stroke: 'Off' | 'Thin' | 'Medium' | 'Thick' | 'Thicker';
+    animate: boolean;
+    badges: boolean;
+    commands: boolean;
+    bots: boolean;
 }
 
 export interface ExternalBrowserSource {

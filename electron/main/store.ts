@@ -3,8 +3,7 @@ import { unlinkSync } from 'node:fs';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { StoreKeys } from '@shared/constants';
-import type { AppStore } from '@shared/types';
+import type { AppStore, Twitch } from '@shared/types';
 
 import { StoreDefaults } from '@shared/constants';
 
@@ -50,19 +49,19 @@ export default function createStore() {
                     size = 3;
                 }
 
-                store.set<typeof StoreKeys.Options>('options', {
-                    twitch: {
-                        ...store.get('options.twitch'),
-                        userBlacklist: chatOptions.userBlacklist,
-                        defaultChannel: chatOptions.defaultChannel,
-                        css: chatOptions.customCSS,
-                        js: chatOptions.customJS,
-                        fade: chatOptions.fadeMessages,
-                        fadeTimeout: chatOptions.fadeTimeout,
-                        bots: chatOptions.showBotActivity,
-                        size,
-                    },
-                });
+                const data: Twitch = {
+                    ...StoreDefaults.options.twitch,
+                    userBlacklist: chatOptions.userBlacklist,
+                    defaultChannel: chatOptions.defaultChannel,
+                    css: chatOptions.customCSS,
+                    js: chatOptions.customJS,
+                    fade: chatOptions.fadeMessages,
+                    fadeTimeout: chatOptions.fadeTimeout,
+                    bots: chatOptions.showBotActivity,
+                    size,
+                };
+
+                store.set('options.twitch', data);
 
                 // @TODO: enable this before release
                 // store.reset('general');

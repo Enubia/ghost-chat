@@ -122,7 +122,6 @@ export default class TrayIcon {
             },
             {
                 label: 'Toggle Vanish',
-                type: 'normal',
                 click: () => {
                     ipcMain.emit(IpcEvent.Vanish);
                 },

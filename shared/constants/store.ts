@@ -31,10 +31,18 @@ export const StoreDefaults: AppStore = {
         },
         kick: {
             channel: '',
+            fontSize: 'Small',
+            stroke: 'Off',
+            animate: false,
+            fade: false,
+            badges: false,
+            commands: false,
+            bots: false,
             css: '',
             js: '',
             defaultChannel: '',
             userBlacklist: [],
+            fadeTimeout: 30,
         },
         external: {
             sources: [],

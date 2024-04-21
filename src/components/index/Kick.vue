@@ -5,7 +5,7 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore, Kick } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
@@ -32,12 +32,14 @@ function routeChat() {
         return;
     }
 
-    electronStore.set('chatOptions', {
+    const data: Kick = {
         ...kick,
         channel: channel.value,
-    });
+    };
 
-    router.push('/kick');
+    electronStore.set('options.kick', data);
+
+    router.push('/webview/kick');
 }
 </script>
 
