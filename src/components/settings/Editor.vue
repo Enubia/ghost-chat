@@ -4,7 +4,7 @@ import type ElectronStore from 'electron-store';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { inject, ref, shallowRef } from 'vue';
+import { inject, onBeforeMount, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
@@ -20,19 +20,21 @@ const success = ref<boolean>(false);
 const view = shallowRef();
 const extensions: any[] = [];
 
-if (electronStore.get('savedWindowState.theme') === 'dark') {
-    extensions.push(oneDark);
-}
+onBeforeMount(() => {
+    if (electronStore.get('savedWindowState.theme') === 'dark') {
+        extensions.push(oneDark);
+    }
 
-if (props.css) {
-    extensions.push(css());
-    code.value = props.css;
-}
+    if (props.css) {
+        extensions.push(css());
+        code.value = props.css;
+    }
 
-if (props.js) {
-    extensions.push(javascript());
-    code.value = props.js;
-}
+    if (props.js) {
+        extensions.push(javascript());
+        code.value = props.js;
+    }
+});
 
 function handleReady(payload: any) {
     view.value = payload.view;
