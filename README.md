@@ -1,18 +1,25 @@
 <p align="center">
   <a href="https://github.com/Enubia/ghost-chat/releases/latest">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/enubia/ghost-chat?style=for-the-badge">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/enubia/ghost-chat">
   </a>
   <a href="https://github.com/Enubia/ghost-chat/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat?style=for-the-badge">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat">
+  </a>
+  <img alt="license" src="https://img.shields.io/github/license/enubia/ghost-chat">
+  <a href="https://github.com/antfu/eslint-config">
+    <img alt="antfu" src="https://antfu.me/badge-code-style.svg">
   </a>
 </p>
 
-<p align="center">
-  <!-- <a href="https://www.buymeacoffee.com/enubia" target="_blank">
-    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" width="200">
-  </a> -->
+<p style="display: flex; justify-content: center; gap: 5px; align-items: center;">
   <a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
     <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" width="145" />
+  </a>
+  <a href="https://ko-fi.com/enubia">
+    <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Buy Me A Coffee" width="126" />
+  </a>
+  <a href="https://www.buymeacoffee.com/enubia" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 45px; width: 210px;" >
   </a>
 </p>
 
