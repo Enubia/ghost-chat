@@ -83,9 +83,6 @@ importers:
       rimraf:
         specifier: 5.0.5
         version: 5.0.5
-      sass:
-        specifier: 1.75.0
-        version: 1.75.0
       simple-git-hooks:
         specifier: 2.11.1
         version: 2.11.1
@@ -7111,7 +7108,8 @@ snapshots:
 
   ignore@5.3.1: {}
 
-  immutable@4.2.4: {}
+  immutable@4.2.4:
+    optional: true
 
   import-fresh@3.3.0:
     dependencies:
@@ -8288,6 +8286,7 @@ snapshots:
       chokidar: 3.6.0
       immutable: 4.2.4
       source-map-js: 1.2.0
+    optional: true
 
   sax@1.2.4: {}
 
