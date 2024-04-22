@@ -11,13 +11,16 @@ import type { AppStore, ExternalBrowserSource } from '@shared/types';
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 
 const router = useRouter();
 const { t } = useI18n();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+const { external } = electronStore.get('options');
 
-const source = ref('');
+const source = ref(external.defaultUrl || '');
+const sources = ref(external.sources || []);
 const hasRegexError = ref(false);
 const hasError = ref(false);
 
@@ -48,16 +51,20 @@ function routeExternal() {
 
     if (source.value !== '' && !hasRegexError.value) {
         const data: ExternalBrowserSource = {
-            css: '',
-            js: '',
+            ...external,
             sources: [
-                ...electronStore.get('options').external.sources,
+                ...external.sources,
                 source.value,
             ],
         };
         electronStore.set('options.external', data);
         router.push(`/webview/externalsource?source=${source.value}`);
     }
+}
+
+function applySourceFromList(item: string) {
+    source.value = item;
+    enableStartButton();
 }
 </script>
 
@@ -82,6 +89,19 @@ function routeExternal() {
                 @change="enableStartButton" @keydown.enter="routeExternal"
             />
             <small v-if="hasRegexError" class="text-red-500 text-xs">{{ t('start.external.input.error') }}</small>
+            <Select v-if="sources.length" @update:model-value="applySourceFromList">
+                <SelectTrigger>
+                    <SelectValue :placeholder="t('start.external.sources-placeholder')" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem
+                        v-for="item, index of sources" :key="index" v-model="sources[index]" class="w-full"
+                        :value="item"
+                    >
+                        {{ item }}
+                    </SelectItem>
+                </SelectContent>
+            </Select>
             <Button :disabled="!source.length || hasError" @click="routeExternal">
                 {{ t('start.external.button') }}
             </Button>

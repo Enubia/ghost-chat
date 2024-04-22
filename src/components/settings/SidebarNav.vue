@@ -20,6 +20,10 @@ const sidebarNavItems = [
         title: t('settings.navigation.kick'),
         link: '/settings/kick',
     },
+    {
+        title: t('settings.navigation.external'),
+        link: '/settings/external',
+    },
 ];
 </script>
 
@@ -27,9 +31,9 @@ const sidebarNavItems = [
     <nav class="grid space-x-0 space-y-4 sticky top-32 z-10">
         <RouterLink
             v-for="item in sidebarNavItems" :key="item.title" :to="item.link"
-            class="w-full text-left justify-start"
+            class="w-full justify-start"
         >
-            <Button variant="ghost" class="w-full" :class="route.name === item.link && 'bg-muted hover:bg-muted'">
+            <Button variant="ghost" class="w-full justify-start" :class="route.name === item.link && 'bg-muted hover:bg-muted'">
                 {{ item.title }}
             </Button>
         </RouterLink>

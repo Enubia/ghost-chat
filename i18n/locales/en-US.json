@@ -32,6 +32,7 @@
             "input": {
                 "error": "This is not a valid URL, it should look like this: http(s)://(www.)twitch.tv"
             },
+            "sources-placeholder": "Your sources history",
             "button": "Go!"
         }
     },
@@ -41,7 +42,8 @@
         "navigation": {
             "general": "General",
             "twitch": "Twitch.tv",
-            "kick": "kick.com"
+            "kick": "kick.com",
+            "external": "External Sources"
         },
         "general": {
             "locale-change": {
@@ -238,6 +240,24 @@
             "user-blacklist": {
                 "label": "User Blacklist",
                 "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Your Custom CSS",
+                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+            },
+            "js-editor": {
+                "label": "Your Custom JS",
+                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+            }
+        },
+        "external": {
+            "default-url": {
+                "input-label": "Default URL",
+                "info": "In case a default URL is set the app will auto apply it for you."
+            },
+            "sources": {
+                "label": "Your sources history",
+                "info": "Here you can delete certain sources from your history."
             },
             "css-editor": {
                 "label": "Your Custom CSS",

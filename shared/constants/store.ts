@@ -45,6 +45,7 @@ export const StoreDefaults: AppStore = {
             fadeTimeout: 30,
         },
         external: {
+            defaultUrl: '',
             sources: [],
             css: '',
             js: '',

@@ -30,6 +30,7 @@ export interface Kick extends Shared {
 }
 
 export interface ExternalBrowserSource {
+    defaultUrl: string;
     sources: string[];
     css: string;
     js: string;
