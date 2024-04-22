@@ -30,7 +30,7 @@ const { twitch } = electronStore.get('options');
 
 const previewLink = ref('');
 const rerender = ref(0);
-const size = ref(String(twitch.size));
+const fontSize = ref(String(twitch.fontSize));
 const userBlacklist = ref(twitch.userBlacklist || []);
 
 const defaultChannel = ref(twitch.defaultChannel);
@@ -60,7 +60,7 @@ function preview() {
     const link = new URL('https://www.giambaj.it/twitch/jchat/v2/');
     link.searchParams.append(TwitchSearchParams.CHANNEL, previewChannel);
 
-    link.searchParams.append(TwitchSearchParams.SIZE, size.value);
+    link.searchParams.append(TwitchSearchParams.SIZE, fontSize.value);
 
     if (animate.value) {
         link.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
@@ -215,11 +215,11 @@ function saveSmallCaps() {
     electronStore.set('options.twitch', data);
 }
 
-function saveSize() {
+function saveFontSize() {
     setTimeout(() => {
         const data: Twitch = {
             ...electronStore.get('options').twitch,
-            size: Number.parseInt(size.value) as typeof twitch.size,
+            fontSize: Number.parseInt(fontSize.value) as typeof twitch.fontSize,
         };
 
         electronStore.set('options.twitch', data);
@@ -281,26 +281,55 @@ function enableBlacklistSuccess() {
         </div>
 
         <div class="flex flex-col gap-2">
-            <Label for="size">
-                {{ t('settings.twitch.size.label') }}
+            <Label for="font-size">
+                {{ t('settings.twitch.font-size.label') }}
             </Label>
-            <Select id="size" v-model="size" @update:model-value="saveSize">
+            <Select id="font-size" v-model="fontSize" @update:model-value="saveFontSize">
                 <SelectTrigger>
-                    <SelectValue :placeholder="t('settings.twitch.size.select-label')" />
+                    <SelectValue :placeholder="t('settings.twitch.font-size.select-label')" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="1">
-                        {{ t('settings.twitch.size.select-options.small') }}
+                        {{ t('settings.twitch.font-size.select-options.small') }}
                     </SelectItem>
                     <SelectItem value="2">
-                        {{ t('settings.twitch.size.select-options.medium') }}
+                        {{ t('settings.twitch.font-size.select-options.medium') }}
                     </SelectItem>
                     <SelectItem value="3">
-                        {{ t('settings.twitch.size.select-options.large') }}
+                        {{ t('settings.twitch.font-size.select-options.large') }}
                     </SelectItem>
                 </SelectContent>
             </Select>
-            <small class="text-muted-foreground">{{ t('settings.twitch.size.info') }}</small>
+            <small class="text-muted-foreground">{{ t('settings.twitch.font-size.info') }}</small>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <Label class="align-elements" for="stroke">
+                {{ t('settings.twitch.stroke.label') }}
+            </Label>
+            <Select id="stroke" v-model="stroke" @update:model-value="saveStroke">
+                <SelectTrigger>
+                    <SelectValue :placeholder="t('settings.twitch.stroke.select-label')" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="false">
+                        {{ t('settings.twitch.stroke.select-options.off') }}
+                    </SelectItem>
+                    <SelectItem value="1">
+                        {{ t('settings.twitch.stroke.select-options.thin') }}
+                    </SelectItem>
+                    <SelectItem value="2">
+                        {{ t('settings.twitch.stroke.select-options.medium') }}
+                    </SelectItem>
+                    <SelectItem value="3">
+                        {{ t('settings.twitch.stroke.select-options.thick') }}
+                    </SelectItem>
+                    <SelectItem value="4">
+                        {{ t('settings.twitch.stroke.select-options.thicker') }}
+                    </SelectItem>
+                </SelectContent>
+            </Select>
+            <small class="text-muted-foreground">{{ t('settings.twitch.stroke.info') }}</small>
         </div>
 
         <div class="flex flex-col gap-2">
@@ -379,35 +408,6 @@ function enableBlacklistSuccess() {
                 </SelectContent>
             </Select>
             <small class="text-muted-foreground">{{ t('settings.twitch.font.info') }}</small>
-        </div>
-
-        <div class="flex flex-col gap-2">
-            <Label class="align-elements" for="stroke">
-                {{ t('settings.twitch.stroke.label') }}
-            </Label>
-            <Select id="stroke" v-model="stroke" @update:model-value="saveStroke">
-                <SelectTrigger>
-                    <SelectValue :placeholder="t('settings.twitch.stroke.select-label')" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="false">
-                        {{ t('settings.twitch.stroke.select-options.off') }}
-                    </SelectItem>
-                    <SelectItem value="1">
-                        {{ t('settings.twitch.stroke.select-options.thin') }}
-                    </SelectItem>
-                    <SelectItem value="2">
-                        {{ t('settings.twitch.stroke.select-options.medium') }}
-                    </SelectItem>
-                    <SelectItem value="3">
-                        {{ t('settings.twitch.stroke.select-options.thick') }}
-                    </SelectItem>
-                    <SelectItem value="4">
-                        {{ t('settings.twitch.stroke.select-options.thicker') }}
-                    </SelectItem>
-                </SelectContent>
-            </Select>
-            <small class="text-muted-foreground">{{ t('settings.twitch.stroke.info') }}</small>
         </div>
 
         <div class="flex flex-col gap-2">

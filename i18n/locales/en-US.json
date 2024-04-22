@@ -24,7 +24,7 @@
             "title": "Twitch.tv"
         },
         "kick": {
-            "title": "kick.tv"
+            "title": "kick.com"
         },
         "external": {
             "title": "External Source",
@@ -97,8 +97,8 @@
                 "input-label": "Default Channel",
                 "info": "In case a default channel is set the app will auto apply it for you."
             },
-            "size": {
-                "label": "Size",
+            "font-size": {
+                "label": "Font Size",
                 "select-label": "Choose a font size",
                 "select-options": {
                     "small": "Small",

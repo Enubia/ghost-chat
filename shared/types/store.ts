@@ -9,7 +9,7 @@ interface Shared {
 }
 
 export interface Twitch extends Shared {
-    size: 1 | 2 | 3;
+    fontSize: 1 | 2 | 3;
     animate: boolean;
     bots: boolean;
     hideCommands: boolean;

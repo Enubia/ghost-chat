@@ -13,7 +13,7 @@ export const StoreDefaults: AppStore = {
     options: {
         twitch: {
             channel: '',
-            size: 1,
+            fontSize: 1,
             animate: false,
             fade: false,
             bots: false,
