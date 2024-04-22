@@ -22,7 +22,7 @@ if (twitch.channel !== '') {
 
 link.searchParams.append(TwitchSearchParams.CHANNEL, channel);
 
-link.searchParams.append(TwitchSearchParams.SIZE, twitch.size.toString());
+link.searchParams.append(TwitchSearchParams.SIZE, twitch.fontSize.toString());
 
 if (twitch.animate) {
     link.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
