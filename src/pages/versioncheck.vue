@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -62,38 +63,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div id="version-check">
-        <div>
-            <div class="spinner">
-                <div class="lds-roller">
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                </div>
-            </div>
-            <div
-                v-if="!showManualDownloadMessage"
-                class="center-elements"
-            >
-                <span id="message">{{ message }}</span>
-            </div>
-            <div
-                v-else
-                class="center-elements"
-            >
-                <span id="message">
-                    {{ t('version-check.manual-update-required.before-link', { version }) }}
-                    <a href="https://github.com/enubia/ghost-chat/releases">
-                        {{ t('version-check.manual-update-required.link') }}
-                    </a>
-                    {{ t('version-check.manual-update-required.after-link') }}
-                </span>
-            </div>
+    <div class="center-elements flex-col py-[50%]">
+        <Icon icon="svg-spinners:blocks-wave" class="text-5xl mb-5 text-primary" />
+        <div v-if="!showManualDownloadMessage" class="center-elements container">
+            <span>{{ message }}</span>
+        </div>
+        <div v-else class="center-elements container">
+            <span class="text-justify">
+                {{ t('version-check.manual-update-required.before-link', { version }) }}
+                <a href="https://github.com/enubia/ghost-chat/releases" class="text-primary underline">
+                    {{ t('version-check.manual-update-required.link') }}
+                </a>
+                {{ t('version-check.manual-update-required.after-link') }}
+            </span>
         </div>
     </div>
 </template>

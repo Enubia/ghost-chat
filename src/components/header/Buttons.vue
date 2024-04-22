@@ -12,8 +12,12 @@ const route = useRoute();
 
 const showVanish = ref(false);
 
+const vanishWhiteList: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource'];
+
+showVanish.value = vanishWhiteList.includes(route.name);
+
 watch(route, () => {
-    showVanish.value = route.name === '/webview/twitch' || route.name === '/webview/externalsource';
+    showVanish.value = vanishWhiteList.includes(route.name);
 });
 </script>
 

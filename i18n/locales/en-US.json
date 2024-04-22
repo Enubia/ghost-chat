@@ -24,7 +24,7 @@
             "title": "Twitch.tv"
         },
         "kick": {
-            "title": "kick.tv"
+            "title": "kick.com"
         },
         "external": {
             "title": "External Source",
@@ -40,7 +40,8 @@
         "info": "All options are saved automatically.",
         "navigation": {
             "general": "General",
-            "twitch": "Twitch.tv"
+            "twitch": "Twitch.tv",
+            "kick": "kick.com"
         },
         "general": {
             "locale-change": {
@@ -54,15 +55,15 @@
                 "single-key-error": "Keybind requires at least one modifier key (e.g. Shift, Alt, Ctrl)"
             },
             "pre-release": {
-                "checkbox-label": "Participate in pre-release versions",
+                "label": "Participate in pre-release versions",
                 "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
             },
             "close-option": {
-                "checkbox-label": "Quit on close",
+                "label": "Quit on close",
                 "info": "Quits the application immediately if set instead of just closing the window."
             },
             "hide-dock-icon-options": {
-                "checkbox-label": "Hide dock icon",
+                "label": "Hide dock icon",
                 "info": "If set the app will not appear on the dock once it's launched."
             },
             "external-sources": {
@@ -96,44 +97,143 @@
                 "input-label": "Default Channel",
                 "info": "In case a default channel is set the app will auto apply it for you."
             },
+            "font-size": {
+                "label": "Font Size",
+                "select-label": "Choose a font size",
+                "select-options": {
+                    "small": "Small",
+                    "medium": "Medium",
+                    "large": "Large"
+                },
+                "info": "Changes the size of the chat lines."
+            },
+            "animate": {
+                "label": "Animate",
+                "info": "Enables chat animations."
+            },
             "fade": {
-                "checkbox-label": "Fade",
+                "label": "Fade",
                 "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen.",
                 "timeout-label": "Fade after {seconds} (seconds)"
             },
             "show-bots": {
-                "checkbox-label": "Show Bots",
+                "label": "Show bots",
                 "info": "KapChat hides bot messages by default, but you can turn them back on."
             },
-            "prevent-clipping": {
-                "checkbox-label": "Prevent Clipping",
-                "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
+            "hide-commands": {
+                "label": "Hide commands",
+                "info": "Hides messages that start with a command character (e.g. !, /, .)."
             },
-            "chat-theme": {
-                "label": "Chat Theme",
+            "hide-badges": {
+                "label": "Hide special badges",
+                "info": "Hides special badges from chat messages."
+            },
+            "font": {
+                "label": "Chat Font",
+                "select-label": "Choose a font",
+                "select-options": [
+                    "Baloo Tammudu",
+                    "Segoe UI",
+                    "Roboto",
+                    "Lato",
+                    "Noto Sans",
+                    "Source Code Pro",
+                    "Impact",
+                    "Comfortaa",
+                    "Dancing Script",
+                    "Indie Flower",
+                    "Press Start 2P",
+                    "Wallpoet"
+                ],
+                "info": "Changes the font of the chat text."
+            },
+            "stroke": {
+                "label": "Stroke",
+                "select-label": "Choose a stroke",
                 "select-options": {
-                    "none": "None",
-                    "dark": "Dark",
-                    "light": "Light",
-                    "betterTTV-Light": "BetterTTV Light",
-                    "betterTTV-Dark": "BetterTTV Dark",
-                    "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
-                    "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
+                    "off": "Off",
+                    "thin": "Thin",
+                    "medium": "Medium",
+                    "thick": "Thick",
+                    "thicker": "Thicker"
                 },
-                "notification": "Please note that in order for the theme to apply you'll need to exit the chat and join again.",
-                "info": {
-                    "before-link": "You should choose a style that fits the game you're going to be playing. If you're an advanced user (meaning you know CSS), you can also choose to use \"None\" and style chat yourself in the Custom CSS section on the left. The selectors available can be found on the",
-                    "link": "KapChat generated page",
-                    "after-link": ", just open the developer tools and inspect the page."
+                "info": "Adds a stroke to the chat text."
+            },
+            "shadow": {
+                "label": "Shadow",
+                "select-label": "Choose a shadow",
+                "select-options": {
+                    "off": "Off",
+                    "small": "Small",
+                    "medium": "Medium",
+                    "large": "Large"
                 },
-                "button": {
-                    "label": "Save",
-                    "loading": "Saving"
-                }
+                "info": "Adds a shadow to the chat text."
+            },
+            "small-caps": {
+                "label": "Caps",
+                "info": "Converts chat text to all capital letters."
+            },
+            "user-blacklist": {
+                "label": "User Blacklist",
+                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Your Custom CSS",
+                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+            },
+            "js-editor": {
+                "label": "Your Custom JS",
+                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+            }
+        },
+        "kick": {
+            "default-channel": {
+                "input-label": "Default Channel",
+                "info": "In case a default channel is set the app will auto apply it for you."
             },
             "font-size": {
-                "label": "Chat Font Size",
-                "small": "Selected size: {fontSize}px"
+                "label": "Font Size",
+                "select-label": "Choose a font size",
+                "select-options": {
+                    "small": "Small",
+                    "medium": "Medium",
+                    "large": "Large"
+                },
+                "info": "Changes the size of the chat lines."
+            },
+            "animate": {
+                "label": "Animate",
+                "info": "Enables chat animations."
+            },
+            "fade": {
+                "label": "Fade",
+                "info": "You can fade out old chat lines after a set number of seconds to keep stale content from remaining on screen.",
+                "timeout-label": "Fade after {seconds} (seconds)"
+            },
+            "hide-bots": {
+                "label": "Show bots",
+                "info": "KapChat hides bot messages by default, but you can turn them back on."
+            },
+            "hide-commands": {
+                "label": "Hide commands",
+                "info": "Hides messages that start with a command character (e.g. !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Hide badges",
+                "info": "Hides badges from chat messages."
+            },
+            "stroke": {
+                "label": "Stroke",
+                "select-label": "Choose a stroke",
+                "select-options": {
+                    "off": "Off",
+                    "thin": "Thin",
+                    "medium": "Medium",
+                    "thick": "Thick",
+                    "thicker": "Thicker"
+                },
+                "info": "Adds a stroke to the chat text."
             },
             "user-blacklist": {
                 "label": "User Blacklist",

@@ -16,14 +16,10 @@ const sidebarNavItems = [
         title: t('settings.navigation.twitch'),
         link: '/settings/twitch',
     },
-    // {
-    //     title: t('settings.navigation.css'),
-    //     link: '/settings/css',
-    // },
-    // {
-    //     title: t('settings.navigation.js'),
-    //     link: '/settings/js',
-    // },
+    {
+        title: t('settings.navigation.kick'),
+        link: '/settings/kick',
+    },
 ];
 </script>
 

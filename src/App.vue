@@ -30,7 +30,7 @@ const settings = electronStore.get('settings');
 const isTransparent = electronStore.get('savedWindowState').isTransparent;
 const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
 
-const chatPages = ['/webview/twitch', '/webview/externalsource'];
+const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
 
 if (!autoUpdatesDisabled && !isTransparent) {
     if (settings.isOpen) {
@@ -46,7 +46,7 @@ const $app = document.querySelector('#app');
 $html?.classList.add(savedWindowState.theme || '');
 
 watch(route, () => {
-    showFooter.value = !chatPages.includes(route.name);
+    showFooter.value = !footerExcludeList.includes(route.name);
     showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
 });
 
@@ -76,7 +76,7 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
     <div :key="rerenderKey" class="min-h-dvh">
         <header
             v-if="showMenuBar" class="flex justify-between items-center w-full top-0 z-10"
-            :class="chatPages.includes(route.name) ? 'absolute' : 'sticky'"
+            :class="footerExcludeList.includes(route.name) ? 'absolute' : 'sticky'"
         >
             <DropDownMenu />
             <MenuButtons />

@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import type ElectronStore from 'electron-store';
+
 import { Icon } from '@iconify/vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
+
+import type { AppStore, ExternalBrowserSource } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
@@ -10,6 +14,8 @@ import { Input } from '@components/ui/input';
 
 const router = useRouter();
 const { t } = useI18n();
+
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const source = ref('');
 const hasRegexError = ref(false);
@@ -38,7 +44,18 @@ function enableStartButton() {
 }
 
 function routeExternal() {
+    checkRegex();
+
     if (source.value !== '' && !hasRegexError.value) {
+        const data: ExternalBrowserSource = {
+            css: '',
+            js: '',
+            sources: [
+                ...electronStore.get('options').external.sources,
+                source.value,
+            ],
+        };
+        electronStore.set('options.external', data);
         router.push(`/webview/externalsource?source=${source.value}`);
     }
 }

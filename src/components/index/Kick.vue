@@ -5,7 +5,7 @@ import { inject, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore, Kick } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
@@ -16,15 +16,15 @@ const { t } = useI18n();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const chatOptions = ref(electronStore.get('chatOptions'));
+const { kick } = electronStore.get('options');
 const channel = ref('');
 
-if (chatOptions.value.channel !== '') {
-    channel.value = chatOptions.value.channel;
+if (kick.channel !== '') {
+    channel.value = kick.channel;
 }
 
-if (chatOptions.value.defaultChannel !== '') {
-    channel.value = chatOptions.value.defaultChannel;
+if (kick.defaultChannel !== '') {
+    channel.value = kick.defaultChannel;
 }
 
 function routeChat() {
@@ -32,12 +32,14 @@ function routeChat() {
         return;
     }
 
-    electronStore.set('chatOptions', {
-        ...chatOptions.value,
+    const data: Kick = {
+        ...kick,
         channel: channel.value,
-    });
+    };
 
-    router.push('/kick');
+    electronStore.set('options.kick', data);
+
+    router.push('/webview/kick');
 }
 </script>
 

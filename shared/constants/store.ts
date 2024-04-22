@@ -1,5 +1,7 @@
+import type { AppStore } from '@shared/types';
+
 export const StoreKeys = {
-    ChatOptions: 'chatOptions',
+    Options: 'options',
     SavedWindowState: 'savedWindowState',
     Settings: 'settings',
     Updater: 'updater',
@@ -7,19 +9,46 @@ export const StoreKeys = {
     Keybind: 'keybind',
 } as const;
 
-export const StoreDefaults = {
-    chatOptions: {
-        channel: '',
-        fadeMessages: false,
-        fadeTimeout: 30,
-        showBotActivity: false,
-        customCSS: '',
-        customJS: '',
-        defaultChannel: '',
-        preventClipping: false,
-        chatTheme: 'undefined',
-        fontSize: '14',
-        userBlacklist: [],
+export const StoreDefaults: AppStore = {
+    options: {
+        twitch: {
+            channel: '',
+            fontSize: 1,
+            animate: false,
+            fade: false,
+            bots: false,
+            hideCommands: false,
+            hideBadges: false,
+            font: 0,
+            stroke: false,
+            shadow: false,
+            smallCaps: false,
+            fadeTimeout: 30,
+            css: '',
+            js: '',
+            defaultChannel: '',
+            userBlacklist: [],
+        },
+        kick: {
+            channel: '',
+            fontSize: 'Small',
+            stroke: 'Off',
+            animate: false,
+            fade: false,
+            badges: false,
+            commands: false,
+            bots: false,
+            css: '',
+            js: '',
+            defaultChannel: '',
+            userBlacklist: [],
+            fadeTimeout: 30,
+        },
+        external: {
+            sources: [],
+            css: '',
+            js: '',
+        },
     },
     savedWindowState: {
         x: 0,
@@ -41,7 +70,6 @@ export const StoreDefaults = {
         },
     },
     general: {
-        externalBrowserSources: [],
         mac: {
             quitOnClose: false,
             hideDockIcon: false,

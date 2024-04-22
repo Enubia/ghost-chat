@@ -4,31 +4,38 @@ import type ElectronStore from 'electron-store';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { inject, ref } from 'vue';
+import { inject, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
 
-const props = defineProps<{ type: 'js' | 'css' }>();
+type ChatType = keyof AppStore['options'];
+
+const props = defineProps<{ type: ChatType; css?: string; js?: string }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
-const code = ref();
-const success = ref<boolean | undefined>(undefined);
+const code = ref('');
+const success = ref<boolean>(false);
+const view = shallowRef();
 const extensions: any[] = [];
 
 if (electronStore.get('savedWindowState.theme') === 'dark') {
     extensions.push(oneDark);
 }
 
-if (props.type === 'css') {
+if (props.css) {
     extensions.push(css());
-    code.value = electronStore.get('chatOptions').customCSS;
+    code.value = props.css;
 }
 
-if (props.type === 'js') {
+if (props.js) {
     extensions.push(javascript());
-    code.value = electronStore.get('chatOptions').customJS;
+    code.value = props.js;
+}
+
+function handleReady(payload: any) {
+    view.value = payload.view;
 }
 
 function enableSuccess() {
@@ -41,12 +48,12 @@ function enableSuccess() {
 function save() {
     enableSuccess();
 
-    if (props.type === 'css') {
-        electronStore.set('chatOptions.customCSS', code.value);
+    if (typeof props.css === 'string') {
+        electronStore.set(`options.${props.type}.css`, code.value);
     }
 
-    if (props.type === 'js') {
-        electronStore.set('chatOptions.customJS', code.value);
+    if (typeof props.js === 'string') {
+        electronStore.set(`options.${props.type}.js`, code.value);
     }
 }
 </script>
@@ -55,12 +62,13 @@ function save() {
     <div class="border-2" :class="success ? 'border-green-600' : 'border-secondary'">
         <Codemirror
             v-model="code"
-            :placeholder="`${props.type.toUpperCase()} goes here...`"
+            :placeholder="`${Object.keys(props)[1].toUpperCase()} goes here...`"
             :style="{ height: '400px' }"
             :autofocus="false"
             :indent-with-tab="true"
             :tab-size="4"
             :extensions="extensions"
+            @ready="handleReady"
             @blur="save"
         />
     </div>

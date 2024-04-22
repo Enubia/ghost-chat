@@ -3,7 +3,7 @@ import { unlinkSync } from 'node:fs';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore, Twitch } from '@shared/types';
 
 import { StoreDefaults } from '@shared/constants';
 
@@ -37,6 +37,35 @@ export default function createStore() {
             },
             '2.8.1': (store) => {
                 store.set('updater.disableAutoUpdates', false);
+            },
+            '3.0.0': (store) => {
+                const chatOptions = store.get('chatOptions', {});
+
+                let size: typeof StoreDefaults.options.twitch.size = 1;
+
+                if (chatOptions.fontSize > 20 && chatOptions.fontSize <= 30) {
+                    size = 2;
+                } else if (chatOptions.fontSize > 30) {
+                    size = 3;
+                }
+
+                const data: Twitch = {
+                    ...StoreDefaults.options.twitch,
+                    userBlacklist: chatOptions.userBlacklist,
+                    defaultChannel: chatOptions.defaultChannel,
+                    css: chatOptions.customCSS,
+                    js: chatOptions.customJS,
+                    fade: chatOptions.fadeMessages,
+                    fadeTimeout: chatOptions.fadeTimeout,
+                    bots: chatOptions.showBotActivity,
+                    size,
+                };
+
+                store.set('options.twitch', data);
+
+                // @TODO: enable this before release
+                // store.reset('general');
+                // store.delete('chatOptions');
             },
         },
     });

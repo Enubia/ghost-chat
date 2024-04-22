@@ -53,8 +53,6 @@ app.on('ready', () => {
             ipcEvents.registerWindow(overlay);
             ipcEvents.registerEvents(indexHtml);
 
-            store.set('general.launchCounter', store.get('general').launchCounter + 1);
-
             // only call updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
                 if (store.get('updater').disableAutoUpdates) {
@@ -124,6 +122,9 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
+
+    store.set('options.twitch.channel', '');
+    store.set('options.kick.channel', '');
 
     const quit = () => {
         if (store.get('keybind').vanishKeybind) {
