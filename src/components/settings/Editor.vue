@@ -9,9 +9,9 @@ import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
 
-type ChatType = keyof AppStore['options'];
+type Option = keyof AppStore['options'];
 
-const props = defineProps<{ type: ChatType; css?: string; js?: string }>();
+const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
@@ -25,14 +25,14 @@ onBeforeMount(() => {
         extensions.push(oneDark);
     }
 
-    if (props.css) {
+    if (props.type === 'css') {
         extensions.push(css());
-        code.value = props.css;
+        code.value = electronStore.get(`options.${props.option}.css`);
     }
 
-    if (props.js) {
+    if (props.type === 'js') {
         extensions.push(javascript());
-        code.value = props.js;
+        code.value = electronStore.get(`options.${props.option}.js`);
     }
 });
 
@@ -50,12 +50,12 @@ function enableSuccess() {
 function save() {
     enableSuccess();
 
-    if (typeof props.css === 'string') {
-        electronStore.set(`options.${props.type}.css`, code.value);
+    if (props.type === 'css') {
+        electronStore.set(`options.${props.option}.css`, code.value);
     }
 
-    if (typeof props.js === 'string') {
-        electronStore.set(`options.${props.type}.js`, code.value);
+    if (props.type === 'js') {
+        electronStore.set(`options.${props.option}.js`, code.value);
     }
 }
 </script>
@@ -64,7 +64,7 @@ function save() {
     <div class="border-2" :class="success ? 'border-green-600' : 'border-secondary'">
         <Codemirror
             v-model="code"
-            :placeholder="`${Object.keys(props)[1].toUpperCase()} goes here...`"
+            :placeholder="`${type.toUpperCase()} goes here...`"
             :style="{ height: '400px' }"
             :autofocus="false"
             :indent-with-tab="true"

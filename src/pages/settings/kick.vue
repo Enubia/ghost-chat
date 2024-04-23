@@ -285,7 +285,7 @@ function enableBlacklistSuccess() {
                 {{ t('settings.kick.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.kick.css-editor.info') }}</small>
-            <Editor id="css-editor" type="kick" :css="kick.css" />
+            <Editor id="css-editor" option="kick" type="css" />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -293,7 +293,7 @@ function enableBlacklistSuccess() {
                 {{ t('settings.kick.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.kick.js-editor.info') }}</small>
-            <Editor id="js-editor" type="kick" :js="kick.js" />
+            <Editor id="js-editor" option="kick" type="js" />
         </div>
     </Settings>
 </template>

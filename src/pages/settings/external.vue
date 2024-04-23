@@ -76,7 +76,7 @@ function removeSource(index: number) {
                 {{ t('settings.external.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.external.css-editor.info') }}</small>
-            <Editor id="css-editor" type="external" :css="external.css" />
+            <Editor id="css-editor" option="external" type="css" />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -84,7 +84,7 @@ function removeSource(index: number) {
                 {{ t('settings.external.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.external.js-editor.info') }}</small>
-            <Editor id="js-editor" type="external" :js="external.js" />
+            <Editor id="js-editor" option="external" type="js" />
         </div>
     </Settings>
 </template>
