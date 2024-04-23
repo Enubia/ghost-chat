@@ -1,2 +1,0 @@
-- external sources settings page
-- kick settings page
