@@ -64,8 +64,12 @@ export interface Updater {
     disableAutoUpdates: boolean;
 }
 
-export interface Keybind {
-    vanishKeybind: string | null;
+export interface Keybinds {
+
+    vanish: {
+        keybind: string | null;
+        activationMessage: string;
+    };
 }
 
 export interface AppStore {
@@ -82,5 +86,9 @@ export interface AppStore {
     settings: Settings;
     general: General;
     updater: Updater;
-    keybind: Keybind;
+    keybinds: Keybinds;
+    /**
+     * @deprecated Only used for migration purposes
+     */
+    keybind?: Record<string, any>;
 }

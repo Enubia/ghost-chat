@@ -139,28 +139,31 @@ export default class IpcEvents {
             } else {
                 // Settings are OPEN and Vanish Call is activated
                 // Just logged, nothing happens for the User
-                log.info('Settings are Open and Vanish Called OR Not in the Channel');
+                log.info('Cannot vanish while settings are open!');
             }
         });
     }
 
     private registerNewKeybind() {
         ipcMain.on(IpcEvent.RegisterNewKeybind, () => {
-            log.info('Registering new Shortcut');
+            log.info('Registering all keybinds after new keybind was set');
+
             globalShortcut.unregisterAll();
 
-            const keybind = this.store.get('keybind').vanishKeybind;
+            const keybinds = this.store.get('keybinds');
 
-            if (keybind) {
-                log.info('Registering new Keybind', keybind);
-                try {
+            try {
+                for (const current in keybinds) {
+                    const { keybind, activationMessage } = keybinds[current];
                     globalShortcut.register(keybind, () => {
-                        log.info('Registered New Keybind');
+                        log.info(activationMessage);
                         ipcMain.emit(IpcEvent.Vanish);
                     });
-                } catch (error) {
-                    log.error('ipcEvents', error);
+
+                    log.info(`Registered [${keybind}]: ${current}`);
                 }
+            } catch (error) {
+                log.error('ipcEvents', error);
             }
         });
     }

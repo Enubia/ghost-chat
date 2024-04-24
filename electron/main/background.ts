@@ -77,17 +77,21 @@ app.on('ready', () => {
         process.platform === 'linux' ? 1000 : 0,
     );
 
-    // Registering the Keybind on the start of the App
-    // Since all Keys are unregistered at close
-    const keybind = store.get('keybind').vanishKeybind;
+    const keybinds = store.get('keybinds');
 
-    if (keybind) {
+    if (keybinds) {
         try {
-            globalShortcut.register(keybind, () => {
-                ipcMain.emit(IpcEvent.Vanish);
-            });
+            for (const current in keybinds) {
+                const { keybind, activationMessage } = keybinds[current];
+                globalShortcut.register(keybind, () => {
+                    log.info(activationMessage);
+                    ipcMain.emit(IpcEvent.Vanish);
+                });
+
+                log.info(`Registered [${keybind}]: ${current}`);
+            }
         } catch (error) {
-            log.error('background', error);
+            log.error('Keybind register error: ', error);
         }
     }
 });
@@ -127,10 +131,8 @@ app.on('window-all-closed', () => {
     store.set('options.kick.channel', '');
 
     const quit = () => {
-        if (store.get('keybind').vanishKeybind) {
-            log.info('unregistering all shortcuts');
-            globalShortcut.unregisterAll();
-        }
+        log.info('Deregistering all keybinds');
+        globalShortcut.unregisterAll();
 
         log.info('App closing');
         app.quit();

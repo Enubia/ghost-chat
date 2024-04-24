@@ -3,7 +3,7 @@ import { unlinkSync } from 'node:fs';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { AppStore, Twitch } from '@shared/types';
+import type { AppStore, Keybinds, Twitch } from '@shared/types';
 
 import { StoreDefaults } from '@shared/constants';
 
@@ -63,8 +63,21 @@ export default function createStore() {
 
                 store.set('options.twitch', data);
 
+                store.get('keybind.vanishKeybind');
+
+                const keybinds: Keybinds = {
+                    ...StoreDefaults.keybinds,
+                    vanish: {
+                        ...StoreDefaults.keybinds.vanish,
+                        keybind: store.get('keybind.vanishKeybind') || null,
+                    },
+                };
+
+                store.set('keybinds', keybinds);
+
                 store.reset('general');
                 store.delete('chatOptions');
+                store.delete('keybind');
             },
         },
     });

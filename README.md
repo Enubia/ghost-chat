@@ -53,7 +53,7 @@ A detailed description can be found in our discord server's faq section and on o
 
 ### Translators needed
 Since GhostChat uses i18n, it's easy to add new language support, but I need you as a community.
-So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language id as the name.
+So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language ID as the name.
 
 A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
 
@@ -62,7 +62,7 @@ If the file already exists and it's just missing some translations you'd like to
 
 Once you are done with the translations, create a PR here on GitHub or post them in the #feature-request channel so that we can add them.
 
-If you have any other suggestions for features, or you've found a bug, feel free to go to create an issue/new feature request either [here on github](https://github.com/Enubia/ghost-chat/issues/new/choose) or in [Discord](https://discord.gg/UVMX32dDcy).
+If you have any other suggestions for features, or you've found a bug, feel free to go to create an issue/new feature request either [here on GitHub](https://github.com/Enubia/ghost-chat/issues/new/choose) or in [Discord](https://discord.gg/UVMX32dDcy).
 
 # Contributing
 

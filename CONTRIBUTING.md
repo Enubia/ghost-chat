@@ -3,7 +3,7 @@ Contributing to GhostChat
 
 Feel free to submit issues and enhancement requests.
 
-Please use [issues](https://github.com/Enubia/ghost-chat/issues/new/choose) or the [Discord](https://discord.gg/UVMX32dDcy) to report bugs and errors.
+Please use [issues](https://github.com/Enubia/ghost-chat/issues/new/choose) or [Discord](https://discord.gg/UVMX32dDcy) to report bugs and errors.
 
 Contributing
 ------------
@@ -26,6 +26,5 @@ Prerequisites:
 
 Install dependencies with `pnpm install`
 
-GitHooks are executed on commit. This means linting the project before a commit can be created. This process also runs on github to ensure that the styling guidelines are met and no build errors are produced.
-
-Once the pull-request is created, all the pipelines need to succeed in order to be able to be merged into master. If any of them fail you'll need to fix the issues before.
+GitHooks are executed on commit. This means linting the project before a commit can be created. This process also runs on Git Hub to ensure that the styling guidelines are met and no build errors are produced.
+Once the pull request is created, all the pipelines need to succeed to be able to be merged into the main branch. If any of them fail you'll need to fix the issues before.

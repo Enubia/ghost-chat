@@ -23,14 +23,14 @@ const { t } = useI18n();
 
 const updater = electronStore.get('updater');
 const mac = electronStore.get('general').mac;
-const keybind = electronStore.get('keybind').vanishKeybind;
+const keybinds = electronStore.get('keybinds');
 
 const participateInPreRelease = ref(false);
 const disableAutoUpdates = ref(updater.disableAutoUpdates);
 const updaterStatus = ref('init');
 const quitOnClose = ref(mac.quitOnClose);
 const hideDockIcon = ref(mac.hideDockIcon);
-const vanishKeybind = ref(keybind);
+const vanish = ref(keybinds.vanish);
 
 const showMacOptions = process.platform === 'darwin';
 
@@ -39,7 +39,7 @@ if (updater.channel !== 'latest') {
 }
 
 function saveKeybind(value: string) {
-    electronStore.set('keybind.vanishKeybind', value);
+    electronStore.set('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
@@ -111,7 +111,7 @@ onUnmounted(() => {
                 </SelectContent>
             </Select>
         </div>
-        <HotKeyInput :model-value="vanishKeybind" @update:model-value="saveKeybind" />
+        <HotKeyInput v-model="vanish.keybind" @update:model-value="saveKeybind" />
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch

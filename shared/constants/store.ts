@@ -81,7 +81,10 @@ export const StoreDefaults: AppStore = {
         channel: 'latest',
         disableAutoUpdates: false,
     },
-    keybind: {
-        vanishKeybind: null,
+    keybinds: {
+        vanish: {
+            keybind: null,
+            activationMessage: 'Vanish keybind triggered',
+        },
     },
 };
