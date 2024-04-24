@@ -50,14 +50,17 @@ function routeExternal() {
     checkRegex();
 
     if (source.value !== '' && !hasRegexError.value) {
-        const data: ExternalBrowserSource = {
-            ...external,
-            sources: [
-                ...external.sources,
-                source.value,
-            ],
-        };
-        electronStore.set('options.external', data);
+        if (!external.sources.includes(source.value)) {
+            const data: ExternalBrowserSource = {
+                ...external,
+                sources: [
+                    ...external.sources,
+                    source.value,
+                ],
+            };
+            electronStore.set('options.external', data);
+        }
+
         router.push(`/webview/externalsource?source=${source.value}`);
     }
 }

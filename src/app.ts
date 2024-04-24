@@ -26,4 +26,5 @@ const i18n = createI18n<false>({
 createApp(App)
     .use(router)
     .use(i18n)
+    .provide('electronStore', electronStore)
     .mount('#app');

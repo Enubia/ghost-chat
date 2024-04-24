@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type ElectronStore from 'electron-store';
+
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import ElectronStore from 'electron-store';
-import { provide, ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router/auto';
 
@@ -12,9 +13,7 @@ import MenuButtons from '@components/header/Buttons.vue';
 import DropDownMenu from '@components/header/Dropdown.vue';
 import { IpcEvent } from '@shared/constants';
 
-const electronStore = new ElectronStore<AppStore>();
-
-provide('electronStore', electronStore);
+const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const router = useRouter();
 const route = useRoute();
