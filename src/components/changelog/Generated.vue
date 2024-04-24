@@ -1,9 +1,24 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 17 April 2024
+        Latest | 24 April 2024
     </h2>
 
     <div class="grid gap-1">
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">feat</span>: added kick.com
+            <a href="https://github.com/Enubia/ghost-chat/pull/911" class="text-blue-500">#911</a>
+        </span>
+        <span>
+
+            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: replace kapchat with jchat
+            <a href="https://github.com/Enubia/ghost-chat/pull/909" class="text-blue-500">#909</a>
+        </span>
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">new</span>: shadcn base
+            <a href="https://github.com/Enubia/ghost-chat/pull/897" class="text-blue-500">#897</a>
+        </span>
         <span>
 
             <span class="text-green-400 bg-green-900 px-1">new</span>: added vue router
@@ -16,18 +31,13 @@
         </span>
         <span>
 
-            <span class="text-green-400 bg-green-900 px-1">new</span>: shadcn base
-            <a href="https://github.com/Enubia/ghost-chat/commit/93121cbc3a75220c96bb7fe3fe4cff1d12f304fe" class="text-blue-500">93121cb</a>
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: added new version check icon
+            <a href="https://github.com/Enubia/ghost-chat/commit/42f0e29d160521becd6460c4d700368de3e37427" class="text-blue-500">42f0e29</a>
         </span>
         <span>
 
-            <span class="text-green-400 bg-green-900 px-1">new</span>: added new main menu
-            <a href="https://github.com/Enubia/ghost-chat/commit/01251e992b6f02f7568b9b8db0e20208dbe83232" class="text-blue-500">01251e9</a>
-        </span>
-        <span>
-
-            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: replace font awesome with iconify
-            <a href="https://github.com/Enubia/ghost-chat/commit/72ea20b792d0b7f9c45d67e2abd8e9357a8b1cd1" class="text-blue-500">72ea20b</a>
+            <span class="text-green-400 bg-green-900 px-1">new</span>: external source settings page
+            <a href="https://github.com/Enubia/ghost-chat/commit/002a365d02b35aabd946ca546c699feda8dfc56c" class="text-blue-500">002a365</a>
         </span>
         <span>
 
@@ -36,23 +46,48 @@
         </span>
         <span>
 
-            <span class="text-pink-400 bg-pink-900 px-1">update</span>: moved support link, reworked layout
-            <a href="https://github.com/Enubia/ghost-chat/commit/3c49cd30cb519cb1d05dca350b6f9691c473f516" class="text-blue-500">3c49cd3</a>
+            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: keybind structure
+            <a href="https://github.com/Enubia/ghost-chat/commit/369c5f6a20142180230b97156f7d51a54cb929db" class="text-blue-500">369c5f6</a>
         </span>
         <span>
 
-            <span class="text-pink-400 bg-pink-900 px-1">update</span>: applied basic css
-            <a href="https://github.com/Enubia/ghost-chat/commit/ce4ab46447200e822c8544439f48e83d1af3e773" class="text-blue-500">ce4ab46</a>
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: settings wording, editor init
+            <a href="https://github.com/Enubia/ghost-chat/commit/91c82e4967949f72c6454b109aee9da47db94cd2" class="text-blue-500">91c82e4</a>
         </span>
         <span>
 
-            <span class="text-pink-400 bg-pink-900 px-1">update</span>: menu bar position, chat window height
-            <a href="https://github.com/Enubia/ghost-chat/commit/a8e9e1d44cc3eb799b5be08696ebdbd4341eca10" class="text-blue-500">a8e9e1d</a>
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: fade timeout label, removed dead code
+            <a href="https://github.com/Enubia/ghost-chat/commit/c561bce9a5322058dac3c91aa18540878a338cf4" class="text-blue-500">c561bce</a>
         </span>
         <span>
 
-            <span class="text-pink-400 bg-pink-900 px-1">update</span>: simplify watch conditions
-            <a href="https://github.com/Enubia/ghost-chat/commit/76089f991cfc0ebf43318cbf81bda3ae9f7a66bc" class="text-blue-500">76089f9</a>
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: editor initial load
+            <a href="https://github.com/Enubia/ghost-chat/commit/8b5e3a38fe9792c0e3e5ec8dc25896cf61857584" class="text-blue-500">8b5e3a3</a>
+        </span>
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: readme and funding
+            <a href="https://github.com/Enubia/ghost-chat/commit/d7f95529c9547d866462db27f1c24f29177aeda6" class="text-blue-500">d7f9552</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: external sources list duplicate entries
+            <a href="https://github.com/Enubia/ghost-chat/commit/2e27ce0cc6742919b8432e97bc4eea8fbe3dffcb" class="text-blue-500">2e27ce0</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: editor loading
+            <a href="https://github.com/Enubia/ghost-chat/commit/c9736ee4a85b754c1216ed664311928b52ae68a0" class="text-blue-500">c9736ee</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed scss dependency
+            <a href="https://github.com/Enubia/ghost-chat/commit/ecbc8bf4c9100883a0770e14c939654398f45b03" class="text-blue-500">ecbc8bf</a>
+        </span>
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: enable settings migration
+            <a href="https://github.com/Enubia/ghost-chat/commit/3e6c72a13d3cfb2dfc4255ab93f2c23ff10b388c" class="text-blue-500">3e6c72a</a>
         </span>
         <span>
 
@@ -61,13 +96,43 @@
         </span>
         <span>
 
-            <span class="text-pink-400 bg-pink-900 px-1">update</span>: description, author and keywords
-            <a href="https://github.com/Enubia/ghost-chat/commit/6221949b7de1d26807bad5f516881ce43fabab40" class="text-blue-500">6221949</a>
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: keybind null check
+            <a href="https://github.com/Enubia/ghost-chat/commit/c1c1213c5e30599fe94b41df2a0c4e850e7f712e" class="text-blue-500">c1c1213</a>
         </span>
         <span>
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: vue-router import
             <a href="https://github.com/Enubia/ghost-chat/commit/bb1d7618545ddd92ec302fee9518c02b48e4f73e" class="text-blue-500">bb1d761</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: remove todo
+            <a href="https://github.com/Enubia/ghost-chat/commit/3a42b1d7bb19b628cf70695b3b77be529c79d541" class="text-blue-500">3a42b1d</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/0db59183ee2a195eda20a282f020c3430a58886b" class="text-blue-500">0db5918</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: build
+            <a href="https://github.com/Enubia/ghost-chat/commit/10d7ded6369401bf3b360f0bc1a98eb65c5fa153" class="text-blue-500">10d7ded</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: external source enter key bug
+            <a href="https://github.com/Enubia/ghost-chat/commit/4418d662516daba0a07d5f9446a348687d5531cf" class="text-blue-500">4418d66</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: revert
+            <a href="https://github.com/Enubia/ghost-chat/commit/c01748656c570122d8b66022601c53d583655859" class="text-blue-500">c017486</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: renmamed files
+            <a href="https://github.com/Enubia/ghost-chat/commit/ba3127224b0e98bfa165b1593d1c15494fb1bb0c" class="text-blue-500">ba31272</a>
         </span>
     </div>
     <hr class="mt-2">

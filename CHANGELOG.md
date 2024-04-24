@@ -1,16 +1,53 @@
 <p align="center">
-Like the app? Consider supporting me via PayPal!
+Like the app? Consider supporting me!
 </p>
 <p align="center">
-<a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW">
+<a href="https://www.paypal.com/donate/?hosted_button_id=RQFDVMBP397KG">
 <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
 alt="Donate with PayPal" width="145" />
+</a>
+<a href="https://www.buymeacoffee.com/enubia" target="_blank">
+<img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black"
+alt="Buy Me A Coffee" width="245" />
+</a>
+<a href="https://ko-fi.com/enubia">
+<img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white"
+alt="Buy Me A Coffee" width="126" />
 </a>
 </p>
 
 ---
 
-## Latest | 23 March 2024
+## Latest | 24 April 2024
+
+- feat: added kick.com [`#911`](https://github.com/Enubia/ghost-chat/pull/911)
+- refactor: replace kapchat with jchat [`#909`](https://github.com/Enubia/ghost-chat/pull/909)
+- new: shadcn base [`#897`](https://github.com/Enubia/ghost-chat/pull/897)
+- new: added vue router [`#887`](https://github.com/Enubia/ghost-chat/pull/887)
+- feat: added static changelog template [`4354195`](https://github.com/Enubia/ghost-chat/commit/4354195e63270959dae91755d9487b7c9523595a)
+- update: added new version check icon [`42f0e29`](https://github.com/Enubia/ghost-chat/commit/42f0e29d160521becd6460c4d700368de3e37427)
+- new: external source settings page [`002a365`](https://github.com/Enubia/ghost-chat/commit/002a365d02b35aabd946ca546c699feda8dfc56c)
+- chore: eslint update [`44598e9`](https://github.com/Enubia/ghost-chat/commit/44598e990b6cabdb3a4e9721fc47c52a2584efb6)
+- refactor: keybind structure [`369c5f6`](https://github.com/Enubia/ghost-chat/commit/369c5f6a20142180230b97156f7d51a54cb929db)
+- fix: settings wording, editor init [`91c82e4`](https://github.com/Enubia/ghost-chat/commit/91c82e4967949f72c6454b109aee9da47db94cd2)
+- fix: fade timeout label, removed dead code [`c561bce`](https://github.com/Enubia/ghost-chat/commit/c561bce9a5322058dac3c91aa18540878a338cf4)
+- fix: editor initial load [`8b5e3a3`](https://github.com/Enubia/ghost-chat/commit/8b5e3a38fe9792c0e3e5ec8dc25896cf61857584)
+- update: readme and funding [`d7f9552`](https://github.com/Enubia/ghost-chat/commit/d7f95529c9547d866462db27f1c24f29177aeda6)
+- fix: external sources list duplicate entries [`2e27ce0`](https://github.com/Enubia/ghost-chat/commit/2e27ce0cc6742919b8432e97bc4eea8fbe3dffcb)
+- fix: editor loading [`c9736ee`](https://github.com/Enubia/ghost-chat/commit/c9736ee4a85b754c1216ed664311928b52ae68a0)
+- chore: removed scss dependency [`ecbc8bf`](https://github.com/Enubia/ghost-chat/commit/ecbc8bf4c9100883a0770e14c939654398f45b03)
+- update: enable settings migration [`3e6c72a`](https://github.com/Enubia/ghost-chat/commit/3e6c72a13d3cfb2dfc4255ab93f2c23ff10b388c)
+- update: remove unused icons [`41ec796`](https://github.com/Enubia/ghost-chat/commit/41ec796e13905a0ab917c45a50c0566688b558ad)
+- fix: keybind null check [`c1c1213`](https://github.com/Enubia/ghost-chat/commit/c1c1213c5e30599fe94b41df2a0c4e850e7f712e)
+- fix: vue-router import [`bb1d761`](https://github.com/Enubia/ghost-chat/commit/bb1d7618545ddd92ec302fee9518c02b48e4f73e)
+- chore: remove todo [`3a42b1d`](https://github.com/Enubia/ghost-chat/commit/3a42b1d7bb19b628cf70695b3b77be529c79d541)
+- fix: readme [`0db5918`](https://github.com/Enubia/ghost-chat/commit/0db59183ee2a195eda20a282f020c3430a58886b)
+- fix: build [`10d7ded`](https://github.com/Enubia/ghost-chat/commit/10d7ded6369401bf3b360f0bc1a98eb65c5fa153)
+- fix: external source enter key bug [`4418d66`](https://github.com/Enubia/ghost-chat/commit/4418d662516daba0a07d5f9446a348687d5531cf)
+- fix: revert [`c017486`](https://github.com/Enubia/ghost-chat/commit/c01748656c570122d8b66022601c53d583655859)
+- chore: renmamed files [`ba31272`](https://github.com/Enubia/ghost-chat/commit/ba3127224b0e98bfa165b1593d1c15494fb1bb0c)
+---
+### v2.9.0 | 23 March 2024
 
 - new(ui/electron): allow updater disableing [`#853`](https://github.com/Enubia/ghost-chat/pull/853)
 - refactor(ui): rename store [`0f4e88c`](https://github.com/Enubia/ghost-chat/commit/0f4e88cdf971e3f9cefb52e8b058bd43716a5843)
@@ -19,6 +56,7 @@ alt="Donate with PayPal" width="145" />
 - feat(ui): added pinia [`fc0e201`](https://github.com/Enubia/ghost-chat/commit/fc0e20176371e4083d3c96c5b8680b1c9a9fa450)
 - fix: disable hardware acceleration for all platforms [`dfca5e1`](https://github.com/Enubia/ghost-chat/commit/dfca5e1773ced5898ca60ec1554871bdef4e28bf)
 - update(ui): init state for pinia [`29571bb`](https://github.com/Enubia/ghost-chat/commit/29571bb5bc191a069e7b7110c2652459e57b014f)
+- chore: update changelog [`a3498f4`](https://github.com/Enubia/ghost-chat/commit/a3498f483450b81a6572b9dab97ccc432bf6c2ae)
 - fix(electron): typo in dev script [`802873e`](https://github.com/Enubia/ghost-chat/commit/802873e2574453f98a37d8d9f58ef25a2d36b108)
 - chore: update readme [`d392d53`](https://github.com/Enubia/ghost-chat/commit/d392d53886b7894ef2ec30b0bacb5e7232db136a)
 ---
