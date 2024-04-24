@@ -83,6 +83,10 @@ app.on('ready', () => {
         try {
             for (const current in keybinds) {
                 const { keybind, activationMessage } = keybinds[current];
+                if (!keybind) {
+                    continue;
+                }
+
                 globalShortcut.register(keybind, () => {
                     log.info(activationMessage);
                     ipcMain.emit(IpcEvent.Vanish);
