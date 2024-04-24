@@ -14,7 +14,6 @@ import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Switch } from '@components/ui/switch';
 import { IpcEvent } from '@shared/constants';
-import { TwitchSearchParams } from '@shared/types';
 
 const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
@@ -28,8 +27,6 @@ for (const [_, value] of Object.entries(tm('settings.twitch.font.select-options'
 
 const { twitch } = electronStore.get('options');
 
-const previewLink = ref('');
-const rerender = ref(0);
 const fontSize = ref(String(twitch.fontSize));
 const userBlacklist = ref(twitch.userBlacklist || []);
 
@@ -47,60 +44,6 @@ const fadeTimeout = ref(twitch.fadeTimeout);
 
 const channelSuccess = ref(false);
 const blacklistSuccess = ref(false);
-
-function preview() {
-    let previewChannel = 'zackrawrr';
-
-    if (twitch.channel !== '') {
-        previewChannel = twitch.channel;
-    } else if (defaultChannel.value !== '') {
-        previewChannel = defaultChannel.value;
-    }
-
-    const link = new URL('https://www.giambaj.it/twitch/jchat/v2/');
-    link.searchParams.append(TwitchSearchParams.CHANNEL, previewChannel);
-
-    link.searchParams.append(TwitchSearchParams.SIZE, fontSize.value);
-
-    if (animate.value) {
-        link.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
-    }
-
-    if (bots.value) {
-        link.searchParams.append(TwitchSearchParams.BOTS, 'true');
-    }
-
-    if (fade.value) {
-        link.searchParams.append(TwitchSearchParams.FADE, fadeTimeout.value.toString());
-    }
-
-    if (hideCommands.value) {
-        link.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
-    }
-
-    if (hideBadges.value) {
-        link.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
-    }
-
-    link.searchParams.append(TwitchSearchParams.FONT, font.value.toString());
-
-    if (stroke.value) {
-        link.searchParams.append(TwitchSearchParams.STROKE, 'true');
-    }
-
-    if (shadow.value) {
-        link.searchParams.append(TwitchSearchParams.SHADOW, 'true');
-    }
-
-    if (smallCaps.value) {
-        link.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
-    }
-
-    previewLink.value = link.toString();
-    rerender.value += 1;
-
-    // @TODO: add a preview chatline / chatbox
-}
 
 function saveDefaultChannel() {
     const data: Twitch = {
@@ -223,7 +166,6 @@ function saveFontSize() {
         };
 
         electronStore.set('options.twitch', data);
-        preview();
     }, 200);
 }
 
@@ -351,10 +293,13 @@ function enableBlacklistSuccess() {
                     </Label>
                 </div>
                 <div v-if="fade">
-                    <Label class="cursor-pointer" for="fade">
+                    <Label class="cursor-pointer" for="fadeTimeout">
                         {{ t('settings.twitch.fade.timeout-label', { seconds: fadeTimeout }) }}
                     </Label>
-                    <Input v-model="fadeTimeout" class="w-30 text-center" type="number" @change="saveFadeTimeout" />
+                    <Input
+                        id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
+                        @change="saveFadeTimeout"
+                    />
                 </div>
             </div>
             <small class="text-muted-foreground">{{ t('settings.twitch.fade.info') }}</small>

@@ -230,10 +230,13 @@ function enableBlacklistSuccess() {
                     </Label>
                 </div>
                 <div v-if="fade">
-                    <Label class="cursor-pointer" for="fade">
+                    <Label class="cursor-pointer" for="fadeTimeout">
                         {{ t('settings.kick.fade.timeout-label', { seconds: fadeTimeout }) }}
                     </Label>
-                    <Input v-model="fadeTimeout" class="w-30 text-center" type="number" @change="saveFadeTimeout" />
+                    <Input
+                        id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
+                        @change="saveFadeTimeout"
+                    />
                 </div>
             </div>
             <small class="text-muted-foreground">{{ t('settings.kick.fade.info') }}</small>
