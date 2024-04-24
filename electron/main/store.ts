@@ -41,12 +41,12 @@ export default function createStore() {
             '3.0.0': (store) => {
                 const chatOptions = store.get('chatOptions', {});
 
-                let size: typeof StoreDefaults.options.twitch.size = 1;
+                let fontSize: typeof StoreDefaults.options.twitch.fontSize = 1;
 
                 if (chatOptions.fontSize > 20 && chatOptions.fontSize <= 30) {
-                    size = 2;
+                    fontSize = 2;
                 } else if (chatOptions.fontSize > 30) {
-                    size = 3;
+                    fontSize = 3;
                 }
 
                 const data: Twitch = {
@@ -58,14 +58,13 @@ export default function createStore() {
                     fade: chatOptions.fadeMessages,
                     fadeTimeout: chatOptions.fadeTimeout,
                     bots: chatOptions.showBotActivity,
-                    size,
+                    fontSize,
                 };
 
                 store.set('options.twitch', data);
 
-                // @TODO: enable this before release
-                // store.reset('general');
-                // store.delete('chatOptions');
+                store.reset('general');
+                store.delete('chatOptions');
             },
         },
     });
