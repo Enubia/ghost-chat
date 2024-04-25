@@ -131,9 +131,6 @@ app.on('activate', () => {
 app.on('window-all-closed', () => {
     overlay = null;
 
-    store.set('options.twitch.channel', '');
-    store.set('options.kick.channel', '');
-
     const quit = () => {
         log.info('Deregistering all keybinds');
         globalShortcut.unregisterAll();
