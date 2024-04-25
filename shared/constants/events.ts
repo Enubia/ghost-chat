@@ -12,6 +12,7 @@ export const IpcEvent = {
     ShowApp: 'show-app',
     RegisterNewKeybind: 'register-new-keybind',
     CloseSettings: 'close-settings',
+    CallStore: 'call-store',
 
     // updater
     CheckingForUpdate: 'checking-for-update',

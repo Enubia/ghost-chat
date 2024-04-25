@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
+import type { Ref } from 'vue';
 
 import { Icon } from '@iconify/vue';
+import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
-import { inject, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router/auto';
 
-import type { AppStore } from '@shared/types';
+import type { Settings, WindowState } from '@shared/types';
 
 import MenuButtons from '@components/header/Buttons.vue';
 import DropDownMenu from '@components/header/Dropdown.vue';
 import { IpcEvent } from '@shared/constants';
-
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
 
 const router = useRouter();
 const route = useRoute();
@@ -24,27 +23,33 @@ const showMenuBar = ref(true);
 const showFooter = ref(true);
 const rerenderKey = ref(0);
 
-const savedWindowState = electronStore.get('savedWindowState');
-const settings = electronStore.get('settings');
-const isTransparent = electronStore.get('savedWindowState').isTransparent;
-const autoUpdatesDisabled = electronStore.get('updater').disableAutoUpdates;
+const savedWindowState = ref({}) as Ref<WindowState>;
+const settings = ref({}) as Ref<Settings>;
+const isTransparent = ref(false);
+const autoUpdatesDisabled = ref(true);
 
 const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
-
-if (!autoUpdatesDisabled && !isTransparent) {
-    if (settings.isOpen) {
-        router.push('/settings/general');
-    } else {
-        router.push('/versioncheck');
-    }
-}
 
 const $html = document.querySelector('html');
 const $app = document.querySelector('#app');
 
-if (savedWindowState.theme) {
-    $html?.classList.add(savedWindowState.theme);
-}
+onMounted(async () => {
+    savedWindowState.value = await IpcHandler.getWindowState();
+    settings.value = await IpcHandler.getSettings();
+    autoUpdatesDisabled.value = await IpcHandler.getValueFromKey('updater.disableAutoUpdates');
+
+    if (savedWindowState.value.theme) {
+        $html?.classList.add(savedWindowState.value.theme);
+    }
+
+    if (!autoUpdatesDisabled.value && !isTransparent.value) {
+        if (settings.value.isOpen) {
+            router.push('/settings/general');
+        } else {
+            router.push('/versioncheck');
+        }
+    }
+});
 
 watch(route, () => {
     showFooter.value = !footerExcludeList.includes(route.name);
@@ -57,7 +62,7 @@ ipcRenderer.on(IpcEvent.Vanish, () => {
 });
 ipcRenderer.on(IpcEvent.ShowApp, () => {
     $app?.removeAttribute('vanished');
-    showMenuBar.value = !isTransparent && !settings.isOpen;
+    showMenuBar.value = !isTransparent.value && !settings.value.isOpen;
 });
 ipcRenderer.on(IpcEvent.Rerender, () => {
     rerenderKey.value += 1;
@@ -97,3 +102,4 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
         </footer>
     </div>
 </template>
+@lib/ipchandler

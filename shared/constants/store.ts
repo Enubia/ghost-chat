@@ -1,4 +1,4 @@
-import type { AppStore } from '@shared/types';
+import type { AppStore } from '@shared/types/';
 
 export const StoreKeys = {
     Options: 'options',

@@ -36,6 +36,12 @@ export interface ExternalBrowserSource {
     js: string;
 }
 
+export interface Options {
+    twitch: Twitch;
+    kick: Kick;
+    external: ExternalBrowserSource;
+}
+
 export interface WindowState {
     x: number;
     y: number;
@@ -77,11 +83,7 @@ export interface AppStore {
      * @deprecated Only used for migration purposes
      */
     chatOptions?: Record<string, any>;
-    options: {
-        twitch: Twitch;
-        kick: Kick;
-        external: ExternalBrowserSource;
-    };
+    options: Options;
     savedWindowState: WindowState;
     settings: Settings;
     general: General;
@@ -92,3 +94,33 @@ export interface AppStore {
      */
     keybind?: Record<string, any>;
 }
+
+// https://github.com/toonvanstrijp/nestjs-i18n/blob/1a86bb46e9386c6450d10c9c9e609f78315752d0/src/types.ts
+type IsAny<T> = unknown extends T
+    ? [keyof T] extends [never]
+            ? false
+            : true
+    : false;
+
+type PathImpl<T, Key extends keyof T> = Key extends string
+    ? IsAny<T[Key]> extends true
+        ? never
+        : T[Key] extends Record<string, any>
+            ?
+            | `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> &
+            string}`
+            | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
+            : never
+    : never;
+
+type PathImpl2<T> = PathImpl<T, keyof T> | keyof T;
+
+type Path<T> = keyof T extends string
+    ? PathImpl2<T> extends infer P
+        ? P extends string | keyof T
+            ? P
+            : keyof T
+        : keyof T
+    : never;
+
+export type StorePath = Path<AppStore>;

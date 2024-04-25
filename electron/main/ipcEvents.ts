@@ -30,6 +30,7 @@ export default class IpcEvents {
         this.vanish();
         this.openSettings(indexHtml);
         this.registerNewKeybind();
+        this.callStore();
     }
 
     registerWindow(overlay: BrowserWindow | null) {
@@ -193,6 +194,30 @@ export default class IpcEvents {
                 if (this.settings && this.manualUpdater) {
                     this.manualUpdater.registerWindow(this.settings);
                 }
+            }
+        });
+    }
+
+    private callStore() {
+        ipcMain.handle(IpcEvent.CallStore, async (_event, data: {
+            action: 'get' | 'set' | 'delete';
+            key: keyof AppStore;
+            value?: any;
+        }) => {
+            log.info('Calling store', data);
+
+            switch (data.action) {
+                case 'get':
+                    return this.store.get(data.key);
+                case 'set':
+                    this.store.set(data.key, data.value);
+                    break;
+                case 'delete':
+                    this.store.delete(data.key);
+                    break;
+                default:
+                    log.error('Unknown action', data);
+                    break;
             }
         });
     }
