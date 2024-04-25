@@ -21,7 +21,7 @@ importers:
         specifier: 6.1.2
         version: 6.1.2
       '@iconify/json':
-        specifier: ^2.2.204
+        specifier: 2.2.204
         version: 2.2.204
       '@iconify/vue':
         specifier: 4.1.2
@@ -36,7 +36,7 @@ importers:
         specifier: 1.0.0
         version: 1.0.0(vue@3.4.23(typescript@5.4.5))
       '@tomjs/vite-plugin-iconify':
-        specifier: ^1.2.0
+        specifier: 1.2.0
         version: 1.2.0(@iconify/json@2.2.204)(vite@5.2.10(@types/node@20.11.21)(sass@1.75.0))
       '@vitejs/plugin-vue':
         specifier: 5.0.4
