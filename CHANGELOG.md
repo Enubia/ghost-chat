@@ -18,7 +18,11 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 24 April 2024
+## Latest | 25 April 2024
+
+- fix: downgrade electron [`#912`](https://github.com/Enubia/ghost-chat/pull/912)
+---
+### v3.0.0 | 24 April 2024
 
 - feat: added kick.com [`#911`](https://github.com/Enubia/ghost-chat/pull/911)
 - refactor: replace kapchat with jchat [`#909`](https://github.com/Enubia/ghost-chat/pull/909)
@@ -27,6 +31,7 @@ alt="Buy Me A Coffee" width="126" />
 - feat: added static changelog template [`4354195`](https://github.com/Enubia/ghost-chat/commit/4354195e63270959dae91755d9487b7c9523595a)
 - update: added new version check icon [`42f0e29`](https://github.com/Enubia/ghost-chat/commit/42f0e29d160521becd6460c4d700368de3e37427)
 - new: external source settings page [`002a365`](https://github.com/Enubia/ghost-chat/commit/002a365d02b35aabd946ca546c699feda8dfc56c)
+- chore: update changelog [`9c3b934`](https://github.com/Enubia/ghost-chat/commit/9c3b934b46357c3640dcc8e8e579cf86d31dadaf)
 - chore: eslint update [`44598e9`](https://github.com/Enubia/ghost-chat/commit/44598e990b6cabdb3a4e9721fc47c52a2584efb6)
 - refactor: keybind structure [`369c5f6`](https://github.com/Enubia/ghost-chat/commit/369c5f6a20142180230b97156f7d51a54cb929db)
 - fix: settings wording, editor init [`91c82e4`](https://github.com/Enubia/ghost-chat/commit/91c82e4967949f72c6454b109aee9da47db94cd2)
@@ -244,6 +249,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
+---
+### v2.2.0 | 3 May 2023
+
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
