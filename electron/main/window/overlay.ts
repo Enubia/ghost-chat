@@ -72,9 +72,9 @@ export default class Overlay {
 
         if (process.env.VITE_DEV_SERVER_URL) {
             window.loadURL(process.env.VITE_DEV_SERVER_URL);
-            // window.webContents.openDevTools({
-            //     mode: 'right',
-            // });
+            window.webContents.openDevTools({
+                mode: 'right',
+            });
         } else {
             window.loadFile(indexHtml);
         }
@@ -114,7 +114,9 @@ export default class Overlay {
 
         window.on('closed', () => {
             if (!this.store.get('savedWindowState').isTransparent) {
-                this.store.set('chatOptions.channel', '');
+                this.store.set('options.twitch.channel', '');
+                this.store.set('options.kick.channel', '');
+                this.store.set('options.external.url', '');
             }
         });
 

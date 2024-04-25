@@ -42,7 +42,9 @@ if (!autoUpdatesDisabled && !isTransparent) {
 const $html = document.querySelector('html');
 const $app = document.querySelector('#app');
 
-$html?.classList.add(savedWindowState.theme || '');
+if (savedWindowState.theme) {
+    $html?.classList.add(savedWindowState.theme);
+}
 
 watch(route, () => {
     showFooter.value = !footerExcludeList.includes(route.name);

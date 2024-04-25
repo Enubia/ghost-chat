@@ -79,6 +79,9 @@ export default function createStore() {
                 store.delete('chatOptions');
                 store.delete('keybind');
             },
+            '3.0.1': (store) => {
+                store.delete('chatOptions');
+            },
         },
     });
 }

@@ -5,6 +5,7 @@ import { rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
+import iconify from '@tomjs/vite-plugin-iconify';
 import vue from '@vitejs/plugin-vue';
 import autoprefixer from 'autoprefixer';
 import tailwind from 'tailwindcss';
@@ -34,6 +35,12 @@ export default defineConfig((({ command }) => {
                         isCustomElement: tag => ['webview'].includes(tag),
                     },
                 },
+            }),
+
+            iconify({
+                resources: ['https://unpkg.com/@iconify/json/json'],
+                rotate: 3000,
+                local: ['pepicons-print', 'fa6-brands', 'fa6-solid', 'fa6-regular', 'svg-spinners'],
             }),
 
             VueI18nPlugin.vite({
