@@ -1,6 +1,6 @@
 {
     "name": "ghost-chat",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "private": true,
     "description": "A Standalone chat overlay for Twitch.tv, Kick.tv and other streaming platforms",
     "author": {
