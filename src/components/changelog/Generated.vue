@@ -1,6 +1,18 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 25 April 2024
+        Latest | 26 April 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: correctly apply migrations
+            <a href="https://github.com/Enubia/ghost-chat/commit/b610cdf40e82fc487fabf68b6a1d921754ccb792" class="text-blue-500">b610cdf</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.0.1 | 25 April 2024
     </h2>
 
     <div class="grid gap-1">
@@ -8,6 +20,11 @@
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: downgrade electron
             <a href="https://github.com/Enubia/ghost-chat/pull/912" class="text-blue-500">#912</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/28b27dd437faac005ce1916b93d1207b1cf8335b" class="text-blue-500">28b27dd</a>
         </span>
     </div>
     <hr class="mt-2">
@@ -982,12 +999,6 @@
             <a href="https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892" class="text-blue-500">5b3a17b</a>
         </span>
     </div>
-    <hr class="mt-2">
-    <h2 class="text-2xl font-semibold py-2">
-        v2.2.0 | 3 May 2023
-    </h2>
-
-    <div class="grid gap-1" />
     <hr class="mt-2">
     <h2 class="text-2xl font-semibold py-2">
         v2.2.0-beta.1 | 2 May 2023
