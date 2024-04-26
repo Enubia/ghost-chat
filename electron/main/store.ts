@@ -82,6 +82,14 @@ export default function createStore() {
             '3.0.1': (store) => {
                 store.delete('chatOptions');
             },
+            '3.0.2': (store) => {
+                const data: Twitch = {
+                    ...StoreDefaults.options.twitch,
+                    ...store.get('options.twitch'),
+                };
+
+                store.set('options.twitch', data);
+            },
         },
     });
 }
