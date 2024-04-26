@@ -18,9 +18,14 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 25 April 2024
+## Latest | 26 April 2024
+
+- fix: correctly apply migrations [`b610cdf`](https://github.com/Enubia/ghost-chat/commit/b610cdf40e82fc487fabf68b6a1d921754ccb792)
+---
+### v3.0.1 | 25 April 2024
 
 - fix: downgrade electron [`#912`](https://github.com/Enubia/ghost-chat/pull/912)
+- chore: update changelog [`28b27dd`](https://github.com/Enubia/ghost-chat/commit/28b27dd437faac005ce1916b93d1207b1cf8335b)
 ---
 ### v3.0.0 | 24 April 2024
 
@@ -249,9 +254,6 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
----
-### v2.2.0 | 3 May 2023
-
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
