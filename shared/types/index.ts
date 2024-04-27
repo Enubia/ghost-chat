@@ -1,3 +1,3 @@
 export * from './store';
 export * from './webviewtag';
-export * from './searchparams';
+export * from '../constants/searchparams';

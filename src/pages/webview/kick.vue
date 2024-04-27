@@ -1,46 +1,52 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
+import type { Ref } from 'vue';
 
-import { inject, onMounted } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onBeforeMount, onMounted, ref } from 'vue';
+
+import type { Kick, WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
-import { type AppStore, KickSearchParams, type WebviewTag } from '@shared/types';
+import { KickSearchParams } from '@shared/constants';
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+const kick = ref() as Ref<Kick>;
+const link = ref() as Ref<URL>;
 
-const { kick } = electronStore.get('options');
+onBeforeMount(async () => {
+    kick.value = (await IpcHandler.getOptions()).kick;
 
-const link = new URL('https://kick-chat.corard.tv/v1/chat');
+    link.value = new URL('https://kick-chat.corard.tv/v1/chat');
 
-let channel = '';
+    let channel = '';
 
-if (kick.channel !== '') {
-    channel = kick.channel;
-} else if (kick.defaultChannel !== '') {
-    channel = kick.defaultChannel;
-}
+    if (kick.value.channel !== '') {
+        channel = kick.value.channel;
+    } else if (kick.value.defaultChannel !== '') {
+        channel = kick.value.defaultChannel;
+    }
 
-link.searchParams.append(KickSearchParams.USER, channel);
-link.searchParams.append(KickSearchParams.FONT_SIZE, kick.fontSize);
-link.searchParams.append(KickSearchParams.STROKE, kick.stroke);
-link.searchParams.append(KickSearchParams.ANIMATE, kick.animate.toString());
+    link.value.searchParams.append(KickSearchParams.USER, channel);
+    link.value.searchParams.append(KickSearchParams.FONT_SIZE, kick.value.fontSize);
+    link.value.searchParams.append(KickSearchParams.STROKE, kick.value.stroke);
+    link.value.searchParams.append(KickSearchParams.ANIMATE, kick.value.animate.toString());
 
-if (kick.fade) {
-    link.searchParams.append(KickSearchParams.FADE, kick.fadeTimeout.toString());
-}
+    if (kick.value.fade) {
+        link.value.searchParams.append(KickSearchParams.FADE, kick.value.fadeTimeout.toString());
+    }
 
-link.searchParams.append(KickSearchParams.BADGES, kick.badges.toString());
-link.searchParams.append(KickSearchParams.COMMANDS, kick.commands.toString());
-link.searchParams.append(KickSearchParams.BOTS, kick.bots.toString());
+    link.value.searchParams.append(KickSearchParams.BADGES, kick.value.badges.toString());
+    link.value.searchParams.append(KickSearchParams.COMMANDS, kick.value.commands.toString());
+    link.value.searchParams.append(KickSearchParams.BOTS, kick.value.bots.toString());
+});
 
 let webView: WebviewTag;
 
 function constructInjectableJS() {
-    if (!kick.userBlacklist || kick.userBlacklist.length === 0) {
-        return kick.js;
+    if (!kick.value.userBlacklist || kick.value.userBlacklist.length === 0) {
+        return kick.value.js;
     }
 
-    const preparedBlacklist = JSON.stringify(kick.userBlacklist).toLowerCase();
+    const preparedBlacklist = JSON.stringify(kick.value.userBlacklist).toLowerCase();
     const blackList = `
         const observer = new MutationObserver((changes) => {
             for (const change of changes) {
@@ -57,26 +63,23 @@ function constructInjectableJS() {
         });
     `.trim();
 
-    return [blackList, kick.js].join('\n');
+    return [blackList, kick.value.js].join('\n');
 }
 
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
-    if (kick.css.length) {
-        webView.addEventListener('dom-ready', async () => {
-            await webView.insertCSS(kick.css);
-        });
-    }
-
-    if (kick.js.length) {
-        webView.addEventListener('dom-ready', async () => {
+    webView.addEventListener('dom-ready', async () => {
+        if (kick.value.css.length) {
+            await webView.insertCSS(kick.value.css);
+        }
+        if (kick.value.js.length) {
             await webView.executeJavaScript(constructInjectableJS());
-        });
-    }
+        }
+    });
 });
 </script>
 
 <template>
-    <WebView :tag-source="link.toString()" class="overflow-hidden" />
+    <WebView :tag-source="link" class="overflow-hidden" />
 </template>

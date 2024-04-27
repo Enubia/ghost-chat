@@ -61,11 +61,11 @@ app.on('ready', () => {
                     new AutoUpdater(store, overlay, false).init();
                 }
             } else {
-                if (store.get('updater').disableAutoUpdates) {
-                    manualUpdater = new ManualUpdater(store, true);
-                } else {
-                    new AutoUpdater(store, overlay, true).init();
-                }
+                // if (store.get('updater').disableAutoUpdates) {
+                //     manualUpdater = new ManualUpdater(store, true);
+                // } else {
+                //     new AutoUpdater(store, overlay, true).init();
+                // }
 
                 overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
             }
