@@ -22,11 +22,9 @@ export default class AutoUpdater {
         this.updaterSettings = this.store.get('updater');
 
         this.autoUpdater = autoUpdater;
-
-        this.init();
     }
 
-    private init() {
+    init() {
         this.autoUpdater.logger = log;
         this.autoUpdater.autoDownload = false;
         this.autoUpdater.disableWebInstaller = true;

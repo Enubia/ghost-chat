@@ -58,14 +58,14 @@ app.on('ready', () => {
                 if (store.get('updater').disableAutoUpdates) {
                     manualUpdater = new ManualUpdater(store, false);
                 } else {
-                    new AutoUpdater(store, overlay, false);
+                    new AutoUpdater(store, overlay, false).init();
                 }
             } else {
-                // if (store.get('updater').disableAutoUpdates) {
-                //     manualUpdater = new ManualUpdater(store, true);
-                // } else {
-                //     new AutoUpdater(store, overlay, true);
-                // }
+                if (store.get('updater').disableAutoUpdates) {
+                    manualUpdater = new ManualUpdater(store, true);
+                } else {
+                    new AutoUpdater(store, overlay, true).init();
+                }
 
                 overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
             }
