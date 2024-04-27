@@ -36,7 +36,7 @@ export default class IpcHandler {
 
     // ---------------------- setters ----------------------
 
-    public static async setValueFromKey(key: StorePath, value: Record<string, unknown>): Promise<void> {
+    public static async setValueFromKey(key: StorePath, value: string | number | Record<string, unknown>): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value });
     }
 
