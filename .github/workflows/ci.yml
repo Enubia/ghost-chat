@@ -7,10 +7,15 @@ on:
       - "!main"
 
 jobs:
-  lint:
+  CI:
     runs-on: windows-latest
 
     steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v2
