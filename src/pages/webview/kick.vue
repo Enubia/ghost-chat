@@ -9,7 +9,7 @@ import type { Kick, WebviewTag } from '@shared/types';
 import WebView from '@components/WebView.vue';
 import { KickSearchParams } from '@shared/constants';
 
-const kick = ref() as Ref<Kick>;
+const kick = ref({} as Kick);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {

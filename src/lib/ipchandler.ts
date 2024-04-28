@@ -4,6 +4,8 @@ import type { AppStore, General, Keybinds, Options, Settings, StorePath, StorePa
 
 import { IpcEvent } from '@shared/constants';
 
+import { cloneValue } from './utils';
+
 export default class IpcHandler {
     // ---------------------- getters ----------------------
     public static async getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
@@ -36,33 +38,34 @@ export default class IpcHandler {
 
     // ---------------------- setters ----------------------
 
+    // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
     public static async setValueFromKey<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
     }
 
     public static async setOptions(value: Options): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value: cloneValue(value) });
     }
 
     public static async setWindowState(value: WindowState): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'savedWindowState', value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'savedWindowState', value: cloneValue(value) });
     }
 
     public static async setSettings(value: Settings): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'settings', value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'settings', value: cloneValue(value) });
     }
 
     public static async setGeneral(value: General): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value: cloneValue(value) });
     }
 
     public static async setUpdater(value: Updater): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key:
-            'updater', value });
+            'updater', value: cloneValue(value) });
     }
 
     public static async setKeybinds(value: Keybinds): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value });
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value: cloneValue(value) });
     }
 
     // only parent keys can be deleted

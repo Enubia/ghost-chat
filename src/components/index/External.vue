@@ -22,9 +22,7 @@ const hasRegexError = ref(false);
 const hasError = ref(false);
 
 onMounted(async () => {
-    const { external: _external } = await IpcHandler.getOptions();
-
-    external.value = _external;
+    external.value = (await IpcHandler.getOptions()).external;
     source.value = external.value.defaultUrl;
     sources.value = external.value.sources;
 });
