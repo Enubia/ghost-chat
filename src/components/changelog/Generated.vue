@@ -1,9 +1,26 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 26 April 2024
+        Latest | 28 April 2024
     </h2>
 
     <div class="grid gap-1">
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: query paramter pass through for external sources
+            <a href="https://github.com/Enubia/ghost-chat/commit/1fcccc45a3a41992943a17b0ef0022dc7495378d" class="text-blue-500">1fcccc4</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.0.2 | 27 April 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/89a2b0716e6414844672d255ad8bc365b34d6c68" class="text-blue-500">89a2b07</a>
+        </span>
         <span>
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: correctly apply migrations
