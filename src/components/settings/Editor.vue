@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { inject, onBeforeMount, ref, shallowRef } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onBeforeMount, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
@@ -13,26 +12,24 @@ type Option = keyof AppStore['options'];
 
 const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-
 const code = ref('');
 const success = ref<boolean>(false);
 const view = shallowRef();
 const extensions: any[] = [];
 
-onBeforeMount(() => {
-    if (electronStore.get('savedWindowState.theme') === 'dark') {
+onBeforeMount(async () => {
+    if (await IpcHandler.getValueFromKey('savedWindowState.theme') === 'dark') {
         extensions.push(oneDark);
     }
 
     if (props.type === 'css') {
         extensions.push(css());
-        code.value = electronStore.get(`options.${props.option}.css`);
+        code.value = await IpcHandler.getValueFromKey(`options.${props.option}.css`);
     }
 
     if (props.type === 'js') {
         extensions.push(javascript());
-        code.value = electronStore.get(`options.${props.option}.js`);
+        code.value = await IpcHandler.getValueFromKey(`options.${props.option}.js`);
     }
 });
 
@@ -47,15 +44,15 @@ function enableSuccess() {
     }, 2000);
 }
 
-function save() {
+async function save() {
     enableSuccess();
 
     if (props.type === 'css') {
-        electronStore.set(`options.${props.option}.css`, code.value);
+        await IpcHandler.setValueFromKey(`options.${props.option}.css`, code.value);
     }
 
     if (props.type === 'js') {
-        electronStore.set(`options.${props.option}.js`, code.value);
+        await IpcHandler.setValueFromKey(`options.${props.option}.js`, code.value);
     }
 }
 </script>

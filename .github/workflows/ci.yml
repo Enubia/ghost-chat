@@ -4,17 +4,18 @@ on:
   push:
     branches:
       - "**"
-      - "!master"
+      - "!main"
 
 jobs:
-  lint:
-    runs-on: ${{ matrix.os }}
+  CI:
+    runs-on: windows-latest
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    
     steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v2
@@ -30,27 +31,6 @@ jobs:
 
       - name: lint
         run: pnpm lint
-
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v2
-        with:
-          version: latest
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: install dependencies
-        run: pnpm install --frozen-lockfile
-
+      
       - name: build
         run: pnpm build

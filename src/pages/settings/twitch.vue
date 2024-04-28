@@ -1,21 +1,18 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import Settings from '@layouts/settings.vue';
+import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
-import { inject, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore, Twitch } from '@shared/types';
+import type { Twitch } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Switch } from '@components/ui/switch';
-import { IpcEvent } from '@shared/constants';
-
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+import { IpcEvent, StoreDefaults } from '@shared/constants';
 
 const { t, rt, tm } = useI18n();
 
@@ -25,172 +22,122 @@ for (const [_, value] of Object.entries(tm('settings.twitch.font.select-options'
     fontOptions.push(rt(value));
 }
 
-const { twitch } = electronStore.get('options');
+const fontSize = ref(String(StoreDefaults.options.twitch.fontSize));
+const userBlacklist = ref(StoreDefaults.options.twitch.userBlacklist);
+const defaultChannel = ref(StoreDefaults.options.twitch.defaultChannel);
+const animate = ref(StoreDefaults.options.twitch.animate);
+const fade = ref(StoreDefaults.options.twitch.fade);
+const bots = ref(StoreDefaults.options.twitch.bots);
+const hideCommands = ref(StoreDefaults.options.twitch.hideCommands);
+const hideBadges = ref(StoreDefaults.options.twitch.hideBadges);
+const font = ref(String(StoreDefaults.options.twitch.font));
+const stroke = ref(String(StoreDefaults.options.twitch.stroke));
+const shadow = ref(String(StoreDefaults.options.twitch.shadow));
+const smallCaps = ref(StoreDefaults.options.twitch.smallCaps);
+const fadeTimeout = ref(StoreDefaults.options.twitch.fadeTimeout);
 
-const fontSize = ref(String(twitch.fontSize));
-const userBlacklist = ref(twitch.userBlacklist || []);
+onMounted(async () => {
+    const twitch = await IpcHandler.getTwitchOptions();
 
-const defaultChannel = ref(twitch.defaultChannel);
-const animate = ref(twitch.animate);
-const fade = ref(twitch.fade);
-const bots = ref(twitch.bots);
-const hideCommands = ref(twitch.hideCommands);
-const hideBadges = ref(twitch.hideBadges);
-const font = ref(String(twitch.font));
-const stroke = ref(String(twitch.stroke));
-const shadow = ref(String(twitch.shadow));
-const smallCaps = ref(twitch.smallCaps);
-const fadeTimeout = ref(twitch.fadeTimeout);
+    fontSize.value = String(twitch.fontSize);
+    userBlacklist.value = twitch.userBlacklist;
+    defaultChannel.value = twitch.defaultChannel;
+    animate.value = twitch.animate;
+    fade.value = twitch.fade;
+    bots.value = twitch.bots;
+    hideCommands.value = twitch.hideCommands;
+    hideBadges.value = twitch.hideBadges;
+    font.value = String(twitch.font);
+    stroke.value = String(twitch.stroke);
+    shadow.value = String(twitch.shadow);
+    smallCaps.value = twitch.smallCaps;
+    fadeTimeout.value = twitch.fadeTimeout;
+});
 
 const channelSuccess = ref(false);
 const blacklistSuccess = ref(false);
 
-function saveDefaultChannel() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        defaultChannel: defaultChannel.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveDefaultChannel() {
+    await IpcHandler.setValueFromKey('options.twitch.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
-function saveAnimate() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        animate: animate.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveAnimate() {
+    await IpcHandler.setValueFromKey('options.twitch.animate', animate.value);
 }
 
-function saveFadeMessages() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        fade: fade.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveFadeMessages() {
+    await IpcHandler.setValueFromKey('options.twitch.fade', fade.value);
 }
 
-function saveShowBotActivity() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        bots: bots.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveShowBotActivity() {
+    await IpcHandler.setValueFromKey('options.twitch.bots', bots.value);
 }
 
-function saveHideCommands() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        hideCommands: hideCommands.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveHideCommands() {
+    await IpcHandler.setValueFromKey('options.twitch.hideCommands', hideCommands.value);
 }
 
-function saveHideBadges() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        hideBadges: hideBadges.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveHideBadges() {
+    await IpcHandler.setValueFromKey('options.twitch.hideBadges', hideBadges.value);
 }
 
-function saveFont() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        font: Number.parseInt(font.value) as typeof twitch.font,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveFont() {
+    await IpcHandler.setValueFromKey('options.twitch.font', Number.parseInt(font.value) as Twitch['font']);
 }
 
-function saveStroke() {
-    let value: typeof twitch.stroke;
+async function saveStroke() {
+    let value: Twitch['stroke'];
 
     switch (stroke.value) {
         case 'false':
             value = false;
             break;
         default:
-            value = Number.parseInt(stroke.value) as typeof twitch.stroke;
+            value = Number.parseInt(stroke.value) as Twitch['stroke'];
             break;
     }
 
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        stroke: value,
-    };
-
-    electronStore.set('options.twitch', data);
+    await IpcHandler.setValueFromKey('options.twitch.stroke', value);
 }
 
-function saveShadow() {
-    let value: typeof twitch.shadow;
+async function saveShadow() {
+    let value: Twitch['shadow'];
 
     switch (shadow.value) {
         case 'false':
             value = false;
             break;
         default:
-            value = Number.parseInt(shadow.value) as typeof twitch.shadow;
+            value = Number.parseInt(shadow.value) as Twitch['shadow'];
             break;
     }
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        shadow: value,
-    };
 
-    electronStore.set('options.twitch', data);
+    await IpcHandler.setValueFromKey('options.twitch.shadow', value);
 }
 
-function saveSmallCaps() {
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        smallCaps: smallCaps.value,
-    };
-
-    electronStore.set('options.twitch', data);
+async function saveSmallCaps() {
+    await IpcHandler.setValueFromKey('options.twitch.smallCaps', smallCaps.value);
 }
 
-function saveFontSize() {
-    setTimeout(() => {
-        const data: Twitch = {
-            ...electronStore.get('options').twitch,
-            fontSize: Number.parseInt(fontSize.value) as typeof twitch.fontSize,
-        };
-
-        electronStore.set('options.twitch', data);
-    }, 200);
+async function saveFontSize() {
+    await IpcHandler.setValueFromKey('options.twitch.fontSize', Number.parseInt(fontSize.value) as Twitch['fontSize']);
 }
 
-function updateBlacklist(event: Event) {
+async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
-    const data: Twitch = {
-        ...electronStore.get('options').twitch,
-        userBlacklist: blacklist,
-    };
 
-    electronStore.set('options.twitch', data);
+    await IpcHandler.setValueFromKey('options.twitch.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
     enableBlacklistSuccess();
 }
 
-function saveFadeTimeout() {
+async function saveFadeTimeout() {
     if (fade.value) {
-        const data: Twitch = {
-            ...electronStore.get('options').twitch,
-            fadeTimeout: fadeTimeout.value,
-        };
-
-        electronStore.set('options.twitch', data);
+        await IpcHandler.setValueFromKey('options.twitch.fadeTimeout', fadeTimeout.value);
     }
 }
 

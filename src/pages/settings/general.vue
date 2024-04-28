@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import { Icon } from '@iconify/vue';
 import Settings from '@layouts/settings.vue';
+import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
-import { inject, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { AppStore } from '@shared/types';
+import type { Keybinds } from '@shared/types';
 
 import { languageMappingList } from '@components/languageMappingList';
 import HotKeyInput from '@components/settings/HotKeyInput.vue';
@@ -15,31 +14,36 @@ import { Button } from '@components/ui/button';
 import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Switch } from '@components/ui/switch';
-import { IpcEvent } from '@shared/constants';
-
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+import { IpcEvent, StoreDefaults } from '@shared/constants';
 
 const { t } = useI18n();
 
-const updater = electronStore.get('updater');
-const mac = electronStore.get('general').mac;
-const keybinds = electronStore.get('keybinds');
-
-const participateInPreRelease = ref(false);
-const disableAutoUpdates = ref(updater.disableAutoUpdates);
+const participateInPreRelease = ref(StoreDefaults.updater.channel === 'beta');
+const disableAutoUpdates = ref(StoreDefaults.updater.disableAutoUpdates);
 const updaterStatus = ref('init');
-const quitOnClose = ref(mac.quitOnClose);
-const hideDockIcon = ref(mac.hideDockIcon);
-const vanish = ref(keybinds.vanish);
+const quitOnClose = ref(StoreDefaults.general.mac.quitOnClose);
+const hideDockIcon = ref(StoreDefaults.general.mac.hideDockIcon);
+const vanish = ref<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
+const showMacOptions = ref(false);
 
-const showMacOptions = process.platform === 'darwin';
+onMounted(async () => {
+    const updater = await IpcHandler.getUpdater();
+    const mac = await IpcHandler.getValueFromKey('general.mac');
 
-if (updater.channel !== 'latest') {
-    participateInPreRelease.value = true;
-}
+    showMacOptions.value = await IpcHandler.getPlatform() === 'darwin';
+    vanish.value = (await IpcHandler.getKeybinds()).vanish;
 
-function saveKeybind(value: string) {
-    electronStore.set('keybinds.vanish.keybind', value);
+    if (updater.channel !== 'latest') {
+        participateInPreRelease.value = true;
+    }
+
+    disableAutoUpdates.value = updater.disableAutoUpdates;
+    quitOnClose.value = mac.quitOnClose;
+    hideDockIcon.value = mac.hideDockIcon;
+});
+
+async function saveKeybind(value: string) {
+    await IpcHandler.setValueFromKey('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
@@ -52,13 +56,22 @@ function restart() {
     ipcRenderer.send(IpcEvent.Close);
 }
 
-function saveAutoUpdateSetting(value: boolean) {
-    electronStore.set('updater.disableAutoUpdates', value);
+async function saveAutoUpdateSetting(value: boolean) {
+    await IpcHandler.setValueFromKey('updater.disableAutoUpdates', value);
     disableAutoUpdates.value = value;
 
     if (!value) {
         updaterStatus.value = 'init';
     }
+}
+
+async function savePrerelease(value: boolean) {
+    await IpcHandler.setValueFromKey('updater.channel', value ? 'beta' : 'latest');
+    participateInPreRelease.value = value;
+}
+
+async function saveLanguage(value: string) {
+    await IpcHandler.setValueFromKey('general.language', value);
 }
 
 ipcRenderer.on(IpcEvent.Error, () => {
@@ -97,10 +110,7 @@ onUnmounted(() => {
             <Label for="locale-switcher">
                 {{ t('settings.general.locale-change.label') }}
             </Label>
-            <Select
-                id="locale-switcher" v-model="$i18n.locale"
-                @update:model-value="electronStore.set('general.language', $i18n.locale)"
-            >
+            <Select id="locale-switcher" v-model="$i18n.locale" @update:model-value="saveLanguage">
                 <SelectTrigger>
                     <SelectValue :placeholder="$i18n.locale" />
                 </SelectTrigger>
@@ -114,10 +124,7 @@ onUnmounted(() => {
         <HotKeyInput v-model="vanish.keybind" @update:model-value="saveKeybind" />
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch
-                    id="beta-updates" :default-checked="participateInPreRelease"
-                    @update:checked="(checked) => electronStore.set('updater.channel', checked ? 'beta' : 'latest')"
-                />
+                <Switch id="beta-updates" :checked="participateInPreRelease" @update:checked="savePrerelease" />
                 <Label for="beta-updates" class="cursor-pointer">
                     {{ t('settings.general.pre-release.label') }}
                 </Label>
@@ -129,7 +136,7 @@ onUnmounted(() => {
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch
-                    id="disable-auto-updates" :default-checked="disableAutoUpdates"
+                    id="disable-auto-updates" :checked="disableAutoUpdates"
                     @update:checked="saveAutoUpdateSetting"
                 />
                 <Label for="disable-auto-updates" class="cursor-pointer">
@@ -166,7 +173,7 @@ onUnmounted(() => {
             <div class="flex items-center gap-2">
                 <Switch
                     id="quit-one-close" :default-checked="quitOnClose"
-                    @update:checked="(checked) => electronStore.set('general.mac.quitOnClose', checked)"
+                    @update:checked="(checked) => IpcHandler.setValueFromKey('general.mac.quitOnClose', checked)"
                 />
                 <Label for="quit-one-close">
                     {{ t('settings.general.close-option.label') }}
@@ -178,7 +185,7 @@ onUnmounted(() => {
             <div class="flex items-center gap-2">
                 <Switch
                     id="hide-dock-icon" :default-checked="hideDockIcon"
-                    @update:checked="(checked) => electronStore.set('general.mac.hideDockIcon', checked)"
+                    @update:checked="(checked) => IpcHandler.setValueFromKey('general.mac.hideDockIcon', checked)"
                 />
                 <Label for="hide-dock-icon">
                     {{ t('settings.general.hide-dock-icon-options.label') }}

@@ -1,43 +1,38 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
-import { inject, ref } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
-
-import type { AppStore, Twitch } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
+import { StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const { t } = useI18n();
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-
-const { twitch } = electronStore.get('options');
+const twitch = ref(StoreDefaults.options.twitch);
 const channel = ref('');
 
-if (twitch.channel !== '') {
-    channel.value = twitch.channel;
-}
+onMounted(async () => {
+    twitch.value = await IpcHandler.getTwitchOptions();
 
-if (twitch.defaultChannel !== '') {
-    channel.value = twitch.defaultChannel;
-}
+    if (twitch.value.channel !== '') {
+        channel.value = twitch.value.channel;
+    }
 
-function routeChat() {
+    if (twitch.value.defaultChannel !== '') {
+        channel.value = twitch.value.defaultChannel;
+    }
+});
+
+async function routeChat() {
     if (!channel.value.length) {
         return;
     }
 
-    const data: Twitch = {
-        ...twitch,
-        channel: channel.value,
-    };
-
-    electronStore.set('options.twitch', data);
+    await IpcHandler.setValueFromKey('options.twitch.channel', channel.value);
 
     router.push('/webview/twitch');
 }

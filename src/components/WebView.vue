@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const props = defineProps<{ tagSource: string }>();
+defineProps<{ tagSource: URL }>();
 </script>
 
 <template>
     <div id="webview-tag">
         <webview
-            :src="props.tagSource"
+            :src="tagSource"
             class="min-h-[95dvh]"
         />
     </div>

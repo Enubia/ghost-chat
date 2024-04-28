@@ -1,134 +1,94 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import Settings from '@layouts/settings.vue';
+import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
-import { inject, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { AppStore, Kick } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
 import { Switch } from '@components/ui/switch';
-import { IpcEvent } from '@shared/constants';
-
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+import { IpcEvent, StoreDefaults } from '@shared/constants';
 
 const { t } = useI18n();
 
-const { kick } = electronStore.get('options');
-
-const fontSize = ref(kick.fontSize);
-const stroke = ref(kick.stroke);
-const animate = ref(kick.animate);
-const fade = ref(kick.fade);
-const badges = ref(kick.badges);
-const commands = ref(kick.commands);
-const bots = ref(kick.bots);
+const kickDefaults = StoreDefaults.options.kick;
+const fontSize = ref(kickDefaults.fontSize);
+const stroke = ref(kickDefaults.stroke);
+const animate = ref(kickDefaults.animate);
+const fade = ref(kickDefaults.fade);
+const badges = ref(kickDefaults.badges);
+const commands = ref(kickDefaults.commands);
+const bots = ref(kickDefaults.bots);
 const channelSuccess = ref(false);
 const blacklistSuccess = ref(false);
-const defaultChannel = ref(kick.defaultChannel);
-const userBlacklist = ref(kick.userBlacklist);
-const fadeTimeout = ref(kick.fadeTimeout);
+const defaultChannel = ref(kickDefaults.defaultChannel);
+const userBlacklist = ref(kickDefaults.userBlacklist);
+const fadeTimeout = ref(kickDefaults.fadeTimeout);
 
-function saveDefaultChannel() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        defaultChannel: defaultChannel.value,
-    };
+onMounted(async () => {
+    const kickStore = await IpcHandler.getKickOptions();
 
-    electronStore.set('options.kick', data);
+    fontSize.value = kickStore.fontSize;
+    stroke.value = kickStore.stroke;
+    animate.value = kickStore.animate;
+    fade.value = kickStore.fade;
+    badges.value = kickStore.badges;
+    commands.value = kickStore.commands;
+    bots.value = kickStore.bots;
+    defaultChannel.value = kickStore.defaultChannel;
+    userBlacklist.value = kickStore.userBlacklist;
+    fadeTimeout.value = kickStore.fadeTimeout;
+});
+
+async function saveDefaultChannel() {
+    await IpcHandler.setValueFromKey('options.kick.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
-function saveFontSize() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        fontSize: fontSize.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveFontSize() {
+    await IpcHandler.setValueFromKey('options.kick.fontSize', fontSize.value);
 }
 
-function saveStroke() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        stroke: stroke.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveStroke() {
+    await IpcHandler.setValueFromKey('options.kick.stroke', stroke.value);
 }
 
-function saveAnimate() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        animate: animate.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveAnimate() {
+    await IpcHandler.setValueFromKey('options.kick.animate', animate.value);
 }
 
-function saveFadeMessages() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        fade: fade.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveFadeMessages() {
+    await IpcHandler.setValueFromKey('options.kick.fade', fade.value);
 }
 
-function saveBadges() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        badges: badges.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveBadges() {
+    await IpcHandler.setValueFromKey('options.kick.badges', badges.value);
 }
 
-function saveCommands() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        commands: commands.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveCommands() {
+    await IpcHandler.setValueFromKey('options.kick.commands', commands.value);
 }
 
-function saveBots() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        bots: bots.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveBots() {
+    await IpcHandler.setValueFromKey('options.kick.bots', bots.value);
 }
 
-function updateBlacklist(event: Event) {
+async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        userBlacklist: blacklist,
-    };
 
-    electronStore.set('options.kick', data);
+    await IpcHandler.setValueFromKey('options.kick.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
     enableBlacklistSuccess();
 }
 
-function saveFadeTimeout() {
-    const data: Kick = {
-        ...electronStore.get('options').kick,
-        fadeTimeout: fadeTimeout.value,
-    };
-
-    electronStore.set('options.kick', data);
+async function saveFadeTimeout() {
+    await IpcHandler.setValueFromKey('options.kick.fadeTimeout', fadeTimeout.value);
 }
 
 function enableChannelSuccess() {
@@ -213,7 +173,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="animate" v-model:checked="animate" @update:checked="saveAnimate" />
+                <Switch id="animate" :checked="animate" @update:checked="saveAnimate" />
                 <Label class="align-elements" for="animate">
                     {{ t('settings.kick.animate.label') }}
                 </Label>
@@ -224,7 +184,7 @@ function enableBlacklistSuccess() {
         <div class="flex flex-col gap-2">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <Switch id="fade" v-model:checked="fade" @update:checked="saveFadeMessages" />
+                    <Switch id="fade" :checked="fade" @update:checked="saveFadeMessages" />
                     <Label class="cursor-pointer" for="fade">
                         {{ t('settings.kick.fade.label') }}
                     </Label>
@@ -244,7 +204,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-badges" v-model:checked="badges" @update:checked="saveBadges" />
+                <Switch id="hide-badges" :checked="badges" @update:checked="saveBadges" />
                 <Label class="align-elements" for="hide-badges">
                     {{ t('settings.kick.hide-badges.label') }}
                 </Label>
@@ -254,7 +214,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-commands" v-model:checked="commands" @update:checked="saveCommands" />
+                <Switch id="hide-commands" :checked="commands" @update:checked="saveCommands" />
                 <Label class="align-elements" for="hide-commands">
                     {{ t('settings.kick.hide-commands.label') }}
                 </Label>
@@ -264,7 +224,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-bots" v-model:checked="bots" @update:checked="saveBots" />
+                <Switch id="hide-bots" :checked="bots" @update:checked="saveBots" />
                 <Label class="align-elements" for="hide-bots">
                     {{ t('settings.kick.hide-bots.label') }}
                 </Label>

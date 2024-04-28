@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import Settings from '@layouts/settings.vue';
+import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
-import { inject, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { AppStore } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
 import { Button } from '@components/ui/button';
@@ -17,15 +14,19 @@ import { IpcEvent } from '@shared/constants';
 
 const { t } = useI18n();
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-const { external } = electronStore.get('options');
-
-const defaultUrl = ref(external.defaultUrl || '');
+const defaultUrl = ref('');
 const channelSuccess = ref(false);
-const sources = ref(external.sources || []);
+const sources = ref<string[]>([]);
 
-function saveDefaultUrl() {
-    electronStore.set('options.external.defaultUrl', defaultUrl.value);
+onMounted(async () => {
+    const external = await IpcHandler.getExternalOptions();
+
+    defaultUrl.value = external.defaultUrl;
+    sources.value = external.sources;
+});
+
+async function saveDefaultUrl() {
+    await IpcHandler.setValueFromKey('options.external.defaultUrl', defaultUrl.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
@@ -37,9 +38,9 @@ function enableChannelSuccess() {
     }, 2000);
 }
 
-function removeSource(index: number) {
+async function removeSource(index: number) {
     sources.value = sources.value.filter((_, i) => i !== index);
-    electronStore.set('options.external.sources', sources.value);
+    await IpcHandler.setValueFromKey('options.external.sources', sources.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 </script>

@@ -1,71 +1,76 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
+import type { Ref } from 'vue';
 
-import { inject, onMounted } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onBeforeMount, onMounted, ref } from 'vue';
+
+import type { WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
-import { type AppStore, TwitchSearchParams, type WebviewTag } from '@shared/types';
+import { StoreDefaults, TwitchSearchParams } from '@shared/constants';
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
+const twitch = ref(StoreDefaults.options.twitch);
+const link = ref() as Ref<URL>;
 
-const { twitch } = electronStore.get('options');
+onBeforeMount(async () => {
+    twitch.value = await IpcHandler.getTwitchOptions();
+    link.value = new URL('https://www.giambaj.it/twitch/jchat/v2/');
 
-const link = new URL('https://www.giambaj.it/twitch/jchat/v2/');
+    let channel = '';
 
-let channel = '';
+    if (twitch.value.channel !== '') {
+        channel = twitch.value.channel;
+    } else if (twitch.value.defaultChannel !== '') {
+        channel = twitch.value.defaultChannel;
+    }
 
-if (twitch.channel !== '') {
-    channel = twitch.channel;
-} else if (twitch.defaultChannel !== '') {
-    channel = twitch.defaultChannel;
-}
+    link.value.searchParams.append(TwitchSearchParams.CHANNEL, channel);
 
-link.searchParams.append(TwitchSearchParams.CHANNEL, channel);
+    link.value.searchParams.append(TwitchSearchParams.SIZE, twitch.value.fontSize.toString());
 
-link.searchParams.append(TwitchSearchParams.SIZE, twitch.fontSize.toString());
+    if (twitch.value.animate) {
+        link.value.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
+    }
 
-if (twitch.animate) {
-    link.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
-}
+    if (twitch.value.bots) {
+        link.value.searchParams.append(TwitchSearchParams.BOTS, 'true');
+    }
 
-if (twitch.bots) {
-    link.searchParams.append(TwitchSearchParams.BOTS, 'true');
-}
+    if (twitch.value.fade) {
+        link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fadeTimeout.toString());
+    }
 
-if (twitch.fade) {
-    link.searchParams.append(TwitchSearchParams.FADE, twitch.fadeTimeout.toString());
-}
+    if (twitch.value.hideCommands) {
+        link.value.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
+    }
 
-if (twitch.hideCommands) {
-    link.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
-}
+    if (twitch.value.hideBadges) {
+        link.value.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
+    }
 
-if (twitch.hideBadges) {
-    link.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
-}
+    link.value.searchParams.append(TwitchSearchParams.FONT, twitch.value.font.toString());
 
-link.searchParams.append(TwitchSearchParams.FONT, twitch.font.toString());
+    if (twitch.value.stroke) {
+        link.value.searchParams.append(TwitchSearchParams.STROKE, twitch.value.stroke.toString());
+    }
 
-if (twitch.stroke) {
-    link.searchParams.append(TwitchSearchParams.STROKE, twitch.stroke.toString());
-}
+    if (twitch.value.shadow) {
+        link.value.searchParams.append(TwitchSearchParams.SHADOW, twitch.value.shadow.toString());
+    }
 
-if (twitch.shadow) {
-    link.searchParams.append(TwitchSearchParams.SHADOW, twitch.shadow.toString());
-}
-
-if (twitch.smallCaps) {
-    link.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
-}
+    if (twitch.value.smallCaps) {
+        link.value.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
+    }
+});
 
 let webView: WebviewTag;
 
 function constructInjectableJS() {
-    if (!twitch.userBlacklist || twitch.userBlacklist.length === 0) {
-        return twitch.js;
+    if (!twitch.value.userBlacklist || twitch.value.userBlacklist.length === 0) {
+        return twitch.value.js;
     }
 
-    const preparedBlacklist = JSON.stringify(twitch.userBlacklist).toLowerCase();
+    const preparedBlacklist = JSON.stringify(twitch.value.userBlacklist).toLowerCase();
     const blackList = `
         const observer = new MutationObserver((changes) => {
             for (const change of changes) {
@@ -82,18 +87,18 @@ function constructInjectableJS() {
         });
     `;
 
-    return [blackList, twitch.js].join('\n');
+    return [blackList, twitch.value.js].join('\n');
 }
 
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
-        if (twitch.css.length) {
-            await webView.insertCSS(twitch.css);
+        if (twitch.value.css.length) {
+            await webView.insertCSS(twitch.value.css);
         }
 
-        if (twitch.js.length) {
+        if (twitch.value.js.length) {
             await webView.executeJavaScript(constructInjectableJS());
         }
     });
@@ -101,5 +106,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <WebView :tag-source="link.toString()" class="overflow-hidden" />
+    <WebView :tag-source="link" class="overflow-hidden" />
 </template>

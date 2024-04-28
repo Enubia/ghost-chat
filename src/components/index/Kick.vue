@@ -1,43 +1,38 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
-import { inject, ref } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
-
-import type { AppStore, Kick } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
+import { StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const { t } = useI18n();
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-
-const { kick } = electronStore.get('options');
+const kick = ref(StoreDefaults.options.kick);
 const channel = ref('');
 
-if (kick.channel !== '') {
-    channel.value = kick.channel;
-}
+onMounted(async () => {
+    kick.value = await IpcHandler.getKickOptions();
 
-if (kick.defaultChannel !== '') {
-    channel.value = kick.defaultChannel;
-}
+    if (kick.value.channel !== '') {
+        channel.value = kick.value.channel;
+    }
 
-function routeChat() {
+    if (kick.value.defaultChannel !== '') {
+        channel.value = kick.value.defaultChannel;
+    }
+});
+
+async function routeChat() {
     if (!channel.value.length) {
         return;
     }
 
-    const data: Kick = {
-        ...kick,
-        channel: channel.value,
-    };
-
-    electronStore.set('options.kick', data);
+    await IpcHandler.setValueFromKey('options.kick.channel', channel.value);
 
     router.push('/webview/kick');
 }

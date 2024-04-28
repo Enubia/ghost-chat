@@ -36,6 +36,12 @@ export interface ExternalBrowserSource {
     js: string;
 }
 
+export interface Options {
+    twitch: Twitch;
+    kick: Kick;
+    external: ExternalBrowserSource;
+}
+
 export interface WindowState {
     x: number;
     y: number;
@@ -51,11 +57,13 @@ export interface Settings {
     savedWindowState: Omit<WindowState, 'isClickThrough' | 'isTransparent'>;
 }
 
+export interface Mac {
+    quitOnClose: boolean;
+    hideDockIcon: boolean;
+}
+
 export interface General {
-    mac: {
-        quitOnClose: boolean;
-        hideDockIcon: boolean;
-    };
+    mac: Mac;
     language: string;
 }
 
@@ -77,11 +85,7 @@ export interface AppStore {
      * @deprecated Only used for migration purposes
      */
     chatOptions?: Record<string, any>;
-    options: {
-        twitch: Twitch;
-        kick: Kick;
-        external: ExternalBrowserSource;
-    };
+    options: Options;
     savedWindowState: WindowState;
     settings: Settings;
     general: General;
@@ -92,3 +96,28 @@ export interface AppStore {
      */
     keybind?: Record<string, any>;
 }
+
+type PathImpl<T, Key extends keyof T> = Key extends string
+    ? T[Key] extends Record<string, any>
+        ? `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> & string}` | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
+        : never
+    : never;
+
+type Path<T> = PathImpl<T, keyof T> | keyof T;
+
+export type StorePath = Path<AppStore>;
+
+type Split<S extends string, D extends string> =
+    string extends S ? string[] :
+        S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] :
+                [S];
+
+type ArrToPath<T, P extends string[]> = P extends [infer K, ...infer R]
+    ? K extends keyof T
+        ? R extends string[]
+            ? ArrToPath<T[K], R>
+            : never
+        : never
+    : T;
+
+export type StorePathValue<T, P extends StorePath> = ArrToPath<T, Split<P, '.'>>;

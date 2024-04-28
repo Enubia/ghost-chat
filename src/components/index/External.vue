@@ -1,28 +1,30 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
 import { Icon } from '@iconify/vue';
-import { inject, ref } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
-
-import type { AppStore, ExternalBrowserSource } from '@shared/types';
 
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
+import { StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const { t } = useI18n();
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-const { external } = electronStore.get('options');
-
-const source = ref(external.defaultUrl || '');
-const sources = ref(external.sources || []);
+const external = ref(StoreDefaults.options.external);
+const source = ref('');
+const sources = ref<string[]>([]);
 const hasRegexError = ref(false);
 const hasError = ref(false);
+
+onMounted(async () => {
+    external.value = await IpcHandler.getExternalOptions();
+    source.value = external.value.defaultUrl;
+    sources.value = external.value.sources;
+});
 
 function checkRegex() {
     if (source.value === '') {
@@ -46,19 +48,15 @@ function enableStartButton() {
     }
 }
 
-function routeExternal() {
+async function routeExternal() {
     checkRegex();
 
     if (source.value !== '' && !hasRegexError.value) {
-        if (!external.sources.includes(source.value)) {
-            const data: ExternalBrowserSource = {
-                ...external,
-                sources: [
-                    ...external.sources,
-                    source.value,
-                ],
-            };
-            electronStore.set('options.external', data);
+        if (!external.value.sources.includes(source.value)) {
+            await IpcHandler.setValueFromKey('options.external.sources', [
+                ...external.value.sources,
+                source.value,
+            ]);
         }
 
         router.push(`/webview/externalsource?source=${encodeURIComponent(source.value)}`);
@@ -101,7 +99,7 @@ function applySourceFromList(item: string) {
                         v-for="item, index of sources" :key="index" v-model="sources[index]" class="w-full"
                         :value="item"
                     >
-                        {{ item }}
+                        {{ item.substring(0, 30) + (item.length > 30 ? '...' : '') }}
                     </SelectItem>
                 </SelectContent>
             </Select>

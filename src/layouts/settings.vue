@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import type ElectronStore from 'electron-store';
-
-import { inject } from 'vue';
+import IpcHandler from '@lib/ipchandler';
+import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { AppStore } from '@shared/types';
 
 import SidebarNav from '@components/settings/SidebarNav.vue';
 import { Separator } from '@components/ui/separator';
 
-const electronStore = inject('electronStore') as ElectronStore<AppStore>;
-
 const { t } = useI18n();
 
-const theme = electronStore.get('savedWindowState.theme');
-const $html = document.querySelector('html');
-$html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+onMounted(async () => {
+    const theme = (await IpcHandler.getWindowState()).theme;
+    const $html = document.querySelector('html');
+
+    $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+});
 </script>
 
 <template>
