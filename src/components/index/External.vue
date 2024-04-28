@@ -103,7 +103,7 @@ function applySourceFromList(item: string) {
                         v-for="item, index of sources" :key="index" v-model="sources[index]" class="w-full"
                         :value="item"
                     >
-                        {{ item }}
+                        {{ item.substring(0, 30) + (item.length > 30 ? '...' : '') }}
                     </SelectItem>
                 </SelectContent>
             </Select>
