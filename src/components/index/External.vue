@@ -61,7 +61,7 @@ function routeExternal() {
             electronStore.set('options.external', data);
         }
 
-        router.push(`/webview/externalsource?source=${source.value}`);
+        router.push(`/webview/externalsource?source=${encodeURIComponent(source.value)}`);
     }
 }
 
