@@ -4,7 +4,7 @@ import type { Ref } from 'vue';
 import IpcHandler from '@lib/ipchandler';
 import { onBeforeMount, onMounted, ref } from 'vue';
 
-import type { Kick, WebviewTag } from '@shared/types';
+import type { WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
 import { KickSearchParams, StoreDefaults } from '@shared/constants';
