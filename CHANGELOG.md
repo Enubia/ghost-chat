@@ -18,8 +18,13 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 26 April 2024
+## Latest | 28 April 2024
 
+- fix: query paramter pass through for external sources [`1fcccc4`](https://github.com/Enubia/ghost-chat/commit/1fcccc45a3a41992943a17b0ef0022dc7495378d)
+---
+### v3.0.2 | 27 April 2024
+
+- chore: update changelog [`89a2b07`](https://github.com/Enubia/ghost-chat/commit/89a2b0716e6414844672d255ad8bc365b34d6c68)
 - fix: correctly apply migrations [`b610cdf`](https://github.com/Enubia/ghost-chat/commit/b610cdf40e82fc487fabf68b6a1d921754ccb792)
 ---
 ### v3.0.1 | 25 April 2024
