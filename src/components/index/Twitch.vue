@@ -17,7 +17,7 @@ const twitch = ref({} as Twitch);
 const channel = ref('');
 
 onMounted(async () => {
-    twitch.value = (await IpcHandler.getOptions()).twitch;
+    twitch.value = await IpcHandler.getTwitchOptions();
 
     if (twitch.value.channel !== '') {
         channel.value = twitch.value.channel;

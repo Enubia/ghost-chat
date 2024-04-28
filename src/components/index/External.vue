@@ -22,7 +22,7 @@ const hasRegexError = ref(false);
 const hasError = ref(false);
 
 onMounted(async () => {
-    external.value = (await IpcHandler.getOptions()).external;
+    external.value = await IpcHandler.getExternalOptions();
     source.value = external.value.defaultUrl;
     sources.value = external.value.sources;
 });
@@ -54,13 +54,10 @@ async function routeExternal() {
 
     if (source.value !== '' && !hasRegexError.value) {
         if (!external.value.sources.includes(source.value)) {
-            await IpcHandler.setValueFromKey('options.external', {
-                ...external.value,
-                sources: [
-                    ...external.value.sources,
-                    source.value,
-                ],
-            });
+            await IpcHandler.setValueFromKey('options.external.sources', [
+                ...external.value.sources,
+                source.value,
+            ]);
         }
 
         router.push(`/webview/externalsource?source=${encodeURIComponent(source.value)}`);

@@ -12,7 +12,7 @@ const route = useRoute();
 const source = new URL(route.query.source!.toString());
 
 onMounted(async () => {
-    const { external } = await IpcHandler.getOptions();
+    const external = await IpcHandler.getExternalOptions();
 
     const webView = document.querySelector('webview') as WebviewTag;
 

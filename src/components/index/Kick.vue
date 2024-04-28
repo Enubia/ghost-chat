@@ -17,7 +17,7 @@ const kick = ref({} as Kick);
 const channel = ref('');
 
 onMounted(async () => {
-    kick.value = (await IpcHandler.getOptions()).kick;
+    kick.value = await IpcHandler.getKickOptions();
 
     if (kick.value.channel !== '') {
         channel.value = kick.value.channel;

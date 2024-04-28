@@ -1,6 +1,19 @@
 import { ipcRenderer } from 'electron';
 
-import type { AppStore, General, Keybinds, Options, Settings, StorePath, StorePathValue, Updater, WindowState } from '@shared/types';
+import type {
+    AppStore,
+    ExternalBrowserSource,
+    General,
+    Keybinds,
+    Kick,
+    Options,
+    Settings,
+    StorePath,
+    StorePathValue,
+    Twitch,
+    Updater,
+    WindowState,
+} from '@shared/types';
 
 import { IpcEvent } from '@shared/constants';
 
@@ -14,6 +27,18 @@ export default class IpcHandler {
 
     public static async getOptions(): Promise<Options> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options' });
+    }
+
+    public static async getTwitchOptions(): Promise<Twitch> {
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.twitch' });
+    }
+
+    public static async getKickOptions(): Promise<Kick> {
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.kick' });
+    }
+
+    public static async getExternalOptions(): Promise<ExternalBrowserSource> {
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.external' });
     }
 
     public static async getWindowState(): Promise<WindowState> {

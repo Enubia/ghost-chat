@@ -13,7 +13,7 @@ const twitch = ref({} as Twitch);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {
-    twitch.value = (await IpcHandler.getOptions()).twitch;
+    twitch.value = await IpcHandler.getTwitchOptions();
     link.value = new URL('https://www.giambaj.it/twitch/jchat/v2/');
 
     let channel = '';

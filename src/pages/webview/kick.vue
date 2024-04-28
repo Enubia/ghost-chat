@@ -13,7 +13,7 @@ const kick = ref({} as Kick);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {
-    kick.value = (await IpcHandler.getOptions()).kick;
+    kick.value = await IpcHandler.getKickOptions();
 
     link.value = new URL('https://kick-chat.corard.tv/v1/chat');
 
