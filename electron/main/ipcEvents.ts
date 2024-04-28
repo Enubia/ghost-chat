@@ -31,6 +31,7 @@ export default class IpcEvents {
         this.openSettings(indexHtml);
         this.registerNewKeybind();
         this.callStore();
+        this.getPlatform();
     }
 
     registerWindow(overlay: BrowserWindow | null) {
@@ -219,6 +220,14 @@ export default class IpcEvents {
                     log.error('Unknown action', data);
                     break;
             }
+        });
+    }
+
+    private getPlatform() {
+        ipcMain.handle(IpcEvent.GetPlatform, () => {
+            log.info('Getting platform');
+
+            return process.platform;
         });
     }
 

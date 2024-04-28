@@ -20,7 +20,6 @@ import { IpcEvent } from '@shared/constants';
 import { cloneValue } from './utils';
 
 export default class IpcHandler {
-    // ---------------------- getters ----------------------
     public static async getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key });
     }
@@ -61,8 +60,6 @@ export default class IpcHandler {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'keybinds' });
     }
 
-    // ---------------------- setters ----------------------
-
     // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
     public static async setValueFromKey<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
@@ -96,5 +93,9 @@ export default class IpcHandler {
     // only parent keys can be deleted
     public static async deleteValueFromKey(key: keyof AppStore): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'delete', key });
+    }
+
+    public static async getPlatform(): Promise<NodeJS.Platform> {
+        return await ipcRenderer.invoke(IpcEvent.GetPlatform);
     }
 }

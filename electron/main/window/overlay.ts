@@ -19,6 +19,7 @@ export default class Overlay {
 
         const webPreferences: WebPreferences = {
             webviewTag: true,
+            // TODO: see if we can disable this again after everything is migrated to contextBridge
             nodeIntegration: true,
             contextIsolation: false,
         };

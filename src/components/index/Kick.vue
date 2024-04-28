@@ -9,11 +9,12 @@ import type { Kick } from '@shared/types';
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
+import { StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const { t } = useI18n();
 
-const kick = ref({} as Kick);
+const kick = ref<Kick>(StoreDefaults.options.kick);
 const channel = ref('');
 
 onMounted(async () => {

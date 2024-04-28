@@ -7,9 +7,9 @@ import { onBeforeMount, onMounted, ref } from 'vue';
 import type { Twitch, WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
-import { TwitchSearchParams } from '@shared/constants';
+import { StoreDefaults, TwitchSearchParams } from '@shared/constants';
 
-const twitch = ref({} as Twitch);
+const twitch = ref<Twitch>(StoreDefaults.options.twitch);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {

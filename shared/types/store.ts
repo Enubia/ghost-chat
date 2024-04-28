@@ -57,11 +57,13 @@ export interface Settings {
     savedWindowState: Omit<WindowState, 'isClickThrough' | 'isTransparent'>;
 }
 
+export interface Mac {
+    quitOnClose: boolean;
+    hideDockIcon: boolean;
+}
+
 export interface General {
-    mac: {
-        quitOnClose: boolean;
-        hideDockIcon: boolean;
-    };
+    mac: Mac;
     language: string;
 }
 

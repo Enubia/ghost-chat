@@ -7,9 +7,9 @@ import { onBeforeMount, onMounted, ref } from 'vue';
 import type { Kick, WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
-import { KickSearchParams } from '@shared/constants';
+import { KickSearchParams, StoreDefaults } from '@shared/constants';
 
-const kick = ref({} as Kick);
+const kick = ref<Kick>(StoreDefaults.options.kick);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {

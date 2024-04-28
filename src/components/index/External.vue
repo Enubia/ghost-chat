@@ -11,11 +11,12 @@ import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
+import { StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const { t } = useI18n();
 
-const external = ref({} as ExternalBrowserSource);
+const external = ref<ExternalBrowserSource>(StoreDefaults.options.external);
 const source = ref('');
 const sources = ref<string[]>([]);
 const hasRegexError = ref(false);

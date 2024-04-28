@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-
 import { Icon } from '@iconify/vue';
 import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';
@@ -12,7 +10,7 @@ import type { Settings, WindowState } from '@shared/types';
 
 import MenuButtons from '@components/header/Buttons.vue';
 import DropDownMenu from '@components/header/Dropdown.vue';
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent, StoreDefaults } from '@shared/constants';
 
 const router = useRouter();
 const route = useRoute();
@@ -23,8 +21,8 @@ const showMenuBar = ref(true);
 const showFooter = ref(true);
 const rerenderKey = ref(0);
 
-const savedWindowState = ref({}) as Ref<WindowState>;
-const settings = ref({}) as Ref<Settings>;
+const savedWindowState = ref<WindowState>(StoreDefaults.savedWindowState);
+const settings = ref<Settings>(StoreDefaults.settings);
 const isTransparent = ref(false);
 const autoUpdatesDisabled = ref(true);
 
