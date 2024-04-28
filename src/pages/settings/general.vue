@@ -6,7 +6,7 @@ import { ipcRenderer } from 'electron';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { Keybinds, Mac, Updater } from '@shared/types';
+import type { Keybinds } from '@shared/types';
 
 import { languageMappingList } from '@components/languageMappingList';
 import HotKeyInput from '@components/settings/HotKeyInput.vue';
@@ -18,29 +18,28 @@ import { IpcEvent, StoreDefaults } from '@shared/constants';
 
 const { t } = useI18n();
 
-const updater = ref<Updater>(StoreDefaults.updater);
-const mac = ref<Mac>(StoreDefaults.general.mac);
-const participateInPreRelease = ref(false);
-const disableAutoUpdates = ref(false);
+const participateInPreRelease = ref(StoreDefaults.updater.channel === 'beta');
+const disableAutoUpdates = ref(StoreDefaults.updater.disableAutoUpdates);
 const updaterStatus = ref('init');
-const quitOnClose = ref(false);
-const hideDockIcon = ref(false);
+const quitOnClose = ref(StoreDefaults.general.mac.quitOnClose);
+const hideDockIcon = ref(StoreDefaults.general.mac.hideDockIcon);
 const vanish = ref<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
 const showMacOptions = ref(false);
 
 onMounted(async () => {
-    updater.value = await IpcHandler.getUpdater();
-    mac.value = await IpcHandler.getValueFromKey('general.mac');
+    const updater = await IpcHandler.getUpdater();
+    const mac = await IpcHandler.getValueFromKey('general.mac');
+
     showMacOptions.value = await IpcHandler.getPlatform() === 'darwin';
     vanish.value = (await IpcHandler.getKeybinds()).vanish;
 
-    if (updater.value.channel !== 'latest') {
+    if (updater.channel !== 'latest') {
         participateInPreRelease.value = true;
     }
 
-    disableAutoUpdates.value = updater.value.disableAutoUpdates;
-    quitOnClose.value = mac.value.quitOnClose;
-    hideDockIcon.value = mac.value.hideDockIcon;
+    disableAutoUpdates.value = updater.disableAutoUpdates;
+    quitOnClose.value = mac.quitOnClose;
+    hideDockIcon.value = mac.hideDockIcon;
 });
 
 async function saveKeybind(value: string) {

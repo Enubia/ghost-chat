@@ -4,12 +4,12 @@ import type { Ref } from 'vue';
 import IpcHandler from '@lib/ipchandler';
 import { onBeforeMount, onMounted, ref } from 'vue';
 
-import type { Twitch, WebviewTag } from '@shared/types';
+import type { WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
 import { StoreDefaults, TwitchSearchParams } from '@shared/constants';
 
-const twitch = ref<Twitch>(StoreDefaults.options.twitch);
+const twitch = ref(StoreDefaults.options.twitch);
 const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {

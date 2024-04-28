@@ -4,8 +4,6 @@ import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import type { Twitch } from '@shared/types';
-
 import { Button } from '@components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
@@ -14,7 +12,7 @@ import { StoreDefaults } from '@shared/constants';
 const router = useRouter();
 const { t } = useI18n();
 
-const twitch = ref<Twitch>(StoreDefaults.options.twitch);
+const twitch = ref(StoreDefaults.options.twitch);
 const channel = ref('');
 
 onMounted(async () => {

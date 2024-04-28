@@ -6,8 +6,6 @@ import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router/auto';
 
-import type { Settings, WindowState } from '@shared/types';
-
 import MenuButtons from '@components/header/Buttons.vue';
 import DropDownMenu from '@components/header/Dropdown.vue';
 import { IpcEvent, StoreDefaults } from '@shared/constants';
@@ -21,8 +19,8 @@ const showMenuBar = ref(true);
 const showFooter = ref(true);
 const rerenderKey = ref(0);
 
-const savedWindowState = ref<WindowState>(StoreDefaults.savedWindowState);
-const settings = ref<Settings>(StoreDefaults.settings);
+const savedWindowState = ref(StoreDefaults.savedWindowState);
+const settings = ref(StoreDefaults.settings);
 const isTransparent = ref(false);
 const autoUpdatesDisabled = ref(true);
 
