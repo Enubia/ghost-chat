@@ -95,32 +95,27 @@ export interface AppStore {
     keybind?: Record<string, any>;
 }
 
-// https://github.com/toonvanstrijp/nestjs-i18n/blob/1a86bb46e9386c6450d10c9c9e609f78315752d0/src/types.ts
-type IsAny<T> = unknown extends T
-    ? [keyof T] extends [never]
-            ? false
-            : true
-    : false;
-
 type PathImpl<T, Key extends keyof T> = Key extends string
-    ? IsAny<T[Key]> extends true
-        ? never
-        : T[Key] extends Record<string, any>
-            ?
-            | `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> &
-            string}`
-            | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
-            : never
+    ? T[Key] extends Record<string, any>
+        ? `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> & string}` | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
+        : never
     : never;
 
-type PathImpl2<T> = PathImpl<T, keyof T> | keyof T;
-
-type Path<T> = keyof T extends string
-    ? PathImpl2<T> extends infer P
-        ? P extends string | keyof T
-            ? P
-            : keyof T
-        : keyof T
-    : never;
+type Path<T> = PathImpl<T, keyof T> | keyof T;
 
 export type StorePath = Path<AppStore>;
+
+type Split<S extends string, D extends string> =
+    string extends S ? string[] :
+        S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] :
+                [S];
+
+type ArrToPath<T, P extends string[]> = P extends [infer K, ...infer R]
+    ? K extends keyof T
+        ? R extends string[]
+            ? ArrToPath<T[K], R>
+            : never
+        : never
+    : T;
+
+export type StorePathValue<T, P extends StorePath> = ArrToPath<T, Split<P, '.'>>;

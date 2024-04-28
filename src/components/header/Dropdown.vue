@@ -28,20 +28,20 @@ function showSettings() {
     ipcRenderer.send(IpcEvent.OpenSettings);
 }
 
-function toggleTheme() {
+async function toggleTheme() {
     const $html = document.querySelector('html');
     const isDarkTheme = $html?.classList.contains('dark');
     let theme = '';
 
     if (isDarkTheme) {
         $html?.classList.remove('dark');
-        IpcHandler.setValueFromKey('savedWindowState.theme', 'light');
-        IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'light');
+        await IpcHandler.setValueFromKey('savedWindowState.theme', 'light');
+        await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'light');
         theme = 'light';
     } else {
         $html?.classList.add('dark');
-        IpcHandler.setValueFromKey('savedWindowState.theme', 'dark');
-        IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'dark');
+        await IpcHandler.setValueFromKey('savedWindowState.theme', 'dark');
+        await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'dark');
         theme = 'dark';
     }
 

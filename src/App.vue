@@ -102,4 +102,3 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
         </footer>
     </div>
 </template>
-@lib/ipchandler

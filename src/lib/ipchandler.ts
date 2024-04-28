@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron';
 
-import type { AppStore, General, Keybinds, Options, Settings, StorePath, Updater, WindowState } from '@shared/types';
+import type { AppStore, General, Keybinds, Options, Settings, StorePath, StorePathValue, Updater, WindowState } from '@shared/types';
 
 import { IpcEvent } from '@shared/constants';
 
 export default class IpcHandler {
     // ---------------------- getters ----------------------
-    public static async getValueFromKey(key: StorePath): Promise<any> {
+    public static async getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key });
     }
 
@@ -36,7 +36,7 @@ export default class IpcHandler {
 
     // ---------------------- setters ----------------------
 
-    public static async setValueFromKey(key: StorePath, value: string | number | Record<string, unknown>): Promise<void> {
+    public static async setValueFromKey<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value });
     }
 
