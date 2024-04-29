@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import IpcHandler from '@lib/ipchandler';
 import { onBeforeMount, onMounted, ref } from 'vue';
 
 import type { WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
+import IpcHandler from '@lib/ipchandler';
 import { StoreDefaults, TwitchSearchParams } from '@shared/constants';
 
 const twitch = ref(StoreDefaults.options.twitch);

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { cn } from '@lib/utils';
 import {
     DropdownMenuContent,
     type DropdownMenuContentEmits,
@@ -8,6 +7,8 @@ import {
     useForwardPropsEmits,
 } from 'radix-vue';
 import { type HTMLAttributes, computed } from 'vue';
+
+import { cn } from '@lib/utils';
 
 const props = withDefaults(
     defineProps<DropdownMenuContentProps & { class?: HTMLAttributes['class'] }>(),

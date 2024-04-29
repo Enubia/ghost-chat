@@ -34,6 +34,7 @@ module.exports = antfu({
                 '@components/**',
                 '@shared/**',
                 '@utils/**',
+                '@lib/**',
             ],
         }],
     },

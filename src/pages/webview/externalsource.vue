@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import IpcHandler from '@lib/ipchandler';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router/auto';
 
 import type { WebviewTag } from '@shared/types';
 
 import WebView from '@components/WebView.vue';
+import IpcHandler from '@lib/ipchandler';
 
 const route = useRoute();
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { cn } from '@lib/utils';
 import {
     DialogClose,
     DialogContent,
@@ -10,6 +9,8 @@ import {
     useForwardPropsEmits,
 } from 'radix-vue';
 import { type HTMLAttributes, computed } from 'vue';
+
+import { cn } from '@lib/utils';
 
 const props = defineProps<DialogContentProps & { class?: HTMLAttributes['class'] }>();
 const emits = defineEmits<DialogContentEmits>();

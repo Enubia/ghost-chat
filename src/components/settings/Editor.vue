@@ -2,11 +2,12 @@
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import IpcHandler from '@lib/ipchandler';
 import { onBeforeMount, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import type { AppStore } from '@shared/types';
+
+import IpcHandler from '@lib/ipchandler';
 
 type Option = keyof AppStore['options'];
 

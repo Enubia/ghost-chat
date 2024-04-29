@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IpcHandler from '@lib/ipchandler';
 import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import SidebarNav from '@components/settings/SidebarNav.vue';
 import { Separator } from '@components/ui/separator';
+import IpcHandler from '@lib/ipchandler';
 
 const { t } = useI18n();
 

@@ -1,9 +1,10 @@
 import messages from '@intlify/unplugin-vue-i18n/messages';
-import IpcHandler from '@lib/ipchandler';
 import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHashHistory } from 'vue-router/auto';
+
+import IpcHandler from '@lib/ipchandler';
 
 import App from './App.vue';
 
