@@ -15,12 +15,15 @@ import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
 
 export default defineConfig((({ command }) => {
-    rmSync('dist-electron', { recursive: true, force: true });
+    rmSync('out', { recursive: true, force: true });
 
     const isServe = command === 'serve';
     const isBuild = command === 'build';
 
     return {
+        build: {
+            outDir: 'out/dist',
+        },
         css: {
             postcss: {
                 plugins: [tailwind(), autoprefixer()],
@@ -63,7 +66,7 @@ export default defineConfig((({ command }) => {
                         build: {
                             sourcemap: isServe,
                             minify: isBuild,
-                            outDir: 'dist-electron/main',
+                            outDir: 'out/dist-electron/main',
                         },
                     },
                 },

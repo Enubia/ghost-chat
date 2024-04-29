@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue/dist/iconify.js';
+import { Icon } from '@iconify/vue';
 import Settings from '@layouts/settings.vue';
 import IpcHandler from '@lib/ipchandler';
 import { ipcRenderer } from 'electron';

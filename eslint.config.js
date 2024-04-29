@@ -45,8 +45,7 @@ module.exports = antfu({
 
     ignores: [
         '.vscode',
-        'dist',
-        'dist-electron',
+        'out',
         'node_modules',
     ],
 

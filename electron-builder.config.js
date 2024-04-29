@@ -8,11 +8,11 @@ module.exports = {
     appId: 'com.github.enubia.ghost-chat',
     asar: true,
     directories: {
-        output: 'release/${version}',
+        output: 'out/release/${version}',
     },
     files: [
-        'dist-electron',
-        'dist',
+        'out/dist-electron',
+        'out/dist',
     ],
     mac: {
         artifactName: '${productName}-${version}-mac.${ext}',

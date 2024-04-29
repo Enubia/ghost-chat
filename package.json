@@ -27,7 +27,7 @@
         "streaming",
         "live-stream"
     ],
-    "main": "dist-electron/main/background.js",
+    "main": "out/dist-electron/main/background.js",
     "debug": {
         "env": {
             "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/"
@@ -43,7 +43,7 @@
         "changelog:generate": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
         "changelog:push": "git add . && git commit -m \"chore: update changelog\" && git push",
         "changelog:update": "pnpm changelog:generate && pnpm changelog:generate-vue && pnpm changelog:push",
-        "clean": "rimraf dist-electron dist release node_modules",
+        "clean": "rimraf out node_modules",
         "dev": "vite",
         "lint:electron": "eslint electron/",
         "lint:shared": "eslint shared/",
