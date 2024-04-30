@@ -1,5 +1,4 @@
 import messages from '@intlify/unplugin-vue-i18n/messages';
-import ElectronStore from 'electron-store';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHashHistory } from 'vue-router/auto';
@@ -26,8 +25,6 @@ IpcHandler.getGeneral()
         createApp(App)
             .use(router)
             .use(i18n)
-            // FIXME: remove after all `inject` calls are removed
-            .provide('electronStore', new ElectronStore())
             .mount('#app');
     })
     .catch((error) => {
