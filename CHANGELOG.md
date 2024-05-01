@@ -18,8 +18,18 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 28 April 2024
+## Latest | 1 May 2024
 
+- new: added renderer handler for ipc calls [`#913`](https://github.com/Enubia/ghost-chat/pull/913)
+- chore: eslint update [`d4e3051`](https://github.com/Enubia/ghost-chat/commit/d4e3051816ef85760c35bb9ec9f439483c7ece1c)
+- update: change output directory [`b600f77`](https://github.com/Enubia/ghost-chat/commit/b600f77d8787eced95662a702d2689bd8c51c7e1)
+- chore: update readme [`5ed2953`](https://github.com/Enubia/ghost-chat/commit/5ed29533b0b17a92073aa67167412a2358af3804)
+- update: remove store from renderer [`dea050d`](https://github.com/Enubia/ghost-chat/commit/dea050da9d0e5f9652403da3440cd20992588771)
+- fix: asset output directory for release [`f747e80`](https://github.com/Enubia/ghost-chat/commit/f747e809eba2ce83b3b8903ae4d2716a26939935)
+---
+### v3.0.3 | 28 April 2024
+
+- chore: update changelog [`68de3d6`](https://github.com/Enubia/ghost-chat/commit/68de3d6fc2f9c1489608f2cf39fe1aacf328accb)
 - fix: query paramter pass through for external sources [`1fcccc4`](https://github.com/Enubia/ghost-chat/commit/1fcccc45a3a41992943a17b0ef0022dc7495378d)
 ---
 ### v3.0.2 | 27 April 2024

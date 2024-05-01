@@ -1,9 +1,51 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 28 April 2024
+        Latest | 1 May 2024
     </h2>
 
     <div class="grid gap-1">
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">new</span>: added renderer handler for ipc calls
+            <a href="https://github.com/Enubia/ghost-chat/pull/913" class="text-blue-500">#913</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: eslint update
+            <a href="https://github.com/Enubia/ghost-chat/commit/d4e3051816ef85760c35bb9ec9f439483c7ece1c" class="text-blue-500">d4e3051</a>
+        </span>
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: change output directory
+            <a href="https://github.com/Enubia/ghost-chat/commit/b600f77d8787eced95662a702d2689bd8c51c7e1" class="text-blue-500">b600f77</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/5ed29533b0b17a92073aa67167412a2358af3804" class="text-blue-500">5ed2953</a>
+        </span>
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: remove store from renderer
+            <a href="https://github.com/Enubia/ghost-chat/commit/dea050da9d0e5f9652403da3440cd20992588771" class="text-blue-500">dea050d</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: asset output directory for release
+            <a href="https://github.com/Enubia/ghost-chat/commit/f747e809eba2ce83b3b8903ae4d2716a26939935" class="text-blue-500">f747e80</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.0.3 | 28 April 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/68de3d6fc2f9c1489608f2cf39fe1aacf328accb" class="text-blue-500">68de3d6</a>
+        </span>
         <span>
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: query paramter pass through for external sources
