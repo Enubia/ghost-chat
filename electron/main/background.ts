@@ -33,7 +33,7 @@ log.info('Store created');
 
 // paths relative to the output directory (dist, dist-electron)
 const DIST_ELECTRON = join(__dirname, '../..');
-const DIST = join(DIST_ELECTRON, '../dist');
+const DIST = join(DIST_ELECTRON, '../out/dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
 
 const trayIconPath = `${PUBLIC}/trayicon.png`;
