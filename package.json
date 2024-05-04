@@ -91,7 +91,7 @@
         "vite": "5.2.11",
         "vite-plugin-electron": "0.28.7",
         "vite-plugin-electron-renderer": "0.14.5",
-        "vue": "3.4.25",
+        "vue": "3.4.26",
         "vue-codemirror": "6.1.1",
         "vue-i18n": "9.13.1",
         "vue-router": "4.3.2",
