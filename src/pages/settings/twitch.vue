@@ -343,7 +343,8 @@ function enableBlacklistSuccess() {
                 {{ t('settings.twitch.user-blacklist.label') }}
             </Label>
             <Input
-                id="user-blacklist" :default-value="userBlacklist.join(', ')"
+                id="user-blacklist"
+                :model-value="userBlacklist.join(', ')"
                 :class="blacklistSuccess && 'border-green-600 border'" @change="updateBlacklist"
             />
             <small class="text-muted-foreground">{{ t('settings.twitch.user-blacklist.info') }}</small>
