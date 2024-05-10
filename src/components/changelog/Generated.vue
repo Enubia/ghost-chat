@@ -1,6 +1,28 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 1 May 2024
+        Latest | 10 May 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: revert store version update
+            <a href="https://github.com/Enubia/ghost-chat/commit/5d17e680bf231685f31847a99839f2587008eb37" class="text-blue-500">5d17e68</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed outdated deps
+            <a href="https://github.com/Enubia/ghost-chat/commit/89ede7f0ddbb0e866a2280478fe4adca305fa6bd" class="text-blue-500">89ede7f</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: visual user blacklist bug
+            <a href="https://github.com/Enubia/ghost-chat/commit/e1e9f5535eb80d34a6b8797246f46755e1359b99" class="text-blue-500">e1e9f55</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.1.0 | 1 May 2024
     </h2>
 
     <div class="grid gap-1">
@@ -13,6 +35,11 @@
 
             <span class="text-blue-400 bg-blue-900 px-1">chore</span>: eslint update
             <a href="https://github.com/Enubia/ghost-chat/commit/d4e3051816ef85760c35bb9ec9f439483c7ece1c" class="text-blue-500">d4e3051</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/3171c96af1c575335f4b1891ab046540ac5da345" class="text-blue-500">3171c96</a>
         </span>
         <span>
 
@@ -1058,6 +1085,12 @@
             <a href="https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892" class="text-blue-500">5b3a17b</a>
         </span>
     </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v2.2.0 | 3 May 2023
+    </h2>
+
+    <div class="grid gap-1" />
     <hr class="mt-2">
     <h2 class="text-2xl font-semibold py-2">
         v2.2.0-beta.1 | 2 May 2023

@@ -18,10 +18,17 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 1 May 2024
+## Latest | 10 May 2024
+
+- chore: revert store version update [`5d17e68`](https://github.com/Enubia/ghost-chat/commit/5d17e680bf231685f31847a99839f2587008eb37)
+- chore: removed outdated deps [`89ede7f`](https://github.com/Enubia/ghost-chat/commit/89ede7f0ddbb0e866a2280478fe4adca305fa6bd)
+- fix: visual user blacklist bug [`e1e9f55`](https://github.com/Enubia/ghost-chat/commit/e1e9f5535eb80d34a6b8797246f46755e1359b99)
+---
+### v3.1.0 | 1 May 2024
 
 - new: added renderer handler for ipc calls [`#913`](https://github.com/Enubia/ghost-chat/pull/913)
 - chore: eslint update [`d4e3051`](https://github.com/Enubia/ghost-chat/commit/d4e3051816ef85760c35bb9ec9f439483c7ece1c)
+- chore: update changelog [`3171c96`](https://github.com/Enubia/ghost-chat/commit/3171c96af1c575335f4b1891ab046540ac5da345)
 - update: change output directory [`b600f77`](https://github.com/Enubia/ghost-chat/commit/b600f77d8787eced95662a702d2689bd8c51c7e1)
 - chore: update readme [`5ed2953`](https://github.com/Enubia/ghost-chat/commit/5ed29533b0b17a92073aa67167412a2358af3804)
 - update: remove store from renderer [`dea050d`](https://github.com/Enubia/ghost-chat/commit/dea050da9d0e5f9652403da3440cd20992588771)
@@ -269,6 +276,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
+---
+### v2.2.0 | 3 May 2023
+
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
