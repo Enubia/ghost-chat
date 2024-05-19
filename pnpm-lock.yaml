@@ -60,8 +60,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1(@lezer/common@1.0.2)
       electron:
-        specifier: 30.0.3
-        version: 30.0.3
+        specifier: 30.0.6
+        version: 30.0.6
       electron-builder:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
@@ -1786,8 +1786,8 @@ packages:
   electron-updater@6.1.8:
     resolution: {integrity: sha512-hhOTfaFAd6wRHAfUaBhnAOYc+ymSGCWJLtFkw4xJqOvtpHmIdNHnXDV9m1MHC+A6q08Abx4Ykgyz/R5DGKNAMQ==}
 
-  electron@30.0.3:
-    resolution: {integrity: sha512-h+suwx6e0fnv/9wi0/cmCMtG+4LrPzJZa+3DEEpxcPcP+pcWnBI70t8QspxgMNIh2wzXLMD9XVqrLkEbiBAInw==}
+  electron@30.0.6:
+    resolution: {integrity: sha512-PkhEPFdpYcTzjAO3gMHZ+map7g2+xCrMDedo/L1i0ir2BRXvAB93IkTJX497U6Srb/09r2cFt+k20VPNVCdw3Q==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -6217,7 +6217,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@30.0.3:
+  electron@30.0.6:
     dependencies:
       '@electron/get': 2.0.2
       '@types/node': 20.11.21
