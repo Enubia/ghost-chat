@@ -78,7 +78,7 @@
         "electron-updater": "6.1.8",
         "lint-staged": "15.2.5",
         "radix-vue": "1.8.0",
-        "release-it": "17.2.1",
+        "release-it": "17.3.0",
         "rimraf": "5.0.7",
         "simple-git-hooks": "2.11.1",
         "tailwind-merge": "2.3.0",
