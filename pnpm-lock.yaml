@@ -78,8 +78,8 @@ importers:
         specifier: 15.2.5
         version: 15.2.5
       radix-vue:
-        specifier: 1.8.2
-        version: 1.8.2(vue@3.4.27(typescript@5.4.5))
+        specifier: 1.8.3
+        version: 1.8.3(vue@3.4.27(typescript@5.4.5))
       release-it:
         specifier: 17.3.0
         version: 17.3.0(typescript@5.4.5)
@@ -3484,8 +3484,8 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
 
-  radix-vue@1.8.2:
-    resolution: {integrity: sha512-ey6jG1rPAD/521PsXGrNkjztvh7PRw6Wwbk7LsHjsKqRoy/S4k58ryzmQ0tmoNOiUALfX92+MOnd5F3ONmuZ/w==}
+  radix-vue@1.8.3:
+    resolution: {integrity: sha512-WPgvEz0i5XKjwahhffD2QPLiOTthTfecoVjwq4l3i3EWBX2tUp4Vw3n3OLGf3S18FN/WfEgD3GIxYfsrnDutqw==}
     peerDependencies:
       vue: '>= 3.2.0'
 
@@ -8176,7 +8176,7 @@ snapshots:
 
   quick-lru@5.1.1: {}
 
-  radix-vue@1.8.2(vue@3.4.27(typescript@5.4.5)):
+  radix-vue@1.8.3(vue@3.4.27(typescript@5.4.5)):
     dependencies:
       '@floating-ui/dom': 1.6.5
       '@floating-ui/vue': 1.0.6(vue@3.4.27(typescript@5.4.5))
