@@ -87,7 +87,7 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
             <router-view />
         </main>
         <footer v-if="showFooter" class="sticky bottom-0 w-full bg-background">
-            <div id="paypal" class="center-elements py-2">
+            <div id="paypal" class="center-elements py-2 px-10 sm:px-0">
                 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
                     <small class="me-2">
                         {{ t('footer.support') }}

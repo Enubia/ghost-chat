@@ -173,7 +173,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="animate" :checked="animate" @update:checked="saveAnimate" />
+                <Switch id="animate" v-model:checked="animate" @update:checked="saveAnimate" />
                 <Label class="align-elements" for="animate">
                     {{ t('settings.kick.animate.label') }}
                 </Label>
@@ -184,7 +184,7 @@ function enableBlacklistSuccess() {
         <div class="flex flex-col gap-2">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <Switch id="fade" :checked="fade" @update:checked="saveFadeMessages" />
+                    <Switch id="fade" v-model:checked="fade" @update:checked="saveFadeMessages" />
                     <Label class="cursor-pointer" for="fade">
                         {{ t('settings.kick.fade.label') }}
                     </Label>
@@ -204,7 +204,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-badges" :checked="badges" @update:checked="saveBadges" />
+                <Switch id="hide-badges" v-model:checked="badges" @update:checked="saveBadges" />
                 <Label class="align-elements" for="hide-badges">
                     {{ t('settings.kick.hide-badges.label') }}
                 </Label>
@@ -214,7 +214,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-commands" :checked="commands" @update:checked="saveCommands" />
+                <Switch id="hide-commands" v-model:checked="commands" @update:checked="saveCommands" />
                 <Label class="align-elements" for="hide-commands">
                     {{ t('settings.kick.hide-commands.label') }}
                 </Label>
@@ -224,7 +224,7 @@ function enableBlacklistSuccess() {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-bots" :checked="bots" @update:checked="saveBots" />
+                <Switch id="hide-bots" v-model:checked="bots" @update:checked="saveBots" />
                 <Label class="align-elements" for="hide-bots">
                     {{ t('settings.kick.hide-bots.label') }}
                 </Label>
