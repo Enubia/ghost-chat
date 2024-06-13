@@ -1,0 +1,267 @@
+<script setup lang="ts">
+import { defineProps, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import { Input } from '@components/ui/input';
+import { Label } from '@components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
+import { Switch } from '@components/ui/switch';
+
+const props = defineProps({
+    fontSize: {
+        type: String,
+        required: true,
+    },
+    stroke: {
+        type: String,
+        required: true,
+    },
+    animate: {
+        type: Boolean,
+        required: true,
+    },
+    fade: {
+        type: Boolean,
+        required: true,
+    },
+    fadeTimeout: {
+        type: Number,
+        required: true,
+    },
+    bots: {
+        type: Boolean,
+        required: true,
+    },
+    hideCommands: {
+        type: Boolean,
+        required: true,
+    },
+    hideBadges: {
+        type: Boolean,
+        required: true,
+    },
+    font: {
+        type: String,
+        required: true,
+    },
+    shadow: {
+        type: String,
+        required: true,
+    },
+    smallCaps: {
+        type: Boolean,
+        required: true,
+    },
+});
+
+const emit = defineEmits([
+    'update:fontSize',
+    'update:stroke',
+    'update:animate',
+    'update:fade',
+    'update:fadeTimeout',
+    'update:bots',
+    'update:hideCommands',
+    'update:hideBadges',
+    'update:font',
+    'update:shadow',
+    'update:smallCaps',
+]);
+
+const { t, rt, tm } = useI18n();
+
+const fontSize = ref(props.fontSize);
+const stroke = ref(props.stroke);
+const animate = ref(props.animate);
+const fade = ref(props.fade);
+const fadeTimeout = ref(props.fadeTimeout);
+const bots = ref(props.bots);
+const hideCommands = ref(props.hideCommands);
+const hideBadges = ref(props.hideBadges);
+const font = ref(props.font);
+const shadow = ref(props.shadow);
+const smallCaps = ref(props.smallCaps);
+
+const saveFontSize = (value: string) => emit('update:fontSize', value);
+const saveStroke = (value: string) => emit('update:stroke', value);
+const saveAnimate = (value: boolean) => emit('update:animate', value);
+const saveFadeMessages = (value: boolean) => emit('update:fade', value);
+const saveFadeTimeout = (value: string | number) => emit('update:fadeTimeout', value);
+const saveShowBotActivity = (value: boolean) => emit('update:bots', value);
+const saveHideCommands = (value: boolean) => emit('update:hideCommands', value);
+const saveHideBadges = (value: boolean) => emit('update:hideBadges', value);
+const saveFont = (value: string) => emit('update:font', value);
+const saveShadow = (value: string) => emit('update:shadow', value);
+const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
+</script>
+
+<template>
+    <div class="flex flex-col gap-2">
+        <Label for="font-size">
+            {{ t('settings.twitch.font-size.label') }}
+        </Label>
+        <Select id="font-size" v-model="fontSize" @update:model-value="saveFontSize">
+            <SelectTrigger>
+                <SelectValue :placeholder="t('settings.twitch.font-size.select-label')" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="1">
+                    {{ t('settings.twitch.font-size.select-options.small') }}
+                </SelectItem>
+                <SelectItem value="2">
+                    {{ t('settings.twitch.font-size.select-options.medium') }}
+                </SelectItem>
+                <SelectItem value="3">
+                    {{ t('settings.twitch.font-size.select-options.large') }}
+                </SelectItem>
+            </SelectContent>
+        </Select>
+        <small class="text-muted-foreground">{{ t('settings.twitch.font-size.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <Label class="align-elements" for="stroke">
+            {{ t('settings.twitch.stroke.label') }}
+        </Label>
+        <Select id="stroke" v-model="stroke" @update:model-value="saveStroke">
+            <SelectTrigger>
+                <SelectValue :placeholder="t('settings.twitch.stroke.select-label')" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="false">
+                    {{ t('settings.twitch.stroke.select-options.off') }}
+                </SelectItem>
+                <SelectItem value="1">
+                    {{ t('settings.twitch.stroke.select-options.thin') }}
+                </SelectItem>
+                <SelectItem value="2">
+                    {{ t('settings.twitch.stroke.select-options.medium') }}
+                </SelectItem>
+                <SelectItem value="3">
+                    {{ t('settings.twitch.stroke.select-options.thick') }}
+                </SelectItem>
+                <SelectItem value="4">
+                    {{ t('settings.twitch.stroke.select-options.thicker') }}
+                </SelectItem>
+            </SelectContent>
+        </Select>
+        <small class="text-muted-foreground">{{ t('settings.twitch.stroke.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+            <Switch id="animate" v-model:checked="animate" @update:checked="saveAnimate" />
+            <Label class="align-elements" for="animate">
+                {{ t('settings.twitch.animate.label') }}
+            </Label>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.animate.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <Switch id="fade" v-model:checked="fade" @update:checked="saveFadeMessages" />
+                <Label class="cursor-pointer" for="fade">
+                    {{ t('settings.twitch.fade.label') }}
+                </Label>
+            </div>
+            <div v-if="fade">
+                <Label class="cursor-pointer" for="fadeTimeout">
+                    {{ t('settings.twitch.fade.timeout-label', { seconds: fadeTimeout }) }}
+                </Label>
+                <Input
+                    id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
+                    @update:model-value="saveFadeTimeout"
+                />
+            </div>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.fade.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+            <Switch id="show-bots" v-model:checked="bots" @update:checked="saveShowBotActivity" />
+            <Label class="align-elements" for="show-bots">
+                {{ t('settings.twitch.show-bots.label') }}
+            </Label>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.show-bots.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+            <Switch id="hide-commands" v-model:checked="hideCommands" @update:checked="saveHideCommands" />
+            <Label class="align-elements" for="hide-commands">
+                {{ t('settings.twitch.hide-commands.label') }}
+            </Label>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.hide-commands.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+            <Switch id="hide-badges" v-model:checked="hideBadges" @update:checked="saveHideBadges" />
+            <Label class="align-elements" for="hide-badges">
+                {{ t('settings.twitch.hide-badges.label') }}
+            </Label>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.hide-badges.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <Label for="font">
+            {{ t('settings.twitch.font.label') }}
+        </Label>
+        <Select id="font" v-model="font" @update:model-value="saveFont">
+            <SelectTrigger>
+                <SelectValue :placeholder="t('settings.twitch.font.select-label')" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem
+                    v-for="[key, value], index in Object.entries(tm('settings.twitch.font.select-options'))"
+                    :key="key" :value="index.toString()"
+                >
+                    {{ rt(value) }}
+                </SelectItem>
+            </SelectContent>
+        </Select>
+        <small class="text-muted-foreground">{{ t('settings.twitch.font.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <Label class="align-elements" for="shadow">
+            {{ t('settings.twitch.shadow.label') }}
+        </Label>
+        <Select id="shadow" v-model="shadow" @update:model-value="saveShadow">
+            <SelectTrigger>
+                <SelectValue :placeholder="t('settings.twitch.shadow.select-label')" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem value="false">
+                    {{ t('settings.twitch.shadow.select-options.off') }}
+                </SelectItem>
+                <SelectItem value="1">
+                    {{ t('settings.twitch.shadow.select-options.small') }}
+                </SelectItem>
+                <SelectItem value="2">
+                    {{ t('settings.twitch.shadow.select-options.medium') }}
+                </SelectItem>
+                <SelectItem value="3">
+                    {{ t('settings.twitch.shadow.select-options.large') }}
+                </SelectItem>
+            </SelectContent>
+        </Select>
+        <small class="text-muted-foreground">{{ t('settings.twitch.shadow.info') }}</small>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2">
+            <Switch id="small-caps" v-model:checked="smallCaps" @update:checked="saveSmallCaps" />
+            <Label class="align-elements" for="small-caps">
+                {{ t('settings.twitch.small-caps.label') }}
+            </Label>
+        </div>
+        <small class="text-muted-foreground">{{ t('settings.twitch.small-caps.info') }}</small>
+    </div>
+</template>
