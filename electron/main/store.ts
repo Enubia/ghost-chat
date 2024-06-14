@@ -90,6 +90,12 @@ export default function createStore() {
 
                 store.set('options.twitch', data);
             },
+            '3.2.0': (store) => {
+                store.set('options.twitch.useJChat', false);
+                store.set('options.twitch.theme', 'undefined');
+                store.set('options.twitch.preventClipping', false);
+                store.set('options.twitch.fontSizeExact', 14);
+            },
         },
     });
 }

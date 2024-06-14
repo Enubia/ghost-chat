@@ -8,8 +8,10 @@ import type { Twitch } from '@shared/types';
 
 import Editor from '@components/settings/Editor.vue';
 import JChat from '@components/settings/twitch/JChat.vue';
+import KapChat from '@components/settings/twitch/KapChat.vue';
 import { Input } from '@components/ui/input';
 import { Label } from '@components/ui/label';
+import Switch from '@components/ui/switch/Switch.vue';
 import IpcHandler from '@lib/ipchandler';
 import { IpcEvent, StoreDefaults } from '@shared/constants';
 
@@ -21,6 +23,7 @@ for (const [_, value] of Object.entries(tm('settings.twitch.font.select-options'
     fontOptions.push(rt(value));
 }
 
+const useJChat = ref(StoreDefaults.options.twitch.useJChat);
 const fontSize = ref(String(StoreDefaults.options.twitch.fontSize));
 const userBlacklist = ref(StoreDefaults.options.twitch.userBlacklist);
 const defaultChannel = ref(StoreDefaults.options.twitch.defaultChannel);
@@ -34,11 +37,18 @@ const stroke = ref(String(StoreDefaults.options.twitch.stroke));
 const shadow = ref(String(StoreDefaults.options.twitch.shadow));
 const smallCaps = ref(StoreDefaults.options.twitch.smallCaps);
 const fadeTimeout = ref(StoreDefaults.options.twitch.fadeTimeout);
-const rerenderKey = ref(0);
+// KapChat specific options
+const theme = ref(StoreDefaults.options.twitch.theme);
+const preventClipping = ref(StoreDefaults.options.twitch.preventClipping);
+const fontSizeExact = ref(StoreDefaults.options.twitch.fontSizeExact);
+
+const jChatRerenderKey = ref(0);
+const kapChatRerenderKey = ref(0);
 
 onMounted(async () => {
     const twitch = await IpcHandler.getTwitchOptions();
 
+    useJChat.value = twitch.useJChat;
     fontSize.value = String(twitch.fontSize);
     userBlacklist.value = twitch.userBlacklist;
     defaultChannel.value = twitch.defaultChannel;
@@ -52,8 +62,11 @@ onMounted(async () => {
     shadow.value = String(twitch.shadow);
     smallCaps.value = twitch.smallCaps;
     fadeTimeout.value = twitch.fadeTimeout;
+    theme.value = String(twitch.theme);
+    preventClipping.value = twitch.preventClipping;
 
-    rerenderKey.value++;
+    jChatRerenderKey.value++;
+    kapChatRerenderKey.value++;
 });
 
 const channelSuccess = ref(false);
@@ -63,6 +76,10 @@ async function saveDefaultChannel() {
     await IpcHandler.setValueFromKey('options.twitch.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
+}
+
+async function saveUseJChat(value: boolean) {
+    await IpcHandler.setValueFromKey('options.twitch.useJChat', value);
 }
 
 async function saveAnimate(value: boolean) {
@@ -128,6 +145,18 @@ async function saveFontSize(value: string) {
     await IpcHandler.setValueFromKey('options.twitch.fontSize', Number.parseInt(value) as Twitch['fontSize']);
 }
 
+async function saveTheme(value: string) {
+    await IpcHandler.setValueFromKey('options.twitch.theme', value);
+}
+
+async function savePreventClipping(value: boolean) {
+    await IpcHandler.setValueFromKey('options.twitch.preventClipping', value);
+}
+
+async function saveFontSizeExact(value: number) {
+    await IpcHandler.setValueFromKey('options.twitch.fontSizeExact', value);
+}
+
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
@@ -172,8 +201,17 @@ function enableBlacklistSuccess() {
             <small class="text-muted-foreground">{{ t('settings.twitch.default-channel.info') }}</small>
         </div>
 
+        <div class="flex flex-col gap-2">
+            <Label for="theme">
+                {{ t('settings.twitch.chat-selector.label') }}
+            </Label>
+            <Switch v-model:checked="useJChat" @update:checked="saveUseJChat" />
+            <small>{{ t('settings.twitch.chat-selector.info') }}</small>
+        </div>
+
         <JChat
-            :key="rerenderKey"
+            v-if="useJChat"
+            :key="jChatRerenderKey"
             :animate="animate"
             :fade="fade"
             :bots="bots"
@@ -195,6 +233,23 @@ function enableBlacklistSuccess() {
             @update:shadow="saveShadow"
             @update:small-caps="saveSmallCaps"
             @update:font-size="saveFontSize"
+            @update:fade-timeout="saveFadeTimeout"
+        />
+
+        <KapChat
+            v-else
+            :key="kapChatRerenderKey"
+            :theme="theme"
+            :prevent-clipping="preventClipping"
+            :fade="fade"
+            :bots="bots"
+            :font-size-exact="fontSizeExact"
+            :fade-timeout="fadeTimeout"
+            @update:theme="saveTheme"
+            @update:prevent-clipping="savePreventClipping"
+            @update:fade="saveFadeMessages"
+            @update:bots="saveShowBotActivity"
+            @update:font-size-exact="saveFontSizeExact"
             @update:fade-timeout="saveFadeTimeout"
         />
 

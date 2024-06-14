@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Input } from '@components/ui/input';
@@ -81,18 +81,6 @@ const hideBadges = ref(props.hideBadges);
 const font = ref(props.font);
 const shadow = ref(props.shadow);
 const smallCaps = ref(props.smallCaps);
-
-const saveFontSize = (value: string) => emit('update:fontSize', value);
-const saveStroke = (value: string) => emit('update:stroke', value);
-const saveAnimate = (value: boolean) => emit('update:animate', value);
-const saveFadeMessages = (value: boolean) => emit('update:fade', value);
-const saveFadeTimeout = (value: string | number) => emit('update:fadeTimeout', value);
-const saveShowBotActivity = (value: boolean) => emit('update:bots', value);
-const saveHideCommands = (value: boolean) => emit('update:hideCommands', value);
-const saveHideBadges = (value: boolean) => emit('update:hideBadges', value);
-const saveFont = (value: string) => emit('update:font', value);
-const saveShadow = (value: string) => emit('update:shadow', value);
-const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 </script>
 
 <template>
@@ -100,7 +88,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
         <Label for="font-size">
             {{ t('settings.twitch.font-size.label') }}
         </Label>
-        <Select id="font-size" v-model="fontSize" @update:model-value="saveFontSize">
+        <Select id="font-size" v-model="fontSize" @update:model-value="emit('update:fontSize', $event)">
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.font-size.select-label')" />
             </SelectTrigger>
@@ -123,7 +111,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
         <Label class="align-elements" for="stroke">
             {{ t('settings.twitch.stroke.label') }}
         </Label>
-        <Select id="stroke" v-model="stroke" @update:model-value="saveStroke">
+        <Select id="stroke" v-model="stroke" @update:model-value="emit('update:stroke', $event)">
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.stroke.select-label')" />
             </SelectTrigger>
@@ -150,7 +138,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="animate" v-model:checked="animate" @update:checked="saveAnimate" />
+            <Switch id="animate" v-model:checked="animate" @update:checked="emit('update:animate', $event)" />
             <Label class="align-elements" for="animate">
                 {{ t('settings.twitch.animate.label') }}
             </Label>
@@ -161,7 +149,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
     <div class="flex flex-col gap-2">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <Switch id="fade" v-model:checked="fade" @update:checked="saveFadeMessages" />
+                <Switch id="fade" v-model:checked="fade" @update:checked="emit('update:fade', $event)" />
                 <Label class="cursor-pointer" for="fade">
                     {{ t('settings.twitch.fade.label') }}
                 </Label>
@@ -172,7 +160,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
                 </Label>
                 <Input
                     id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
-                    @update:model-value="saveFadeTimeout"
+                    @update:model-value="emit('update:fadeTimeout', $event)"
                 />
             </div>
         </div>
@@ -181,7 +169,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="show-bots" v-model:checked="bots" @update:checked="saveShowBotActivity" />
+            <Switch id="show-bots" v-model:checked="bots" @update:checked="emit('update:bots', $event)" />
             <Label class="align-elements" for="show-bots">
                 {{ t('settings.twitch.show-bots.label') }}
             </Label>
@@ -191,7 +179,10 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="hide-commands" v-model:checked="hideCommands" @update:checked="saveHideCommands" />
+            <Switch
+                id="hide-commands" v-model:checked="hideCommands"
+                @update:checked="emit('update:hideCommands', $event)"
+            />
             <Label class="align-elements" for="hide-commands">
                 {{ t('settings.twitch.hide-commands.label') }}
             </Label>
@@ -201,7 +192,10 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="hide-badges" v-model:checked="hideBadges" @update:checked="saveHideBadges" />
+            <Switch
+                id="hide-badges" v-model:checked="hideBadges"
+                @update:checked="emit('update:hideBadges', $event)"
+            />
             <Label class="align-elements" for="hide-badges">
                 {{ t('settings.twitch.hide-badges.label') }}
             </Label>
@@ -213,7 +207,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
         <Label for="font">
             {{ t('settings.twitch.font.label') }}
         </Label>
-        <Select id="font" v-model="font" @update:model-value="saveFont">
+        <Select id="font" v-model="font" @update:model-value="emit('update:font', $event)">
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.font.select-label')" />
             </SelectTrigger>
@@ -233,7 +227,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
         <Label class="align-elements" for="shadow">
             {{ t('settings.twitch.shadow.label') }}
         </Label>
-        <Select id="shadow" v-model="shadow" @update:model-value="saveShadow">
+        <Select id="shadow" v-model="shadow" @update:model-value="emit('update:shadow', $event)">
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.shadow.select-label')" />
             </SelectTrigger>
@@ -257,7 +251,7 @@ const saveSmallCaps = (value: boolean) => emit('update:smallCaps', value);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="small-caps" v-model:checked="smallCaps" @update:checked="saveSmallCaps" />
+            <Switch id="small-caps" v-model:checked="smallCaps" @update:checked="emit('update:smallCaps', $event)" />
             <Label class="align-elements" for="small-caps">
                 {{ t('settings.twitch.small-caps.label') }}
             </Label>

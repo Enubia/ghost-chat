@@ -99,6 +99,10 @@
                 "input-label": "Default Channel",
                 "info": "In case a default channel is set the app will auto apply it for you."
             },
+            "chat-selector": {
+                "label": "Use JChat",
+                "info": "You can change the underlying chat service here. Defaults to kapchat."
+            },
             "font-size": {
                 "label": "Font Size",
                 "select-label": "Choose a font size",
@@ -175,6 +179,28 @@
             "small-caps": {
                 "label": "Caps",
                 "info": "Converts chat text to all capital letters."
+            },
+            "theme": {
+                "label": "Chat Theme",
+                "select-label": "Choose a theme",
+                "select-options": {
+                    "undefined": "None",
+                    "dark": "Dark",
+                    "light": "Light",
+                    "bttv_light": "BetterTTV Light",
+                    "bttv_dark": "BetterTTV Dark",
+                    "s0n0s_1080": "S0N0S' 1080P Theme",
+                    "s0n0s_1440": "S0N0S' 1440P Theme"
+                },
+                "info": "Changes the color theme of the chat."
+            },
+            "prevent-clipping": {
+                "label": "Prevent Clipping",
+                "info": "You can prevent the clipping of chat lines, but it is disabled by default for performance reasons. If you have a large channel, you might not want to enable this."
+            },
+            "font-size-exact": {
+                "label": "Exact Font Size",
+                "info": "Currently selected font size {size}px."
             },
             "user-blacklist": {
                 "label": "User Blacklist",

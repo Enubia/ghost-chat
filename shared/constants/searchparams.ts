@@ -10,6 +10,9 @@ export enum TwitchSearchParams {
     STROKE = 'stroke',
     SHADOW = 'shadow',
     SMALL_CAPS = 'small_caps',
+    BOT_ACTIVITY = 'bot_activity',
+    PREVENT_CLIPPING = 'prevent_clipping',
+    THEME = 'theme',
 }
 
 export enum KickSearchParams {

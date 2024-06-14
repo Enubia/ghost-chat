@@ -12,6 +12,7 @@ export const StoreKeys = {
 export const StoreDefaults: AppStore = {
     options: {
         twitch: {
+            useJChat: false,
             channel: '',
             fontSize: 1,
             animate: false,
@@ -28,6 +29,9 @@ export const StoreDefaults: AppStore = {
             js: '',
             defaultChannel: '',
             userBlacklist: [],
+            preventClipping: false,
+            fontSizeExact: 14,
+            theme: 'undefined',
         },
         kick: {
             channel: '',

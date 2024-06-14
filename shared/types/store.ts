@@ -9,6 +9,7 @@ interface Shared {
 }
 
 export interface Twitch extends Shared {
+    useJChat: boolean;
     fontSize: 1 | 2 | 3;
     animate: boolean;
     bots: boolean;
@@ -18,6 +19,9 @@ export interface Twitch extends Shared {
     stroke: false | 1 | 2 | 3 | 4;
     shadow: false | 1 | 2 | 3;
     smallCaps: boolean;
+    theme: string;
+    preventClipping: boolean;
+    fontSizeExact: number;
 }
 
 export interface Kick extends Shared {

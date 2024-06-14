@@ -14,7 +14,9 @@ const link = ref() as Ref<URL>;
 
 onBeforeMount(async () => {
     twitch.value = await IpcHandler.getTwitchOptions();
-    link.value = new URL('https://www.giambaj.it/twitch/jchat/v2/');
+    link.value = twitch.value.useJChat
+        ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
+        : new URL('https://nightdev.com/hosted/obschat/');
 
     let channel = '';
 
@@ -26,40 +28,47 @@ onBeforeMount(async () => {
 
     link.value.searchParams.append(TwitchSearchParams.CHANNEL, channel);
 
-    link.value.searchParams.append(TwitchSearchParams.SIZE, twitch.value.fontSize.toString());
+    if (twitch.value.useJChat) {
+        if (twitch.value.fade) {
+            link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fadeTimeout.toString());
+        }
 
-    if (twitch.value.animate) {
-        link.value.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
-    }
+        link.value.searchParams.append(TwitchSearchParams.SIZE, twitch.value.fontSize.toString());
 
-    if (twitch.value.bots) {
-        link.value.searchParams.append(TwitchSearchParams.BOTS, 'true');
-    }
+        if (twitch.value.animate) {
+            link.value.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
+        }
 
-    if (twitch.value.fade) {
-        link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fadeTimeout.toString());
-    }
+        if (twitch.value.bots) {
+            link.value.searchParams.append(TwitchSearchParams.BOTS, 'true');
+        }
 
-    if (twitch.value.hideCommands) {
-        link.value.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
-    }
+        if (twitch.value.hideCommands) {
+            link.value.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
+        }
 
-    if (twitch.value.hideBadges) {
-        link.value.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
-    }
+        if (twitch.value.hideBadges) {
+            link.value.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
+        }
 
-    link.value.searchParams.append(TwitchSearchParams.FONT, twitch.value.font.toString());
+        link.value.searchParams.append(TwitchSearchParams.FONT, twitch.value.font.toString());
 
-    if (twitch.value.stroke) {
-        link.value.searchParams.append(TwitchSearchParams.STROKE, twitch.value.stroke.toString());
-    }
+        if (twitch.value.stroke) {
+            link.value.searchParams.append(TwitchSearchParams.STROKE, twitch.value.stroke.toString());
+        }
 
-    if (twitch.value.shadow) {
-        link.value.searchParams.append(TwitchSearchParams.SHADOW, twitch.value.shadow.toString());
-    }
+        if (twitch.value.shadow) {
+            link.value.searchParams.append(TwitchSearchParams.SHADOW, twitch.value.shadow.toString());
+        }
 
-    if (twitch.value.smallCaps) {
-        link.value.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
+        if (twitch.value.smallCaps) {
+            link.value.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
+        }
+    } else {
+        link.value.searchParams.append(TwitchSearchParams.THEME, twitch.value.theme.toString());
+        link.value.searchParams.append(TwitchSearchParams.PREVENT_CLIPPING, twitch.value.preventClipping.toString());
+        link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fade ? twitch.value.fadeTimeout.toString() : 'false');
+        link.value.searchParams.append(TwitchSearchParams.BOT_ACTIVITY, twitch.value.bots.toString());
     }
 });
 
@@ -90,12 +99,23 @@ function constructInjectableJS() {
     return [blackList, twitch.value.js].join('\n');
 }
 
+function constructInjectableCSS() {
+    const css = `
+        #chat_box {
+            font-size: ${twitch.value.fontSizeExact}px !important;
+        }
+    `;
+    return [css, twitch.value.css].join('\n');
+}
+
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
-        if (twitch.value.css.length) {
+        if (twitch.value.useJChat) {
             await webView.insertCSS(twitch.value.css);
+        } else {
+            await webView.insertCSS(constructInjectableCSS());
         }
 
         if (twitch.value.js.length) {
