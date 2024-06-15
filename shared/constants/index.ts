@@ -1,3 +1,3 @@
-export * from './events';
-export * from './store';
-export * from './searchparams';
+export * from './events.js';
+export * from './store.js';
+export * from './searchparams.js';

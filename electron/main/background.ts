@@ -3,14 +3,13 @@ import { join } from 'node:path';
 import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '@shared/constants';
-
-import AutoUpdater from './autoUpdater';
-import IpcEvents from './ipcEvents';
-import ManualUpdater from './manualUpdater';
-import createStore from './store';
-import TrayIcon from './trayIcon';
-import Overlay from './window/overlay';
+import { IpcEvent } from '../../shared/constants/index.js';
+import AutoUpdater from './autoUpdater.js';
+import IpcEvents from './ipcEvents.js';
+import ManualUpdater from './manualUpdater.js';
+import createStore from './store.js';
+import TrayIcon from './trayIcon.js';
+import Overlay from './window/overlay.js';
 
 if (!app.requestSingleInstanceLock()) {
     app.quit();
@@ -32,7 +31,7 @@ const store = createStore();
 log.info('Store created');
 
 // paths relative to the output directory (dist, dist-electron)
-const DIST_ELECTRON = join(__dirname, '../..');
+const DIST_ELECTRON = join(import.meta.dirname, '../..');
 const DIST = join(DIST_ELECTRON, '../out/dist');
 const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
 

@@ -5,6 +5,7 @@
             "ESNext",
             "DOM"
         ],
+        "module": "ESNext",
         "moduleResolution": "Bundler",
         "types": [
             "@intlify/unplugin-vue-i18n/messages",
