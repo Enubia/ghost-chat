@@ -1,6 +1,28 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 10 May 2024
+        Latest | 15 June 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: move jchat options to own component, prepare kapchat
+            <a href="https://github.com/Enubia/ghost-chat/commit/2fcbff5e3ad22d69c0fa068d0cc5e557a8661231" class="text-blue-500">2fcbff5</a>
+        </span>
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">feat</span>: added kapchat back
+            <a href="https://github.com/Enubia/ghost-chat/commit/85c783fbe8409ae57402e8dc538d2ad2282e94eb" class="text-blue-500">85c783f</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: kick settings toggle, index layout breakpoints
+            <a href="https://github.com/Enubia/ghost-chat/commit/017ea9a54c70bce2ca1844fe5c8b82e4cd87e8ac" class="text-blue-500">017ea9a</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.1.1 | 10 May 2024
     </h2>
 
     <div class="grid gap-1">
@@ -13,6 +35,11 @@
 
             <span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed outdated deps
             <a href="https://github.com/Enubia/ghost-chat/commit/89ede7f0ddbb0e866a2280478fe4adca305fa6bd" class="text-blue-500">89ede7f</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/7f6de251b5f036507b3825355484f8a6d5daca3e" class="text-blue-500">7f6de25</a>
         </span>
         <span>
 
@@ -1085,12 +1112,6 @@
             <a href="https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892" class="text-blue-500">5b3a17b</a>
         </span>
     </div>
-    <hr class="mt-2">
-    <h2 class="text-2xl font-semibold py-2">
-        v2.2.0 | 3 May 2023
-    </h2>
-
-    <div class="grid gap-1" />
     <hr class="mt-2">
     <h2 class="text-2xl font-semibold py-2">
         v2.2.0-beta.1 | 2 May 2023

@@ -18,10 +18,17 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 10 May 2024
+## Latest | 15 June 2024
+
+- refactor: move jchat options to own component, prepare kapchat [`2fcbff5`](https://github.com/Enubia/ghost-chat/commit/2fcbff5e3ad22d69c0fa068d0cc5e557a8661231)
+- feat: added kapchat back [`85c783f`](https://github.com/Enubia/ghost-chat/commit/85c783fbe8409ae57402e8dc538d2ad2282e94eb)
+- fix: kick settings toggle, index layout breakpoints [`017ea9a`](https://github.com/Enubia/ghost-chat/commit/017ea9a54c70bce2ca1844fe5c8b82e4cd87e8ac)
+---
+### v3.1.1 | 10 May 2024
 
 - chore: revert store version update [`5d17e68`](https://github.com/Enubia/ghost-chat/commit/5d17e680bf231685f31847a99839f2587008eb37)
 - chore: removed outdated deps [`89ede7f`](https://github.com/Enubia/ghost-chat/commit/89ede7f0ddbb0e866a2280478fe4adca305fa6bd)
+- chore: update changelog [`7f6de25`](https://github.com/Enubia/ghost-chat/commit/7f6de251b5f036507b3825355484f8a6d5daca3e)
 - fix: visual user blacklist bug [`e1e9f55`](https://github.com/Enubia/ghost-chat/commit/e1e9f5535eb80d34a6b8797246f46755e1359b99)
 ---
 ### v3.1.0 | 1 May 2024
@@ -276,9 +283,6 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
----
-### v2.2.0 | 3 May 2023
-
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 
