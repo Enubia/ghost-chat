@@ -16,7 +16,10 @@ module.exports = {
     ],
     mac: {
         artifactName: '${productName}-${version}-mac.${ext}',
-        target: 'default',
+        target: {
+            target: 'default',
+            arch: ['x64', 'arm64'],
+        },
         publish: ['github'],
     },
     win: {
