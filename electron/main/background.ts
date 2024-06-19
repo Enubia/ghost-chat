@@ -3,7 +3,8 @@ import { join } from 'node:path';
 import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '../../shared/constants/index.js';
+import { IpcEvent } from '@shared/constants/index.js';
+
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
 import ManualUpdater from './manualUpdater.js';
