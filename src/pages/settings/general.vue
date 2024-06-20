@@ -25,6 +25,7 @@ const quitOnClose = ref(StoreDefaults.general.mac.quitOnClose);
 const hideDockIcon = ref(StoreDefaults.general.mac.hideDockIcon);
 const vanish = ref<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
 const showMacOptions = ref(false);
+const rerenderKey = ref(0);
 
 onMounted(async () => {
     const updater = await IpcHandler.getUpdater();
@@ -40,6 +41,8 @@ onMounted(async () => {
     disableAutoUpdates.value = updater.disableAutoUpdates;
     quitOnClose.value = mac.quitOnClose;
     hideDockIcon.value = mac.hideDockIcon;
+
+    rerenderKey.value++;
 });
 
 async function saveKeybind(value: string) {
@@ -105,7 +108,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <Settings>
+    <Settings :key="rerenderKey">
         <div>
             <Label for="locale-switcher">
                 {{ t('settings.general.locale-change.label') }}
