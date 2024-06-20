@@ -18,10 +18,22 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 15 June 2024
+## Latest | 20 June 2024
+
+- feat: add arm64 builds [`#978`](https://github.com/Enubia/ghost-chat/pull/978)
+- new: change project type to module for compatibility reasons [`41cbbb2`](https://github.com/Enubia/ghost-chat/commit/41cbbb25f1569cd52c9857e900eb9aeeda4bac6b)
+- fix: visual bug on hotkey input field [`762d939`](https://github.com/Enubia/ghost-chat/commit/762d9395d6a1e327f9b652926236628a738b00bd)
+- chore: rename electron-builder config to cjs [`20c5f4b`](https://github.com/Enubia/ghost-chat/commit/20c5f4ba96addc624210d1370a73f8cf6aa86294)
+- chore: workflow update [`e4dd4d3`](https://github.com/Enubia/ghost-chat/commit/e4dd4d37aa10148a4fbbcf4ffb4f32471b2ff473)
+- Update README.md [`d699270`](https://github.com/Enubia/ghost-chat/commit/d699270c3a5b8e890cdf308387cab2410b9fe737)
+- update: fix import alias for shared [`8ff5316`](https://github.com/Enubia/ghost-chat/commit/8ff5316349739d013734b4d6ec52728d3521be74)
+- chore: rename handlebar setup [`96bb3af`](https://github.com/Enubia/ghost-chat/commit/96bb3af5b68a442a669a1c8519fc1de43aaa10bd)
+---
+### v3.2.0 | 15 June 2024
 
 - refactor: move jchat options to own component, prepare kapchat [`2fcbff5`](https://github.com/Enubia/ghost-chat/commit/2fcbff5e3ad22d69c0fa068d0cc5e557a8661231)
 - feat: added kapchat back [`85c783f`](https://github.com/Enubia/ghost-chat/commit/85c783fbe8409ae57402e8dc538d2ad2282e94eb)
+- chore: update changelog [`c7aad20`](https://github.com/Enubia/ghost-chat/commit/c7aad20d07d4a0e05fc33d12bfa796af965fe205)
 - fix: kick settings toggle, index layout breakpoints [`017ea9a`](https://github.com/Enubia/ghost-chat/commit/017ea9a54c70bce2ca1844fe5c8b82e4cd87e8ac)
 ---
 ### v3.1.1 | 10 May 2024
@@ -283,6 +295,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
+---
+### v2.2.0 | 3 May 2023
+
 ---
 ### v2.2.0-beta.1 | 2 May 2023
 

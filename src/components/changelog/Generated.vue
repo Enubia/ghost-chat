@@ -1,6 +1,53 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 15 June 2024
+        Latest | 20 June 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">feat</span>: add arm64 builds
+            <a href="https://github.com/Enubia/ghost-chat/pull/978" class="text-blue-500">#978</a>
+        </span>
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">new</span>: change project type to module for compatibility reasons
+            <a href="https://github.com/Enubia/ghost-chat/commit/41cbbb25f1569cd52c9857e900eb9aeeda4bac6b" class="text-blue-500">41cbbb2</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: visual bug on hotkey input field
+            <a href="https://github.com/Enubia/ghost-chat/commit/762d9395d6a1e327f9b652926236628a738b00bd" class="text-blue-500">762d939</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: rename electron-builder config to cjs
+            <a href="https://github.com/Enubia/ghost-chat/commit/20c5f4ba96addc624210d1370a73f8cf6aa86294" class="text-blue-500">20c5f4b</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: workflow update
+            <a href="https://github.com/Enubia/ghost-chat/commit/e4dd4d37aa10148a4fbbcf4ffb4f32471b2ff473" class="text-blue-500">e4dd4d3</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update README.md
+            <a href="https://github.com/Enubia/ghost-chat/commit/d699270c3a5b8e890cdf308387cab2410b9fe737" class="text-blue-500">d699270</a>
+        </span>
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: fix import alias for shared
+            <a href="https://github.com/Enubia/ghost-chat/commit/8ff5316349739d013734b4d6ec52728d3521be74" class="text-blue-500">8ff5316</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: rename handlebar setup
+            <a href="https://github.com/Enubia/ghost-chat/commit/96bb3af5b68a442a669a1c8519fc1de43aaa10bd" class="text-blue-500">96bb3af</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.0 | 15 June 2024
     </h2>
 
     <div class="grid gap-1">
@@ -13,6 +60,11 @@
 
             <span class="text-green-400 bg-green-900 px-1">feat</span>: added kapchat back
             <a href="https://github.com/Enubia/ghost-chat/commit/85c783fbe8409ae57402e8dc538d2ad2282e94eb" class="text-blue-500">85c783f</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/c7aad20d07d4a0e05fc33d12bfa796af965fe205" class="text-blue-500">c7aad20</a>
         </span>
         <span>
 
@@ -1112,6 +1164,12 @@
             <a href="https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892" class="text-blue-500">5b3a17b</a>
         </span>
     </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v2.2.0 | 3 May 2023
+    </h2>
+
+    <div class="grid gap-1" />
     <hr class="mt-2">
     <h2 class="text-2xl font-semibold py-2">
         v2.2.0-beta.1 | 2 May 2023
