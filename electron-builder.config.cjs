@@ -15,7 +15,7 @@ module.exports = {
         'out/dist',
     ],
     mac: {
-        artifactName: '${productName}-${version}-mac.${ext}',
+        artifactName: '${productName}-${version}-${arch}-mac.${ext}',
         target: {
             target: 'default',
             arch: ['x64', 'arm64'],
