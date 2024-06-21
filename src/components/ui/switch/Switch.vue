@@ -8,7 +8,7 @@ import {
 } from 'radix-vue';
 import { type HTMLAttributes, computed } from 'vue';
 
-import { cn } from '@lib/utils';
+import { cn } from '#lib/utils';
 
 const props = defineProps<SwitchRootProps & { class?: HTMLAttributes['class'] }>();
 

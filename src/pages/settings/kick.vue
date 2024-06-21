@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import Settings from '@layouts/settings.vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import Editor from '@components/settings/Editor.vue';
-import { Input } from '@components/ui/input';
-import { Label } from '@components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
-import { Switch } from '@components/ui/switch';
-import IpcHandler from '@lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '@shared/constants';
+import Editor from '#components/settings/Editor.vue';
+import { Input } from '#components/ui/input';
+import { Label } from '#components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
+import { Switch } from '#components/ui/switch';
+import Settings from '#layouts/settings.vue';
+import IpcHandler from '#lib/ipchandler';
+import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const { t } = useI18n();
 

@@ -5,10 +5,10 @@ import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router/auto';
 
-import MenuButtons from '@components/header/Buttons.vue';
-import DropDownMenu from '@components/header/Dropdown.vue';
-import IpcHandler from '@lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '@shared/constants';
+import MenuButtons from '#components/header/Buttons.vue';
+import DropDownMenu from '#components/header/Dropdown.vue';
+import IpcHandler from '#lib/ipchandler';
+import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const router = useRouter();
 const route = useRoute();

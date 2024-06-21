@@ -3,11 +3,11 @@ import type { Ref } from 'vue';
 
 import { onBeforeMount, onMounted, ref } from 'vue';
 
-import type { WebviewTag } from '@shared/types';
+import type { WebviewTag } from '#shared/types';
 
-import WebView from '@components/WebView.vue';
-import IpcHandler from '@lib/ipchandler';
-import { KickSearchParams, StoreDefaults } from '@shared/constants';
+import WebView from '#components/WebView.vue';
+import IpcHandler from '#lib/ipchandler';
+import { KickSearchParams, StoreDefaults } from '#shared/constants';
 
 const kick = ref(StoreDefaults.options.kick);
 const link = ref() as Ref<URL>;

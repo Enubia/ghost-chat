@@ -5,9 +5,9 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { onBeforeMount, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore } from '#shared/types';
 
-import IpcHandler from '@lib/ipchandler';
+import IpcHandler from '#lib/ipchandler';
 
 type Option = keyof AppStore['options'];
 

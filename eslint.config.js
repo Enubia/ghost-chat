@@ -11,6 +11,7 @@ export default antfu({
         'style/quote-props': ['error', 'as-needed'],
         'style/quotes': ['error', 'single', { avoidEscape: true }],
         curly: ['error', 'all'],
+        'import/order': 'off',
         'unused-imports/no-unused-imports': 'warn',
         'perfectionist/sort-imports': ['error', {
             type: 'natural',
@@ -31,10 +32,10 @@ export default antfu({
             ],
             'newlines-between': 'always',
             'internal-pattern': [
-                '@components/**',
-                '@shared/**',
-                '@utils/**',
-                '@lib/**',
+                '#components/**',
+                '#shared/**',
+                '#layouts/**',
+                '#lib/**',
             ],
         }],
     },

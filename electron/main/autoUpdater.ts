@@ -5,9 +5,9 @@ import type { AppUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 
-import type { AppStore, Updater } from '@shared/types';
+import type { AppStore, Updater } from '#shared/types/store.js';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants/index.js';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;

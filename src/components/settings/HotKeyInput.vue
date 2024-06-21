@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { Input } from '@components/ui/input';
-import { Label } from '@components/ui/label';
-import { KeyToCode, hotkeyToString, isFunctionKey } from '@shared/utils/keyToCode';
+import { Input } from '#components/ui/input';
+import { Label } from '#components/ui/label';
+import { KeyToCode, hotkeyToString, isFunctionKey } from '#shared/utils/keyToCode';
 
 const props = defineProps<{
     modelValue: string | null;

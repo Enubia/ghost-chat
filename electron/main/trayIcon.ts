@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/order
 import type ElectronStore from 'electron-store';
 
 import fs from 'node:fs';
@@ -7,9 +6,9 @@ import path from 'node:path';
 import { Menu, Tray, app, clipboard, ipcMain, shell } from 'electron';
 import log from 'electron-log';
 
-import type { AppStore } from '@shared/types';
+import type { AppStore } from '#shared/types/store.js';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants/index.js';
 
 export default class TrayIcon {
     private tray: Tray | null = null;

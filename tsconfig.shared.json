@@ -2,16 +2,16 @@
     "compilerOptions": {
         "target": "ESNext",
         "paths": {
-            "@shared/*": [
+            "#shared/*": [
                 "./shared/*"
             ],
-            "@components/*": [
+            "#components/*": [
                 "./src/components/*"
             ],
-            "@lib/*": [
+            "#lib/*": [
                 "./src/lib/*"
             ],
-            "@layouts/*": [
+            "#layouts/*": [
                 "./src/layouts/*"
             ]
         },

@@ -3,9 +3,9 @@ import { unlinkSync } from 'node:fs';
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { AppStore, Keybinds, Twitch } from '@shared/types';
+import type { AppStore, Keybinds, Twitch } from '#shared/types/store.js';
 
-import { StoreDefaults } from '@shared/constants';
+import { StoreDefaults } from '#shared/constants/index.js';
 
 export default function createStore() {
     return new ElectronStore<AppStore>({

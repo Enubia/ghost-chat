@@ -13,9 +13,9 @@ import type {
     Twitch,
     Updater,
     WindowState,
-} from '@shared/types';
+} from '#shared/types';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants';
 
 import { cloneValue } from './utils';
 

@@ -3,10 +3,10 @@ import type ElectronStore from 'electron-store';
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 
-import type { StoreKeys } from '@shared/constants';
-import type { AppStore } from '@shared/types';
+import type { StoreKeys } from '#shared/constants/store.js';
+import type { AppStore } from '#shared/types/store.js';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants/index.js';
 
 export default class Settings {
     public window: BrowserWindow | null = null;

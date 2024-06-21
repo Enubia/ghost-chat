@@ -5,10 +5,10 @@ import { onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import { Button } from '@components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/ui/dropdown-menu';
-import IpcHandler from '@lib/ipchandler';
-import { IpcEvent } from '@shared/constants';
+import { Button } from '#components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#components/ui/dropdown-menu';
+import IpcHandler from '#lib/ipchandler';
+import { IpcEvent } from '#shared/constants';
 
 defineEmits(['vanish']);
 

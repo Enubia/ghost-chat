@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Generated from '@components/changelog/Generated.vue';
+import Generated from '#components/changelog/Generated.vue';
 </script>
 
 <template>

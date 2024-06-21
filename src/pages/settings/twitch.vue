@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import Settings from '@layouts/settings.vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { Twitch } from '@shared/types';
+import type { Twitch } from '#shared/types';
 
-import Editor from '@components/settings/Editor.vue';
-import JChat from '@components/settings/twitch/JChat.vue';
-import KapChat from '@components/settings/twitch/KapChat.vue';
-import { Input } from '@components/ui/input';
-import { Label } from '@components/ui/label';
-import Switch from '@components/ui/switch/Switch.vue';
-import IpcHandler from '@lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '@shared/constants';
+import Editor from '#components/settings/Editor.vue';
+import JChat from '#components/settings/twitch/JChat.vue';
+import KapChat from '#components/settings/twitch/KapChat.vue';
+import { Input } from '#components/ui/input';
+import { Label } from '#components/ui/label';
+import Switch from '#components/ui/switch/Switch.vue';
+import Settings from '#layouts/settings.vue';
+import IpcHandler from '#lib/ipchandler';
+import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const { t, rt, tm } = useI18n();
 

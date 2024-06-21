@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router/auto';
 
-import { Button } from '@components/ui/button';
+import { Button } from '#components/ui/button';
 
 const { t } = useI18n();
 const route = useRoute();

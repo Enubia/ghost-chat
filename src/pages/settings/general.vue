@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import Settings from '@layouts/settings.vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import type { Keybinds } from '@shared/types';
+import type { Keybinds } from '#shared/types';
 
-import { languageMappingList } from '@components/languageMappingList';
-import HotKeyInput from '@components/settings/HotKeyInput.vue';
-import { Button } from '@components/ui/button';
-import { Label } from '@components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
-import { Switch } from '@components/ui/switch';
-import IpcHandler from '@lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '@shared/constants';
+import { languageMappingList } from '#components/languageMappingList';
+import HotKeyInput from '#components/settings/HotKeyInput.vue';
+import { Button } from '#components/ui/button';
+import { Label } from '#components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
+import { Switch } from '#components/ui/switch';
+import Settings from '#layouts/settings.vue';
+import IpcHandler from '#lib/ipchandler';
+import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const { t } = useI18n();
 

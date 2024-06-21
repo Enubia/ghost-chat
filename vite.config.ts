@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/order
 import type { UserConfigFn } from 'vite';
 
 import { rmSync } from 'node:fs';
@@ -60,7 +59,7 @@ export default defineConfig((({ command }) => {
                     vite: {
                         resolve: {
                             alias: {
-                                '@shared': resolve(process.cwd(), 'shared'),
+                                '#shared': resolve(process.cwd(), 'shared'),
                             },
                         },
                         build: {
@@ -78,10 +77,10 @@ export default defineConfig((({ command }) => {
         clearScreen: false,
         resolve: {
             alias: {
-                '@shared': resolve(__dirname, 'shared'),
-                '@components': resolve(__dirname, 'src/components'),
-                '@lib': resolve(__dirname, 'src/lib'),
-                '@layouts': resolve(__dirname, 'src/layouts'),
+                '#shared': resolve(__dirname, 'shared'),
+                '#components': resolve(__dirname, 'src/components'),
+                '#lib': resolve(__dirname, 'src/lib'),
+                '#layouts': resolve(__dirname, 'src/layouts'),
             },
         },
     };

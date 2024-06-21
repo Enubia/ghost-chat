@@ -5,7 +5,7 @@ import { onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants';
 
 const router = useRouter();
 

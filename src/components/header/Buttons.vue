@@ -4,8 +4,8 @@ import { ipcRenderer } from 'electron';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 
-import Button from '@components/ui/button/Button.vue';
-import { IpcEvent } from '@shared/constants';
+import Button from '#components/ui/button/Button.vue';
+import { IpcEvent } from '#shared/constants';
 
 const router = useRouter();
 const route = useRoute();

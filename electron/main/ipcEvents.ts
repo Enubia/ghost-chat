@@ -4,14 +4,14 @@ import type ElectronStore from 'electron-store';
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import type { StoreKeys } from '@shared/constants';
-import type { AppStore, WindowState } from '@shared/types';
+import type { StoreKeys } from '#shared/constants/store.js';
+import type { AppStore, WindowState } from '#shared/types/store.js';
 
-import { IpcEvent } from '@shared/constants';
+import { IpcEvent } from '#shared/constants/index.js';
 
-import type ManualUpdater from './manualUpdater';
+import type ManualUpdater from './manualUpdater.js';
 
-import Settings from './window/settings';
+import Settings from './window/settings.js';
 
 export default class IpcEvents {
     private settings: BrowserWindow | null = null;
