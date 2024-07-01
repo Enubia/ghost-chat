@@ -90,7 +90,7 @@
         "vite": "5.3.2",
         "vite-plugin-electron": "0.28.7",
         "vite-plugin-electron-renderer": "0.14.5",
-        "vue": "3.4.30",
+        "vue": "3.4.31",
         "vue-codemirror": "6.1.1",
         "vue-i18n": "9.13.1",
         "vue-router": "4.4.0",
