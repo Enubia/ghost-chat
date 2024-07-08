@@ -36,8 +36,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0(vue@3.4.31(typescript@5.5.2))
       '@tomjs/vite-plugin-iconify':
-        specifier: 1.2.0
-        version: 1.2.0(@iconify/json@2.2.225)(vite@5.3.2(@types/node@20.11.21)(sass@1.75.0))
+        specifier: 1.2.1
+        version: 1.2.1(@iconify/json@2.2.225)(vite@5.3.2(@types/node@20.11.21)(sass@1.75.0))
       '@vitejs/plugin-vue':
         specifier: 5.0.5
         version: 5.0.5(vite@5.3.2(@types/node@20.11.21)(sass@1.75.0))(vue@3.4.31(typescript@5.5.2))
@@ -859,8 +859,8 @@ packages:
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
 
-  '@tomjs/vite-plugin-iconify@1.2.0':
-    resolution: {integrity: sha512-Y/74jRqsgIoycgjlfzgXbBqm0Aoha73cePsBEwBNm0TvNFf/69SrbSxS14NjFpbtwzuUsMC22RiwkEVquI5f6w==}
+  '@tomjs/vite-plugin-iconify@1.2.1':
+    resolution: {integrity: sha512-Si5W4d+Hbo+yYpm2iLABTwwxm9K7Kl6y45F3DwqP99zWVJa5bPAWqiWJyUf5uZ5F+rzqxewXtapFVhir8yBlxQ==}
     engines: {node: '>=16'}
     hasBin: true
     peerDependencies:
@@ -5176,14 +5176,14 @@ snapshots:
       '@tanstack/virtual-core': 3.5.0
       vue: 3.4.31(typescript@5.5.2)
 
-  '@tomjs/vite-plugin-iconify@1.2.0(@iconify/json@2.2.225)(vite@5.3.2(@types/node@20.11.21)(sass@1.75.0))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.225)(vite@5.3.2(@types/node@20.11.21)(sass@1.75.0))':
     dependencies:
       '@iconify/json': 2.2.225
       cac: 6.7.14
       fs-extra: 11.2.0
       lodash.clonedeep: 4.5.0
       node-html-parser: 6.1.13
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       vite: 5.3.2(@types/node@20.11.21)(sass@1.75.0)
 
   '@tootallnate/once@2.0.0': {}
@@ -8191,7 +8191,7 @@ snapshots:
   postcss@8.4.38:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       source-map-js: 1.2.0
 
   prelude-ls@1.2.1: {}

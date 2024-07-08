@@ -64,7 +64,7 @@
         "@intlify/unplugin-vue-i18n": "4.0.0",
         "@picocss/pico": "2.0.6",
         "@radix-icons/vue": "1.0.0",
-        "@tomjs/vite-plugin-iconify": "1.2.0",
+        "@tomjs/vite-plugin-iconify": "1.2.1",
         "@vitejs/plugin-vue": "5.0.5",
         "@vueuse/core": "10.11.0",
         "auto-changelog": "2.4.0",
