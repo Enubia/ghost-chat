@@ -78,7 +78,7 @@
         "electron-store": "10.0.0",
         "electron-updater": "6.2.1",
         "lint-staged": "15.2.7",
-        "radix-vue": "1.9.0",
+        "radix-vue": "1.9.1",
         "release-it": "17.4.1",
         "rimraf": "5.0.8",
         "simple-git-hooks": "2.11.1",
