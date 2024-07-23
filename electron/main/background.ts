@@ -1,10 +1,11 @@
-import { join } from 'node:path';
+import path from 'node:path';
 
 import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '#shared/constants/index.js';
 
+import { cleanLogs } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
 import ManualUpdater from './manualUpdater.js';
@@ -23,6 +24,8 @@ const logFileDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 
 log.transports.file.fileName = `app-${logFileDate}.log`;
 
+cleanLogs();
+
 log.info('App starting');
 
 app.disableHardwareAcceleration();
@@ -32,13 +35,13 @@ const store = createStore();
 log.info('Store created');
 
 // paths relative to the output directory (dist, dist-electron)
-const DIST_ELECTRON = join(import.meta.dirname, '../..');
-const DIST = join(DIST_ELECTRON, '../out/dist');
-const PUBLIC = process.env.VITE_DEV_SERVER_URL ? join(DIST_ELECTRON, '../public') : DIST;
+const DIST_ELECTRON = path.join(import.meta.dirname, '../..');
+const DIST = path.join(DIST_ELECTRON, '../out/dist');
+const PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(DIST_ELECTRON, '../public') : DIST;
 
 const trayIconPath = `${PUBLIC}/trayicon.png`;
 
-const indexHtml = join(DIST, 'index.html');
+const indexHtml = path.join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
 let ipcEvents: IpcEvents;
