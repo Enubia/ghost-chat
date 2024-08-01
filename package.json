@@ -65,7 +65,7 @@
         "@picocss/pico": "2.0.6",
         "@radix-icons/vue": "1.0.0",
         "@tomjs/vite-plugin-iconify": "1.2.1",
-        "@vitejs/plugin-vue": "5.0.5",
+        "@vitejs/plugin-vue": "5.1.2",
         "@vueuse/core": "10.11.0",
         "auto-changelog": "2.4.0",
         "autoprefixer": "10.4.19",
