@@ -1,6 +1,43 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 20 June 2024
+        Latest | 19 August 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update deps
+            <a href="https://github.com/Enubia/ghost-chat/pull/1054" class="text-blue-500">#1054</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Add Russian localization
+            <a href="https://github.com/Enubia/ghost-chat/pull/1032" class="text-blue-500">#1032</a>
+        </span>
+        <span>
+
+            <span class="text-green-400 bg-green-900 px-1">feat</span>: logfile cleanup on startup
+            <a href="https://github.com/Enubia/ghost-chat/pull/1021" class="text-blue-500">#1021</a>
+        </span>
+        <span>
+
+            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: use node alias prefix
+            <a href="https://github.com/Enubia/ghost-chat/commit/38ca0c574a163e1a1d69e9264eef1ae5a59e513f" class="text-blue-500">38ca0c5</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: readme download links
+            <a href="https://github.com/Enubia/ghost-chat/commit/da74eefe6cb9cd30a833154eda05f0c8fbd129af" class="text-blue-500">da74eef</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: typed-router
+            <a href="https://github.com/Enubia/ghost-chat/commit/99a05e89da59d03f40db67a6c7e81b2e5101665f" class="text-blue-500">99a05e8</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.1 | 20 June 2024
     </h2>
 
     <div class="grid gap-1">
@@ -8,6 +45,11 @@
 
             <span class="text-green-400 bg-green-900 px-1">feat</span>: add arm64 builds
             <a href="https://github.com/Enubia/ghost-chat/pull/978" class="text-blue-500">#978</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/95f04d6b9da9f2cd2bc2a1f70a6f74acbcdc0aec" class="text-blue-500">95f04d6</a>
         </span>
         <span>
 

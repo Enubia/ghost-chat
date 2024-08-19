@@ -18,9 +18,19 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 20 June 2024
+## Latest | 19 August 2024
+
+- chore: update deps [`#1054`](https://github.com/Enubia/ghost-chat/pull/1054)
+- Add Russian localization [`#1032`](https://github.com/Enubia/ghost-chat/pull/1032)
+- feat: logfile cleanup on startup [`#1021`](https://github.com/Enubia/ghost-chat/pull/1021)
+- refactor: use node alias prefix [`38ca0c5`](https://github.com/Enubia/ghost-chat/commit/38ca0c574a163e1a1d69e9264eef1ae5a59e513f)
+- fix: readme download links [`da74eef`](https://github.com/Enubia/ghost-chat/commit/da74eefe6cb9cd30a833154eda05f0c8fbd129af)
+- chore: typed-router [`99a05e8`](https://github.com/Enubia/ghost-chat/commit/99a05e89da59d03f40db67a6c7e81b2e5101665f)
+---
+### v3.2.1 | 20 June 2024
 
 - feat: add arm64 builds [`#978`](https://github.com/Enubia/ghost-chat/pull/978)
+- chore: update changelog [`95f04d6`](https://github.com/Enubia/ghost-chat/commit/95f04d6b9da9f2cd2bc2a1f70a6f74acbcdc0aec)
 - new: change project type to module for compatibility reasons [`41cbbb2`](https://github.com/Enubia/ghost-chat/commit/41cbbb25f1569cd52c9857e900eb9aeeda4bac6b)
 - fix: visual bug on hotkey input field [`762d939`](https://github.com/Enubia/ghost-chat/commit/762d9395d6a1e327f9b652926236628a738b00bd)
 - chore: rename electron-builder config to cjs [`20c5f4b`](https://github.com/Enubia/ghost-chat/commit/20c5f4ba96addc624210d1370a73f8cf6aa86294)
