@@ -24,9 +24,23 @@ export interface Twitch extends Shared {
     fontSizeExact: number;
 }
 
+export enum FontSize {
+    Small = 'Small',
+    Medium = 'Medium',
+    Large = 'Large',
+}
+
+export enum Stroke {
+    Off = 'Off',
+    Thin = 'Thin',
+    Medium = 'Medium',
+    Thick = 'Thick',
+    Thicker = 'Thicker',
+}
+
 export interface Kick extends Shared {
-    fontSize: 'Small' | 'Medium' | 'Large';
-    stroke: 'Off' | 'Thin' | 'Medium' | 'Thick' | 'Thicker';
+    fontSize: FontSize;
+    stroke: Stroke;
     animate: boolean;
     badges: boolean;
     commands: boolean;

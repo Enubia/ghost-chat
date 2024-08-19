@@ -11,6 +11,7 @@ import { Switch } from '#components/ui/switch';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { IpcEvent, StoreDefaults } from '#shared/constants';
+import type { FontSize, Stroke } from '#shared/types';
 
 const { t } = useI18n();
 
@@ -43,38 +44,38 @@ onMounted(async () => {
     fadeTimeout.value = kickStore.fadeTimeout;
 });
 
-async function saveDefaultChannel() {
-    await IpcHandler.setValueFromKey('options.kick.defaultChannel', defaultChannel.value);
+async function saveDefaultChannel(value: string) {
+    await IpcHandler.setValueFromKey('options.kick.defaultChannel', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
-async function saveFontSize() {
-    await IpcHandler.setValueFromKey('options.kick.fontSize', fontSize.value);
+async function saveFontSize(value: string) {
+    await IpcHandler.setValueFromKey('options.kick.fontSize', value as FontSize);
 }
 
-async function saveStroke() {
-    await IpcHandler.setValueFromKey('options.kick.stroke', stroke.value);
+async function saveStroke(value: string) {
+    await IpcHandler.setValueFromKey('options.kick.stroke', value as Stroke);
 }
 
-async function saveAnimate() {
-    await IpcHandler.setValueFromKey('options.kick.animate', animate.value);
+async function saveAnimate(value: boolean) {
+    await IpcHandler.setValueFromKey('options.kick.animate', value);
 }
 
-async function saveFadeMessages() {
-    await IpcHandler.setValueFromKey('options.kick.fade', fade.value);
+async function saveFadeMessages(value: boolean) {
+    await IpcHandler.setValueFromKey('options.kick.fade', value);
 }
 
-async function saveBadges() {
-    await IpcHandler.setValueFromKey('options.kick.badges', badges.value);
+async function saveBadges(value: boolean) {
+    await IpcHandler.setValueFromKey('options.kick.badges', value);
 }
 
-async function saveCommands() {
-    await IpcHandler.setValueFromKey('options.kick.commands', commands.value);
+async function saveCommands(value: boolean) {
+    await IpcHandler.setValueFromKey('options.kick.commands', value);
 }
 
-async function saveBots() {
-    await IpcHandler.setValueFromKey('options.kick.bots', bots.value);
+async function saveBots(value: boolean) {
+    await IpcHandler.setValueFromKey('options.kick.bots', value);
 }
 
 async function updateBlacklist(event: Event) {
@@ -87,8 +88,10 @@ async function updateBlacklist(event: Event) {
     enableBlacklistSuccess();
 }
 
-async function saveFadeTimeout() {
-    await IpcHandler.setValueFromKey('options.kick.fadeTimeout', fadeTimeout.value);
+async function saveFadeTimeout(value: string | number) {
+    if (fade.value) {
+        await IpcHandler.setValueFromKey('options.kick.fadeTimeout', Number.parseInt(value as string));
+    }
 }
 
 function enableChannelSuccess() {
@@ -195,7 +198,7 @@ function enableBlacklistSuccess() {
                     </Label>
                     <Input
                         id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
-                        @change="saveFadeTimeout"
+                        @update:model-value="saveFadeTimeout"
                     />
                 </div>
             </div>
