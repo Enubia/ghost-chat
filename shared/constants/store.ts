@@ -1,4 +1,4 @@
-import type { AppStore } from '#shared/types/store.js';
+import { type AppStore, FontSize, Stroke } from '#shared/types/store.js';
 
 export const StoreKeys = {
     Options: 'options',
@@ -35,8 +35,8 @@ export const StoreDefaults: AppStore = {
         },
         kick: {
             channel: '',
-            fontSize: 'Small',
-            stroke: 'Off',
+            fontSize: FontSize.Small,
+            stroke: Stroke.Off,
             animate: false,
             fade: false,
             badges: false,
