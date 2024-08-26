@@ -1,6 +1,28 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 19 August 2024
+        Latest | 26 August 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: fix migrations crashing initial installation
+            <a href="https://github.com/Enubia/ghost-chat/commit/189bcfdd93745b72cbf6443513fb7c42e02923c8" class="text-blue-500">189bcfd</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/9deaf129d8276cb2f104af6b6464f367d4d0edd8" class="text-blue-500">9deaf12</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update README.md
+            <a href="https://github.com/Enubia/ghost-chat/commit/2ec52748750557dc2b831416c6c0d20e64717ab7" class="text-blue-500">2ec5274</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.2 | 19 August 2024
     </h2>
 
     <div class="grid gap-1">
@@ -23,6 +45,11 @@
 
             <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: use node alias prefix
             <a href="https://github.com/Enubia/ghost-chat/commit/38ca0c574a163e1a1d69e9264eef1ae5a59e513f" class="text-blue-500">38ca0c5</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/85567ad6968aebe0f2c01bae2808a7398d8a9255" class="text-blue-500">85567ad</a>
         </span>
         <span>
 

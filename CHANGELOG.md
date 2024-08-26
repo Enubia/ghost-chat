@@ -18,12 +18,19 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 19 August 2024
+## Latest | 26 August 2024
+
+- fix migrations crashing initial installation [`189bcfd`](https://github.com/Enubia/ghost-chat/commit/189bcfdd93745b72cbf6443513fb7c42e02923c8)
+- update readme [`9deaf12`](https://github.com/Enubia/ghost-chat/commit/9deaf129d8276cb2f104af6b6464f367d4d0edd8)
+- Update README.md [`2ec5274`](https://github.com/Enubia/ghost-chat/commit/2ec52748750557dc2b831416c6c0d20e64717ab7)
+---
+### v3.2.2 | 19 August 2024
 
 - chore: update deps [`#1054`](https://github.com/Enubia/ghost-chat/pull/1054)
 - Add Russian localization [`#1032`](https://github.com/Enubia/ghost-chat/pull/1032)
 - feat: logfile cleanup on startup [`#1021`](https://github.com/Enubia/ghost-chat/pull/1021)
 - refactor: use node alias prefix [`38ca0c5`](https://github.com/Enubia/ghost-chat/commit/38ca0c574a163e1a1d69e9264eef1ae5a59e513f)
+- chore: update changelog [`85567ad`](https://github.com/Enubia/ghost-chat/commit/85567ad6968aebe0f2c01bae2808a7398d8a9255)
 - fix: readme download links [`da74eef`](https://github.com/Enubia/ghost-chat/commit/da74eefe6cb9cd30a833154eda05f0c8fbd129af)
 - chore: typed-router [`99a05e8`](https://github.com/Enubia/ghost-chat/commit/99a05e89da59d03f40db67a6c7e81b2e5101665f)
 ---
