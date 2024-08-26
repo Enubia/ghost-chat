@@ -6,6 +6,28 @@
     <div class="grid gap-1">
         <span>
 
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: font size not applying correctly
+            <a href="https://github.com/Enubia/ghost-chat/commit/a3e14e0c9c0837d165fd51ac82089f4824490ceb" class="text-blue-500">a3e14e0</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/4d86922b9b4384731ae9b02b46a7dbfa7c7cf749" class="text-blue-500">4d86922</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.3 | 26 August 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/cd046de20dc4d59ff6977f50491a1fab9df636bc" class="text-blue-500">cd046de</a>
+        </span>
+        <span>
+
             <span class="text-gray-400 bg-gray-900 px-1">misc</span>: fix migrations crashing initial installation
             <a href="https://github.com/Enubia/ghost-chat/commit/189bcfdd93745b72cbf6443513fb7c42e02923c8" class="text-blue-500">189bcfd</a>
         </span>

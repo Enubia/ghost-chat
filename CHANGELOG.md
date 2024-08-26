@@ -20,6 +20,12 @@ alt="Buy Me A Coffee" width="126" />
 
 ## Latest | 26 August 2024
 
+- fix: font size not applying correctly [`a3e14e0`](https://github.com/Enubia/ghost-chat/commit/a3e14e0c9c0837d165fd51ac82089f4824490ceb)
+- chore: update readme [`4d86922`](https://github.com/Enubia/ghost-chat/commit/4d86922b9b4384731ae9b02b46a7dbfa7c7cf749)
+---
+### v3.2.3 | 26 August 2024
+
+- chore: update changelog [`cd046de`](https://github.com/Enubia/ghost-chat/commit/cd046de20dc4d59ff6977f50491a1fab9df636bc)
 - fix migrations crashing initial installation [`189bcfd`](https://github.com/Enubia/ghost-chat/commit/189bcfdd93745b72cbf6443513fb7c42e02923c8)
 - update readme [`9deaf12`](https://github.com/Enubia/ghost-chat/commit/9deaf129d8276cb2f104af6b6464f367d4d0edd8)
 - Update README.md [`2ec5274`](https://github.com/Enubia/ghost-chat/commit/2ec52748750557dc2b831416c6c0d20e64717ab7)
