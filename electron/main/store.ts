@@ -1,4 +1,4 @@
-import { unlinkSync } from 'node:fs';
+import { existsSync, unlinkSync } from 'node:fs';
 
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
@@ -29,7 +29,9 @@ export default function createStore() {
             '2.0.0': (store) => {
                 // delete store file initially
                 // there are old keys that might conflict with some of the new stuff
-                unlinkSync(store.path);
+                if (existsSync(store.path)) {
+                    unlinkSync(store.path);
+                }
             },
             '2.8.0': (store) => {
                 store.set('general.showSupportBox', true);
