@@ -64,6 +64,7 @@ onMounted(async () => {
     fadeTimeout.value = twitch.fadeTimeout;
     theme.value = String(twitch.theme);
     preventClipping.value = twitch.preventClipping;
+    fontSizeExact.value = twitch.fontSizeExact;
 
     jChatRerenderKey.value++;
     kapChatRerenderKey.value++;

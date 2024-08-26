@@ -100,8 +100,14 @@ function constructInjectableJS() {
 }
 
 function constructInjectableCSS() {
+    // need to apply the font size to the chat box and chat lines
+    // sometimes it doesn't apply when a theme is selected
     const css = `
         #chat_box {
+            font-size: ${twitch.value.fontSizeExact}px !important;
+        }
+
+        #chat_box .chat_line {
             font-size: ${twitch.value.fontSizeExact}px !important;
         }
     `;
