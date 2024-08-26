@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router/auto';
+import { useRoute, useRouter } from 'vue-router';
 
 import Button from '#components/ui/button/Button.vue';
 import { IpcEvent } from '#shared/constants';

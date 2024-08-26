@@ -3,7 +3,7 @@ import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRoute, useRouter } from 'vue-router/auto';
+import { useRoute, useRouter } from 'vue-router';
 
 import MenuButtons from '#components/header/Buttons.vue';
 import DropDownMenu from '#components/header/Dropdown.vue';

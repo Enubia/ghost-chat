@@ -3,7 +3,7 @@ import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router/auto';
+import { useRouter } from 'vue-router';
 
 import { IpcEvent } from '#shared/constants';
 
