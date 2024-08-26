@@ -31,21 +31,18 @@ function showSettings() {
 async function toggleTheme() {
     const $html = document.querySelector('html');
     const isDarkTheme = $html?.classList.contains('dark');
-    let theme = '';
 
     if (isDarkTheme) {
         $html?.classList.remove('dark');
         await IpcHandler.setValueFromKey('savedWindowState.theme', 'light');
         await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'light');
-        theme = 'light';
     } else {
         $html?.classList.add('dark');
         await IpcHandler.setValueFromKey('savedWindowState.theme', 'dark');
         await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'dark');
-        theme = 'dark';
     }
 
-    ipcRenderer.send(IpcEvent.ThemeChanged, theme);
+    ipcRenderer.send(IpcEvent.ThemeChanged, isDarkTheme ? 'light' : 'dark');
 }
 
 ipcRenderer.on(IpcEvent.CloseSettings, () => {

@@ -42,7 +42,7 @@ async function routeChat() {
     <Dialog>
         <DialogTrigger>
             <div class="flex justify-center rounded p-4 hover:cursor-pointer hover:scale-105 bg-secondary shadow-xl">
-                <img src="../../assets/brands/kick.png" class="h-12">
+                <img src="../../assets/brands/kick.png" class="h-12" alt="kick">
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">

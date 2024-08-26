@@ -41,11 +41,7 @@ function checkRegex() {
 function enableStartButton() {
     checkRegex();
 
-    if (source.value !== '' && !hasRegexError.value) {
-        hasError.value = false;
-    } else {
-        hasError.value = true;
-    }
+    hasError.value = !(source.value !== '' && !hasRegexError.value);
 }
 
 async function routeExternal() {
@@ -96,7 +92,7 @@ function applySourceFromList(item: string) {
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem
-                        v-for="item, index of sources" :key="index" v-model="sources[index]" class="w-full"
+                        v-for="(item, index) of sources" :key="index" v-model="sources[index]" class="w-full"
                         :value="item"
                     >
                         {{ item.substring(0, 30) + (item.length > 30 ? '...' : '') }}
