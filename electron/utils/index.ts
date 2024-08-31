@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import log from 'electron-log';
+import { app, globalShortcut } from 'electron';
 
 export function cleanLogs() {
     try {
@@ -35,4 +36,12 @@ export function cleanLogs() {
         log.error('Failed to clear logs');
         log.error(error);
     }
+}
+
+export function quit() {
+    log.info('Deregistering all keybinds');
+    globalShortcut.unregisterAll();
+
+    log.info('App closing');
+    app.quit();
 }

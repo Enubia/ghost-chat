@@ -5,7 +5,7 @@ import log from 'electron-log';
 
 import { IpcEvent } from '#shared/constants/index.js';
 
-import { cleanLogs } from '../utils/index.js';
+import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
 import ManualUpdater from './manualUpdater.js';
@@ -133,14 +133,6 @@ app.on('activate', () => {
 
 app.on('window-all-closed', () => {
     overlay = null;
-
-    const quit = () => {
-        log.info('Deregistering all keybinds');
-        globalShortcut.unregisterAll();
-
-        log.info('App closing');
-        app.quit();
-    };
 
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
