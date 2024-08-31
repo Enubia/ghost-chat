@@ -21,8 +21,8 @@ importers:
         specifier: 6.1.2
         version: 6.1.2
       '@iconify/json':
-        specifier: 2.2.241
-        version: 2.2.241
+        specifier: 2.2.242
+        version: 2.2.242
       '@iconify/vue':
         specifier: 4.1.2
         version: 4.1.2(vue@3.4.38(typescript@5.5.4))
@@ -37,7 +37,7 @@ importers:
         version: 1.0.0(vue@3.4.38(typescript@5.5.4))
       '@tomjs/vite-plugin-iconify':
         specifier: 1.2.1
-        version: 1.2.1(@iconify/json@2.2.241)(vite@5.4.2(@types/node@22.4.1)(sass@1.75.0))
+        version: 1.2.1(@iconify/json@2.2.242)(vite@5.4.2(@types/node@22.4.1)(sass@1.75.0))
       '@vitejs/plugin-vue':
         specifier: 5.1.2
         version: 5.1.2(vite@5.4.2(@types/node@22.4.1)(sass@1.75.0))(vue@3.4.38(typescript@5.5.4))
@@ -482,8 +482,8 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
-  '@iconify/json@2.2.241':
-    resolution: {integrity: sha512-zpeIjmIrTjl0ra6BYTYDfoK/hXn++xT5Hllc87K5SQwnqKs9RJeToSBzjF1gAsrxia+ilkhtGCcqbFF0ppDXiw==}
+  '@iconify/json@2.2.242':
+    resolution: {integrity: sha512-cS6eYdx1C1GhqaZm25ztH5yoghCaTXGJBeseUkS259GxxX9obtGLLk0yy+twxpNCD5/F9gjbgxh46BjNWsHtwg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -4488,7 +4488,7 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
-  '@iconify/json@2.2.241':
+  '@iconify/json@2.2.242':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -4841,9 +4841,9 @@ snapshots:
       '@tanstack/virtual-core': 3.9.0
       vue: 3.4.38(typescript@5.5.4)
 
-  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.241)(vite@5.4.2(@types/node@22.4.1)(sass@1.75.0))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.242)(vite@5.4.2(@types/node@22.4.1)(sass@1.75.0))':
     dependencies:
-      '@iconify/json': 2.2.241
+      '@iconify/json': 2.2.242
       cac: 6.7.14
       fs-extra: 11.2.0
       lodash.clonedeep: 4.5.0
