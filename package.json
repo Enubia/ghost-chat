@@ -77,7 +77,7 @@
         "electron-log": "5.1.7",
         "electron-store": "10.0.0",
         "electron-updater": "6.2.1",
-        "lint-staged": "15.2.9",
+        "lint-staged": "15.2.10",
         "radix-vue": "1.9.5",
         "release-it": "17.6.0",
         "rimraf": "6.0.1",
