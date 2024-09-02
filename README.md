@@ -18,11 +18,6 @@
   <a href="https://ko-fi.com/enubia">
     <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Buy Me A Coffee" width="126" />
   </a>
-  <!--
-  <a href="https://www.buymeacoffee.com/enubia" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 45px; width: 210px;" >
-  </a>
-  -->
 </p>
 
 <p align="center">
