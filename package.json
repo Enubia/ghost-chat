@@ -94,7 +94,7 @@
         "vue-codemirror": "6.1.1",
         "vue-i18n": "9.14.0",
         "vue-router": "4.4.3",
-        "vue-tsc": "2.1.4"
+        "vue-tsc": "2.1.6"
     },
     "simple-git-hooks": {
         "pre-commit": "npx lint-staged"
