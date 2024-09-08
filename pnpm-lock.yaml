@@ -66,8 +66,8 @@ importers:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
       electron-log:
-        specifier: 5.1.7
-        version: 5.1.7
+        specifier: 5.2.0
+        version: 5.2.0
       electron-store:
         specifier: 10.0.0
         version: 10.0.0
@@ -1753,8 +1753,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  electron-log@5.1.7:
-    resolution: {integrity: sha512-/PjrS9zGkrZCDTHt6IgNE3FeciBbi4wd7U76NG9jAoNXF99E9IJdvBkqvaUJ1NjLojYDKs0kTvn9YhKy1/Zi+Q==}
+  electron-log@5.2.0:
+    resolution: {integrity: sha512-VjLkvaLmbP3AOGOh5Fob9M8bFU0mmeSAb5G2EoTBx+kQLf2XA/0byzjsVGBTHhikbT+m1AB27NEQUv9wX9nM8w==}
     engines: {node: '>= 14'}
 
   electron-publish@24.13.1:
@@ -5933,7 +5933,7 @@ snapshots:
       - electron-builder-squirrel-windows
       - supports-color
 
-  electron-log@5.1.7: {}
+  electron-log@5.2.0: {}
 
   electron-publish@24.13.1:
     dependencies:
