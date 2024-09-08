@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SelectSeparator, type SelectSeparatorProps } from 'radix-vue';
-import { type HTMLAttributes, computed } from 'vue';
+import { computed, type HTMLAttributes } from 'vue';
 
 import { cn } from '#lib/utils';
 

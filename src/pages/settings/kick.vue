@@ -3,6 +3,8 @@ import { ipcRenderer } from 'electron';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import type { FontSize, Stroke } from '#shared/types';
+
 import Editor from '#components/settings/Editor.vue';
 import { Input } from '#components/ui/input';
 import { Label } from '#components/ui/label';
@@ -11,7 +13,6 @@ import { Switch } from '#components/ui/switch';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { IpcEvent, StoreDefaults } from '#shared/constants';
-import type { FontSize, Stroke } from '#shared/types';
 
 const { t } = useI18n();
 
