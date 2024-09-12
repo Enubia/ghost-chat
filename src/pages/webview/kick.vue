@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { tryOnBeforeMount, tryOnMounted } from '@vueuse/core';
+import { ref } from 'vue';
 
 import type { WebviewTag } from '#shared/types';
 
@@ -12,7 +13,7 @@ import { KickSearchParams, StoreDefaults } from '#shared/constants';
 const kick = ref(StoreDefaults.options.kick);
 const link = ref() as Ref<URL>;
 
-onBeforeMount(async () => {
+tryOnBeforeMount(async () => {
     kick.value = await IpcHandler.getKickOptions();
 
     link.value = new URL('https://kick-chat.corard.tv/v1/chat');
@@ -66,7 +67,7 @@ function constructInjectableJS() {
     return [blackList, kick.value.js].join('\n');
 }
 
-onMounted(() => {
+tryOnMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {

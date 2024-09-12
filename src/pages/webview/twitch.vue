@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { tryOnBeforeMount, tryOnMounted } from '@vueuse/core';
+import { ref } from 'vue';
 
 import type { WebviewTag } from '#shared/types';
 
@@ -12,7 +13,7 @@ import { StoreDefaults, TwitchSearchParams } from '#shared/constants';
 const twitch = ref(StoreDefaults.options.twitch);
 const link = ref() as Ref<URL>;
 
-onBeforeMount(async () => {
+tryOnBeforeMount(async () => {
     twitch.value = await IpcHandler.getTwitchOptions();
     link.value = twitch.value.useJChat
         ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
@@ -114,7 +115,7 @@ function constructInjectableCSS() {
     return [css, twitch.value.css].join('\n');
 }
 
-onMounted(() => {
+tryOnMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
