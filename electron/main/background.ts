@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '#shared/constants/index.js';

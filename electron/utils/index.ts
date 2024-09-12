@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import log from 'electron-log';
 import { app, globalShortcut } from 'electron';
+import log from 'electron-log';
 
 export function cleanLogs() {
     try {
