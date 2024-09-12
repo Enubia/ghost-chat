@@ -21,10 +21,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.4-win.exe" target="_blank">
+  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.5-win.exe" target="_blank">
     <img src="./markdown-images/windows-button.png" alt="Buy Me A Coffee" width="350" >
   </a>
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.4-arm64-mac.dmg">
+  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.5-arm64-mac.dmg">
     <img src="./markdown-images/mac-download-button.png" alt="Donate with PayPal" width="350" />
   </a>
 </p>
