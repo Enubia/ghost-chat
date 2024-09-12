@@ -1,9 +1,66 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 26 August 2024
+        Latest | 12 September 2024
     </h2>
 
     <div class="grid gap-1">
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: linter changes
+            <a href="https://github.com/Enubia/ghost-chat/commit/e96fecd171581bf0393c3c67c0a626cd13e90c80" class="text-blue-500">e96fecd</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: linter issues
+            <a href="https://github.com/Enubia/ghost-chat/commit/8382a2e7dadae34f2a57cfa0a9edfcc9c866d888" class="text-blue-500">8382a2e</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: router imports
+            <a href="https://github.com/Enubia/ghost-chat/commit/5bea0cee4ef714673ad1be9c1f4e95a396c842b9" class="text-blue-500">5bea0ce</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: router imports
+            <a href="https://github.com/Enubia/ghost-chat/commit/fad8bcd7b35518cc51deaf3db4a56854be20dd51" class="text-blue-500">fad8bcd</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: change lifecycle hooks to make sure the link is always present when loading the webview
+            <a href="https://github.com/Enubia/ghost-chat/commit/0ddef4ed81a7c4206b17f24126be9f22d26fe22e" class="text-blue-500">0ddef4e</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: linter
+            <a href="https://github.com/Enubia/ghost-chat/commit/0c2b5d80cafedf01f9e2bdfac05a6b42181b41c2" class="text-blue-500">0c2b5d8</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: remove link
+            <a href="https://github.com/Enubia/ghost-chat/commit/3683826ebd0b5cef6878d0635b3dc9261630d0ac" class="text-blue-500">3683826</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/85247fe895f7f96e080eed94e7085ff219c1dc03" class="text-blue-500">85247fe</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update FUNDING.yml
+            <a href="https://github.com/Enubia/ghost-chat/commit/51363b269e909d6c1b1a3a98a3278d629046929f" class="text-blue-500">51363b2</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.4 | 26 August 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/6cf135ad583e1b4c4fa53f66cb69d09cac056604" class="text-blue-500">6cf135a</a>
+        </span>
         <span>
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: font size not applying correctly

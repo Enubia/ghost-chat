@@ -18,8 +18,21 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 26 August 2024
+## Latest | 12 September 2024
 
+- fix: linter changes [`e96fecd`](https://github.com/Enubia/ghost-chat/commit/e96fecd171581bf0393c3c67c0a626cd13e90c80)
+- fix: linter issues [`8382a2e`](https://github.com/Enubia/ghost-chat/commit/8382a2e7dadae34f2a57cfa0a9edfcc9c866d888)
+- fix: router imports [`5bea0ce`](https://github.com/Enubia/ghost-chat/commit/5bea0cee4ef714673ad1be9c1f4e95a396c842b9)
+- fix: router imports [`fad8bcd`](https://github.com/Enubia/ghost-chat/commit/fad8bcd7b35518cc51deaf3db4a56854be20dd51)
+- fix: change lifecycle hooks to make sure the link is always present when loading the webview [`0ddef4e`](https://github.com/Enubia/ghost-chat/commit/0ddef4ed81a7c4206b17f24126be9f22d26fe22e)
+- fix: linter [`0c2b5d8`](https://github.com/Enubia/ghost-chat/commit/0c2b5d80cafedf01f9e2bdfac05a6b42181b41c2)
+- remove link [`3683826`](https://github.com/Enubia/ghost-chat/commit/3683826ebd0b5cef6878d0635b3dc9261630d0ac)
+- chore: update readme [`85247fe`](https://github.com/Enubia/ghost-chat/commit/85247fe895f7f96e080eed94e7085ff219c1dc03)
+- Update FUNDING.yml [`51363b2`](https://github.com/Enubia/ghost-chat/commit/51363b269e909d6c1b1a3a98a3278d629046929f)
+---
+### v3.2.4 | 26 August 2024
+
+- chore: update changelog [`6cf135a`](https://github.com/Enubia/ghost-chat/commit/6cf135ad583e1b4c4fa53f66cb69d09cac056604)
 - fix: font size not applying correctly [`a3e14e0`](https://github.com/Enubia/ghost-chat/commit/a3e14e0c9c0837d165fd51ac82089f4824490ceb)
 - chore: update readme [`4d86922`](https://github.com/Enubia/ghost-chat/commit/4d86922b9b4384731ae9b02b46a7dbfa7c7cf749)
 ---
