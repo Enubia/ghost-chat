@@ -1,13 +1,13 @@
 import { type AppStore, FontSize, Stroke } from '#shared/types/store.js';
 
-export const StoreKeys = {
-    Options: 'options',
-    SavedWindowState: 'savedWindowState',
-    Settings: 'settings',
-    Updater: 'updater',
-    General: 'general',
-    Keybind: 'keybind',
-} as const;
+export enum StoreKeys {
+    Options = 'options',
+    SavedWindowState = 'savedWindowState',
+    Settings = 'settings',
+    Updater = 'updater',
+    General = 'general',
+    Keybind = 'keybind',
+}
 
 export const StoreDefaults: AppStore = {
     options: {
