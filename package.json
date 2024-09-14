@@ -83,7 +83,7 @@
         "rimraf": "6.0.1",
         "simple-git-hooks": "2.11.1",
         "tailwind-merge": "2.5.2",
-        "tailwindcss": "3.4.10",
+        "tailwindcss": "3.4.11",
         "tailwindcss-animate": "1.0.7",
         "typescript": "5.5.4",
         "unplugin-vue-router": "0.10.8",
