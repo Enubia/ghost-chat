@@ -4,10 +4,10 @@ import type ElectronStore from 'electron-store';
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import type { StoreKeys } from '#shared/constants/store.js';
 import type { AppStore, WindowState } from '#shared/types/store.js';
 
 import { IpcEvent } from '#shared/constants/index.js';
+import { StoreKeys } from '#shared/constants/store.js';
 
 import type ManualUpdater from './manualUpdater.js';
 
@@ -102,7 +102,7 @@ export default class IpcEvents {
                 // DISABLING VANISH CASE
                 // Settings are CLOSED and the Window IS transparent
                 log.info('Disabling Vanish');
-                this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+                this.store.set<typeof StoreKeys.SavedWindowState>(StoreKeys.SavedWindowState, {
                     ...this.store.get('savedWindowState'),
                     isClickThrough: false,
                     isTransparent: false,

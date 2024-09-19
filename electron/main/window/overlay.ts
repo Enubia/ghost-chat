@@ -4,8 +4,9 @@ import type ElectronStore from 'electron-store';
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
 
-import type { StoreKeys } from '#shared/constants/store.js';
 import type { AppStore } from '#shared/types/store.js';
+
+import { StoreKeys } from '#shared/constants/store.js';
 
 export default class Overlay {
     constructor(private store: ElectronStore<AppStore>) {}
@@ -96,7 +97,7 @@ export default class Overlay {
 
                 log.info('Closing, saved overlay window state', windowBounds);
 
-                this.store.set<typeof StoreKeys.SavedWindowState>('savedWindowState', {
+                this.store.set<typeof StoreKeys.SavedWindowState>(StoreKeys.SavedWindowState, {
                     x: windowBounds.x,
                     y: windowBounds.y,
                     width: windowBounds.width,

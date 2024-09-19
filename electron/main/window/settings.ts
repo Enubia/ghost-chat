@@ -3,10 +3,10 @@ import type ElectronStore from 'electron-store';
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 
-import type { StoreKeys } from '#shared/constants/store.js';
 import type { AppStore } from '#shared/types/store.js';
 
 import { IpcEvent } from '#shared/constants/index.js';
+import { StoreKeys } from '#shared/constants/store.js';
 
 export default class Settings {
     public window: BrowserWindow | null = null;
@@ -40,7 +40,7 @@ export default class Settings {
             },
         });
 
-        this.store.set<typeof StoreKeys.Settings>('settings', {
+        this.store.set<typeof StoreKeys.Settings>(StoreKeys.Settings, {
             isOpen: true,
             savedWindowState,
         });
@@ -77,7 +77,7 @@ export default class Settings {
 
                 log.info('Closing, saved settings window state', windowBounds);
 
-                this.store.set<typeof StoreKeys.Settings>('settings', {
+                this.store.set<typeof StoreKeys.Settings>(StoreKeys.Settings, {
                     isOpen: false,
                     savedWindowState: {
                         x: windowBounds.x,
