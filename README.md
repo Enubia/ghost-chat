@@ -35,15 +35,15 @@ or you want to have your chat on your main screen. It is not only limited to Twi
 
 ## Installation / Usage
 
-A detailed description can be found in our discord server's faq section and on our [wiki](https://github.com/Enubia/ghost-chat/wiki).
+A detailed description is available in our Discord server's faq section and on our [wiki](https://github.com/Enubia/ghost-chat/wiki).
 
 <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
 
 ## Additional info
 
 ### Translators needed
-Since GhostChat uses i18n, it's easy to add new language support, but I need you as a community.
-So if you are a native speaker of a language that is not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language ID as the name.
+Since GhostChat uses i18n, adding new language support is easy, but I need you as a community.
+So if you are a native speaker of a language not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language ID as the name.
 
 A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
 
