@@ -15,7 +15,7 @@ module.exports = {
         'out/dist',
     ],
     mac: {
-        artifactName: '${productName}-${arch}-mac.${ext}',
+        artifactName: '${productName}-${arch}.${ext}',
         target: {
             target: 'default',
             arch: ['x64', 'arm64'],
@@ -23,7 +23,7 @@ module.exports = {
         publish: ['github'],
     },
     win: {
-        artifactName: '${productName}-win.${ext}',
+        artifactName: '${productName}.${ext}',
         target: 'nsis',
         publish: ['github'],
     },

@@ -20,17 +20,6 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.5-win.exe" target="_blank">
-    <img src="./markdown-images/windows-button.png" alt="Buy Me A Coffee" width="350" >
-  </a>
-  <a href="https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-3.2.5-arm64-mac.dmg">
-    <img src="./markdown-images/mac-download-button.png" alt="Donate with PayPal" width="350" />
-  </a>
-</p>
-
----
-
 # Ghost Chat
 
 Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv), [Kick.com](https://kick.com) chat as an overlay on windowed/windowed full-screen applications written in Typescript with the help of Electron and Vue.
@@ -38,13 +27,17 @@ Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv), [
 It lets you connect to a channel without the need to open Twitch/Kick in your browser which comes in handy if you happen to have only one monitor,
 or you want to have your chat on your main screen. It is not only limited to Twitch and Kick, you can connect to any chat via the external sources option. Just enter the chat overlay URL and you are good to go.
 
+## Downloads
+
+- **Download for [Windows](https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat.exe)**
+- **Download for [Mac Arm](https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-arm64.dmg)**
+- **Download for [Mac Intel](https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-x64.dmg)**
+
 ## Installation / Usage
 
 A detailed description can be found in our discord server's faq section and on our [wiki](https://github.com/Enubia/ghost-chat/wiki).
 
-<p align="center">
-  <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
-</p>
+<a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
 
 ## Additional info
 
