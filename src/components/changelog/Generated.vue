@@ -1,6 +1,38 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 12 September 2024
+        Latest | 19 September 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: changed constants to enums
+            <a href="https://github.com/Enubia/ghost-chat/commit/6bea83501550fa61c2a81ea271e2f333bb1a9fc0" class="text-blue-500">6bea835</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/3728f0efea420e40f21fd2f861ad63fd99e75594" class="text-blue-500">3728f0e</a>
+        </span>
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: type errors after enum refactoring
+            <a href="https://github.com/Enubia/ghost-chat/commit/da1e594a4092830459cba5fc96aaae4218dace21" class="text-blue-500">da1e594</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed version from build assets
+            <a href="https://github.com/Enubia/ghost-chat/commit/29ec0ae779bf5836dfd8727ccd979d56efcace4d" class="text-blue-500">29ec0ae</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+            <a href="https://github.com/Enubia/ghost-chat/commit/41e1efc4ff8b40e9ef1db79a6b70de1d769045b3" class="text-blue-500">41e1efc</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.5 | 12 September 2024
     </h2>
 
     <div class="grid gap-1">
@@ -8,6 +40,11 @@
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: linter changes
             <a href="https://github.com/Enubia/ghost-chat/commit/e96fecd171581bf0393c3c67c0a626cd13e90c80" class="text-blue-500">e96fecd</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/6c0c49f2ea6f698eb8a11203a34c22eeda355244" class="text-blue-500">6c0c49f</a>
         </span>
         <span>
 

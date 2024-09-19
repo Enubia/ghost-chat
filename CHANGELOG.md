@@ -18,9 +18,18 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 12 September 2024
+## Latest | 19 September 2024
+
+- refactor: changed constants to enums [`6bea835`](https://github.com/Enubia/ghost-chat/commit/6bea83501550fa61c2a81ea271e2f333bb1a9fc0)
+- chore: update readme [`3728f0e`](https://github.com/Enubia/ghost-chat/commit/3728f0efea420e40f21fd2f861ad63fd99e75594)
+- fix: type errors after enum refactoring [`da1e594`](https://github.com/Enubia/ghost-chat/commit/da1e594a4092830459cba5fc96aaae4218dace21)
+- chore: removed version from build assets [`29ec0ae`](https://github.com/Enubia/ghost-chat/commit/29ec0ae779bf5836dfd8727ccd979d56efcace4d)
+- chore: update readme [`41e1efc`](https://github.com/Enubia/ghost-chat/commit/41e1efc4ff8b40e9ef1db79a6b70de1d769045b3)
+---
+### v3.2.5 | 12 September 2024
 
 - fix: linter changes [`e96fecd`](https://github.com/Enubia/ghost-chat/commit/e96fecd171581bf0393c3c67c0a626cd13e90c80)
+- chore: update changelog [`6c0c49f`](https://github.com/Enubia/ghost-chat/commit/6c0c49f2ea6f698eb8a11203a34c22eeda355244)
 - fix: linter issues [`8382a2e`](https://github.com/Enubia/ghost-chat/commit/8382a2e7dadae34f2a57cfa0a9edfcc9c866d888)
 - fix: router imports [`5bea0ce`](https://github.com/Enubia/ghost-chat/commit/5bea0cee4ef714673ad1be9c1f4e95a396c842b9)
 - fix: router imports [`fad8bcd`](https://github.com/Enubia/ghost-chat/commit/fad8bcd7b35518cc51deaf3db4a56854be20dd51)
