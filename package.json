@@ -89,7 +89,7 @@
         "unplugin-vue-router": "0.10.8",
         "vite": "5.4.6",
         "vite-plugin-electron": "0.28.8",
-        "vite-plugin-electron-renderer": "0.14.5",
+        "vite-plugin-electron-renderer": "0.14.6",
         "vue": "3.5.5",
         "vue-codemirror": "6.1.1",
         "vue-i18n": "10.0.1",
