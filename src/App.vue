@@ -84,7 +84,16 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
             <MenuButtons />
         </header>
         <main>
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <template v-if="Component">
+                    <Suspense>
+                        <component :is="Component" :key="$route.path" />
+                        <template #fallback>
+                            <Icon icon="fa5-solid:spinner" class="text-primary text-4xl animate-spin" />
+                        </template>
+                    </Suspense>
+                </template>
+            </router-view>
         </main>
         <footer v-if="showFooter" class="sticky bottom-0 w-full bg-background">
             <div id="paypal" class="center-elements py-2 px-10 sm:px-0">

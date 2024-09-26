@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import { tryOnBeforeMount, tryOnMounted } from '@vueuse/core';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import type { WebviewTag } from '#shared/types';
 
@@ -13,65 +12,64 @@ import { StoreDefaults, TwitchSearchParams } from '#shared/constants';
 const twitch = ref(StoreDefaults.options.twitch);
 const link = ref() as Ref<URL>;
 
-tryOnBeforeMount(async () => {
-    twitch.value = await IpcHandler.getTwitchOptions();
-    link.value = twitch.value.useJChat
-        ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
-        : new URL('https://nightdev.com/hosted/obschat/');
+twitch.value = await IpcHandler.getTwitchOptions();
 
-    let channel = '';
+link.value = twitch.value.useJChat
+    ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
+    : new URL('https://nightdev.com/hosted/obschat/');
 
-    if (twitch.value.channel !== '') {
-        channel = twitch.value.channel;
-    } else if (twitch.value.defaultChannel !== '') {
-        channel = twitch.value.defaultChannel;
+let channel = '';
+
+if (twitch.value.channel !== '') {
+    channel = twitch.value.channel;
+} else if (twitch.value.defaultChannel !== '') {
+    channel = twitch.value.defaultChannel;
+}
+
+link.value.searchParams.append(TwitchSearchParams.CHANNEL, channel);
+
+if (twitch.value.useJChat) {
+    if (twitch.value.fade) {
+        link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fadeTimeout.toString());
     }
 
-    link.value.searchParams.append(TwitchSearchParams.CHANNEL, channel);
+    link.value.searchParams.append(TwitchSearchParams.SIZE, twitch.value.fontSize.toString());
 
-    if (twitch.value.useJChat) {
-        if (twitch.value.fade) {
-            link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fadeTimeout.toString());
-        }
-
-        link.value.searchParams.append(TwitchSearchParams.SIZE, twitch.value.fontSize.toString());
-
-        if (twitch.value.animate) {
-            link.value.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
-        }
-
-        if (twitch.value.bots) {
-            link.value.searchParams.append(TwitchSearchParams.BOTS, 'true');
-        }
-
-        if (twitch.value.hideCommands) {
-            link.value.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
-        }
-
-        if (twitch.value.hideBadges) {
-            link.value.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
-        }
-
-        link.value.searchParams.append(TwitchSearchParams.FONT, twitch.value.font.toString());
-
-        if (twitch.value.stroke) {
-            link.value.searchParams.append(TwitchSearchParams.STROKE, twitch.value.stroke.toString());
-        }
-
-        if (twitch.value.shadow) {
-            link.value.searchParams.append(TwitchSearchParams.SHADOW, twitch.value.shadow.toString());
-        }
-
-        if (twitch.value.smallCaps) {
-            link.value.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
-        }
-    } else {
-        link.value.searchParams.append(TwitchSearchParams.THEME, twitch.value.theme.toString());
-        link.value.searchParams.append(TwitchSearchParams.PREVENT_CLIPPING, twitch.value.preventClipping.toString());
-        link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fade ? twitch.value.fadeTimeout.toString() : 'false');
-        link.value.searchParams.append(TwitchSearchParams.BOT_ACTIVITY, twitch.value.bots.toString());
+    if (twitch.value.animate) {
+        link.value.searchParams.append(TwitchSearchParams.ANIMATE, 'true');
     }
-});
+
+    if (twitch.value.bots) {
+        link.value.searchParams.append(TwitchSearchParams.BOTS, 'true');
+    }
+
+    if (twitch.value.hideCommands) {
+        link.value.searchParams.append(TwitchSearchParams.HIDE_COMMANDS, 'true');
+    }
+
+    if (twitch.value.hideBadges) {
+        link.value.searchParams.append(TwitchSearchParams.HIDE_BADGES, 'true');
+    }
+
+    link.value.searchParams.append(TwitchSearchParams.FONT, twitch.value.font.toString());
+
+    if (twitch.value.stroke) {
+        link.value.searchParams.append(TwitchSearchParams.STROKE, twitch.value.stroke.toString());
+    }
+
+    if (twitch.value.shadow) {
+        link.value.searchParams.append(TwitchSearchParams.SHADOW, twitch.value.shadow.toString());
+    }
+
+    if (twitch.value.smallCaps) {
+        link.value.searchParams.append(TwitchSearchParams.SMALL_CAPS, 'true');
+    }
+} else {
+    link.value.searchParams.append(TwitchSearchParams.THEME, twitch.value.theme.toString());
+    link.value.searchParams.append(TwitchSearchParams.PREVENT_CLIPPING, twitch.value.preventClipping.toString());
+    link.value.searchParams.append(TwitchSearchParams.FADE, twitch.value.fade ? twitch.value.fadeTimeout.toString() : 'false');
+    link.value.searchParams.append(TwitchSearchParams.BOT_ACTIVITY, twitch.value.bots.toString());
+}
 
 let webView: WebviewTag;
 
@@ -115,7 +113,7 @@ function constructInjectableCSS() {
     return [css, twitch.value.css].join('\n');
 }
 
-tryOnMounted(() => {
+onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {

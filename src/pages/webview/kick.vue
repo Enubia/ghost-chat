@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import { tryOnBeforeMount, tryOnMounted } from '@vueuse/core';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import type { WebviewTag } from '#shared/types';
 
@@ -13,32 +12,30 @@ import { KickSearchParams, StoreDefaults } from '#shared/constants';
 const kick = ref(StoreDefaults.options.kick);
 const link = ref() as Ref<URL>;
 
-tryOnBeforeMount(async () => {
-    kick.value = await IpcHandler.getKickOptions();
+kick.value = await IpcHandler.getKickOptions();
 
-    link.value = new URL('https://kick-chat.corard.tv/v1/chat');
+link.value = new URL('https://kick-chat.corard.tv/v1/chat');
 
-    let channel = '';
+let channel = '';
 
-    if (kick.value.channel !== '') {
-        channel = kick.value.channel;
-    } else if (kick.value.defaultChannel !== '') {
-        channel = kick.value.defaultChannel;
-    }
+if (kick.value.channel !== '') {
+    channel = kick.value.channel;
+} else if (kick.value.defaultChannel !== '') {
+    channel = kick.value.defaultChannel;
+}
 
-    link.value.searchParams.append(KickSearchParams.USER, channel);
-    link.value.searchParams.append(KickSearchParams.FONT_SIZE, kick.value.fontSize);
-    link.value.searchParams.append(KickSearchParams.STROKE, kick.value.stroke);
-    link.value.searchParams.append(KickSearchParams.ANIMATE, kick.value.animate.toString());
+link.value.searchParams.append(KickSearchParams.USER, channel);
+link.value.searchParams.append(KickSearchParams.FONT_SIZE, kick.value.fontSize);
+link.value.searchParams.append(KickSearchParams.STROKE, kick.value.stroke);
+link.value.searchParams.append(KickSearchParams.ANIMATE, kick.value.animate.toString());
 
-    if (kick.value.fade) {
-        link.value.searchParams.append(KickSearchParams.FADE, kick.value.fadeTimeout.toString());
-    }
+if (kick.value.fade) {
+    link.value.searchParams.append(KickSearchParams.FADE, kick.value.fadeTimeout.toString());
+}
 
-    link.value.searchParams.append(KickSearchParams.BADGES, kick.value.badges.toString());
-    link.value.searchParams.append(KickSearchParams.COMMANDS, kick.value.commands.toString());
-    link.value.searchParams.append(KickSearchParams.BOTS, kick.value.bots.toString());
-});
+link.value.searchParams.append(KickSearchParams.BADGES, kick.value.badges.toString());
+link.value.searchParams.append(KickSearchParams.COMMANDS, kick.value.commands.toString());
+link.value.searchParams.append(KickSearchParams.BOTS, kick.value.bots.toString());
 
 let webView: WebviewTag;
 
@@ -67,7 +64,7 @@ function constructInjectableJS() {
     return [blackList, kick.value.js].join('\n');
 }
 
-tryOnMounted(() => {
+onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
