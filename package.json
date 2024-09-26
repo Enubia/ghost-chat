@@ -76,7 +76,7 @@
         "electron-builder": "25.0.5",
         "electron-log": "5.2.0",
         "electron-store": "10.0.0",
-        "electron-updater": "6.2.1",
+        "electron-updater": "6.3.0",
         "lint-staged": "15.2.10",
         "radix-vue": "1.9.6",
         "release-it": "17.6.0",

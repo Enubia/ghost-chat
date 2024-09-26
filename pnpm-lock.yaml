@@ -72,8 +72,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0
       electron-updater:
-        specifier: 6.2.1
-        version: 6.2.1
+        specifier: 6.3.0
+        version: 6.3.0
       lint-staged:
         specifier: 15.2.10
         version: 15.2.10
@@ -1942,8 +1942,8 @@ packages:
   electron-to-chromium@1.5.11:
     resolution: {integrity: sha512-R1CccCDYqndR25CaXFd6hp/u9RaaMcftMkphmvuepXr5b1vfLkRml6aWVeBhXJ7rbevHkKEMJtz8XqPf7ffmew==}
 
-  electron-updater@6.2.1:
-    resolution: {integrity: sha512-83eKIPW14qwZqUUM6wdsIRwVKZyjmHxQ4/8G+1C6iS5PdDt7b1umYQyj1/qPpH510GmHEQe4q0kCPe3qmb3a0Q==}
+  electron-updater@6.3.0:
+    resolution: {integrity: sha512-3Xlezhk+dKaSQrOnkQNqCGiuGSSUPO9BV9TQZ4Iig6AyTJ4FzJONE5gFFc382sY53Sh9dwJfzKsA3DxRHt2btw==}
 
   electron@32.1.2:
     resolution: {integrity: sha512-CXe6doFzhmh1U7daOvUzmF6Cj8hssdYWMeEPRnRO6rB9/bbwMlWctcQ7P8NJXhLQ88/vYUJQrJvlJPh8qM0BRQ==}
@@ -5014,7 +5014,7 @@ snapshots:
   '@intlify/message-compiler@10.0.0':
     dependencies:
       '@intlify/shared': 10.0.0
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@intlify/message-compiler@10.0.1':
     dependencies:
@@ -6689,9 +6689,9 @@ snapshots:
 
   electron-to-chromium@1.5.11: {}
 
-  electron-updater@6.2.1:
+  electron-updater@6.3.0:
     dependencies:
-      builder-util-runtime: 9.2.4
+      builder-util-runtime: 9.2.5
       fs-extra: 10.1.0
       js-yaml: 4.1.0
       lazy-val: 1.0.5
@@ -8987,7 +8987,7 @@ snapshots:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.7
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
     optional: true
 
   sax@1.4.1: {}
