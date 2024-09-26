@@ -1,6 +1,28 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 19 September 2024
+        Latest | 26 September 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: content loading for twitch and kick
+            <a href="https://github.com/Enubia/ghost-chat/commit/fb2dc6588f2f2bef037d8b389174dcaeaa6164ea" class="text-blue-500">fb2dc65</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update README.md
+            <a href="https://github.com/Enubia/ghost-chat/commit/424eb678b2b430f44869d067db93c174727f1916" class="text-blue-500">424eb67</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update renovate.json
+            <a href="https://github.com/Enubia/ghost-chat/commit/7881724abdfdf3b46fcf0b77922cd50f75bfeffa" class="text-blue-500">7881724</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.6 | 19 September 2024
     </h2>
 
     <div class="grid gap-1">
@@ -8,6 +30,11 @@
 
             <span class="text-purple-400 bg-purple-900 px-1">refactor</span>: changed constants to enums
             <a href="https://github.com/Enubia/ghost-chat/commit/6bea83501550fa61c2a81ea271e2f333bb1a9fc0" class="text-blue-500">6bea835</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/f9b41da3707f65503e7308388b15b20f7d721d27" class="text-blue-500">f9b41da</a>
         </span>
         <span>
 
@@ -1349,12 +1376,6 @@
             <a href="https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892" class="text-blue-500">5b3a17b</a>
         </span>
     </div>
-    <hr class="mt-2">
-    <h2 class="text-2xl font-semibold py-2">
-        v2.2.0 | 3 May 2023
-    </h2>
-
-    <div class="grid gap-1" />
     <hr class="mt-2">
     <h2 class="text-2xl font-semibold py-2">
         v2.2.0-beta.1 | 2 May 2023
