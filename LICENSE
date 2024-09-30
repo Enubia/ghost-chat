@@ -1,13 +1,29 @@
-Zlib License
+# DON'T BE A DICK PUBLIC LICENSE
 
-Copyright (c) 2023 Marco Schuster
+[Source](https://github.com/philsturgeon/dbad)
 
-This software is provided ‘as-is’, without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
+> Version 1.2, February 2021
 
-Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+> Copyright (C) [2024] [Marco Schuster]
+ 
+ Everyone is permitted to copy and distribute verbatim or modified copies of this license document.
 
-1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
+> DON'T BE A DICK PUBLIC LICENSE
+> TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
+ 1. Do whatever you like with the original work, just don't be a dick.
 
-3. This notice may not be removed or altered from any source distribution.
+     Being a dick includes - but is not limited to - the following instances:
+
+	 1a. Outright copyright infringement - Don't just copy the original work/works and change the name.  
+	 1b. Selling the unmodified original with no work done what-so-ever, that's REALLY being a dick.  
+	 1c. Modifying the original work to contain hidden harmful content. That would make you a PROPER dick.  
+
+ 2. If you become rich through modifications, related works/services, or supporting the original work,
+ share the love. Only a dick would make loads off this work and not buy the original work's 
+ creator(s) a pint.
+ 
+ 3. Code is provided with no warranty. Using somebody else's code and bitching when it goes wrong makes 
+ you a DONKEY dick. Fix the problem yourself. A non-dick would submit the fix back or submit a [bug report](https://www.chiark.greenend.org.uk/~sgtatham/bugs.html).
+
+ 4. If you use code, calling it your own would make you a ROYAL dick. [How to cite a repo](https://academia.stackexchange.com/questions/14010/how-do-you-cite-a-github-repository). Alternatively, even just a comment giving attribution to where you found the code would be OK.
