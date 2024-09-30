@@ -5,7 +5,6 @@
   <a href="https://github.com/Enubia/ghost-chat/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/enubia/ghost-chat">
   </a>
-  <img alt="license" src="https://img.shields.io/github/license/enubia/ghost-chat">
   <a href="https://github.com/antfu/eslint-config">
     <img alt="antfu" src="https://antfu.me/badge-code-style.svg">
   </a>
