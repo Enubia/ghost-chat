@@ -72,8 +72,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0
       electron-updater:
-        specifier: 6.3.0
-        version: 6.3.0
+        specifier: 6.3.4
+        version: 6.3.4
       lint-staged:
         specifier: 15.2.10
         version: 15.2.10
@@ -1942,8 +1942,8 @@ packages:
   electron-to-chromium@1.5.11:
     resolution: {integrity: sha512-R1CccCDYqndR25CaXFd6hp/u9RaaMcftMkphmvuepXr5b1vfLkRml6aWVeBhXJ7rbevHkKEMJtz8XqPf7ffmew==}
 
-  electron-updater@6.3.0:
-    resolution: {integrity: sha512-3Xlezhk+dKaSQrOnkQNqCGiuGSSUPO9BV9TQZ4Iig6AyTJ4FzJONE5gFFc382sY53Sh9dwJfzKsA3DxRHt2btw==}
+  electron-updater@6.3.4:
+    resolution: {integrity: sha512-uZUo7p1Y53G4tl6Cgw07X1yF8Jlz6zhaL7CQJDZ1fVVkOaBfE2cWtx80avwDVi8jHp+I/FWawrMgTAeCCNIfAg==}
 
   electron@32.1.2:
     resolution: {integrity: sha512-CXe6doFzhmh1U7daOvUzmF6Cj8hssdYWMeEPRnRO6rB9/bbwMlWctcQ7P8NJXhLQ88/vYUJQrJvlJPh8qM0BRQ==}
@@ -6689,7 +6689,7 @@ snapshots:
 
   electron-to-chromium@1.5.11: {}
 
-  electron-updater@6.3.0:
+  electron-updater@6.3.4:
     dependencies:
       builder-util-runtime: 9.2.5
       fs-extra: 10.1.0
