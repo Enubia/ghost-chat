@@ -98,6 +98,10 @@ export default function createStore() {
                 store.set('options.twitch.preventClipping', false);
                 store.set('options.twitch.fontSizeExact', 14);
             },
+            '3.3.0': (store) => {
+                store.set('updater.channel', 'stable');
+                store.set('updater.disableAutoUpdates', true);
+            },
         },
     });
 }

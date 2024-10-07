@@ -297,13 +297,7 @@
     },
     "version-check": {
         "loading-message": "Checking for updates",
-        "update-available": "Version {version} is available, download will start in the backround. You can find the updates in the changelog.",
-        "download-finished": "Download finished, new version will be applied on restart",
-        "error": "Some error happened during download, please report this in the discord!",
-        "manual-update-required": {
-            "before-link": "Version {version} is available but your system does not allow auto updates. Please visit the",
-            "link": "GhostChat release page",
-            "after-link": "and download the update manually. You can find the updates in the changelog."
-        }
+        "update-available": "Version {version} is available. You can find your installer here: {link}",
+        "error": "Some error happened during download, please report this in the discord!"
     }
 }

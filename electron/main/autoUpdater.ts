@@ -53,12 +53,8 @@ export default class AutoUpdater {
 
             if (info.version.includes('beta') && this.updaterSettings.channel !== 'beta') {
                 this.sendStatusToWindow(IpcEvent.UpdateNotAvailable);
-            } else if (process.platform !== 'darwin') {
-                this.autoUpdater.downloadUpdate();
-                this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
             } else {
-                log.info(`[${this.logPrefix}] manual update called`);
-                this.sendStatusToWindow(IpcEvent.ManualUpdateRequired, info.version);
+                this.sendStatusToWindow(IpcEvent.UpdateAvailable, info.version);
             }
         });
 
@@ -70,10 +66,6 @@ export default class AutoUpdater {
         this.autoUpdater.on('error', (err) => {
             this.autoUpdater.logger?.error(err);
             this.sendStatusToWindow(IpcEvent.Error);
-        });
-
-        this.autoUpdater.on('update-downloaded', (_info) => {
-            this.sendStatusToWindow(IpcEvent.UpdateDownloaded);
         });
     }
 
