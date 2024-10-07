@@ -18,9 +18,18 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 26 September 2024
+## Latest | 7 October 2024
+
+- update: disabled autoupdater [`#1113`](https://github.com/Enubia/ghost-chat/pull/1113)
+- Update LICENSE [`ad97ac5`](https://github.com/Enubia/ghost-chat/commit/ad97ac552d6cee9bce937f541db822dc32542778)
+- Update package.json [`cb5a2f8`](https://github.com/Enubia/ghost-chat/commit/cb5a2f86d927af65a5ed3c37fa07a3dbcccfc08e)
+- Update README.md [`4c3ffe4`](https://github.com/Enubia/ghost-chat/commit/4c3ffe4a834d1d0ce8f8a5951d27e1c432eb6448)
+- updated license [`6be8bab`](https://github.com/Enubia/ghost-chat/commit/6be8bab70c3a1e44c54bc01fd61b883993e2e986)
+---
+### v3.2.7 | 26 September 2024
 
 - fix: content loading for twitch and kick [`fb2dc65`](https://github.com/Enubia/ghost-chat/commit/fb2dc6588f2f2bef037d8b389174dcaeaa6164ea)
+- chore: update changelog [`86d76ae`](https://github.com/Enubia/ghost-chat/commit/86d76ae8b48f9f3e3faf5f4828c9de16802bf8e6)
 - Update README.md [`424eb67`](https://github.com/Enubia/ghost-chat/commit/424eb678b2b430f44869d067db93c174727f1916)
 - Update renovate.json [`7881724`](https://github.com/Enubia/ghost-chat/commit/7881724abdfdf3b46fcf0b77922cd50f75bfeffa)
 ---

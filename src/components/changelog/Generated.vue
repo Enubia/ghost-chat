@@ -1,6 +1,38 @@
 <template>
     <h2 class="text-2xl font-semibold py-2">
-        Latest | 26 September 2024
+        Latest | 7 October 2024
+    </h2>
+
+    <div class="grid gap-1">
+        <span>
+
+            <span class="text-pink-400 bg-pink-900 px-1">update</span>: disabled autoupdater
+            <a href="https://github.com/Enubia/ghost-chat/pull/1113" class="text-blue-500">#1113</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update LICENSE
+            <a href="https://github.com/Enubia/ghost-chat/commit/ad97ac552d6cee9bce937f541db822dc32542778" class="text-blue-500">ad97ac5</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update package.json
+            <a href="https://github.com/Enubia/ghost-chat/commit/cb5a2f86d927af65a5ed3c37fa07a3dbcccfc08e" class="text-blue-500">cb5a2f8</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: Update README.md
+            <a href="https://github.com/Enubia/ghost-chat/commit/4c3ffe4a834d1d0ce8f8a5951d27e1c432eb6448" class="text-blue-500">4c3ffe4</a>
+        </span>
+        <span>
+
+            <span class="text-gray-400 bg-gray-900 px-1">misc</span>: updated license
+            <a href="https://github.com/Enubia/ghost-chat/commit/6be8bab70c3a1e44c54bc01fd61b883993e2e986" class="text-blue-500">6be8bab</a>
+        </span>
+    </div>
+    <hr class="mt-2">
+    <h2 class="text-2xl font-semibold py-2">
+        v3.2.7 | 26 September 2024
     </h2>
 
     <div class="grid gap-1">
@@ -8,6 +40,11 @@
 
             <span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: content loading for twitch and kick
             <a href="https://github.com/Enubia/ghost-chat/commit/fb2dc6588f2f2bef037d8b389174dcaeaa6164ea" class="text-blue-500">fb2dc65</a>
+        </span>
+        <span>
+
+            <span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+            <a href="https://github.com/Enubia/ghost-chat/commit/86d76ae8b48f9f3e3faf5f4828c9de16802bf8e6" class="text-blue-500">86d76ae</a>
         </span>
         <span>
 
