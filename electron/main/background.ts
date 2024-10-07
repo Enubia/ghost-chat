@@ -8,7 +8,6 @@ import { IpcEvent } from '#shared/constants/index.js';
 import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
-import ManualUpdater from './manualUpdater.js';
 import createStore from './store.js';
 import TrayIcon from './trayIcon.js';
 import Overlay from './window/overlay.js';
@@ -45,7 +44,6 @@ const indexHtml = path.join(DIST, 'index.html');
 
 let overlay: BrowserWindow | null;
 let ipcEvents: IpcEvents;
-let manualUpdater: ManualUpdater;
 
 app.on('ready', () => {
     setTimeout(
@@ -58,23 +56,11 @@ app.on('ready', () => {
 
             // only call updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
-                if (store.get('updater').disableAutoUpdates) {
-                    manualUpdater = new ManualUpdater(store, false);
-                } else {
-                    new AutoUpdater(store, overlay, false).init();
-                }
+                new AutoUpdater(store, overlay, false).init();
             } else {
-                // if (store.get('updater').disableAutoUpdates) {
-                //     manualUpdater = new ManualUpdater(store, true);
-                // } else {
-                //     new AutoUpdater(store, overlay, true).init();
-                // }
+                // new AutoUpdater(store, overlay, true).init();
 
                 overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
-            }
-
-            if (manualUpdater) {
-                ipcEvents.registerManualUpdater(manualUpdater);
             }
         },
         process.platform === 'linux' ? 1000 : 0,

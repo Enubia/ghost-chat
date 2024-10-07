@@ -104,12 +104,6 @@
     "version-check": {
         "loading-message": "업데이트 확인 중",
         "update-available": "버전 {version}을(를) 사용할 수 있습니다, 다운로드가 자동으로 시작됩니다",
-        "download-finished": "다운로드 완료, 다시 시작할 때 새 버전이 적용됩니다",
-        "error": "다운로드 중에 오류가 발생했습니다, Discord에 제보해 주세요!",
-        "manual-update-required": {
-            "before-link": "버전 {version}을(를) 사용할 수 있으나 시스템이 자동 업데이트를 허용하지 않습니다.",
-            "link": "GhostChat 릴리즈 페이지",
-            "after-link": "를 방문하고 업데이트를 수동으로 다운로드하세요."
-        }
+        "error": "다운로드 중에 오류가 발생했습니다, Discord에 제보해 주세요!"
     }
 }

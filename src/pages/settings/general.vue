@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -8,7 +7,6 @@ import type { Keybinds } from '#shared/types';
 
 import { languageMappingList } from '#components/languageMappingList';
 import HotKeyInput from '#components/settings/HotKeyInput.vue';
-import { Button } from '#components/ui/button';
 import { Label } from '#components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
 import { Switch } from '#components/ui/switch';
@@ -50,23 +48,23 @@ async function saveKeybind(value: string) {
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
-function checkForUpdates() {
-    updaterStatus.value = 'checking';
-    ipcRenderer.send(IpcEvent.CheckForUpdates);
-}
+// function checkForUpdates() {
+//     updaterStatus.value = 'checking';
+//     ipcRenderer.send(IpcEvent.CheckForUpdates);
+// }
 
-function restart() {
-    ipcRenderer.send(IpcEvent.Close);
-}
+// function restart() {
+//     ipcRenderer.send(IpcEvent.Close);
+// }
 
-async function saveAutoUpdateSetting(value: boolean) {
-    await IpcHandler.setValueFromKey('updater.disableAutoUpdates', value);
-    disableAutoUpdates.value = value;
+// async function saveAutoUpdateSetting(value: boolean) {
+//     await IpcHandler.setValueFromKey('updater.disableAutoUpdates', value);
+//     disableAutoUpdates.value = value;
 
-    if (!value) {
-        updaterStatus.value = 'init';
-    }
-}
+//     if (!value) {
+//         updaterStatus.value = 'init';
+//     }
+// }
 
 async function savePrerelease(value: boolean) {
     await IpcHandler.setValueFromKey('updater.channel', value ? 'beta' : 'latest');
@@ -136,7 +134,7 @@ onUnmounted(() => {
                 {{ t('settings.general.pre-release.info') }}
             </small>
         </div>
-        <div class="flex flex-col gap-2">
+        <!-- <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch
                     id="disable-auto-updates" :checked="disableAutoUpdates"
@@ -171,7 +169,7 @@ onUnmounted(() => {
                     {{ t(`settings.general.auto-updates.${updaterStatus}`) }}
                 </small>
             </div>
-        </div>
+        </div> -->
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch

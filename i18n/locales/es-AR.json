@@ -102,12 +102,6 @@
     "version-check": {
         "loading-message": "Buscando actualizaciones",
         "update-available": "La versión {version} está disponible, la descarga va a comenzar automaticamente",
-        "download-finished": "La descarga finalizó, la nueva versión va a ser aplicada al reiniciar",
-        "error": "Se produjeron algunos errores durante la descarga, por favor reportá esto en el discord!",
-        "manual-update-required": {
-            "before-link": "La versión {version} esta disponible pero tu sistema no permite actualizaciones automáticas. Por favor, visitá",
-            "link": "la página de lanzamientos de GhostChat",
-            "after-link": "y descargá la actualización manualmente."
-        }
+        "error": "Se produjeron algunos errores durante la descarga, por favor reportá esto en el discord!"
     }
 }
