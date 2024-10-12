@@ -17,8 +17,8 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="space-y-6 p-10 block">
-        <div class="space-y-0.5">
+    <div class="p-10">
+        <div>
             <h2 class="text-2xl font-bold tracking-tight">
                 {{ t('settings.title') }}
             </h2>
@@ -27,12 +27,12 @@ onMounted(async () => {
             </p>
             <Separator />
         </div>
-        <div class="flex space-y-8 space-x-12">
-            <aside class="w-1/6">
+        <div class="flex">
+            <aside>
                 <SidebarNav />
             </aside>
-            <div class="w-5/6">
-                <div class="space-y-6 relative">
+            <div class="min-w-52 mt-10">
+                <div class="space-y-6">
                     <slot />
                 </div>
             </div>

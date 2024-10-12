@@ -107,7 +107,7 @@ onUnmounted(() => {
 
 <template>
     <Settings :key="rerenderKey">
-        <div>
+        <div class="flex flex-col gap-2">
             <Label for="locale-switcher">
                 {{ t('settings.general.locale-change.label') }}
             </Label>
