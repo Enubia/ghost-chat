@@ -93,11 +93,11 @@ importers:
         specifier: 2.5.4
         version: 2.5.4
       tailwindcss:
-        specifier: 3.4.13
-        version: 3.4.13
+        specifier: 3.4.14
+        version: 3.4.14
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.13)
+        version: 1.0.7(tailwindcss@3.4.14)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -3963,10 +3963,6 @@ packages:
     resolution: {integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
 
-  source-map-js@1.2.0:
-    resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
-    engines: {node: '>=0.10.0'}
-
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -4104,8 +4100,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss@3.4.13:
-    resolution: {integrity: sha512-KqjHOJKogOUt5Bs752ykCeiwvi0fKVkr5oqsFNt/8px/tA8scFPIlkygsf6jXrfCqGHz7VflA6+yytWuM+XhFw==}
+  tailwindcss@3.4.14:
+    resolution: {integrity: sha512-IcSvOcTRcUtQQ7ILQL5quRDg7Xs93PdJEk1ZLbhhvJc7uj/OAhYOnruEiwnGgBvUtaUAJ8/mhSw1o8L2jCiENA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -5650,7 +5646,7 @@ snapshots:
       estree-walker: 2.0.2
       magic-string: 0.30.11
       postcss: 8.4.47
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.10':
     dependencies:
@@ -9094,8 +9090,6 @@ snapshots:
       ip-address: 9.0.5
       smart-buffer: 4.2.0
 
-  source-map-js@1.2.0: {}
-
   source-map-js@1.2.1: {}
 
   source-map-support@0.5.21:
@@ -9225,11 +9219,11 @@ snapshots:
 
   tailwind-merge@2.5.4: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.13):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.14):
     dependencies:
-      tailwindcss: 3.4.13
+      tailwindcss: 3.4.14
 
-  tailwindcss@3.4.13:
+  tailwindcss@3.4.14:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
