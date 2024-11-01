@@ -21,8 +21,8 @@ importers:
         specifier: 6.1.2
         version: 6.1.2
       '@iconify/json':
-        specifier: 2.2.255
-        version: 2.2.255
+        specifier: 2.2.266
+        version: 2.2.266
       '@iconify/vue':
         specifier: 4.1.2
         version: 4.1.2(vue@3.5.10(typescript@5.6.2))
@@ -37,7 +37,7 @@ importers:
         version: 1.0.0(vue@3.5.10(typescript@5.6.2))
       '@tomjs/vite-plugin-iconify':
         specifier: 1.2.1
-        version: 1.2.1(@iconify/json@2.2.255)(vite@5.4.8(@types/node@22.4.1)(sass@1.75.0))
+        version: 1.2.1(@iconify/json@2.2.266)(vite@5.4.8(@types/node@22.4.1)(sass@1.75.0))
       '@vitejs/plugin-vue':
         specifier: 5.1.4
         version: 5.1.4(vite@5.4.8(@types/node@22.4.1)(sass@1.75.0))(vue@3.5.10(typescript@5.6.2))
@@ -64,7 +64,7 @@ importers:
         version: 32.1.2
       electron-builder:
         specifier: 25.0.5
-        version: 25.0.5(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5))
+        version: 25.0.5(electron-builder-squirrel-windows@24.13.3)
       electron-log:
         specifier: 5.2.0
         version: 5.2.0
@@ -513,8 +513,8 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
-  '@iconify/json@2.2.255':
-    resolution: {integrity: sha512-wtBKGYrKHOmRlbai6cd4yTfHakLQ4lLD68w5pb1RDf1+6o0QcvLdun1sWZNcqkOvZOZAUOUPVISqKkYDlWY6YA==}
+  '@iconify/json@2.2.266':
+    resolution: {integrity: sha512-lv+lmPjhDh5/sCaom8AX39USmneRMcQRT/SKoDsxizOjVKycZ8PRk7kNKi776YkKzuksb0Xv5Tfi/Mrr3YLQgQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1404,6 +1404,7 @@ packages:
 
   boolean@3.2.0:
     resolution: {integrity: sha512-d0II/GO9uf9lfUHH2BQsjxzRJZBdsjgsBiW4BvhWk/3qoKwQFjIDVN19PfX8F2D/r9PCMTtLWjYVCFrpeYUzsw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   boxen@7.1.1:
     resolution: {integrity: sha512-2hCgjEmP8YLWQ130n2FerGv7rYpfBmnmp9Uy2Le1vge6X3gZIfSmEzP5QTDElFxcvVcXlEn8Aq6MU/PZygIOog==}
@@ -2180,6 +2181,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@10.1.0:
@@ -4966,7 +4968,7 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
-  '@iconify/json@2.2.255':
+  '@iconify/json@2.2.266':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -5323,9 +5325,9 @@ snapshots:
       '@tanstack/virtual-core': 3.9.0
       vue: 3.5.10(typescript@5.6.2)
 
-  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.255)(vite@5.4.8(@types/node@22.4.1)(sass@1.75.0))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.266)(vite@5.4.8(@types/node@22.4.1)(sass@1.75.0))':
     dependencies:
-      '@iconify/json': 2.2.255
+      '@iconify/json': 2.2.266
       cac: 6.7.14
       fs-extra: 11.2.0
       lodash.clonedeep: 4.5.0
@@ -5832,7 +5834,7 @@ snapshots:
 
   app-builder-bin@5.0.0-alpha.7: {}
 
-  app-builder-lib@24.13.3(dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3))(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5)):
+  app-builder-lib@24.13.3(dmg-builder@25.0.5)(electron-builder-squirrel-windows@24.13.3):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.2.1
@@ -5866,7 +5868,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  app-builder-lib@25.0.5(dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3))(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5)):
+  app-builder-lib@25.0.5(dmg-builder@25.0.5)(electron-builder-squirrel-windows@24.13.3):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.3.2
@@ -6552,7 +6554,7 @@ snapshots:
 
   dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3):
     dependencies:
-      app-builder-lib: 25.0.5(dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3))(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5))
+      app-builder-lib: 25.0.5(dmg-builder@25.0.5)(electron-builder-squirrel-windows@24.13.3)
       builder-util: 25.0.3
       builder-util-runtime: 9.2.5
       fs-extra: 10.1.0
@@ -6625,7 +6627,7 @@ snapshots:
 
   electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5):
     dependencies:
-      app-builder-lib: 24.13.3(dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3))(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5))
+      app-builder-lib: 24.13.3(dmg-builder@25.0.5)(electron-builder-squirrel-windows@24.13.3)
       archiver: 5.3.2
       builder-util: 24.13.1
       fs-extra: 10.1.0
@@ -6633,9 +6635,9 @@ snapshots:
       - dmg-builder
       - supports-color
 
-  electron-builder@25.0.5(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5)):
+  electron-builder@25.0.5(electron-builder-squirrel-windows@24.13.3):
     dependencies:
-      app-builder-lib: 25.0.5(dmg-builder@25.0.5(electron-builder-squirrel-windows@24.13.3))(electron-builder-squirrel-windows@24.13.3(dmg-builder@25.0.5))
+      app-builder-lib: 25.0.5(dmg-builder@25.0.5)(electron-builder-squirrel-windows@24.13.3)
       builder-util: 25.0.3
       builder-util-runtime: 9.2.5
       chalk: 4.1.2
