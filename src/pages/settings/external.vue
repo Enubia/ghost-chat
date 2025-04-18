@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import Editor from '#components/settings/Editor.vue';
@@ -14,9 +14,9 @@ import { IpcEvent } from '#shared/constants';
 
 const { t } = useI18n();
 
-const defaultUrl = ref('');
-const channelSuccess = ref(false);
-const sources = ref<string[]>([]);
+const defaultUrl = shallowRef('');
+const channelSuccess = shallowRef(false);
+const sources = shallowRef<string[]>([]);
 
 onMounted(async () => {
     const external = await IpcHandler.getExternalOptions();
@@ -61,7 +61,7 @@ async function removeSource(index: number) {
         <div v-if="sources.length" class="flex flex-col gap-2">
             <Label>{{ t('settings.external.sources.label') }}</Label>
             <div
-                v-for="source, index in sources" :key="source" class="flex justify-between items-center gap-1"
+                v-for="source, index in sources" :key="source" class="flex items-center justify-between gap-1"
                 :value="index.toString()"
             >
                 <Input v-model="sources[index]" readonly class="bg-gray-300" />

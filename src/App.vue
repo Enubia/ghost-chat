@@ -77,7 +77,7 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
 <template>
     <div :key="rerenderKey" class="min-h-dvh">
         <header
-            v-if="showMenuBar" class="flex justify-between items-center w-full top-0 z-10"
+            v-if="showMenuBar" class="top-0 z-10 flex w-full items-center justify-between"
             :class="footerExcludeList.includes(route.name) ? 'absolute' : 'sticky'"
         >
             <DropDownMenu />
@@ -89,14 +89,14 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
                     <Suspense>
                         <component :is="Component" :key="$route.path" />
                         <template #fallback>
-                            <Icon icon="fa5-solid:spinner" class="text-primary text-4xl animate-spin" />
+                            <Icon icon="fa5-solid:spinner" class="animate-spin text-4xl text-primary" />
                         </template>
                     </Suspense>
                 </template>
             </router-view>
         </main>
         <footer v-if="showFooter" class="sticky bottom-0 w-full bg-background">
-            <div id="paypal" class="center-elements py-2 px-10 sm:px-0">
+            <div id="paypal" class="center-elements px-10 py-2 sm:px-0">
                 <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
                     <small class="me-2">
                         {{ t('footer.support') }}

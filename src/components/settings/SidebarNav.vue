@@ -28,7 +28,7 @@ const sidebarNavItems = [
 </script>
 
 <template>
-    <nav class="grid space-x-0 space-y-4 px-4 sticky top-32 z-10">
+    <nav class="sticky top-32 z-10 grid space-x-0 space-y-4 px-4">
         <RouterLink
             v-for="item in sidebarNavItems" :key="item.title" :to="item.link"
             class="w-full justify-start"

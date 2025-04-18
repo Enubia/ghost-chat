@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -12,8 +12,8 @@ import { StoreDefaults } from '#shared/constants';
 const router = useRouter();
 const { t } = useI18n();
 
-const kick = ref(StoreDefaults.options.kick);
-const channel = ref('');
+const kick = shallowRef(StoreDefaults.options.kick);
+const channel = shallowRef('');
 
 onMounted(async () => {
     kick.value = await IpcHandler.getKickOptions();

@@ -1,5 +1,7 @@
 import antfu from '@antfu/eslint-config';
+import { FlatCompat } from '@eslint/eslintrc';
 
+const compat = new FlatCompat();
 export default antfu(
     {
         stylistic: {
@@ -11,6 +13,7 @@ export default antfu(
             '.vscode',
             'out',
             'node_modules',
+            'changelog',
         ],
 
         yaml: false,
@@ -74,4 +77,18 @@ export default antfu(
             'unused-imports/no-unused-imports': 'warn',
         },
     },
+    ...compat.config({
+        extends: ['plugin:tailwindcss/recommended'],
+
+        rules: {
+            'tailwindcss/no-custom-classname': 'off',
+        },
+
+        ignorePatterns: [
+            '.vscode',
+            'out',
+            'node_modules',
+            'changelog',
+        ],
+    }),
 );

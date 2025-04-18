@@ -2,7 +2,7 @@
 import type { FontSize, Stroke } from '#shared/types';
 
 import { ipcRenderer } from 'electron';
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import Editor from '#components/settings/Editor.vue';
@@ -16,19 +16,18 @@ import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const { t } = useI18n();
 
-const kickDefaults = StoreDefaults.options.kick;
-const fontSize = ref(kickDefaults.fontSize);
-const stroke = ref(kickDefaults.stroke);
-const animate = ref(kickDefaults.animate);
-const fade = ref(kickDefaults.fade);
-const badges = ref(kickDefaults.badges);
-const commands = ref(kickDefaults.commands);
-const bots = ref(kickDefaults.bots);
-const channelSuccess = ref(false);
-const blacklistSuccess = ref(false);
-const defaultChannel = ref(kickDefaults.defaultChannel);
-const userBlacklist = ref(kickDefaults.userBlacklist);
-const fadeTimeout = ref(kickDefaults.fadeTimeout);
+const fontSize = shallowRef(StoreDefaults.options.kick.fontSize);
+const stroke = shallowRef(StoreDefaults.options.kick.stroke);
+const animate = shallowRef(StoreDefaults.options.kick.animate);
+const fade = shallowRef(StoreDefaults.options.kick.fade);
+const badges = shallowRef(StoreDefaults.options.kick.badges);
+const commands = shallowRef(StoreDefaults.options.kick.commands);
+const bots = shallowRef(StoreDefaults.options.kick.bots);
+const channelSuccess = shallowRef(false);
+const blacklistSuccess = shallowRef(false);
+const defaultChannel = shallowRef(StoreDefaults.options.kick.defaultChannel);
+const userBlacklist = shallowRef(StoreDefaults.options.kick.userBlacklist);
+const fadeTimeout = shallowRef(StoreDefaults.options.kick.fadeTimeout);
 
 onMounted(async () => {
     const kickStore = await IpcHandler.getKickOptions();
@@ -45,7 +44,8 @@ onMounted(async () => {
     fadeTimeout.value = kickStore.fadeTimeout;
 });
 
-async function saveDefaultChannel(value: string) {
+async function saveDefaultChannel(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
     await IpcHandler.setValueFromKey('options.kick.defaultChannel', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();

@@ -31,7 +31,7 @@ onMounted(async () => {
             <aside>
                 <SidebarNav />
             </aside>
-            <div class="min-w-52 mt-10">
+            <div class="mt-10 min-w-52">
                 <div class="space-y-6">
                     <slot />
                 </div>

@@ -2,7 +2,7 @@
 import type { Twitch } from '#shared/types';
 
 import { ipcRenderer } from 'electron';
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import Editor from '#components/settings/Editor.vue';
@@ -23,27 +23,27 @@ for (const [_, value] of Object.entries(tm('settings.twitch.font.select-options'
     fontOptions.push(rt(value));
 }
 
-const useJChat = ref(StoreDefaults.options.twitch.useJChat);
-const fontSize = ref(String(StoreDefaults.options.twitch.fontSize));
-const userBlacklist = ref(StoreDefaults.options.twitch.userBlacklist);
-const defaultChannel = ref(StoreDefaults.options.twitch.defaultChannel);
-const animate = ref(StoreDefaults.options.twitch.animate);
-const fade = ref(StoreDefaults.options.twitch.fade);
-const bots = ref(StoreDefaults.options.twitch.bots);
-const hideCommands = ref(StoreDefaults.options.twitch.hideCommands);
-const hideBadges = ref(StoreDefaults.options.twitch.hideBadges);
-const font = ref(String(StoreDefaults.options.twitch.font));
-const stroke = ref(String(StoreDefaults.options.twitch.stroke));
-const shadow = ref(String(StoreDefaults.options.twitch.shadow));
-const smallCaps = ref(StoreDefaults.options.twitch.smallCaps);
-const fadeTimeout = ref(StoreDefaults.options.twitch.fadeTimeout);
+const useJChat = shallowRef(StoreDefaults.options.twitch.useJChat);
+const fontSize = shallowRef(String(StoreDefaults.options.twitch.fontSize));
+const userBlacklist = shallowRef(StoreDefaults.options.twitch.userBlacklist);
+const defaultChannel = shallowRef(StoreDefaults.options.twitch.defaultChannel);
+const animate = shallowRef(StoreDefaults.options.twitch.animate);
+const fade = shallowRef(StoreDefaults.options.twitch.fade);
+const bots = shallowRef(StoreDefaults.options.twitch.bots);
+const hideCommands = shallowRef(StoreDefaults.options.twitch.hideCommands);
+const hideBadges = shallowRef(StoreDefaults.options.twitch.hideBadges);
+const font = shallowRef(String(StoreDefaults.options.twitch.font));
+const stroke = shallowRef(String(StoreDefaults.options.twitch.stroke));
+const shadow = shallowRef(String(StoreDefaults.options.twitch.shadow));
+const smallCaps = shallowRef(StoreDefaults.options.twitch.smallCaps);
+const fadeTimeout = shallowRef(StoreDefaults.options.twitch.fadeTimeout);
 // KapChat specific options
-const theme = ref(StoreDefaults.options.twitch.theme);
-const preventClipping = ref(StoreDefaults.options.twitch.preventClipping);
-const fontSizeExact = ref(StoreDefaults.options.twitch.fontSizeExact);
+const theme = shallowRef(StoreDefaults.options.twitch.theme);
+const preventClipping = shallowRef(StoreDefaults.options.twitch.preventClipping);
+const fontSizeExact = shallowRef(StoreDefaults.options.twitch.fontSizeExact);
 
-const jChatRerenderKey = ref(0);
-const kapChatRerenderKey = ref(0);
+const jChatRerenderKey = shallowRef(0);
+const kapChatRerenderKey = shallowRef(0);
 
 onMounted(async () => {
     const twitch = await IpcHandler.getTwitchOptions();
@@ -70,8 +70,8 @@ onMounted(async () => {
     kapChatRerenderKey.value++;
 });
 
-const channelSuccess = ref(false);
-const blacklistSuccess = ref(false);
+const channelSuccess = shallowRef(false);
+const blacklistSuccess = shallowRef(false);
 
 async function saveDefaultChannel() {
     await IpcHandler.setValueFromKey('options.twitch.defaultChannel', defaultChannel.value);

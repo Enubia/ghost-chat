@@ -68,8 +68,8 @@ function applySourceFromList(item: string) {
 <template>
     <Dialog>
         <DialogTrigger>
-            <div class="flex justify-center rounded p-4 hover:cursor-pointer hover:scale-105 bg-secondary shadow-xl">
-                <Icon icon="pepicons-print:internet" class="w-10 h-12 text-blue-500" />
+            <div class="flex justify-center rounded bg-secondary p-4 shadow-xl hover:scale-105 hover:cursor-pointer">
+                <Icon icon="pepicons-print:internet" class="h-12 w-10 text-blue-500" />
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">
@@ -85,7 +85,7 @@ function applySourceFromList(item: string) {
                 v-model="source" :class="hasRegexError ? 'border-red-500' : ''" placeholder="https://twitch.tv"
                 @change="enableStartButton" @keydown.enter="routeExternal"
             />
-            <small v-if="hasRegexError" class="text-red-500 text-xs">{{ t('start.external.input.error') }}</small>
+            <small v-if="hasRegexError" class="text-xs text-red-500">{{ t('start.external.input.error') }}</small>
             <Select v-if="sources.length" @update:model-value="applySourceFromList">
                 <SelectTrigger>
                     <SelectValue :placeholder="t('start.external.sources-placeholder')" />

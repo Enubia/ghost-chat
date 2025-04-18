@@ -2,7 +2,7 @@
 import type { Keybinds } from '#shared/types';
 
 import { ipcRenderer } from 'electron';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { languageMappingList } from '#components/languageMappingList';
@@ -16,14 +16,14 @@ import { IpcEvent, StoreDefaults } from '#shared/constants';
 
 const { t } = useI18n();
 
-const participateInPreRelease = ref(StoreDefaults.updater.channel === 'beta');
-const disableAutoUpdates = ref(StoreDefaults.updater.disableAutoUpdates);
-const updaterStatus = ref('init');
-const quitOnClose = ref(StoreDefaults.general.mac.quitOnClose);
-const hideDockIcon = ref(StoreDefaults.general.mac.hideDockIcon);
-const vanish = ref<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
-const showMacOptions = ref(false);
-const rerenderKey = ref(0);
+const participateInPreRelease = shallowRef(StoreDefaults.updater.channel === 'beta');
+const disableAutoUpdates = shallowRef(StoreDefaults.updater.disableAutoUpdates);
+const updaterStatus = shallowRef('init');
+const quitOnClose = shallowRef(StoreDefaults.general.mac.quitOnClose);
+const hideDockIcon = shallowRef(StoreDefaults.general.mac.hideDockIcon);
+const vanish = shallowRef<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
+const showMacOptions = shallowRef(false);
+const rerenderKey = shallowRef(0);
 
 onMounted(async () => {
     const updater = await IpcHandler.getUpdater();
@@ -47,24 +47,6 @@ async function saveKeybind(value: string) {
     await IpcHandler.setValueFromKey('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
-
-// function checkForUpdates() {
-//     updaterStatus.value = 'checking';
-//     ipcRenderer.send(IpcEvent.CheckForUpdates);
-// }
-
-// function restart() {
-//     ipcRenderer.send(IpcEvent.Close);
-// }
-
-// async function saveAutoUpdateSetting(value: boolean) {
-//     await IpcHandler.setValueFromKey('updater.disableAutoUpdates', value);
-//     disableAutoUpdates.value = value;
-
-//     if (!value) {
-//         updaterStatus.value = 'init';
-//     }
-// }
 
 async function savePrerelease(value: boolean) {
     await IpcHandler.setValueFromKey('updater.channel', value ? 'beta' : 'latest');
@@ -134,42 +116,6 @@ onUnmounted(() => {
                 {{ t('settings.general.pre-release.info') }}
             </small>
         </div>
-        <!-- <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2">
-                <Switch
-                    id="disable-auto-updates" :checked="disableAutoUpdates"
-                    @update:checked="saveAutoUpdateSetting"
-                />
-                <Label for="disable-auto-updates" class="cursor-pointer">
-                    {{ t('settings.general.auto-updates.disable-label') }}
-                </Label>
-            </div>
-            <small v-if="!disableAutoUpdates" class="text-muted-foreground">
-                {{ t('settings.general.auto-updates.disable-info') }}
-            </small>
-            <div v-if="disableAutoUpdates" class="flex flex-col">
-                <Button
-                    :disabled="updaterStatus === 'checking' || updaterStatus === 'update-available'"
-                    v-on="{ click: updaterStatus === 'update-downloaded' ? restart : checkForUpdates }"
-                >
-                    {{ t(`settings.general.auto-updates.button.${updaterStatus}`) }}
-                    <Icon
-                        v-if="updaterStatus === 'checking' || updaterStatus === 'update-available'" class="ms-2"
-                        icon="svg-spinners:270-ring"
-                    />
-                </Button>
-                <small v-if="updaterStatus === 'manual-update-required'">
-                    {{ t('settings.general.auto-updates.manual-update-required.before-link') }}
-                    <a href="https://github.com/Enubia/ghost-chat/releases">
-                        {{ t('settings.general.auto-updates.manual-update-required.link') }}
-                    </a>
-                    {{ t('settings.general.auto-updates.manual-update-required.after-link') }}
-                </small>
-                <small v-else-if="updaterStatus !== ''">
-                    {{ t(`settings.general.auto-updates.${updaterStatus}`) }}
-                </small>
-            </div>
-        </div> -->
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import { onUnmounted, ref } from 'vue';
+import { onUnmounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -11,8 +11,8 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const message = ref(t('version-check.loading-message'));
-const showLink = ref(false);
+const message = shallowRef(t('version-check.loading-message'));
+const showLink = shallowRef(false);
 
 ipcRenderer.on(IpcEvent.Recreated, () => {
     router.push('/');
@@ -49,8 +49,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="center-elements flex-col gap-2 py-[50%]">
-        <Icon icon="svg-spinners:blocks-wave" class="text-5xl mb-5 text-primary" />
+    <div class="center-elements m-auto h-dvh flex-col gap-2">
+        <Icon icon="svg-spinners:blocks-wave" class="mb-5 text-5xl text-primary" />
         <span>{{ message }}</span>
         <a v-if="showLink" href="https://github.com/enubia/ghost-chat/releases/latest" class="text-primary underline">
             https://github.com/enubia/ghost-chat/releases/latest
