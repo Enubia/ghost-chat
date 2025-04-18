@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { Events } from 'vue-codemirror';
+
 import type { AppStore } from '#shared/types';
 
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { onBeforeMount, ref, shallowRef } from 'vue';
+import { onBeforeMount, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import IpcHandler from '#lib/ipchandler';
@@ -13,9 +15,9 @@ type Option = keyof AppStore['options'];
 
 const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
 
-const code = ref('');
-const success = ref<boolean>(false);
-const view = shallowRef();
+const code = shallowRef('');
+const success = shallowRef<boolean>(false);
+const view = shallowRef<Parameters<Events['ready']>[0]['view']>();
 const extensions: any[] = [];
 
 onBeforeMount(async () => {
@@ -34,7 +36,7 @@ onBeforeMount(async () => {
     }
 });
 
-function handleReady(payload: any) {
+function handleReady(payload: Parameters<Events['ready']>[0]) {
     view.value = payload.view;
 }
 
