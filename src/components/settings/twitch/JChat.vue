@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Input } from '#components/ui/input';
@@ -70,17 +70,17 @@ const emit = defineEmits([
 
 const { t, rt, tm } = useI18n();
 
-const fontSize = ref(props.fontSize);
-const stroke = ref(props.stroke);
-const animate = ref(props.animate);
-const fade = ref(props.fade);
-const fadeTimeout = ref(props.fadeTimeout);
-const bots = ref(props.bots);
-const hideCommands = ref(props.hideCommands);
-const hideBadges = ref(props.hideBadges);
-const font = ref(props.font);
-const shadow = ref(props.shadow);
-const smallCaps = ref(props.smallCaps);
+const fontSize = shallowRef(props.fontSize);
+const stroke = shallowRef(props.stroke);
+const animate = shallowRef(props.animate);
+const fade = shallowRef(props.fade);
+const fadeTimeout = shallowRef(props.fadeTimeout);
+const bots = shallowRef(props.bots);
+const hideCommands = shallowRef(props.hideCommands);
+const hideBadges = shallowRef(props.hideBadges);
+const font = shallowRef(props.font);
+const shadow = shallowRef(props.shadow);
+const smallCaps = shallowRef(props.smallCaps);
 </script>
 
 <template>

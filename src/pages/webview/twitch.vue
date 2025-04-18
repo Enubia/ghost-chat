@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-
 import type { WebviewTag } from '#shared/types';
 
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';
-import { StoreDefaults, TwitchSearchParams } from '#shared/constants';
+import { TwitchSearchParams } from '#shared/constants';
 
-const twitch = ref(StoreDefaults.options.twitch);
-const link = ref() as Ref<URL>;
-
-twitch.value = await IpcHandler.getTwitchOptions();
-
-link.value = twitch.value.useJChat
-    ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
-    : new URL('https://nightdev.com/hosted/obschat/');
+const twitch = shallowRef(await IpcHandler.getTwitchOptions());
+const link = shallowRef(
+    twitch.value.useJChat
+        ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
+        : new URL('https://nightdev.com/hosted/obschat/'),
+);
 
 let channel = '';
 

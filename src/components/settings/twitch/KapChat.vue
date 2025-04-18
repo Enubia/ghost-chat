@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Input } from '#components/ui/input';
@@ -44,12 +44,12 @@ const emit = defineEmits([
     'update:fadeTimeout',
 ]);
 
-const theme = ref(props.theme);
-const preventClipping = ref(props.preventClipping);
-const fade = ref(props.fade);
-const bots = ref(props.bots);
-const fontSizeExact = ref([props.fontSizeExact]);
-const fadeTimeout = ref(props.fadeTimeout);
+const theme = shallowRef(props.theme);
+const preventClipping = shallowRef(props.preventClipping);
+const fade = shallowRef(props.fade);
+const bots = shallowRef(props.bots);
+const fontSizeExact = shallowRef([props.fontSizeExact]);
+const fadeTimeout = shallowRef(props.fadeTimeout);
 
 const { t, tm, rt } = useI18n();
 </script>

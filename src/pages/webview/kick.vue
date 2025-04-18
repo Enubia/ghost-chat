@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-
 import type { WebviewTag } from '#shared/types';
 
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';
-import { KickSearchParams, StoreDefaults } from '#shared/constants';
+import { KickSearchParams } from '#shared/constants';
 
-const kick = ref(StoreDefaults.options.kick);
-const link = ref() as Ref<URL>;
-
-kick.value = await IpcHandler.getKickOptions();
-
-link.value = new URL('https://kick-chat.corard.tv/v1/chat');
+const kick = shallowRef(await IpcHandler.getKickOptions());
+const link = shallowRef(new URL('https://kick-chat.corard.tv/v1/chat'));
 
 let channel = '';
 
