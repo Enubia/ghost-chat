@@ -17,7 +17,7 @@ export default class Settings {
         private destroyWindow: () => void,
     ) {}
 
-    buildWindow(indexHtml: string, arg: any) {
+    buildWindow(indexHtml: string, urlHash: string) {
         log.info('Building settings window');
 
         const { savedWindowState } = this.store.get('settings');
@@ -52,13 +52,13 @@ export default class Settings {
         }
 
         if (process.env.VITE_DEV_SERVER_URL) {
-            this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${arg}`);
+            this.window.loadURL(`${process.env.VITE_DEV_SERVER_URL}#${urlHash}`);
 
             this.window.webContents.openDevTools({
                 mode: 'right',
             });
         } else {
-            this.window.loadFile(indexHtml, { hash: arg });
+            this.window.loadFile(indexHtml, { hash: urlHash });
         }
 
         this.window.webContents.on('will-navigate', (event, url) => {
