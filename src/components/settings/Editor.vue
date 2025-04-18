@@ -16,9 +16,9 @@ type Option = keyof AppStore['options'];
 const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
 
 const code = shallowRef('');
-const success = shallowRef<boolean>(false);
+const success = shallowRef(false);
 const view = shallowRef<Parameters<Events['ready']>[0]['view']>();
-const extensions: any[] = [];
+const extensions: ReturnType<typeof css> | typeof oneDark[] = [];
 
 onBeforeMount(async () => {
     if (await IpcHandler.getValueFromKey('savedWindowState.theme') === 'dark') {

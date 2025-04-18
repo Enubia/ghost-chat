@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -16,7 +16,7 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const isSettingsOpen = ref(false);
+const isSettingsOpen = shallowRef(false);
 
 onBeforeMount(async () => {
     isSettingsOpen.value = (await IpcHandler.getSettings()).isOpen;

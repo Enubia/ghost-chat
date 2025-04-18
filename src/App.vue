@@ -48,7 +48,7 @@ onMounted(async () => {
 });
 
 watch(route, () => {
-    showFooter.value = !(footerExcludeList.includes(route.name) && route.path.startsWith('/settings'));
+    showFooter.value = !footerExcludeList.includes(route.name) && !route.path.startsWith('/settings');
     showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
 });
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -14,11 +14,11 @@ import { StoreDefaults } from '#shared/constants';
 const router = useRouter();
 const { t } = useI18n();
 
-const external = ref(StoreDefaults.options.external);
-const source = ref('');
-const sources = ref<string[]>([]);
-const hasRegexError = ref(false);
-const hasError = ref(false);
+const external = shallowRef(StoreDefaults.options.external);
+const source = shallowRef('');
+const sources = shallowRef<string[]>([]);
+const hasRegexError = shallowRef(false);
+const hasError = shallowRef(false);
 
 onMounted(async () => {
     external.value = await IpcHandler.getExternalOptions();

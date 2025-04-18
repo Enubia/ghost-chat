@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -12,8 +12,8 @@ import { StoreDefaults } from '#shared/constants';
 const router = useRouter();
 const { t } = useI18n();
 
-const twitch = ref(StoreDefaults.options.twitch);
-const channel = ref('');
+const twitch = shallowRef(StoreDefaults.options.twitch);
+const channel = shallowRef('');
 
 onMounted(async () => {
     twitch.value = await IpcHandler.getTwitchOptions();

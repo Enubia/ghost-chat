@@ -6,7 +6,7 @@ defineProps<{ tagSource: URL }>();
     <div id="webview-tag">
         <webview
             :src="tagSource"
-            class="min-h-[95dvh]"
+            class="min-h-dvh"
         />
     </div>
 </template>

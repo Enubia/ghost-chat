@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import { ref, watch } from 'vue';
+import { shallowRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Button from '#components/ui/button/Button.vue';
@@ -10,7 +10,7 @@ import { IpcEvent } from '#shared/constants';
 const router = useRouter();
 const route = useRoute();
 
-const showVanish = ref(false);
+const showVanish = shallowRef(false);
 
 const vanishWhiteList: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource'];
 
