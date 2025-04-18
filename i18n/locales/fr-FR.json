@@ -1,0 +1,303 @@
+{
+    "header": {
+        "dropdown": {
+            "start": "Démarrer",
+            "chat": "Chat",
+            "settings": "Options",
+            "toggle-color-theme": "Modifier les couleurs",
+            "changelog": "Changelog",
+            "vanish": {
+                "title": "Faire disparaître",
+                "tooltip": "Invisible et ignoré des clics"
+            }
+        }
+    },
+    "footer": {
+        "support": "Vous aimez ce programme? Pensez à soutenir les développeurs!"
+    },
+    "start": {
+        "channel": {
+            "info": "Quelle chaîne? ex. enubia_ ",
+            "button": "Allez!"
+        },
+        "twitch": {
+            "title": "Twitch.tv"
+        },
+        "kick": {
+            "title": "kick.com"
+        },
+        "external": {
+            "title": "Source externe",
+            "info": "Entrez l'URL que vous souhaitez charger",
+            "input": {
+                "error": "Ce n'est pas une URL valide, elle devrait ressembler à ceci : http(s)://(www.)twitch.tv"
+            },
+            "sources-placeholder": "Votre historique de sources",
+            "button": "Allez!"
+        }
+    },
+    "settings": {
+        "title": "Options",
+        "info": "Toutes les options sont enregistrées automatiquement.",
+        "navigation": {
+            "general": "Général",
+            "twitch": "Twitch.tv",
+            "kick": "kick.com",
+            "external": "Sources externes"
+        },
+        "general": {
+            "locale-change": {
+                "label": "Choisissez votre langue préférée",
+                "info": "Veuillez noter que pour que cette modification prenne effet sur l'ensemble de l'application, vous devrez la redémarrer une fois."
+            },
+            "keybind-change": {
+                "label": "Modifier la combinaison de touches pour faire disparaître",
+                "no-key": "Pas de combinaison de touches définie",
+                "meta-error": "Les méta-touches (Win ou CMD) ne sont pas autorisées.",
+                "single-key-error": "La combinaison de touches nécessite au moins une touche modificatrice (par exemple Shift, Alt, Ctrl)."
+            },
+            "pre-release": {
+                "label": "Participer aux versions beta",
+                "info": "Cocher ceci si vous souhaitez participer aux versions Beta. Celles-ci seront également téléchargées automatiquement si elles sont paramétrées."
+            },
+            "close-option": {
+                "label": "Fermer l'application à la fermeture de la fenêtre",
+                "info": "Quitte l'application immédiatement si cette option est activée, au lieu de simplement fermer la fenêtre."
+            },
+            "hide-dock-icon-options": {
+                "label": "Masquer l'icône du dock",
+                "info": "Si cette option est activée, l'application n'apparaîtra pas sur le dock une fois qu'elle aura été lancée."
+            },
+            "external-sources": {
+                "heading": "Sources externes"
+            },
+            "auto-updates": {
+                "disable-label": "Désactiver les mises à jour automatiques",
+                "disable-info": "Si vous désactivez les mises à jour automatiques, vous devrez vérifier manuellement les mises à jour de temps en temps.",
+                "init": "Cliquez pour vérifier les mises à jour maintenant",
+                "checking": "Recherche de mises à jour",
+                "error": "Une erreur est survenue lors de la mise à jour, merci de signaler ce problème sur notre discord!",
+                "update-downloaded": "Une nouvelle version a été téléchargée, la mise à jour sera appliquée lors du redémarrage.",
+                "update-not-available": "Aucune mise à jour disponible",
+                "update-available": "Une nouvelle version est disponible, le téléchargement commencera dans le fond.",
+                "manual-update-required": {
+                    "before-link": "Votre système n'autorise pas les mises à jour automatiques. Veuillez consulter la ",
+                    "link": "page de publication de GhostChat",
+                    "after-link": "et téléchargez la mise à jour manuellement."
+                },
+                "button": {
+                    "init": "Vérifier la présence de mise à jour",
+                    "checking": "Vérification",
+                    "update-available": "Téléchargement",
+                    "update-not-available": "Vérifier les mises à jour",
+                    "update-downloaded": "Redémarrer pour appliquer la mise à jour"
+                }
+            }
+        },
+        "twitch": {
+            "default-channel": {
+                "input-label": "Chaîne par défaut",
+                "info": "Si une chaîne par défaut est définie, l'application l'appliquera automatiquement pour vous."
+            },
+            "chat-selector": {
+                "label": "Utiliser JChat",
+                "info": "Vous pouvez changer le service de chat sous-jacent ici. La valeur par défaut est kapchat."
+            },
+            "font-size": {
+                "label": "Taille des caractères",
+                "select-label": "Choisir une taille des caractères",
+                "select-options": {
+                    "small": "Petite",
+                    "medium": "Moyenne",
+                    "large": "Grande"
+                },
+                "info": "Modifie la taille des lignes de chat."
+            },
+            "animate": {
+                "label": "Animations",
+                "info": "Active les animations du chat."
+            },
+            "fade": {
+                "label": "Disparition des messages",
+                "info": "Vous pouvez faire disparaître les anciennes lignes de chat après un certain nombre de secondes afin d'éviter que des contenus périmés ne restent affichés à l'écran.",
+                "timeout-label": "Disparition après {seconds} (secondes)"
+            },
+            "show-bots": {
+                "label": "Afficher les robots",
+                "info": "KapChat masque les messages des robots par défaut, mais vous pouvez les réactiver."
+            },
+            "hide-commands": {
+                "label": "Cacher les commandes",
+                "info": "Masque les messages qui commencent par un caractère de commande (par exemple !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Cacher les badges",
+                "info": "Masque les badges dans les messages de chat."
+            },
+            "font": {
+                "label": "Police d'écriture du Chat",
+                "select-label": "Choisir une police d'écriture",
+                "select-options": [
+                    "Baloo Tammudu",
+                    "Segoe UI",
+                    "Roboto",
+                    "Lato",
+                    "Noto Sans",
+                    "Source Code Pro",
+                    "Impact",
+                    "Comfortaa",
+                    "Dancing Script",
+                    "Indie Flower",
+                    "Press Start 2P",
+                    "Wallpoet"
+                ],
+                "info": "Modifie la police du texte du chat."
+            },
+            "stroke": {
+                "label": "Trait",
+                "select-label": "Choisir une taille de trait",
+                "select-options": {
+                    "off": "Sans",
+                    "thin": "Mince",
+                    "medium": "Moyen",
+                    "thick": "Épais",
+                    "thicker": "Très épais"
+                },
+                "info": "Ajoute un trait au texte du chat."
+            },
+            "shadow": {
+                "label": "Ombre",
+                "select-label": "Choisir une ombre",
+                "select-options": {
+                    "off": "Off",
+                    "small": "Petite",
+                    "medium": "Moyenne",
+                    "large": "Grande"
+                },
+                "info": "Ajoute une ombre au texte du chat."
+            },
+            "small-caps": {
+                "label": "Majuscules",
+                "info": "Convertit le texte du chat en lettres majuscules."
+            },
+            "theme": {
+                "label": "Thème du Chat",
+                "select-label": "Sélectionnez un thème",
+                "select-options": {
+                    "undefined": "Sans",
+                    "dark": "Sombre",
+                    "light": "Lumineux",
+                    "bttv_light": "BetterTTV Light",
+                    "bttv_dark": "BetterTTV Dark",
+                    "s0n0s_1080": "S0N0S' 1080P Theme",
+                    "s0n0s_1440": "S0N0S' 1440P Theme"
+                },
+                "info": "Modifie le thème de couleur du chat."
+            },
+            "prevent-clipping": {
+                "label": "Empêcher les découpages",
+                "info": "Vous pouvez empêcher le découpage des lignes de chat, mais cette fonction est désactivée par défaut pour des raisons de performances. Si vous avez une grande chaîne, vous ne voudrez peut-être pas l'activer."
+            },
+            "font-size-exact": {
+                "label": "Taile exacte des caractères",
+                "info": "Taille des caractères actuellement sélectionnée {size}px."
+            },
+            "user-blacklist": {
+                "label": "Utilisateurs bloqués",
+                "info": "Entrez une liste de noms d'utilisateurs séparés par des virgules pour masquer leurs messages dans le chat. (par exemple StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Votre CSS personnalisé",
+                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            },
+            "js-editor": {
+                "label": "Votre JS personnalisé",
+                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            }
+        },
+        "kick": {
+            "default-channel": {
+                "input-label": "Chaîne/Channel par défaut",
+                "info": "Si un canal par défaut est défini, l'application l'appliquera automatiquement pour vous."
+            },
+            "font-size": {
+                "label": "Taille des caractères",
+                "select-label": "Choisir la taille des caractères",
+                "select-options": {
+                    "small": "Petit",
+                    "medium": "Moyen",
+                    "large": "Grand"
+                },
+                "info": "Modifie la taille des lignes du chat."
+            },
+            "animate": {
+                "label": "Animations",
+                "info": "Active les animations du chat."
+            },
+            "fade": {
+                "label": "Disparition des messages",
+                "info": "Vous pouvez faire disparaître les anciennes lignes de chat après un certain nombre de secondes afin d'éviter que des contenus périmés ne restent affichés à l'écran.",
+                "timeout-label": "Disparition après {seconds} (secondes)"
+            },
+            "hide-bots": {
+                "label": "Afficher les robots",
+                "info": "KapChat masque les messages des robots par défaut, mais vous pouvez les réactiver."
+            },
+            "hide-commands": {
+                "label": "Cacher les commandes",
+                "info": "Masque les messages qui commencent par un caractère de commande (par exemple !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Cacher les badges",
+                "info": "Masque les badges dans les messages de chat."
+            },
+            "stroke": {
+                "label": "Trait",
+                "select-label": "Choisir une taille de trait",
+                "select-options": {
+                    "off": "Sans",
+                    "thin": "Mince",
+                    "medium": "Moyen",
+                    "thick": "Épais",
+                    "thicker": "Très épais"
+                },
+                "info": "Ajoute un trait au texte du chat."
+            },
+            "user-blacklist": {
+                "label": "Utilisateurs bloqués",
+                "info": "Entrez une liste de noms d'utilisateurs séparés par des virgules pour masquer leurs messages dans le chat. (par exemple StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Votre CSS personnalisé",
+                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            },
+            "js-editor": {
+                "label": "Votre JS personnalisé",
+                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            }
+        },
+        "external": {
+            "default-url": {
+                "input-label": "URL par défaut",
+                "info": "Si une URL par défaut est définie, l'application l'appliquera automatiquement pour vous."
+            },
+            "sources": {
+                "label": "L'historique de vos sources",
+                "info": "Vous pouvez ici supprimer certaines sources de votre historique."
+            },
+            "css-editor": {
+                "label": "Votre CSS personnalisé",
+                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            },
+            "js-editor": {
+                "label": "Votre JS personnalisé",
+                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+            }
+        }
+    },
+    "version-check": {
+        "loading-message": "Vérification des mises à jour",
+        "update-available": "La version {version} est disponible. Vous pouvez l'installer en suivant ce lien: {link}",
+        "error": "Une erreur est survenue durant le téléchargement, merci de signaler ce problème sur notre discord!"
+    }
+}

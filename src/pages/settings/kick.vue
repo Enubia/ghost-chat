@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { FontSize, Stroke } from '#shared/types';
+
 import { ipcRenderer } from 'electron';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { FontSize, Stroke } from '#shared/types';
 
 import Editor from '#components/settings/Editor.vue';
 import { Input } from '#components/ui/input';

@@ -1,45 +1,131 @@
 import type { IpcMainEvent, Rectangle } from 'electron';
 import type ElectronStore from 'electron-store';
 
+import type { AppStore, WindowState } from '#shared/types/store.js';
+
+import type ManualUpdater from './manualUpdater.js';
+
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
-
-import type { AppStore, WindowState } from '#shared/types/store.js';
 
 import { IpcEvent } from '#shared/constants/index.js';
 import { StoreKeys } from '#shared/constants/store.js';
 
-import type ManualUpdater from './manualUpdater.js';
-
 import Settings from './window/settings.js';
 
 export default class IpcEvents {
-    private settings: BrowserWindow | null = null;
+    private manualUpdater: ManualUpdater | null = null;
     private overlay: BrowserWindow | null = null;
 
-    private manualUpdater: ManualUpdater | null = null;
+    private settings: BrowserWindow | null = null;
 
     constructor(private store: ElectronStore<AppStore>) {}
 
-    registerEvents(indexHtml: string) {
-        this.rerender();
-        this.themeChanged();
-        this.close();
-        this.setClickThrough();
-        this.minimize();
-        this.vanish();
-        this.openSettings(indexHtml);
-        this.registerNewKeybind();
-        this.callStore();
-        this.getPlatform();
+    private callStore() {
+        ipcMain.handle(IpcEvent.CallStore, async (_event, data: {
+            action: 'get' | 'set' | 'delete';
+            key: keyof AppStore;
+            value?: any;
+        }) => {
+            log.info('Calling store', data);
+
+            switch (data.action) {
+                case 'get':
+                    return this.store.get(data.key);
+                case 'set':
+                    this.store.set(data.key, data.value);
+                    break;
+                case 'delete':
+                    this.store.delete(data.key);
+                    break;
+                default:
+                    log.error('Unknown action', data);
+                    break;
+            }
+        });
     }
 
-    registerWindow(overlay: BrowserWindow | null) {
-        this.overlay = overlay;
+    private close() {
+        ipcMain.on(IpcEvent.Close, () => {
+            log.info('Closing all windows');
+
+            for (const window of BrowserWindow.getAllWindows()) {
+                window.close();
+            }
+        });
     }
 
-    registerManualUpdater(manualUpdater: ManualUpdater) {
-        this.manualUpdater = manualUpdater;
+    private destroyWindow() {
+        this.settings = null;
+    }
+
+    private getPlatform() {
+        ipcMain.handle(IpcEvent.GetPlatform, () => {
+            log.info('Getting platform');
+
+            return process.platform;
+        });
+    }
+
+    private minimize() {
+        ipcMain.on(IpcEvent.Minimize, () => {
+            log.info('Minimizing overlay');
+
+            this.overlay?.minimize();
+        });
+    }
+
+    private openSettings(indexHtml: string) {
+        ipcMain.on(IpcEvent.OpenSettings, () => {
+            log.info('Opening settings window');
+
+            if (!this.store.get('settings').isOpen) {
+                this.store.set('settings.isOpen', true);
+            }
+
+            if (this.settings) {
+                log.info('Focusing settings window');
+
+                this.settings.focus();
+            } else {
+                log.info('Creating settings window');
+
+                const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
+                _settings.buildWindow(indexHtml, 'settings/general');
+                this.settings = _settings.window;
+                if (this.settings && this.manualUpdater) {
+                    this.manualUpdater.registerWindow(this.settings);
+                }
+            }
+        });
+    }
+
+    private registerNewKeybind() {
+        ipcMain.on(IpcEvent.RegisterNewKeybind, () => {
+            log.info('Registering all keybinds after new keybind was set');
+
+            globalShortcut.unregisterAll();
+
+            const keybinds = this.store.get('keybinds');
+
+            try {
+                for (const current in keybinds) {
+                    const { keybind, activationMessage } = keybinds[current];
+                    if (!keybind) {
+                        continue;
+                    }
+
+                    globalShortcut.register(keybind, () => {
+                        log.info(activationMessage);
+                        ipcMain.emit(IpcEvent.Vanish);
+                    });
+
+                    log.info(`Registered [${keybind}]: ${current}`);
+                }
+            } catch (error) {
+                log.error('ipcEvents', error);
+            }
+        });
     }
 
     private rerender() {
@@ -56,26 +142,6 @@ export default class IpcEvents {
         });
     }
 
-    private themeChanged() {
-        ipcMain.on(IpcEvent.ThemeChanged, (_event: IpcMainEvent, theme: string) => {
-            log.info('Theme changed', theme);
-
-            if (this.settings) {
-                this.settings.webContents.send(IpcEvent.ThemeChanged, theme);
-            }
-        });
-    }
-
-    private close() {
-        ipcMain.on(IpcEvent.Close, () => {
-            log.info('Closing all windows');
-
-            for (const window of BrowserWindow.getAllWindows()) {
-                window.close();
-            }
-        });
-    }
-
     private setClickThrough() {
         ipcMain.on(IpcEvent.SetClickThrough, () => {
             log.info('Setting click through to true');
@@ -85,11 +151,13 @@ export default class IpcEvents {
         });
     }
 
-    private minimize() {
-        ipcMain.on(IpcEvent.Minimize, () => {
-            log.info('Minimizing overlay');
+    private themeChanged() {
+        ipcMain.on(IpcEvent.ThemeChanged, (_event: IpcMainEvent, theme: string) => {
+            log.info('Theme changed', theme);
 
-            this.overlay?.minimize();
+            if (this.settings) {
+                this.settings.webContents.send(IpcEvent.ThemeChanged, theme);
+            }
         });
     }
 
@@ -146,92 +214,24 @@ export default class IpcEvents {
         });
     }
 
-    private registerNewKeybind() {
-        ipcMain.on(IpcEvent.RegisterNewKeybind, () => {
-            log.info('Registering all keybinds after new keybind was set');
-
-            globalShortcut.unregisterAll();
-
-            const keybinds = this.store.get('keybinds');
-
-            try {
-                for (const current in keybinds) {
-                    const { keybind, activationMessage } = keybinds[current];
-                    if (!keybind) {
-                        continue;
-                    }
-
-                    globalShortcut.register(keybind, () => {
-                        log.info(activationMessage);
-                        ipcMain.emit(IpcEvent.Vanish);
-                    });
-
-                    log.info(`Registered [${keybind}]: ${current}`);
-                }
-            } catch (error) {
-                log.error('ipcEvents', error);
-            }
-        });
+    registerEvents(indexHtml: string) {
+        this.rerender();
+        this.themeChanged();
+        this.close();
+        this.setClickThrough();
+        this.minimize();
+        this.vanish();
+        this.openSettings(indexHtml);
+        this.registerNewKeybind();
+        this.callStore();
+        this.getPlatform();
     }
 
-    private openSettings(indexHtml: string) {
-        ipcMain.on(IpcEvent.OpenSettings, () => {
-            log.info('Opening settings window');
-
-            if (!this.store.get('settings').isOpen) {
-                this.store.set('settings.isOpen', true);
-            }
-
-            if (this.settings) {
-                log.info('Focusing settings window');
-
-                this.settings.focus();
-            } else {
-                log.info('Creating settings window');
-
-                const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
-                _settings.buildWindow(indexHtml, 'settings/general');
-                this.settings = _settings.window;
-                if (this.settings && this.manualUpdater) {
-                    this.manualUpdater.registerWindow(this.settings);
-                }
-            }
-        });
+    registerManualUpdater(manualUpdater: ManualUpdater) {
+        this.manualUpdater = manualUpdater;
     }
 
-    private callStore() {
-        ipcMain.handle(IpcEvent.CallStore, async (_event, data: {
-            action: 'get' | 'set' | 'delete';
-            key: keyof AppStore;
-            value?: any;
-        }) => {
-            log.info('Calling store', data);
-
-            switch (data.action) {
-                case 'get':
-                    return this.store.get(data.key);
-                case 'set':
-                    this.store.set(data.key, data.value);
-                    break;
-                case 'delete':
-                    this.store.delete(data.key);
-                    break;
-                default:
-                    log.error('Unknown action', data);
-                    break;
-            }
-        });
-    }
-
-    private getPlatform() {
-        ipcMain.handle(IpcEvent.GetPlatform, () => {
-            log.info('Getting platform');
-
-            return process.platform;
-        });
-    }
-
-    private destroyWindow() {
-        this.settings = null;
+    registerWindow(overlay: BrowserWindow | null) {
+        this.overlay = overlay;
     }
 }

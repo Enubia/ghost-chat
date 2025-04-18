@@ -1,10 +1,10 @@
 import type { BrowserWindowConstructorOptions, WebPreferences } from 'electron';
 import type ElectronStore from 'electron-store';
 
+import type { AppStore } from '#shared/types/store.js';
+
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
-
-import type { AppStore } from '#shared/types/store.js';
 
 import { StoreKeys } from '#shared/constants/store.js';
 

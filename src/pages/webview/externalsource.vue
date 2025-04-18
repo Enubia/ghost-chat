@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { WebviewTag } from '#shared/types';
+
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-
-import type { WebviewTag } from '#shared/types';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';

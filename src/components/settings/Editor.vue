@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { AppStore } from '#shared/types';
+
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { onBeforeMount, ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
-
-import type { AppStore } from '#shared/types';
 
 import IpcHandler from '#lib/ipchandler';
 

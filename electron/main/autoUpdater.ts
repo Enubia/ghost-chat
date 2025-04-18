@@ -2,17 +2,17 @@ import type { BrowserWindow } from 'electron';
 import type ElectronStore from 'electron-store';
 import type { AppUpdater } from 'electron-updater';
 
+import type { AppStore, Updater } from '#shared/types/store.js';
+
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
-
-import type { AppStore, Updater } from '#shared/types/store.js';
 
 import { IpcEvent } from '#shared/constants/index.js';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;
-    private updaterSettings: Updater;
     private logPrefix = this.constructor.name;
+    private updaterSettings: Updater;
 
     constructor(
         private store: ElectronStore<AppStore>,
@@ -22,6 +22,10 @@ export default class AutoUpdater {
         this.updaterSettings = this.store.get('updater');
 
         this.autoUpdater = autoUpdater;
+    }
+
+    private sendStatusToWindow(message: string, args?: string | Record<string, unknown>) {
+        this.overlay.webContents.send(message, args);
     }
 
     init() {
@@ -67,9 +71,5 @@ export default class AutoUpdater {
             this.autoUpdater.logger?.error(err);
             this.sendStatusToWindow(IpcEvent.Error);
         });
-    }
-
-    private sendStatusToWindow(message: string, args?: string | Record<string, unknown>) {
-        this.overlay.webContents.send(message, args);
     }
 }

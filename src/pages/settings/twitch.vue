@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { Twitch } from '#shared/types';
+
 import { ipcRenderer } from 'electron';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { Twitch } from '#shared/types';
 
 import Editor from '#components/settings/Editor.vue';
 import JChat from '#components/settings/twitch/JChat.vue';

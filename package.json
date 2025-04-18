@@ -3,6 +3,7 @@
     "type": "module",
     "version": "3.3.0",
     "private": true,
+    "packageManager": "pnpm@10.8.1+sha512.c50088ba998c67b8ca8c99df8a5e02fd2ae2e2b29aaf238feaa9e124248d3f48f9fb6db2424949ff901cffbb5e0f0cc1ad6aedb602cd29450751d11c35023677",
     "description": "A Standalone chat overlay for Twitch.tv, Kick.tv and other streaming platforms",
     "author": {
         "name": "Marco Schuster",
@@ -50,19 +51,19 @@
         "lint:shared": "eslint shared/",
         "lint:src": "eslint src/",
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
+        "lint:fix": "eslint --fix src shared electron",
         "release": "pnpm build && electron-builder --config electron-builder.config.cjs",
         "publish": "pnpm changelog:update && release-it",
         "postinstall": "simple-git-hooks"
     },
     "devDependencies": {
-        "@antfu/eslint-config": "3.8.0",
+        "@antfu/eslint-config": "4.12.0",
         "@codemirror/lang-css": "6.3.0",
         "@codemirror/lang-javascript": "6.2.2",
         "@codemirror/theme-one-dark": "6.1.2",
         "@iconify/json": "2.2.266",
         "@iconify/vue": "4.1.2",
         "@intlify/unplugin-vue-i18n": "5.2.0",
-        "@picocss/pico": "2.0.6",
         "@radix-icons/vue": "1.0.0",
         "@tomjs/vite-plugin-iconify": "1.2.1",
         "@vitejs/plugin-vue": "5.1.4",
@@ -77,6 +78,7 @@
         "electron-log": "5.2.0",
         "electron-store": "10.0.0",
         "electron-updater": "6.3.9",
+        "eslint": "9.24.0",
         "lint-staged": "15.2.10",
         "radix-vue": "1.9.8",
         "release-it": "17.10.0",
@@ -100,6 +102,6 @@
         "pre-commit": "npx lint-staged"
     },
     "lint-staged": {
-        "*": "eslint"
+        "*": "eslint -c ./eslint.config.js"
     }
 }

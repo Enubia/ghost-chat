@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { Keybinds } from '#shared/types';
+
 import { ipcRenderer } from 'electron';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import type { Keybinds } from '#shared/types';
 
 import { languageMappingList } from '#components/languageMappingList';
 import HotKeyInput from '#components/settings/HotKeyInput.vue';

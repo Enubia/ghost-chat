@@ -1,21 +1,23 @@
+import type { BrowserWindow } from 'electron';
 import type ElectronStore from 'electron-store';
-
-import { type BrowserWindow, ipcMain } from 'electron';
-import log from 'electron-log';
-import { type AppUpdater, autoUpdater } from 'electron-updater';
+import type { AppUpdater } from 'electron-updater';
 
 import type { AppStore, Updater } from '#shared/types/store.js';
+
+import { ipcMain } from 'electron';
+import log from 'electron-log';
+import { autoUpdater } from 'electron-updater';
 
 import { IpcEvent } from '#shared/constants/index.js';
 
 export default class ManualUpdater {
-    private updater: AppUpdater;
-
-    private updaterSettings: Updater;
-
     private logPrefix = this.constructor.name;
 
     private settings: BrowserWindow | null = null;
+
+    private updater: AppUpdater;
+
+    private updaterSettings: Updater;
 
     constructor(
         private store: ElectronStore<AppStore>,
@@ -26,27 +28,6 @@ export default class ManualUpdater {
         this.updater = autoUpdater;
 
         this.init();
-    }
-
-    init() {
-        this.updater.logger = log;
-        this.updater.autoDownload = false;
-        this.updater.disableWebInstaller = true;
-
-        if (this.forceDevUpdateConfig) {
-            this.updater.forceDevUpdateConfig = true;
-        }
-
-        if (this.updaterSettings.channel === 'beta') {
-            this.updater.allowPrerelease = true;
-        }
-
-        this.registerIPCListeners();
-        this.registerUpdaterListeners();
-    }
-
-    registerWindow(settings: BrowserWindow) {
-        this.settings = settings;
     }
 
     private registerIPCListeners() {
@@ -91,5 +72,26 @@ export default class ManualUpdater {
 
     private sendStatusToWindow(message: string, args?: string | Record<string, unknown>) {
         this.settings?.webContents.send(message, args);
+    }
+
+    init() {
+        this.updater.logger = log;
+        this.updater.autoDownload = false;
+        this.updater.disableWebInstaller = true;
+
+        if (this.forceDevUpdateConfig) {
+            this.updater.forceDevUpdateConfig = true;
+        }
+
+        if (this.updaterSettings.channel === 'beta') {
+            this.updater.allowPrerelease = true;
+        }
+
+        this.registerIPCListeners();
+        this.registerUpdaterListeners();
+    }
+
+    registerWindow(settings: BrowserWindow) {
+        this.settings = settings;
     }
 }

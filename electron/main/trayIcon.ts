@@ -1,12 +1,12 @@
 import type ElectronStore from 'electron-store';
 
-import fs from 'node:fs';
-import path from 'node:path';
+import type { AppStore } from '#shared/types/store.js';
 
 import { app, clipboard, ipcMain, Menu, shell, Tray } from 'electron';
 import log from 'electron-log';
 
-import type { AppStore } from '#shared/types/store.js';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import { IpcEvent } from '#shared/constants/index.js';
 

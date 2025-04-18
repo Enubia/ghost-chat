@@ -1,9 +1,9 @@
-import { existsSync, unlinkSync } from 'node:fs';
+import type { AppStore, Keybinds, Twitch } from '#shared/types/store.js';
 
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
-import type { AppStore, Keybinds, Twitch } from '#shared/types/store.js';
+import { existsSync, unlinkSync } from 'node:fs';
 
 import { StoreDefaults } from '#shared/constants/index.js';
 

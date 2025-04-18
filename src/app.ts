@@ -7,7 +7,6 @@ import { routes } from 'vue-router/auto-routes';
 import IpcHandler from '#lib/ipchandler';
 
 import App from './App.vue';
-
 import './assets/css/index.css';
 
 const router = createRouter({

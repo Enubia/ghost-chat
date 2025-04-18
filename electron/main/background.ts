@@ -1,7 +1,7 @@
-import path from 'node:path';
-
 import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
+
+import path from 'node:path';
 
 import { IpcEvent } from '#shared/constants/index.js';
 

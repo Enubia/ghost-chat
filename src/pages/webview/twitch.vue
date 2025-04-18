@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 
-import { onMounted, ref } from 'vue';
-
 import type { WebviewTag } from '#shared/types';
+
+import { onMounted, ref } from 'vue';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';

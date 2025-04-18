@@ -1,9 +1,9 @@
 import type ElectronStore from 'electron-store';
 
+import type { AppStore } from '#shared/types/store.js';
+
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
-
-import type { AppStore } from '#shared/types/store.js';
 
 import { IpcEvent } from '#shared/constants/index.js';
 import { StoreKeys } from '#shared/constants/store.js';

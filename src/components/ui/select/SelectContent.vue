@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import type { SelectContentEmits, SelectContentProps } from 'radix-vue';
+import type { HTMLAttributes } from 'vue';
+
 import {
     SelectContent,
-    type SelectContentEmits,
-    type SelectContentProps,
+
     SelectPortal,
     SelectViewport,
     useForwardPropsEmits,
 } from 'radix-vue';
-import { computed, type HTMLAttributes } from 'vue';
+import { computed } from 'vue';
 
 import { cn } from '#lib/utils';
 

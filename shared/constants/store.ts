@@ -1,4 +1,6 @@
-import { type AppStore, FontSize, Stroke } from '#shared/types/store.js';
+import type { AppStore } from '#shared/types/store.js';
+
+import { FontSize, Stroke } from '#shared/types/store.js';
 
 export enum StoreKeys {
     Options = 'options',
