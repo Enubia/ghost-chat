@@ -27,7 +27,7 @@ jobs:
       - name: release artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
+        run: pnpm build:release
   
   release-mac:
     needs: release-windows
@@ -51,4 +51,4 @@ jobs:
       - name: release artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm release
+        run: pnpm build:release

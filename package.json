@@ -41,6 +41,7 @@
     },
     "scripts": {
         "build": "vue-tsc --noEmit && vite build",
+        "build:release": "pnpm build && electron-builder --config electron-builder.config.cjs",
         "changelog:generate-vue": "auto-changelog --handlebars-setup handlebars-setup.cjs -p -l false -t ./changelog-template-vue.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0 --output src/components/changelog/Generated.vue && eslint --fix src/components/changelog/Generated.vue",
         "changelog:generate": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
         "changelog:push": "git add . && git commit -m \"chore: update changelog\" && git push",
@@ -52,7 +53,6 @@
         "lint:src": "eslint src/",
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
         "lint:fix": "eslint --fix src shared electron",
-        "release": "pnpm build && electron-builder --config electron-builder.config.cjs",
         "publish": "pnpm changelog:update && release-it",
         "postinstall": "simple-git-hooks"
     },
