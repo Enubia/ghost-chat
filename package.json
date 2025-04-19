@@ -36,8 +36,8 @@
         }
     },
     "engines": {
-        "node": ">=20",
-        "pnpm": ">=9"
+        "node": ">=22",
+        "pnpm": ">=10"
     },
     "scripts": {
         "build": "vue-tsc --noEmit && vite build",
@@ -101,7 +101,7 @@
         "vue-tsc": "2.1.10"
     },
     "simple-git-hooks": {
-        "pre-commit": "npx lint-staged"
+        "pre-commit": "pnpm dlx lint-staged"
     },
     "lint-staged": {
         "*": "eslint -c ./eslint.config.js"
