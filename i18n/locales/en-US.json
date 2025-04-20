@@ -13,7 +13,7 @@
         }
     },
     "footer": {
-        "support": "Support the dev"
+        "download-link": "Get the latest version"
     },
     "start": {
         "channel": {
@@ -296,6 +296,7 @@
         }
     },
     "version-check": {
+        "download-link": "Download",
         "loading-message": "Checking for updates",
         "update-available": "Version {version} is available. You can find your installer here: {link}",
         "error": "Some error happened during download, please report this in the discord!"

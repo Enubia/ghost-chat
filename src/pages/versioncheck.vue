@@ -5,7 +5,10 @@ import { onUnmounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import Button from '#components/ui/button/Button.vue';
 import { IpcEvent } from '#shared/constants';
+
+import { version } from '../store/version';
 
 const router = useRouter();
 
@@ -20,6 +23,7 @@ ipcRenderer.on(IpcEvent.Recreated, () => {
 
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     showLink.value = true;
+    version.hasNew = true;
     message.value = t('version-check.update-available', { version: versionNumber });
 });
 
@@ -51,9 +55,15 @@ onUnmounted(() => {
 <template>
     <div class="center-elements m-auto h-dvh flex-col gap-2">
         <Icon icon="svg-spinners:blocks-wave" class="mb-5 text-5xl text-primary" />
-        <span>{{ message }}</span>
-        <a v-if="showLink" href="https://github.com/enubia/ghost-chat/releases/latest" class="text-primary underline">
-            https://github.com/enubia/ghost-chat/releases/latest
+        <span class="text-center">{{ message }}</span>
+        <a v-if="showLink" :href="version.downloadLink" class="center-elements">
+            <Button
+                variant="secondary"
+                class="mt-5"
+            >
+                {{ t('version-check.download-link') }}
+                <Icon icon="mdi:open-in-new" class="ml-2" />
+            </Button>
         </a>
     </div>
 </template>

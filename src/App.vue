@@ -10,13 +10,15 @@ import DropDownMenu from '#components/header/Dropdown.vue';
 import IpcHandler from '#lib/ipchandler';
 import { IpcEvent, StoreDefaults } from '#shared/constants';
 
+import { version } from './store/version';
+
 const router = useRouter();
 const route = useRoute();
 
 const { t } = useI18n();
 
-const showMenuBar = shallowRef(true);
-const showFooter = shallowRef(true);
+const showMenuBar = shallowRef(false);
+const showFooter = shallowRef(false);
 const rerenderKey = shallowRef(0);
 
 const savedWindowState = shallowRef(StoreDefaults.savedWindowState);
@@ -95,15 +97,21 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
                 </template>
             </router-view>
         </main>
-        <footer v-if="showFooter" class="sticky bottom-0 w-full bg-background">
-            <div id="paypal" class="center-elements px-10 py-2 sm:px-0">
-                <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements">
-                    <small class="me-2">
-                        {{ t('footer.support') }}
-                    </small>
+        <footer v-if="showFooter" class="absolute bottom-0 w-full dark:text-background">
+            <div class="grid grid-cols-2">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements bg-[#009bde36] py-2">
                     <Icon icon="fa6-brands:paypal" style="color: #009cde" />
                 </a>
+                <a href="https://www.ko-fi.com/enubia" class="center-elements bg-[#ff633379] py-2">
+                    <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5">
+                </a>
             </div>
+            <a v-if="version.hasNew" :href="version.downloadLink" class="center-elements bg-green-600 py-2">
+                <small>
+                    {{ t('footer.download-link') }}
+                </small>
+                <Icon icon="mdi:open-in-new" class="ml-2" />
+            </a>
         </footer>
     </div>
 </template>
