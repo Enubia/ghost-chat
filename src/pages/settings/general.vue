@@ -2,7 +2,7 @@
 import type { Keybinds } from '#shared/types';
 
 import { ipcRenderer } from 'electron';
-import { onMounted, onUnmounted, shallowRef } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { languageMappingList } from '#components/languageMappingList';
@@ -17,8 +17,6 @@ import { IpcEvent, StoreDefaults } from '#shared/constants';
 const { t } = useI18n();
 
 const participateInPreRelease = shallowRef(StoreDefaults.updater.channel === 'beta');
-const disableAutoUpdates = shallowRef(StoreDefaults.updater.disableAutoUpdates);
-const updaterStatus = shallowRef('init');
 const quitOnClose = shallowRef(StoreDefaults.general.mac.quitOnClose);
 const hideDockIcon = shallowRef(StoreDefaults.general.mac.hideDockIcon);
 const vanish = shallowRef<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
@@ -36,7 +34,6 @@ onMounted(async () => {
         participateInPreRelease.value = true;
     }
 
-    disableAutoUpdates.value = updater.disableAutoUpdates;
     quitOnClose.value = mac.quitOnClose;
     hideDockIcon.value = mac.hideDockIcon;
 
@@ -56,35 +53,6 @@ async function savePrerelease(value: boolean) {
 async function saveLanguage(value: string) {
     await IpcHandler.setValueFromKey('general.language', value);
 }
-
-ipcRenderer.on(IpcEvent.Error, () => {
-    updaterStatus.value = 'error';
-});
-
-ipcRenderer.on(IpcEvent.UpdateDownloaded, () => {
-    updaterStatus.value = 'update-downloaded';
-});
-
-ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
-    updaterStatus.value = 'update-not-available';
-});
-
-ipcRenderer.on(IpcEvent.UpdateAvailable, () => {
-    updaterStatus.value = 'update-available';
-});
-
-ipcRenderer.on(IpcEvent.ManualUpdateRequired, () => {
-    updaterStatus.value = 'manual-update-required';
-});
-
-// Cleanup, otherwise we'll have memory leaks (MaxListenersExceededWarning)
-onUnmounted(() => {
-    ipcRenderer.removeAllListeners(IpcEvent.Error);
-    ipcRenderer.removeAllListeners(IpcEvent.UpdateDownloaded);
-    ipcRenderer.removeAllListeners(IpcEvent.UpdateNotAvailable);
-    ipcRenderer.removeAllListeners(IpcEvent.UpdateAvailable);
-    ipcRenderer.removeAllListeners(IpcEvent.ManualUpdateRequired);
-});
 </script>
 
 <template>
