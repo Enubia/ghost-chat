@@ -14,6 +14,7 @@ export enum IpcEvent {
     CloseSettings = 'close-settings',
     CallStore = 'call-store',
     GetPlatform = 'get-platform',
+    Notification = 'notification',
 
     // updater
     CheckingForUpdate = 'checking-for-update',

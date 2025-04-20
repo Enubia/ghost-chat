@@ -110,8 +110,9 @@ export default class IpcEvents {
 
             try {
                 for (const current in keybinds) {
-                    const { keybind, activationMessage } = keybinds[current];
+                    const { keybind, activationMessage } = keybinds[current as keyof typeof keybinds];
                     if (!keybind) {
+                        this.overlay?.webContents.send(IpcEvent.Notification, { type: 'toggleUnbound' });
                         continue;
                     }
 
@@ -121,6 +122,7 @@ export default class IpcEvents {
                     });
 
                     log.info(`Registered [${keybind}]: ${current}`);
+                    this.overlay?.webContents.send(IpcEvent.Notification, { type: 'toggleSet' });
                 }
             } catch (error) {
                 log.error('ipcEvents', error);

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
-import { onMounted, ref as shallowRef, watch } from 'vue';
+import { onMounted, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import MenuButtons from '#components/header/Buttons.vue';
 import DropDownMenu from '#components/header/Dropdown.vue';
 import IpcHandler from '#lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '#shared/constants';
+import { downloadLink, IpcEvent, kofiLink, paypalLink, StoreDefaults } from '#shared/constants';
 
-import { version } from './store/version';
+import { versionState } from './state/version';
 
 const router = useRouter();
 const route = useRoute();
@@ -24,7 +24,9 @@ const rerenderKey = shallowRef(0);
 const savedWindowState = shallowRef(StoreDefaults.savedWindowState);
 const settings = shallowRef(StoreDefaults.settings);
 const isTransparent = shallowRef(false);
-// const autoUpdatesDisabled = shallowRef(true);
+const notifications = shallowRef({
+    showToggleUnbound: false,
+});
 
 const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
 
@@ -34,7 +36,9 @@ const $app = document.querySelector('#app');
 onMounted(async () => {
     savedWindowState.value = await IpcHandler.getWindowState();
     settings.value = await IpcHandler.getSettings();
-    // autoUpdatesDisabled.value = await IpcHandler.getValueFromKey('updater.disableAutoUpdates');
+
+    const keybinds = await IpcHandler.getKeybinds();
+    notifications.value = { showToggleUnbound: !keybinds.vanish.keybind };
 
     if (savedWindowState.value.theme) {
         $html?.classList.add(savedWindowState.value.theme);
@@ -74,6 +78,18 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
         $html?.classList.add('dark');
     }
 });
+ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
+    switch (notification.type) {
+        case 'toggleUnbound':
+            notifications.value = { showToggleUnbound: true };
+            break;
+        case 'toggleSet':
+            notifications.value = { showToggleUnbound: false };
+            break;
+        default:
+            break;
+    }
+});
 </script>
 
 <template>
@@ -98,18 +114,20 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
             </router-view>
         </main>
         <footer v-if="showFooter" class="absolute bottom-0 w-full dark:text-background">
+            <div v-if="notifications.showToggleUnbound" class="flex items-center justify-center bg-yellow-200 text-yellow-600">
+                <Icon icon="fa6-solid:triangle-exclamation" class="text-1xl mr-2" />
+                <small>{{ t('footer.toggle-missing') }}</small>
+            </div>
             <div class="grid grid-cols-2">
-                <a href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW" class="center-elements bg-[#009bde36] py-2">
+                <a :href="paypalLink" class="center-elements bg-[#009bde36] py-2">
                     <Icon icon="fa6-brands:paypal" style="color: #009cde" />
                 </a>
-                <a href="https://www.ko-fi.com/enubia" class="center-elements bg-[#ff633379] py-2">
+                <a :href="kofiLink" class="center-elements bg-[#ff633379] py-2">
                     <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5">
                 </a>
             </div>
-            <a v-if="version.hasNew" :href="version.downloadLink" class="center-elements bg-green-600 py-2">
-                <small>
-                    {{ t('footer.download-link') }}
-                </small>
+            <a v-if="versionState.new.length" :href="downloadLink" class="center-elements bg-green-600 py-2">
+                <small>{{ t('footer.download-link', { new: versionState.new }) }}</small>
                 <Icon icon="mdi:open-in-new" class="ml-2" />
             </a>
         </footer>

@@ -13,7 +13,8 @@
         }
     },
     "footer": {
-        "download-link": "Get the latest version"
+        "download-link": "New version available v{new}",
+        "toggle-missing": "No hotkey assigned for vanish toggle!"
     },
     "start": {
         "channel": {

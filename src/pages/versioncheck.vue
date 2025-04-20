@@ -6,9 +6,9 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import Button from '#components/ui/button/Button.vue';
-import { IpcEvent } from '#shared/constants';
+import { downloadLink, IpcEvent } from '#shared/constants';
 
-import { version } from '../store/version';
+import { versionState } from '../state/version';
 
 const router = useRouter();
 
@@ -17,28 +17,16 @@ const { t } = useI18n();
 const message = shallowRef(t('version-check.loading-message'));
 const showLink = shallowRef(false);
 
-ipcRenderer.on(IpcEvent.Recreated, () => {
-    router.push('/');
-});
-
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     showLink.value = true;
-    version.hasNew = true;
+    versionState.setNew(versionNumber);
     message.value = t('version-check.update-available', { version: versionNumber });
-});
-
-ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
-    router.push('/');
 });
 
 ipcRenderer.on(IpcEvent.Error, () => {
     message.value = t('version-check.error');
-    setTimeout(() => {
-        router.push('/');
-    }, 3000);
 });
 
-// fallback in case something unpredictable happens
 setTimeout(() => {
     router.push('/');
 }, 5000);
@@ -54,9 +42,9 @@ onUnmounted(() => {
 
 <template>
     <div class="center-elements m-auto h-dvh flex-col gap-2">
-        <Icon icon="svg-spinners:blocks-wave" class="mb-5 text-5xl text-primary" />
+        <Icon icon="svg-spinners:blocks-wave" class="mb-5 text-5xl" style="color: #762ce6" />
         <span class="text-center">{{ message }}</span>
-        <a v-if="showLink" :href="version.downloadLink" class="center-elements">
+        <a v-if="showLink" :href="downloadLink" class="center-elements">
             <Button
                 variant="secondary"
                 class="mt-5"

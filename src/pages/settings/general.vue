@@ -43,7 +43,7 @@ onMounted(async () => {
     rerenderKey.value++;
 });
 
-async function saveKeybind(value: string) {
+async function saveKeybind(value: string | null) {
     await IpcHandler.setValueFromKey('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
