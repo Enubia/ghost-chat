@@ -1,0 +1,19 @@
+v3.5:
+    Youtube integration:
+        ☐ figure out what youtube overlay to use
+            ☐ maybe we can somehow get the current live chat from the youtube handle? (test.ts has an implementation to get the current live chat with just the channel id)
+        ☐ check what styling options are available
+            ☐ there's something called "chat v2", might be useful https://chatv2.septapus.com/
+
+v3.6 (Multistream):
+    ☐ keep all the current functionality
+
+    New window handler:
+        ☐ should draw a window on the whole screen (transparent)
+        ☐ should be able to add dragable chat "widgets" to the window
+            ☐ widgets should get their own unique id (can be defined by the user)
+            ☐ should determine which widgets are available based on the previous user input
+                ☐ stream selection button or somthing similar
+        ☐ toggle to move the widgets around (similar to vanish mode)
+        ☐ needs to create a new config for this type of window
+            ☐ should be able to save the current layout (widget position, size, etc.)
