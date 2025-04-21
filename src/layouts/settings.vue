@@ -17,8 +17,8 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="p-10">
-        <div>
+    <div class="px-10">
+        <div class="sticky top-0 z-10 bg-background py-6">
             <h2 class="text-2xl font-bold tracking-tight">
                 {{ t('settings.title') }}
             </h2>
@@ -31,7 +31,7 @@ onMounted(async () => {
             <aside>
                 <SidebarNav />
             </aside>
-            <div class="mt-10 min-w-52">
+            <div class="min-w-52 pb-4">
                 <div class="space-y-6">
                     <slot />
                 </div>
