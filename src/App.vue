@@ -19,6 +19,11 @@ const { t } = useI18n();
 
 const showMenuBar = shallowRef(false);
 const showFooter = shallowRef(false);
+const additionalFooterClasses = shallowRef({
+    position: '',
+    pp: '',
+    kofi: '',
+});
 const rerenderKey = shallowRef(0);
 
 const savedWindowState = shallowRef(StoreDefaults.savedWindowState);
@@ -56,6 +61,17 @@ onMounted(async () => {
 watch(route, () => {
     showFooter.value = !footerExcludeList.includes(route.name) && !route.path.startsWith('/settings');
     showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
+    additionalFooterClasses.value = route.name === '/changelog'
+        ? {
+                position: 'sticky bottom-0',
+                pp: 'bg-[#009bde]',
+                kofi: 'bg-[#ff6333]',
+            }
+        : {
+                position: '',
+                pp: '',
+                kofi: '',
+            };
 });
 
 ipcRenderer.on(IpcEvent.Vanish, () => {
@@ -93,36 +109,36 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
 </script>
 
 <template>
-    <div :key="rerenderKey" class="min-h-dvh">
+    <div :key="rerenderKey" class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
         <header
-            v-if="showMenuBar" class="top-0 z-10 flex w-full items-center justify-between"
+            v-if="showMenuBar" class="flex w-full justify-between align-top"
             :class="footerExcludeList.includes(route.name) ? 'absolute' : 'sticky'"
         >
             <DropDownMenu />
             <MenuButtons />
         </header>
-        <main>
+        <main class="flex flex-col">
             <router-view v-slot="{ Component }">
                 <template v-if="Component">
                     <Suspense>
                         <component :is="Component" :key="$route.path" />
                         <template #fallback>
-                            <Icon icon="fa5-solid:spinner" class="animate-spin text-4xl text-primary" />
+                            <Icon icon="fa6-solid:spinner" class="animate-spin text-4xl text-primary" />
                         </template>
                     </Suspense>
                 </template>
             </router-view>
         </main>
-        <footer v-if="showFooter" class="absolute bottom-0 w-full dark:text-background">
+        <footer v-if="showFooter" class="w-full dark:text-background" :class="additionalFooterClasses.position">
             <div v-if="notifications.showToggleUnbound" class="flex items-center justify-center bg-yellow-200 text-yellow-600">
                 <Icon icon="fa6-solid:triangle-exclamation" class="text-1xl mr-2" />
                 <small>{{ t('footer.toggle-missing') }}</small>
             </div>
             <div class="grid grid-cols-2">
-                <a :href="paypalLink" class="center-elements bg-[#009bde36] py-2">
-                    <Icon icon="fa6-brands:paypal" style="color: #009cde" />
+                <a :href="paypalLink" class="center-elements bg-[#009bde36] py-2" :class="additionalFooterClasses.pp">
+                    <img src="./assets/brands/paypal.png" alt="PayPal" class="size-5">
                 </a>
-                <a :href="kofiLink" class="center-elements bg-[#ff633379] py-2">
+                <a :href="kofiLink" class="center-elements bg-[#ff633379] py-2" :class="additionalFooterClasses.kofi">
                     <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5">
                 </a>
             </div>
