@@ -32,7 +32,7 @@ async function routeChat() {
         return;
     }
 
-    await IpcHandler.setValueFromKey('options.twitch.channel', channel.value);
+    await IpcHandler.setKeyValue('options.twitch.channel', channel.value);
 
     router.push('/webview/twitch');
 }

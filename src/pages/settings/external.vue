@@ -26,7 +26,7 @@ onMounted(async () => {
 });
 
 async function saveDefaultUrl() {
-    await IpcHandler.setValueFromKey('options.external.defaultUrl', defaultUrl.value);
+    await IpcHandler.setKeyValue('options.external.defaultUrl', defaultUrl.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
@@ -40,7 +40,7 @@ function enableChannelSuccess() {
 
 async function removeSource(index: number) {
     sources.value = sources.value.filter((_, i) => i !== index);
-    await IpcHandler.setValueFromKey('options.external.sources', sources.value);
+    await IpcHandler.setKeyValue('options.external.sources', sources.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 </script>

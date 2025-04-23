@@ -46,44 +46,44 @@ onMounted(async () => {
 
 async function saveDefaultChannel(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    await IpcHandler.setValueFromKey('options.kick.defaultChannel', value);
+    await IpcHandler.setKeyValue('options.kick.defaultChannel', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
 async function saveFontSize(value: string) {
-    await IpcHandler.setValueFromKey('options.kick.fontSize', value as FontSize);
+    await IpcHandler.setKeyValue('options.kick.fontSize', value as FontSize);
 }
 
 async function saveStroke(value: string) {
-    await IpcHandler.setValueFromKey('options.kick.stroke', value as Stroke);
+    await IpcHandler.setKeyValue('options.kick.stroke', value as Stroke);
 }
 
 async function saveAnimate(value: boolean) {
-    await IpcHandler.setValueFromKey('options.kick.animate', value);
+    await IpcHandler.setKeyValue('options.kick.animate', value);
 }
 
 async function saveFadeMessages(value: boolean) {
-    await IpcHandler.setValueFromKey('options.kick.fade', value);
+    await IpcHandler.setKeyValue('options.kick.fade', value);
 }
 
 async function saveBadges(value: boolean) {
-    await IpcHandler.setValueFromKey('options.kick.badges', value);
+    await IpcHandler.setKeyValue('options.kick.badges', value);
 }
 
 async function saveCommands(value: boolean) {
-    await IpcHandler.setValueFromKey('options.kick.commands', value);
+    await IpcHandler.setKeyValue('options.kick.commands', value);
 }
 
 async function saveBots(value: boolean) {
-    await IpcHandler.setValueFromKey('options.kick.bots', value);
+    await IpcHandler.setKeyValue('options.kick.bots', value);
 }
 
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
 
-    await IpcHandler.setValueFromKey('options.kick.userBlacklist', blacklist);
+    await IpcHandler.setKeyValue('options.kick.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
     enableBlacklistSuccess();
@@ -91,7 +91,7 @@ async function updateBlacklist(event: Event) {
 
 async function saveFadeTimeout(value: string | number) {
     if (fade.value) {
-        await IpcHandler.setValueFromKey('options.kick.fadeTimeout', Number.parseInt(value as string));
+        await IpcHandler.setKeyValue('options.kick.fadeTimeout', Number.parseInt(value as string));
     }
 }
 

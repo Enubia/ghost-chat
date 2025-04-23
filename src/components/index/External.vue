@@ -49,7 +49,7 @@ async function routeExternal() {
 
     if (source.value !== '' && !hasRegexError.value) {
         if (!external.value.sources.includes(source.value)) {
-            await IpcHandler.setValueFromKey('options.external.sources', [
+            await IpcHandler.setKeyValue('options.external.sources', [
                 ...external.value.sources,
                 source.value,
             ]);

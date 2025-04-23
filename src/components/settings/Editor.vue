@@ -51,11 +51,11 @@ async function save() {
     enableSuccess();
 
     if (props.type === 'css') {
-        await IpcHandler.setValueFromKey(`options.${props.option}.css`, code.value);
+        await IpcHandler.setKeyValue(`options.${props.option}.css`, code.value);
     }
 
     if (props.type === 'js') {
-        await IpcHandler.setValueFromKey(`options.${props.option}.js`, code.value);
+        await IpcHandler.setKeyValue(`options.${props.option}.js`, code.value);
     }
 }
 </script>

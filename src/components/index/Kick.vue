@@ -32,7 +32,7 @@ async function routeChat() {
         return;
     }
 
-    await IpcHandler.setValueFromKey('options.kick.channel', channel.value);
+    await IpcHandler.setKeyValue('options.kick.channel', channel.value);
 
     router.push('/webview/kick');
 }

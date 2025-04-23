@@ -74,38 +74,38 @@ const channelSuccess = shallowRef(false);
 const blacklistSuccess = shallowRef(false);
 
 async function saveDefaultChannel() {
-    await IpcHandler.setValueFromKey('options.twitch.defaultChannel', defaultChannel.value);
+    await IpcHandler.setKeyValue('options.twitch.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
 }
 
 async function saveUseJChat(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.useJChat', value);
+    await IpcHandler.setKeyValue('options.twitch.useJChat', value);
 }
 
 async function saveAnimate(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.animate', value);
+    await IpcHandler.setKeyValue('options.twitch.animate', value);
 }
 
 async function saveFadeMessages(value: boolean) {
     fade.value = value;
-    await IpcHandler.setValueFromKey('options.twitch.fade', value);
+    await IpcHandler.setKeyValue('options.twitch.fade', value);
 }
 
 async function saveShowBotActivity(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.bots', value);
+    await IpcHandler.setKeyValue('options.twitch.bots', value);
 }
 
 async function saveHideCommands(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.hideCommands', value);
+    await IpcHandler.setKeyValue('options.twitch.hideCommands', value);
 }
 
 async function saveHideBadges(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.hideBadges', value);
+    await IpcHandler.setKeyValue('options.twitch.hideBadges', value);
 }
 
 async function saveFont(value: string) {
-    await IpcHandler.setValueFromKey('options.twitch.font', Number.parseInt(value) as Twitch['font']);
+    await IpcHandler.setKeyValue('options.twitch.font', Number.parseInt(value) as Twitch['font']);
 }
 
 async function saveStroke(value: string) {
@@ -120,7 +120,7 @@ async function saveStroke(value: string) {
             break;
     }
 
-    await IpcHandler.setValueFromKey('options.twitch.stroke', valueToSave);
+    await IpcHandler.setKeyValue('options.twitch.stroke', valueToSave);
 }
 
 async function saveShadow(value: string) {
@@ -135,34 +135,34 @@ async function saveShadow(value: string) {
             break;
     }
 
-    await IpcHandler.setValueFromKey('options.twitch.shadow', valueToSave);
+    await IpcHandler.setKeyValue('options.twitch.shadow', valueToSave);
 }
 
 async function saveSmallCaps(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.smallCaps', value);
+    await IpcHandler.setKeyValue('options.twitch.smallCaps', value);
 }
 
 async function saveFontSize(value: string) {
-    await IpcHandler.setValueFromKey('options.twitch.fontSize', Number.parseInt(value) as Twitch['fontSize']);
+    await IpcHandler.setKeyValue('options.twitch.fontSize', Number.parseInt(value) as Twitch['fontSize']);
 }
 
 async function saveTheme(value: string) {
-    await IpcHandler.setValueFromKey('options.twitch.theme', value);
+    await IpcHandler.setKeyValue('options.twitch.theme', value);
 }
 
 async function savePreventClipping(value: boolean) {
-    await IpcHandler.setValueFromKey('options.twitch.preventClipping', value);
+    await IpcHandler.setKeyValue('options.twitch.preventClipping', value);
 }
 
 async function saveFontSizeExact(value: number) {
-    await IpcHandler.setValueFromKey('options.twitch.fontSizeExact', value);
+    await IpcHandler.setKeyValue('options.twitch.fontSizeExact', value);
 }
 
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map(user => user.trim());
 
-    await IpcHandler.setValueFromKey('options.twitch.userBlacklist', blacklist);
+    await IpcHandler.setKeyValue('options.twitch.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
     enableBlacklistSuccess();
@@ -170,7 +170,7 @@ async function updateBlacklist(event: Event) {
 
 async function saveFadeTimeout(value: number) {
     if (fade.value) {
-        await IpcHandler.setValueFromKey('options.twitch.fadeTimeout', value);
+        await IpcHandler.setKeyValue('options.twitch.fadeTimeout', value);
     }
 }
 

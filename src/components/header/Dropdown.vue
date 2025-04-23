@@ -34,12 +34,12 @@ async function toggleTheme() {
 
     if (isDarkTheme) {
         $html?.classList.remove('dark');
-        await IpcHandler.setValueFromKey('savedWindowState.theme', 'light');
-        await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'light');
+        await IpcHandler.setKeyValue('savedWindowState.theme', 'light');
+        await IpcHandler.setKeyValue('settings.savedWindowState.theme', 'light');
     } else {
         $html?.classList.add('dark');
-        await IpcHandler.setValueFromKey('savedWindowState.theme', 'dark');
-        await IpcHandler.setValueFromKey('settings.savedWindowState.theme', 'dark');
+        await IpcHandler.setKeyValue('savedWindowState.theme', 'dark');
+        await IpcHandler.setKeyValue('settings.savedWindowState.theme', 'dark');
     }
 
     ipcRenderer.send(IpcEvent.ThemeChanged, isDarkTheme ? 'light' : 'dark');

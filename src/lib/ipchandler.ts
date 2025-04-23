@@ -77,6 +77,11 @@ export default class IpcHandler {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value: cloneValue(value) });
     }
 
+    // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
+    public static async setKeyValue<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
+        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
+    }
+
     public static async setOptions(value: Options): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value: cloneValue(value) });
     }
@@ -88,11 +93,6 @@ export default class IpcHandler {
     public static async setUpdater(value: Updater): Promise<void> {
         return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key:
             'updater', value: cloneValue(value) });
-    }
-
-    // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
-    public static async setValueFromKey<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
     }
 
     public static async setWindowState(value: WindowState): Promise<void> {

@@ -41,17 +41,17 @@ onMounted(async () => {
 });
 
 async function saveKeybind(value: string | null) {
-    await IpcHandler.setValueFromKey('keybinds.vanish.keybind', value);
+    await IpcHandler.setKeyValue('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
 async function savePrerelease(value: boolean) {
-    await IpcHandler.setValueFromKey('updater.channel', value ? 'beta' : 'latest');
+    await IpcHandler.setKeyValue('updater.channel', value ? 'beta' : 'latest');
     participateInPreRelease.value = value;
 }
 
 async function saveLanguage(value: string) {
-    await IpcHandler.setValueFromKey('general.language', value);
+    await IpcHandler.setKeyValue('general.language', value);
 }
 </script>
 
@@ -88,7 +88,7 @@ async function saveLanguage(value: string) {
             <div class="flex items-center gap-2">
                 <Switch
                     id="quit-one-close" :default-checked="quitOnClose"
-                    @update:checked="(checked) => IpcHandler.setValueFromKey('general.mac.quitOnClose', checked)"
+                    @update:checked="(checked) => IpcHandler.setKeyValue('general.mac.quitOnClose', checked)"
                 />
                 <Label for="quit-one-close">
                     {{ t('settings.general.close-option.label') }}
@@ -100,7 +100,7 @@ async function saveLanguage(value: string) {
             <div class="flex items-center gap-2">
                 <Switch
                     id="hide-dock-icon" :default-checked="hideDockIcon"
-                    @update:checked="(checked) => IpcHandler.setValueFromKey('general.mac.hideDockIcon', checked)"
+                    @update:checked="(checked) => IpcHandler.setKeyValue('general.mac.hideDockIcon', checked)"
                 />
                 <Label for="hide-dock-icon">
                     {{ t('settings.general.hide-dock-icon-options.label') }}
