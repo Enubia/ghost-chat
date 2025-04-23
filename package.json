@@ -74,7 +74,7 @@
         "@vueuse/core": "11.2.0",
         "auto-changelog": "2.5.0",
         "autoprefixer": "10.4.20",
-        "class-variance-authority": "0.7.0",
+        "class-variance-authority": "0.7.1",
         "clsx": "2.1.1",
         "codemirror": "6.0.1",
         "electron": "35.2.1",
