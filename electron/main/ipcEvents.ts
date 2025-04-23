@@ -221,9 +221,13 @@ export default class IpcEvents {
         this.registerNewKeybind();
         this.callStore();
         this.getPlatform();
+
+        return this;
     }
 
     registerWindow(overlay: BrowserWindow | null) {
         this.overlay = overlay;
+
+        return this;
     }
 }

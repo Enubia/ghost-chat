@@ -46,25 +46,20 @@ let mainWindow: BrowserWindow | null;
 let ipcEvents: IpcEvents;
 
 app.on('ready', () => {
-    setTimeout(
-        async () => {
-            mainWindow = new Main(store).buildWindow(indexHtml);
-            new TrayIcon(store).buildTray(trayIconPath);
-            ipcEvents = new IpcEvents(store);
-            ipcEvents.registerWindow(mainWindow);
-            ipcEvents.registerEvents(indexHtml);
+    mainWindow = new Main(store).buildWindow(indexHtml);
+    new TrayIcon(store).buildTray(trayIconPath);
+    ipcEvents = new IpcEvents(store);
+    ipcEvents
+        .registerWindow(mainWindow)
+        .registerEvents(indexHtml);
 
-            // only call updater for prod environment
-            if (!process.env.VITE_DEV_SERVER_URL) {
-                new AutoUpdater(store, mainWindow, false).init();
-            } else {
-                // new AutoUpdater(store, overlay, true).init();
-
-                mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
-            }
-        },
-        process.platform === 'linux' ? 1000 : 0,
-    );
+    if (process.env.VITE_DEV_SERVER_URL) {
+        // new AutoUpdater(store, overlay, true).init();
+        mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
+    } else {
+        // only call updater for prod environment
+        new AutoUpdater(store, mainWindow, false).init();
+    }
 
     const keybinds = store.get('keybinds');
 
@@ -106,8 +101,9 @@ app.on('activate', () => {
 
             // register the events and overlay again
             // since they still hold a reference to a null object in case the overlay was recreated
-            ipcEvents.registerWindow(mainWindow);
-            ipcEvents.registerEvents(indexHtml);
+            ipcEvents
+                .registerWindow(mainWindow)
+                .registerEvents(indexHtml);
 
             // wait a second for the window to be created again so that it can handle events
             setTimeout(() => {
