@@ -60,8 +60,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       electron:
-        specifier: 33.1.0
-        version: 33.1.0
+        specifier: 33.4.10
+        version: 33.4.10
       electron-builder:
         specifier: 25.1.8
         version: 25.1.8(electron-builder-squirrel-windows@25.1.8)
@@ -1975,8 +1975,8 @@ packages:
   electron-updater@6.3.9:
     resolution: {integrity: sha512-2PJNONi+iBidkoC5D1nzT9XqsE8Q1X28Fn6xRQhO3YX8qRRyJ3mkV4F1aQsuRnYPqq6Hw+E51y27W75WgDoofw==}
 
-  electron@33.1.0:
-    resolution: {integrity: sha512-7KiY6MtRo1fVFLPGyHS7Inh8yZfrbUTy43nNwUgMD2CBk729BgSwOC2WhmcptNJVlzHJpVxSWkiVi2hp9mH/bw==}
+  electron@33.4.10:
+    resolution: {integrity: sha512-K1QvMoKnrlrZATShVuh3bZEAT7DNiNQ4jLqbgbd37R/OQCuWPQ1o0lXbAl2NnkU9dCCjtZujYIsF+NVmMX/h+g==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -5352,7 +5352,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 20.17.30
+      '@types/node': 22.14.1
       '@types/responselike': 1.0.3
 
   '@types/debug@4.1.12':
@@ -5378,7 +5378,7 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 20.17.30
+      '@types/node': 22.14.1
 
   '@types/mdast@4.0.4':
     dependencies:
@@ -5404,7 +5404,7 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 20.17.30
+      '@types/node': 22.14.1
 
   '@types/unist@3.0.3': {}
 
@@ -5415,7 +5415,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.17.30
+      '@types/node': 22.14.1
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.31.0(@typescript-eslint/parser@8.31.0(eslint@9.24.0(jiti@1.21.7))(typescript@5.6.3))(eslint@9.24.0(jiti@1.21.7))(typescript@5.6.3)':
@@ -6587,7 +6587,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@33.1.0:
+  electron@33.4.10:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.17.30
@@ -8432,7 +8432,7 @@ snapshots:
       ky: 1.8.1
       registry-auth-token: 5.1.0
       registry-url: 6.0.1
-      semver: 7.6.3
+      semver: 7.7.1
 
   package-manager-detector@0.2.11:
     dependencies:
