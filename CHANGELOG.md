@@ -18,8 +18,19 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 19 April 2025
+## Latest | 23 April 2025
 
+- feat: added notification for unbound vanish toggle [`1287dcd`](https://github.com/Enubia/ghost-chat/commit/1287dcd5e0d4b7be903a46bb1bcfaea23bf62ba8)
+- feat: update footer links and version check functionality [`4649bb0`](https://github.com/Enubia/ghost-chat/commit/4649bb0b0e74d77e045687dd17042008ecc5af2f)
+- chore: added todo and test youtube chat fetching [`59b2627`](https://github.com/Enubia/ghost-chat/commit/59b2627fe86f56640ae1b9fcd70ddf7598083af2)
+- refactor: simplify commit type handling in formatMessage function [`8e0598e`](https://github.com/Enubia/ghost-chat/commit/8e0598e6403299f7c673d9c39e047435f33618c8)
+- refactor: removed unused listeners [`a13dd44`](https://github.com/Enubia/ghost-chat/commit/a13dd44e5fc3d97ec3d748963bf9a8cdd776d525)
+- refactor: refined settings page layout [`ef920a3`](https://github.com/Enubia/ghost-chat/commit/ef920a34b7b3d212447a2501a4106022f33baaaa)
+- chore: link update [`a8d1a20`](https://github.com/Enubia/ghost-chat/commit/a8d1a20abd61aeb6e3d6e2ee42953ab998890075)
+---
+### v3.4.0 | 19 April 2025
+
+- chore: update changelog [`4c2f7d5`](https://github.com/Enubia/ghost-chat/commit/4c2f7d508b516fd9c5b90ca97bcb14925d968c95)
 - feat: french localization [`bbc30c9`](https://github.com/Enubia/ghost-chat/commit/bbc30c9f880a369f92721ea947b9710e89138f62)
 - fix: kick settings not being save [`6bc3490`](https://github.com/Enubia/ghost-chat/commit/6bc349096f38ce093c8a6f724c9a9b06529faf48)
 - chore: removed timestamp file [`f826972`](https://github.com/Enubia/ghost-chat/commit/f826972cefc07e902f009eae235cdf57fd3105c2)

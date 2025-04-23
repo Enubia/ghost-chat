@@ -1,7 +1,52 @@
 <template>
-<h2 class="text-2xl font-semibold py-2">Latest | 19 April 2025</h2>
+<h2 class="text-2xl font-semibold py-2">Latest | 23 April 2025</h2>
 
 <div class="grid gap-1">
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: added notification for unbound vanish toggle
+<a href=https://github.com/Enubia/ghost-chat/commit/1287dcd5e0d4b7be903a46bb1bcfaea23bf62ba8 class="text-blue-500">1287dcd</a>
+</span>
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: update footer links and version check functionality
+<a href=https://github.com/Enubia/ghost-chat/commit/4649bb0b0e74d77e045687dd17042008ecc5af2f class="text-blue-500">4649bb0</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: added todo and test youtube chat fetching
+<a href=https://github.com/Enubia/ghost-chat/commit/59b2627fe86f56640ae1b9fcd70ddf7598083af2 class="text-blue-500">59b2627</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: simplify commit type handling in formatMessage function
+<a href=https://github.com/Enubia/ghost-chat/commit/8e0598e6403299f7c673d9c39e047435f33618c8 class="text-blue-500">8e0598e</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: removed unused listeners
+<a href=https://github.com/Enubia/ghost-chat/commit/a13dd44e5fc3d97ec3d748963bf9a8cdd776d525 class="text-blue-500">a13dd44</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: refined settings page layout
+<a href=https://github.com/Enubia/ghost-chat/commit/ef920a34b7b3d212447a2501a4106022f33baaaa class="text-blue-500">ef920a3</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: link update
+<a href=https://github.com/Enubia/ghost-chat/commit/a8d1a20abd61aeb6e3d6e2ee42953ab998890075 class="text-blue-500">a8d1a20</a>
+</span>
+</div>
+<hr class="mt-2">
+<h2 class="text-2xl font-semibold py-2">v3.4.0 | 19 April 2025</h2>
+
+<div class="grid gap-1">
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/4c2f7d508b516fd9c5b90ca97bcb14925d968c95 class="text-blue-500">4c2f7d5</a>
+</span>
 <span>
 
 <span class="text-green-400 bg-green-900 px-1">feat</span>: french localization
@@ -624,27 +669,27 @@
 <div class="grid gap-1">
 <span>
 
-<span class="text-green-400 bg-green-900 px-1">new(ui/electron)</span>: allow updater disableing
+new(ui/electron): allow updater disableing
 <a href=https://github.com/Enubia/ghost-chat/pull/853 class="text-blue-500">#853</a>
 </span>
 <span>
 
-<span class="text-purple-400 bg-purple-900 px-1">refactor(ui)</span>: rename store
+refactor(ui): rename store
 <a href=https://github.com/Enubia/ghost-chat/commit/0f4e88cdf971e3f9cefb52e8b058bd43716a5843 class="text-blue-500">0f4e88c</a>
 </span>
 <span>
 
-<span class="text-purple-400 bg-purple-900 px-1">refactor(ui/electron)</span>: use path alias
+refactor(ui/electron): use path alias
 <a href=https://github.com/Enubia/ghost-chat/commit/1ff679011b08e015b4f7ac953835a4b567f528cf class="text-blue-500">1ff6790</a>
 </span>
 <span>
 
-<span class="text-pink-400 bg-pink-900 px-1">update(ui)</span>: remove pinia
+update(ui): remove pinia
 <a href=https://github.com/Enubia/ghost-chat/commit/96e52fa43d2131d1c248cff223ab40ad87c0e654 class="text-blue-500">96e52fa</a>
 </span>
 <span>
 
-<span class="text-green-400 bg-green-900 px-1">feat(ui)</span>: added pinia
+feat(ui): added pinia
 <a href=https://github.com/Enubia/ghost-chat/commit/fc0e20176371e4083d3c96c5b8680b1c9a9fa450 class="text-blue-500">fc0e201</a>
 </span>
 <span>
@@ -654,7 +699,7 @@
 </span>
 <span>
 
-<span class="text-pink-400 bg-pink-900 px-1">update(ui)</span>: init state for pinia
+update(ui): init state for pinia
 <a href=https://github.com/Enubia/ghost-chat/commit/29571bb5bc191a069e7b7110c2652459e57b014f class="text-blue-500">29571bb</a>
 </span>
 <span>
@@ -664,7 +709,7 @@
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(electron)</span>: typo in dev script
+fix(electron): typo in dev script
 <a href=https://github.com/Enubia/ghost-chat/commit/802873e2574453f98a37d8d9f58ef25a2d36b108 class="text-blue-500">802873e</a>
 </span>
 <span>
@@ -679,7 +724,7 @@
 <div class="grid gap-1">
 <span>
 
-<span class="text-pink-400 bg-pink-900 px-1">update(ui)</span>: replace checkboxes with switches
+update(ui): replace checkboxes with switches
 <a href=https://github.com/Enubia/ghost-chat/commit/c595f2b8d6e612fb94096613c15f63d2c3e191f7 class="text-blue-500">c595f2b</a>
 </span>
 <span>
@@ -689,12 +734,12 @@
 </span>
 <span>
 
-<span class="text-green-400 bg-green-900 px-1">feat(ui)</span>: support box
+feat(ui): support box
 <a href=https://github.com/Enubia/ghost-chat/commit/78208e1694a7a2956061cf9bdc47019f2134650c class="text-blue-500">78208e1</a>
 </span>
 <span>
 
-<span class="text-blue-400 bg-blue-900 px-1">chore(build)</span>: update builder config
+chore(build): update builder config
 <a href=https://github.com/Enubia/ghost-chat/commit/a517539810c8d3f46d5b630f279929630c326c67 class="text-blue-500">a517539</a>
 </span>
 <span>
@@ -719,7 +764,7 @@
 </span>
 <span>
 
-<span class="text-pink-400 bg-pink-900 px-1">update(ui)</span>: made support box dismissable
+update(ui): made support box dismissable
 <a href=https://github.com/Enubia/ghost-chat/commit/02bd02022d768a9c2218629d91bbf72e9bfa4372 class="text-blue-500">02bd020</a>
 </span>
 <span>
@@ -1029,7 +1074,7 @@
 </span>
 <span>
 
-<span class="text-blue-400 bg-blue-900 px-1">chore(electron)</span>: remove blur workaround
+chore(electron): remove blur workaround
 <a href=https://github.com/Enubia/ghost-chat/commit/a3da7634ae613696f30be5ff2d9859bbab33682f class="text-blue-500">a3da763</a>
 </span>
 <span>
@@ -1049,12 +1094,12 @@
 <div class="grid gap-1">
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(windows)</span>: turn off hardware acceleration
+fix(windows): turn off hardware acceleration
 <a href=https://github.com/Enubia/ghost-chat/commit/1359c80ab2a8c4855586c11efa81f2b33c2c39ca class="text-blue-500">1359c80</a>
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(mac)</span>: remove titlebar style
+fix(mac): remove titlebar style
 <a href=https://github.com/Enubia/ghost-chat/commit/12aa2c0e90bbaaa9f9ddfe1b9e43fc457063841e class="text-blue-500">12aa2c0</a>
 </span>
 <span>
@@ -1579,7 +1624,7 @@
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(dropdown)</span>: added condition to check if vanish should be displayed
+fix(dropdown): added condition to check if vanish should be displayed
 <a href=https://github.com/Enubia/ghost-chat/commit/f766e9090fb81de952a5eaa3b78da3243dfe9f14 class="text-blue-500">f766e90</a>
 </span>
 <span>
@@ -1594,7 +1639,7 @@
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(trayicon)</span>: added check for settings page open state
+fix(trayicon): added check for settings page open state
 <a href=https://github.com/Enubia/ghost-chat/commit/31d64adbc3dcd8400ee581aa9efd6f62b596a4b5 class="text-blue-500">31d64ad</a>
 </span>
 <span>
@@ -1694,12 +1739,12 @@
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(mac)</span>: null pointer reference error
+fix(mac): null pointer reference error
 <a href=https://github.com/Enubia/ghost-chat/commit/987cc9d212ac3441908f3601b7a20de5894e5ed5 class="text-blue-500">987cc9d</a>
 </span>
 <span>
 
-<span class="text-pink-400 bg-pink-900 px-1">update(mac)</span>: added info about autoupdates
+update(mac): added info about autoupdates
 <a href=https://github.com/Enubia/ghost-chat/commit/0656d2f331e592efe43cc5d861cb7f03271e6316 class="text-blue-500">0656d2f</a>
 </span>
 <span>
@@ -1714,7 +1759,7 @@
 </span>
 <span>
 
-<span class="text-yellow-400 bg-yellow-900 px-1">fix(mac)</span>: restore window on soft quit
+fix(mac): restore window on soft quit
 <a href=https://github.com/Enubia/ghost-chat/commit/3b99dba14f645e4971b2892cf91dcf07084ddec2 class="text-blue-500">3b99dba</a>
 </span>
 <span>
