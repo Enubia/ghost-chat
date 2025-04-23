@@ -85,7 +85,7 @@
         "eslint": "9.24.0",
         "eslint-plugin-tailwindcss": "3.18.0",
         "lint-staged": "15.2.10",
-        "radix-vue": "1.9.8",
+        "radix-vue": "1.9.17",
         "release-it": "17.10.0",
         "rimraf": "6.0.1",
         "simple-git-hooks": "2.11.1",
