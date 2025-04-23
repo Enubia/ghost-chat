@@ -8,7 +8,7 @@ import log from 'electron-log';
 
 import { StoreKeys } from '#shared/constants/store.js';
 
-export default class Overlay {
+export default class Main {
     constructor(private store: ElectronStore<AppStore>) {}
 
     buildWindow(indexHtml: string) {

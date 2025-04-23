@@ -3,8 +3,6 @@ import type ElectronStore from 'electron-store';
 
 import type { AppStore, WindowState } from '#shared/types/store.js';
 
-import type ManualUpdater from './manualUpdater.js';
-
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
@@ -14,7 +12,6 @@ import { StoreKeys } from '#shared/constants/store.js';
 import Settings from './window/settings.js';
 
 export default class IpcEvents {
-    private manualUpdater: ManualUpdater | null = null;
     private overlay: BrowserWindow | null = null;
 
     private settings: BrowserWindow | null = null;
@@ -93,9 +90,6 @@ export default class IpcEvents {
                 const _settings = new Settings(this.overlay, this.store, this.destroyWindow.bind(this));
                 _settings.buildWindow(indexHtml, 'settings/general');
                 this.settings = _settings.window;
-                if (this.settings && this.manualUpdater) {
-                    this.manualUpdater.registerWindow(this.settings);
-                }
             }
         });
     }
@@ -227,10 +221,6 @@ export default class IpcEvents {
         this.registerNewKeybind();
         this.callStore();
         this.getPlatform();
-    }
-
-    registerManualUpdater(manualUpdater: ManualUpdater) {
-        this.manualUpdater = manualUpdater;
     }
 
     registerWindow(overlay: BrowserWindow | null) {

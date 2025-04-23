@@ -10,7 +10,7 @@ import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
 import createStore from './store.js';
 import TrayIcon from './trayIcon.js';
-import Overlay from './window/overlay.js';
+import Main from './window/main.js';
 
 if (!app.requestSingleInstanceLock()) {
     app.quit();
@@ -42,25 +42,25 @@ const trayIconPath = `${PUBLIC}/trayicon.png`;
 
 const indexHtml = path.join(DIST, 'index.html');
 
-let overlay: BrowserWindow | null;
+let mainWindow: BrowserWindow | null;
 let ipcEvents: IpcEvents;
 
 app.on('ready', () => {
     setTimeout(
         async () => {
-            overlay = new Overlay(store).buildWindow(indexHtml);
+            mainWindow = new Main(store).buildWindow(indexHtml);
             new TrayIcon(store).buildTray(trayIconPath);
             ipcEvents = new IpcEvents(store);
-            ipcEvents.registerWindow(overlay);
+            ipcEvents.registerWindow(mainWindow);
             ipcEvents.registerEvents(indexHtml);
 
             // only call updater for prod environment
             if (!process.env.VITE_DEV_SERVER_URL) {
-                new AutoUpdater(store, overlay, false).init();
+                new AutoUpdater(store, mainWindow, false).init();
             } else {
                 // new AutoUpdater(store, overlay, true).init();
 
-                overlay.on('show', () => overlay?.webContents.send(IpcEvent.UpdateNotAvailable));
+                mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
             }
         },
         process.platform === 'linux' ? 1000 : 0,
@@ -92,9 +92,9 @@ app.on('ready', () => {
 app.on('activate', () => {
     log.info('App activated');
 
-    if (overlay?.isMinimized()) {
+    if (mainWindow?.isMinimized()) {
         log.info('Restoring overlay');
-        overlay.restore();
+        mainWindow.restore();
     } else {
         const allWindows = BrowserWindow.getAllWindows();
         if (allWindows.length) {
@@ -102,23 +102,23 @@ app.on('activate', () => {
             allWindows[0].focus();
         } else {
             log.info('Recreating overlay');
-            overlay = new Overlay(store).buildWindow(indexHtml);
+            mainWindow = new Main(store).buildWindow(indexHtml);
 
             // register the events and overlay again
             // since they still hold a reference to a null object in case the overlay was recreated
-            ipcEvents.registerWindow(overlay);
+            ipcEvents.registerWindow(mainWindow);
             ipcEvents.registerEvents(indexHtml);
 
             // wait a second for the window to be created again so that it can handle events
             setTimeout(() => {
-                overlay?.webContents.send(IpcEvent.Recreated);
+                mainWindow?.webContents.send(IpcEvent.Recreated);
             }, 1000);
         }
     }
 });
 
 app.on('window-all-closed', () => {
-    overlay = null;
+    mainWindow = null;
 
     if (process.platform === 'darwin') {
         if (store.get('general').mac.quitOnClose) {
