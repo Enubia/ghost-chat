@@ -9,7 +9,8 @@
         {
             "description": "Ignore Node.js version specified in package.json",
             "matchDepTypes": [
-                "engines"
+                "engines",
+                "packageManager"
             ],
             "enabled": false
         }
