@@ -54,8 +54,8 @@ app.on('ready', () => {
         .registerEvents(indexHtml);
 
     if (process.env.VITE_DEV_SERVER_URL) {
-        // new AutoUpdater(store, overlay, true).init();
-        mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
+        new AutoUpdater(store, mainWindow, true).init();
+        // mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
     } else {
         // only call updater for prod environment
         new AutoUpdater(store, mainWindow, false).init();

@@ -21,81 +21,81 @@ import { cloneValue } from './utils';
 
 export default class IpcHandler {
     // only parent keys can be deleted
-    public static async deleteValueFromKey(key: keyof AppStore): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'delete', key });
+    public static deleteKeyValue(key: keyof AppStore): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'delete', key });
     }
 
-    public static async getExternalOptions(): Promise<ExternalBrowserSource> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.external' });
+    public static getExternalOptions(): Promise<ExternalBrowserSource> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.external' });
     }
 
-    public static async getGeneral(): Promise<General> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'general' });
+    public static getGeneral(): Promise<General> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'general' });
     }
 
-    public static async getKeybinds(): Promise<Keybinds> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'keybinds' });
+    public static getKeybinds(): Promise<Keybinds> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'keybinds' });
     }
 
-    public static async getKickOptions(): Promise<Kick> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.kick' });
+    public static getKickOptions(): Promise<Kick> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.kick' });
     }
 
-    public static async getOptions(): Promise<Options> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options' });
+    public static getOptions(): Promise<Options> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options' });
     }
 
-    public static async getPlatform(): Promise<NodeJS.Platform> {
-        return await ipcRenderer.invoke(IpcEvent.GetPlatform);
+    public static getPlatform(): Promise<NodeJS.Platform> {
+        return ipcRenderer.invoke(IpcEvent.GetPlatform);
     }
 
-    public static async getSettings(): Promise<Settings> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'settings' });
+    public static getSettings(): Promise<Settings> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'settings' });
     }
 
-    public static async getTwitchOptions(): Promise<Twitch> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.twitch' });
+    public static getTwitchOptions(): Promise<Twitch> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.twitch' });
     }
 
-    public static async getUpdater(): Promise<Updater> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'updater' });
+    public static getUpdater(): Promise<Updater> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'updater' });
     }
 
-    public static async getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key });
+    public static getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key });
     }
 
-    public static async getWindowState(): Promise<WindowState> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'savedWindowState' });
+    public static getWindowState(): Promise<WindowState> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'savedWindowState' });
     }
 
-    public static async setGeneral(value: General): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value: cloneValue(value) });
+    public static setGeneral(value: General): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value: cloneValue(value) });
     }
 
-    public static async setKeybinds(value: Keybinds): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value: cloneValue(value) });
+    public static setKeybinds(value: Keybinds): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value: cloneValue(value) });
     }
 
     // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
-    public static async setKeyValue<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
+    public static setKeyValue<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
     }
 
-    public static async setOptions(value: Options): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value: cloneValue(value) });
+    public static setOptions(value: Options): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value: cloneValue(value) });
     }
 
-    public static async setSettings(value: Settings): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'settings', value: cloneValue(value) });
+    public static setSettings(value: Settings): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'settings', value: cloneValue(value) });
     }
 
-    public static async setUpdater(value: Updater): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key:
+    public static setUpdater(value: Updater): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key:
             'updater', value: cloneValue(value) });
     }
 
-    public static async setWindowState(value: WindowState): Promise<void> {
-        return await ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'savedWindowState', value: cloneValue(value) });
+    public static setWindowState(value: WindowState): Promise<void> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'savedWindowState', value: cloneValue(value) });
     }
 }
