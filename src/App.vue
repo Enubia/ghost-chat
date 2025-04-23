@@ -33,7 +33,7 @@ const notifications = shallowRef({
     showToggleUnbound: false,
 });
 
-const footerExcludeList: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
+const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
 
 const $html = document.querySelector('html');
 const $app = document.querySelector('#app');
@@ -59,7 +59,7 @@ onMounted(async () => {
 });
 
 watch(route, () => {
-    showFooter.value = !footerExcludeList.includes(route.name) && !route.path.startsWith('/settings');
+    showFooter.value = !webviewRoutes.includes(route.name) && !route.path.startsWith('/settings');
     showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
     additionalFooterClasses.value = route.name === '/changelog'
         ? {
@@ -111,8 +111,8 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
 <template>
     <div :key="rerenderKey" class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
         <header
-            v-if="showMenuBar" class="flex w-full justify-between align-top"
-            :class="footerExcludeList.includes(route.name) ? 'absolute' : 'sticky'"
+            v-if="showMenuBar" class="flex w-full justify-between"
+            :class="webviewRoutes.includes(route.name) ? 'absolute' : ''"
         >
             <DropDownMenu />
             <MenuButtons />

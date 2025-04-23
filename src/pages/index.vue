@@ -5,9 +5,11 @@ import Twitch from '#components/index/Twitch.vue';
 </script>
 
 <template>
-    <div class="my-12 grid grid-cols-1 items-center justify-center gap-2 px-10 sm:grid-cols-2">
+    <div class="grid h-full grid-rows-4 px-10">
         <Twitch />
         <Kick />
+        <External />
+        <!-- placeholder for youtube -->
         <External />
     </div>
 </template>

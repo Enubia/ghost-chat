@@ -68,7 +68,7 @@ function applySourceFromList(item: string) {
 <template>
     <Dialog>
         <DialogTrigger>
-            <div class="flex justify-center rounded bg-secondary p-4 shadow-xl hover:scale-105 hover:cursor-pointer">
+            <div class="flex justify-center rounded bg-secondary p-4 hover:scale-105 hover:cursor-pointer">
                 <Icon icon="pepicons-print:internet" class="h-12 w-10 text-blue-500" />
             </div>
         </DialogTrigger>
