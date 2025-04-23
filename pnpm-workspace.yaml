@@ -2,4 +2,5 @@ onlyBuiltDependencies:
   - electron
   - esbuild
   - simple-git-hooks
+  - unrs-resolver
   - vue-demi
