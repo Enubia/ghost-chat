@@ -1,10 +1,10 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:base"
+        "config:recommended"
     ],
     "dependencyDashboard": true,
-    "pinVersions": true,
+    "rangeStrategy": "pin",
     "packageRules": [
         {
             "description": "Ignore Node.js version specified in package.json",
