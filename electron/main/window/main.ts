@@ -36,6 +36,7 @@ export default class Main {
             maximizable: false,
             titleBarStyle: 'hidden',
             show: false,
+            roundedCorners: false,
             webPreferences,
         };
 
@@ -63,7 +64,7 @@ export default class Main {
             if (this.store.get('general.mac.hideDockIcon')) {
                 // hide the dock icon AFTER the window is created
                 // otherwise it will show up again and be persistent
-                app.dock.hide();
+                app.dock?.hide();
             }
         }
 

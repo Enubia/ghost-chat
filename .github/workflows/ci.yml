@@ -11,7 +11,7 @@ on:
       - "!main"
 
 jobs:
-  CI:
+  lint-typecheck:
     runs-on: windows-latest
 
     steps:
@@ -36,5 +36,16 @@ jobs:
       - name: lint
         run: pnpm lint
       
+      - name: typecheck
+        run: pnpm typecheck
+    
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
       - name: build
         run: pnpm build

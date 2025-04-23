@@ -7,52 +7,19 @@ import { Label } from '#components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
 import { Switch } from '#components/ui/switch';
 
-const props = defineProps({
-    fontSize: {
-        type: String,
-        required: true,
-    },
-    stroke: {
-        type: String,
-        required: true,
-    },
-    animate: {
-        type: Boolean,
-        required: true,
-    },
-    fade: {
-        type: Boolean,
-        required: true,
-    },
-    fadeTimeout: {
-        type: Number,
-        required: true,
-    },
-    bots: {
-        type: Boolean,
-        required: true,
-    },
-    hideCommands: {
-        type: Boolean,
-        required: true,
-    },
-    hideBadges: {
-        type: Boolean,
-        required: true,
-    },
-    font: {
-        type: String,
-        required: true,
-    },
-    shadow: {
-        type: String,
-        required: true,
-    },
-    smallCaps: {
-        type: Boolean,
-        required: true,
-    },
-});
+const props = defineProps<{
+    fontSize: string;
+    stroke: string;
+    animate: boolean;
+    fade: boolean;
+    fadeTimeout: number;
+    bots: boolean;
+    hideCommands: boolean;
+    hideBadges: boolean;
+    font: string;
+    shadow: string;
+    smallCaps: boolean;
+}>();
 
 const emit = defineEmits([
     'update:fontSize',

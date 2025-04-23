@@ -120,7 +120,7 @@ app.on('window-all-closed', () => {
         if (store.get('general').mac.quitOnClose) {
             quit();
         } else {
-            app.dock.show();
+            app.dock?.show();
         }
     } else {
         quit();

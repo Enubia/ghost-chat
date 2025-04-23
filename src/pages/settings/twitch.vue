@@ -24,7 +24,7 @@ for (const [_, value] of Object.entries(tm('settings.twitch.font.select-options'
 }
 
 const useJChat = shallowRef(StoreDefaults.options.twitch.useJChat);
-const fontSize = shallowRef(String(StoreDefaults.options.twitch.fontSize));
+const fontSize = shallowRef(StoreDefaults.options.twitch.fontSize.toString());
 const userBlacklist = shallowRef(StoreDefaults.options.twitch.userBlacklist);
 const defaultChannel = shallowRef(StoreDefaults.options.twitch.defaultChannel);
 const animate = shallowRef(StoreDefaults.options.twitch.animate);
@@ -32,9 +32,9 @@ const fade = shallowRef(StoreDefaults.options.twitch.fade);
 const bots = shallowRef(StoreDefaults.options.twitch.bots);
 const hideCommands = shallowRef(StoreDefaults.options.twitch.hideCommands);
 const hideBadges = shallowRef(StoreDefaults.options.twitch.hideBadges);
-const font = shallowRef(String(StoreDefaults.options.twitch.font));
-const stroke = shallowRef(String(StoreDefaults.options.twitch.stroke));
-const shadow = shallowRef(String(StoreDefaults.options.twitch.shadow));
+const font = shallowRef(StoreDefaults.options.twitch.font.toString());
+const stroke = shallowRef(StoreDefaults.options.twitch.stroke.toString());
+const shadow = shallowRef(StoreDefaults.options.twitch.shadow.toString());
 const smallCaps = shallowRef(StoreDefaults.options.twitch.smallCaps);
 const fadeTimeout = shallowRef(StoreDefaults.options.twitch.fadeTimeout);
 // KapChat specific options
@@ -49,7 +49,7 @@ onMounted(async () => {
     const twitch = await IpcHandler.getTwitchOptions();
 
     useJChat.value = twitch.useJChat;
-    fontSize.value = String(twitch.fontSize);
+    fontSize.value = twitch.fontSize.toString();
     userBlacklist.value = twitch.userBlacklist;
     defaultChannel.value = twitch.defaultChannel;
     animate.value = twitch.animate;
@@ -57,12 +57,12 @@ onMounted(async () => {
     bots.value = twitch.bots;
     hideCommands.value = twitch.hideCommands;
     hideBadges.value = twitch.hideBadges;
-    font.value = String(twitch.font);
-    stroke.value = String(twitch.stroke);
-    shadow.value = String(twitch.shadow);
+    font.value = twitch.font.toString();
+    stroke.value = twitch.stroke.toString();
+    shadow.value = twitch.shadow.toString();
     smallCaps.value = twitch.smallCaps;
     fadeTimeout.value = twitch.fadeTimeout;
-    theme.value = String(twitch.theme);
+    theme.value = twitch.theme;
     preventClipping.value = twitch.preventClipping;
     fontSizeExact.value = twitch.fontSizeExact;
 

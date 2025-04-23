@@ -1,2 +1,2 @@
-export * from './store';
-export * from './webviewtag';
+export * from './store.js';
+export * from './webviewtag.js';

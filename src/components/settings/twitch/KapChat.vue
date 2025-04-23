@@ -8,32 +8,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#
 import Slider from '#components/ui/slider/Slider.vue';
 import { Switch } from '#components/ui/switch';
 
-const props = defineProps({
-    theme: {
-        type: String,
-        required: true,
-    },
-    preventClipping: {
-        type: Boolean,
-        required: true,
-    },
-    fade: {
-        type: Boolean,
-        required: true,
-    },
-    bots: {
-        type: Boolean,
-        required: true,
-    },
-    fontSizeExact: {
-        type: Number,
-        required: true,
-    },
-    fadeTimeout: {
-        type: Number,
-        required: true,
-    },
-});
+const props = defineProps<{
+    theme: string;
+    preventClipping: boolean;
+    fade: boolean;
+    bots: boolean;
+    fontSizeExact: number;
+    fadeTimeout: number;
+}>();
 
 const emit = defineEmits([
     'update:theme',
