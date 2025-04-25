@@ -6,7 +6,7 @@ import type { AppStore } from '#shared/types';
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import { onBeforeMount, shallowRef } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 
 import IpcHandler from '#lib/ipchandler';
@@ -18,20 +18,20 @@ const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
 const code = shallowRef('');
 const success = shallowRef(false);
 const view = shallowRef<Parameters<Events['ready']>[0]['view']>();
-const extensions: ReturnType<typeof css> | typeof oneDark[] = [];
+const extensions = shallowRef<(ReturnType<typeof css> | typeof oneDark)[]>([]);
 
-onBeforeMount(async () => {
+onMounted(async () => {
     if (await IpcHandler.getValueFromKey('savedWindowState.theme') === 'dark') {
-        extensions.push(oneDark);
+        extensions.value.push(oneDark);
     }
 
     if (props.type === 'css') {
-        extensions.push(css());
+        extensions.value.push(css());
         code.value = await IpcHandler.getValueFromKey(`options.${props.option}.css`);
     }
 
     if (props.type === 'js') {
-        extensions.push(javascript());
+        extensions.value.push(javascript());
         code.value = await IpcHandler.getValueFromKey(`options.${props.option}.js`);
     }
 });

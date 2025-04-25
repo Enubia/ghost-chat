@@ -72,7 +72,9 @@ async function saveLanguage(value: string) {
                 </SelectContent>
             </Select>
         </div>
-        <HotKeyInput v-model="vanish.keybind" @update:model-value="saveKeybind" />
+
+        <HotKeyInput v-model="vanish.keybind" @update:keyup="saveKeybind" />
+
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch id="beta-updates" :checked="participateInPreRelease" @update:checked="savePrerelease" />
@@ -84,6 +86,7 @@ async function saveLanguage(value: string) {
                 {{ t('settings.general.pre-release.info') }}
             </small>
         </div>
+
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch
@@ -96,6 +99,7 @@ async function saveLanguage(value: string) {
             </div>
             <small class="text-muted-foreground">{{ t('settings.general.close-option.info') }}</small>
         </div>
+
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch

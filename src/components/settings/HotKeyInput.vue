@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Input } from '#components/ui/input';
@@ -9,17 +9,17 @@ import { hotkeyToString, isFunctionKey, KeyToCode } from '#shared/utils/keyToCod
 const props = defineProps<{
     modelValue: string | null;
 }>();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:keyup']);
 const { t } = useI18n();
 
-const showSingleKeyError = ref(false);
-const showMetaError = ref(false);
-const inputValue = ref(props.modelValue);
+const showSingleKeyError = shallowRef(false);
+const showMetaError = shallowRef(false);
+const inputValue = shallowRef(props.modelValue);
 
 function handleKeyup(event: KeyboardEvent) {
     if (event.code === 'Backspace') {
         inputValue.value = null;
-        return emit('update:modelValue', null);
+        return emit('update:keyup', null);
     }
 
     let { code, ctrlKey, shiftKey, altKey, metaKey } = event;
@@ -51,7 +51,7 @@ function handleKeyup(event: KeyboardEvent) {
 
         inputValue.value = code;
 
-        emit('update:modelValue', code);
+        emit('update:keyup', code);
     }
 }
 </script>
