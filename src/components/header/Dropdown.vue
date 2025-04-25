@@ -10,8 +10,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import IpcHandler from '#lib/ipchandler';
 import { IpcEvent } from '#shared/constants';
 
-defineEmits(['vanish']);
-
 const router = useRouter();
 
 const { t } = useI18n();
