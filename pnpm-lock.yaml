@@ -24,8 +24,8 @@ importers:
         specifier: 3.3.1
         version: 3.3.1
       '@iconify/json':
-        specifier: 2.2.332
-        version: 2.2.332
+        specifier: 2.2.333
+        version: 2.2.333
       '@iconify/vue':
         specifier: 4.3.0
         version: 4.3.0(vue@3.5.13(typescript@5.6.3))
@@ -37,7 +37,7 @@ importers:
         version: 1.0.0(vue@3.5.13(typescript@5.6.3))
       '@tomjs/vite-plugin-iconify':
         specifier: 1.2.1
-        version: 1.2.1(@iconify/json@2.2.332)(vite@5.4.19(@types/node@22.14.1))
+        version: 1.2.1(@iconify/json@2.2.333)(vite@5.4.19(@types/node@22.14.1))
       '@vitejs/plugin-vue':
         specifier: 5.2.3
         version: 5.2.3(vite@5.4.19(@types/node@22.14.1))(vue@3.5.13(typescript@5.6.3))
@@ -558,8 +558,8 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
-  '@iconify/json@2.2.332':
-    resolution: {integrity: sha512-bIaEG2ecvYiq/lwBF0KIOCEW5zMyBx1WOmBubetZwvKNs+gXbV3ocLCjT3xWBFSD4v29BRpqdtoVOpUlIfDK+g==}
+  '@iconify/json@2.2.333':
+    resolution: {integrity: sha512-GRp9JV9iUILIfeeWCAQRPirY6wP03l5EOeAfWca+qMPDyeCY/hb8LN/sdsGYsK6QAWvyKelkgx/DgcD3V6anEQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -5015,7 +5015,7 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
-  '@iconify/json@2.2.332':
+  '@iconify/json@2.2.333':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -5381,9 +5381,9 @@ snapshots:
       '@tanstack/virtual-core': 3.13.6
       vue: 3.5.13(typescript@5.6.3)
 
-  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.332)(vite@5.4.19(@types/node@22.14.1))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.333)(vite@5.4.19(@types/node@22.14.1))':
     dependencies:
-      '@iconify/json': 2.2.332
+      '@iconify/json': 2.2.333
       cac: 6.7.14
       fs-extra: 11.3.0
       lodash.clonedeep: 4.5.0
