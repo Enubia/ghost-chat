@@ -2,14 +2,24 @@
 import External from '#components/index/External.vue';
 import Kick from '#components/index/Kick.vue';
 import Twitch from '#components/index/Twitch.vue';
+
+const components = [
+    Twitch,
+    Kick,
+    External,
+];
+
+const gridRows = components.length;
 </script>
 
 <template>
-    <div class="grid h-full grid-rows-4 px-10">
-        <Twitch />
-        <Kick />
-        <External />
-        <!-- placeholder for youtube -->
-        <External />
+    <div class="flex h-full items-center justify-center">
+        <div class="grid w-5/6 gap-4" :class="`grid-rows-${gridRows}`">
+            <component
+                :is="component"
+                v-for="(component, index) in components"
+                :key="index"
+            />
+        </div>
     </div>
 </template>

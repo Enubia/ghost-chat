@@ -41,7 +41,7 @@ async function routeChat() {
 <template>
     <Dialog>
         <DialogTrigger>
-            <div class="flex justify-center rounded bg-secondary p-4 hover:scale-105 hover:cursor-pointer">
+            <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
                 <img src="../../assets/brands/twitch.png" class="h-12" alt="twitch">
             </div>
         </DialogTrigger>

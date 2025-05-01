@@ -117,7 +117,7 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
             <DropDownMenu />
             <MenuButtons />
         </header>
-        <main class="flex flex-col">
+        <main>
             <router-view v-slot="{ Component }">
                 <template v-if="Component">
                     <Suspense>
@@ -129,8 +129,8 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
                 </template>
             </router-view>
         </main>
-        <footer v-if="showFooter" class="w-full dark:text-background" :class="additionalFooterClasses.position">
-            <div v-if="notifications.showToggleUnbound" class="flex items-center justify-center bg-yellow-200 text-yellow-600">
+        <footer v-if="showFooter" class="dark:text-background" :class="additionalFooterClasses.position">
+            <div v-if="notifications.showToggleUnbound" class="flex justify-center bg-yellow-200 text-yellow-600">
                 <Icon icon="fa6-solid:triangle-exclamation" class="text-1xl mr-2" />
                 <small>{{ t('footer.toggle-missing') }}</small>
             </div>
