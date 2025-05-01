@@ -84,7 +84,7 @@
         "electron-updater": "6.6.2",
         "eslint": "9.25.1",
         "eslint-plugin-tailwindcss": "3.18.0",
-        "lint-staged": "15.2.10",
+        "lint-staged": "15.5.1",
         "radix-vue": "1.9.17",
         "release-it": "17.10.0",
         "rimraf": "6.0.1",
