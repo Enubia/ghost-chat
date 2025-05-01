@@ -66,7 +66,7 @@
         "@codemirror/theme-one-dark": "6.1.2",
         "@eslint/eslintrc": "3.3.1",
         "@iconify/json": "2.2.332",
-        "@iconify/vue": "4.1.2",
+        "@iconify/vue": "4.3.0",
         "@intlify/unplugin-vue-i18n": "5.2.0",
         "@radix-icons/vue": "1.0.0",
         "@tomjs/vite-plugin-iconify": "1.2.1",
