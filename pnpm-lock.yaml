@@ -37,10 +37,10 @@ importers:
         version: 1.0.0(vue@3.5.13(typescript@5.6.3))
       '@tomjs/vite-plugin-iconify':
         specifier: 1.2.1
-        version: 1.2.1(@iconify/json@2.2.332)(vite@5.4.18(@types/node@22.14.1))
+        version: 1.2.1(@iconify/json@2.2.332)(vite@5.4.19(@types/node@22.14.1))
       '@vitejs/plugin-vue':
         specifier: 5.1.4
-        version: 5.1.4(vite@5.4.18(@types/node@22.14.1))(vue@3.5.13(typescript@5.6.3))
+        version: 5.1.4(vite@5.4.19(@types/node@22.14.1))(vue@3.5.13(typescript@5.6.3))
       '@vueuse/core':
         specifier: 11.2.0
         version: 11.2.0(vue@3.5.13(typescript@5.6.3))
@@ -111,8 +111,8 @@ importers:
         specifier: 0.10.8
         version: 0.10.8(rollup@4.40.0)(vue-router@4.4.5(vue@3.5.13(typescript@5.6.3)))(vue@3.5.13(typescript@5.6.3))
       vite:
-        specifier: 5.4.18
-        version: 5.4.18(@types/node@22.14.1)
+        specifier: 5.4.19
+        version: 5.4.19(@types/node@22.14.1)
       vite-plugin-electron:
         specifier: 0.29.0
         version: 0.29.0(vite-plugin-electron-renderer@0.14.6)
@@ -4336,8 +4336,8 @@ packages:
       vite-plugin-electron-renderer:
         optional: true
 
-  vite@5.4.18:
-    resolution: {integrity: sha512-1oDcnEp3lVyHCuQ2YFelM4Alm2o91xNoMncRm1U7S+JdYfYOvbiGZ3/CxGttrOu2M/KcGz7cRC2DoNUA6urmMA==}
+  vite@5.4.19:
+    resolution: {integrity: sha512-qO3aKv3HoQC8QKiNSTuUM1l9o/XX3+c+VTgLHbJWHZGeTPVAg2XwazI9UWzoxjIJCGCV2zU60uqMzjeLZuULqA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -5399,7 +5399,7 @@ snapshots:
       '@tanstack/virtual-core': 3.13.6
       vue: 3.5.13(typescript@5.6.3)
 
-  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.332)(vite@5.4.18(@types/node@22.14.1))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.332)(vite@5.4.19(@types/node@22.14.1))':
     dependencies:
       '@iconify/json': 2.2.332
       cac: 6.7.14
@@ -5407,7 +5407,7 @@ snapshots:
       lodash.clonedeep: 4.5.0
       node-html-parser: 6.1.13
       picocolors: 1.1.1
-      vite: 5.4.18(@types/node@22.14.1)
+      vite: 5.4.19(@types/node@22.14.1)
 
   '@tootallnate/once@2.0.0': {}
 
@@ -5638,9 +5638,9 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.6.4':
     optional: true
 
-  '@vitejs/plugin-vue@5.1.4(vite@5.4.18(@types/node@22.14.1))(vue@3.5.13(typescript@5.6.3))':
+  '@vitejs/plugin-vue@5.1.4(vite@5.4.19(@types/node@22.14.1))(vue@3.5.13(typescript@5.6.3))':
     dependencies:
-      vite: 5.4.18(@types/node@22.14.1)
+      vite: 5.4.19(@types/node@22.14.1)
       vue: 3.5.13(typescript@5.6.3)
 
   '@vitest/eslint-plugin@1.1.43(@typescript-eslint/utils@8.31.0(eslint@9.24.0(jiti@1.21.7))(typescript@5.6.3))(eslint@9.24.0(jiti@1.21.7))(typescript@5.6.3)':
@@ -9469,7 +9469,7 @@ snapshots:
     optionalDependencies:
       vite-plugin-electron-renderer: 0.14.6
 
-  vite@5.4.18(@types/node@22.14.1):
+  vite@5.4.19(@types/node@22.14.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
