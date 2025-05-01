@@ -27,8 +27,8 @@ importers:
         specifier: 2.2.332
         version: 2.2.332
       '@iconify/vue':
-        specifier: 4.1.2
-        version: 4.1.2(vue@3.5.13(typescript@5.6.3))
+        specifier: 4.3.0
+        version: 4.3.0(vue@3.5.13(typescript@5.6.3))
       '@intlify/unplugin-vue-i18n':
         specifier: 5.2.0
         version: 5.2.0(@vue/compiler-dom@3.5.13)(eslint@9.24.0(jiti@1.21.7))(rollup@4.40.0)(typescript@5.6.3)(vue-i18n@10.0.7(vue@3.5.13(typescript@5.6.3)))(vue@3.5.13(typescript@5.6.3))
@@ -568,8 +568,8 @@ packages:
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
-  '@iconify/vue@4.1.2':
-    resolution: {integrity: sha512-CQnYqLiQD5LOAaXhBrmj1mdL2/NCJvwcC4jtW2Z8ukhThiFkLDkutarTOV2trfc9EXqUqRs0KqXOL9pZ/IyysA==}
+  '@iconify/vue@4.3.0':
+    resolution: {integrity: sha512-Xq0h6zMrHBbrW8jXJ9fISi+x8oDQllg5hTDkDuxnWiskJ63rpJu9CvJshj8VniHVTbsxCg9fVoPAaNp3RQI5OQ==}
     peerDependencies:
       vue: '>=3'
 
@@ -5040,7 +5040,7 @@ snapshots:
 
   '@iconify/types@2.0.0': {}
 
-  '@iconify/vue@4.1.2(vue@3.5.13(typescript@5.6.3))':
+  '@iconify/vue@4.3.0(vue@3.5.13(typescript@5.6.3))':
     dependencies:
       '@iconify/types': 2.0.0
       vue: 3.5.13(typescript@5.6.3)
