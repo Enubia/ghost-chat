@@ -1,5 +1,3 @@
-import type { UserConfigFn } from 'vite';
-
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import iconify from '@tomjs/vite-plugin-iconify';
 import vue from '@vitejs/plugin-vue';
@@ -13,7 +11,7 @@ import renderer from 'vite-plugin-electron-renderer';
 import { rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-export default defineConfig((({ command }) => {
+export default defineConfig(({ command }) => {
     rmSync('out', { recursive: true, force: true });
 
     const isServe = command === 'serve';
@@ -84,4 +82,4 @@ export default defineConfig((({ command }) => {
             },
         },
     };
-}) as UserConfigFn);
+});
