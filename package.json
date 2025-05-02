@@ -86,7 +86,7 @@
         "eslint-plugin-tailwindcss": "3.18.0",
         "lint-staged": "15.5.1",
         "radix-vue": "1.9.17",
-        "release-it": "17.11.0",
+        "release-it": "19.0.1",
         "rimraf": "6.0.1",
         "simple-git-hooks": "2.13.0",
         "tailwind-merge": "2.6.0",
