@@ -11,6 +11,7 @@ const router = useRouter();
 const route = useRoute();
 
 const showVanish = shallowRef(false);
+const showBack = shallowRef(false);
 
 const vanishWhiteList: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource'];
 
@@ -18,6 +19,7 @@ showVanish.value = vanishWhiteList.includes(route.name);
 
 watch(route, () => {
     showVanish.value = vanishWhiteList.includes(route.name);
+    showBack.value = route.name !== '/';
 });
 </script>
 
@@ -26,7 +28,7 @@ watch(route, () => {
         <Button v-if="showVanish" variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Vanish)">
             <Icon icon="fa6-solid:ghost" />
         </Button>
-        <Button variant="ghost" class="rounded-none" @click="router.push('/')">
+        <Button v-if="showBack" variant="ghost" class="rounded-none" @click="router.push('/')">
             <Icon icon="fa6-solid:chevron-left" />
         </Button>
         <Button variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Minimize)">
