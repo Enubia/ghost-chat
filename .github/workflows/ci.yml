@@ -12,6 +12,8 @@ on:
 
 jobs:
   lint-typecheck:
+    if: github.event.pull_request.draft == false && github.base_ref != 'main'
+    
     runs-on: windows-latest
 
     steps:
@@ -40,6 +42,8 @@ jobs:
         run: pnpm typecheck
     
   build:
+    if: github.event.pull_request.draft == false && github.base_ref != 'main'
+
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
