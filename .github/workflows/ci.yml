@@ -6,14 +6,11 @@ on:
       - "**"
       - "!main"
   pull_request:
-    branches:
-      - "**"
-      - "!main"
     types: ['opened', 'edited', 'reopened', 'synchronize', 'ready_for_review']
 
 jobs:
   lint-typecheck:
-    if: github.event.pull_request.draft == false
+    if: ${{ github.event_name == 'push' && !github.event.pull_request.draft }}
 
     runs-on: windows-latest
 
@@ -43,7 +40,7 @@ jobs:
         run: pnpm typecheck
     
   build:
-    if: github.event.pull_request.draft == false
+    if: ${{ github.event_name == 'push' && !github.event.pull_request.draft }}
 
     strategy:
       matrix:
