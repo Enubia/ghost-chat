@@ -1,5 +1,6 @@
 import FetchVideoIdError from '#shared/errors/fetchvideoiderror';
 import StreamNotStartedError from '#shared/errors/streamnotstartederror';
+import { delay } from '#shared/utils/delay';
 
 const FIVE_SECONDS = 1000 * 5;
 export const FETCH_VIDEO_ID_ERROR = 'fetch-video-id-error';
@@ -37,7 +38,7 @@ export async function getYoutubeChatURL(channelId: string) {
 
             if (error instanceof StreamNotStartedError) {
                 tries--;
-                await new Promise(resolve => setTimeout(resolve, FIVE_SECONDS));
+                await delay(FIVE_SECONDS);
             }
         }
     }
