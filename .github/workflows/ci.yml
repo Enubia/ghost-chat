@@ -9,9 +9,12 @@ on:
     branches:
       - "**"
       - "!main"
+    types: ['opened', 'edited', 'reopened', 'synchronize', 'ready_for_review']
 
 jobs:
   lint-typecheck:
+    if: github.event.pull_request.draft == false
+
     runs-on: windows-latest
 
     steps:
@@ -40,6 +43,8 @@ jobs:
         run: pnpm typecheck
     
   build:
+    if: github.event.pull_request.draft == false
+
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
