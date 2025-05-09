@@ -5,7 +5,7 @@ import type { AppStore } from '#shared/types/store.js';
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#shared/constants/events.js';
 import { StoreKeys } from '#shared/constants/store.js';
 
 export default class Settings {

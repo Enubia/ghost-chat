@@ -8,7 +8,9 @@ import { useRoute, useRouter } from 'vue-router';
 import MenuButtons from '#components/header/Buttons.vue';
 import DropDownMenu from '#components/header/Dropdown.vue';
 import IpcHandler from '#lib/ipchandler';
-import { downloadLink, IpcEvent, kofiLink, paypalLink, StoreDefaults } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
+import { downloadLink, kofiLink, paypalLink } from '#shared/constants/links';
+import { StoreDefaults } from '#shared/constants/store';
 
 import { versionState } from './state/version';
 

@@ -7,7 +7,7 @@ import { Button } from '#components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '#components/ui/dialog';
 import { Input } from '#components/ui/input';
 import IpcHandler from '#lib/ipchandler';
-import { StoreDefaults } from '#shared/constants';
+import { StoreDefaults } from '#shared/constants/store';
 
 const router = useRouter();
 const { t } = useI18n();

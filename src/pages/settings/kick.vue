@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FontSize, Stroke } from '#shared/types';
+import type { FontSize, Stroke } from '#shared/types/store';
 
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
@@ -12,7 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#
 import { Switch } from '#components/ui/switch';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
+import { StoreDefaults } from '#shared/constants/store';
 
 const { t } = useI18n();
 

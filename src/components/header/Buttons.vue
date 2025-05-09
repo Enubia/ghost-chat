@@ -5,7 +5,7 @@ import { shallowRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Button from '#components/ui/button/Button.vue';
-import { IpcEvent } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
 
 const router = useRouter();
 const route = useRoute();

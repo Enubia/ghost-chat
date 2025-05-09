@@ -6,7 +6,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 import Button from '#components/ui/button/Button.vue';
-import { downloadLink, IpcEvent } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
+import { downloadLink } from '#shared/constants/links';
 
 import { versionState } from '../state/version';
 

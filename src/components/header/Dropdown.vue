@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router';
 import { Button } from '#components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '#components/ui/dropdown-menu';
 import IpcHandler from '#lib/ipchandler';
-import { IpcEvent } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
 
 const router = useRouter();
 

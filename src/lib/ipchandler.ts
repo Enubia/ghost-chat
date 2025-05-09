@@ -11,11 +11,11 @@ import type {
     Twitch,
     Updater,
     WindowState,
-} from '#shared/types';
+} from '#shared/types/store';
 
 import { ipcRenderer } from 'electron';
 
-import { IpcEvent } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
 
 import { cloneValue } from './utils';
 

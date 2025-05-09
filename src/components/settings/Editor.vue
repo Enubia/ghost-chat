@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Events } from 'vue-codemirror';
 
-import type { AppStore } from '#shared/types';
+import type { AppStore } from '#shared/types/store';
 
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Twitch } from '#shared/types';
+import type { Twitch } from '#shared/types/store';
 
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
@@ -13,7 +13,8 @@ import { Label } from '#components/ui/label';
 import Switch from '#components/ui/switch/Switch.vue';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
-import { IpcEvent, StoreDefaults } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
+import { StoreDefaults } from '#shared/constants/store';
 
 const { t, rt, tm } = useI18n();
 

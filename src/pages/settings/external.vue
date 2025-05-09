@@ -10,7 +10,7 @@ import { Input } from '#components/ui/input';
 import { Label } from '#components/ui/label';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
-import { IpcEvent } from '#shared/constants';
+import { IpcEvent } from '#shared/constants/events';
 
 const { t } = useI18n();
 

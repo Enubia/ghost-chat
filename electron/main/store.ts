@@ -5,7 +5,7 @@ import ElectronStore from 'electron-store';
 
 import { existsSync, unlinkSync } from 'node:fs';
 
-import { StoreDefaults } from '#shared/constants/index.js';
+import { StoreDefaults } from '#shared/constants/store.js';
 
 export default function createStore() {
     return new ElectronStore<AppStore>({

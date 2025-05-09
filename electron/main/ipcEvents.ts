@@ -6,7 +6,7 @@ import type { AppStore, WindowState } from '#shared/types/store.js';
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#shared/constants/events.js';
 import { StoreKeys } from '#shared/constants/store.js';
 
 import Settings from './window/settings.js';

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { WebviewTag } from '#shared/types';
+import type { WebviewTag } from '#shared/types/webviewtag';
 
 import { onMounted, shallowRef } from 'vue';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';
-import { TwitchSearchParams } from '#shared/constants';
+import { TwitchSearchParams } from '#shared/constants/searchparams';
 
 const twitch = shallowRef(await IpcHandler.getTwitchOptions());
 const link = shallowRef(

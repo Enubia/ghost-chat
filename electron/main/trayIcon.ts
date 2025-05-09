@@ -8,7 +8,7 @@ import log from 'electron-log';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#shared/constants/events.js';
 
 export default class TrayIcon {
     private tray: Tray | null = null;

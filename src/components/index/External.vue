@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '#components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
 import IpcHandler from '#lib/ipchandler';
-import { StoreDefaults } from '#shared/constants';
+import { StoreDefaults } from '#shared/constants/store';
 
 const router = useRouter();
 const { t } = useI18n();

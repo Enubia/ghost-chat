@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { WebviewTag } from '#shared/types';
+import type { WebviewTag } from '#shared/types/webviewtag';
 
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';

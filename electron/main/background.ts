@@ -3,7 +3,7 @@ import log from 'electron-log';
 
 import path from 'node:path';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#shared/constants/events.js';
 
 import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';

@@ -8,7 +8,7 @@ import { ipcMain } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#shared/constants/events.js';
 
 export default class ManualUpdater {
     private logPrefix = this.constructor.name;

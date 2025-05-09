@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { WebviewTag } from '#shared/types';
+import type { WebviewTag } from '#shared/types/webviewtag';
 
 import { onMounted, shallowRef } from 'vue';
 
 import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';
-import { KickSearchParams } from '#shared/constants';
+import { KickSearchParams } from '#shared/constants/searchparams';
 
 const kick = shallowRef(await IpcHandler.getKickOptions());
 const link = shallowRef(new URL('https://kick-chat.corard.tv/v1/chat'));
