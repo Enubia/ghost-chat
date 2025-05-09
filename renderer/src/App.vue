@@ -5,13 +5,13 @@ import { onMounted, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
-import MenuButtons from '#components/header/Buttons.vue';
-import DropDownMenu from '#components/header/Dropdown.vue';
-import IpcHandler from '#lib/ipchandler';
 import { IpcEvent } from '#shared/constants/events';
 import { downloadLink, kofiLink, paypalLink } from '#shared/constants/links';
 import { StoreDefaults } from '#shared/constants/store';
 
+import MenuButtons from './components/header/Buttons.vue';
+import DropDownMenu from './components/header/Dropdown.vue';
+import IpcHandler from './lib/ipchandler';
 import { versionState } from './state/version';
 
 const router = useRouter();

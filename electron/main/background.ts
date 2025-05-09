@@ -33,12 +33,10 @@ const store = createStore();
 
 log.info('Store created');
 
-// paths relative to the output directory (dist, dist-electron)
-const DIST_ELECTRON = path.join(import.meta.dirname, '../..');
-const DIST = path.join(DIST_ELECTRON, '../out/dist');
-const PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(DIST_ELECTRON, '../public') : DIST;
+const DIST = path.join(process.cwd(), '../..', 'dist');
+const ICONS = process.env.VITE_DEV_SERVER_URL ? path.join(process.cwd(), './icons') : DIST;
 
-const trayIconPath = `${PUBLIC}/trayicon.png`;
+const trayIconPath = `${ICONS}/trayicon.png`;
 
 const indexHtml = path.join(DIST, 'index.html');
 

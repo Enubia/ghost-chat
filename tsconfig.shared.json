@@ -6,13 +6,13 @@
                 "./shared/*"
             ],
             "#components/*": [
-                "./src/components/*"
+                "./renderer/src/components/*"
             ],
             "#lib/*": [
-                "./src/lib/*"
+                "./renderer/src/lib/*"
             ],
             "#layouts/*": [
-                "./src/layouts/*"
+                "./renderer/src/layouts/*"
             ]
         },
         "resolveJsonModule": true,

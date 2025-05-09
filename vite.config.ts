@@ -27,7 +27,9 @@ export default defineConfig(({ command }) => {
             },
         },
         plugins: [
-            VueRouter(),
+            VueRouter({
+                routesFolder: './renderer/src/pages',
+            }),
 
             vue({
                 template: {
@@ -44,7 +46,7 @@ export default defineConfig(({ command }) => {
             }),
 
             VueI18nPlugin.vite({
-                include: resolve(process.cwd(), './i18n/locales/**'),
+                include: resolve(process.cwd(), './renderer/i18n/locales/**'),
                 runtimeOnly: false,
             }),
 
@@ -75,10 +77,10 @@ export default defineConfig(({ command }) => {
         clearScreen: false,
         resolve: {
             alias: {
-                '#shared': resolve(__dirname, 'shared'),
-                '#components': resolve(__dirname, 'src/components'),
-                '#lib': resolve(__dirname, 'src/lib'),
-                '#layouts': resolve(__dirname, 'src/layouts'),
+                '#shared': resolve(process.cwd(), 'shared'),
+                '#components': resolve(process.cwd(), 'renderer/src/components'),
+                '#lib': resolve(process.cwd(), 'renderer/src/lib'),
+                '#layouts': resolve(process.cwd(), 'renderer/src/layouts'),
             },
         },
     };

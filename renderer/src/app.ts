@@ -4,9 +4,8 @@ import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHashHistory } from 'vue-router/auto';
 import { routes } from 'vue-router/auto-routes';
 
-import IpcHandler from '#lib/ipchandler';
-
 import App from './App.vue';
+import IpcHandler from './lib/ipchandler';
 import './assets/css/index.css';
 
 const router = createRouter({
