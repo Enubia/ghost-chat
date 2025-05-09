@@ -1,5 +1,1 @@
-export default class FetchVideoIdError extends Error {
-    constructor() {
-        super();
-    }
-}
+export default class FetchVideoIdError extends Error {}
