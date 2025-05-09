@@ -41,11 +41,11 @@
     },
     "scripts": {
         "build:vue": "vite build",
-        "build:electron": "electron-builder --config electron-builder.config.cjs --publish never",
+        "build:electron": "electron-builder --config ./configs/electron-builder.config.cjs --publish never",
         "build": "pnpm build:vue && pnpm build:electron",
-        "build:release": "pnpm build:vue && electron-builder --config electron-builder.config.cjs",
-        "changelog:generate-vue": "auto-changelog --handlebars-setup handlebars-setup.cjs -p -l false -t ./changelog-template-vue.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0 --output src/components/changelog/Generated.vue && eslint --fix src/components/changelog/Generated.vue",
-        "changelog:generate": "auto-changelog -p -l false -t ./changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
+        "build:release": "pnpm build:vue && electron-builder --config ./configs/electron-builder.config.cjs",
+        "changelog:generate-vue": "auto-changelog --handlebars-setup ./configs/handlebars-setup.cjs -p -l false -t ./configs/changelog-template-vue.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0 --output src/components/changelog/Generated.vue && eslint --fix src/components/changelog/Generated.vue",
+        "changelog:generate": "auto-changelog -p -l false -t ./configs/changelog-template.hbs --ignore-commit-pattern \"chore\\(deps\\)|chore: release|Enubia/renovate\" --starting-version v2.0.0",
         "changelog:push": "git add . && git commit -m \"chore: update changelog\" && git push",
         "changelog:update": "pnpm changelog:generate && pnpm changelog:generate-vue && pnpm changelog:push",
         "clean": "rimraf out node_modules",
@@ -56,7 +56,7 @@
         "lint": "pnpm lint:src && pnpm lint:shared && pnpm lint:electron",
         "lint:fix": "eslint --fix src shared electron",
         "typecheck": "vue-tsc --noEmit && tsc --noEmit -p ./electron/tsconfig.json",
-        "publish": "pnpm changelog:update && release-it",
+        "publish": "pnpm changelog:update && release-it --config ./configs/release-it.json",
         "postinstall": "simple-git-hooks"
     },
     "devDependencies": {
