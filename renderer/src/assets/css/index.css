@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    :root  {
+    :root {
         --background: 200.4 0% 95%;
         --foreground: 200.4 0% 0%;
         --card: 200.4 0% 90%;
@@ -27,7 +26,7 @@
         --radius: 0.3rem;
     }
 
-    .dark  {
+    .dark {
         --background: 200.4 10% 5%;
         --foreground: 200.4 0% 90%;
         --card: 200.4 0% 0%;
@@ -85,7 +84,8 @@ body {
     justify-content: center;
 }
 
-button, a {
+button,
+a {
     -webkit-app-region: no-drag;
     cursor: pointer;
 }

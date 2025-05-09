@@ -4,6 +4,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 const compat = new FlatCompat();
 export default antfu(
     {
+        formatters: true,
         stylistic: {
             indent: 4,
             semi: true,
