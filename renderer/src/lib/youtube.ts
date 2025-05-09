@@ -3,7 +3,8 @@ import StreamNotStartedError from '#shared/errors/streamnotstartederror';
 import { delay } from '#shared/utils/delay';
 
 const FIVE_SECONDS = 1000 * 5;
-export const FETCH_VIDEO_ID_ERROR = 'fetch-video-id-error';
+export const FETCH_VIDEO_ID_ERROR = 'fetch-video-id-error' as const;
+export const TIMEOUT_EXCEEDED = 'timeout-exceeded' as const;
 
 async function getLiveVideoID(channelId: string) {
     const response = await fetch(`https://www.youtube.com/embed/live_stream?channel=${channelId}`);
@@ -24,13 +25,12 @@ async function getLiveVideoID(channelId: string) {
 }
 
 export async function getYoutubeChatURL(channelId: string) {
-    let url = '';
     let tries = 50;
 
-    while (tries > 0) {
+    do {
         try {
             const videoId = await getLiveVideoID(channelId);
-            url = `https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`;
+            return new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`);
         } catch (error) {
             if (error instanceof FetchVideoIdError) {
                 return FETCH_VIDEO_ID_ERROR;
@@ -41,7 +41,7 @@ export async function getYoutubeChatURL(channelId: string) {
                 await delay(FIVE_SECONDS);
             }
         }
-    }
+    } while (tries > 0);
 
-    return url;
+    return TIMEOUT_EXCEEDED;
 }
