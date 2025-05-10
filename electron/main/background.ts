@@ -51,13 +51,7 @@ app.on('ready', () => {
         .registerWindow(mainWindow)
         .registerEvents(indexHtml);
 
-    if (process.env.VITE_DEV_SERVER_URL) {
-        new AutoUpdater(store, mainWindow, true).init();
-        // mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
-    } else {
-        // only call updater for prod environment
-        new AutoUpdater(store, mainWindow, false).init();
-    }
+    new AutoUpdater(store, mainWindow, !!process.env.VITE_DEV_SERVER_URL).init();
 
     const keybinds = store.get('keybinds');
 
