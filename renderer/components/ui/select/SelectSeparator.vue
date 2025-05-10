@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'vue';
 import { SelectSeparator } from 'radix-vue';
 import { computed } from 'vue';
 
-import { cn } from '../#lib/utils/cn';
+import { cn } from '#lib//utils/cn';
 
 const props = defineProps<SelectSeparatorProps & { class?: HTMLAttributes['class'] }>();
 

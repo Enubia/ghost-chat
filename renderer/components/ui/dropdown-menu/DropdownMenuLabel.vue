@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'vue';
 import { DropdownMenuLabel, useForwardProps } from 'radix-vue';
 import { computed } from 'vue';
 
-import { cn } from '../#lib/utils/cn';
+import { cn } from '#lib//utils/cn';
 
 const props = defineProps<DropdownMenuLabelProps & { class?: HTMLAttributes['class']; inset?: boolean }>();
 

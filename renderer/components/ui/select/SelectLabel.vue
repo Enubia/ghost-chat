@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'vue';
 
 import { SelectLabel } from 'radix-vue';
 
-import { cn } from '../#lib/utils/cn';
+import { cn } from '#lib//utils/cn';
 
 const props = defineProps<SelectLabelProps & { class?: HTMLAttributes['class'] }>();
 </script>

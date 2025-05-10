@@ -6,7 +6,7 @@ import type { ButtonVariants } from '.';
 
 import { Primitive } from 'radix-vue';
 
-import { cn } from '../#lib/utils/cn';
+import { cn } from '#lib//utils/cn';
 
 import { buttonVariants } from '.';
 

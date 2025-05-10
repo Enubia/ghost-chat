@@ -11,7 +11,7 @@ import {
 } from 'radix-vue';
 import { computed } from 'vue';
 
-import { cn } from '../#lib/utils/cn';
+import { cn } from '#lib//utils/cn';
 
 import { SelectScrollDownButton, SelectScrollUpButton } from '.';
 
