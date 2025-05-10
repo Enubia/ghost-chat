@@ -1,20 +1,6 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "paths": {
-            "#shared/*": [
-                "./shared/*"
-            ],
-            "#components/*": [
-                "./renderer/src/components/*"
-            ],
-            "#lib/*": [
-                "./renderer/src/lib/*"
-            ],
-            "#layouts/*": [
-                "./renderer/src/layouts/*"
-            ]
-        },
         "resolveJsonModule": true,
         "strict": true,
         "noImplicitAny": false,

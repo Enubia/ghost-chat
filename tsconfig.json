@@ -7,6 +7,26 @@
         ],
         "module": "ESNext",
         "moduleResolution": "Bundler",
+        "paths": {
+            "#ipc/*": [
+                "./ipc/*"
+            ],
+            "#components/*": [
+                "./renderer/components/*"
+            ],
+            "#lib/*": [
+                "./renderer/lib/*"
+            ],
+            "#layouts/*": [
+                "./renderer/layouts/*"
+            ],
+            "#constants/*": [
+                "./renderer/constants/*"
+            ],
+            "#state/*": [
+                "./renderer/state/*"
+            ]
+        },
         "types": [
             "@intlify/unplugin-vue-i18n/messages",
             "unplugin-vue-router/client"
@@ -17,6 +37,6 @@
     "include": [
         "./typed-router.d.ts",
         "renderer",
-        "shared"
+        "ipc"
     ]
 }

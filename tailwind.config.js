@@ -7,7 +7,7 @@ module.exports = {
     prefix: '',
 
     content: [
-        './renderer/src/**/*.{ts,tsx,vue}',
+        './renderer/**/*.{ts,tsx,vue}',
     ],
 
     theme: {

@@ -1,13 +1,13 @@
 import type { IpcMainEvent, Rectangle } from 'electron';
 import type ElectronStore from 'electron-store';
 
-import type { AppStore, WindowState } from '#shared/types/store.js';
+import type { AppStore, WindowState } from '#ipc/types/store.js';
 
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '#shared/constants/events.js';
-import { StoreKeys } from '#shared/constants/store.js';
+import { IpcEvent } from '#ipc/constants/events.js';
+import { StoreKeys } from '#ipc/constants/store.js';
 
 import Settings from './window/settings.js';
 

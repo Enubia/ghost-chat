@@ -51,10 +51,10 @@
         "clean": "rimraf out node_modules",
         "dev": "vite",
         "lint:electron": "eslint electron/",
-        "lint:shared": "eslint shared/",
+        "lint:ipc": "eslint ipc/",
         "lint:renderer": "eslint renderer/",
-        "lint": "pnpm lint:renderer && pnpm lint:shared && pnpm lint:electron",
-        "lint:fix": "eslint --fix src shared electron",
+        "lint": "pnpm lint:renderer && pnpm lint:ipc && pnpm lint:electron",
+        "lint:fix": "eslint --fix src ipc electron",
         "typecheck": "vue-tsc --noEmit && tsc --noEmit -p ./electron/tsconfig.json",
         "publish": "pnpm changelog:update && release-it --config ./configs/release-it.json",
         "postinstall": "simple-git-hooks"

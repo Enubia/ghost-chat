@@ -1,6 +1,6 @@
 import type ElectronStore from 'electron-store';
 
-import type { AppStore } from '#shared/types/store.js';
+import type { AppStore } from '#ipc/types/store.js';
 
 import { app, clipboard, ipcMain, Menu, shell, Tray } from 'electron';
 import log from 'electron-log';
@@ -8,7 +8,7 @@ import log from 'electron-log';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { IpcEvent } from '#shared/constants/events.js';
+import { IpcEvent } from '#ipc/constants/events.js';
 
 export default class TrayIcon {
     private tray: Tray | null = null;

@@ -1,11 +1,11 @@
-import type { AppStore, Keybinds, Twitch } from '#shared/types/store.js';
+import type { AppStore, Keybinds, Twitch } from '#ipc/types/store.js';
 
 import { app } from 'electron';
 import ElectronStore from 'electron-store';
 
 import { existsSync, unlinkSync } from 'node:fs';
 
-import { StoreDefaults } from '#shared/constants/store.js';
+import { StoreDefaults } from '#ipc/constants/store.js';
 
 export default function createStore() {
     return new ElectronStore<AppStore>({

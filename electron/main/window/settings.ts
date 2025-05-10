@@ -1,12 +1,12 @@
 import type ElectronStore from 'electron-store';
 
-import type { AppStore } from '#shared/types/store.js';
+import type { AppStore } from '#ipc/types/store.js';
 
 import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 
-import { IpcEvent } from '#shared/constants/events.js';
-import { StoreKeys } from '#shared/constants/store.js';
+import { IpcEvent } from '#ipc/constants/events.js';
+import { StoreKeys } from '#ipc/constants/store.js';
 
 export default class Settings {
     public window: BrowserWindow | null = null;

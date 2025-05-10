@@ -28,7 +28,7 @@ export default defineConfig(({ command }) => {
         },
         plugins: [
             VueRouter({
-                routesFolder: './renderer/src/pages',
+                routesFolder: './renderer/pages',
             }),
 
             vue({
@@ -59,7 +59,7 @@ export default defineConfig(({ command }) => {
                     vite: {
                         resolve: {
                             alias: {
-                                '#shared': resolve(process.cwd(), 'shared'),
+                                '#ipc': resolve(process.cwd(), 'ipc'),
                             },
                         },
                         build: {
@@ -77,10 +77,10 @@ export default defineConfig(({ command }) => {
         clearScreen: false,
         resolve: {
             alias: {
-                '#shared': resolve(process.cwd(), 'shared'),
-                '#components': resolve(process.cwd(), 'renderer/src/components'),
-                '#lib': resolve(process.cwd(), 'renderer/src/lib'),
-                '#layouts': resolve(process.cwd(), 'renderer/src/layouts'),
+                '#ipc': resolve(process.cwd(), 'ipc'),
+                '#components': resolve(process.cwd(), 'renderer/components'),
+                '#lib': resolve(process.cwd(), 'renderer/lib'),
+                '#layouts': resolve(process.cwd(), 'renderer/layouts'),
             },
         },
     };

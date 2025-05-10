@@ -2,12 +2,12 @@ import type { BrowserWindow } from 'electron';
 import type ElectronStore from 'electron-store';
 import type { AppUpdater } from 'electron-updater';
 
-import type { AppStore, Updater } from '#shared/types/store.js';
+import type { AppStore, Updater } from '#ipc/types/store.js';
 
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 
-import { IpcEvent } from '#shared/constants/events.js';
+import { IpcEvent } from '#ipc/constants/events.js';
 
 export default class AutoUpdater {
     private autoUpdater: AppUpdater;
