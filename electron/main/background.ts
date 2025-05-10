@@ -3,7 +3,7 @@ import log from 'electron-log';
 
 import path from 'node:path';
 
-import { IpcEvent } from '#shared/constants/index.js';
+import { IpcEvent } from '#ipc/constants/events.js';
 
 import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
@@ -33,12 +33,10 @@ const store = createStore();
 
 log.info('Store created');
 
-// paths relative to the output directory (dist, dist-electron)
-const DIST_ELECTRON = path.join(import.meta.dirname, '../..');
-const DIST = path.join(DIST_ELECTRON, '../out/dist');
-const PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(DIST_ELECTRON, '../public') : DIST;
+const DIST = path.join(process.cwd(), '../..', 'dist');
+const ICONS = process.env.VITE_DEV_SERVER_URL ? path.join(process.cwd(), './icons') : DIST;
 
-const trayIconPath = `${PUBLIC}/trayicon.png`;
+const trayIconPath = `${ICONS}/trayicon.png`;
 
 const indexHtml = path.join(DIST, 'index.html');
 
@@ -53,13 +51,7 @@ app.on('ready', () => {
         .registerWindow(mainWindow)
         .registerEvents(indexHtml);
 
-    if (process.env.VITE_DEV_SERVER_URL) {
-        new AutoUpdater(store, mainWindow, true).init();
-        // mainWindow.on('show', () => mainWindow?.webContents.send(IpcEvent.UpdateNotAvailable));
-    } else {
-        // only call updater for prod environment
-        new AutoUpdater(store, mainWindow, false).init();
-    }
+    new AutoUpdater(store, mainWindow, !!process.env.VITE_DEV_SERVER_URL).init();
 
     const keybinds = store.get('keybinds');
 

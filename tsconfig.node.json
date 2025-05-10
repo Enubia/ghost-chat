@@ -6,10 +6,15 @@
         ],
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
+        "paths": {
+            "#ipc/*": [
+                "./ipc/*"
+            ]
+        },
         "allowSyntheticDefaultImports": true
     },
     "include": [
         "electron",
-        "shared"
+        "ipc"
     ]
 }
