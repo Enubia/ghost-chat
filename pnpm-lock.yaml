@@ -79,8 +79,8 @@ importers:
         specifier: 1.2.1
         version: 1.2.1(@iconify/json@2.2.333)(vite@6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1))
       '@vitejs/plugin-vue':
-        specifier: 5.2.3
-        version: 5.2.3(vite@6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
+        specifier: 5.2.4
+        version: 5.2.4(vite@6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       auto-changelog:
         specifier: 2.5.0
         version: 2.5.0(encoding@0.1.13)
@@ -1266,8 +1266,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vitejs/plugin-vue@5.2.3':
-    resolution: {integrity: sha512-IYSLEQj4LgZZuoVpdSUCw3dIynTWQgPlaRP6iAvMle4My0HdYwr5g5wQAfwOeHQBmYwEkqF70nRpSilr6PoUDg==}
+  '@vitejs/plugin-vue@5.2.4':
+    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0
@@ -5745,7 +5745,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.6.4':
     optional: true
 
-  '@vitejs/plugin-vue@5.2.3(vite@6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
+  '@vitejs/plugin-vue@5.2.4(vite@6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vite: 6.3.4(@types/node@22.14.1)(jiti@2.4.2)(yaml@2.7.1)
       vue: 3.5.13(typescript@5.8.3)
