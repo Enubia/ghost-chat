@@ -2,9 +2,11 @@
 import External from '#components/index/External.vue';
 import Kick from '#components/index/Kick.vue';
 import Twitch from '#components/index/Twitch.vue';
+import Youtube from '#components/index/Youtube.vue';
 
 const components = [
     Twitch,
+    Youtube,
     Kick,
     External,
 ];
