@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 22.15.0
 
+      - name: Change Workdir
+        run: cd app
+
       - name: install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -44,6 +47,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.15.0
+
+      - name: Change Workdir
+        run: cd app
 
       - name: install dependencies
         run: pnpm install --frozen-lockfile
