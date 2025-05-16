@@ -24,9 +24,9 @@
         "changelog:update": "pnpm changelog:generate && pnpm changelog:generate-vue && pnpm changelog:push",
         "clean": "rimraf out node_modules",
         "dev": "vite",
-        "lint:electron": "eslint app/electron/",
-        "lint:ipc": "eslint app/ipc/",
-        "lint:renderer": "eslint app/renderer/",
+        "lint:electron": "eslint electron",
+        "lint:ipc": "eslint ipc",
+        "lint:renderer": "eslint renderer",
         "lint": "pnpm lint:renderer && pnpm lint:ipc && pnpm lint:electron",
         "typecheck": "vue-tsc --noEmit && tsc --noEmit -p ./electron/tsconfig.json",
         "publish": "pnpm changelog:update && release-it --config ./configs/release-it.json"
