@@ -28,5 +28,6 @@ declare module 'vue-router/auto-routes' {
     '/webview/externalsource': RouteRecordInfo<'/webview/externalsource', '/webview/externalsource', Record<never, never>, Record<never, never>>,
     '/webview/kick': RouteRecordInfo<'/webview/kick', '/webview/kick', Record<never, never>, Record<never, never>>,
     '/webview/twitch': RouteRecordInfo<'/webview/twitch', '/webview/twitch', Record<never, never>, Record<never, never>>,
+    '/webview/youtube': RouteRecordInfo<'/webview/youtube', '/webview/youtube', Record<never, never>, Record<never, never>>,
   }
 }

@@ -8,38 +8,38 @@ import IpcHandler from '#lib/ipchandler';
 
 import { KickSearchParams } from '../../constants/searchparams';
 
-const kick = shallowRef(await IpcHandler.getKickOptions());
+const kick = await IpcHandler.getKickOptions();
 const link = shallowRef(new URL('https://kick-chat.corard.tv/v1/chat'));
 
 let channel = '';
 
-if (kick.value.channel !== '') {
-    channel = kick.value.channel;
-} else if (kick.value.defaultChannel !== '') {
-    channel = kick.value.defaultChannel;
+if (kick.channel !== '') {
+    channel = kick.channel;
+} else if (kick.defaultChannel !== '') {
+    channel = kick.defaultChannel;
 }
 
 link.value.searchParams.append(KickSearchParams.USER, channel);
-link.value.searchParams.append(KickSearchParams.FONT_SIZE, kick.value.fontSize);
-link.value.searchParams.append(KickSearchParams.STROKE, kick.value.stroke);
-link.value.searchParams.append(KickSearchParams.ANIMATE, kick.value.animate.toString());
+link.value.searchParams.append(KickSearchParams.FONT_SIZE, kick.fontSize);
+link.value.searchParams.append(KickSearchParams.STROKE, kick.stroke);
+link.value.searchParams.append(KickSearchParams.ANIMATE, kick.animate.toString());
 
-if (kick.value.fade) {
-    link.value.searchParams.append(KickSearchParams.FADE, kick.value.fadeTimeout.toString());
+if (kick.fade) {
+    link.value.searchParams.append(KickSearchParams.FADE, kick.fadeTimeout.toString());
 }
 
-link.value.searchParams.append(KickSearchParams.BADGES, kick.value.badges.toString());
-link.value.searchParams.append(KickSearchParams.COMMANDS, kick.value.commands.toString());
-link.value.searchParams.append(KickSearchParams.BOTS, kick.value.bots.toString());
+link.value.searchParams.append(KickSearchParams.BADGES, kick.badges.toString());
+link.value.searchParams.append(KickSearchParams.COMMANDS, kick.commands.toString());
+link.value.searchParams.append(KickSearchParams.BOTS, kick.bots.toString());
 
 let webView: WebviewTag;
 
 function constructInjectableJS() {
-    if (!kick.value.userBlacklist || kick.value.userBlacklist.length === 0) {
-        return kick.value.js;
+    if (!kick.userBlacklist || kick.userBlacklist.length === 0) {
+        return kick.js;
     }
 
-    const preparedBlacklist = JSON.stringify(kick.value.userBlacklist).toLowerCase();
+    const preparedBlacklist = JSON.stringify(kick.userBlacklist).toLowerCase();
     const blackList = `
         const observer = new MutationObserver((changes) => {
             for (const change of changes) {
@@ -56,17 +56,17 @@ function constructInjectableJS() {
         });
     `.trim();
 
-    return [blackList, kick.value.js].join('\n');
+    return [blackList, kick.js].join('\n');
 }
 
 onMounted(() => {
     webView = document.querySelector('webview') as WebviewTag;
 
     webView.addEventListener('dom-ready', async () => {
-        if (kick.value.css.length) {
-            await webView.insertCSS(kick.value.css);
+        if (kick.css.length) {
+            await webView.insertCSS(kick.css);
         }
-        if (kick.value.js.length) {
+        if (kick.js.length) {
             await webView.executeJavaScript(constructInjectableJS());
         }
     });
