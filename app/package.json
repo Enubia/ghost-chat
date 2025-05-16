@@ -1,8 +1,12 @@
 {
-    "name": "@ghost-chat/app",
+    "name": "ghost-chat",
     "type": "module",
     "version": "3.4.1",
     "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Enubia/ghost-chat.git"
+    },
     "main": "out/dist-electron/main/background.js",
     "debug": {
         "env": {

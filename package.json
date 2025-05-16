@@ -38,6 +38,6 @@
         "pre-commit": "pnpm dlx lint-staged"
     },
     "lint-staged": {
-        "app/**/*.{css,json,ts,vue}": "pnpm -r exec eslint"
+        "app/**/*.{css,json,ts,vue}": "pnpm --filter ghost-chat exec eslint"
     }
 }
