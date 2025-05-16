@@ -6,7 +6,7 @@ import type { AppStore } from '#ipc/types/store.js';
 import { app, BrowserWindow, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
 
-import { StoreKeys } from '#ipc/constants/store.js';
+import { StoreKeys } from '#ipc/constants/store/keys.js';
 
 export default class Main {
     constructor(private store: ElectronStore<AppStore>) {}
@@ -23,8 +23,6 @@ export default class Main {
             // TODO: see if we can disable this again after everything is migrated to contextBridge
             nodeIntegration: true,
             contextIsolation: false,
-            webSecurity: false,
-            allowRunningInsecureContent: false,
         };
 
         let options: BrowserWindowConstructorOptions = {

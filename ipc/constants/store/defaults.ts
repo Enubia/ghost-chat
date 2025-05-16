@@ -1,15 +1,7 @@
-import type { AppStore } from '../types/store.js';
+import type { AppStore } from '#ipc/types/store.js';
 
-import { FontSize, Stroke } from '../types/store.js';
-
-export enum StoreKeys {
-    Options = 'options',
-    SavedWindowState = 'savedWindowState',
-    Settings = 'settings',
-    Updater = 'updater',
-    General = 'general',
-    Keybind = 'keybind',
-}
+import { FontSize } from './fontsize.js';
+import { Stroke } from './stroke.js';
 
 export const StoreDefaults: AppStore = {
     options: {
@@ -55,6 +47,16 @@ export const StoreDefaults: AppStore = {
             sources: [],
             css: '',
             js: '',
+        },
+        youtube: {
+            channelId: '',
+            css: '',
+            js: '',
+            defaultChannelId: '',
+            userBlacklist: [],
+            retries: 50,
+            fetch_delay: 5,
+            video_url: '',
         },
     },
     savedWindowState: {

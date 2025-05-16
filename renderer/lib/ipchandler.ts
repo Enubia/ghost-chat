@@ -11,6 +11,7 @@ import type {
     Twitch,
     Updater,
     WindowState,
+    Youtube,
 } from '#ipc/types/store';
 
 import { ipcRenderer } from 'electron';
@@ -20,7 +21,9 @@ import { IpcEvent } from '#ipc/constants/events';
 import { cloneValue } from './utils/clonevalue';
 
 export default class IpcHandler {
-    // only parent keys can be deleted
+    /**
+     * Only parent keys can be deleted
+     */
     public static deleteKeyValue(key: keyof AppStore): Promise<void> {
         return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'delete', key });
     }
@@ -68,6 +71,12 @@ export default class IpcHandler {
     public static getWindowState(): Promise<WindowState> {
         return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'savedWindowState' });
     }
+
+    public static getYoutubeOptions(): Promise<Youtube> {
+        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.youtube' });
+    }
+
+    // ------------------------------------
 
     public static setGeneral(value: General): Promise<void> {
         return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value: cloneValue(value) });

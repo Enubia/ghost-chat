@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import { IpcEvent } from '#ipc/constants/events';
-import { StoreDefaults } from '#ipc/constants/store';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
 
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';

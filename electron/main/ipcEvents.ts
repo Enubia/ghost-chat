@@ -7,7 +7,7 @@ import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '#ipc/constants/events.js';
-import { StoreKeys } from '#ipc/constants/store.js';
+import { StoreKeys } from '#ipc/constants/store/keys.js';
 
 import Settings from './window/settings.js';
 

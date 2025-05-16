@@ -1,3 +1,6 @@
+import type { FontSize } from '#ipc/constants/store/fontsize.js';
+import type { Stroke } from '#ipc/constants/store/stroke.js';
+
 interface Shared {
     channel: string;
     fade: boolean;
@@ -24,20 +27,6 @@ export interface Twitch extends Shared {
     fontSizeExact: number;
 }
 
-export enum FontSize {
-    Small = 'Small',
-    Medium = 'Medium',
-    Large = 'Large',
-}
-
-export enum Stroke {
-    Off = 'Off',
-    Thin = 'Thin',
-    Medium = 'Medium',
-    Thick = 'Thick',
-    Thicker = 'Thicker',
-}
-
 export interface Kick extends Shared {
     fontSize: FontSize;
     stroke: Stroke;
@@ -54,10 +43,19 @@ export interface ExternalBrowserSource {
     js: string;
 }
 
+export interface Youtube extends Omit<Shared, 'channel' | 'defaultChannel' | 'fade' | 'fadeTimeout'> {
+    channelId: string;
+    defaultChannelId: string;
+    retries: number;
+    fetch_delay: number;
+    video_url: string;
+}
+
 export interface Options {
     twitch: Twitch;
     kick: Kick;
     external: ExternalBrowserSource;
+    youtube: Youtube;
 }
 
 export interface WindowState {

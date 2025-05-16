@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { FontSize, Stroke } from '#ipc/types/store';
+import type { FontSize } from '#ipc/constants/store/fontsize';
+import type { Stroke } from '#ipc/constants/store/stroke';
 
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
@@ -11,7 +12,7 @@ import { Label } from '#components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
 import { Switch } from '#components/ui/switch';
 import { IpcEvent } from '#ipc/constants/events';
-import { StoreDefaults } from '#ipc/constants/store';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 

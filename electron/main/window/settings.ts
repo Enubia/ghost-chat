@@ -6,7 +6,7 @@ import { BrowserWindow, shell } from 'electron';
 import log from 'electron-log';
 
 import { IpcEvent } from '#ipc/constants/events.js';
-import { StoreKeys } from '#ipc/constants/store.js';
+import { StoreKeys } from '#ipc/constants/store/keys.js';
 
 export default class Settings {
     public window: BrowserWindow | null = null;

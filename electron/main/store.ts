@@ -1,13 +1,16 @@
 import type { AppStore, Keybinds, Twitch } from '#ipc/types/store.js';
 
 import { app } from 'electron';
+import log from 'electron-log';
 import ElectronStore from 'electron-store';
 
 import { existsSync, unlinkSync } from 'node:fs';
 
-import { StoreDefaults } from '#ipc/constants/store.js';
+import { StoreDefaults } from '#ipc/constants/store/defaults.js';
 
 export default function createStore() {
+    log.info('App version:', app.getVersion());
+
     return new ElectronStore<AppStore>({
         defaults: {
             ...StoreDefaults,
@@ -101,6 +104,16 @@ export default function createStore() {
             '3.3.0': (store) => {
                 store.set('updater.channel', 'stable');
                 store.set('updater.disableAutoUpdates', true);
+            },
+            '3.5.0': (store) => {
+                store.set('options.youtube.channelId', '');
+                store.set('options.youtube.css', '');
+                store.set('options.youtube.js', '');
+                store.set('options.youtube.defaultChannelId', '');
+                store.set('options.youtube.userBlacklist', []);
+                store.set('options.youtube.retries', 50);
+                store.set('options.youtube.fetch_delay', 5);
+                store.set('options.youtube.video_url', '');
             },
         },
     });

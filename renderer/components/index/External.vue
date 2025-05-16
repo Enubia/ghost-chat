@@ -4,7 +4,7 @@ import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { StoreDefaults } from '#ipc/constants/store';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
 import IpcHandler from '#lib/ipchandler';
 
 import { Button } from '../ui/button';

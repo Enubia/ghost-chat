@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
+import { useFetch } from '@vueuse/core';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-import { StoreDefaults } from '#ipc/constants/store';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
 import IpcHandler from '#lib/ipchandler';
-import { getYoutubeChatURL } from '#lib/youtube';
+import { delay } from '#lib/utils/delay';
 
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
@@ -27,10 +28,42 @@ onMounted(async () => {
         channelId.value = youtube.value.channelId;
     }
 
-    if (youtube.value.defaultChannel !== '') {
+    if (youtube.value.defaultChannelId !== '') {
         channelId.value = youtube.value.defaultChannelId;
     }
 });
+
+const TIMEOUT_EXCEEDED = 'timeout-exceeded' as const;
+const UNEXPECTED_ERROR = 'unexpected-error' as const;
+
+async function getYoutubeChatURL() {
+    const FETCH_DELAY = 1000 * (youtube.value.fetch_delay || StoreDefaults.options.youtube.fetch_delay);
+
+    let tries = youtube.value.retries || StoreDefaults.options.youtube.retries;
+
+    const { abort, error, data, execute } = useFetch(`https://www.youtube.com/embed/live_stream?channel=${channelId.value}`).get().text();
+
+    do {
+        await execute();
+
+        if (error) {
+            return UNEXPECTED_ERROR;
+        }
+
+        const videoId = data.value?.match(/"VIDEO_ID":"(.*?)"/)?.at(1);
+
+        if (videoId && videoId !== 'live_stream') {
+            return new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`);
+        } else {
+            tries--;
+            await delay(FETCH_DELAY);
+        }
+    } while (tries > 0);
+
+    abort();
+
+    return TIMEOUT_EXCEEDED;
+}
 
 async function routeChat() {
     if (!channelId.value.length) {
@@ -38,7 +71,7 @@ async function routeChat() {
     }
 
     isLoading.value = true;
-    const result = await getYoutubeChatURL(channelId.value, youtube.value);
+    const result = await getYoutubeChatURL();
 
     switch (result) {
         case 'timeout-exceeded':
@@ -58,7 +91,7 @@ async function routeChat() {
 </script>
 
 <template>
-    <Dialog v-on:update:open="">
+    <Dialog>
         <DialogTrigger>
             <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
                 <Icon icon="fa:youtube-play" color="#FF0000" class="size-12" />

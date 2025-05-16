@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Events } from 'vue-codemirror';
 
-import type { AppStore } from '#ipc/types/store';
+import type { Options } from '#ipc/types/store';
 
 import { css } from '@codemirror/lang-css';
 import { javascript } from '@codemirror/lang-javascript';
@@ -11,9 +11,7 @@ import { Codemirror } from 'vue-codemirror';
 
 import IpcHandler from '#lib/ipchandler';
 
-type Option = keyof AppStore['options'];
-
-const props = defineProps<{ option: Option; type: 'css' | 'js' }>();
+const props = defineProps<{ option: keyof Options; type: 'css' | 'js' }>();
 
 const code = shallowRef('');
 const success = shallowRef(false);
