@@ -23,6 +23,8 @@ export default class Main {
             // TODO: see if we can disable this again after everything is migrated to contextBridge
             nodeIntegration: true,
             contextIsolation: false,
+            webSecurity: false,
+            allowRunningInsecureContent: false,
         };
 
         let options: BrowserWindowConstructorOptions = {

@@ -35,7 +35,7 @@ const notifications = shallowRef({
     showToggleUnbound: false,
 });
 
-const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/versioncheck'];
+const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/webview/youtube', '/versioncheck'];
 
 const $html = document.querySelector('html');
 const $app = document.querySelector('#app');

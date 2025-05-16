@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { useFetch } from '@vueuse/core';
-import { onMounted, shallowRef } from 'vue';
+import { computed, onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -20,6 +20,12 @@ const youtube = shallowRef(StoreDefaults.options.youtube);
 const channelId = shallowRef('');
 const info = shallowRef(t('start.channel.id.info'));
 const isLoading = shallowRef(false);
+const retries = shallowRef(youtube.value.retries || StoreDefaults.options.youtube.retries);
+
+const { abort, error, data, execute } = useFetch(
+    computed(() => `https://www.youtube.com/embed/live_stream?channel=${channelId.value}`),
+    { immediate: false },
+).get().text();
 
 onMounted(async () => {
     youtube.value = await IpcHandler.getYoutubeOptions();
@@ -39,14 +45,10 @@ const UNEXPECTED_ERROR = 'unexpected-error' as const;
 async function getYoutubeChatURL() {
     const FETCH_DELAY = 1000 * (youtube.value.fetch_delay || StoreDefaults.options.youtube.fetch_delay);
 
-    let tries = youtube.value.retries || StoreDefaults.options.youtube.retries;
-
-    const { abort, error, data, execute } = useFetch(`https://www.youtube.com/embed/live_stream?channel=${channelId.value}`).get().text();
-
     do {
         await execute();
 
-        if (error) {
+        if (error.value) {
             return UNEXPECTED_ERROR;
         }
 
@@ -55,10 +57,10 @@ async function getYoutubeChatURL() {
         if (videoId && videoId !== 'live_stream') {
             return new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`);
         } else {
-            tries--;
+            retries.value--;
             await delay(FETCH_DELAY);
         }
-    } while (tries > 0);
+    } while (retries.value > 0);
 
     abort();
 
@@ -71,6 +73,7 @@ async function routeChat() {
     }
 
     isLoading.value = true;
+
     const result = await getYoutubeChatURL();
 
     switch (result) {
@@ -81,6 +84,7 @@ async function routeChat() {
             info.value = t('start.channel.id.unexpected-error');
             break;
         default:
+            await IpcHandler.setKeyValue('options.youtube.channelId', channelId.value);
             await IpcHandler.setKeyValue('options.youtube.video_url', result.href);
             router.push('/webview/youtube');
             break;
@@ -88,10 +92,20 @@ async function routeChat() {
 
     isLoading.value = false;
 }
+
+function stopLoading() {
+    abort();
+    retries.value = 0;
+    isLoading.value = false;
+
+    setTimeout(() => {
+        info.value = t('start.channel.id.info');
+    });
+}
 </script>
 
 <template>
-    <Dialog>
+    <Dialog @update:open="open => open ? null : stopLoading()">
         <DialogTrigger>
             <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
                 <Icon icon="fa:youtube-play" color="#FF0000" class="size-12" />
