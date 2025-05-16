@@ -1,43 +1,43 @@
 {
-  "name": "ghost-chat",
-  "version": "0.0.0",
-  "description": "A Standalone chat overlay for Twitch.tv, Kick.tv and other streaming platforms",
-  "author": {
-    "name": "Marco Schuster",
-    "email": "44695100+Enubia@users.noreply.github.com"
-  },
-  "license": "DBAD",
-  "homepage": "https://github.com/Enubia/ghost-chat#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Enubia/ghost-chat.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Enubia/ghost-chat/issues"
-  },
-  "keywords": [
-    "electron",
-    "typescript",
-    "vue",
-    "twitch",
-    "kick.tv",
-    "chat",
-    "transparent-overlay",
-    "streaming",
-    "live-stream"
-  ],
-  "scripts": {
-    "postinstall": "simple-git-hooks"
-  },
-  "packageManager": "pnpm@10.11.0",
-  "devDependencies": {
-    "lint-staged": "16.0.0",
-    "simple-git-hooks": "2.13.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm dlx lint-staged"
-  },
-  "lint-staged": {
-    "app/**/*.{css,json,ts,vue}": "pnpm -r exec eslint"
-  }
+    "name": "ghost-chat",
+    "version": "0.0.0",
+    "description": "A Standalone chat overlay for Twitch.tv, Kick.tv and other streaming platforms",
+    "author": {
+        "name": "Marco Schuster",
+        "email": "44695100+Enubia@users.noreply.github.com"
+    },
+    "license": "DBAD",
+    "homepage": "https://github.com/Enubia/ghost-chat#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Enubia/ghost-chat.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Enubia/ghost-chat/issues"
+    },
+    "keywords": [
+        "electron",
+        "typescript",
+        "vue",
+        "twitch",
+        "kick.tv",
+        "chat",
+        "transparent-overlay",
+        "streaming",
+        "live-stream"
+    ],
+    "scripts": {
+        "postinstall": "simple-git-hooks"
+    },
+    "packageManager": "pnpm@10.11.0",
+    "devDependencies": {
+        "lint-staged": "16.0.0",
+        "simple-git-hooks": "2.13.0"
+    },
+    "simple-git-hooks": {
+        "pre-commit": "pnpm dlx lint-staged"
+    },
+    "lint-staged": {
+        "app/**/*.{css,json,ts,vue}": "pnpm -r exec eslint"
+    }
 }
