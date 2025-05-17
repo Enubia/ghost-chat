@@ -125,7 +125,7 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
                     <Suspense>
                         <component :is="Component" :key="$route.path" />
                         <template #fallback>
-                            <Icon icon="fa6-solid:spinner" class="animate-spin text-4xl text-primary" />
+                            <Icon icon="svg-spinners:6-dots-rotate" class="text-4xl text-primary" />
                         </template>
                     </Suspense>
                 </template>
