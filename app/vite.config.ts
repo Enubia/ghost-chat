@@ -42,7 +42,7 @@ export default defineConfig(({ command }) => {
             iconify({
                 resources: ['https://unpkg.com/@iconify/json/json'],
                 rotate: 3000,
-                local: ['pepicons-print', 'fa6-brands', 'fa6-solid', 'fa6-regular', 'svg-spinners'],
+                local: ['fa6-brands', 'fa6-solid', 'fa6-regular', 'svg-spinners', 'mdi'],
             }),
 
             VueI18nPlugin.vite({

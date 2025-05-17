@@ -53,13 +53,10 @@ onUnmounted(() => {
 
 <template>
     <div class="center-elements m-auto h-dvh flex-col gap-2">
-        <Icon icon="svg-spinners:blocks-wave" class="mb-5 text-5xl" style="color: #762ce6" />
+        <Icon icon="svg-spinners:ring-resize" class="mb-5 text-5xl" style="color: #762ce6" />
         <span class="text-center">{{ message }}</span>
         <a v-if="showLink" :href="downloadLink" class="center-elements">
-            <Button
-                variant="secondary"
-                class="mt-5"
-            >
+            <Button variant="secondary" class="mt-5">
                 {{ t('version-check.download-link') }}
                 <Icon icon="mdi:open-in-new" class="ml-2" />
             </Button>
