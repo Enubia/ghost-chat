@@ -1,8 +1,8 @@
 import { reactive } from 'vue';
 
-export const versionState = reactive({
+export const versionStore = reactive({
     new: '',
     setNew: (newVersion: string) => {
-        versionState.new = newVersion;
+        versionStore.new = newVersion;
     },
 });

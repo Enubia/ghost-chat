@@ -12,7 +12,7 @@ import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import { downloadLink, kofiLink, paypalLink } from './constants/links';
 import IpcHandler from './lib/ipchandler';
-import { versionState } from './state/version';
+import { versionStore } from './store/version';
 
 const router = useRouter();
 const route = useRoute();
@@ -144,8 +144,8 @@ ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
                     <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5">
                 </a>
             </div>
-            <a v-if="versionState.new.length" :href="downloadLink" class="center-elements bg-green-600 py-2">
-                <small>{{ t('footer.download-link', { new: versionState.new }) }}</small>
+            <a v-if="versionStore.new.length" :href="downloadLink" class="center-elements bg-green-600 py-2">
+                <small>{{ t('footer.download-link', { new: versionStore.new }) }}</small>
                 <Icon icon="mdi:open-in-new" class="ml-2" />
             </a>
         </footer>

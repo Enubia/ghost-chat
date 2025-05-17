@@ -9,7 +9,7 @@ import Button from '#components/ui/button/Button.vue';
 import { IpcEvent } from '#ipc/constants/events';
 
 import { downloadLink } from '../constants/links';
-import { versionState } from '../state/version';
+import { versionStore } from '../store/version';
 
 const router = useRouter();
 
@@ -28,7 +28,7 @@ ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
 
 ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     showLink.value = true;
-    versionState.setNew(versionNumber);
+    versionStore.setNew(versionNumber);
     message.value = t('version-check.update-available', { version: versionNumber });
 });
 
