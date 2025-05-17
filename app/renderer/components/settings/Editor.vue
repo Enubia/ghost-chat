@@ -1,45 +1,42 @@
 <script setup lang="ts">
-import type { Events } from 'vue-codemirror';
-
 import type { Options } from '#ipc/types/store';
 
-import { css } from '@codemirror/lang-css';
-import { javascript } from '@codemirror/lang-javascript';
-import { oneDark } from '@codemirror/theme-one-dark';
-import { onMounted, shallowRef } from 'vue';
-import { Codemirror } from 'vue-codemirror';
+import hljs from 'highlight.js';
+// @ts-expect-error - no type definitions available
+import CodeEditor from 'simple-code-editor';
+import { onMounted, shallowRef, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import IpcHandler from '#lib/ipchandler';
 
 const props = defineProps<{ option: keyof Options; type: 'css' | 'js' }>();
 
+const { t } = useI18n();
+
 const code = shallowRef('');
 const success = shallowRef(false);
-const view = shallowRef<Parameters<Events['ready']>[0]['view']>();
-const extensions = shallowRef<(ReturnType<typeof css> | typeof oneDark)[]>([]);
+const theme = shallowRef('github');
+const debounceTimeout = shallowRef<NodeJS.Timeout | null>(null);
+
+const language = [props.type === 'css' ? ['css', 'CSS'] : ['javascript', 'JS']];
 
 onMounted(async () => {
     if (await IpcHandler.getValueFromKey('savedWindowState.theme') === 'dark') {
-        extensions.value.push(oneDark);
+        theme.value = 'github-dark';
     }
 
     if (props.type === 'css') {
-        extensions.value.push(css());
         code.value = await IpcHandler.getValueFromKey(`options.${props.option}.css`);
     }
 
     if (props.type === 'js') {
-        extensions.value.push(javascript());
         code.value = await IpcHandler.getValueFromKey(`options.${props.option}.js`);
     }
 });
 
-function handleReady(payload: Parameters<Events['ready']>[0]) {
-    view.value = payload.view;
-}
-
 function enableSuccess() {
     success.value = true;
+
     setTimeout(() => {
         success.value = false;
     }, 2000);
@@ -56,20 +53,33 @@ async function save() {
         await IpcHandler.setKeyValue(`options.${props.option}.js`, code.value);
     }
 }
+
+function debouncedSave() {
+    if (debounceTimeout.value !== null) {
+        clearTimeout(debounceTimeout.value);
+    }
+
+    debounceTimeout.value = setTimeout(() => {
+        save();
+        debounceTimeout.value = null;
+    }, 300);
+}
+
+watch(code, debouncedSave);
 </script>
 
 <template>
-    <div class="border-2" :class="success ? 'border-green-600' : 'border-secondary'">
-        <Codemirror
+    <div class="flex flex-col gap-2">
+        <small v-if="success" class="text-green-600">{{ t('settings.success') }}</small>
+        <CodeEditor
             v-model="code"
-            :placeholder="`${type.toUpperCase()} goes here...`"
-            :style="{ height: '400px' }"
-            :autofocus="false"
-            :indent-with-tab="true"
-            :tab-size="4"
-            :extensions="extensions"
-            @ready="handleReady"
-            @blur="save"
+            :line-nums="true"
+            :languages="language"
+            :tab-spaces="4"
+            :highlight="hljs"
+            :theme="theme"
+            height="400px"
+            width="auto"
         />
     </div>
 </template>

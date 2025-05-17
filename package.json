@@ -27,6 +27,7 @@
         "live-stream"
     ],
     "scripts": {
+        "clean": "pnpm -r clean",
         "postinstall": "simple-git-hooks"
     },
     "packageManager": "pnpm@10.11.0",

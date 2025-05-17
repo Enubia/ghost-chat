@@ -46,6 +46,7 @@
             "kick": "kick.com",
             "external": "External Sources"
         },
+        "success": "Setting saved!",
         "general": {
             "locale-change": {
                 "label": "Select your preferred language",
