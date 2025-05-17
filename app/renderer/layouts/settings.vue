@@ -28,8 +28,8 @@ onMounted(async () => {
             </p>
             <Separator />
         </div>
-        <div class="flex">
-            <aside>
+        <div class="flex gap-2">
+            <aside class="sticky top-[6.5rem]">
                 <SidebarNav />
             </aside>
             <div class="min-w-52 pb-4">

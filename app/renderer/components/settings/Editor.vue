@@ -62,7 +62,7 @@ function debouncedSave() {
     debounceTimeout.value = setTimeout(() => {
         save();
         debounceTimeout.value = null;
-    }, 300);
+    }, 2000);
 }
 
 watch(code, debouncedSave);
@@ -83,3 +83,13 @@ watch(code, debouncedSave);
         />
     </div>
 </template>
+
+<style>
+#css-editor > div > div > div.header.border {
+    @apply border-0;
+}
+
+#js-editor > div > div > div.header.border {
+    @apply border-0;
+}
+</style>

@@ -17,6 +17,10 @@ const sidebarNavItems = [
         link: '/settings/twitch',
     },
     {
+        title: t('settings.navigation.youtube'),
+        link: '/settings/youtube',
+    },
+    {
         title: t('settings.navigation.kick'),
         link: '/settings/kick',
     },
@@ -28,10 +32,9 @@ const sidebarNavItems = [
 </script>
 
 <template>
-    <nav class="sticky top-28 z-10 grid space-x-0 space-y-4 px-4">
+    <nav class="grid space-y-2">
         <RouterLink
             v-for="item in sidebarNavItems" :key="item.title" :to="item.link"
-            class="w-full justify-start"
         >
             <Button variant="ghost" class="w-full justify-start" :class="route.name === item.link && 'bg-muted hover:bg-muted'">
                 {{ item.title }}

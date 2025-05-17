@@ -44,7 +44,8 @@
             "general": "General",
             "twitch": "Twitch.tv",
             "kick": "kick.com",
-            "external": "External Sources"
+            "external": "External Sources",
+            "youtube": "YouTube"
         },
         "success": "Setting saved!",
         "general": {
