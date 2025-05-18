@@ -18,7 +18,7 @@ const { t } = useI18n();
 
 const youtube = shallowRef(StoreDefaults.options.youtube);
 const channelId = shallowRef('');
-const info = shallowRef(t('start.channel.id.info'));
+const info = shallowRef(t('start.youtube.channel-id.info'));
 const isLoading = shallowRef(false);
 const retries = shallowRef(youtube.value.retries || StoreDefaults.options.youtube.retries);
 
@@ -78,10 +78,10 @@ async function routeChat() {
 
     switch (result) {
         case 'timeout-exceeded':
-            info.value = t('start.channel.id.timeout-exceeded');
+            info.value = t('start.youtube.channel-id.timeout-exceeded');
             break;
         case 'unexpected-error':
-            info.value = t('start.channel.id.unexpected-error');
+            info.value = t('start.youtube.channel-id.unexpected-error');
             break;
         default:
             await IpcHandler.setKeyValue('options.youtube.channelId', channelId.value);
@@ -99,7 +99,7 @@ function stopLoading() {
     isLoading.value = false;
 
     setTimeout(() => {
-        info.value = t('start.channel.id.info');
+        info.value = t('start.youtube.channel-id.info');
     });
 }
 </script>
