@@ -9,30 +9,30 @@ import IpcHandler from '#lib/ipchandler';
 const youtube = await IpcHandler.getYoutubeOptions();
 const source = new URL(youtube.videoUrl);
 
-function constructInjectableJS() {
-    if (!youtube.userBlacklist || youtube.userBlacklist.length === 0) {
-        return youtube.js;
-    }
+// function constructInjectableJS() {
+//     if (!youtube.userBlacklist || youtube.userBlacklist.length === 0) {
+//         return youtube.js;
+//     }
 
-    const preparedBlacklist = JSON.stringify(youtube.userBlacklist).toLowerCase();
-    const blackList = `
-        const observer = new MutationObserver((changes) => {
-            for (const change of changes) {
-                for (const node of change.addedNodes) {
-                    if (${preparedBlacklist}.includes(node.attributes['data-sender'].value)) {
-                        node.remove();
-                    }
-                }
-            }
-        });
+//     const preparedBlacklist = JSON.stringify(youtube.userBlacklist).toLowerCase();
+//     const blackList = `
+//         const observer = new MutationObserver((changes) => {
+//             for (const change of changes) {
+//                 for (const node of change.addedNodes) {
+//                     if (${preparedBlacklist}.includes(node.attributes['data-sender'].value)) {
+//                         node.remove();
+//                     }
+//                 }
+//             }
+//         });
 
-        observer.observe(document.querySelector('#chat-container'), {
-            childList: true,
-        });
-    `.trim();
+//         observer.observe(document.querySelector('#chat-container'), {
+//             childList: true,
+//         });
+//     `.trim();
 
-    return [blackList, youtube.js].join('\n');
-}
+//     return [blackList, youtube.js].join('\n');
+// }
 
 onMounted(() => {
     const webView = document.querySelector('webview') as WebviewTag;
@@ -42,7 +42,7 @@ onMounted(() => {
             await webView.insertCSS(youtube.css);
         }
         if (youtube.js.length) {
-            await webView.executeJavaScript(constructInjectableJS());
+            await webView.executeJavaScript(youtube.js);
         }
     });
 });

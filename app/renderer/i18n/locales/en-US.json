@@ -313,7 +313,8 @@
             },
             "css-editor": {
                 "label": "Your Custom CSS",
-                "link-info": "You can style the youtube chat with this little tool. Just copy and paste the generated CSS code into this editor and it will apply the styling you've chosen.",
+                "link-info": "You can style the youtube chat with some googling and custom css. Just copy and paste the code into this editor and it will apply the styling you've chosen. Due to the fact that we use the youtube chat directly it's hard to come up with something predefined. Below is an example list of users who made some CSS for OBS.",
+                "chatv2": "(Good starting point if you know some CSS)",
                 "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
             },
             "js-editor": {

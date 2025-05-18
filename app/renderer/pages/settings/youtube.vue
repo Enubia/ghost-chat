@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 import Editor from '#components/settings/Editor.vue';
 import Input from '#components/ui/input/Input.vue';
 import Label from '#components/ui/label/Label.vue';
-import { chatV2 } from '#constants/links';
+import { chatV2, githubcss } from '#constants/links';
 import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
@@ -22,7 +22,7 @@ const userBlacklist = shallowRef(StoreDefaults.options.youtube.userBlacklist);
 const channelSuccess = shallowRef(false);
 const retriesSucess = shallowRef(false);
 const fetchDelaySuccess = shallowRef(false);
-const blacklistSuccess = shallowRef(false);
+// const blacklistSuccess = shallowRef(false);
 
 onMounted(async () => {
     const youtubeOptions = await IpcHandler.getYoutubeOptions();
@@ -52,15 +52,15 @@ async function saveFetchDelay(event: Event) {
     enableFetchDelaySuccess();
 }
 
-async function saveBlacklist(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    const blacklist = value.split(',').map(user => user.trim());
+// async function saveBlacklist(event: Event) {
+//     const value = (event.target as HTMLInputElement).value;
+//     const blacklist = value.split(',').map(user => user.trim());
 
-    await IpcHandler.setKeyValue('options.youtube.userBlacklist', blacklist);
-    userBlacklist.value = blacklist;
+//     await IpcHandler.setKeyValue('options.youtube.userBlacklist', blacklist);
+//     userBlacklist.value = blacklist;
 
-    enableBlacklistSuccess();
-}
+//     enableBlacklistSuccess();
+// }
 
 function enableChannelSuccess() {
     channelSuccess.value = true;
@@ -83,12 +83,12 @@ function enableFetchDelaySuccess() {
     }, 2000);
 }
 
-function enableBlacklistSuccess() {
-    blacklistSuccess.value = true;
-    setTimeout(() => {
-        blacklistSuccess.value = false;
-    }, 2000);
-}
+// function enableBlacklistSuccess() {
+//     blacklistSuccess.value = true;
+//     setTimeout(() => {
+//         blacklistSuccess.value = false;
+//     }, 2000);
+// }
 </script>
 
 <template>
@@ -124,7 +124,7 @@ function enableBlacklistSuccess() {
             />
         </div>
 
-        <div class="flex flex-col gap-2">
+        <!-- <div class="flex flex-col gap-2">
             <Label for="user-blacklist">
                 {{ t('settings.youtube.user-blacklist.label') }}
             </Label>
@@ -132,14 +132,19 @@ function enableBlacklistSuccess() {
                 id="user-blacklist" :model-value="userBlacklist.join(', ')"
                 :class="blacklistSuccess && 'border-green-600 border'" @change="saveBlacklist"
             />
-        </div>
+        </div> -->
 
         <div class="flex flex-col gap-2">
             <Label for="css-editor" class="flex flex-col gap-1">
                 {{ t('settings.youtube.css-editor.label') }}
-                <small class="font-light">
+                <small class="flex flex-col gap-2 font-light">
                     {{ t('settings.youtube.css-editor.link-info') }}
-                    <a class="text-primary underline" :href="chatV2">{{ chatV2 }}</a>
+                    <hr>
+                    <span>
+                        <a class="text-primary underline" :href="chatV2">{{ chatV2 }}</a>
+                        {{ t('settings.youtube.css-editor.chatv2') }}
+                    </span>
+                    <a v-for="item, index of githubcss" :key="index" class="text-primary underline" :href="item">{{ item }}</a>
                 </small>
             </Label>
             <small class="text-yellow-600">{{ t('settings.youtube.css-editor.info') }}</small>

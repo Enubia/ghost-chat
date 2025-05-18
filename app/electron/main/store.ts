@@ -15,7 +15,7 @@ export default function createStore() {
         defaults: {
             ...StoreDefaults,
 
-            // Hack to make sure the store is always up-to-date at first init,
+            // Hack to make sure the store is alwas up-to-date at first init,
             // default behavior of electron-store
             // being to consider the store in version '0.0.0' by default
             // @ts-expect-error https://github.com/sindresorhus/electron-store/issues/256

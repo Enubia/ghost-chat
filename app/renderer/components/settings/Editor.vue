@@ -59,7 +59,7 @@ useEventListener(editor, 'focusout', save);
             :tab-spaces="4"
             :highlight="hljs"
             :theme="theme"
-            fontsize="12px"
+            fontsize="10px"
             height="400px"
             width="auto"
             max-width="600px"
