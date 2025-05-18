@@ -1,9 +1,13 @@
-v3.5:
-    Youtube integration:
-        ✔ figure out what youtube overlay to use @done(25-05-16 14:22)
-            ✔ maybe we can somehow get the current live chat from the youtube handle? (test.ts has an implementation to get the current live chat with just the channel id) @done(25-05-16 14:23)
-        ☐ check what styling options are available
-            ☐ there's something called "chat v2", might be useful https://chatv2.septapus.com/
+v3.5 (Youtube integration):
+    ✔ figure out what youtube overlay to use @done(25-05-16 14:22)
+        ✔ maybe we can somehow get the current live chat from the youtube handle? (test.ts has an implementation to get the current live chat with just the channel id) @done(25-05-16 14:23)
+    ☐ check what styling options are available
+        ☐ there's something called "chat v2", might be useful https://chatv2.septapus.com/
+
+v3.5.1 (code cleanup):
+    ☐ refactor settings pages, we have so much duplicated code (looking at you success enabling functions)
+    
+    ☐ cleanup translation files, lots of duplicated messages which can be combined probably
 
 v3.6 (Multistream):
     ☐ keep all the current functionality

@@ -43,7 +43,7 @@ const TIMEOUT_EXCEEDED = 'timeout-exceeded' as const;
 const UNEXPECTED_ERROR = 'unexpected-error' as const;
 
 async function getYoutubeChatURL() {
-    const FETCH_DELAY = 1000 * (youtube.value.fetch_delay || StoreDefaults.options.youtube.fetch_delay);
+    const FETCH_DELAY = 1000 * (youtube.value.fetchDelay || StoreDefaults.options.youtube.fetchDelay);
 
     do {
         await execute();
@@ -85,7 +85,7 @@ async function routeChat() {
             break;
         default:
             await IpcHandler.setKeyValue('options.youtube.channelId', channelId.value);
-            await IpcHandler.setKeyValue('options.youtube.video_url', result.href);
+            await IpcHandler.setKeyValue('options.youtube.videoUrl', result.href);
             router.push('/webview/youtube');
             break;
     }

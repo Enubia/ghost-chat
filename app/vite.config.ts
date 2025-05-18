@@ -78,9 +78,11 @@ export default defineConfig(({ command }) => {
         resolve: {
             alias: {
                 '#ipc': resolve(process.cwd(), 'ipc'),
+                '#constants': resolve(process.cwd(), 'renderer/constants'),
                 '#components': resolve(process.cwd(), 'renderer/components'),
                 '#lib': resolve(process.cwd(), 'renderer/lib'),
                 '#layouts': resolve(process.cwd(), 'renderer/layouts'),
+                '#store': resolve(process.cwd(), 'renderer/store'),
             },
         },
     };

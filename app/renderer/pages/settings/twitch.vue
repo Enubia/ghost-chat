@@ -263,22 +263,22 @@ function enableBlacklistSuccess() {
                 id="user-blacklist" :model-value="userBlacklist.join(', ')"
                 :class="blacklistSuccess && 'border-green-600 border'" @change="updateBlacklist"
             />
+        </div>
 
-            <div class="flex flex-col gap-2">
-                <Label for="css-editor">
-                    {{ t('settings.twitch.css-editor.label') }}
-                </Label>
-                <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
-                <Editor id="css-editor" option="twitch" type="css" />
-            </div>
+        <div class="flex flex-col gap-2">
+            <Label for="css-editor">
+                {{ t('settings.twitch.css-editor.label') }}
+            </Label>
+            <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
+            <Editor id="css-editor" option="twitch" type="css" />
+        </div>
 
-            <div class="flex flex-col gap-2">
-                <Label for="js-editor">
-                    {{ t('settings.twitch.js-editor.label') }}
-                </Label>
-                <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
-                <Editor id="js-editor" option="twitch" type="js" />
-            </div>
+        <div class="flex flex-col gap-2">
+            <Label for="js-editor">
+                {{ t('settings.twitch.js-editor.label') }}
+            </Label>
+            <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
+            <Editor id="js-editor" option="twitch" type="js" />
         </div>
     </Settings>
 </template>

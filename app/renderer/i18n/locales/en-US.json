@@ -60,7 +60,7 @@
             },
             "pre-release": {
                 "label": "Participate in pre-release versions",
-                "info": "Select if you want to participate in pre-release versions. Those will also be downloaded automatically if set."
+                "info": "Select if you want to participate in pre-release versions."
             },
             "close-option": {
                 "label": "Quit on close",
@@ -289,6 +289,31 @@
             },
             "css-editor": {
                 "label": "Your Custom CSS",
+                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+            },
+            "js-editor": {
+                "label": "Your Custom JS",
+                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+            }
+        },
+        "youtube": {
+            "default-channel-id": {
+                "input-label": "Default Channel Id",
+                "info": "In case a default channel id is set the app will auto apply it for you."
+            },
+            "retries": {
+                "input-label": "Retry count (for fetching the live chat URL)"
+            },
+            "fetch-delay": {
+                "input-label": "Delay in seconds between every retry"
+            },
+            "user-blacklist": {
+                "label": "User Blacklist",
+                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+            },
+            "css-editor": {
+                "label": "Your Custom CSS",
+                "link-info": "You can style the youtube chat with this little tool. Just copy and paste the generated CSS code into this editor and it will apply the styling you've chosen.",
                 "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
             },
             "js-editor": {

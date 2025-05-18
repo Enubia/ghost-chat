@@ -47,8 +47,8 @@ export interface Youtube extends Omit<Shared, 'channel' | 'defaultChannel' | 'fa
     channelId: string;
     defaultChannelId: string;
     retries: number;
-    fetch_delay: number;
-    video_url: string;
+    fetchDelay: number;
+    videoUrl: string;
 }
 
 export interface Options {

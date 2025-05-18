@@ -10,15 +10,13 @@ import { IpcEvent } from '#ipc/constants/events';
 const router = useRouter();
 const route = useRoute();
 
-const showVanish = shallowRef(false);
-const showBack = shallowRef(false);
+const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource', '/webview/youtube'];
 
-const vanishWhiteList: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource'];
-
-showVanish.value = vanishWhiteList.includes(route.name);
+const showVanish = shallowRef(webviewRoutes.includes(route.name));
+const showBack = shallowRef(webviewRoutes.includes(route.name));
 
 watch(route, () => {
-    showVanish.value = vanishWhiteList.includes(route.name);
+    showVanish.value = webviewRoutes.includes(route.name);
     showBack.value = route.name !== '/';
 });
 </script>

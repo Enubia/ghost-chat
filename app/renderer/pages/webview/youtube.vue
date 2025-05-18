@@ -7,7 +7,7 @@ import WebView from '#components/WebView.vue';
 import IpcHandler from '#lib/ipchandler';
 
 const youtube = await IpcHandler.getYoutubeOptions();
-const source = new URL(youtube.video_url);
+const source = new URL(youtube.videoUrl);
 
 function constructInjectableJS() {
     if (!youtube.userBlacklist || youtube.userBlacklist.length === 0) {

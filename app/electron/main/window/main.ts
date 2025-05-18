@@ -123,7 +123,7 @@ export default class Main {
                 this.store.set('options.kick.channel', '');
                 this.store.set('options.external.url', '');
                 this.store.set('options.youtube.channelId', '');
-                this.store.set('options.youtube.video_url', '');
+                this.store.set('options.youtube.videoUrl', '');
             }
         });
 

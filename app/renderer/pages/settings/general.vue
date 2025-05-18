@@ -22,7 +22,6 @@ const quitOnClose = shallowRef(StoreDefaults.general.mac.quitOnClose);
 const hideDockIcon = shallowRef(StoreDefaults.general.mac.hideDockIcon);
 const vanish = shallowRef<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
 const showMacOptions = shallowRef(false);
-const rerenderKey = shallowRef(0);
 
 onMounted(async () => {
     const updater = await IpcHandler.getUpdater();
@@ -37,8 +36,6 @@ onMounted(async () => {
 
     quitOnClose.value = mac.quitOnClose;
     hideDockIcon.value = mac.hideDockIcon;
-
-    rerenderKey.value++;
 });
 
 async function saveKeybind(value: string | null) {
@@ -46,18 +43,28 @@ async function saveKeybind(value: string | null) {
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
+async function saveLanguage(value: string) {
+    await IpcHandler.setKeyValue('general.language', value);
+}
+
 async function savePrerelease(value: boolean) {
     await IpcHandler.setKeyValue('updater.channel', value ? 'beta' : 'latest');
     participateInPreRelease.value = value;
 }
 
-async function saveLanguage(value: string) {
-    await IpcHandler.setKeyValue('general.language', value);
+async function saveQuitOnClose(value: boolean) {
+    await IpcHandler.setKeyValue('general.mac.quitOnClose', value);
+    quitOnClose.value = value;
+}
+
+async function saveHideDockIcon(value: boolean) {
+    await IpcHandler.setKeyValue('general.mac.hideDockIcon', value);
+    hideDockIcon.value = value;
 }
 </script>
 
 <template>
-    <Settings :key="rerenderKey">
+    <Settings>
         <div class="flex flex-col gap-2">
             <Label for="locale-switcher">
                 {{ t('settings.general.locale-change.label') }}
@@ -91,8 +98,8 @@ async function saveLanguage(value: string) {
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch
-                    id="quit-one-close" :default-checked="quitOnClose"
-                    @update:checked="(checked) => IpcHandler.setKeyValue('general.mac.quitOnClose', checked)"
+                    id="quit-one-close" :checked="quitOnClose"
+                    @update:checked="saveQuitOnClose"
                 />
                 <Label for="quit-one-close">
                     {{ t('settings.general.close-option.label') }}
@@ -104,8 +111,8 @@ async function saveLanguage(value: string) {
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
                 <Switch
-                    id="hide-dock-icon" :default-checked="hideDockIcon"
-                    @update:checked="(checked) => IpcHandler.setKeyValue('general.mac.hideDockIcon', checked)"
+                    id="hide-dock-icon" :checked="hideDockIcon"
+                    @update:checked="saveHideDockIcon"
                 />
                 <Label for="hide-dock-icon">
                     {{ t('settings.general.hide-dock-icon-options.label') }}

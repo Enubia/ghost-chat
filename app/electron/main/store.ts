@@ -112,8 +112,8 @@ export default function createStore() {
                 store.set('options.youtube.defaultChannelId', '');
                 store.set('options.youtube.userBlacklist', []);
                 store.set('options.youtube.retries', 50);
-                store.set('options.youtube.fetch_delay', 5);
-                store.set('options.youtube.video_url', '');
+                store.set('options.youtube.fetchDelay', 5);
+                store.set('options.youtube.videoUrl', '');
             },
         },
     });

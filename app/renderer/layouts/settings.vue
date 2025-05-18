@@ -5,16 +5,8 @@ import { useI18n } from 'vue-i18n';
 import SidebarNav from '#components/settings/SidebarNav.vue';
 
 import { Separator } from '../components/ui/separator';
-import IpcHandler from '../lib/ipchandler';
 
 const { t } = useI18n();
-
-onMounted(async () => {
-    const theme = (await IpcHandler.getWindowState()).theme;
-    const $html = document.querySelector('html');
-
-    $html?.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-});
 </script>
 
 <template>

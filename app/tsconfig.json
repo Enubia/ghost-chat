@@ -11,6 +11,9 @@
             "#ipc/*": [
                 "./ipc/*"
             ],
+            "#constants/*": [
+                "./renderer/constants/*"
+            ],
             "#components/*": [
                 "./renderer/components/*"
             ],
@@ -20,11 +23,8 @@
             "#layouts/*": [
                 "./renderer/layouts/*"
             ],
-            "#constants/*": [
-                "./renderer/constants/*"
-            ],
-            "#state/*": [
-                "./renderer/state/*"
+            "#store/*": [
+                "./renderer/store/*"
             ]
         },
         "types": [

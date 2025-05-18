@@ -55,8 +55,8 @@ export const StoreDefaults: AppStore = {
             defaultChannelId: '',
             userBlacklist: [],
             retries: 50,
-            fetch_delay: 5,
-            video_url: '',
+            fetchDelay: 5,
+            videoUrl: '',
         },
     },
     savedWindowState: {
