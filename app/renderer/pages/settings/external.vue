@@ -52,8 +52,11 @@ async function removeSource(index: number) {
                 {{ t('settings.external.default-url.input-label') }}
             </Label>
             <Input
-                id="default-url" v-model="defaultUrl" :class="channelSuccess && 'border-green-600 border'"
-                @focusout="saveDefaultUrl" @keydown.enter="saveDefaultUrl"
+                id="default-url"
+                v-model="defaultUrl"
+                :class="channelSuccess && 'border-green-600 border'"
+                @focusout="saveDefaultUrl"
+                @keydown.enter="saveDefaultUrl"
             />
             <small class="text-muted-foreground">{{ t('settings.external.default-url.info') }}</small>
         </div>

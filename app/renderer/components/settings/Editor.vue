@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import type { Options } from '#ipc/types/store';
 
-import hljs from 'highlight.js';
+import { useEventListener } from '@vueuse/core';
 // @ts-expect-error - no type definitions available
 import CodeEditor from 'simple-code-editor';
-import { onMounted, shallowRef, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { onMounted, shallowRef, useTemplateRef } from 'vue';
 
 import IpcHandler from '#lib/ipchandler';
 
 const props = defineProps<{ option: keyof Options; type: 'css' | 'js' }>();
 
-const { t } = useI18n();
-
 const code = shallowRef('');
-const success = shallowRef(false);
 const theme = shallowRef('github');
-const debounceTimeout = shallowRef<NodeJS.Timeout | null>(null);
+const hljs = shallowRef<HTMLDivElement | null>(null);
+const editor = useTemplateRef<HTMLDivElement>('editor');
 
 const language = [props.type === 'css' ? ['css', 'CSS'] : ['javascript', 'JS']];
 
 onMounted(async () => {
+    hljs.value = document.querySelector('.hljs');
+
     if (await IpcHandler.getValueFromKey('savedWindowState.theme') === 'dark') {
         theme.value = 'github-dark';
     }
@@ -34,16 +33,12 @@ onMounted(async () => {
     }
 });
 
-function enableSuccess() {
-    success.value = true;
+async function save() {
+    hljs.value?.classList.add('border', 'border-green-600');
 
     setTimeout(() => {
-        success.value = false;
+        hljs.value?.classList.remove('border', 'border-green-600');
     }, 2000);
-}
-
-async function save() {
-    enableSuccess();
 
     if (props.type === 'css') {
         await IpcHandler.setKeyValue(`options.${props.option}.css`, code.value);
@@ -54,24 +49,13 @@ async function save() {
     }
 }
 
-function debouncedSave() {
-    if (debounceTimeout.value !== null) {
-        clearTimeout(debounceTimeout.value);
-    }
-
-    debounceTimeout.value = setTimeout(() => {
-        save();
-        debounceTimeout.value = null;
-    }, 2000);
-}
-
-watch(code, debouncedSave);
+useEventListener(editor, 'focusout', save);
 </script>
 
 <template>
     <div class="flex flex-col gap-2">
-        <small v-if="success" class="text-green-600">{{ t('settings.success') }}</small>
         <CodeEditor
+            ref="editor"
             v-model="code"
             :line-nums="true"
             :languages="language"

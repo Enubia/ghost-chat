@@ -47,7 +47,6 @@
             "external": "External Sources",
             "youtube": "YouTube"
         },
-        "success": "Setting saved!",
         "general": {
             "locale-change": {
                 "label": "Select your preferred language",

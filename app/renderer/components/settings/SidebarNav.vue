@@ -32,11 +32,15 @@ const sidebarNavItems = [
 </script>
 
 <template>
-    <nav class="grid space-y-2">
+    <nav class="sticky top-[6.6rem] grid space-y-2">
         <RouterLink
             v-for="item in sidebarNavItems" :key="item.title" :to="item.link"
         >
-            <Button variant="ghost" class="w-full justify-start" :class="route.name === item.link && 'bg-muted hover:bg-muted'">
+            <Button
+                variant="ghost"
+                class="w-full justify-start"
+                :class="route.name === item.link && 'bg-muted hover:bg-muted'"
+            >
                 {{ item.title }}
             </Button>
         </RouterLink>

@@ -22,6 +22,7 @@ export default antfu(
     {
         rules: {
             'antfu/no-top-level-await': ['off'],
+            'style/max-len': ['error', 150],
             curly: ['error', 'all'],
             'import/order': 'off',
             'no-console': ['warn', { allow: ['warn', 'error'] }],
@@ -76,6 +77,13 @@ export default antfu(
             'style/quotes': ['error', 'single', { avoidEscape: true }],
             'ts/consistent-type-definitions': 'off',
             'unused-imports/no-unused-imports': 'warn',
+        },
+    },
+    {
+        files: ['**/ui/**/*.{ts,vue}', '**/i18n/**/*.json'],
+
+        rules: {
+            'style/max-len': 'off',
         },
     },
     ...compat.config({
