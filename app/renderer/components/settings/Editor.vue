@@ -3,9 +3,8 @@ import type { Options } from '#ipc/types/store';
 
 import { useEventListener } from '@vueuse/core';
 import hljs from 'highlight.js';
-// @ts-expect-error - no type definitions available
 import CodeEditor from 'simple-code-editor';
-import { onMounted, shallowRef, useTemplateRef, watch } from 'vue';
+import { onMounted, shallowRef, useTemplateRef } from 'vue';
 
 import IpcHandler from '#lib/ipchandler';
 
