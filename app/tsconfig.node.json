@@ -1,0 +1,20 @@
+{
+    "extends": "./tsconfig.shared.json",
+    "compilerOptions": {
+        "lib": [
+            "ESNext"
+        ],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "paths": {
+            "#ipc/*": [
+                "./ipc/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "electron",
+        "ipc"
+    ]
+}

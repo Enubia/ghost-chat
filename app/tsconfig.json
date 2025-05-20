@@ -1,0 +1,42 @@
+{
+    "extends": "./tsconfig.shared.json",
+    "compilerOptions": {
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "paths": {
+            "#ipc/*": [
+                "./ipc/*"
+            ],
+            "#constants/*": [
+                "./renderer/constants/*"
+            ],
+            "#components/*": [
+                "./renderer/components/*"
+            ],
+            "#lib/*": [
+                "./renderer/lib/*"
+            ],
+            "#layouts/*": [
+                "./renderer/layouts/*"
+            ],
+            "#store/*": [
+                "./renderer/store/*"
+            ]
+        },
+        "types": [
+            "@intlify/unplugin-vue-i18n/messages",
+            "unplugin-vue-router/client"
+        ],
+        "noEmit": true,
+        "isolatedModules": true
+    },
+    "include": [
+        "./typed-router.d.ts",
+        "renderer",
+        "ipc"
+    ]
+}

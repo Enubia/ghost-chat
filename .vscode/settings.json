@@ -36,7 +36,9 @@
         "json",
         "jsonc",
         "yaml",
-        "toml"
+        "toml",
+        "css",
+        "scss"
     ],
 
     "search.exclude": {
