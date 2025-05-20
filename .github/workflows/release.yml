@@ -21,13 +21,12 @@ jobs:
         with:
           node-version: 22.15.0
 
-      - name: Change Workdir
-        run: cd app
-
       - name: install dependencies
+        working-directory: ./app
         run: pnpm install --frozen-lockfile
 
       - name: release artifacts
+        working-directory: ./app
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm build:release
@@ -48,13 +47,12 @@ jobs:
         with:
           node-version: 22.15.0
 
-      - name: Change Workdir
-        run: cd app
-
       - name: install dependencies
+        working-directory: ./app
         run: pnpm install --frozen-lockfile
 
       - name: release artifacts
+        working-directory: ./app
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm build:release
