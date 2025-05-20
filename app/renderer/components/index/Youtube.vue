@@ -20,8 +20,6 @@ const youtube = shallowRef(StoreDefaults.options.youtube);
 const channelId = shallowRef('');
 const info = shallowRef(t('start.youtube.channel-id.info'));
 const isLoading = shallowRef(false);
-// This is now just a reference to the configuration, not a counter that gets decremented
-const retries = shallowRef(youtube.value.retries || StoreDefaults.options.youtube.retries);
 
 const { abort, error, data, execute } = useFetch(
     computed(() => `https://www.youtube.com/embed/live_stream?channel=${channelId.value}`),

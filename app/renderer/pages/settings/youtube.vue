@@ -20,7 +20,7 @@ const fetchDelay = shallowRef(StoreDefaults.options.youtube.fetchDelay);
 const userBlacklist = shallowRef(StoreDefaults.options.youtube.userBlacklist);
 
 const channelSuccess = shallowRef(false);
-const retriesSucess = shallowRef(false);
+const retriesSuccess = shallowRef(false);
 const fetchDelaySuccess = shallowRef(false);
 // const blacklistSuccess = shallowRef(false);
 
@@ -35,6 +35,11 @@ onMounted(async () => {
 
 async function saveDefaultChannelId(event: Event) {
     const value = (event.target as HTMLInputElement).value;
+
+    if (!value.trim()) {
+        return;
+    }
+
     await IpcHandler.setKeyValue('options.youtube.defaultChannelId', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableChannelSuccess();
@@ -43,10 +48,11 @@ async function saveDefaultChannelId(event: Event) {
 async function saveRetries(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     const parsedValue = Number.parseInt(value);
-    if (isNaN(parsedValue) || parsedValue < 0) {
-        // Add error handling/feedback here
+
+    if (Number.isNaN(parsedValue) || parsedValue < 0) {
         return;
     }
+
     await IpcHandler.setKeyValue('options.youtube.retries', parsedValue);
     enableRetriesSuccess();
 }
@@ -54,10 +60,11 @@ async function saveRetries(event: Event) {
 async function saveFetchDelay(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     const parsedValue = Number.parseInt(value);
-    if (isNaN(parsedValue) || parsedValue < 0) {
-        // Add error handling/feedback here
+
+    if (Number.isNaN(parsedValue) || parsedValue < 0) {
         return;
     }
+
     await IpcHandler.setKeyValue('options.youtube.fetchDelay', parsedValue);
     enableFetchDelaySuccess();
 }
@@ -80,9 +87,9 @@ function enableChannelSuccess() {
 }
 
 function enableRetriesSuccess() {
-    retriesSucess.value = true;
+    retriesSuccess.value = true;
     setTimeout(() => {
-        retriesSucess.value = false;
+        retriesSuccess.value = false;
     }, 2000);
 }
 
@@ -119,7 +126,7 @@ function enableFetchDelaySuccess() {
                 {{ t('settings.youtube.retries.input-label') }}
             </Label>
             <Input
-                id="retries" v-model="retries" :class="retriesSucess && 'border-green-600 border'"
+                id="retries" v-model="retries" :class="retriesSuccess && 'border-green-600 border'"
                 @change="saveRetries"
             />
         </div>
