@@ -15,6 +15,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 
 const { t, rt, tm } = useI18n();
 
@@ -77,7 +78,7 @@ const blacklistSuccess = shallowRef(false);
 async function saveDefaultChannel() {
     await IpcHandler.setKeyValue('options.twitch.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    enableChannelSuccess();
+    enableSuccessIndicator(channelSuccess);
 }
 
 async function saveUseJChat(value: boolean) {
@@ -166,27 +167,13 @@ async function updateBlacklist(event: Event) {
     await IpcHandler.setKeyValue('options.twitch.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
-    enableBlacklistSuccess();
+    enableSuccessIndicator(blacklistSuccess);
 }
 
 async function saveFadeTimeout(value: number) {
     if (fade.value) {
         await IpcHandler.setKeyValue('options.twitch.fadeTimeout', value);
     }
-}
-
-function enableChannelSuccess() {
-    channelSuccess.value = true;
-    setTimeout(() => {
-        channelSuccess.value = false;
-    }, 2000);
-}
-
-function enableBlacklistSuccess() {
-    blacklistSuccess.value = true;
-    setTimeout(() => {
-        blacklistSuccess.value = false;
-    }, 2000);
 }
 </script>
 

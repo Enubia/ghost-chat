@@ -11,6 +11,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 
 const { t } = useI18n();
 
@@ -22,7 +23,6 @@ const userBlacklist = shallowRef(StoreDefaults.options.youtube.userBlacklist);
 const channelSuccess = shallowRef(false);
 const retriesSuccess = shallowRef(false);
 const fetchDelaySuccess = shallowRef(false);
-// const blacklistSuccess = shallowRef(false);
 
 onMounted(async () => {
     const youtubeOptions = await IpcHandler.getYoutubeOptions();
@@ -42,7 +42,7 @@ async function saveDefaultChannelId(event: Event) {
 
     await IpcHandler.setKeyValue('options.youtube.defaultChannelId', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    enableChannelSuccess();
+    enableSuccessIndicator(channelSuccess);
 }
 
 async function saveRetries(event: Event) {
@@ -54,7 +54,7 @@ async function saveRetries(event: Event) {
     }
 
     await IpcHandler.setKeyValue('options.youtube.retries', parsedValue);
-    enableRetriesSuccess();
+    enableSuccessIndicator(retriesSuccess);
 }
 
 async function saveFetchDelay(event: Event) {
@@ -66,46 +66,8 @@ async function saveFetchDelay(event: Event) {
     }
 
     await IpcHandler.setKeyValue('options.youtube.fetchDelay', parsedValue);
-    enableFetchDelaySuccess();
+    enableSuccessIndicator(fetchDelaySuccess);
 }
-
-// async function saveBlacklist(event: Event) {
-//     const value = (event.target as HTMLInputElement).value;
-//     const blacklist = value.split(',').map(user => user.trim());
-
-//     await IpcHandler.setKeyValue('options.youtube.userBlacklist', blacklist);
-//     userBlacklist.value = blacklist;
-
-//     enableBlacklistSuccess();
-// }
-
-function enableChannelSuccess() {
-    channelSuccess.value = true;
-    setTimeout(() => {
-        channelSuccess.value = false;
-    }, 2000);
-}
-
-function enableRetriesSuccess() {
-    retriesSuccess.value = true;
-    setTimeout(() => {
-        retriesSuccess.value = false;
-    }, 2000);
-}
-
-function enableFetchDelaySuccess() {
-    fetchDelaySuccess.value = true;
-    setTimeout(() => {
-        fetchDelaySuccess.value = false;
-    }, 2000);
-}
-
-// function enableBlacklistSuccess() {
-//     blacklistSuccess.value = true;
-//     setTimeout(() => {
-//         blacklistSuccess.value = false;
-//     }, 2000);
-// }
 </script>
 
 <template>

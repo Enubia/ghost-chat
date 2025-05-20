@@ -15,6 +15,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 
 const { t } = useI18n();
 
@@ -50,7 +51,7 @@ async function saveDefaultChannel(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     await IpcHandler.setKeyValue('options.kick.defaultChannel', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    enableChannelSuccess();
+    enableSuccessIndicator(channelSuccess);
 }
 
 async function saveFontSize(value: string) {
@@ -88,27 +89,13 @@ async function updateBlacklist(event: Event) {
     await IpcHandler.setKeyValue('options.kick.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
-    enableBlacklistSuccess();
+    enableSuccessIndicator(blacklistSuccess);
 }
 
 async function saveFadeTimeout(value: string | number) {
     if (fade.value) {
         await IpcHandler.setKeyValue('options.kick.fadeTimeout', Number.parseInt(value as string));
     }
-}
-
-function enableChannelSuccess() {
-    channelSuccess.value = true;
-    setTimeout(() => {
-        channelSuccess.value = false;
-    }, 2000);
-}
-
-function enableBlacklistSuccess() {
-    blacklistSuccess.value = true;
-    setTimeout(() => {
-        blacklistSuccess.value = false;
-    }, 2000);
 }
 </script>
 

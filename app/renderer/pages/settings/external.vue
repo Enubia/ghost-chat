@@ -11,6 +11,7 @@ import { Label } from '#components/ui/label';
 import { IpcEvent } from '#ipc/constants/events';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 
 const { t } = useI18n();
 
@@ -28,14 +29,7 @@ onMounted(async () => {
 async function saveDefaultUrl() {
     await IpcHandler.setKeyValue('options.external.defaultUrl', defaultUrl.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
-    enableChannelSuccess();
-}
-
-function enableChannelSuccess() {
-    channelSuccess.value = true;
-    setTimeout(() => {
-        channelSuccess.value = false;
-    }, 2000);
+    enableSuccessIndicator(channelSuccess);
 }
 
 async function removeSource(index: number) {
