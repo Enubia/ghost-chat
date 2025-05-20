@@ -20,6 +20,7 @@ const youtube = shallowRef(StoreDefaults.options.youtube);
 const channelId = shallowRef('');
 const info = shallowRef(t('start.youtube.channel-id.info'));
 const isLoading = shallowRef(false);
+// This is now just a reference to the configuration, not a counter that gets decremented
 const retries = shallowRef(youtube.value.retries || StoreDefaults.options.youtube.retries);
 
 const { abort, error, data, execute } = useFetch(
@@ -43,7 +44,8 @@ const TIMEOUT_EXCEEDED = 'timeout-exceeded' as const;
 const UNEXPECTED_ERROR = 'unexpected-error' as const;
 
 async function getYoutubeChatURL() {
-    const FETCH_DELAY = 1000 * (youtube.value.fetchDelay || StoreDefaults.options.youtube.fetchDelay);
+    const FETCH_DELAY = 1000 * (youtube.value.fetchDelay ?? StoreDefaults.options.youtube.fetchDelay);
+    let remaining = youtube.value.retries ?? StoreDefaults.options.youtube.retries;
 
     do {
         await execute();
@@ -57,10 +59,10 @@ async function getYoutubeChatURL() {
         if (videoId && videoId !== 'live_stream') {
             return new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`);
         } else {
-            retries.value--;
+            remaining--;
             await delay(FETCH_DELAY);
         }
-    } while (retries.value > 0);
+    } while (remaining > 0);
 
     abort();
 
@@ -95,9 +97,7 @@ async function routeChat() {
 
 function stopLoading() {
     abort();
-    retries.value = 0;
     isLoading.value = false;
-
     setTimeout(() => {
         info.value = t('start.youtube.channel-id.info');
     });
