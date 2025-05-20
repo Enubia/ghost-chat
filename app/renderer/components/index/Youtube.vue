@@ -95,10 +95,9 @@ async function routeChat() {
 
 function stopLoading() {
     abort();
+
     isLoading.value = false;
-    setTimeout(() => {
-        info.value = t('start.youtube.channel-id.info');
-    });
+    info.value = t('start.youtube.channel-id.info');
 }
 </script>
 
