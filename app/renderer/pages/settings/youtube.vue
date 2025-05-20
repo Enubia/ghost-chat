@@ -42,13 +42,23 @@ async function saveDefaultChannelId(event: Event) {
 
 async function saveRetries(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    await IpcHandler.setKeyValue('options.youtube.retries', Number.parseInt(value));
+    const parsedValue = Number.parseInt(value);
+    if (isNaN(parsedValue) || parsedValue < 0) {
+        // Add error handling/feedback here
+        return;
+    }
+    await IpcHandler.setKeyValue('options.youtube.retries', parsedValue);
     enableRetriesSuccess();
 }
 
 async function saveFetchDelay(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    await IpcHandler.setKeyValue('options.youtube.fetchDelay', Number.parseInt(value));
+    const parsedValue = Number.parseInt(value);
+    if (isNaN(parsedValue) || parsedValue < 0) {
+        // Add error handling/feedback here
+        return;
+    }
+    await IpcHandler.setKeyValue('options.youtube.fetchDelay', parsedValue);
     enableFetchDelaySuccess();
 }
 
