@@ -15,16 +15,23 @@
     <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal" width="145" />
   </a>
   <a href="https://ko-fi.com/enubia">
-    <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Buy Me A Coffee" width="126" />
+    <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-Fi" width="126" />
   </a>
 </p>
 
 # Ghost Chat
 
-Ghost chat is a standalone, multi-platform [Twitch.tv](https://www.twitch.tv), [Kick.com](https://kick.com) chat as an overlay on windowed/windowed full-screen applications written in Typescript with the help of Electron and Vue.
+Ghost Chat is a standalone, multi-platform chat overlay for [Twitch.tv](https://www.twitch.tv), [Kick.com](https://kick.com), and [YouTube](https://www.youtube.com) live streams. Built with TypeScript using Electron and Vue, it works perfectly on windowed or windowed full-screen applications.
 
-It lets you connect to a channel without the need to open Twitch/Kick in your browser which comes in handy if you happen to have only one monitor,
-or you want to have your chat on your main screen. It is not only limited to Twitch and Kick, you can connect to any chat via the external sources option. Just enter the chat overlay URL and you are good to go.
+It lets you connect to a channel without opening a browser, perfect for single-monitor setups or when you want chat directly on your main screen. Beyond the built-in platforms, you can connect to any chat via the external sources option - just enter the chat overlay URL.
+
+## Key Features
+
+- **Multi-Streaming Platform Support**: Twitch, Kick, YouTube, and custom chat sources
+- **Customizable Interface**: Adjustable opacity, font sizes, and colors
+- **Custom CSS and JS**: Apply your own styling and functionality
+- **Hotkeys**: Quick toggle visibility
+- **Multiple Languages**: Now with German, English, Spanish (Argentina), French, Korean and Russian localizations (Some of them might not be up to date due to a vast majority of changes in recent releases)
 
 ## Downloads
 
@@ -32,30 +39,35 @@ or you want to have your chat on your main screen. It is not only limited to Twi
 - **Download for [Mac Arm](https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-arm64.dmg)**
 - **Download for [Mac Intel](https://github.com/Enubia/ghost-chat/releases/latest/download/Ghost-Chat-x64.dmg)**
 
-## Installation / Usage
+## Installation & Usage
 
-A detailed description is available in our Discord server's faq section and on our [wiki](https://github.com/Enubia/ghost-chat/wiki).
+For detailed instructions, check our Discord server's FAQ section or our [wiki](https://github.com/Enubia/ghost-chat/wiki).
 
 <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
 
-## Additional info
+## Recent Updates (April 2025)
 
-### Translators needed
-Since GhostChat uses i18n, adding new language support is easy, but I need you as a community.
-So if you are a native speaker of a language not yet included you can check [en-US.json](/i18n/locales/en-US.json) and create a new file in this directory with the language ID as the name.
+- Added notification for unbound vanish toggle
+- Updated footer links and version check functionality
+- Improved YouTube chat fetching mechanism
+- Simplified code structure and removed unused components
+- Added French localization
+- Fixed bugs in Kick settings and chat display
+- Added ARM64 support for Apple Silicon Macs
 
-A reference to what the key should look like can be found [here](/src/components/languageMappingList.ts).
+For a complete change history, see the [CHANGELOG](CHANGELOG.md).
 
-Just search for your language and choose the key as the filename for the JSON file.
-If the file already exists and it's just missing some translations you'd like to add then please add them in there, otherwise copy over the parts of en-US.json that you want to translate and replace the English text with your language-specific translations.
+## Help With Translations
 
-Once you are done with the translations, create a PR here on GitHub or post them in the #feature-request channel so that we can add them.
+Ghost Chat uses i18n, making it easy to add new language support. If you speak a language not yet included:
 
-If you have any other suggestions for features, or you've found a bug, feel free to go to create an issue/new feature request either [here on GitHub](https://github.com/Enubia/ghost-chat/issues/new/choose) or in [Discord](https://discord.gg/UVMX32dDcy).
+1. Check the reference file [en-US.json](/i18n/locales/en-US.json)
+2. Create a new file with your language code (or update an existing one)
+3. Submit your translations through a PR or in our Discord's #feature-request channel
 
-# Contributing
+## Contributing
 
-Please refer to our [contributing guidelines](CONTRIBUTING.md).
+Please refer to our [contributing guidelines](CONTRIBUTING.md). We welcome bug reports, feature requests, and code contributions!
 
 <p align="center">
   <a href="https://github.com/enubia/ghost-chat/graphs/contributors">
@@ -72,5 +84,5 @@ Please refer to our [contributing guidelines](CONTRIBUTING.md).
                 srcset="https://api.star-history.com/svg?repos=enubia/ghost-chat&type=Date" />
             <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=enubia/ghost-chat&type=Date" />
         </picture>
-    </p>
-</a>
+    </a>
+</p>
