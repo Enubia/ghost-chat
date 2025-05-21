@@ -1,7 +1,7 @@
 {
     "name": "ghost-chat",
     "version": "0.0.0",
-    "description": "A Standalone chat overlay for Twitch.tv, Kick.tv, YouTube and other streaming platforms",
+    "description": "A Standalone chat overlay for Twitch, Kick, YouTube and other streaming platforms",
     "author": {
         "name": "Marco Schuster",
         "email": "44695100+Enubia@users.noreply.github.com"

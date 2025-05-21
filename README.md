@@ -27,7 +27,7 @@ It lets you connect to a channel without opening a browser, perfect for single-m
 
 ## Key Features
 
-- **Multi-Streaming Platform Support**: Twitch, Kick, YouTube, and custom chat sources
+- **Multiple Streaming Platforms**: Twitch, Kick, YouTube, and custom chat sources
 - **Customizable Interface**: Adjustable opacity, font sizes, and colors
 - **Custom CSS and JS**: Apply your own styling and functionality
 - **Hotkeys**: Quick toggle visibility
@@ -44,18 +44,6 @@ It lets you connect to a channel without opening a browser, perfect for single-m
 For detailed instructions, check our Discord server's FAQ section or our [wiki](https://github.com/Enubia/ghost-chat/wiki).
 
 <a href="https://discord.gg/UVMX32dDcy"><img src="https://discordapp.com/api/guilds/1078447787252916234/widget.png?style=banner2" alt="Discord server"></a>
-
-## Recent Updates (April 2025)
-
-- Added notification for unbound vanish toggle
-- Updated footer links and version check functionality
-- Improved YouTube chat fetching mechanism
-- Simplified code structure and removed unused components
-- Added French localization
-- Fixed bugs in Kick settings and chat display
-- Added ARM64 support for Apple Silicon Macs
-
-For a complete change history, see the [CHANGELOG](CHANGELOG.md).
 
 ## Help With Translations
 
