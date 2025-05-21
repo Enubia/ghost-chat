@@ -1,7 +1,132 @@
 <template>
-<h2 class="text-2xl font-semibold py-2">Latest | 23 April 2025</h2>
+<h2 class="text-2xl font-semibold py-2">Latest | 21 May 2025</h2>
 
 <div class="grid gap-1">
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: youtube
+<a href=https://github.com/Enubia/ghost-chat/pull/1182 class="text-blue-500">#1182</a>
+</span>
+<span>
+
+chore(config): migrate renovate config
+<a href=https://github.com/Enubia/ghost-chat/pull/1142 class="text-blue-500">#1142</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: fix line endings
+<a href=https://github.com/Enubia/ghost-chat/commit/a8900a01dbc6e7957e45954c40082c5732d5b08a class="text-blue-500">a8900a0</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: deps splitting
+<a href=https://github.com/Enubia/ghost-chat/commit/d8bc4f95f178885ac6994cbdd7cd8b2e301b0644 class="text-blue-500">d8bc4f9</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update CI workflow and improve Electron app behavior
+<a href=https://github.com/Enubia/ghost-chat/commit/9e4dc29140c769e1a82e10f9f170fb1b6b9a5238 class="text-blue-500">9e4dc29</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: version check redirect if no update is available
+<a href=https://github.com/Enubia/ghost-chat/commit/bc2ff931afdd42d350b975304b70367a3aff55b4 class="text-blue-500">bc2ff93</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: renamed ipc function call
+<a href=https://github.com/Enubia/ghost-chat/commit/00526cecc2a4fcdc47053d0e5b829350a4f73176 class="text-blue-500">00526ce</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+<a href=https://github.com/Enubia/ghost-chat/commit/4e82ca5aad6f19ecbaab79a2c285541d4ea3fe26 class="text-blue-500">4e82ca5</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: cleanup css
+<a href=https://github.com/Enubia/ghost-chat/commit/193c4eb82b021d409fb25f5a965c5d16313e9854 class="text-blue-500">193c4eb</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed creation timeout
+<a href=https://github.com/Enubia/ghost-chat/commit/90ca452f9add0a390eb41406046e5c4359b99851 class="text-blue-500">90ca452</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: removed manual updater references
+<a href=https://github.com/Enubia/ghost-chat/commit/5443512ba7e000f6f4d7b9fab87bfd930546659f class="text-blue-500">5443512</a>
+</span>
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: add additional footer classes and update footer styles; adjust spacing in index page
+<a href=https://github.com/Enubia/ghost-chat/commit/30a192d5dd51eb099b7c39268bb63d4ee4391def class="text-blue-500">30a192d</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: update HotKeyInput event emission to use 'update
+<a href=https://github.com/Enubia/ghost-chat/commit/4997ea881499445e14bfa3be989afead23fc2201 class="text-blue-500">4997ea8</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: workflow runs
+<a href=https://github.com/Enubia/ghost-chat/commit/7d1b6601542a1910a9210aa8296a80f481abe621 class="text-blue-500">7d1b660</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: rename footerExcludeList to webviewRoutes for clarity; update related logic in App.vue; remove shadow effect from buttons in External, Kick, and Twitch components
+<a href=https://github.com/Enubia/ghost-chat/commit/127a31dd890b07e08376471acaba862e6f6b3af8 class="text-blue-500">127a31d</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update readme
+<a href=https://github.com/Enubia/ghost-chat/commit/5bb9732b9778749d50d331e2697d9b5de37b530f class="text-blue-500">5bb9732</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: release workdir
+<a href=https://github.com/Enubia/ghost-chat/commit/32fb10c14ef75d8ccb92ce0101e3e78bb9f59d49 class="text-blue-500">32fb10c</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">deps</span>: moved electron back to dev deps
+<a href=https://github.com/Enubia/ghost-chat/commit/b46bb2e04c849a080fc636f7f3886818dd75e0c3 class="text-blue-500">b46bb2e</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed vite config typing
+<a href=https://github.com/Enubia/ghost-chat/commit/24a202c14dae87582378dd743a9ba75db64585d5 class="text-blue-500">24a202c</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update tsconfig node version
+<a href=https://github.com/Enubia/ghost-chat/commit/1ded4989fc7dff5ec3b5ea416a68d4b65195fc96 class="text-blue-500">1ded498</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: reenable renovate
+<a href=https://github.com/Enubia/ghost-chat/commit/5c83d782b2da6b5764a762e365a6bce06e2868c8 class="text-blue-500">5c83d78</a>
+</span>
+<span>
+
+choref: fix eslint config
+<a href=https://github.com/Enubia/ghost-chat/commit/5e6d33de12f05e0707cfc5a60bb927904ea06b4a class="text-blue-500">5e6d33d</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: removed unused emits
+<a href=https://github.com/Enubia/ghost-chat/commit/47aa3df40d46e4ebb399c6b971ddb5b62150ac7c class="text-blue-500">47aa3df</a>
+</span>
+</div>
+<hr class="mt-2">
+<h2 class="text-2xl font-semibold py-2">v3.4.1 | 23 April 2025</h2>
+
+<div class="grid gap-1">
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/6960730836f3e0d20898566ee83a8eb2dc3d805c class="text-blue-500">6960730</a>
+</span>
 <span>
 
 <span class="text-green-400 bg-green-900 px-1">feat</span>: added notification for unbound vanish toggle
