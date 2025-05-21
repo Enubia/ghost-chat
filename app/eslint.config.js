@@ -80,7 +80,7 @@ export default antfu(
         },
     },
     {
-        files: ['**/ui/**/*.{ts,vue}', '**/i18n/**/*.json'],
+        files: ['**/ui/**/*.{ts,vue}', '**/*.json'],
 
         rules: {
             'style/max-len': 'off',
