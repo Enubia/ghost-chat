@@ -6,10 +6,6 @@ Like the app? Consider supporting me!
 <img src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
 alt="Donate with PayPal" width="145" />
 </a>
-<a href="https://www.buymeacoffee.com/enubia" target="_blank">
-<img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black"
-alt="Buy Me A Coffee" width="245" />
-</a>
 <a href="https://ko-fi.com/enubia">
 <img src="https://img.shields.io/badge/Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white"
 alt="Buy Me A Coffee" width="126" />
@@ -18,8 +14,35 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 23 April 2025
+## Latest | 21 May 2025
 
+- feat: youtube [`#1182`](https://github.com/Enubia/ghost-chat/pull/1182)
+- chore(config): migrate renovate config [`#1142`](https://github.com/Enubia/ghost-chat/pull/1142)
+- chore: fix line endings [`a8900a0`](https://github.com/Enubia/ghost-chat/commit/a8900a01dbc6e7957e45954c40082c5732d5b08a)
+- chore: deps splitting [`d8bc4f9`](https://github.com/Enubia/ghost-chat/commit/d8bc4f95f178885ac6994cbdd7cd8b2e301b0644)
+- chore: update CI workflow and improve Electron app behavior [`9e4dc29`](https://github.com/Enubia/ghost-chat/commit/9e4dc29140c769e1a82e10f9f170fb1b6b9a5238)
+- fix: version check redirect if no update is available [`bc2ff93`](https://github.com/Enubia/ghost-chat/commit/bc2ff931afdd42d350b975304b70367a3aff55b4)
+- refactor: renamed ipc function call [`00526ce`](https://github.com/Enubia/ghost-chat/commit/00526cecc2a4fcdc47053d0e5b829350a4f73176)
+- chore: update readme [`4e82ca5`](https://github.com/Enubia/ghost-chat/commit/4e82ca5aad6f19ecbaab79a2c285541d4ea3fe26)
+- refactor: cleanup css [`193c4eb`](https://github.com/Enubia/ghost-chat/commit/193c4eb82b021d409fb25f5a965c5d16313e9854)
+- chore: removed creation timeout [`90ca452`](https://github.com/Enubia/ghost-chat/commit/90ca452f9add0a390eb41406046e5c4359b99851)
+- fix: removed manual updater references [`5443512`](https://github.com/Enubia/ghost-chat/commit/5443512ba7e000f6f4d7b9fab87bfd930546659f)
+- feat: add additional footer classes and update footer styles; adjust spacing in index page [`30a192d`](https://github.com/Enubia/ghost-chat/commit/30a192d5dd51eb099b7c39268bb63d4ee4391def)
+- refactor: update HotKeyInput event emission to use 'update:keyup'; change lifecycle hook in Editor.vue to onMounted [`4997ea8`](https://github.com/Enubia/ghost-chat/commit/4997ea881499445e14bfa3be989afead23fc2201)
+- fix: workflow runs [`7d1b660`](https://github.com/Enubia/ghost-chat/commit/7d1b6601542a1910a9210aa8296a80f481abe621)
+- refactor: rename footerExcludeList to webviewRoutes for clarity; update related logic in App.vue; remove shadow effect from buttons in External, Kick, and Twitch components [`127a31d`](https://github.com/Enubia/ghost-chat/commit/127a31dd890b07e08376471acaba862e6f6b3af8)
+- chore: update readme [`5bb9732`](https://github.com/Enubia/ghost-chat/commit/5bb9732b9778749d50d331e2697d9b5de37b530f)
+- fix: release workdir [`32fb10c`](https://github.com/Enubia/ghost-chat/commit/32fb10c14ef75d8ccb92ce0101e3e78bb9f59d49)
+- deps: moved electron back to dev deps [`b46bb2e`](https://github.com/Enubia/ghost-chat/commit/b46bb2e04c849a080fc636f7f3886818dd75e0c3)
+- chore: removed vite config typing [`24a202c`](https://github.com/Enubia/ghost-chat/commit/24a202c14dae87582378dd743a9ba75db64585d5)
+- chore: update tsconfig node version [`1ded498`](https://github.com/Enubia/ghost-chat/commit/1ded4989fc7dff5ec3b5ea416a68d4b65195fc96)
+- chore: reenable renovate [`5c83d78`](https://github.com/Enubia/ghost-chat/commit/5c83d782b2da6b5764a762e365a6bce06e2868c8)
+- choref: fix eslint config [`5e6d33d`](https://github.com/Enubia/ghost-chat/commit/5e6d33de12f05e0707cfc5a60bb927904ea06b4a)
+- chore: removed unused emits [`47aa3df`](https://github.com/Enubia/ghost-chat/commit/47aa3df40d46e4ebb399c6b971ddb5b62150ac7c)
+---
+### v3.4.1 | 23 April 2025
+
+- chore: update changelog [`6960730`](https://github.com/Enubia/ghost-chat/commit/6960730836f3e0d20898566ee83a8eb2dc3d805c)
 - feat: added notification for unbound vanish toggle [`1287dcd`](https://github.com/Enubia/ghost-chat/commit/1287dcd5e0d4b7be903a46bb1bcfaea23bf62ba8)
 - feat: update footer links and version check functionality [`4649bb0`](https://github.com/Enubia/ghost-chat/commit/4649bb0b0e74d77e045687dd17042008ecc5af2f)
 - chore: added todo and test youtube chat fetching [`59b2627`](https://github.com/Enubia/ghost-chat/commit/59b2627fe86f56640ae1b9fcd70ddf7598083af2)
