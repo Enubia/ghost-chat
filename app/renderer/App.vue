@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
+import { useIpcRendererOn } from '@vueuse/electron';
 import { onMounted, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
@@ -76,18 +76,18 @@ watch(route, () => {
             };
 });
 
-ipcRenderer.on(IpcEvent.Vanish, () => {
+useIpcRendererOn(IpcEvent.Vanish, () => {
     $app?.setAttribute('vanished', 'true');
     showMenuBar.value = false;
 });
-ipcRenderer.on(IpcEvent.ShowApp, () => {
+useIpcRendererOn(IpcEvent.ShowApp, () => {
     $app?.removeAttribute('vanished');
     showMenuBar.value = !isTransparent.value && !settings.value.isOpen;
 });
-ipcRenderer.on(IpcEvent.Rerender, () => {
+useIpcRendererOn(IpcEvent.Rerender, () => {
     rerenderKey.value += 1;
 });
-ipcRenderer.on(IpcEvent.ThemeChanged, () => {
+useIpcRendererOn(IpcEvent.ThemeChanged, () => {
     const isDarkTheme = $html?.classList.contains('dark');
 
     if (isDarkTheme) {
@@ -96,7 +96,7 @@ ipcRenderer.on(IpcEvent.ThemeChanged, () => {
         $html?.classList.add('dark');
     }
 });
-ipcRenderer.on(IpcEvent.Notification, (_, notification) => {
+useIpcRendererOn(IpcEvent.Notification, (_, notification) => {
     switch (notification.type) {
         case 'toggleUnbound':
             notifications.value = { showToggleUnbound: true };

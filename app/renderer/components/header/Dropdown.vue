@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
+import { useIpcRenderer, useIpcRendererOn } from '@vueuse/electron';
 import { onBeforeMount, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -16,6 +16,7 @@ const router = useRouter();
 const { t } = useI18n();
 
 const isSettingsOpen = shallowRef(false);
+const ipcRenderer = useIpcRenderer();
 
 onBeforeMount(async () => {
     isSettingsOpen.value = (await IpcHandler.getSettings()).isOpen;
@@ -44,7 +45,7 @@ async function toggleTheme() {
     ipcRenderer.send(IpcEvent.ThemeChanged, isDarkTheme ? 'light' : 'dark');
 }
 
-ipcRenderer.on(IpcEvent.CloseSettings, () => {
+useIpcRendererOn(IpcEvent.CloseSettings, () => {
     isSettingsOpen.value = false;
 });
 </script>

@@ -26,6 +26,9 @@ importers:
       '@vueuse/core':
         specifier: 13.1.0
         version: 13.1.0(vue@3.5.13(typescript@5.8.3))
+      '@vueuse/electron':
+        specifier: ^13.2.0
+        version: 13.2.0(electron@36.2.0)(vue@3.5.13(typescript@5.8.3))
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -1315,6 +1318,12 @@ packages:
     peerDependencies:
       vue: ^3.5.0
 
+  '@vueuse/electron@13.2.0':
+    resolution: {integrity: sha512-QGlmhs/DETsmPD1OpmFrDsYUDsMWvo5TLZjLfs1lz+pYAgbPYmQb1GcDLDVpKmTPI+jkBqnnWKZv4qO4DFk4kQ==}
+    peerDependencies:
+      electron: '>=9.0.0'
+      vue: ^3.5.0
+
   '@vueuse/metadata@10.11.1':
     resolution: {integrity: sha512-IGa5FXd003Ug1qAZmyE8wF3sJ81xGLSqTqtQ6jaVfkeZ4i5kS2mwQF61yhVqojRnenVew5PldLyRgvdl4YYuSw==}
 
@@ -1326,6 +1335,11 @@ packages:
 
   '@vueuse/shared@13.1.0':
     resolution: {integrity: sha512-IVS/qRRjhPTZ6C2/AM3jieqXACGwFZwWTdw5sNTSKk2m/ZpkuuN+ri+WCVUP8TqaKwJYt/KuMwmXspMAw8E6ew==}
+    peerDependencies:
+      vue: ^3.5.0
+
+  '@vueuse/shared@13.2.0':
+    resolution: {integrity: sha512-vx9ZPDF5HcU9up3Jgt3G62dMUfZEdk6tLyBAHYAG4F4n73vpaA7J5hdncDI/lS9Vm7GA/FPlbOmh9TrDZROTpg==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -5808,6 +5822,12 @@ snapshots:
       '@vueuse/shared': 13.1.0(vue@3.5.13(typescript@5.8.3))
       vue: 3.5.13(typescript@5.8.3)
 
+  '@vueuse/electron@13.2.0(electron@36.2.0)(vue@3.5.13(typescript@5.8.3))':
+    dependencies:
+      '@vueuse/shared': 13.2.0(vue@3.5.13(typescript@5.8.3))
+      electron: 36.2.0
+      vue: 3.5.13(typescript@5.8.3)
+
   '@vueuse/metadata@10.11.1': {}
 
   '@vueuse/metadata@13.1.0': {}
@@ -5820,6 +5840,10 @@ snapshots:
       - vue
 
   '@vueuse/shared@13.1.0(vue@3.5.13(typescript@5.8.3))':
+    dependencies:
+      vue: 3.5.13(typescript@5.8.3)
+
+  '@vueuse/shared@13.2.0(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vue: 3.5.13(typescript@5.8.3)
 

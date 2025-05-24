@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
-import { onUnmounted, shallowRef, watch } from 'vue';
+import { useIpcRendererOn } from '@vueuse/electron';
+import { shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -18,21 +18,22 @@ const { t } = useI18n();
 const message = shallowRef(t('version-check.loading-message'));
 const showLink = shallowRef(false);
 const immediateRedirect = shallowRef(false);
+
 const redirectTimeout = setTimeout(() => {
     router.push('/');
 }, 5000);
 
-ipcRenderer.on(IpcEvent.UpdateNotAvailable, () => {
+useIpcRendererOn(IpcEvent.UpdateNotAvailable, () => {
     immediateRedirect.value = true;
 });
 
-ipcRenderer.on(IpcEvent.UpdateAvailable, (_, versionNumber) => {
+useIpcRendererOn(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     showLink.value = true;
     versionStore.setNew(versionNumber);
     message.value = t('version-check.update-available', { version: versionNumber });
 });
 
-ipcRenderer.on(IpcEvent.Error, () => {
+useIpcRendererOn(IpcEvent.Error, () => {
     message.value = t('version-check.error');
 });
 
@@ -41,13 +42,6 @@ watch(immediateRedirect, (val) => {
         clearTimeout(redirectTimeout);
         router.push('/');
     }
-});
-
-// Cleanup, otherwise we'll have memory leaks (MaxListenersExceededWarning)
-onUnmounted(() => {
-    ipcRenderer.removeAllListeners(IpcEvent.UpdateNotAvailable);
-    ipcRenderer.removeAllListeners(IpcEvent.UpdateAvailable);
-    ipcRenderer.removeAllListeners(IpcEvent.Error);
 });
 </script>
 

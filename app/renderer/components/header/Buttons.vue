@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
+import { useIpcRenderer } from '@vueuse/electron';
 import { shallowRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -14,6 +14,7 @@ const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/kick', 
 
 const showVanish = shallowRef(webviewRoutes.includes(route.name));
 const showBack = shallowRef(webviewRoutes.includes(route.name));
+const ipcRenderer = useIpcRenderer();
 
 watch(route, () => {
     showVanish.value = webviewRoutes.includes(route.name);
