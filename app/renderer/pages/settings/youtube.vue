@@ -36,11 +36,7 @@ onMounted(async () => {
 async function saveDefaultChannelId(event: Event) {
     const value = (event.target as HTMLInputElement).value;
 
-    if (!value.trim()) {
-        return;
-    }
-
-    await IpcHandler.setKeyValue('options.youtube.defaultChannelId', value);
+    await IpcHandler.setKeyValue('options.youtube.defaultChannelId', value.trim());
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableSuccessIndicator(channelSuccess);
 }
@@ -80,7 +76,9 @@ async function saveFetchDelay(event: Event) {
                 id="default-channel-id" v-model="defaultChannelId" :class="channelSuccess && 'border-green-600 border'"
                 @change="saveDefaultChannelId"
             />
-            <small class="text-muted-foreground">{{ t('settings.youtube.default-channel-id.info') }}</small>
+            <small class="text-muted-foreground">
+                {{ t('settings.youtube.default-channel-id.info', { channelIdInfo: t('start.youtube.channel-id.info') }) }}
+            </small>
         </div>
 
         <div class="flex flex-col gap-2">

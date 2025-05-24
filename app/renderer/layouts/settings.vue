@@ -23,7 +23,7 @@ const { t } = useI18n();
             <aside>
                 <SidebarNav />
             </aside>
-            <div class="min-w-52 pb-4">
+            <div class="min-w-52 max-w-[30rem] pb-4">
                 <div class="space-y-6">
                     <slot />
                 </div>

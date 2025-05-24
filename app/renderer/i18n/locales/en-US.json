@@ -39,9 +39,13 @@
         "youtube": {
             "title": "YouTube",
             "channel-id": {
-                "info": "Enter your channel id, you can find this on your profile page via the share button. (Copy Channel Id)",
+                "info": "You can find this id on your profile page in the URL (the last part after youtube.com/channel/) or by clicking on \"Share Channel\"!",
+                "fetching-state": "Fetching live video id. (Waiting for your stream to go live)",
                 "timeout-exceeded": "Timeout to connect to chat exceeded! (Is your stream running?)",
                 "unexpected-error": "Failed to connect to chat. Retry or ask for guidance in Discord."
+            },
+            "live-id": {
+                "info": "If you want to test your setup by using unlisted streams, you can input your live id directly since this is not available otherwise. (the last part after youtube.com/live/)"
             }
         }
     },
@@ -307,7 +311,7 @@
         "youtube": {
             "default-channel-id": {
                 "input-label": "Default Channel Id",
-                "info": "In case a default channel id is set the app will auto apply it for you. You can find this ID on your profile page in the URL!"
+                "info": "In case a default channel id is set the app will auto apply it for you. {channelIdInfo}"
             },
             "retries": {
                 "input-label": "Retry count (for fetching the live chat URL)"

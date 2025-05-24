@@ -18,8 +18,11 @@ const { t } = useI18n();
 
 const youtube = shallowRef(StoreDefaults.options.youtube);
 const channelId = shallowRef('');
+const liveId = shallowRef('');
 const info = shallowRef(t('start.youtube.channel-id.info'));
 const isLoading = shallowRef(false);
+const isModalOpen = shallowRef(true);
+const remaining = shallowRef(youtube.value.retries ?? StoreDefaults.options.youtube.retries);
 
 const { abort, error, data, execute } = useFetch(
     computed(() => `https://www.youtube.com/embed/live_stream?channel=${channelId.value}`),
@@ -41,14 +44,21 @@ onMounted(async () => {
 const TIMEOUT_EXCEEDED = 'timeout-exceeded' as const;
 const UNEXPECTED_ERROR = 'unexpected-error' as const;
 
+function resetRemainingTries() {
+    // reset remaining to initial value so that we can try it again later on
+    // if this doesn't happen and the user closes the modal,
+    // it will only try once because the component wasn't rerendered and the value is still 0
+    remaining.value = youtube.value.retries ?? StoreDefaults.options.youtube.retries;
+}
+
 async function getYoutubeChatURL() {
     const FETCH_DELAY = 1000 * (youtube.value.fetchDelay ?? StoreDefaults.options.youtube.fetchDelay);
-    let remaining = youtube.value.retries ?? StoreDefaults.options.youtube.retries;
 
     do {
         await execute();
 
         if (error.value) {
+            resetRemainingTries();
             return UNEXPECTED_ERROR;
         }
 
@@ -57,17 +67,30 @@ async function getYoutubeChatURL() {
         if (videoId && videoId !== 'live_stream') {
             return new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${videoId}`);
         } else {
-            remaining--;
+            remaining.value--;
+            info.value = t('start.youtube.channel-id.fetching-state');
             await delay(FETCH_DELAY);
         }
-    } while (remaining > 0);
+    } while (remaining.value > 0);
 
-    abort();
+    resetRemainingTries();
 
-    return TIMEOUT_EXCEEDED;
+    if (isModalOpen.value) {
+        abort();
+
+        return TIMEOUT_EXCEEDED;
+    }
 }
 
 async function routeChat() {
+    if (liveId.value.length) {
+        const url = new URL(`https://www.youtube.com/live_chat?is_popout=1&v=${liveId.value}`);
+
+        await IpcHandler.setKeyValue('options.youtube.videoUrl', url.href);
+
+        return router.push('/webview/youtube');
+    }
+
     if (!channelId.value.length) {
         return;
     }
@@ -75,6 +98,11 @@ async function routeChat() {
     isLoading.value = true;
 
     const result = await getYoutubeChatURL();
+
+    if (!result) {
+        info.value = t('start.youtube.channel-id.info');
+        return;
+    }
 
     switch (result) {
         case 'timeout-exceeded':
@@ -86,8 +114,7 @@ async function routeChat() {
         default:
             await IpcHandler.setKeyValue('options.youtube.channelId', channelId.value);
             await IpcHandler.setKeyValue('options.youtube.videoUrl', result.href);
-            router.push('/webview/youtube');
-            break;
+            return router.push('/webview/youtube');
     }
 
     isLoading.value = false;
@@ -96,6 +123,9 @@ async function routeChat() {
 function stopLoading() {
     abort();
 
+    // this has to be set so that the loop execution halts when the dialog is closed manually
+    remaining.value = 0;
+    isModalOpen.value = false;
     isLoading.value = false;
     info.value = t('start.youtube.channel-id.info');
 }
@@ -117,10 +147,24 @@ function stopLoading() {
                     {{ info }}
                 </DialogDescription>
             </DialogHeader>
-            <Input v-model="channelId" placeholder="Your youtube channel Id" @keydown.enter="routeChat" />
+            <Input
+                v-model="channelId" :disabled="isLoading" placeholder="Your youtube channel Id"
+                @keydown.enter="routeChat"
+            />
             <Button :disabled="!channelId.length || isLoading" class="flex gap-2" @click="routeChat">
                 {{ t('start.channel.button') }}
                 <Icon v-if="isLoading" icon="svg-spinners:6-dots-rotate" class="animate-spin text-2xl" />
+            </Button>
+            <hr class="border-dashed">
+            <DialogDescription class="grid gap-3">
+                {{ t('start.youtube.live-id.info') }}
+            </DialogDescription>
+            <Input
+                v-model="liveId" :disabled="isLoading" placeholder="Your youtube live Id"
+                @keydown.enter="routeChat"
+            />
+            <Button :disabled="isLoading" class="flex gap-2" @click="routeChat">
+                {{ t('start.channel.button') }}
             </Button>
         </DialogContent>
     </Dialog>

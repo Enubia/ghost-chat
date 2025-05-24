@@ -49,7 +49,7 @@ For detailed instructions, check our Discord server's FAQ section or our [wiki](
 
 Ghost Chat uses i18n, making it easy to add new language support. If you speak a language not yet included:
 
-1. Check the reference file [en-US.json](/i18n/locales/en-US.json)
+1. Check the reference file [en-US.json](/app/renderer/i18n/locales/en-US.json)
 2. Create a new file with your language code (or update an existing one)
 3. Submit your translations through a PR or in our Discord's #feature-request channel
 
