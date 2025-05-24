@@ -29,7 +29,7 @@
         "lint:renderer": "eslint renderer",
         "lint": "pnpm lint:renderer && pnpm lint:ipc && pnpm lint:electron",
         "typecheck": "vue-tsc --noEmit && tsc --noEmit -p ./electron/tsconfig.json",
-        "publish": "pnpm changelog:update && release-it --config ./configs/release-it.json"
+        "release": "pnpm changelog:update && release-it --config ./configs/release-it.json"
     },
     "dependencies": {
         "@iconify/vue": "5.0.0",

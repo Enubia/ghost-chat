@@ -1,5 +1,30 @@
 <template>
-<h2 class="text-2xl font-semibold py-2">Latest | 21 May 2025</h2>
+<h2 class="text-2xl font-semibold py-2">Latest | 24 May 2025</h2>
+
+<div class="grid gap-1">
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: changelog location
+<a href=https://github.com/Enubia/ghost-chat/commit/df0377043ddd2e47f9274e258329b538384cbfee class="text-blue-500">df03770</a>
+</span>
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: youtube live id option
+<a href=https://github.com/Enubia/ghost-chat/commit/3a5253e5bef0ee7ed2d1ce20047c91a53fd19679 class="text-blue-500">3a5253e</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: moved engines to root package.jsona
+<a href=https://github.com/Enubia/ghost-chat/commit/4c58a1dd811d85fd815d3b091b9cdae5a670cdbe class="text-blue-500">4c58a1d</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: fix pnpm version
+<a href=https://github.com/Enubia/ghost-chat/commit/c5d9c86529b11f760b714430af41e7bd52609281 class="text-blue-500">c5d9c86</a>
+</span>
+</div>
+<hr class="mt-2">
+<h2 class="text-2xl font-semibold py-2">v3.5.0 | 21 May 2025</h2>
 
 <div class="grid gap-1">
 <span>
@@ -16,6 +41,11 @@ chore(config): migrate renovate config
 
 <span class="text-blue-400 bg-blue-900 px-1">chore</span>: fix line endings
 <a href=https://github.com/Enubia/ghost-chat/commit/a8900a01dbc6e7957e45954c40082c5732d5b08a class="text-blue-500">a8900a0</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/dff628b9e31325dbedefe0f8b8bae3f177caa5eb class="text-blue-500">dff628b</a>
 </span>
 <span>
 
