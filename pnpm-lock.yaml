@@ -27,7 +27,7 @@ importers:
         specifier: 13.1.0
         version: 13.1.0(vue@3.5.13(typescript@5.8.3))
       '@vueuse/electron':
-        specifier: ^13.2.0
+        specifier: 13.2.0
         version: 13.2.0(electron@35.5.0)(vue@3.5.13(typescript@5.8.3))
       class-variance-authority:
         specifier: 0.7.1
