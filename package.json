@@ -29,6 +29,7 @@
     ],
     "scripts": {
         "clean": "pnpm -r clean",
+        "dev": "pnpm --filter=ghost-chat dev",
         "postinstall": "simple-git-hooks"
     },
     "engines": {
