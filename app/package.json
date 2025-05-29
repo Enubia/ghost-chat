@@ -59,7 +59,7 @@
         "@vitejs/plugin-vue": "5.2.4",
         "auto-changelog": "2.5.0",
         "autoprefixer": "10.4.21",
-        "electron": "35.5.0",
+        "electron": "36.3.2",
         "electron-builder": "26.0.12",
         "eslint": "9.27.0",
         "eslint-plugin-format": "1.0.1",
