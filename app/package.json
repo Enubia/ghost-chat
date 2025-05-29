@@ -61,7 +61,7 @@
         "autoprefixer": "10.4.21",
         "electron": "35.5.0",
         "electron-builder": "26.0.12",
-        "eslint": "9.26.0",
+        "eslint": "9.27.0",
         "eslint-plugin-format": "1.0.1",
         "eslint-plugin-tailwindcss": "3.18.0",
         "release-it": "19.0.2",
