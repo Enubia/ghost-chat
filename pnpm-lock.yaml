@@ -45,8 +45,8 @@ importers:
         specifier: 6.6.2
         version: 6.6.2
       highlight.js:
-        specifier: 11.8.0
-        version: 11.8.0
+        specifier: 11.11.1
+        version: 11.11.1
       radix-vue:
         specifier: 1.9.17
         version: 1.9.17(vue@3.5.13(typescript@5.8.3))
@@ -2575,8 +2575,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  highlight.js@11.8.0:
-    resolution: {integrity: sha512-MedQhoqVdr0U6SSnWPzfiadUcDHfN/Wzq25AkXiQv9oiOO/sG0S7XkvpFIqWBl9Yq1UYyYOOVORs5UW2XlPyzg==}
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
     engines: {node: '>=12.0.0'}
 
   hosted-git-info@4.1.0:
@@ -7164,7 +7164,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  highlight.js@11.8.0: {}
+  highlight.js@11.11.1: {}
 
   hosted-git-info@4.1.0:
     dependencies:
@@ -8590,7 +8590,7 @@ snapshots:
 
   simple-code-editor@2.0.9:
     dependencies:
-      highlight.js: 11.8.0
+      highlight.js: 11.11.1
 
   simple-git-hooks@2.13.0: {}
 
