@@ -14,8 +14,27 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 24 May 2025
+## Latest | 29 May 2025
 
+- fix(deps): update dependency vue to v3.5.16 [`#1195`](https://github.com/Enubia/ghost-chat/pull/1195)
+- fix(deps): update vueuse monorepo to v13.3.0 [`#1201`](https://github.com/Enubia/ghost-chat/pull/1201)
+- fix(deps): update dependency vue-i18n to v11.1.5 [`#1196`](https://github.com/Enubia/ghost-chat/pull/1196)
+- fix(deps): pin dependency @vueuse/electron to v13.2.0 [`#1192`](https://github.com/Enubia/ghost-chat/pull/1192)
+- fix: remove old lock file [`e956cc1`](https://github.com/Enubia/ghost-chat/commit/e956cc1165fe35b3efc03f6278a07bde3bb0db0e)
+- chore: cleaned up translations [`8da561f`](https://github.com/Enubia/ghost-chat/commit/8da561f504c0ca7c480ba4856933b425644ca16d)
+- feat: added brazilian localization [`e17af4b`](https://github.com/Enubia/ghost-chat/commit/e17af4b1442148a7e9bd2b8452c9e3be396bae59)
+- chore: update contributing guidelines [`29f37f5`](https://github.com/Enubia/ghost-chat/commit/29f37f57cd69fa3ac66c2a6a7bced2d8d9cef0c1)
+- refactor: ipcRenderer usage with vueuse/electrona [`3dd4568`](https://github.com/Enubia/ghost-chat/commit/3dd456836cf9bbc8f7bd641ed5e8feea8e5deab8)
+- chore: update build pipeline [`fe90d4b`](https://github.com/Enubia/ghost-chat/commit/fe90d4bceb03075872f3b5e934cea73d94528037)
+- fix: revert electron to v35 [`6426d36`](https://github.com/Enubia/ghost-chat/commit/6426d36197a19999a09362cf281fa5bda77ea038)
+- fix: correctly change locale of the whole app [`55fcdff`](https://github.com/Enubia/ghost-chat/commit/55fcdffcc98e145f7b3b5d52f376529f51494852)
+- fix: hotkey input value not being reflected properly [`7714463`](https://github.com/Enubia/ghost-chat/commit/7714463914418ddd34dd7d2380213d922b580aad)
+- chore: update build pipeline [`0914d35`](https://github.com/Enubia/ghost-chat/commit/0914d35ce69362be90ce2686a2a2bf107896317a)
+- chore: dev script in root package [`9a52db9`](https://github.com/Enubia/ghost-chat/commit/9a52db9218b6829a3055a074add5d913533bb9de)
+---
+### v3.6.0 | 24 May 2025
+
+- chore: update changelog [`f3dc193`](https://github.com/Enubia/ghost-chat/commit/f3dc19322824348cf154527d9d882b0ecaf7e002)
 - chore: changelog location [`df03770`](https://github.com/Enubia/ghost-chat/commit/df0377043ddd2e47f9274e258329b538384cbfee)
 - feat: youtube live id option [`3a5253e`](https://github.com/Enubia/ghost-chat/commit/3a5253e5bef0ee7ed2d1ce20047c91a53fd19679)
 - chore: moved engines to root package.jsona [`4c58a1d`](https://github.com/Enubia/ghost-chat/commit/4c58a1dd811d85fd815d3b091b9cdae5a670cdbe)

@@ -1,7 +1,92 @@
 <template>
-<h2 class="text-2xl font-semibold py-2">Latest | 24 May 2025</h2>
+<h2 class="text-2xl font-semibold py-2">Latest | 29 May 2025</h2>
 
 <div class="grid gap-1">
+<span>
+
+fix(deps): update dependency vue to v3.5.16
+<a href=https://github.com/Enubia/ghost-chat/pull/1195 class="text-blue-500">#1195</a>
+</span>
+<span>
+
+fix(deps): update vueuse monorepo to v13.3.0
+<a href=https://github.com/Enubia/ghost-chat/pull/1201 class="text-blue-500">#1201</a>
+</span>
+<span>
+
+fix(deps): update dependency vue-i18n to v11.1.5
+<a href=https://github.com/Enubia/ghost-chat/pull/1196 class="text-blue-500">#1196</a>
+</span>
+<span>
+
+fix(deps): pin dependency @vueuse/electron to v13.2.0
+<a href=https://github.com/Enubia/ghost-chat/pull/1192 class="text-blue-500">#1192</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: remove old lock file
+<a href=https://github.com/Enubia/ghost-chat/commit/e956cc1165fe35b3efc03f6278a07bde3bb0db0e class="text-blue-500">e956cc1</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: cleaned up translations
+<a href=https://github.com/Enubia/ghost-chat/commit/8da561f504c0ca7c480ba4856933b425644ca16d class="text-blue-500">8da561f</a>
+</span>
+<span>
+
+<span class="text-green-400 bg-green-900 px-1">feat</span>: added brazilian localization
+<a href=https://github.com/Enubia/ghost-chat/commit/e17af4b1442148a7e9bd2b8452c9e3be396bae59 class="text-blue-500">e17af4b</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update contributing guidelines
+<a href=https://github.com/Enubia/ghost-chat/commit/29f37f57cd69fa3ac66c2a6a7bced2d8d9cef0c1 class="text-blue-500">29f37f5</a>
+</span>
+<span>
+
+<span class="text-purple-400 bg-purple-900 px-1">refactor</span>: ipcRenderer usage with vueuse/electrona
+<a href=https://github.com/Enubia/ghost-chat/commit/3dd456836cf9bbc8f7bd641ed5e8feea8e5deab8 class="text-blue-500">3dd4568</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update build pipeline
+<a href=https://github.com/Enubia/ghost-chat/commit/fe90d4bceb03075872f3b5e934cea73d94528037 class="text-blue-500">fe90d4b</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: revert electron to v35
+<a href=https://github.com/Enubia/ghost-chat/commit/6426d36197a19999a09362cf281fa5bda77ea038 class="text-blue-500">6426d36</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: correctly change locale of the whole app
+<a href=https://github.com/Enubia/ghost-chat/commit/55fcdffcc98e145f7b3b5d52f376529f51494852 class="text-blue-500">55fcdff</a>
+</span>
+<span>
+
+<span class="text-yellow-400 bg-yellow-900 px-1">fix</span>: hotkey input value not being reflected properly
+<a href=https://github.com/Enubia/ghost-chat/commit/7714463914418ddd34dd7d2380213d922b580aad class="text-blue-500">7714463</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update build pipeline
+<a href=https://github.com/Enubia/ghost-chat/commit/0914d35ce69362be90ce2686a2a2bf107896317a class="text-blue-500">0914d35</a>
+</span>
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: dev script in root package
+<a href=https://github.com/Enubia/ghost-chat/commit/9a52db9218b6829a3055a074add5d913533bb9de class="text-blue-500">9a52db9</a>
+</span>
+</div>
+<hr class="mt-2">
+<h2 class="text-2xl font-semibold py-2">v3.6.0 | 24 May 2025</h2>
+
+<div class="grid gap-1">
+<span>
+
+<span class="text-blue-400 bg-blue-900 px-1">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/f3dc19322824348cf154527d9d882b0ecaf7e002 class="text-blue-500">f3dc193</a>
+</span>
 <span>
 
 <span class="text-blue-400 bg-blue-900 px-1">chore</span>: changelog location
