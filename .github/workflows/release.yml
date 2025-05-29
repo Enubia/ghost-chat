@@ -22,7 +22,6 @@ jobs:
           node-version: 22.15.0
 
       - name: install dependencies
-        working-directory: ./app
         run: pnpm install --frozen-lockfile
 
       - name: release artifacts
@@ -48,7 +47,6 @@ jobs:
           node-version: 22.15.0
 
       - name: install dependencies
-        working-directory: ./app
         run: pnpm install --frozen-lockfile
 
       - name: release artifacts
