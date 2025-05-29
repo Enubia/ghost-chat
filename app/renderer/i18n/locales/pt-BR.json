@@ -1,0 +1,310 @@
+{
+    "header": {
+        "dropdown": {
+            "start": "Início",
+            "settings": "Configurações",
+            "toggle-color-theme": "Mudar o tema",
+            "changelog": "Changelog"
+        }
+    },
+    "footer": {
+        "download-link": "Nova versão disponível! v{new}",
+        "toggle-missing": "Nenhuma tecla para alternar opacidade definida."
+    },
+    "start": {
+        "channel": {
+            "info": "Coloque seu canal. Ex: enubia_",
+            "button": "Pronto!"
+        },
+        "twitch": {
+            "title": "Twitch.tv"
+        },
+        "kick": {
+            "title": "kick.com"
+        },
+        "external": {
+            "title": "Fonte externa",
+            "info": "Importe qualquer fonte que você deseja carregar",
+            "input": {
+                "error": "Essa não é uma URL válida, deve se parecer com isto: http(s)://(www.)twitch.tv"
+            },
+            "sources-placeholder": "Seu histórico de fonte",
+            "button": "Pronto!"
+        },
+        "youtube": {
+            "title": "YouTube",
+            "channel-id": {
+                "info": "Você pode achar o ID no seu perfil na ultima parte após youtube.com/channel/ ou clicando em \"Compartilhar Canal\"!",
+                "fetching-state": "Procurando a live ativa.",
+                "timeout-exceeded": "Live não encontrada! (Você está ao vivo?)",
+                "unexpected-error": "Falha ao conectar no chat, tente novamente ou peça ajuda no Discord."
+            },
+            "live-id": {
+                "info": "Se você deseja testar a configuração em lives não-listadas, coloque o ID da live direto (a última parte, depois de youtube.com/live/)"
+            }
+        }
+    },
+    "settings": {
+        "title": "Configurações",
+        "info": "Todas as configurações serão salvas automaticamente.",
+        "navigation": {
+            "general": "Geral",
+            "twitch": "Twitch.tv",
+            "kick": "kick.com",
+            "external": "Fontes externas",
+            "youtube": "YouTube"
+        },
+        "general": {
+            "locale-change": {
+                "label": "Selecione sua língua preferida."
+            },
+            "keybind-change": {
+                "label": "Troque o atalho para alternar transparencia",
+                "no-key": "Nenhum atalho definido",
+                "meta-error": "Chaves de comando (Win ou CMD) não são permitidas",
+                "single-key-error": "O atalho precisa ter um modificador (Ex: Shift, Alt, Ctrl) ao menos."
+            },
+            "pre-release": {
+                "label": "Participar das versões de teste",
+                "info": ""
+            },
+            "close-option": {
+                "label": "Minimizar",
+                "info": "Ativando, ao fechar o aplicativo ele em vez de minimizar, irá fechar por completo."
+            },
+            "hide-dock-icon-options": {
+                "label": "Esconder ícone",
+                "info": "Se aplicado, após você iniciar o chat o ícone na barra de tarefas irá sumir (ocultar)."
+            }
+        },
+        "twitch": {
+            "default-channel": {
+                "input-label": "Canal padrão",
+                "info": "Caso seja definido, o programa irá atualizar sozinho."
+            },
+            "chat-selector": {
+                "label": "Usar JChat",
+                "info": "Você pode alterar o serviço do chat aqui, o padrão é KapChat."
+            },
+            "font-size": {
+                "label": "Tamanho da fonte",
+                "select-label": "Escolha o tamanho da fonte",
+                "select-options": {
+                    "small": "Pequeno",
+                    "medium": "Medio",
+                    "large": "Grande"
+                },
+                "info": "Troque o tamanho das linhas."
+            },
+            "animate": {
+                "label": "Animação",
+                "info": "Ativar animações no chat."
+            },
+            "fade": {
+                "label": "Fade",
+                "info": "Você pode apagar mensagens velhas do chat após um determinado tempo (segundos) apagar mensagens antigas.",
+                "timeout-label": "Apagar após {seconds} segundos."
+            },
+            "show-bots": {
+                "label": "Mostrar bots",
+                "info": "KapChat oculta mensagens de bots automaticamente, mas você pode exibi-las novamente."
+            },
+            "hide-commands": {
+                "label": "Ocultar comandos",
+                "info": "Oculta mensagens que começam com comandos (Ex: !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Ocultar insígnias especiais",
+                "info": ""
+            },
+            "font": {
+                "label": "Fonte do chat",
+                "select-label": "Escolha a fonte",
+                "select-options": [
+                    "Segoe UI",
+                    "Lato",
+                    "Source Code Pro",
+                    "Comfortaa",
+                    "Indie Flower",
+                    "Wallpoet"
+                ],
+                "info": "Mudará a fonte usada no chat."
+            },
+            "stroke": {
+                "label": "Traço",
+                "select-label": "Escolha o tamanho do traço",
+                "select-options": {
+                    "off": "Sem",
+                    "thin": "Fino",
+                    "medium": "Medio",
+                    "thick": "Grosso",
+                    "thicker": "Mais grosso"
+                },
+                "info": "Adiciona um traço ao chat."
+            },
+            "shadow": {
+                "label": "Sombra",
+                "select-label": "Escolha o tamanho da sombra",
+                "select-options": {
+                    "off": "Sem",
+                    "small": "Pequena",
+                    "medium": "Média",
+                    "large": "Longa"
+                },
+                "info": "Adiciona uma sombra a mensagem."
+            },
+            "small-caps": {
+                "label": "Formatação",
+                "info": "Converte todas as letras do chat em maiúscula."
+            },
+            "theme": {
+                "label": "Tema do chat",
+                "select-label": "Escolha o tema",
+                "select-options": [
+                    "Baloo Tammudu",
+                    "Segoe UI",
+                    "Roboto",
+                    "Lato",
+                    "Noto Sans",
+                    "Source Code Pro",
+                    "Impact",
+                    "Comfortaa",
+                    "Dancing Script",
+                    "Indie Flower",
+                    "Press Start 2P",
+                    "Wallpoet"
+                ],
+                "info": "Troque o tema do chat."
+            },
+            "prevent-clipping": {
+                "label": "Evitar clipagem",
+                "info": "Você pode evitar que as mensagens se sobreponham, mas esta desativada por questão de performance. Se você tiver um canal grande poderá não querer ativar essa opção."
+            },
+            "font-size-exact": {
+                "label": "Tamanho da fonte exata",
+                "info": "Selecionado atualmente o tamanho {size}px."
+            },
+            "user-blacklist": {
+                "label": "Lista negra de usuario"
+            },
+            "css-editor": {
+                "label": "CSS customizado",
+                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+            },
+            "js-editor": {
+                "label": "JS customizado",
+                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+            }
+        },
+        "kick": {
+            "default-channel": {
+                "input-label": "Canal padrão",
+                "info": "Caso seja definido, o programa atualizará sozinho"
+            },
+            "font-size": {
+                "label": "Tamanho da fonte",
+                "select-label": "Escolha o tamanho da fonte",
+                "select-options": {
+                    "small": "Pequeno",
+                    "medium": "Medio",
+                    "large": "Grande"
+                },
+                "info": "Troca o tamanho da linha do chat."
+            },
+            "animate": {
+                "info": "Ativa animações no chat.",
+                "label": "Animações"
+            },
+            "fade": {
+                "label": "Ocultar",
+                "info": "Você pode apagar mensagens velhas do chat após um determinado tempo (segundos) apagar mensagens antigas.",
+                "timeout-label": "Apagar após {seconds} segundos."
+            },
+            "hide-bots": {
+                "label": "Mostrar bots",
+                "info": "KapChat ocultar os bots por padrão, mas você pode reverter."
+            },
+            "hide-commands": {
+                "label": "Ocultar comandos",
+                "info": "Oculta mensagens que começam com comandos (Ex: !, /, .)."
+            },
+            "hide-badges": {
+                "label": "Ocultar insígnias",
+                "info": ""
+            },
+            "stroke": {
+                "label": "Traço",
+                "select-label": "Escolha o traço",
+                "select-options": {
+                    "off": "Sem",
+                    "thin": "Fino",
+                    "medium": "Medio",
+                    "thick": "Grosso",
+                    "thicker": "Mais grosso"
+                },
+                "info": "Adiciona um traço no chat."
+            },
+            "user-blacklist": {
+                "label": "Lista negra de usuario",
+                "info": "Separe por virgulas quais usuarios você deseja ocultar do chat (Ex: StreamElements, NightBot, etc...)."
+            },
+            "css-editor": {
+                "label": "CSS Customizado",
+                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+            },
+            "js-editor": {
+                "label": "JS Customizado",
+                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+            }
+        },
+        "external": {
+            "default-url": {
+                "input-label": "URL padrão",
+                "info": "Caso seja definido, o programa atualizará sozinho."
+            },
+            "sources": {
+                "label": "Seu histórico de fontes.",
+                "info": "Você pode apagar qualquer fonte do histórico."
+            },
+            "css-editor": {
+                "label": "CSS Customizado",
+                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+            },
+            "js-editor": {
+                "label": "JS Customizado",
+                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+            }
+        },
+        "youtube": {
+            "default-channel-id": {
+                "input-label": "ID do canal padrão",
+                "info": "Caso seja definido o ID, o programa atualizará sozinho. {channelIdInfo}"
+            },
+            "retries": {
+                "input-label": "Tentativas de reconexão (para obter a URL do chat)"
+            },
+            "fetch-delay": {
+                "input-label": "Atraso (em segundos) entre cada tentativa"
+            },
+            "user-blacklist": {
+                "label": "Lista negra de usuarios"
+            },
+            "css-editor": {
+                "label": "CSS Customizado",
+                "link-info": "Você pode estilizar o chat a vontade, por usarmos o chat do proprio YouTube. Entretanto, por causa desse mesmo motivo é dificil encontrar alguma modificação presetada. Segue uma lista de estilos criados usando CSS para o OBS (que tambem serve no programa).",
+                "chatv2": "(Um bom inicio caso você saiba de CSS)",
+                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+            },
+            "js-editor": {
+                "label": "JS Customizado",
+                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+            }
+        }
+    },
+    "version-check": {
+        "download-link": "Baixar",
+        "loading-message": "Verificar atualizações",
+        "update-available": "v{version} esta disponivel. Você pode achar o instalador aqui: {link}",
+        "error": "A atualização falhou! Por favor, reporte esse erro no Discord."
+    }
+}
