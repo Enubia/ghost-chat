@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { hotkeyToString, isFunctionKey, KeyToCode } from '#lib/utils/keyToCode';
@@ -55,6 +55,12 @@ function handleKeyup(event: KeyboardEvent) {
         emit('update:keyup', code);
     }
 }
+
+watch(() => props.modelValue, (value) => {
+    inputValue.value = value as string | null;
+}, {
+    immediate: true,
+});
 </script>
 
 <template>
