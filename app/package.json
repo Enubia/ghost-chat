@@ -28,8 +28,9 @@
         "lint:ipc": "eslint ipc",
         "lint:renderer": "eslint renderer",
         "lint": "pnpm lint:renderer && pnpm lint:ipc && pnpm lint:electron",
+        "release": "pnpm changelog:update && release-it --config ./configs/release-it.json",
         "typecheck": "vue-tsc --noEmit && tsc --noEmit -p ./electron/tsconfig.json",
-        "release": "pnpm changelog:update && release-it --config ./configs/release-it.json"
+        "unused": "pnpm dlx vue-i18n-extract report --vueFiles './renderer/**/*.?(ts|vue)' --languageFiles './renderer/i18n/locales/* .?(json|yml|yaml)'"
     },
     "dependencies": {
         "@iconify/vue": "5.0.0",
@@ -58,7 +59,7 @@
         "@vitejs/plugin-vue": "5.2.4",
         "auto-changelog": "2.5.0",
         "autoprefixer": "10.4.21",
-        "electron": "36.2.0",
+        "electron": "35.5.0",
         "electron-builder": "26.0.12",
         "eslint": "9.26.0",
         "eslint-plugin-format": "1.0.1",
