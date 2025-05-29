@@ -2,109 +2,14 @@
     "header": {
         "dropdown": {
             "start": "Start",
-            "chat": "Chat",
             "settings": "Einstellungen",
             "toggle-color-theme": "Ändere das Theme",
-            "changelog": "Changelog",
-            "vanish": {
-                "title": "Vanish",
-                "tooltip": "transparent und keine cursor interaktion"
-            }
+            "changelog": "Changelog"
         }
     },
     "start": {
-        "twitch": {
-            "input": {
-                "info": "Gib einen channel namen ein, z.B. enubia1"
-            },
-            "button": "Start!",
-            "sourceSwitcher": "Möchtest du etwas anderes laden? Klick hier!"
-        },
         "external": {
-            "input": {
-                "info": "Gib eine browser source ein die du laden möchtest"
-            },
-            "button": "Start!",
-            "sourceSwitcher": "Möchtest du Twitch laden? Klick hier!"
-        }
-    },
-    "settings": {
-        "aside": {
-            "1": "Allgemein",
-            "2": "Twitch",
-            "3": "Eigenes CSS",
-            "4": "Eigenes JavaScript"
-        },
-        "document": {
-            "editor": {
-                "button": {
-                    "label": "Speichern",
-                    "loading": "Speichert..."
-                }
-            },
-            "general": {
-                "locale-change": {
-                    "label": "Wähle deine bevorzugte Sprache",
-                    "info": "Um die Sprache der ganzen App zu ändern musst du GhostChat einmal neu starten."
-                },
-                "keybind-change": {
-                    "label": "Setze einen neue Vanish Tastenkombination",
-                    "no-key": "Keine Tastenkombination festgelegt",
-                    "error": "Meta-Taste (Win oder CMD) ist nicht erlaubt"
-                },
-                "pre-release": {
-                    "checkbox-label": "Nimm teil an frühen Versionen",
-                    "info": "Wähle, ob du an Versionen vor der Veröffentlichung teilnehmen möchtest. Diese werden auch automatisch heruntergeladen."
-                },
-                "close-option": {
-                    "checkbox-label": "Schliesse die app",
-                    "info": "Beendet die Anwendung sofort, wenn diese Options festgelegt ist, anstatt nur das Fenster zu schließen."
-                },
-                "hide-dock-icon-options": {
-                    "checkbox-label": "Verberge das App Icon",
-                    "info": "Lässt die app nicht in deiner dock aufscheinene."
-                }
-            },
-            "kap-chat": {
-                "default-channel": {
-                    "input-label": "Standardkanal",
-                    "info": "Wenn ein Standardkanal festgelegt ist, wird dieser automatisch für dich angewendet."
-                },
-                "fade": {
-                    "checkbox-label": "Verblassen von nachrichten",
-                    "info": "Du kannst alte Chat-Nachrichten nach einer festgelegten Anzahl von Sekunden verblassen lassen, um veraltete Nachrichten zu verhindern."
-                },
-                "show-bots": {
-                    "checkbox-label": "Zeige Bot Nachrichten",
-                    "info": "Kapchat verbirgt standardmäßig Bot-Nachrichten, aber du kannst sie wieder einschalten."
-                },
-                "prevent-clipping": {
-                    "checkbox-label": "Abschneiden verhindern",
-                    "info": "Du kannst das Abschneiden von Chat-Zeilen verhindern, es ist jedoch standardmäßig aus Leistungsgründen deaktiviert. Wenn du einen großen Kanal hast, möchtest due dies möglicherweise nicht aktivieren."
-                },
-                "chat-theme": {
-                    "label": "Chat Theme",
-                    "select-options": {
-                        "none": "Keines",
-                        "dark": "Dunkel",
-                        "light": "Hell",
-                        "betterTTV-Light": "BetterTTV Light",
-                        "betterTTV-Dark": "BetterTTV Dark",
-                        "s0N0S-1080P-Theme": "S0N0S' 1080P Theme",
-                        "s0N0S-1440P-Theme": "S0N0S' 1440P Theme"
-                    },
-                    "notification": "Bitte beachte, dass due damit den Chat beenden und erneut beitreten musst.",
-                    "info": {
-                        "before-link": "Du solltes einen Stil auswählen, der zum Spiel passt, das du spielen wirst. Wenn du ein fortgeschrittener Benutzer bist (dh du kennst CSS), kannst du dich auch dafür entscheiden, im Bereich Eigenes CSS links ein benutzerdefiniertes CSS styling zu erzeugen. Die verfügbaren Selektoren findest du auf der",
-                        "link": "KapChat generierten Seite",
-                        "after-link": ", öffne einfach die Entwickler-Tools uns inspiziere die Seite."
-                    },
-                    "button": {
-                        "label": "Speichern",
-                        "loading": "Speichert..."
-                    }
-                }
-            }
+            "button": "Start!"
         }
     },
     "version-check": {

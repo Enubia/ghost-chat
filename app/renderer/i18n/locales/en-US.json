@@ -2,14 +2,9 @@
     "header": {
         "dropdown": {
             "start": "Start",
-            "chat": "Chat",
             "settings": "Settings",
             "toggle-color-theme": "Toggle Color Theme",
-            "changelog": "Changelog",
-            "vanish": {
-                "title": "Vanish",
-                "tooltip": "transparent and click-through"
-            }
+            "changelog": "Changelog"
         }
     },
     "footer": {
@@ -61,8 +56,7 @@
         },
         "general": {
             "locale-change": {
-                "label": "Select your preferred language",
-                "info": "Please note that in order for this change to take effect on the whole application you'll need to restart it once."
+                "label": "Select your preferred language"
             },
             "keybind-change": {
                 "label": "Change the Vanish Keybind",
@@ -81,31 +75,6 @@
             "hide-dock-icon-options": {
                 "label": "Hide dock icon",
                 "info": "If set the app will not appear on the dock once it's launched."
-            },
-            "external-sources": {
-                "heading": "External Sources"
-            },
-            "auto-updates": {
-                "disable-label": "Disable Auto Updates",
-                "disable-info": "If you disable auto updates you'll have to check for updates manually from time to time.",
-                "init": "Click to check for updates now",
-                "checking": "Checking for updates",
-                "error": "The updater encountered an error, please report this in the discord!",
-                "update-downloaded": "A new version has been downloaded, update will be applied upon restart.",
-                "update-not-available": "No updates available",
-                "update-available": "A new version is available, download will start in the backround.",
-                "manual-update-required": {
-                    "before-link": "Your system does not allow auto updates. Please visit the",
-                    "link": "GhostChat release page",
-                    "after-link": "and download the update manually."
-                },
-                "button": {
-                    "init": "Check for updates",
-                    "checking": "Checking",
-                    "update-available": "Downloading",
-                    "update-not-available": "Check for updates",
-                    "update-downloaded": "Restart to apply"
-                }
             }
         },
         "twitch": {
@@ -217,8 +186,7 @@
                 "info": "Currently selected font size {size}px."
             },
             "user-blacklist": {
-                "label": "User Blacklist",
-                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+                "label": "User Blacklist"
             },
             "css-editor": {
                 "label": "Your Custom CSS",
@@ -320,8 +288,7 @@
                 "input-label": "Delay in seconds between every retry"
             },
             "user-blacklist": {
-                "label": "User Blacklist",
-                "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
+                "label": "User Blacklist"
             },
             "css-editor": {
                 "label": "Your Custom CSS",

@@ -2,101 +2,13 @@
     "header": {
         "dropdown": {
             "start": "Principal",
-            "chat": "Chat",
             "settings": "Configuración",
-            "toggle-color-theme": "Cambiar color del tema",
-            "vanish": {
-                "title": "Desvanecer",
-                "tooltip": "transparente y atravesar clic"
-            }
+            "toggle-color-theme": "Cambiar color del tema"
         }
     },
     "start": {
-        "twitch": {
-            "input": {
-                "info": "Entrar a un canal, ej. enubia1"
-            },
-            "button": "Entrar!"
-        },
         "external": {
-            "input": {
-                "info": "Input any browser source you'd like to load"
-            },
             "button": "Go!"
-        }
-    },
-    "settings": {
-        "aside": {
-            "1": "General",
-            "2": "Twitch",
-            "3": "CSS modificado",
-            "4": "JavaScript modificado"
-        },
-        "document": {
-            "editor": {
-                "button": {
-                    "label": "Guardar",
-                    "loading": "Guardando..."
-                }
-            },
-            "general": {
-                "locale-change": {
-                    "label": "Seleccionar tu idioma preferido",
-                    "info": "Tener presente que para que este cambio tenga efecto en toda la aplicación vas a necesitar reiniciarla una vez."
-                },
-                "pre-release": {
-                    "checkbox-label": "Participa en las versiones previas al lanzamiento",
-                    "info": "Elegí si querés participar de las versiones previas al lanzamiento. Estas también van a ser descargadas automáticamente si se eliget."
-                },
-                "close-option": {
-                    "checkbox-label": "Salir al cerrar",
-                    "info": "Si está seleccionado, cierra inmediatamente la aplicación, en vez de solo cerrar la ventana."
-                },
-                "hide-dock-icon-options": {
-                    "checkbox-label": "Hide dock icon",
-                    "info": "If set the app will not appear on the dock once it's launched."
-                }
-            },
-            "kap-chat": {
-                "default-channel": {
-                    "input-label": "Canal por Defecto",
-                    "info": "En el caso que haya un canal por defecto, la aplicación lo va a completar automáticamente por vos."
-                },
-                "fade": {
-                    "checkbox-label": "Esfumar",
-                    "info": "Podés esfumar viejas líneas del chat después de ciertos segundos para mantener la pantalla libre de contenido desactualizado."
-                },
-                "show-bots": {
-                    "checkbox-label": "Mostrar Bots",
-                    "info": "KapChat oculta mensajes de bots por defecto, pero podes elegir volver a mostrarlo."
-                },
-                "prevent-clipping": {
-                    "checkbox-label": "Prevenir Clipping",
-                    "info": "Podés prevenir el clipping de lineas de chat, pero está desactivado por defecto por razones de rendimiento. Si tenés un canal grande, tal vez no quieras habilitar esto."
-                },
-                "chat-theme": {
-                    "label": "Tema del Chat",
-                    "select-options": {
-                        "none": "Ninguno",
-                        "dark": "Oscuro",
-                        "light": "Claro",
-                        "betterTTV-Light": "BetterTTV Claro",
-                        "betterTTV-Dark": "BetterTTV Oscuro",
-                        "s0N0S-1080P-Theme": "Tema S0N0S' 1080P",
-                        "s0N0S-1440P-Theme": "Tema S0N0S' 1440P"
-                    },
-                    "notification": "Por favor, tené en cuenta que para que el tema se aplique vas a tener que salir del chat y volver a entrar.",
-                    "info": {
-                        "before-link": "Deberías elegir un estilo que se ajuste al contenido que estés stremeando. Si sos un usuario avanzado (es decir, que sabés CSS), también podés elegir usar \"Ninguno\" y estilizarlo vos mismo en la sección CSS modificado de la izquierda. Los selectores disponibles se pueden encontrar en",
-                        "link": "la página de KapChat",
-                        "after-link": ", solo abrí DevTools e inspeccioná la página."
-                    },
-                    "button": {
-                        "label": "Guardar",
-                        "loading": "Guardando..."
-                    }
-                }
-            }
         }
     },
     "version-check": {

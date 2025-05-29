@@ -2,18 +2,10 @@
     "header": {
         "dropdown": {
             "start": "Démarrer",
-            "chat": "Chat",
             "settings": "Options",
             "toggle-color-theme": "Modifier les couleurs",
-            "changelog": "Changelog",
-            "vanish": {
-                "title": "Faire disparaître",
-                "tooltip": "Invisible et ignoré des clics"
-            }
+            "changelog": "Changelog"
         }
-    },
-    "footer": {
-        "support": "Vous aimez ce programme? Pensez à soutenir les développeurs!"
     },
     "start": {
         "channel": {
@@ -47,8 +39,7 @@
         },
         "general": {
             "locale-change": {
-                "label": "Choisissez votre langue préférée",
-                "info": "Veuillez noter que pour que cette modification prenne effet sur l'ensemble de l'application, vous devrez la redémarrer une fois."
+                "label": "Choisissez votre langue préférée"
             },
             "keybind-change": {
                 "label": "Modifier la combinaison de touches pour faire disparaître",
@@ -67,31 +58,6 @@
             "hide-dock-icon-options": {
                 "label": "Masquer l'icône du dock",
                 "info": "Si cette option est activée, l'application n'apparaîtra pas sur le dock une fois qu'elle aura été lancée."
-            },
-            "external-sources": {
-                "heading": "Sources externes"
-            },
-            "auto-updates": {
-                "disable-label": "Désactiver les mises à jour automatiques",
-                "disable-info": "Si vous désactivez les mises à jour automatiques, vous devrez vérifier manuellement les mises à jour de temps en temps.",
-                "init": "Cliquez pour vérifier les mises à jour maintenant",
-                "checking": "Recherche de mises à jour",
-                "error": "Une erreur est survenue lors de la mise à jour, merci de signaler ce problème sur notre discord!",
-                "update-downloaded": "Une nouvelle version a été téléchargée, la mise à jour sera appliquée lors du redémarrage.",
-                "update-not-available": "Aucune mise à jour disponible",
-                "update-available": "Une nouvelle version est disponible, le téléchargement commencera dans le fond.",
-                "manual-update-required": {
-                    "before-link": "Votre système n'autorise pas les mises à jour automatiques. Veuillez consulter la ",
-                    "link": "page de publication de GhostChat",
-                    "after-link": "et téléchargez la mise à jour manuellement."
-                },
-                "button": {
-                    "init": "Vérifier la présence de mise à jour",
-                    "checking": "Vérification",
-                    "update-available": "Téléchargement",
-                    "update-not-available": "Vérifier les mises à jour",
-                    "update-downloaded": "Redémarrer pour appliquer la mise à jour"
-                }
             }
         },
         "twitch": {
@@ -203,8 +169,7 @@
                 "info": "Taille des caractères actuellement sélectionnée {size}px."
             },
             "user-blacklist": {
-                "label": "Utilisateurs bloqués",
-                "info": "Entrez une liste de noms d'utilisateurs séparés par des virgules pour masquer leurs messages dans le chat. (par exemple StreamElements, Nightbot)"
+                "label": "Utilisateurs bloqués"
             },
             "css-editor": {
                 "label": "Votre CSS personnalisé",

@@ -2,103 +2,13 @@
     "header": {
         "dropdown": {
             "start": "시작",
-            "chat": "채팅",
             "settings": "설정",
-            "toggle-color-theme": "색상 테마 전환",
-            "vanish": {
-                "title": "Vanish",
-                "tooltip": "창을 투명화하고 클릭 통과 모드를 사용합니다"
-            }
+            "toggle-color-theme": "색상 테마 전환"
         }
     },
     "start": {
-        "twitch": {
-            "input": {
-                "info": "채널을 입력하세요, 예: enubia1"
-            },
-            "button": "이동!",
-            "sourceSwitcher": "다른 것을 불러오고 싶나요? 여기를 클릭하세요"
-        },
         "external": {
-            "input": {
-                "info": "불러오고 싶은 브라우저 소스를 입력하세요"
-            },
-            "button": "이동!",
-            "sourceSwitcher": "Twitch 채팅을 불러오고 싶나요? 여기를 클릭하세요!"
-        }
-    },
-    "settings": {
-        "aside": {
-            "1": "일반",
-            "2": "Twitch",
-            "3": "사용자 지정 CSS",
-            "4": "사용자 지정 JavaScript"
-        },
-        "document": {
-            "editor": {
-                "button": {
-                    "label": "저장",
-                    "loading": "저장 중..."
-                }
-            },
-            "general": {
-                "locale-change": {
-                    "label": "원하는 언어 선택",
-                    "info": "이 변경 사항을 앱 전체에 적용하려면 앱을 한 번 다시 시작해야 합니다."
-                },
-                "pre-release": {
-                    "checkbox-label": "사전 릴리즈 버전에 참여하기",
-                    "info": "사전 릴리즈 버전에 참여하고 싶으면 선택하세요. 설정할 경우 자동으로 다운로드됩니다."
-                },
-                "close-option": {
-                    "checkbox-label": "창을 닫을 때 종료",
-                    "info": "설정할 경우 창만 닫는 대신 앱을 즉시 종료합니다."
-                },
-                "hide-dock-icon-options": {
-                    "checkbox-label": "독 아이콘 숨기기",
-                    "info": "설정할 경우 앱이 실행되면 독에 표시되지 않습니다."
-                }
-            },
-            "kap-chat": {
-                "default-channel": {
-                    "input-label": "기본 채널",
-                    "info": "기본 채널이 설정되어 있으면 앱이 자동으로 적용합니다."
-                },
-                "fade": {
-                    "checkbox-label": "페이드 효과 사용",
-                    "info": "오래된 내용이 화면에 남아 있지 않도록 설정된 시간 (초 단위)이 지난 오래된 채팅에 페이드 아웃 효과를 적용할 수 있습니다."
-                },
-                "show-bots": {
-                    "checkbox-label": "봇 표시",
-                    "info": "KapChat은 기본적으로 봇 메시지를 숨기지만 다시 표시할 수 있습니다."
-                },
-                "prevent-clipping": {
-                    "checkbox-label": "메시지 잘림 방지",
-                    "info": "채팅 줄이 잘리는 것을 방지할 수 있으나 성능상의 이유로 기본적으로 비활성화되어 있습니다. 채널 규모가 크다면 이 기능을 활성화하지 않는 것이 좋습니다."
-                },
-                "chat-theme": {
-                    "label": "채팅 테마",
-                    "select-options": {
-                        "none": "없음",
-                        "dark": "어두움",
-                        "light": "밝음",
-                        "betterTTV-Light": "BetterTTV Light",
-                        "betterTTV-Dark": "BetterTTV Dark",
-                        "s0N0S-1080P-Theme": "S0N0S의 1080P 테마",
-                        "s0N0S-1440P-Theme": "S0N0S의 1440P 테마"
-                    },
-                    "notification": "테마를 적용하려면 채팅을 종료하고 다시 참여해야 합니다.",
-                    "info": {
-                        "before-link": "플레이할 게임에 맞는 스타일을 선택해야 합니다. 고급 사용자 (CSS를 아는)라면 \"없음\"을 선택하고 왼쪽의 사용자 지정 CSS 섹션에서 채팅을 직접 꾸밀 수 있습니다. 사용할 수 있는 선택자는",
-                        "link": "KapChat에서 생성한 페이지",
-                        "after-link": "에서 찾을 수 있습니다, 개발자 도구를 열고 페이지를 검사하세요."
-                    },
-                    "button": {
-                        "label": "저장",
-                        "loading": "저장 중..."
-                    }
-                }
-            }
+            "button": "이동!"
         }
     },
     "version-check": {
