@@ -17,7 +17,7 @@ import { versionStore } from './store/version';
 const router = useRouter();
 const route = useRoute();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const showMenuBar = shallowRef(false);
 const showFooter = shallowRef(false);
@@ -84,8 +84,9 @@ useIpcRendererOn(IpcEvent.ShowApp, () => {
     $app?.removeAttribute('vanished');
     showMenuBar.value = !isTransparent.value && !settings.value.isOpen;
 });
-useIpcRendererOn(IpcEvent.Rerender, () => {
+useIpcRendererOn(IpcEvent.Rerender, async () => {
     rerenderKey.value += 1;
+    locale.value = (await IpcHandler.getGeneral()).language;
 });
 useIpcRendererOn(IpcEvent.ThemeChanged, () => {
     const isDarkTheme = $html?.classList.contains('dark');

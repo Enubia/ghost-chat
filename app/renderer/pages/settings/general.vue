@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Keybinds } from '#ipc/types/store';
-
+import { useIpcRenderer } from '@vueuse/electron';
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -20,7 +19,7 @@ const { t } = useI18n();
 const participateInPreRelease = shallowRef(StoreDefaults.updater.channel === 'beta');
 const quitOnClose = shallowRef(StoreDefaults.general.mac.quitOnClose);
 const hideDockIcon = shallowRef(StoreDefaults.general.mac.hideDockIcon);
-const vanish = shallowRef<Keybinds['vanish']>(StoreDefaults.keybinds.vanish);
+const vanishKeybind = shallowRef<string | null>(StoreDefaults.keybinds.vanish.keybind);
 const showMacOptions = shallowRef(false);
 
 onMounted(async () => {
@@ -28,7 +27,7 @@ onMounted(async () => {
     const mac = await IpcHandler.getValueFromKey('general.mac');
 
     showMacOptions.value = await IpcHandler.getPlatform() === 'darwin';
-    vanish.value = (await IpcHandler.getKeybinds()).vanish;
+    vanishKeybind.value = (await IpcHandler.getKeybinds()).vanish.keybind;
 
     if (updater.channel !== 'latest') {
         participateInPreRelease.value = true;
@@ -45,6 +44,7 @@ async function saveKeybind(value: string | null) {
 
 async function saveLanguage(value: string) {
     await IpcHandler.setKeyValue('general.language', value);
+    useIpcRenderer().send(IpcEvent.Rerender, 'parent');
 }
 
 async function savePrerelease(value: boolean) {
@@ -81,7 +81,7 @@ async function saveHideDockIcon(value: boolean) {
             </Select>
         </div>
 
-        <HotKeyInput v-model="vanish.keybind" @update:keyup="saveKeybind" />
+        <HotKeyInput v-model="vanishKeybind" @update:keyup="saveKeybind" />
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
