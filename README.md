@@ -31,7 +31,6 @@ It lets you connect to a channel without opening a browser, perfect for single-m
 - **Customizable Interface**: Adjustable opacity, font sizes, and colors
 - **Custom CSS and JS**: Apply your own styling and functionality
 - **Hotkeys**: Quick toggle visibility
-- **Multiple Languages**: Now with German, English, Spanish (Argentina), French, Korean and Russian localizations (Some of them might not be up to date due to a vast majority of changes in recent releases)
 
 ## Downloads
 
