@@ -44,5 +44,6 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/out": true
-    }
+    },
+    "oxc.enable": true
 }

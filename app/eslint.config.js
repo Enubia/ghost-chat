@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config';
 import { FlatCompat } from '@eslint/eslintrc';
+import oxlint from 'eslint-plugin-oxlint';
 
 const compat = new FlatCompat();
 export default antfu(
@@ -11,7 +12,6 @@ export default antfu(
         },
 
         ignores: [
-            '.vscode',
             'out',
             'node_modules',
             'changelog',
@@ -94,10 +94,10 @@ export default antfu(
         },
 
         ignorePatterns: [
-            '.vscode',
             'out',
             'node_modules',
             'changelog',
         ],
     }),
+    ...oxlint.configs['flat/recommended'],
 );
