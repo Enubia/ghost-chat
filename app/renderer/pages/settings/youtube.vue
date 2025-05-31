@@ -113,14 +113,14 @@ async function saveFetchDelay(event: Event) {
         <div class="flex flex-col gap-2">
             <Label for="css-editor" class="flex flex-col gap-1">
                 {{ t('settings.youtube.css-editor.label') }}
-                <small class="flex flex-col gap-2 font-light">
+                <small class="flex flex-col font-light gap-2">
                     {{ t('settings.youtube.css-editor.link-info') }}
                     <hr />
                     <span>
-                        <a class="text-primary underline" :href="chatV2">{{ chatV2 }}</a>
+                        <a class="underline text-primary" :href="chatV2">{{ chatV2 }}</a>
                         {{ t('settings.youtube.css-editor.chatv2') }}
                     </span>
-                    <a v-for="(item, index) of githubcss" :key="index" class="text-primary underline" :href="item">{{ item }}</a>
+                    <a v-for="(item, index) of githubcss" :key="index" class="underline text-primary" :href="item">{{ item }}</a>
                 </small>
             </Label>
             <small class="text-yellow-600">{{ t('settings.youtube.css-editor.info') }}</small>

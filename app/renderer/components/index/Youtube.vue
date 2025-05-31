@@ -134,7 +134,7 @@ function stopLoading() {
 <template>
     <Dialog @update:open="(open) => (open ? null : stopLoading())">
         <DialogTrigger>
-            <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
+            <div class="flex justify-center p-4 rounded bg-secondary hover:cursor-pointer hover:bg-gray-400">
                 <Icon icon="fa6-brands:youtube" color="#FF0000" class="size-12" />
             </div>
         </DialogTrigger>
@@ -150,7 +150,7 @@ function stopLoading() {
             <Input v-model="channelId" :disabled="isLoading" placeholder="Your youtube channel Id" @keydown.enter="routeChat" />
             <Button :disabled="!channelId.length || isLoading" class="flex gap-2" @click="routeChat">
                 {{ t('start.channel.button') }}
-                <Icon v-if="isLoading" icon="svg-spinners:6-dots-rotate" class="animate-spin text-2xl" />
+                <Icon v-if="isLoading" icon="svg-spinners:6-dots-rotate" class="text-2xl animate-spin" />
             </Button>
             <hr class="border-dashed" />
             <DialogDescription class="grid gap-3">

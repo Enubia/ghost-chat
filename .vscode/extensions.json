@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "oxc.oxc-vscode",
+        "esbenp.prettier-vscode",
+        "Vue.volar",
+        "bradlc.vscode-tailwindcss",
+        "heybourn.headwind"
+    ]
+}

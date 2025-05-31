@@ -1,9 +1,9 @@
 <template>
     {{#each releases}}
         {{#if tag}}
-            <h2 class='text-2xl font-semibold py-2'>{{tag}} | {{niceDate}}</h2>
+            <h2 class='py-2 text-2xl font-semibold'>{{tag}} | {{niceDate}}</h2>
         {{else}}
-            <h2 class='text-2xl font-semibold py-2'>Latest | {{niceDate}}</h2>
+            <h2 class='py-2 text-2xl font-semibold'>Latest | {{niceDate}}</h2>
         {{/if}}
 
         {{#if summary}}

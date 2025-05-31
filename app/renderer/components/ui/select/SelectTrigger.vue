@@ -29,7 +29,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     >
         <slot />
         <SelectIcon as-child>
-            <CaretSortIcon class="size-4 opacity-50" />
+            <CaretSortIcon class="opacity-50 size-4" />
         </SelectIcon>
     </SelectTrigger>
 </template>

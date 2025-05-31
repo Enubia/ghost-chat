@@ -8,7 +8,7 @@ const { t } = useI18n();
 
 <template>
     <div class="px-10">
-        <div class="sticky top-0 z-10 bg-background py-6">
+        <div class="sticky top-0 z-10 py-6 bg-background">
             <h2 class="text-2xl font-bold tracking-tight">
                 {{ t('settings.title') }}
             </h2>

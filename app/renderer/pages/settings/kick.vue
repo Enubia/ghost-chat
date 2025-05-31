@@ -185,7 +185,7 @@ async function saveFadeTimeout(value: string | number) {
                             })
                         }}
                     </Label>
-                    <Input id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number" @update:model-value="saveFadeTimeout" />
+                    <Input id="fadeTimeout" v-model="fadeTimeout" class="text-center w-30" type="number" @update:model-value="saveFadeTimeout" />
                 </div>
             </div>
             <small class="text-muted-foreground">{{ t('settings.kick.fade.info') }}</small>

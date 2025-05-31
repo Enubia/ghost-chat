@@ -104,7 +104,7 @@ const { t, tm, rt } = useI18n();
                 <Input
                     id="fadeTimeout"
                     v-model="fadeTimeout"
-                    class="w-30 text-center"
+                    class="text-center w-30"
                     type="number"
                     @update:model-value="emit('update:fadeTimeout', $event)"
                 />

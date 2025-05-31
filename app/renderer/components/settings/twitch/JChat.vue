@@ -131,7 +131,7 @@ const smallCaps = shallowRef(props.smallCaps);
                 <Input
                     id="fadeTimeout"
                     v-model="fadeTimeout"
-                    class="w-30 text-center"
+                    class="text-center w-30"
                     type="number"
                     @update:model-value="emit('update:fadeTimeout', $event)"
                 />
