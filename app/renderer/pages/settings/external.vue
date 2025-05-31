@@ -5,7 +5,7 @@ import { Input } from '#components/ui/input';
 import { Label } from '#components/ui/label';
 import { IpcEvent } from '#ipc/constants/events';
 import Settings from '#layouts/settings.vue';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
 import { Icon } from '@iconify/vue';

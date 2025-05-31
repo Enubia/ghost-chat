@@ -5,7 +5,7 @@ import Label from '#components/ui/label/Label.vue';
 import { chatV2, githubcss } from '#constants/links';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
 import { onMounted, shallowRef } from 'vue';

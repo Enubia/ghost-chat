@@ -2,7 +2,7 @@
 import WebView from '#components/WebView.vue';
 import { KickSearchParams } from '#constants/searchparams';
 import type { WebviewTag } from '#ipc/types/webviewtag';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { onMounted, shallowRef } from 'vue';
 
 const kick = await IpcHandler.getKickOptions();

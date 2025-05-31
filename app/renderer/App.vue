@@ -9,7 +9,7 @@ import { useRoute, useRouter } from 'vue-router';
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import { downloadLink, kofiLink, paypalLink } from './constants/links';
-import IpcHandler from './lib/ipchandler';
+import * as IpcHandler from './lib/ipchandler';
 import { versionStore } from './store/version';
 
 const router = useRouter();

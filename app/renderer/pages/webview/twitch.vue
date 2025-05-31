@@ -2,7 +2,7 @@
 import WebView from '#components/WebView.vue';
 import { TwitchSearchParams } from '#constants/searchparams';
 import type { WebviewTag } from '#ipc/types/webviewtag';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { onMounted } from 'vue';
 
 const twitch = await IpcHandler.getTwitchOptions();

@@ -7,7 +7,7 @@ import { Switch } from '#components/ui/switch';
 import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { save } from '#lib/utils/save';
 import { useIpcRenderer } from '@vueuse/electron';
 import { ipcRenderer } from 'electron';

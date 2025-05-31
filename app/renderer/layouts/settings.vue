@@ -17,11 +17,11 @@ const { t } = useI18n();
             </p>
             <Separator />
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-6">
             <aside>
                 <SidebarNav />
             </aside>
-            <div class="min-w-52 max-w-[30rem] pb-4">
+            <div class="w-full pb-4">
                 <div class="space-y-6">
                     <slot />
                 </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IpcEvent } from '#ipc/constants/events';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { Icon } from '@iconify/vue';
 import { useIpcRenderer, useIpcRendererOn } from '@vueuse/electron';
 import { onBeforeMount, shallowRef } from 'vue';

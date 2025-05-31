@@ -1,6 +1,24 @@
 import type { FontSize } from '#ipc/constants/store/fontsize.js';
 import type { Stroke } from '#ipc/constants/store/stroke.js';
 
+type PathImpl<T, Key extends keyof T> = Key extends string
+    ? T[Key] extends Record<string, any>
+        ? `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> & string}` | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
+        : never
+    : never;
+
+type Path<T> = PathImpl<T, keyof T> | keyof T;
+
+type Split<S extends string, D extends string> = string extends S ? string[] : S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] : [S];
+
+type ArrToPath<T, P extends string[]> = P extends [infer K, ...infer R]
+    ? K extends keyof T
+        ? R extends string[]
+            ? ArrToPath<T[K], R>
+            : never
+        : never
+    : T;
+
 interface Shared {
     channel: string;
     fade: boolean;
@@ -10,7 +28,6 @@ interface Shared {
     userBlacklist: string[];
     fadeTimeout: number;
 }
-
 export interface Twitch extends Shared {
     useJChat: boolean;
     fontSize: 1 | 2 | 3;
@@ -112,24 +129,6 @@ export interface AppStore {
     keybind?: Record<string, any>;
 }
 
-type PathImpl<T, Key extends keyof T> = Key extends string
-    ? T[Key] extends Record<string, any>
-        ? `${Key}.${PathImpl<T[Key], Exclude<keyof T[Key], keyof any[]>> & string}` | `${Key}.${Exclude<keyof T[Key], keyof any[]> & string}`
-        : never
-    : never;
-
-type Path<T> = PathImpl<T, keyof T> | keyof T;
-
 export type StorePath = Path<AppStore>;
-
-type Split<S extends string, D extends string> = string extends S ? string[] : S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] : [S];
-
-type ArrToPath<T, P extends string[]> = P extends [infer K, ...infer R]
-    ? K extends keyof T
-        ? R extends string[]
-            ? ArrToPath<T[K], R>
-            : never
-        : never
-    : T;
 
 export type StorePathValue<T, P extends StorePath> = ArrToPath<T, Split<P, '.'>>;

@@ -9,7 +9,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import { Twitch } from '#ipc/types/store';
 import Settings from '#layouts/settings.vue';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
 import { ipcRenderer } from 'electron';

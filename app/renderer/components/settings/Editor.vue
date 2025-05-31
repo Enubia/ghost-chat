@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IpcEvent } from '#ipc/constants/events';
 import type { Options } from '#ipc/types/store';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { useEventListener } from '@vueuse/core';
 import { useIpcRenderer } from '@vueuse/electron';
 import hljs from 'highlight.js';
@@ -66,7 +66,6 @@ useEventListener(editor, 'focusout', save);
             fontsize="10px"
             height="400px"
             width="auto"
-            max-width="600px"
         />
     </div>
 </template>

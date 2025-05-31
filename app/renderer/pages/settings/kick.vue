@@ -9,7 +9,7 @@ import { StoreDefaults } from '#ipc/constants/store/defaults';
 import type { FontSize } from '#ipc/constants/store/fontsize';
 import type { Stroke } from '#ipc/constants/store/stroke';
 import Settings from '#layouts/settings.vue';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
 import { ipcRenderer } from 'electron';

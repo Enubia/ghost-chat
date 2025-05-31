@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { StoreDefaults } from '#ipc/constants/store/defaults';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';

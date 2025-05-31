@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { StoreDefaults } from '#ipc/constants/store/defaults';
-import IpcHandler from '#lib/ipchandler';
+import * as IpcHandler from '#lib/ipchandler';
 import { delay } from '#lib/utils/delay';
 import { Icon } from '@iconify/vue';
 import { useFetch } from '@vueuse/core';
