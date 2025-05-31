@@ -18,9 +18,6 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[vue]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "prettier.requireConfig": true,
 
     // CODE ACTIONS (Fix + Organize)
