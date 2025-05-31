@@ -1,13 +1,11 @@
 <script setup lang="ts">
+import { Input } from '#components/ui/input';
+import { Label } from '#components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
+import Slider from '#components/ui/slider/Slider.vue';
+import { Switch } from '#components/ui/switch';
 import { shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import Slider from '#components/ui/slider/Slider.vue';
-
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import { Switch } from '../../ui/switch';
 
 const props = defineProps<{
     theme: string;
@@ -18,14 +16,7 @@ const props = defineProps<{
     fadeTimeout: number;
 }>();
 
-const emit = defineEmits([
-    'update:theme',
-    'update:preventClipping',
-    'update:fade',
-    'update:bots',
-    'update:fontSizeExact',
-    'update:fadeTimeout',
-]);
+const emit = defineEmits(['update:theme', 'update:preventClipping', 'update:fade', 'update:bots', 'update:fontSizeExact', 'update:fadeTimeout']);
 
 const theme = shallowRef(props.theme);
 const preventClipping = shallowRef(props.preventClipping);
@@ -47,10 +38,7 @@ const { t, tm, rt } = useI18n();
                 <SelectValue :placeholder="t('settings.twitch.theme.select-label')" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem
-                    v-for="[key, value] in Object.entries(tm('settings.twitch.theme.select-options'))"
-                    :key="key" :value="key"
-                >
+                <SelectItem v-for="[key, value] in Object.entries(tm('settings.twitch.theme.select-options'))" :key="key" :value="key">
                     {{ rt(value) }}
                 </SelectItem>
             </SelectContent>
@@ -80,12 +68,21 @@ const { t, tm, rt } = useI18n();
             {{ t('settings.twitch.font-size-exact.label') }}
         </Label>
         <Slider
-            id="font-size-exact" v-model="fontSizeExact" class="my-3" :default-value="fontSizeExact" :min="10"
-            :max="50" :step="1"
+            id="font-size-exact"
+            v-model="fontSizeExact"
+            class="my-3"
+            :default-value="fontSizeExact"
+            :min="10"
+            :max="50"
+            :step="1"
             @update:model-value="emit('update:fontSizeExact', $event ? $event[0] : fontSizeExact[0])"
         />
         <small class="text-muted-foreground" :style="`font-size: ${fontSizeExact[0]}px;`">
-            {{ t('settings.twitch.font-size-exact.info', { size: fontSizeExact[0] }) }}
+            {{
+                t('settings.twitch.font-size-exact.info', {
+                    size: fontSizeExact[0],
+                })
+            }}
         </small>
     </div>
     <div class="flex flex-col gap-2">
@@ -98,10 +95,17 @@ const { t, tm, rt } = useI18n();
             </div>
             <div v-if="fade">
                 <Label class="cursor-pointer" for="fadeTimeout">
-                    {{ t('settings.twitch.fade.timeout-label', { seconds: fadeTimeout }) }}
+                    {{
+                        t('settings.twitch.fade.timeout-label', {
+                            seconds: fadeTimeout,
+                        })
+                    }}
                 </Label>
                 <Input
-                    id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
+                    id="fadeTimeout"
+                    v-model="fadeTimeout"
+                    class="w-30 text-center"
+                    type="number"
                     @update:model-value="emit('update:fadeTimeout', $event)"
                 />
             </div>

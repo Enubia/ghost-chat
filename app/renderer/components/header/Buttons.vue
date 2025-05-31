@@ -1,16 +1,15 @@
 <script setup lang="ts">
+import Button from '#components/ui/button/Button.vue';
+import { IpcEvent } from '#ipc/constants/events';
 import { Icon } from '@iconify/vue';
 import { useIpcRenderer } from '@vueuse/electron';
 import { shallowRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import Button from '#components/ui/button/Button.vue';
-import { IpcEvent } from '#ipc/constants/events';
-
 const router = useRouter();
 const route = useRoute();
 
-const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource', '/webview/youtube'];
+const webviewRoutes: (typeof route.name)[] = ['/webview/twitch', '/webview/kick', '/webview/externalsource', '/webview/youtube'];
 
 const showVanish = shallowRef(webviewRoutes.includes(route.name));
 const showBack = shallowRef(webviewRoutes.includes(route.name));

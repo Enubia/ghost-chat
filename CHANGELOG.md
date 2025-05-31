@@ -14,11 +14,42 @@ alt="Buy Me A Coffee" width="126" />
 
 ---
 
-## Latest | 21 May 2025
+## Latest | 29 May 2025
+
+- fix(deps): update dependency vue to v3.5.16 [`#1195`](https://github.com/Enubia/ghost-chat/pull/1195)
+- fix(deps): update vueuse monorepo to v13.3.0 [`#1201`](https://github.com/Enubia/ghost-chat/pull/1201)
+- fix(deps): update dependency vue-i18n to v11.1.5 [`#1196`](https://github.com/Enubia/ghost-chat/pull/1196)
+- fix(deps): pin dependency @vueuse/electron to v13.2.0 [`#1192`](https://github.com/Enubia/ghost-chat/pull/1192)
+- fix: remove old lock file [`e956cc1`](https://github.com/Enubia/ghost-chat/commit/e956cc1165fe35b3efc03f6278a07bde3bb0db0e)
+- chore: cleaned up translations [`8da561f`](https://github.com/Enubia/ghost-chat/commit/8da561f504c0ca7c480ba4856933b425644ca16d)
+- feat: added brazilian localization [`e17af4b`](https://github.com/Enubia/ghost-chat/commit/e17af4b1442148a7e9bd2b8452c9e3be396bae59)
+- chore: update contributing guidelines [`29f37f5`](https://github.com/Enubia/ghost-chat/commit/29f37f57cd69fa3ac66c2a6a7bced2d8d9cef0c1)
+- refactor: ipcRenderer usage with vueuse/electrona [`3dd4568`](https://github.com/Enubia/ghost-chat/commit/3dd456836cf9bbc8f7bd641ed5e8feea8e5deab8)
+- chore: update build pipeline [`fe90d4b`](https://github.com/Enubia/ghost-chat/commit/fe90d4bceb03075872f3b5e934cea73d94528037)
+- fix: revert electron to v35 [`6426d36`](https://github.com/Enubia/ghost-chat/commit/6426d36197a19999a09362cf281fa5bda77ea038)
+- fix: correctly change locale of the whole app [`55fcdff`](https://github.com/Enubia/ghost-chat/commit/55fcdffcc98e145f7b3b5d52f376529f51494852)
+- fix: hotkey input value not being reflected properly [`7714463`](https://github.com/Enubia/ghost-chat/commit/7714463914418ddd34dd7d2380213d922b580aad)
+- chore: update build pipeline [`0914d35`](https://github.com/Enubia/ghost-chat/commit/0914d35ce69362be90ce2686a2a2bf107896317a)
+- chore: dev script in root package [`9a52db9`](https://github.com/Enubia/ghost-chat/commit/9a52db9218b6829a3055a074add5d913533bb9de)
+
+---
+
+### v3.6.0 | 24 May 2025
+
+- chore: update changelog [`f3dc193`](https://github.com/Enubia/ghost-chat/commit/f3dc19322824348cf154527d9d882b0ecaf7e002)
+- chore: changelog location [`df03770`](https://github.com/Enubia/ghost-chat/commit/df0377043ddd2e47f9274e258329b538384cbfee)
+- feat: youtube live id option [`3a5253e`](https://github.com/Enubia/ghost-chat/commit/3a5253e5bef0ee7ed2d1ce20047c91a53fd19679)
+- chore: moved engines to root package.jsona [`4c58a1d`](https://github.com/Enubia/ghost-chat/commit/4c58a1dd811d85fd815d3b091b9cdae5a670cdbe)
+- chore: fix pnpm version [`c5d9c86`](https://github.com/Enubia/ghost-chat/commit/c5d9c86529b11f760b714430af41e7bd52609281)
+
+---
+
+### v3.5.0 | 21 May 2025
 
 - feat: youtube [`#1182`](https://github.com/Enubia/ghost-chat/pull/1182)
 - chore(config): migrate renovate config [`#1142`](https://github.com/Enubia/ghost-chat/pull/1142)
 - chore: fix line endings [`a8900a0`](https://github.com/Enubia/ghost-chat/commit/a8900a01dbc6e7957e45954c40082c5732d5b08a)
+- chore: update changelog [`dff628b`](https://github.com/Enubia/ghost-chat/commit/dff628b9e31325dbedefe0f8b8bae3f177caa5eb)
 - chore: deps splitting [`d8bc4f9`](https://github.com/Enubia/ghost-chat/commit/d8bc4f95f178885ac6994cbdd7cd8b2e301b0644)
 - chore: update CI workflow and improve Electron app behavior [`9e4dc29`](https://github.com/Enubia/ghost-chat/commit/9e4dc29140c769e1a82e10f9f170fb1b6b9a5238)
 - fix: version check redirect if no update is available [`bc2ff93`](https://github.com/Enubia/ghost-chat/commit/bc2ff931afdd42d350b975304b70367a3aff55b4)
@@ -39,7 +70,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: reenable renovate [`5c83d78`](https://github.com/Enubia/ghost-chat/commit/5c83d782b2da6b5764a762e365a6bce06e2868c8)
 - choref: fix eslint config [`5e6d33d`](https://github.com/Enubia/ghost-chat/commit/5e6d33de12f05e0707cfc5a60bb927904ea06b4a)
 - chore: removed unused emits [`47aa3df`](https://github.com/Enubia/ghost-chat/commit/47aa3df40d46e4ebb399c6b971ddb5b62150ac7c)
+
 ---
+
 ### v3.4.1 | 23 April 2025
 
 - chore: update changelog [`6960730`](https://github.com/Enubia/ghost-chat/commit/6960730836f3e0d20898566ee83a8eb2dc3d805c)
@@ -50,7 +83,9 @@ alt="Buy Me A Coffee" width="126" />
 - refactor: removed unused listeners [`a13dd44`](https://github.com/Enubia/ghost-chat/commit/a13dd44e5fc3d97ec3d748963bf9a8cdd776d525)
 - refactor: refined settings page layout [`ef920a3`](https://github.com/Enubia/ghost-chat/commit/ef920a34b7b3d212447a2501a4106022f33baaaa)
 - chore: link update [`a8d1a20`](https://github.com/Enubia/ghost-chat/commit/a8d1a20abd61aeb6e3d6e2ee42953ab998890075)
+
 ---
+
 ### v3.4.0 | 19 April 2025
 
 - chore: update changelog [`4c2f7d5`](https://github.com/Enubia/ghost-chat/commit/4c2f7d508b516fd9c5b90ca97bcb14925d968c95)
@@ -65,7 +100,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: updated engines [`19cdf6a`](https://github.com/Enubia/ghost-chat/commit/19cdf6a90ed78a68d9d11f9695d82c14518ea462)
 - update: renamed scripts [`ec5adfa`](https://github.com/Enubia/ghost-chat/commit/ec5adfa52f1eb341da457d5dbfb7fd28e7fbb104)
 - Rename renovate.json to renovate.json.disabled [`db5cf49`](https://github.com/Enubia/ghost-chat/commit/db5cf49b39bd1349bfb8cd0da7e426fc17607d3f)
+
 ---
+
 ### v3.3.0 | 7 October 2024
 
 - update: disabled autoupdater [`#1113`](https://github.com/Enubia/ghost-chat/pull/1113)
@@ -74,14 +111,18 @@ alt="Buy Me A Coffee" width="126" />
 - Update package.json [`cb5a2f8`](https://github.com/Enubia/ghost-chat/commit/cb5a2f86d927af65a5ed3c37fa07a3dbcccfc08e)
 - Update README.md [`4c3ffe4`](https://github.com/Enubia/ghost-chat/commit/4c3ffe4a834d1d0ce8f8a5951d27e1c432eb6448)
 - updated license [`6be8bab`](https://github.com/Enubia/ghost-chat/commit/6be8bab70c3a1e44c54bc01fd61b883993e2e986)
+
 ---
+
 ### v3.2.7 | 26 September 2024
 
 - fix: content loading for twitch and kick [`fb2dc65`](https://github.com/Enubia/ghost-chat/commit/fb2dc6588f2f2bef037d8b389174dcaeaa6164ea)
 - chore: update changelog [`86d76ae`](https://github.com/Enubia/ghost-chat/commit/86d76ae8b48f9f3e3faf5f4828c9de16802bf8e6)
 - Update README.md [`424eb67`](https://github.com/Enubia/ghost-chat/commit/424eb678b2b430f44869d067db93c174727f1916)
 - Update renovate.json [`7881724`](https://github.com/Enubia/ghost-chat/commit/7881724abdfdf3b46fcf0b77922cd50f75bfeffa)
+
 ---
+
 ### v3.2.6 | 19 September 2024
 
 - refactor: changed constants to enums [`6bea835`](https://github.com/Enubia/ghost-chat/commit/6bea83501550fa61c2a81ea271e2f333bb1a9fc0)
@@ -90,7 +131,9 @@ alt="Buy Me A Coffee" width="126" />
 - fix: type errors after enum refactoring [`da1e594`](https://github.com/Enubia/ghost-chat/commit/da1e594a4092830459cba5fc96aaae4218dace21)
 - chore: removed version from build assets [`29ec0ae`](https://github.com/Enubia/ghost-chat/commit/29ec0ae779bf5836dfd8727ccd979d56efcace4d)
 - chore: update readme [`41e1efc`](https://github.com/Enubia/ghost-chat/commit/41e1efc4ff8b40e9ef1db79a6b70de1d769045b3)
+
 ---
+
 ### v3.2.5 | 12 September 2024
 
 - fix: linter changes [`e96fecd`](https://github.com/Enubia/ghost-chat/commit/e96fecd171581bf0393c3c67c0a626cd13e90c80)
@@ -103,20 +146,26 @@ alt="Buy Me A Coffee" width="126" />
 - remove link [`3683826`](https://github.com/Enubia/ghost-chat/commit/3683826ebd0b5cef6878d0635b3dc9261630d0ac)
 - chore: update readme [`85247fe`](https://github.com/Enubia/ghost-chat/commit/85247fe895f7f96e080eed94e7085ff219c1dc03)
 - Update FUNDING.yml [`51363b2`](https://github.com/Enubia/ghost-chat/commit/51363b269e909d6c1b1a3a98a3278d629046929f)
+
 ---
+
 ### v3.2.4 | 26 August 2024
 
 - chore: update changelog [`6cf135a`](https://github.com/Enubia/ghost-chat/commit/6cf135ad583e1b4c4fa53f66cb69d09cac056604)
 - fix: font size not applying correctly [`a3e14e0`](https://github.com/Enubia/ghost-chat/commit/a3e14e0c9c0837d165fd51ac82089f4824490ceb)
 - chore: update readme [`4d86922`](https://github.com/Enubia/ghost-chat/commit/4d86922b9b4384731ae9b02b46a7dbfa7c7cf749)
+
 ---
+
 ### v3.2.3 | 26 August 2024
 
 - chore: update changelog [`cd046de`](https://github.com/Enubia/ghost-chat/commit/cd046de20dc4d59ff6977f50491a1fab9df636bc)
 - fix migrations crashing initial installation [`189bcfd`](https://github.com/Enubia/ghost-chat/commit/189bcfdd93745b72cbf6443513fb7c42e02923c8)
 - update readme [`9deaf12`](https://github.com/Enubia/ghost-chat/commit/9deaf129d8276cb2f104af6b6464f367d4d0edd8)
 - Update README.md [`2ec5274`](https://github.com/Enubia/ghost-chat/commit/2ec52748750557dc2b831416c6c0d20e64717ab7)
+
 ---
+
 ### v3.2.2 | 19 August 2024
 
 - chore: update deps [`#1054`](https://github.com/Enubia/ghost-chat/pull/1054)
@@ -126,7 +175,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update changelog [`85567ad`](https://github.com/Enubia/ghost-chat/commit/85567ad6968aebe0f2c01bae2808a7398d8a9255)
 - fix: readme download links [`da74eef`](https://github.com/Enubia/ghost-chat/commit/da74eefe6cb9cd30a833154eda05f0c8fbd129af)
 - chore: typed-router [`99a05e8`](https://github.com/Enubia/ghost-chat/commit/99a05e89da59d03f40db67a6c7e81b2e5101665f)
+
 ---
+
 ### v3.2.1 | 20 June 2024
 
 - feat: add arm64 builds [`#978`](https://github.com/Enubia/ghost-chat/pull/978)
@@ -138,21 +189,27 @@ alt="Buy Me A Coffee" width="126" />
 - Update README.md [`d699270`](https://github.com/Enubia/ghost-chat/commit/d699270c3a5b8e890cdf308387cab2410b9fe737)
 - update: fix import alias for shared [`8ff5316`](https://github.com/Enubia/ghost-chat/commit/8ff5316349739d013734b4d6ec52728d3521be74)
 - chore: rename handlebar setup [`96bb3af`](https://github.com/Enubia/ghost-chat/commit/96bb3af5b68a442a669a1c8519fc1de43aaa10bd)
+
 ---
+
 ### v3.2.0 | 15 June 2024
 
 - refactor: move jchat options to own component, prepare kapchat [`2fcbff5`](https://github.com/Enubia/ghost-chat/commit/2fcbff5e3ad22d69c0fa068d0cc5e557a8661231)
 - feat: added kapchat back [`85c783f`](https://github.com/Enubia/ghost-chat/commit/85c783fbe8409ae57402e8dc538d2ad2282e94eb)
 - chore: update changelog [`c7aad20`](https://github.com/Enubia/ghost-chat/commit/c7aad20d07d4a0e05fc33d12bfa796af965fe205)
 - fix: kick settings toggle, index layout breakpoints [`017ea9a`](https://github.com/Enubia/ghost-chat/commit/017ea9a54c70bce2ca1844fe5c8b82e4cd87e8ac)
+
 ---
+
 ### v3.1.1 | 10 May 2024
 
 - chore: revert store version update [`5d17e68`](https://github.com/Enubia/ghost-chat/commit/5d17e680bf231685f31847a99839f2587008eb37)
 - chore: removed outdated deps [`89ede7f`](https://github.com/Enubia/ghost-chat/commit/89ede7f0ddbb0e866a2280478fe4adca305fa6bd)
 - chore: update changelog [`7f6de25`](https://github.com/Enubia/ghost-chat/commit/7f6de251b5f036507b3825355484f8a6d5daca3e)
 - fix: visual user blacklist bug [`e1e9f55`](https://github.com/Enubia/ghost-chat/commit/e1e9f5535eb80d34a6b8797246f46755e1359b99)
+
 ---
+
 ### v3.1.0 | 1 May 2024
 
 - new: added renderer handler for ipc calls [`#913`](https://github.com/Enubia/ghost-chat/pull/913)
@@ -162,22 +219,30 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update readme [`5ed2953`](https://github.com/Enubia/ghost-chat/commit/5ed29533b0b17a92073aa67167412a2358af3804)
 - update: remove store from renderer [`dea050d`](https://github.com/Enubia/ghost-chat/commit/dea050da9d0e5f9652403da3440cd20992588771)
 - fix: asset output directory for release [`f747e80`](https://github.com/Enubia/ghost-chat/commit/f747e809eba2ce83b3b8903ae4d2716a26939935)
+
 ---
+
 ### v3.0.3 | 28 April 2024
 
 - chore: update changelog [`68de3d6`](https://github.com/Enubia/ghost-chat/commit/68de3d6fc2f9c1489608f2cf39fe1aacf328accb)
 - fix: query paramter pass through for external sources [`1fcccc4`](https://github.com/Enubia/ghost-chat/commit/1fcccc45a3a41992943a17b0ef0022dc7495378d)
+
 ---
+
 ### v3.0.2 | 27 April 2024
 
 - chore: update changelog [`89a2b07`](https://github.com/Enubia/ghost-chat/commit/89a2b0716e6414844672d255ad8bc365b34d6c68)
 - fix: correctly apply migrations [`b610cdf`](https://github.com/Enubia/ghost-chat/commit/b610cdf40e82fc487fabf68b6a1d921754ccb792)
+
 ---
+
 ### v3.0.1 | 25 April 2024
 
 - fix: downgrade electron [`#912`](https://github.com/Enubia/ghost-chat/pull/912)
 - chore: update changelog [`28b27dd`](https://github.com/Enubia/ghost-chat/commit/28b27dd437faac005ce1916b93d1207b1cf8335b)
+
 ---
+
 ### v3.0.0 | 24 April 2024
 
 - feat: added kick.com [`#911`](https://github.com/Enubia/ghost-chat/pull/911)
@@ -207,7 +272,9 @@ alt="Buy Me A Coffee" width="126" />
 - fix: external source enter key bug [`4418d66`](https://github.com/Enubia/ghost-chat/commit/4418d662516daba0a07d5f9446a348687d5531cf)
 - fix: revert [`c017486`](https://github.com/Enubia/ghost-chat/commit/c01748656c570122d8b66022601c53d583655859)
 - chore: renmamed files [`ba31272`](https://github.com/Enubia/ghost-chat/commit/ba3127224b0e98bfa165b1593d1c15494fb1bb0c)
+
 ---
+
 ### v2.9.0 | 23 March 2024
 
 - new(ui/electron): allow updater disableing [`#853`](https://github.com/Enubia/ghost-chat/pull/853)
@@ -220,7 +287,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update changelog [`a3498f4`](https://github.com/Enubia/ghost-chat/commit/a3498f483450b81a6572b9dab97ccc432bf6c2ae)
 - fix(electron): typo in dev script [`802873e`](https://github.com/Enubia/ghost-chat/commit/802873e2574453f98a37d8d9f58ef25a2d36b108)
 - chore: update readme [`d392d53`](https://github.com/Enubia/ghost-chat/commit/d392d53886b7894ef2ec30b0bacb5e7232db136a)
+
 ---
+
 ### v2.8.0 | 13 March 2024
 
 - update(ui): replace checkboxes with switches [`c595f2b`](https://github.com/Enubia/ghost-chat/commit/c595f2b8d6e612fb94096613c15f63d2c3e191f7)
@@ -246,7 +315,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update renovate [`4c02c7e`](https://github.com/Enubia/ghost-chat/commit/4c02c7e944ac4e7e78f631c783ca19f8a01932c6)
 - Update CONTRIBUTING.md [`b89be4d`](https://github.com/Enubia/ghost-chat/commit/b89be4d9b36021198c6149ebb74e09cf33037db9)
 - chore: update renovate [`3acc12c`](https://github.com/Enubia/ghost-chat/commit/3acc12c0c920f81cf512f2e2dbcb789d967f2b40)
+
 ---
+
 ### v2.7.0 | 11 February 2024
 
 - chore: update linter [`5210f52`](https://github.com/Enubia/ghost-chat/commit/5210f52df243a1e9510a43393e0c3bcbc044ffc9)
@@ -257,7 +328,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update changelog [`bd0613b`](https://github.com/Enubia/ghost-chat/commit/bd0613b75dc5de2ad6482828e79815e9b658d6e4)
 - chore: update changelog scripts [`d0f038e`](https://github.com/Enubia/ghost-chat/commit/d0f038e82878769c92d2d6fd89180f0adf1b5d3d)
 - fix: version check loader color [`c998c0f`](https://github.com/Enubia/ghost-chat/commit/c998c0f4b762d9b7ef5a4565836422c9569dfc0d)
+
 ---
+
 ### v2.6.1 | 4 February 2024
 
 - new: automate changelog [`f519cc5`](https://github.com/Enubia/ghost-chat/commit/f519cc55b164e31ca01d79632d24fcdefd6cb39d)
@@ -265,7 +338,9 @@ alt="Buy Me A Coffee" width="126" />
 - Update donation links and download buttons [`41e4ea8`](https://github.com/Enubia/ghost-chat/commit/41e4ea87509fafb655b69f43dbfccdf4ed6c38e5)
 - chore: update configs [`7212de1`](https://github.com/Enubia/ghost-chat/commit/7212de108661868b3233b2abc5328e94c9d87529)
 - chore: update configs [`d43fdcd`](https://github.com/Enubia/ghost-chat/commit/d43fdcd035eae4a350748945f8d8bb012408a7d7)
+
 ---
+
 ### v2.6.0 | 3 February 2024
 
 - feat: added user blacklist to remove messages from chat [`#791`](https://github.com/Enubia/ghost-chat/pull/791)
@@ -283,7 +358,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update engines [`ba3443f`](https://github.com/Enubia/ghost-chat/commit/ba3443f69058e8fc004188862a680f81a1ae56a9)
 - chore: adapt eslint rules [`24a02d9`](https://github.com/Enubia/ghost-chat/commit/24a02d9259bbcb02d73479de99b7288e0fd2293c)
 - chore: update husky script [`2a18ba3`](https://github.com/Enubia/ghost-chat/commit/2a18ba3f5fe0819753f92b30440350de3efcb4aa)
+
 ---
+
 ### v2.5.2 | 26 January 2024
 
 - feat: Update trayIcon.ts with new features [`#779`](https://github.com/Enubia/ghost-chat/pull/779)
@@ -292,11 +369,15 @@ alt="Buy Me A Coffee" width="126" />
 - update: Update changelog and styles [`85aa957`](https://github.com/Enubia/ghost-chat/commit/85aa957c27e896fe904b926ccdcfa0dc00cf885e)
 - update: default font-size [`0101cf1`](https://github.com/Enubia/ghost-chat/commit/0101cf19b6106d133b22e78631a1463109d081ca)
 - chore: stuff [`901fde1`](https://github.com/Enubia/ghost-chat/commit/901fde1fac4aa0560bf09ba3a38e92645a00e759)
+
 ---
+
 ### v2.5.1 | 21 January 2024
 
 - fix: hotkey assignment mapping [`9911a45`](https://github.com/Enubia/ghost-chat/commit/9911a4543a05c43bfaff7011a5c49d62bfdb5d99)
+
 ---
+
 ### v2.5.0 | 21 January 2024
 
 - vanish toggle hotkey [`#773`](https://github.com/Enubia/ghost-chat/pull/773)
@@ -308,13 +389,17 @@ alt="Buy Me A Coffee" width="126" />
 - chore(electron): remove blur workaround [`a3da763`](https://github.com/Enubia/ghost-chat/commit/a3da7634ae613696f30be5ff2d9859bbab33682f)
 - chore: revert [`2ce9073`](https://github.com/Enubia/ghost-chat/commit/2ce9073a9801abd83070fba174700b371e4208e5)
 - chore: revert version number [`e256f08`](https://github.com/Enubia/ghost-chat/commit/e256f08baa99bc2bb0d403a07bd50ed23e33eb41)
+
 ---
+
 ### v2.4.2 | 3 January 2024
 
 - fix(windows): turn off hardware acceleration [`1359c80`](https://github.com/Enubia/ghost-chat/commit/1359c80ab2a8c4855586c11efa81f2b33c2c39ca)
 - fix(mac): remove titlebar style [`12aa2c0`](https://github.com/Enubia/ghost-chat/commit/12aa2c0e90bbaaa9f9ddfe1b9e43fc457063841e)
 - chore: update readme [`ed9a730`](https://github.com/Enubia/ghost-chat/commit/ed9a7307690abd21add160783323c8a960e03a92)
+
 ---
+
 ### v2.4.1 | 1 January 2024
 
 - update: removed single click-through option [`cbba964`](https://github.com/Enubia/ghost-chat/commit/cbba9649b2de4757b6a779efdfa945ab84074a41)
@@ -322,7 +407,9 @@ alt="Buy Me A Coffee" width="126" />
 - Merge pull request #761 from wont-stream/patch-1 [`99df16c`](https://github.com/Enubia/ghost-chat/commit/99df16cd09e092d956efef2bd231d1546eacb07a)
 - fix: indents and editorconfig [`5888b96`](https://github.com/Enubia/ghost-chat/commit/5888b96b1758459b5b776e7c02b4d9f77369342f)
 - Fix typo [`11c5e76`](https://github.com/Enubia/ghost-chat/commit/11c5e763394e1318831ca6c62659171ccc5f0f14)
+
 ---
+
 ### v2.4.0 | 26 November 2023
 
 - chore: new eslint ruleset [`9ebb73d`](https://github.com/Enubia/ghost-chat/commit/9ebb73d310bc6b3bde17a6a51a15a2c9b1a293c4)
@@ -332,13 +419,17 @@ alt="Buy Me A Coffee" width="126" />
 - feat: external sources list [`3bd11a0`](https://github.com/Enubia/ghost-chat/commit/3bd11a06f47d5b16ded2389dc924a143ccaf4a5d)
 - fix: eslint [`1a7893f`](https://github.com/Enubia/ghost-chat/commit/1a7893f210b20e14f17a70aff58cdd51c4a1eab8)
 - chore: package json update [`0ac0743`](https://github.com/Enubia/ghost-chat/commit/0ac0743eaa5bfcfc27235847b78096b31728606d)
+
 ---
+
 ### v2.3.3 | 13 November 2023
 
 - fix: linter [`9a9d8ed`](https://github.com/Enubia/ghost-chat/commit/9a9d8ed3b4b48de8ddd104e4626f2675c7cbd3f7)
 - fix: eslint [`05f2a26`](https://github.com/Enubia/ghost-chat/commit/05f2a26b4a8965c5f0891069e4d9cdccb14c7b67)
 - Update ci.yml [`353d630`](https://github.com/Enubia/ghost-chat/commit/353d6301183efda83f90b8a04d1e32783743ff64)
+
 ---
+
 ### v2.3.2 | 22 September 2023
 
 - chore: update release workflow [`3a3cf5f`](https://github.com/Enubia/ghost-chat/commit/3a3cf5fd2cf160842f8c5a7a4ead4b155751b80e)
@@ -347,27 +438,35 @@ alt="Buy Me A Coffee" width="126" />
 - Update README.md [`1a14c49`](https://github.com/Enubia/ghost-chat/commit/1a14c49dd4d2a2e05c149377c6ad3143d203b4f8)
 - fix: workflow again [`c24c9ff`](https://github.com/Enubia/ghost-chat/commit/c24c9ffb5a886662a14e9f5fa2ceb7b25ba3a8fd)
 - fix: workflow [`108b885`](https://github.com/Enubia/ghost-chat/commit/108b885e0d2e7aab8104cba2d35a5c30d3a740d0)
+
 ---
+
 ### v2.3.0 | 29 August 2023
 
 - feat: added chat preview to theme selector [`376c555`](https://github.com/Enubia/ghost-chat/commit/376c5553fda84de1da56f22de5b287fdf3c1d550)
 - Update FUNDING.yml [`3704acd`](https://github.com/Enubia/ghost-chat/commit/3704acd6017125941ae6995a6f20d2c35f0af105)
 - Merge pull request #610 from Enubia/Enubia-patch-1 [`79aa769`](https://github.com/Enubia/ghost-chat/commit/79aa769a1b5769f760b00314f4be7763b6fb964f)
 - Update FUNDING.yml [`d572b83`](https://github.com/Enubia/ghost-chat/commit/d572b83c3ba41874f6c05e0d44ebda1539b0cb90)
+
 ---
+
 ### v2.2.6 | 17 July 2023
 
 - chore: update eslint config [`2b3ae22`](https://github.com/Enubia/ghost-chat/commit/2b3ae220d7901a1c69b292587d8afb98ca714f55)
 - refactor: change image folder [`8c940a9`](https://github.com/Enubia/ghost-chat/commit/8c940a9e3fe01d2dbefbfc39ba00ec0b2aa7691b)
 - fix: linter [`117f2a0`](https://github.com/Enubia/ghost-chat/commit/117f2a0b43bcd8ca9d36ac3b4c06247654d004ff)
 - fix: husky [`a922435`](https://github.com/Enubia/ghost-chat/commit/a922435b1e6d8b44708a946b2e82186b50b4b93b)
+
 ---
+
 ### v2.2.5 | 24 June 2023
 
 - chore: added crash report sending [`d8ec487`](https://github.com/Enubia/ghost-chat/commit/d8ec487dcfa12ad196b0bc6fa831ee1fa7058870)
 - fix: fixed store creation on initial install [`6622683`](https://github.com/Enubia/ghost-chat/commit/662268377251b9598da43fd7112a541dd3ad7362)
 - fix: fixed autoupdater flag deprecation warning [`f3f11b5`](https://github.com/Enubia/ghost-chat/commit/f3f11b593827f1ae383355082a39cc7efe7fc7eb)
+
 ---
+
 ### v2.2.4 | 22 June 2023
 
 - refactor: reworked url validation for external sources [`ac9d94d`](https://github.com/Enubia/ghost-chat/commit/ac9d94d2aa22c0bcb528370a1f3438b18737dd4a)
@@ -375,7 +474,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update license [`bfb059a`](https://github.com/Enubia/ghost-chat/commit/bfb059a09c6dfeb3aac5e6e984e27761c3ff515b)
 - fix: prepend protocol for external url if missing [`a2253ae`](https://github.com/Enubia/ghost-chat/commit/a2253ae528c1ec28459bad3eca210b497a65be90)
 - fix: view height [`b28d9c8`](https://github.com/Enubia/ghost-chat/commit/b28d9c85185b90c9c8fbc4b082b7b1c7e86a5b9f)
+
 ---
+
 ### v2.2.3 | 18 June 2023
 
 - update: fixed layout of webview tag [`6bfd447`](https://github.com/Enubia/ghost-chat/commit/6bfd4476e6432f710a4863eb7fca7b562b87cb18)
@@ -385,7 +486,9 @@ alt="Buy Me A Coffee" width="126" />
 - Update Korean localization [`159b513`](https://github.com/Enubia/ghost-chat/commit/159b5135ee4352434cecf75c24021ad3f6beaaba)
 - chore: update release workflow [`006d9b6`](https://github.com/Enubia/ghost-chat/commit/006d9b656663eeb94a4fcd0f57c4b610ce8962f7)
 - chore: configure release workflow [`f482841`](https://github.com/Enubia/ghost-chat/commit/f4828413ebd1bb905b3b59fa8880bca7ca35ff40)
+
 ---
+
 ### v2.2.2 | 5 June 2023
 
 - update: added tranlsations for source switcher [`84f8232`](https://github.com/Enubia/ghost-chat/commit/84f823270b4e5b7f3fd6a56b36f7befc59338346)
@@ -395,7 +498,9 @@ alt="Buy Me A Coffee" width="126" />
 - ci: fix pnpm version [`057582d`](https://github.com/Enubia/ghost-chat/commit/057582d85a3bd1bd2b1943b3c2aece385fcf2119)
 - chore: ci update [`05996d8`](https://github.com/Enubia/ghost-chat/commit/05996d8c70a6b5c126bbd7d7a40152a11e9a6157)
 - chore: update readme [`49da44b`](https://github.com/Enubia/ghost-chat/commit/49da44bf42b266af42edf9fb6839e66a6b6177cd)
+
 ---
+
 ### v2.2.1 | 16 May 2023
 
 - chore: refactored view showing stuff [`2fe4112`](https://github.com/Enubia/ghost-chat/commit/2fe4112bab3c8b03e8bbe03bc61179090ced54ed)
@@ -405,19 +510,26 @@ alt="Buy Me A Coffee" width="126" />
 - chore: remove todo [`39f68e1`](https://github.com/Enubia/ghost-chat/commit/39f68e1e425ca09e9d2e4248b79c77581c778ec4)
 - chore: update todo [`60e69de`](https://github.com/Enubia/ghost-chat/commit/60e69deab34c9daac80c2da21364b70c5da1ab30)
 - chore: version update [`5b3a17b`](https://github.com/Enubia/ghost-chat/commit/5b3a17b8067a53cbfdacad6729e76eb7632f0892)
+
 ---
+
 ### v2.2.0 | 3 May 2023
 
 ---
+
 ### v2.2.0-beta.1 | 2 May 2023
 
 - fix: autoupdater prerelease versions [`d941261`](https://github.com/Enubia/ghost-chat/commit/d9412611835e4ec284e4125a0536d04642a80852)
+
 ---
+
 ### v2.2.0-beta.0 | 2 May 2023
 
 - chore: fix scripts [`51f40c5`](https://github.com/Enubia/ghost-chat/commit/51f40c531be942d09b186643077be07f9016be9c)
 - chore: fix scripts [`151a699`](https://github.com/Enubia/ghost-chat/commit/151a69917448b9cd27c2e8d3565b0802f561d4f1)
+
 ---
+
 ### v2.2.0-beta | 2 May 2023
 
 - feat: external source loading [`2e9ccfd`](https://github.com/Enubia/ghost-chat/commit/2e9ccfd04b52006d702f172f1c115105c76c0b12)
@@ -425,7 +537,9 @@ alt="Buy Me A Coffee" width="126" />
 - fix: update notifications on mac [`aa367b5`](https://github.com/Enubia/ghost-chat/commit/aa367b587739f56a0e80bfc9b85ffda5f9d1e518)
 - chore: script name changes [`915224b`](https://github.com/Enubia/ghost-chat/commit/915224b43c0e17217c8135710802c33035d6ae19)
 - fix: type missmatch for webview link [`f19bafc`](https://github.com/Enubia/ghost-chat/commit/f19bafcdd566853a22e37e93e777633acb956cdb)
+
 ---
+
 ### v2.1.0 | 15 April 2023
 
 - feat: new vanish mode handling [`691459f`](https://github.com/Enubia/ghost-chat/commit/691459f22a064f0d1591abbc7275a8ec1eae9153)
@@ -435,7 +549,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update workflow [`8c0d105`](https://github.com/Enubia/ghost-chat/commit/8c0d105ff60de5d1424aa9aa1adacf3eb797b2d7)
 - chore: update workflow [`475bf65`](https://github.com/Enubia/ghost-chat/commit/475bf65e05bb46fe01872e6f0e0f1eba71539212)
 - chore: pin electron-log [`6b97739`](https://github.com/Enubia/ghost-chat/commit/6b977390aee70c4dae4c3f8076d7ef3183d63785)
+
 ---
+
 ### v2.0.3 | 21 March 2023
 
 - chore: update todos [`93a28e7`](https://github.com/Enubia/ghost-chat/commit/93a28e7e8dcad8af1a272b70a8da8f239933e8d7)
@@ -446,11 +562,15 @@ alt="Buy Me A Coffee" width="126" />
 - refactor: ref instead of shallow [`db3ebbc`](https://github.com/Enubia/ghost-chat/commit/db3ebbc2f296ffe0f79d1c8fe71c04b486cad4ab)
 - chore: update vscode settings [`9ba0e08`](https://github.com/Enubia/ghost-chat/commit/9ba0e08c89cc975a73edbe6c0f6e9d7c107efa67)
 - update: skip version check in vanished mode [`c12d878`](https://github.com/Enubia/ghost-chat/commit/c12d878ad785d903560110e3a7ff920671ac9651)
+
 ---
+
 ### v2.0.2 | 15 March 2023
 
 - fix: revert vanish condition bugged [`9507b45`](https://github.com/Enubia/ghost-chat/commit/9507b4540d1dd418d61986bd2230893356720646)
+
 ---
+
 ### v2.0.1 | 15 March 2023
 
 - fix/settings-and-vanish [`#453`](https://github.com/Enubia/ghost-chat/pull/453)
@@ -464,7 +584,9 @@ alt="Buy Me A Coffee" width="126" />
 - chore: update todos [`aca8ea9`](https://github.com/Enubia/ghost-chat/commit/aca8ea99039bf6dfdee698475deabc9314ebaf80)
 - chore: update license [`6baa960`](https://github.com/Enubia/ghost-chat/commit/6baa96044c77480ac927119b9e8cfe423aaa4997)
 - chore: update readme [`7e6b25e`](https://github.com/Enubia/ghost-chat/commit/7e6b25ef54c0cd288e4311e7f5a3a1bbe65c2947)
+
 ---
+
 ### v2.0.0 | 8 March 2023
 
 - nice addition, thanks a lot! [`#439`](https://github.com/Enubia/ghost-chat/pull/439)
@@ -505,4 +627,5 @@ alt="Buy Me A Coffee" width="126" />
 - chore: enable fallbacklocale again [`bb8d30d`](https://github.com/Enubia/ghost-chat/commit/bb8d30de5417a201688f59906f6bd4fde13fcbb6)
 - chore: updated todos [`c392d13`](https://github.com/Enubia/ghost-chat/commit/c392d131541ff9f25bcc27fe5d6e327cda090cc9)
 - chore: updated version again [`c663fe5`](https://github.com/Enubia/ghost-chat/commit/c663fe585d18815a045132366d49d2532e7c5c4f)
+
 ---

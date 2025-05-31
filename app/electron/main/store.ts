@@ -1,12 +1,9 @@
+import { StoreDefaults } from '#ipc/constants/store/defaults.js';
 import type { AppStore, Keybinds, Twitch } from '#ipc/types/store.js';
-
 import { app } from 'electron';
 import log from 'electron-log';
 import ElectronStore from 'electron-store';
-
 import { existsSync, unlinkSync } from 'node:fs';
-
-import { StoreDefaults } from '#ipc/constants/store/defaults.js';
 
 export default function createStore() {
     log.info('App version:', app.getVersion());

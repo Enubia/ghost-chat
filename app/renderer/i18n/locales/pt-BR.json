@@ -121,11 +121,17 @@
                 "label": "Fonte do chat",
                 "select-label": "Escolha a fonte",
                 "select-options": [
+                    "Baloo Tammudu",
                     "Segoe UI",
+                    "Roboto",
                     "Lato",
+                    "Noto Sans",
                     "Source Code Pro",
+                    "Impact",
                     "Comfortaa",
+                    "Dancing Script",
                     "Indie Flower",
+                    "Press Start 2P",
                     "Wallpoet"
                 ],
                 "info": "Mudará a fonte usada no chat."

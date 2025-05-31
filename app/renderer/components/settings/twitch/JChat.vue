@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import { Input } from '#components/ui/input';
+import { Label } from '#components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#components/ui/select';
+import { Switch } from '#components/ui/switch';
 import { shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import { Switch } from '../../ui/switch';
 
 const props = defineProps<{
     fontSize: string;
@@ -123,10 +122,17 @@ const smallCaps = shallowRef(props.smallCaps);
             </div>
             <div v-if="fade">
                 <Label class="cursor-pointer" for="fadeTimeout">
-                    {{ t('settings.twitch.fade.timeout-label', { seconds: fadeTimeout }) }}
+                    {{
+                        t('settings.twitch.fade.timeout-label', {
+                            seconds: fadeTimeout,
+                        })
+                    }}
                 </Label>
                 <Input
-                    id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
+                    id="fadeTimeout"
+                    v-model="fadeTimeout"
+                    class="w-30 text-center"
+                    type="number"
                     @update:model-value="emit('update:fadeTimeout', $event)"
                 />
             </div>
@@ -146,10 +152,7 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch
-                id="hide-commands" v-model:checked="hideCommands"
-                @update:checked="emit('update:hideCommands', $event)"
-            />
+            <Switch id="hide-commands" v-model:checked="hideCommands" @update:checked="emit('update:hideCommands', $event)" />
             <Label class="align-elements" for="hide-commands">
                 {{ t('settings.twitch.hide-commands.label') }}
             </Label>
@@ -159,10 +162,7 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch
-                id="hide-badges" v-model:checked="hideBadges"
-                @update:checked="emit('update:hideBadges', $event)"
-            />
+            <Switch id="hide-badges" v-model:checked="hideBadges" @update:checked="emit('update:hideBadges', $event)" />
             <Label class="align-elements" for="hide-badges">
                 {{ t('settings.twitch.hide-badges.label') }}
             </Label>
@@ -180,8 +180,9 @@ const smallCaps = shallowRef(props.smallCaps);
             </SelectTrigger>
             <SelectContent>
                 <SelectItem
-                    v-for="[key, value], index in Object.entries(tm('settings.twitch.font.select-options'))"
-                    :key="key" :value="index.toString()"
+                    v-for="([key, value], index) in Object.entries(tm('settings.twitch.font.select-options'))"
+                    :key="key"
+                    :value="index.toString()"
                 >
                     {{ rt(value) }}
                 </SelectItem>

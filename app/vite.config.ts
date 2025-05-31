@@ -34,7 +34,7 @@ export default defineConfig(({ command }) => {
             vue({
                 template: {
                     compilerOptions: {
-                        isCustomElement: tag => ['webview'].includes(tag),
+                        isCustomElement: (tag) => ['webview'].includes(tag),
                     },
                 },
             }),

@@ -1,12 +1,11 @@
 import messages from '@intlify/unplugin-vue-i18n/messages';
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
-import { createRouter, createWebHashHistory } from 'vue-router/auto';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import { routes } from 'vue-router/auto-routes';
-
 import App from './App.vue';
-import IpcHandler from './lib/ipchandler';
 import './assets/css/index.css';
+import IpcHandler from './lib/ipchandler';
 
 const router = createRouter({
     routes,
@@ -22,10 +21,7 @@ IpcHandler.getGeneral()
             legacy: false,
         });
 
-        createApp(App)
-            .use(router)
-            .use(i18n)
-            .mount('#app');
+        createApp(App).use(router).use(i18n).mount('#app');
     })
     .catch((error) => {
         console.error(error);

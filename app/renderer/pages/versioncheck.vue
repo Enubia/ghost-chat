@@ -1,13 +1,11 @@
 <script setup lang="ts">
+import Button from '#components/ui/button/Button.vue';
+import { IpcEvent } from '#ipc/constants/events';
 import { Icon } from '@iconify/vue';
 import { useIpcRendererOn } from '@vueuse/electron';
 import { shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import Button from '#components/ui/button/Button.vue';
-import { IpcEvent } from '#ipc/constants/events';
-
 import { downloadLink } from '../constants/links';
 import { versionStore } from '../store/version';
 
@@ -30,7 +28,9 @@ useIpcRendererOn(IpcEvent.UpdateNotAvailable, () => {
 useIpcRendererOn(IpcEvent.UpdateAvailable, (_, versionNumber) => {
     showLink.value = true;
     versionStore.setNew(versionNumber);
-    message.value = t('version-check.update-available', { version: versionNumber });
+    message.value = t('version-check.update-available', {
+        version: versionNumber,
+    });
 });
 
 useIpcRendererOn(IpcEvent.Error, () => {

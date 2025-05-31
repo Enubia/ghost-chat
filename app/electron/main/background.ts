@@ -1,10 +1,7 @@
+import { IpcEvent } from '#ipc/constants/events.js';
 import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
-
 import path from 'node:path';
-
-import { IpcEvent } from '#ipc/constants/events.js';
-
 import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';
@@ -48,9 +45,7 @@ app.on('ready', () => {
     mainWindow = new Main(store).buildWindow(indexHtml);
     new TrayIcon(store).buildTray(trayIconPath);
     ipcEvents = new IpcEvents(store);
-    ipcEvents
-        .registerWindow(mainWindow)
-        .registerEvents(indexHtml);
+    ipcEvents.registerWindow(mainWindow).registerEvents(indexHtml);
 
     new AutoUpdater(store, mainWindow, !!process.env.VITE_DEV_SERVER_URL).init();
 
@@ -94,9 +89,7 @@ app.on('activate', () => {
 
             // register the events and overlay again
             // since they still hold a reference to a null object in case the overlay was recreated
-            ipcEvents
-                .registerWindow(mainWindow)
-                .registerEvents(indexHtml);
+            ipcEvents.registerWindow(mainWindow).registerEvents(indexHtml);
 
             // wait a second for the window to be created again so that it can handle events
             setTimeout(() => {

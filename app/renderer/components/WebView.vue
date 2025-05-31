@@ -3,8 +3,5 @@ defineProps<{ tagSource: URL }>();
 </script>
 
 <template>
-    <webview
-        :src="tagSource"
-        class="min-h-dvh"
-    />
+    <webview :src="tagSource" class="min-h-dvh" />
 </template>

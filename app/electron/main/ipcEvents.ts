@@ -1,14 +1,10 @@
-import type { IpcMainEvent, Rectangle } from 'electron';
-import type ElectronStore from 'electron-store';
-
-import type { AppStore, WindowState } from '#ipc/types/store.js';
-
-import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
-import log from 'electron-log';
-
 import { IpcEvent } from '#ipc/constants/events.js';
 import { StoreKeys } from '#ipc/constants/store/keys.js';
-
+import type { AppStore, WindowState } from '#ipc/types/store.js';
+import type { IpcMainEvent, Rectangle } from 'electron';
+import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import log from 'electron-log';
+import type ElectronStore from 'electron-store';
 import Settings from './window/settings.js';
 
 export default class IpcEvents {
@@ -19,27 +15,33 @@ export default class IpcEvents {
     constructor(private store: ElectronStore<AppStore>) {}
 
     private callStore() {
-        ipcMain.handle(IpcEvent.CallStore, async (_event, data: {
-            action: 'get' | 'set' | 'delete';
-            key: keyof AppStore;
-            value?: any;
-        }) => {
-            log.info('Calling store', data);
+        ipcMain.handle(
+            IpcEvent.CallStore,
+            async (
+                _event,
+                data: {
+                    action: 'get' | 'set' | 'delete';
+                    key: keyof AppStore;
+                    value?: any;
+                },
+            ) => {
+                log.info('Calling store', data);
 
-            switch (data.action) {
-                case 'get':
-                    return this.store.get(data.key);
-                case 'set':
-                    this.store.set(data.key, data.value);
-                    break;
-                case 'delete':
-                    this.store.delete(data.key);
-                    break;
-                default:
-                    log.error('Unknown action', data);
-                    break;
-            }
-        });
+                switch (data.action) {
+                    case 'get':
+                        return this.store.get(data.key);
+                    case 'set':
+                        this.store.set(data.key, data.value);
+                        break;
+                    case 'delete':
+                        this.store.delete(data.key);
+                        break;
+                    default:
+                        log.error('Unknown action', data);
+                        break;
+                }
+            },
+        );
     }
 
     private close() {
@@ -106,7 +108,9 @@ export default class IpcEvents {
                 for (const current in keybinds) {
                     const { keybind, activationMessage } = keybinds[current as keyof typeof keybinds];
                     if (!keybind) {
-                        this.overlay?.webContents.send(IpcEvent.Notification, { type: 'toggleUnbound' });
+                        this.overlay?.webContents.send(IpcEvent.Notification, {
+                            type: 'toggleUnbound',
+                        });
                         continue;
                     }
 
@@ -116,7 +120,9 @@ export default class IpcEvents {
                     });
 
                     log.info(`Registered [${keybind}]: ${current}`);
-                    this.overlay?.webContents.send(IpcEvent.Notification, { type: 'toggleSet' });
+                    this.overlay?.webContents.send(IpcEvent.Notification, {
+                        type: 'toggleSet',
+                    });
                 }
             } catch (error) {
                 log.error('ipcEvents', error);
@@ -159,10 +165,7 @@ export default class IpcEvents {
 
     private vanish() {
         ipcMain.on(IpcEvent.Vanish, () => {
-            if (
-                !this.store.get('settings').isOpen
-                && this.store.get('savedWindowState').isTransparent
-            ) {
+            if (!this.store.get('settings').isOpen && this.store.get('savedWindowState').isTransparent) {
                 // DISABLING VANISH CASE
                 // Settings are CLOSED and the Window IS transparent
                 log.info('Disabling Vanish');
@@ -174,10 +177,7 @@ export default class IpcEvents {
 
                 this.overlay?.setIgnoreMouseEvents(false);
                 this.overlay?.webContents.send(IpcEvent.ShowApp);
-            } else if (
-                !this.store.get('settings').isOpen
-                && !this.store.get('savedWindowState').isTransparent
-            ) {
+            } else if (!this.store.get('settings').isOpen && !this.store.get('savedWindowState').isTransparent) {
                 // ENABLING VANISH CASE
                 // Settings are CLOSED and Window IS NOT transparent
                 log.info('Vanishing overlay');

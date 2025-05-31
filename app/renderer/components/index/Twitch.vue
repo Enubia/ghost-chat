@@ -1,11 +1,9 @@
 <script setup lang="ts">
+import { StoreDefaults } from '#ipc/constants/store/defaults';
+import IpcHandler from '#lib/ipchandler';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import { StoreDefaults } from '#ipc/constants/store/defaults';
-import IpcHandler from '#lib/ipchandler';
-
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Input } from '../ui/input';
@@ -43,7 +41,7 @@ async function routeChat() {
     <Dialog>
         <DialogTrigger>
             <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
-                <img src="../../assets/brands/twitch.png" class="h-12" alt="twitch">
+                <img src="../../assets/brands/twitch.png" class="h-12" alt="twitch" />
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">

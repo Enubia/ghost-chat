@@ -1,21 +1,15 @@
-import type ElectronStore from 'electron-store';
-
+import { IpcEvent } from '#ipc/constants/events.js';
 import type { AppStore } from '#ipc/types/store.js';
-
 import { app, clipboard, ipcMain, Menu, shell, Tray } from 'electron';
 import log from 'electron-log';
-
+import type ElectronStore from 'electron-store';
 import fs from 'node:fs';
 import path from 'node:path';
-
-import { IpcEvent } from '#ipc/constants/events.js';
 
 export default class TrayIcon {
     private tray: Tray | null = null;
 
-    constructor(
-        private store: ElectronStore<AppStore>,
-    ) {}
+    constructor(private store: ElectronStore<AppStore>) {}
 
     buildTray(trayIconPath: string) {
         this.tray = new Tray(trayIconPath);
@@ -94,16 +88,22 @@ export default class TrayIcon {
                             const locale = app.getLocale();
                             const store = this.store.store;
 
-                            log.info(JSON.stringify({
-                                appVersion,
-                                electronVersion,
-                                chromeVersion,
-                                nodeVersion,
-                                platform,
-                                arch,
-                                locale,
-                                store,
-                            }, null, 4));
+                            log.info(
+                                JSON.stringify(
+                                    {
+                                        appVersion,
+                                        electronVersion,
+                                        chromeVersion,
+                                        nodeVersion,
+                                        platform,
+                                        arch,
+                                        locale,
+                                        store,
+                                    },
+                                    null,
+                                    4,
+                                ),
+                            );
 
                             let clipboardText = `**App Version:** ${appVersion}\n\n`;
                             clipboardText += `**Electron Version:** ${electronVersion}\n\n`;

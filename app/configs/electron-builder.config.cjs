@@ -10,10 +10,7 @@ module.exports = {
     directories: {
         output: 'out/release/${version}',
     },
-    files: [
-        'out/dist-electron',
-        'out/dist',
-    ],
+    files: ['out/dist-electron', 'out/dist'],
     mac: {
         artifactName: '${productName}-${arch}.${ext}',
         target: {

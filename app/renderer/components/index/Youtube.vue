@@ -1,14 +1,12 @@
 <script setup lang="ts">
+import { StoreDefaults } from '#ipc/constants/store/defaults';
+import IpcHandler from '#lib/ipchandler';
+import { delay } from '#lib/utils/delay';
 import { Icon } from '@iconify/vue';
 import { useFetch } from '@vueuse/core';
 import { computed, onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import { StoreDefaults } from '#ipc/constants/store/defaults';
-import IpcHandler from '#lib/ipchandler';
-import { delay } from '#lib/utils/delay';
-
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Input } from '../ui/input';
@@ -27,7 +25,9 @@ const remaining = shallowRef(youtube.value.retries ?? StoreDefaults.options.yout
 const { abort, error, data, execute } = useFetch(
     computed(() => `https://www.youtube.com/embed/live_stream?channel=${channelId.value}`),
     { immediate: false },
-).get().text();
+)
+    .get()
+    .text();
 
 onMounted(async () => {
     youtube.value = await IpcHandler.getYoutubeOptions();
@@ -132,7 +132,7 @@ function stopLoading() {
 </script>
 
 <template>
-    <Dialog @update:open="open => open ? null : stopLoading()">
+    <Dialog @update:open="(open) => (open ? null : stopLoading())">
         <DialogTrigger>
             <div class="flex justify-center rounded bg-secondary p-4 hover:cursor-pointer hover:bg-gray-400">
                 <Icon icon="fa6-brands:youtube" color="#FF0000" class="size-12" />
@@ -147,22 +147,16 @@ function stopLoading() {
                     {{ info }}
                 </DialogDescription>
             </DialogHeader>
-            <Input
-                v-model="channelId" :disabled="isLoading" placeholder="Your youtube channel Id"
-                @keydown.enter="routeChat"
-            />
+            <Input v-model="channelId" :disabled="isLoading" placeholder="Your youtube channel Id" @keydown.enter="routeChat" />
             <Button :disabled="!channelId.length || isLoading" class="flex gap-2" @click="routeChat">
                 {{ t('start.channel.button') }}
                 <Icon v-if="isLoading" icon="svg-spinners:6-dots-rotate" class="animate-spin text-2xl" />
             </Button>
-            <hr class="border-dashed">
+            <hr class="border-dashed" />
             <DialogDescription class="grid gap-3">
                 {{ t('start.youtube.live-id.info') }}
             </DialogDescription>
-            <Input
-                v-model="liveId" :disabled="isLoading" placeholder="Your youtube live Id"
-                @keydown.enter="routeChat"
-            />
+            <Input v-model="liveId" :disabled="isLoading" placeholder="Your youtube live Id" @keydown.enter="routeChat" />
             <Button :disabled="isLoading" class="flex gap-2" @click="routeChat">
                 {{ t('start.channel.button') }}
             </Button>

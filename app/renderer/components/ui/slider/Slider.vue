@@ -1,11 +1,9 @@
 <script setup lang="ts">
+import { cn } from '#lib/utils/cn';
 import type { SliderRootEmits, SliderRootProps } from 'radix-vue';
-import type { HTMLAttributes } from 'vue';
-
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'radix-vue';
+import type { HTMLAttributes } from 'vue';
 import { computed } from 'vue';
-
-import { cn } from '#lib//utils/cn';
 
 const props = defineProps<SliderRootProps & { class?: HTMLAttributes['class'] }>();
 const emits = defineEmits<SliderRootEmits>();
@@ -20,13 +18,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-    <SliderRoot
-        :class="cn(
-            'relative flex w-full touch-none select-none items-center',
-            props.class,
-        )"
-        v-bind="forwarded"
-    >
+    <SliderRoot :class="cn('relative flex w-full touch-none select-none items-center', props.class)" v-bind="forwarded">
         <SliderTrack class="relative h-1.5 w-full grow overflow-hidden rounded-full bg-primary/20">
             <SliderRange class="absolute h-full bg-primary" />
         </SliderTrack>

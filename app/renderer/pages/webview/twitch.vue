@@ -1,18 +1,12 @@
 <script setup lang="ts">
+import WebView from '#components/WebView.vue';
+import { TwitchSearchParams } from '#constants/searchparams';
 import type { WebviewTag } from '#ipc/types/webviewtag';
-
+import IpcHandler from '#lib/ipchandler';
 import { onMounted } from 'vue';
 
-import WebView from '#components/WebView.vue';
-import IpcHandler from '#lib/ipchandler';
-
-import { TwitchSearchParams } from '../../constants/searchparams';
-
 const twitch = await IpcHandler.getTwitchOptions();
-const link
-    = twitch.useJChat
-        ? new URL('https://www.giambaj.it/twitch/jchat/v2/')
-        : new URL('https://nightdev.com/hosted/obschat/');
+const link = twitch.useJChat ? new URL('https://www.giambaj.it/twitch/jchat/v2/') : new URL('https://nightdev.com/hosted/obschat/');
 
 let channel = '';
 

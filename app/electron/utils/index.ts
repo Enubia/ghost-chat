@@ -1,6 +1,5 @@
 import { app, globalShortcut } from 'electron';
 import log from 'electron-log';
-
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -17,7 +16,7 @@ export function cleanLogs() {
                 continue;
             }
 
-            const [_, day, month, year] = file.split('-');
+            const [, day, month, year] = file.split('-');
             const fileDate = new Date(`${year}-${month}-${day}`);
             const date = new Date();
             const diff = date.getTime() - fileDate.getTime();

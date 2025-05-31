@@ -12,7 +12,7 @@ function formatMessage(string) {
         return `<span class="text-gray-400 bg-gray-900 px-1">misc</span>: ${string}`;
     }
 
-    const [commitType, rest] = string.split(':').map(part => part.trim());
+    const [commitType, rest] = string.split(':').map((part) => part.trim());
 
     switch (commitType) {
         case 'new':

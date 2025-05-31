@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import type { Twitch } from '#ipc/types/store';
-
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import Editor from '#components/settings/Editor.vue';
 import JChat from '#components/settings/twitch/JChat.vue';
 import KapChat from '#components/settings/twitch/KapChat.vue';
@@ -13,9 +7,13 @@ import { Label } from '#components/ui/label';
 import Switch from '#components/ui/switch/Switch.vue';
 import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
+import type { Twitch } from '#ipc/types/store';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t, rt, tm } = useI18n();
 
@@ -162,7 +160,7 @@ async function saveFontSizeExact(value: number) {
 
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
-    const blacklist = target.value.split(',').map(user => user.trim());
+    const blacklist = target.value.split(',').map((user) => user.trim());
 
     await IpcHandler.setKeyValue('options.twitch.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
@@ -183,10 +181,7 @@ async function saveFadeTimeout(value: number) {
             <Label for="default-channel">
                 {{ t('settings.twitch.default-channel.input-label') }}
             </Label>
-            <Input
-                id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'"
-                @change="saveDefaultChannel"
-            />
+            <Input id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'" @change="saveDefaultChannel" />
             <small class="text-muted-foreground">{{ t('settings.twitch.default-channel.info') }}</small>
         </div>
 
@@ -247,8 +242,10 @@ async function saveFadeTimeout(value: number) {
                 {{ t('settings.twitch.user-blacklist.label') }}
             </Label>
             <Input
-                id="user-blacklist" :model-value="userBlacklist.join(', ')"
-                :class="blacklistSuccess && 'border-green-600 border'" @change="updateBlacklist"
+                id="user-blacklist"
+                :model-value="userBlacklist.join(', ')"
+                :class="blacklistSuccess && 'border-green-600 border'"
+                @change="updateBlacklist"
             />
         </div>
 

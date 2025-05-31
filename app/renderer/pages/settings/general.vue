@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { useIpcRenderer } from '@vueuse/electron';
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import { languageMappingList } from '#components/languageMappingList';
 import HotKeyInput from '#components/settings/HotKeyInput.vue';
 import { Label } from '#components/ui/label';
@@ -13,6 +8,10 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { useIpcRenderer } from '@vueuse/electron';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -26,7 +25,7 @@ onMounted(async () => {
     const updater = await IpcHandler.getUpdater();
     const mac = await IpcHandler.getValueFromKey('general.mac');
 
-    showMacOptions.value = await IpcHandler.getPlatform() === 'darwin';
+    showMacOptions.value = (await IpcHandler.getPlatform()) === 'darwin';
     vanishKeybind.value = (await IpcHandler.getKeybinds()).vanish.keybind;
 
     if (updater.channel !== 'latest') {
@@ -97,10 +96,7 @@ async function saveHideDockIcon(value: boolean) {
 
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch
-                    id="quit-one-close" :checked="quitOnClose"
-                    @update:checked="saveQuitOnClose"
-                />
+                <Switch id="quit-one-close" :checked="quitOnClose" @update:checked="saveQuitOnClose" />
                 <Label for="quit-one-close">
                     {{ t('settings.general.close-option.label') }}
                 </Label>
@@ -110,10 +106,7 @@ async function saveHideDockIcon(value: boolean) {
 
         <div v-if="showMacOptions" class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch
-                    id="hide-dock-icon" :checked="hideDockIcon"
-                    @update:checked="saveHideDockIcon"
-                />
+                <Switch id="hide-dock-icon" :checked="hideDockIcon" @update:checked="saveHideDockIcon" />
                 <Label for="hide-dock-icon">
                     {{ t('settings.general.hide-dock-icon-options.label') }}
                 </Label>

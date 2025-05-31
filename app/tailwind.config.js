@@ -6,9 +6,7 @@ module.exports = {
     safelist: ['dark'],
     prefix: '',
 
-    content: [
-        './renderer/**/*.{ts,tsx,vue}',
-    ],
+    content: ['./renderer/**/*.{ts,vue}'],
 
     theme: {
         container: {

@@ -1,6 +1,0 @@
-{
-    "ignorePatterns": [
-        "out",
-        "node_modules"
-    ]
-}

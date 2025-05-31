@@ -1,9 +1,7 @@
 <script setup lang="ts">
+import { hotkeyToString, isFunctionKey, KeyToCode } from '#lib/utils/keyToCode';
 import { shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-
-import { hotkeyToString, isFunctionKey, KeyToCode } from '#lib/utils/keyToCode';
-
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 
@@ -56,11 +54,15 @@ function handleKeyup(event: KeyboardEvent) {
     }
 }
 
-watch(() => props.modelValue, (value) => {
-    inputValue.value = value as string | null;
-}, {
-    immediate: true,
-});
+watch(
+    () => props.modelValue,
+    (value) => {
+        inputValue.value = value as string | null;
+    },
+    {
+        immediate: true,
+    },
+);
 </script>
 
 <template>
@@ -74,7 +76,7 @@ watch(() => props.modelValue, (value) => {
             :class="{
                 'border-red-500': showSingleKeyError || showMetaError,
             }"
-            @focusout="() => showSingleKeyError = showMetaError = false"
+            @focusout="() => (showSingleKeyError = showMetaError = false)"
             @keyup="handleKeyup"
             @keydown.prevent
         />

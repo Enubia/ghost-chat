@@ -1,49 +1,43 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.preferences.autoImportFileExcludePatterns": [
-        "vue-router$"
-    ],
+    "typescript.preferences.autoImportFileExcludePatterns": ["vue-router$"],
 
     "json.schemas": [
         {
-            "fileMatch": [
-                "/*electron-builder.json5",
-                "/*electron-builder.json"
-            ],
+            "fileMatch": ["/*electron-builder.json5", "/*electron-builder.json"],
             "url": "https://json.schemastore.org/electron-builder"
         }
     ],
 
-    // Disable the default formatter, use eslint instead
-    "prettier.enable": false,
-    "editor.formatOnSave": false,
+    // LINTING (Oxlint)
+    "oxc.enable": true,
+    "oxc.lint.run": "onType",
 
-    // Auto fix
+    // CODE FORMATTING (Prettier)
+    "prettier.enable": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.requireConfig": true,
+
+    // CODE ACTIONS (Fix + Organize)
+    "editor.codeActions.triggerOnFocusChange": true, // Trigger on focus change
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "never"
+        "source.organizeImports": "explicit"
     },
+    "files.trimTrailingWhitespace": true,
 
-    // Enable eslint for all supported languages
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "vue",
-        "html",
-        "markdown",
-        "json",
-        "jsonc",
-        "yaml",
-        "toml",
-        "css",
-        "scss"
-    ],
+    // TAILWIND INTELLISENSE
+    "tailwindCSS.includeLanguages": {
+        "typescript": "html"
+    },
+    "tailwindCSS.experimental.classRegex": ["clsx\\(([^)]*)\\)", "cn\\(([^)]*)\\)"],
 
     "search.exclude": {
         "**/node_modules": true,
         "**/out": true
-    },
-    "oxc.enable": true
+    }
 }

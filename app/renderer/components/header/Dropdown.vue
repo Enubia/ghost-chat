@@ -1,13 +1,11 @@
 <script setup lang="ts">
+import { IpcEvent } from '#ipc/constants/events';
+import IpcHandler from '#lib/ipchandler';
 import { Icon } from '@iconify/vue';
 import { useIpcRenderer, useIpcRendererOn } from '@vueuse/electron';
 import { onBeforeMount, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import { IpcEvent } from '#ipc/constants/events';
-import IpcHandler from '#lib/ipchandler';
-
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 

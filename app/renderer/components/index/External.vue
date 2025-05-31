@@ -1,12 +1,10 @@
 <script setup lang="ts">
+import { StoreDefaults } from '#ipc/constants/store/defaults';
+import IpcHandler from '#lib/ipchandler';
 import { Icon } from '@iconify/vue';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-
-import { StoreDefaults } from '#ipc/constants/store/defaults';
-import IpcHandler from '#lib/ipchandler';
-
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Input } from '../ui/input';
@@ -33,8 +31,7 @@ function checkRegex() {
         return;
     }
 
-    const regex
-        = /^https?:\/\/(?:www\.)?[-\w@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-\w()@:%+.~#?&/=]*$/;
+    const regex = /^https?:\/\/(?:www\.)?[-\w@:%.+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-\w()@:%+.~#?&/=]*$/;
 
     hasRegexError.value = !regex.test(source.value);
 }
@@ -50,10 +47,7 @@ async function routeExternal() {
 
     if (source.value !== '' && !hasRegexError.value) {
         if (!external.value.sources.includes(source.value)) {
-            await IpcHandler.setKeyValue('options.external.sources', [
-                ...external.value.sources,
-                source.value,
-            ]);
+            await IpcHandler.setKeyValue('options.external.sources', [...external.value.sources, source.value]);
         }
 
         router.push(`/webview/externalsource?source=${encodeURIComponent(source.value)}`);
@@ -83,8 +77,11 @@ function applySourceFromList(item: string) {
                 </DialogDescription>
             </DialogHeader>
             <Input
-                v-model="source" :class="hasRegexError ? 'border-red-500' : ''" placeholder="https://twitch.tv"
-                @change="enableStartButton" @keydown.enter="routeExternal"
+                v-model="source"
+                :class="hasRegexError ? 'border-red-500' : ''"
+                placeholder="https://twitch.tv"
+                @change="enableStartButton"
+                @keydown.enter="routeExternal"
             />
             <small v-if="hasRegexError" class="text-xs text-red-500">{{ t('start.external.input.error') }}</small>
             <Select v-if="sources.length" @update:model-value="applySourceFromList">
@@ -92,10 +89,7 @@ function applySourceFromList(item: string) {
                     <SelectValue :placeholder="t('start.external.sources-placeholder')" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem
-                        v-for="(item, index) of sources" :key="index" v-model="sources[index]" class="w-full"
-                        :value="item"
-                    >
+                    <SelectItem v-for="(item, index) of sources" :key="index" v-model="sources[index]" class="w-full" :value="item">
                         {{ item.substring(0, 30) + (item.length > 30 ? '...' : '') }}
                     </SelectItem>
                 </SelectContent>

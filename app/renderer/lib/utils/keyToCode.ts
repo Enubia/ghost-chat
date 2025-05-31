@@ -110,9 +110,7 @@ export const KeyToCode = {
     Quote: 222,
 };
 
-export const CodeToKey = Object.fromEntries(
-    Object.entries(KeyToCode).map(([key, code]) => [code, key]),
-);
+export const CodeToKey = Object.fromEntries(Object.entries(KeyToCode).map(([key, code]) => [code, key]));
 
 export const KeyToElectron = {
     // Cancel,
@@ -239,9 +237,7 @@ export function hotkeyToString(keys: string[], ctrl = false, shift = false, alt 
         alt = true;
     }
 
-    keys = keys
-        .filter(key => !isModKey(key))
-        .map(key => KeyToElectron[key] || key);
+    keys = keys.filter((key) => !isModKey(key)).map((key) => KeyToElectron[key] || key);
 
     if (keys.length === 1 && isFunctionKey(keys[0]) && !ctrl && !shift && !alt) {
         return keys[0];
@@ -265,22 +261,15 @@ export function hotkeyToString(keys: string[], ctrl = false, shift = false, alt 
         mod = 'Shift';
     }
 
-    return (mod && keys.length) ? `${mod} + ${keys.join(' + ')}` : (keys.join(' + ') || mod);
+    return mod && keys.length ? `${mod} + ${keys.join(' + ')}` : keys.join(' + ') || mod;
 }
 
 export function mergeTwoHotkeys(str1: string, str2: string): string {
-    return hotkeyToString(Array.from(new Set([
-        ...str1.split(' + '),
-        ...str2.split(' + '),
-    ])));
+    return hotkeyToString(Array.from(new Set([...str1.split(' + '), ...str2.split(' + ')])));
 }
 
 export function isModKey(key: string) {
-    return (
-        key === 'Ctrl'
-        || key === 'Shift'
-        || key === 'Alt'
-    );
+    return key === 'Ctrl' || key === 'Shift' || key === 'Alt';
 }
 
 export function isFunctionKey(key: string) {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-
 import { Button } from '../ui/button';
 
 const { t } = useI18n();
@@ -33,14 +32,8 @@ const sidebarNavItems = [
 
 <template>
     <nav class="sticky top-[6.6rem] grid space-y-2">
-        <RouterLink
-            v-for="item in sidebarNavItems" :key="item.title" :to="item.link"
-        >
-            <Button
-                variant="ghost"
-                class="w-full justify-start"
-                :class="route.name === item.link && 'bg-muted hover:bg-muted'"
-            >
+        <RouterLink v-for="item in sidebarNavItems" :key="item.title" :to="item.link">
+            <Button variant="ghost" class="w-full justify-start" :class="route.name === item.link && 'bg-muted hover:bg-muted'">
                 {{ item.title }}
             </Button>
         </RouterLink>

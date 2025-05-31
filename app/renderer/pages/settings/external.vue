@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import Editor from '#components/settings/Editor.vue';
 import { Button } from '#components/ui/button';
 import { Input } from '#components/ui/input';
@@ -12,6 +7,10 @@ import { IpcEvent } from '#ipc/constants/events';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { Icon } from '@iconify/vue';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -57,10 +56,7 @@ async function removeSource(index: number) {
 
         <div v-if="sources.length" class="flex flex-col gap-2">
             <Label>{{ t('settings.external.sources.label') }}</Label>
-            <div
-                v-for="source, index in sources" :key="source" class="flex items-center justify-between gap-1"
-                :value="index.toString()"
-            >
+            <div v-for="(source, index) in sources" :key="source" class="flex items-center justify-between gap-1" :value="index.toString()">
                 <Input v-model="sources[index]" readonly class="bg-gray-300" />
                 <Button variant="destructive" @click="removeSource(index)">
                     <Icon icon="fa6-regular:trash-can" />

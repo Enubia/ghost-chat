@@ -1,13 +1,11 @@
 <script setup lang="ts">
+import { IpcEvent } from '#ipc/constants/events';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
 import { Icon } from '@iconify/vue';
 import { useIpcRendererOn } from '@vueuse/electron';
 import { onMounted, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
-
-import { IpcEvent } from '#ipc/constants/events';
-import { StoreDefaults } from '#ipc/constants/store/defaults';
-
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import { downloadLink, kofiLink, paypalLink } from './constants/links';
@@ -35,7 +33,7 @@ const notifications = shallowRef({
     showToggleUnbound: false,
 });
 
-const webviewRoutes: typeof route.name[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/webview/youtube', '/versioncheck'];
+const webviewRoutes: (typeof route.name)[] = ['/webview/twitch', '/webview/externalsource', '/webview/kick', '/webview/youtube', '/versioncheck'];
 
 const $html = document.querySelector('html');
 const $app = document.querySelector('#app');
@@ -63,17 +61,18 @@ onMounted(async () => {
 watch(route, () => {
     showFooter.value = !webviewRoutes.includes(route.name) && !route.path.startsWith('/settings');
     showMenuBar.value = !(route.path.startsWith('/settings') || route.name === '/versioncheck');
-    additionalFooterClasses.value = route.name === '/changelog'
-        ? {
-                position: 'sticky bottom-0',
-                pp: 'bg-[#009bde]',
-                kofi: 'bg-[#ff6333]',
-            }
-        : {
-                position: '',
-                pp: '',
-                kofi: '',
-            };
+    additionalFooterClasses.value =
+        route.name === '/changelog'
+            ? {
+                  position: 'sticky bottom-0',
+                  pp: 'bg-[#009bde]',
+                  kofi: 'bg-[#ff6333]',
+              }
+            : {
+                  position: '',
+                  pp: '',
+                  kofi: '',
+              };
 });
 
 useIpcRendererOn(IpcEvent.Vanish, () => {
@@ -113,10 +112,7 @@ useIpcRendererOn(IpcEvent.Notification, (_, notification) => {
 
 <template>
     <div :key="rerenderKey" class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
-        <header
-            v-if="showMenuBar" class="flex w-full justify-between"
-            :class="webviewRoutes.includes(route.name) ? 'absolute' : ''"
-        >
+        <header v-if="showMenuBar" class="flex w-full justify-between" :class="webviewRoutes.includes(route.name) ? 'absolute' : ''">
             <DropDownMenu />
             <MenuButtons />
         </header>
@@ -139,10 +135,10 @@ useIpcRendererOn(IpcEvent.Notification, (_, notification) => {
             </div>
             <div class="grid grid-cols-2">
                 <a :href="paypalLink" class="center-elements bg-[#009bde36] py-2" :class="additionalFooterClasses.pp">
-                    <img src="./assets/brands/paypal.png" alt="PayPal" class="size-5">
+                    <img src="./assets/brands/paypal.png" alt="PayPal" class="size-5" />
                 </a>
                 <a :href="kofiLink" class="center-elements bg-[#ff633379] py-2" :class="additionalFooterClasses.kofi">
-                    <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5">
+                    <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5" />
                 </a>
             </div>
             <a v-if="versionStore.new.length" :href="downloadLink" class="center-elements bg-green-600 py-2">

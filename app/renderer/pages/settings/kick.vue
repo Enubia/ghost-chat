@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import type { FontSize } from '#ipc/constants/store/fontsize';
-import type { Stroke } from '#ipc/constants/store/stroke';
-
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import Editor from '#components/settings/Editor.vue';
 import { Input } from '#components/ui/input';
 import { Label } from '#components/ui/label';
@@ -13,9 +6,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '#
 import { Switch } from '#components/ui/switch';
 import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
+import type { FontSize } from '#ipc/constants/store/fontsize';
+import type { Stroke } from '#ipc/constants/store/stroke';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -84,7 +82,7 @@ async function saveBots(value: boolean) {
 
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
-    const blacklist = target.value.split(',').map(user => user.trim());
+    const blacklist = target.value.split(',').map((user) => user.trim());
 
     await IpcHandler.setKeyValue('options.kick.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
@@ -105,10 +103,7 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="default-channel">
                 {{ t('settings.kick.default-channel.input-label') }}
             </Label>
-            <Input
-                id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'"
-                @change="saveDefaultChannel"
-            />
+            <Input id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'" @change="saveDefaultChannel" />
             <small class="text-muted-foreground">{{ t('settings.kick.default-channel.info') }}</small>
         </div>
 
@@ -184,12 +179,13 @@ async function saveFadeTimeout(value: string | number) {
                 </div>
                 <div v-if="fade">
                     <Label class="cursor-pointer" for="fadeTimeout">
-                        {{ t('settings.kick.fade.timeout-label', { seconds: fadeTimeout }) }}
+                        {{
+                            t('settings.kick.fade.timeout-label', {
+                                seconds: fadeTimeout,
+                            })
+                        }}
                     </Label>
-                    <Input
-                        id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number"
-                        @update:model-value="saveFadeTimeout"
-                    />
+                    <Input id="fadeTimeout" v-model="fadeTimeout" class="w-30 text-center" type="number" @update:model-value="saveFadeTimeout" />
                 </div>
             </div>
             <small class="text-muted-foreground">{{ t('settings.kick.fade.info') }}</small>
@@ -230,8 +226,10 @@ async function saveFadeTimeout(value: string | number) {
                 {{ t('settings.kick.user-blacklist.label') }}
             </Label>
             <Input
-                id="user-blacklist" :model-value="userBlacklist.join(', ')"
-                :class="blacklistSuccess && 'border-green-600 border'" @change="updateBlacklist"
+                id="user-blacklist"
+                :model-value="userBlacklist.join(', ')"
+                :class="blacklistSuccess && 'border-green-600 border'"
+                @change="updateBlacklist"
             />
             <small class="text-muted-foreground">{{ t('settings.kick.user-blacklist.info') }}</small>
         </div>

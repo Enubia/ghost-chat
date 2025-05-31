@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import Editor from '#components/settings/Editor.vue';
 import Input from '#components/ui/input/Input.vue';
 import Label from '#components/ui/label/Label.vue';
@@ -12,6 +8,9 @@ import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
@@ -73,11 +72,17 @@ async function saveFetchDelay(event: Event) {
                 {{ t('settings.youtube.default-channel-id.input-label') }}
             </Label>
             <Input
-                id="default-channel-id" v-model="defaultChannelId" :class="channelSuccess && 'border-green-600 border'"
+                id="default-channel-id"
+                v-model="defaultChannelId"
+                :class="channelSuccess && 'border-green-600 border'"
                 @change="saveDefaultChannelId"
             />
             <small class="text-muted-foreground">
-                {{ t('settings.youtube.default-channel-id.info', { channelIdInfo: t('start.youtube.channel-id.info') }) }}
+                {{
+                    t('settings.youtube.default-channel-id.info', {
+                        channelIdInfo: t('start.youtube.channel-id.info'),
+                    })
+                }}
             </small>
         </div>
 
@@ -85,20 +90,14 @@ async function saveFetchDelay(event: Event) {
             <Label for="retries">
                 {{ t('settings.youtube.retries.input-label') }}
             </Label>
-            <Input
-                id="retries" v-model="retries" :class="retriesSuccess && 'border-green-600 border'"
-                @change="saveRetries"
-            />
+            <Input id="retries" v-model="retries" :class="retriesSuccess && 'border-green-600 border'" @change="saveRetries" />
         </div>
 
         <div class="flex flex-col gap-2">
             <Label for="fetchDelay">
                 {{ t('settings.youtube.fetch-delay.input-label') }}
             </Label>
-            <Input
-                id="fetchDelay" v-model="fetchDelay" :class="fetchDelaySuccess && 'border-green-600 border'"
-                @change="saveFetchDelay"
-            />
+            <Input id="fetchDelay" v-model="fetchDelay" :class="fetchDelaySuccess && 'border-green-600 border'" @change="saveFetchDelay" />
         </div>
 
         <!-- <div class="flex flex-col gap-2">
@@ -116,12 +115,12 @@ async function saveFetchDelay(event: Event) {
                 {{ t('settings.youtube.css-editor.label') }}
                 <small class="flex flex-col gap-2 font-light">
                     {{ t('settings.youtube.css-editor.link-info') }}
-                    <hr>
+                    <hr />
                     <span>
                         <a class="text-primary underline" :href="chatV2">{{ chatV2 }}</a>
                         {{ t('settings.youtube.css-editor.chatv2') }}
                     </span>
-                    <a v-for="item, index of githubcss" :key="index" class="text-primary underline" :href="item">{{ item }}</a>
+                    <a v-for="(item, index) of githubcss" :key="index" class="text-primary underline" :href="item">{{ item }}</a>
                 </small>
             </Label>
             <small class="text-yellow-600">{{ t('settings.youtube.css-editor.info') }}</small>

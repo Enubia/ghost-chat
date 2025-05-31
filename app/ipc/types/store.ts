@@ -89,7 +89,6 @@ export interface Updater {
 }
 
 export interface Keybinds {
-
     vanish: {
         keybind: string | null;
         activationMessage: string;
@@ -123,10 +122,7 @@ type Path<T> = PathImpl<T, keyof T> | keyof T;
 
 export type StorePath = Path<AppStore>;
 
-type Split<S extends string, D extends string> =
-    string extends S ? string[] :
-        S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] :
-                [S];
+type Split<S extends string, D extends string> = string extends S ? string[] : S extends `${infer T}${D}${infer Rem}` ? [T, ...Split<Rem, D>] : [S];
 
 type ArrToPath<T, P extends string[]> = P extends [infer K, ...infer R]
     ? K extends keyof T

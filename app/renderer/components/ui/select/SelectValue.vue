@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { SelectValueProps } from 'radix-vue';
-
 import { SelectValue } from 'radix-vue';
 
 const props = defineProps<SelectValueProps>();

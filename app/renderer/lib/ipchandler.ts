@@ -25,27 +25,45 @@ export default class IpcHandler {
      * Only parent keys can be deleted
      */
     public static deleteKeyValue(key: keyof AppStore): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'delete', key });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'delete',
+            key,
+        });
     }
 
     public static getExternalOptions(): Promise<ExternalBrowserSource> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.external' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'options.external',
+        });
     }
 
     public static getGeneral(): Promise<General> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'general' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'general',
+        });
     }
 
     public static getKeybinds(): Promise<Keybinds> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'keybinds' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'keybinds',
+        });
     }
 
     public static getKickOptions(): Promise<Kick> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.kick' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'options.kick',
+        });
     }
 
     public static getOptions(): Promise<Options> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'options',
+        });
     }
 
     public static getPlatform(): Promise<NodeJS.Platform> {
@@ -53,15 +71,24 @@ export default class IpcHandler {
     }
 
     public static getSettings(): Promise<Settings> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'settings' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'settings',
+        });
     }
 
     public static getTwitchOptions(): Promise<Twitch> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.twitch' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'options.twitch',
+        });
     }
 
     public static getUpdater(): Promise<Updater> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'updater' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'updater',
+        });
     }
 
     public static getValueFromKey<K extends StorePath>(key: K): Promise<StorePathValue<AppStore, K>> {
@@ -69,42 +96,75 @@ export default class IpcHandler {
     }
 
     public static getWindowState(): Promise<WindowState> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'savedWindowState' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'savedWindowState',
+        });
     }
 
     public static getYoutubeOptions(): Promise<Youtube> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'get', key: 'options.youtube' });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'get',
+            key: 'options.youtube',
+        });
     }
 
     // ------------------------------------
 
     public static setGeneral(value: General): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'general', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'general',
+            value: cloneValue(value),
+        });
     }
 
     public static setKeybinds(value: Keybinds): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'keybinds', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'keybinds',
+            value: cloneValue(value),
+        });
     }
 
     // values need to be cloned, otherwise their clone algorithm will throw an error for some reason
     public static setKeyValue<K extends StorePath>(key: K, value: StorePathValue<AppStore, K>): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key, value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key,
+            value: cloneValue(value),
+        });
     }
 
     public static setOptions(value: Options): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'options', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'options',
+            value: cloneValue(value),
+        });
     }
 
     public static setSettings(value: Settings): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'settings', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'settings',
+            value: cloneValue(value),
+        });
     }
 
     public static setUpdater(value: Updater): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key:
-            'updater', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'updater',
+            value: cloneValue(value),
+        });
     }
 
     public static setWindowState(value: WindowState): Promise<void> {
-        return ipcRenderer.invoke(IpcEvent.CallStore, { action: 'set', key: 'savedWindowState', value: cloneValue(value) });
+        return ipcRenderer.invoke(IpcEvent.CallStore, {
+            action: 'set',
+            key: 'savedWindowState',
+            value: cloneValue(value),
+        });
     }
 }
