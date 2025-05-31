@@ -189,12 +189,10 @@
                 "label": "User Blacklist"
             },
             "css-editor": {
-                "label": "Your Custom CSS",
-                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+                "label": "Your Custom CSS"
             },
             "js-editor": {
-                "label": "Your Custom JS",
-                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+                "label": "Your Custom JS"
             }
         },
         "kick": {
@@ -250,12 +248,10 @@
                 "info": "Enter a comma separated list of usernames to hide their messages from chat. (e.g. StreamElements, Nightbot)"
             },
             "css-editor": {
-                "label": "Your Custom CSS",
-                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+                "label": "Your Custom CSS"
             },
             "js-editor": {
-                "label": "Your Custom JS",
-                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+                "label": "Your Custom JS"
             }
         },
         "external": {
@@ -293,12 +289,10 @@
             "css-editor": {
                 "label": "Your Custom CSS",
                 "link-info": "You can style the youtube chat with some googling and custom css. Just copy and paste the code into this editor and it will apply the styling you've chosen. Due to the fact that we use the youtube chat directly it's hard to come up with something predefined. Below is an example list of users who made some CSS for OBS.",
-                "chatv2": "(Good starting point if you know some CSS)",
-                "info": "Please note that in order for the CSS to apply you'll need to exit the chat and join again."
+                "chatv2": "(Good starting point if you know some CSS)"
             },
             "js-editor": {
-                "label": "Your Custom JS",
-                "info": "Please note that in order for the JS to apply you'll need to exit the chat and join again."
+                "label": "Your Custom JS"
             }
         }
     },

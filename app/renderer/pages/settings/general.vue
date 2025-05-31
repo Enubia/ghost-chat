@@ -8,6 +8,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
+import { save } from '#lib/utils/save';
 import { useIpcRenderer } from '@vueuse/electron';
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
@@ -37,27 +38,27 @@ onMounted(async () => {
 });
 
 async function saveKeybind(value: string | null) {
-    await IpcHandler.setKeyValue('keybinds.vanish.keybind', value);
+    await save('keybinds.vanish.keybind', value);
     ipcRenderer.send(IpcEvent.RegisterNewKeybind);
 }
 
 async function saveLanguage(value: string) {
-    await IpcHandler.setKeyValue('general.language', value);
+    await save('general.language', value);
     useIpcRenderer().send(IpcEvent.Rerender, 'parent');
 }
 
 async function savePrerelease(value: boolean) {
-    await IpcHandler.setKeyValue('updater.channel', value ? 'beta' : 'latest');
+    await save('updater.channel', value ? 'beta' : 'latest');
     participateInPreRelease.value = value;
 }
 
 async function saveQuitOnClose(value: boolean) {
-    await IpcHandler.setKeyValue('general.mac.quitOnClose', value);
+    await save('general.mac.quitOnClose', value);
     quitOnClose.value = value;
 }
 
 async function saveHideDockIcon(value: boolean) {
-    await IpcHandler.setKeyValue('general.mac.hideDockIcon', value);
+    await save('general.mac.hideDockIcon', value);
     hideDockIcon.value = value;
 }
 </script>

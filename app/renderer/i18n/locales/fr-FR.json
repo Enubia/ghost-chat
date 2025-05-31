@@ -172,12 +172,10 @@
                 "label": "Utilisateurs bloqués"
             },
             "css-editor": {
-                "label": "Votre CSS personnalisé",
-                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre CSS personnalisé"
             },
             "js-editor": {
-                "label": "Votre JS personnalisé",
-                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre JS personnalisé"
             }
         },
         "kick": {
@@ -233,12 +231,10 @@
                 "info": "Entrez une liste de noms d'utilisateurs séparés par des virgules pour masquer leurs messages dans le chat. (par exemple StreamElements, Nightbot)"
             },
             "css-editor": {
-                "label": "Votre CSS personnalisé",
-                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre CSS personnalisé"
             },
             "js-editor": {
-                "label": "Votre JS personnalisé",
-                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre JS personnalisé"
             }
         },
         "external": {
@@ -251,12 +247,10 @@
                 "info": "Vous pouvez ici supprimer certaines sources de votre historique."
             },
             "css-editor": {
-                "label": "Votre CSS personnalisé",
-                "info": "Veuillez noter que pour que le CSS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre CSS personnalisé"
             },
             "js-editor": {
-                "label": "Votre JS personnalisé",
-                "info": "Veuillez noter que pour que le JS s'applique, vous devez quitter le chat et le rejoindre à nouveau."
+                "label": "Votre JS personnalisé"
             }
         }
     },

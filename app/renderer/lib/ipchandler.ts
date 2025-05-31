@@ -18,7 +18,7 @@ import { ipcRenderer } from 'electron';
 
 import { IpcEvent } from '#ipc/constants/events';
 
-import { cloneValue } from './utils/clonevalue';
+import { cloneValue } from './utils/cloneValue';
 
 export default class IpcHandler {
     /**

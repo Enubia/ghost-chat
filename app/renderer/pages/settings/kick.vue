@@ -11,6 +11,7 @@ import type { Stroke } from '#ipc/constants/store/stroke';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { save } from '#lib/utils/save';
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -47,37 +48,9 @@ onMounted(async () => {
 
 async function saveDefaultChannel(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    await IpcHandler.setKeyValue('options.kick.defaultChannel', value);
+    await save('options.kick.defaultChannel', value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableSuccessIndicator(channelSuccess);
-}
-
-async function saveFontSize(value: string) {
-    await IpcHandler.setKeyValue('options.kick.fontSize', value as FontSize);
-}
-
-async function saveStroke(value: string) {
-    await IpcHandler.setKeyValue('options.kick.stroke', value as Stroke);
-}
-
-async function saveAnimate(value: boolean) {
-    await IpcHandler.setKeyValue('options.kick.animate', value);
-}
-
-async function saveFadeMessages(value: boolean) {
-    await IpcHandler.setKeyValue('options.kick.fade', value);
-}
-
-async function saveBadges(value: boolean) {
-    await IpcHandler.setKeyValue('options.kick.badges', value);
-}
-
-async function saveCommands(value: boolean) {
-    await IpcHandler.setKeyValue('options.kick.commands', value);
-}
-
-async function saveBots(value: boolean) {
-    await IpcHandler.setKeyValue('options.kick.bots', value);
 }
 
 async function updateBlacklist(event: Event) {
@@ -119,7 +92,7 @@ async function saveFadeTimeout(value: string | number) {
             <Select
                 id="font-size"
                 v-model="fontSize"
-                @update:model-value="saveFontSize"
+                @update:model-value="(value) => save('options.kick.fontSize', value as FontSize)"
             >
                 <SelectTrigger>
                     <SelectValue :placeholder="t('settings.kick.font-size.select-label')" />
@@ -146,7 +119,7 @@ async function saveFadeTimeout(value: string | number) {
             <Select
                 id="stroke"
                 v-model="stroke"
-                @update:model-value="saveStroke"
+                @update:model-value="(value) => save('options.kick.stroke', value as Stroke)"
             >
                 <SelectTrigger>
                     <SelectValue :placeholder="t('settings.kick.stroke.select-label')" />
@@ -177,7 +150,7 @@ async function saveFadeTimeout(value: string | number) {
                 <Switch
                     id="animate"
                     v-model:checked="animate"
-                    @update:checked="saveAnimate"
+                    @update:checked="(value) => save('options.kick.animate', value)"
                 />
                 <Label
                     class="align-elements"
@@ -195,7 +168,7 @@ async function saveFadeTimeout(value: string | number) {
                     <Switch
                         id="fade"
                         v-model:checked="fade"
-                        @update:checked="saveFadeMessages"
+                        @update:checked="(value) => save('options.kick.fade', value)"
                     />
                     <Label
                         class="cursor-pointer"
@@ -232,7 +205,7 @@ async function saveFadeTimeout(value: string | number) {
                 <Switch
                     id="hide-badges"
                     v-model:checked="badges"
-                    @update:checked="saveBadges"
+                    @update:checked="(value) => save('options.kick.badges', value)"
                 />
                 <Label
                     class="align-elements"
@@ -249,7 +222,7 @@ async function saveFadeTimeout(value: string | number) {
                 <Switch
                     id="hide-commands"
                     v-model:checked="commands"
-                    @update:checked="saveCommands"
+                    @update:checked="(value) => save('options.kick.commands', value)"
                 />
                 <Label
                     class="align-elements"
@@ -266,7 +239,7 @@ async function saveFadeTimeout(value: string | number) {
                 <Switch
                     id="hide-bots"
                     v-model:checked="bots"
-                    @update:checked="saveBots"
+                    @update:checked="(value) => save('options.kick.bots', value)"
                 />
                 <Label
                     class="align-elements"
@@ -295,7 +268,6 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="css-editor">
                 {{ t('settings.kick.css-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.kick.css-editor.info') }}</small>
             <Editor
                 id="css-editor"
                 option="kick"
@@ -307,7 +279,6 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="js-editor">
                 {{ t('settings.kick.js-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.kick.js-editor.info') }}</small>
             <Editor
                 id="js-editor"
                 option="kick"

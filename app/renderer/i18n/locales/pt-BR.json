@@ -194,12 +194,10 @@
                 "label": "Lista negra de usuario"
             },
             "css-editor": {
-                "label": "CSS customizado",
-                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+                "label": "CSS customizado"
             },
             "js-editor": {
-                "label": "JS customizado",
-                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+                "label": "JS customizado"
             }
         },
         "kick": {
@@ -255,12 +253,11 @@
                 "info": "Separe por virgulas quais usuarios você deseja ocultar do chat (Ex: StreamElements, NightBot, etc...)."
             },
             "css-editor": {
-                "label": "CSS Customizado",
-                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+                "label": "CSS Customizado"
             },
             "js-editor": {
                 "label": "JS Customizado",
-                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+                "info": "Para que o JS seja apSDlicado, é necessário reiniciar o chat."
             }
         },
         "external": {
@@ -273,12 +270,10 @@
                 "info": "Você pode apagar qualquer fonte do histórico."
             },
             "css-editor": {
-                "label": "CSS Customizado",
-                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+                "label": "CSS Customizado"
             },
             "js-editor": {
-                "label": "JS Customizado",
-                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+                "label": "JS Customizado"
             }
         },
         "youtube": {
@@ -298,12 +293,10 @@
             "css-editor": {
                 "label": "CSS Customizado",
                 "link-info": "Você pode estilizar o chat a vontade, por usarmos o chat do proprio YouTube. Entretanto, por causa desse mesmo motivo é dificil encontrar alguma modificação presetada. Segue uma lista de estilos criados usando CSS para o OBS (que tambem serve no programa).",
-                "chatv2": "(Um bom inicio caso você saiba de CSS)",
-                "info": "Para que o CSS seja aplicado, é necessário reiniciar o chat."
+                "chatv2": "(Um bom inicio caso você saiba de CSS)"
             },
             "js-editor": {
-                "label": "JS Customizado",
-                "info": "Para que o JS seja aplicado, é necessário reiniciar o chat."
+                "label": "JS Customizado"
             }
         }
     },

@@ -7,6 +7,7 @@ import { IpcEvent } from '#ipc/constants/events';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { save } from '#lib/utils/save';
 import { Icon } from '@iconify/vue';
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
@@ -26,14 +27,14 @@ onMounted(async () => {
 });
 
 async function saveDefaultUrl() {
-    await IpcHandler.setKeyValue('options.external.defaultUrl', defaultUrl.value);
+    await save('options.external.defaultUrl', defaultUrl.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableSuccessIndicator(channelSuccess);
 }
 
 async function removeSource(index: number) {
     sources.value = sources.value.filter((_, i) => i !== index);
-    await IpcHandler.setKeyValue('options.external.sources', sources.value);
+    await save('options.external.sources', sources.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
 }
 </script>
@@ -84,7 +85,6 @@ async function removeSource(index: number) {
             <Label for="css-editor">
                 {{ t('settings.external.css-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.external.css-editor.info') }}</small>
             <Editor
                 id="css-editor"
                 option="external"
@@ -96,7 +96,6 @@ async function removeSource(index: number) {
             <Label for="js-editor">
                 {{ t('settings.external.js-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.external.js-editor.info') }}</small>
             <Editor
                 id="js-editor"
                 option="external"

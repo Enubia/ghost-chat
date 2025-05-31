@@ -7,10 +7,11 @@ import { Label } from '#components/ui/label';
 import Switch from '#components/ui/switch/Switch.vue';
 import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
-import type { Twitch } from '#ipc/types/store';
+import { Twitch } from '#ipc/types/store';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
+import { save } from '#lib/utils/save';
 import { ipcRenderer } from 'electron';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -74,95 +75,16 @@ const channelSuccess = shallowRef(false);
 const blacklistSuccess = shallowRef(false);
 
 async function saveDefaultChannel() {
-    await IpcHandler.setKeyValue('options.twitch.defaultChannel', defaultChannel.value);
+    await save('options.twitch.defaultChannel', defaultChannel.value);
     ipcRenderer.send(IpcEvent.Rerender, 'parent');
     enableSuccessIndicator(channelSuccess);
-}
-
-async function saveUseJChat(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.useJChat', value);
-}
-
-async function saveAnimate(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.animate', value);
-}
-
-async function saveFadeMessages(value: boolean) {
-    fade.value = value;
-    await IpcHandler.setKeyValue('options.twitch.fade', value);
-}
-
-async function saveShowBotActivity(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.bots', value);
-}
-
-async function saveHideCommands(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.hideCommands', value);
-}
-
-async function saveHideBadges(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.hideBadges', value);
-}
-
-async function saveFont(value: string) {
-    await IpcHandler.setKeyValue('options.twitch.font', Number.parseInt(value) as Twitch['font']);
-}
-
-async function saveStroke(value: string) {
-    let valueToSave: Twitch['stroke'];
-
-    switch (value) {
-        case 'false':
-            valueToSave = false;
-            break;
-        default:
-            valueToSave = Number.parseInt(value) as Twitch['stroke'];
-            break;
-    }
-
-    await IpcHandler.setKeyValue('options.twitch.stroke', valueToSave);
-}
-
-async function saveShadow(value: string) {
-    let valueToSave: Twitch['shadow'];
-
-    switch (value) {
-        case 'false':
-            valueToSave = false;
-            break;
-        default:
-            valueToSave = Number.parseInt(value) as Twitch['shadow'];
-            break;
-    }
-
-    await IpcHandler.setKeyValue('options.twitch.shadow', valueToSave);
-}
-
-async function saveSmallCaps(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.smallCaps', value);
-}
-
-async function saveFontSize(value: string) {
-    await IpcHandler.setKeyValue('options.twitch.fontSize', Number.parseInt(value) as Twitch['fontSize']);
-}
-
-async function saveTheme(value: string) {
-    await IpcHandler.setKeyValue('options.twitch.theme', value);
-}
-
-async function savePreventClipping(value: boolean) {
-    await IpcHandler.setKeyValue('options.twitch.preventClipping', value);
-}
-
-async function saveFontSizeExact(value: number) {
-    await IpcHandler.setKeyValue('options.twitch.fontSizeExact', value);
 }
 
 async function updateBlacklist(event: Event) {
     const target = event.target as HTMLInputElement;
     const blacklist = target.value.split(',').map((user) => user.trim());
 
-    await IpcHandler.setKeyValue('options.twitch.userBlacklist', blacklist);
+    await save('options.twitch.userBlacklist', blacklist);
     userBlacklist.value = blacklist;
 
     enableSuccessIndicator(blacklistSuccess);
@@ -170,7 +92,16 @@ async function updateBlacklist(event: Event) {
 
 async function saveFadeTimeout(value: number) {
     if (fade.value) {
-        await IpcHandler.setKeyValue('options.twitch.fadeTimeout', value);
+        await save('options.twitch.fadeTimeout', value);
+    }
+}
+
+function parseStrokeOrShadow(value: string) {
+    switch (value) {
+        case 'false':
+            return false;
+        default:
+            return Number.parseInt(value);
     }
 }
 </script>
@@ -196,7 +127,7 @@ async function saveFadeTimeout(value: number) {
             </Label>
             <Switch
                 v-model:checked="useJChat"
-                @update:checked="saveUseJChat"
+                @update:checked="(value) => save('options.twitch.useJChat', value)"
             />
             <small>{{ t('settings.twitch.chat-selector.info') }}</small>
         </div>
@@ -215,16 +146,21 @@ async function saveFadeTimeout(value: number) {
             :small-caps="smallCaps"
             :font-size="fontSize"
             :fade-timeout="fadeTimeout"
-            @update:animate="saveAnimate"
-            @update:fade="saveFadeMessages"
-            @update:bots="saveShowBotActivity"
-            @update:hide-commands="saveHideCommands"
-            @update:hide-badges="saveHideBadges"
-            @update:font="saveFont"
-            @update:stroke="saveStroke"
-            @update:shadow="saveShadow"
-            @update:small-caps="saveSmallCaps"
-            @update:font-size="saveFontSize"
+            @update:animate="(value) => save('options.twitch.animate', value)"
+            @update:fade="
+                (value) => {
+                    fade = value;
+                    save('options.twitch.fade', value);
+                }
+            "
+            @update:bots="(value) => save('options.twitch.bots', value)"
+            @update:hide-commands="(value) => save('options.twitch.hideCommands', value)"
+            @update:hide-badges="(value) => save('options.twitch.hideBadges', value)"
+            @update:font="(value) => save('options.twitch.font', Number.parseInt(value) as Twitch['font'])"
+            @update:stroke="(value) => save('options.twitch.stroke', parseStrokeOrShadow(value) as Twitch['stroke'])"
+            @update:shadow="(value) => save('options.twitch.shadow', parseStrokeOrShadow(value) as Twitch['shadow'])"
+            @update:small-caps="(value) => save('options.twitch.smallCaps', value)"
+            @update:font-size="(value) => save('options.twitch.fontSize', Number.parseInt(value) as Twitch['fontSize'])"
             @update:fade-timeout="saveFadeTimeout"
         />
 
@@ -237,11 +173,16 @@ async function saveFadeTimeout(value: number) {
             :bots="bots"
             :font-size-exact="fontSizeExact"
             :fade-timeout="fadeTimeout"
-            @update:theme="saveTheme"
-            @update:prevent-clipping="savePreventClipping"
-            @update:fade="saveFadeMessages"
-            @update:bots="saveShowBotActivity"
-            @update:font-size-exact="saveFontSizeExact"
+            @update:theme="(value) => save('options.twitch.theme', value)"
+            @update:prevent-clipping="(value) => save('options.twitch.preventClipping', value)"
+            @update:fade="
+                (value) => {
+                    fade = value;
+                    save('options.twitch.fade', value);
+                }
+            "
+            @update:bots="(value) => save('options.twitch.bots', value)"
+            @update:font-size-exact="(value) => save('options.twitch.fontSizeExact', value)"
             @update:fade-timeout="saveFadeTimeout"
         />
 
@@ -261,7 +202,6 @@ async function saveFadeTimeout(value: number) {
             <Label for="css-editor">
                 {{ t('settings.twitch.css-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
             <Editor
                 id="css-editor"
                 option="twitch"
@@ -273,7 +213,6 @@ async function saveFadeTimeout(value: number) {
             <Label for="js-editor">
                 {{ t('settings.twitch.js-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
             <Editor
                 id="js-editor"
                 option="twitch"

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { IpcEvent } from '#ipc/constants/events';
 import type { Options } from '#ipc/types/store';
 import IpcHandler from '#lib/ipchandler';
 import { useEventListener } from '@vueuse/core';
+import { useIpcRenderer } from '@vueuse/electron';
 import hljs from 'highlight.js';
 import CodeEditor from 'simple-code-editor';
 import { onMounted, shallowRef, useTemplateRef } from 'vue';
@@ -42,6 +44,8 @@ async function save() {
     if (props.type === 'js') {
         await IpcHandler.setKeyValue(`options.${props.option}.js`, code.value);
     }
+
+    useIpcRenderer().send(IpcEvent.Rerender, 'parent');
 }
 
 useEventListener(editor, 'focusout', save);

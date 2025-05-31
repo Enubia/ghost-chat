@@ -19,6 +19,9 @@
     "editor.formatOnType": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "prettier.requireConfig": true,
+    "headwind.classRegex": {
+        "vue": "\\bclass\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\']"
+    },
 
     // CODE ACTIONS (Fix + Organize)
     "editor.codeActions.triggerOnFocusChange": true, // Trigger on focus change

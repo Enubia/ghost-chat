@@ -3,12 +3,11 @@ import Editor from '#components/settings/Editor.vue';
 import Input from '#components/ui/input/Input.vue';
 import Label from '#components/ui/label/Label.vue';
 import { chatV2, githubcss } from '#constants/links';
-import { IpcEvent } from '#ipc/constants/events';
 import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
-import { ipcRenderer } from 'electron';
+import { save } from '#lib/utils/save';
 import { onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -35,8 +34,7 @@ onMounted(async () => {
 async function saveDefaultChannelId(event: Event) {
     const value = (event.target as HTMLInputElement).value;
 
-    await IpcHandler.setKeyValue('options.youtube.defaultChannelId', value.trim());
-    ipcRenderer.send(IpcEvent.Rerender, 'parent');
+    await save('options.youtube.defaultChannelId', value.trim());
     enableSuccessIndicator(channelSuccess);
 }
 
@@ -48,7 +46,7 @@ async function saveRetries(event: Event) {
         return;
     }
 
-    await IpcHandler.setKeyValue('options.youtube.retries', parsedValue);
+    await save('options.youtube.retries', parsedValue);
     enableSuccessIndicator(retriesSuccess);
 }
 
@@ -60,7 +58,7 @@ async function saveFetchDelay(event: Event) {
         return;
     }
 
-    await IpcHandler.setKeyValue('options.youtube.fetchDelay', parsedValue);
+    await save('options.youtube.fetchDelay', parsedValue);
     enableSuccessIndicator(fetchDelaySuccess);
 }
 </script>
@@ -136,7 +134,6 @@ async function saveFetchDelay(event: Event) {
                     >
                 </small>
             </Label>
-            <small class="text-yellow-600">{{ t('settings.youtube.css-editor.info') }}</small>
             <Editor
                 id="css-editor"
                 option="youtube"
@@ -148,7 +145,6 @@ async function saveFetchDelay(event: Event) {
             <Label for="js-editor">
                 {{ t('settings.youtube.js-editor.label') }}
             </Label>
-            <small class="text-yellow-600">{{ t('settings.youtube.js-editor.info') }}</small>
             <Editor
                 id="js-editor"
                 option="youtube"
