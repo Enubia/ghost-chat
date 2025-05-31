@@ -33,10 +33,11 @@ When reporting issues, please include:
 
 ## Code Style and Conventions
 
-We use [Anthony Fu's ESLint config](https://github.com/antfu/eslint-config) for code style. All code should pass linting before being submitted:
+We [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) for fast linting and [Prettier](https://prettier.io/) for code formatting. All code should pass linting and formatting before being submitted:
 
-- Git hooks automatically run linting before commits
+- Git hooks automatically run linting and formatting before commits
 - GitHub Actions will verify your code meets our standards
+- Run `pnpm check` locally to check your code
 
 ## Building and Testing
 
