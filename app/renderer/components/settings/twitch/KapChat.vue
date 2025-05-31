@@ -33,12 +33,20 @@ const { t, tm, rt } = useI18n();
         <Label for="theme">
             {{ t('settings.twitch.theme.label') }}
         </Label>
-        <Select id="theme" v-model="theme" @update:model-value="emit('update:theme', $event)">
+        <Select
+            id="theme"
+            v-model="theme"
+            @update:model-value="emit('update:theme', $event)"
+        >
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.theme.select-label')" />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem v-for="[key, value] in Object.entries(tm('settings.twitch.theme.select-options'))" :key="key" :value="key">
+                <SelectItem
+                    v-for="[key, value] in Object.entries(tm('settings.twitch.theme.select-options'))"
+                    :key="key"
+                    :value="key"
+                >
                     {{ rt(value) }}
                 </SelectItem>
             </SelectContent>
@@ -47,8 +55,14 @@ const { t, tm, rt } = useI18n();
     </div>
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch v-model:checked="preventClipping" @update:checked="emit('update:preventClipping', $event)" />
-            <Label class="align-elements" for="prevent-clipping">
+            <Switch
+                v-model:checked="preventClipping"
+                @update:checked="emit('update:preventClipping', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="prevent-clipping"
+            >
                 {{ t('settings.twitch.prevent-clipping.label') }}
             </Label>
         </div>
@@ -56,15 +70,25 @@ const { t, tm, rt } = useI18n();
     </div>
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="show-bots" v-model:checked="bots" @update:checked="emit('update:bots', $event)" />
-            <Label class="align-elements" for="show-bots">
+            <Switch
+                id="show-bots"
+                v-model:checked="bots"
+                @update:checked="emit('update:bots', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="show-bots"
+            >
                 {{ t('settings.twitch.show-bots.label') }}
             </Label>
         </div>
         <small class="text-muted-foreground">{{ t('settings.twitch.show-bots.info') }}</small>
     </div>
     <div class="flex flex-col gap-2">
-        <Label class="align-elements" for="font-size-exact">
+        <Label
+            class="align-elements"
+            for="font-size-exact"
+        >
             {{ t('settings.twitch.font-size-exact.label') }}
         </Label>
         <Slider
@@ -77,7 +101,10 @@ const { t, tm, rt } = useI18n();
             :step="1"
             @update:model-value="emit('update:fontSizeExact', $event ? $event[0] : fontSizeExact[0])"
         />
-        <small class="text-muted-foreground" :style="`font-size: ${fontSizeExact[0]}px;`">
+        <small
+            class="text-muted-foreground"
+            :style="`font-size: ${fontSizeExact[0]}px;`"
+        >
             {{
                 t('settings.twitch.font-size-exact.info', {
                     size: fontSizeExact[0],
@@ -88,13 +115,23 @@ const { t, tm, rt } = useI18n();
     <div class="flex flex-col gap-2">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <Switch id="fade" v-model:checked="fade" @update:checked="emit('update:fade', $event)" />
-                <Label class="cursor-pointer" for="fade">
+                <Switch
+                    id="fade"
+                    v-model:checked="fade"
+                    @update:checked="emit('update:fade', $event)"
+                />
+                <Label
+                    class="cursor-pointer"
+                    for="fade"
+                >
                     {{ t('settings.twitch.fade.label') }}
                 </Label>
             </div>
             <div v-if="fade">
-                <Label class="cursor-pointer" for="fadeTimeout">
+                <Label
+                    class="cursor-pointer"
+                    for="fadeTimeout"
+                >
                     {{
                         t('settings.twitch.fade.timeout-label', {
                             seconds: fadeTimeout,

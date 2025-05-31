@@ -90,41 +90,58 @@ async function saveFetchDelay(event: Event) {
             <Label for="retries">
                 {{ t('settings.youtube.retries.input-label') }}
             </Label>
-            <Input id="retries" v-model="retries" :class="retriesSuccess && 'border-green-600 border'" @change="saveRetries" />
+            <Input
+                id="retries"
+                v-model="retries"
+                :class="retriesSuccess && 'border-green-600 border'"
+                @change="saveRetries"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
             <Label for="fetchDelay">
                 {{ t('settings.youtube.fetch-delay.input-label') }}
             </Label>
-            <Input id="fetchDelay" v-model="fetchDelay" :class="fetchDelaySuccess && 'border-green-600 border'" @change="saveFetchDelay" />
+            <Input
+                id="fetchDelay"
+                v-model="fetchDelay"
+                :class="fetchDelaySuccess && 'border-green-600 border'"
+                @change="saveFetchDelay"
+            />
         </div>
 
-        <!-- <div class="flex flex-col gap-2">
-            <Label for="user-blacklist">
-                {{ t('settings.youtube.user-blacklist.label') }}
-            </Label>
-            <Input
-                id="user-blacklist" :model-value="userBlacklist.join(', ')"
-                :class="blacklistSuccess && 'border-green-600 border'" @change="saveBlacklist"
-            />
-        </div> -->
-
         <div class="flex flex-col gap-2">
-            <Label for="css-editor" class="flex flex-col gap-1">
+            <Label
+                for="css-editor"
+                class="flex flex-col gap-1"
+            >
                 {{ t('settings.youtube.css-editor.label') }}
-                <small class="flex flex-col font-light gap-2">
+                <small class="flex flex-col gap-2 font-light">
                     {{ t('settings.youtube.css-editor.link-info') }}
                     <hr />
                     <span>
-                        <a class="underline text-primary" :href="chatV2">{{ chatV2 }}</a>
+                        <a
+                            class="underline text-primary"
+                            :href="chatV2"
+                            >{{ chatV2 }}</a
+                        >
                         {{ t('settings.youtube.css-editor.chatv2') }}
                     </span>
-                    <a v-for="(item, index) of githubcss" :key="index" class="underline text-primary" :href="item">{{ item }}</a>
+                    <a
+                        v-for="(item, index) of githubcss"
+                        :key="index"
+                        class="underline text-primary"
+                        :href="item"
+                        >{{ item }}</a
+                    >
                 </small>
             </Label>
             <small class="text-yellow-600">{{ t('settings.youtube.css-editor.info') }}</small>
-            <Editor id="css-editor" option="youtube" type="css" />
+            <Editor
+                id="css-editor"
+                option="youtube"
+                type="css"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -132,7 +149,11 @@ async function saveFetchDelay(event: Event) {
                 {{ t('settings.youtube.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.youtube.js-editor.info') }}</small>
-            <Editor id="js-editor" option="youtube" type="js" />
+            <Editor
+                id="js-editor"
+                option="youtube"
+                type="js"
+            />
         </div>
     </Settings>
 </template>

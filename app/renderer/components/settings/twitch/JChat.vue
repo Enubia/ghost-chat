@@ -54,7 +54,11 @@ const smallCaps = shallowRef(props.smallCaps);
         <Label for="font-size">
             {{ t('settings.twitch.font-size.label') }}
         </Label>
-        <Select id="font-size" v-model="fontSize" @update:model-value="emit('update:fontSize', $event)">
+        <Select
+            id="font-size"
+            v-model="fontSize"
+            @update:model-value="emit('update:fontSize', $event)"
+        >
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.font-size.select-label')" />
             </SelectTrigger>
@@ -74,10 +78,17 @@ const smallCaps = shallowRef(props.smallCaps);
     </div>
 
     <div class="flex flex-col gap-2">
-        <Label class="align-elements" for="stroke">
+        <Label
+            class="align-elements"
+            for="stroke"
+        >
             {{ t('settings.twitch.stroke.label') }}
         </Label>
-        <Select id="stroke" v-model="stroke" @update:model-value="emit('update:stroke', $event)">
+        <Select
+            id="stroke"
+            v-model="stroke"
+            @update:model-value="emit('update:stroke', $event)"
+        >
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.stroke.select-label')" />
             </SelectTrigger>
@@ -104,8 +115,15 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="animate" v-model:checked="animate" @update:checked="emit('update:animate', $event)" />
-            <Label class="align-elements" for="animate">
+            <Switch
+                id="animate"
+                v-model:checked="animate"
+                @update:checked="emit('update:animate', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="animate"
+            >
                 {{ t('settings.twitch.animate.label') }}
             </Label>
         </div>
@@ -115,13 +133,23 @@ const smallCaps = shallowRef(props.smallCaps);
     <div class="flex flex-col gap-2">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <Switch id="fade" v-model:checked="fade" @update:checked="emit('update:fade', $event)" />
-                <Label class="cursor-pointer" for="fade">
+                <Switch
+                    id="fade"
+                    v-model:checked="fade"
+                    @update:checked="emit('update:fade', $event)"
+                />
+                <Label
+                    class="cursor-pointer"
+                    for="fade"
+                >
                     {{ t('settings.twitch.fade.label') }}
                 </Label>
             </div>
             <div v-if="fade">
-                <Label class="cursor-pointer" for="fadeTimeout">
+                <Label
+                    class="cursor-pointer"
+                    for="fadeTimeout"
+                >
                     {{
                         t('settings.twitch.fade.timeout-label', {
                             seconds: fadeTimeout,
@@ -142,8 +170,15 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="show-bots" v-model:checked="bots" @update:checked="emit('update:bots', $event)" />
-            <Label class="align-elements" for="show-bots">
+            <Switch
+                id="show-bots"
+                v-model:checked="bots"
+                @update:checked="emit('update:bots', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="show-bots"
+            >
                 {{ t('settings.twitch.show-bots.label') }}
             </Label>
         </div>
@@ -152,8 +187,15 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="hide-commands" v-model:checked="hideCommands" @update:checked="emit('update:hideCommands', $event)" />
-            <Label class="align-elements" for="hide-commands">
+            <Switch
+                id="hide-commands"
+                v-model:checked="hideCommands"
+                @update:checked="emit('update:hideCommands', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="hide-commands"
+            >
                 {{ t('settings.twitch.hide-commands.label') }}
             </Label>
         </div>
@@ -162,8 +204,15 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="hide-badges" v-model:checked="hideBadges" @update:checked="emit('update:hideBadges', $event)" />
-            <Label class="align-elements" for="hide-badges">
+            <Switch
+                id="hide-badges"
+                v-model:checked="hideBadges"
+                @update:checked="emit('update:hideBadges', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="hide-badges"
+            >
                 {{ t('settings.twitch.hide-badges.label') }}
             </Label>
         </div>
@@ -174,7 +223,11 @@ const smallCaps = shallowRef(props.smallCaps);
         <Label for="font">
             {{ t('settings.twitch.font.label') }}
         </Label>
-        <Select id="font" v-model="font" @update:model-value="emit('update:font', $event)">
+        <Select
+            id="font"
+            v-model="font"
+            @update:model-value="emit('update:font', $event)"
+        >
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.font.select-label')" />
             </SelectTrigger>
@@ -192,10 +245,17 @@ const smallCaps = shallowRef(props.smallCaps);
     </div>
 
     <div class="flex flex-col gap-2">
-        <Label class="align-elements" for="shadow">
+        <Label
+            class="align-elements"
+            for="shadow"
+        >
             {{ t('settings.twitch.shadow.label') }}
         </Label>
-        <Select id="shadow" v-model="shadow" @update:model-value="emit('update:shadow', $event)">
+        <Select
+            id="shadow"
+            v-model="shadow"
+            @update:model-value="emit('update:shadow', $event)"
+        >
             <SelectTrigger>
                 <SelectValue :placeholder="t('settings.twitch.shadow.select-label')" />
             </SelectTrigger>
@@ -219,8 +279,15 @@ const smallCaps = shallowRef(props.smallCaps);
 
     <div class="flex flex-col gap-2">
         <div class="flex items-center gap-2">
-            <Switch id="small-caps" v-model:checked="smallCaps" @update:checked="emit('update:smallCaps', $event)" />
-            <Label class="align-elements" for="small-caps">
+            <Switch
+                id="small-caps"
+                v-model:checked="smallCaps"
+                @update:checked="emit('update:smallCaps', $event)"
+            />
+            <Label
+                class="align-elements"
+                for="small-caps"
+            >
                 {{ t('settings.twitch.small-caps.label') }}
             </Label>
         </div>

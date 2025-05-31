@@ -103,7 +103,12 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="default-channel">
                 {{ t('settings.kick.default-channel.input-label') }}
             </Label>
-            <Input id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'" @change="saveDefaultChannel" />
+            <Input
+                id="default-channel"
+                v-model="defaultChannel"
+                :class="channelSuccess && 'border-green-600 border'"
+                @change="saveDefaultChannel"
+            />
             <small class="text-muted-foreground">{{ t('settings.kick.default-channel.info') }}</small>
         </div>
 
@@ -111,7 +116,11 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="font-size">
                 {{ t('settings.kick.font-size.label') }}
             </Label>
-            <Select id="font-size" v-model="fontSize" @update:model-value="saveFontSize">
+            <Select
+                id="font-size"
+                v-model="fontSize"
+                @update:model-value="saveFontSize"
+            >
                 <SelectTrigger>
                     <SelectValue :placeholder="t('settings.kick.font-size.select-label')" />
                 </SelectTrigger>
@@ -134,7 +143,11 @@ async function saveFadeTimeout(value: string | number) {
             <Label for="stroke">
                 {{ t('settings.kick.stroke.label') }}
             </Label>
-            <Select id="stroke" v-model="stroke" @update:model-value="saveStroke">
+            <Select
+                id="stroke"
+                v-model="stroke"
+                @update:model-value="saveStroke"
+            >
                 <SelectTrigger>
                     <SelectValue :placeholder="t('settings.kick.stroke.select-label')" />
                 </SelectTrigger>
@@ -161,8 +174,15 @@ async function saveFadeTimeout(value: string | number) {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="animate" v-model:checked="animate" @update:checked="saveAnimate" />
-                <Label class="align-elements" for="animate">
+                <Switch
+                    id="animate"
+                    v-model:checked="animate"
+                    @update:checked="saveAnimate"
+                />
+                <Label
+                    class="align-elements"
+                    for="animate"
+                >
                     {{ t('settings.kick.animate.label') }}
                 </Label>
             </div>
@@ -172,20 +192,36 @@ async function saveFadeTimeout(value: string | number) {
         <div class="flex flex-col gap-2">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <Switch id="fade" v-model:checked="fade" @update:checked="saveFadeMessages" />
-                    <Label class="cursor-pointer" for="fade">
+                    <Switch
+                        id="fade"
+                        v-model:checked="fade"
+                        @update:checked="saveFadeMessages"
+                    />
+                    <Label
+                        class="cursor-pointer"
+                        for="fade"
+                    >
                         {{ t('settings.kick.fade.label') }}
                     </Label>
                 </div>
                 <div v-if="fade">
-                    <Label class="cursor-pointer" for="fadeTimeout">
+                    <Label
+                        class="cursor-pointer"
+                        for="fadeTimeout"
+                    >
                         {{
                             t('settings.kick.fade.timeout-label', {
                                 seconds: fadeTimeout,
                             })
                         }}
                     </Label>
-                    <Input id="fadeTimeout" v-model="fadeTimeout" class="text-center w-30" type="number" @update:model-value="saveFadeTimeout" />
+                    <Input
+                        id="fadeTimeout"
+                        v-model="fadeTimeout"
+                        class="text-center w-30"
+                        type="number"
+                        @update:model-value="saveFadeTimeout"
+                    />
                 </div>
             </div>
             <small class="text-muted-foreground">{{ t('settings.kick.fade.info') }}</small>
@@ -193,8 +229,15 @@ async function saveFadeTimeout(value: string | number) {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-badges" v-model:checked="badges" @update:checked="saveBadges" />
-                <Label class="align-elements" for="hide-badges">
+                <Switch
+                    id="hide-badges"
+                    v-model:checked="badges"
+                    @update:checked="saveBadges"
+                />
+                <Label
+                    class="align-elements"
+                    for="hide-badges"
+                >
                     {{ t('settings.kick.hide-badges.label') }}
                 </Label>
             </div>
@@ -203,8 +246,15 @@ async function saveFadeTimeout(value: string | number) {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-commands" v-model:checked="commands" @update:checked="saveCommands" />
-                <Label class="align-elements" for="hide-commands">
+                <Switch
+                    id="hide-commands"
+                    v-model:checked="commands"
+                    @update:checked="saveCommands"
+                />
+                <Label
+                    class="align-elements"
+                    for="hide-commands"
+                >
                     {{ t('settings.kick.hide-commands.label') }}
                 </Label>
             </div>
@@ -213,8 +263,15 @@ async function saveFadeTimeout(value: string | number) {
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="hide-bots" v-model:checked="bots" @update:checked="saveBots" />
-                <Label class="align-elements" for="hide-bots">
+                <Switch
+                    id="hide-bots"
+                    v-model:checked="bots"
+                    @update:checked="saveBots"
+                />
+                <Label
+                    class="align-elements"
+                    for="hide-bots"
+                >
                     {{ t('settings.kick.hide-bots.label') }}
                 </Label>
             </div>
@@ -239,7 +296,11 @@ async function saveFadeTimeout(value: string | number) {
                 {{ t('settings.kick.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.kick.css-editor.info') }}</small>
-            <Editor id="css-editor" option="kick" type="css" />
+            <Editor
+                id="css-editor"
+                option="kick"
+                type="css"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -247,7 +308,11 @@ async function saveFadeTimeout(value: string | number) {
                 {{ t('settings.kick.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.kick.js-editor.info') }}</small>
-            <Editor id="js-editor" option="kick" type="js" />
+            <Editor
+                id="js-editor"
+                option="kick"
+                type="js"
+            />
         </div>
     </Settings>
 </template>

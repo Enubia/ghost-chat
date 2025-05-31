@@ -23,13 +23,27 @@ watch(route, () => {
 
 <template>
     <div>
-        <Button v-if="showVanish" variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Vanish)">
+        <Button
+            v-if="showVanish"
+            variant="ghost"
+            class="rounded-none"
+            @click="ipcRenderer.send(IpcEvent.Vanish)"
+        >
             <Icon icon="fa6-solid:ghost" />
         </Button>
-        <Button v-if="showBack" variant="ghost" class="rounded-none" @click="router.push('/')">
+        <Button
+            v-if="showBack"
+            variant="ghost"
+            class="rounded-none"
+            @click="router.push('/')"
+        >
             <Icon icon="fa6-solid:chevron-left" />
         </Button>
-        <Button variant="ghost" class="rounded-none" @click="ipcRenderer.send(IpcEvent.Minimize)">
+        <Button
+            variant="ghost"
+            class="rounded-none"
+            @click="ipcRenderer.send(IpcEvent.Minimize)"
+        >
             <Icon icon="fa6-solid:down-left-and-up-right-to-center" />
         </Button>
         <Button

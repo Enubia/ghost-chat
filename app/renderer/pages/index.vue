@@ -11,8 +11,15 @@ const gridRows = components.length;
 
 <template>
     <div class="flex items-center justify-center h-full">
-        <div class="w-5/6 grid gap-4" :class="`grid-rows-${gridRows}`">
-            <component :is="component" v-for="(component, index) in components" :key="index" />
+        <div
+            class="grid w-5/6 gap-4"
+            :class="`grid-rows-${gridRows}`"
+        >
+            <component
+                :is="component"
+                v-for="(component, index) in components"
+                :key="index"
+            />
         </div>
     </div>
 </template>

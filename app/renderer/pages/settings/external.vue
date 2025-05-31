@@ -54,11 +54,26 @@ async function removeSource(index: number) {
             <small class="text-muted-foreground">{{ t('settings.external.default-url.info') }}</small>
         </div>
 
-        <div v-if="sources.length" class="flex flex-col gap-2">
+        <div
+            v-if="sources.length"
+            class="flex flex-col gap-2"
+        >
             <Label>{{ t('settings.external.sources.label') }}</Label>
-            <div v-for="(source, index) in sources" :key="source" class="flex items-center justify-between gap-1" :value="index.toString()">
-                <Input v-model="sources[index]" readonly class="bg-gray-300" />
-                <Button variant="destructive" @click="removeSource(index)">
+            <div
+                v-for="(source, index) in sources"
+                :key="source"
+                class="flex items-center justify-between gap-1"
+                :value="index.toString()"
+            >
+                <Input
+                    v-model="sources[index]"
+                    readonly
+                    class="bg-gray-300"
+                />
+                <Button
+                    variant="destructive"
+                    @click="removeSource(index)"
+                >
                     <Icon icon="fa6-regular:trash-can" />
                 </Button>
             </div>
@@ -70,7 +85,11 @@ async function removeSource(index: number) {
                 {{ t('settings.external.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.external.css-editor.info') }}</small>
-            <Editor id="css-editor" option="external" type="css" />
+            <Editor
+                id="css-editor"
+                option="external"
+                type="css"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -78,7 +97,11 @@ async function removeSource(index: number) {
                 {{ t('settings.external.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.external.js-editor.info') }}</small>
-            <Editor id="js-editor" option="external" type="js" />
+            <Editor
+                id="js-editor"
+                option="external"
+                type="js"
+            />
         </div>
     </Settings>
 </template>

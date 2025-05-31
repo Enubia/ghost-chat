@@ -68,24 +68,42 @@ async function saveHideDockIcon(value: boolean) {
             <Label for="locale-switcher">
                 {{ t('settings.general.locale-change.label') }}
             </Label>
-            <Select id="locale-switcher" v-model="$i18n.locale" @update:model-value="saveLanguage">
+            <Select
+                id="locale-switcher"
+                v-model="$i18n.locale"
+                @update:model-value="saveLanguage"
+            >
                 <SelectTrigger>
                     <SelectValue :placeholder="$i18n.locale" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">
+                    <SelectItem
+                        v-for="locale in $i18n.availableLocales"
+                        :key="`locale-${locale}`"
+                        :value="locale"
+                    >
                         {{ languageMappingList[locale].nativeName }}
                     </SelectItem>
                 </SelectContent>
             </Select>
         </div>
 
-        <HotKeyInput v-model="vanishKeybind" @update:keyup="saveKeybind" />
+        <HotKeyInput
+            v-model="vanishKeybind"
+            @update:keyup="saveKeybind"
+        />
 
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2">
-                <Switch id="beta-updates" :checked="participateInPreRelease" @update:checked="savePrerelease" />
-                <Label for="beta-updates" class="cursor-pointer">
+                <Switch
+                    id="beta-updates"
+                    :checked="participateInPreRelease"
+                    @update:checked="savePrerelease"
+                />
+                <Label
+                    for="beta-updates"
+                    class="cursor-pointer"
+                >
                     {{ t('settings.general.pre-release.label') }}
                 </Label>
             </div>
@@ -94,9 +112,16 @@ async function saveHideDockIcon(value: boolean) {
             </small>
         </div>
 
-        <div v-if="showMacOptions" class="flex flex-col gap-2">
+        <div
+            v-if="showMacOptions"
+            class="flex flex-col gap-2"
+        >
             <div class="flex items-center gap-2">
-                <Switch id="quit-one-close" :checked="quitOnClose" @update:checked="saveQuitOnClose" />
+                <Switch
+                    id="quit-one-close"
+                    :checked="quitOnClose"
+                    @update:checked="saveQuitOnClose"
+                />
                 <Label for="quit-one-close">
                     {{ t('settings.general.close-option.label') }}
                 </Label>
@@ -104,9 +129,16 @@ async function saveHideDockIcon(value: boolean) {
             <small class="text-muted-foreground">{{ t('settings.general.close-option.info') }}</small>
         </div>
 
-        <div v-if="showMacOptions" class="flex flex-col gap-2">
+        <div
+            v-if="showMacOptions"
+            class="flex flex-col gap-2"
+        >
             <div class="flex items-center gap-2">
-                <Switch id="hide-dock-icon" :checked="hideDockIcon" @update:checked="saveHideDockIcon" />
+                <Switch
+                    id="hide-dock-icon"
+                    :checked="hideDockIcon"
+                    @update:checked="saveHideDockIcon"
+                />
                 <Label for="hide-dock-icon">
                     {{ t('settings.general.hide-dock-icon-options.label') }}
                 </Label>

@@ -135,7 +135,11 @@ function stopLoading() {
     <Dialog @update:open="(open) => (open ? null : stopLoading())">
         <DialogTrigger>
             <div class="flex justify-center p-4 rounded bg-secondary hover:cursor-pointer hover:bg-gray-400">
-                <Icon icon="fa6-brands:youtube" color="#FF0000" class="size-12" />
+                <Icon
+                    icon="fa6-brands:youtube"
+                    color="#FF0000"
+                    class="size-12"
+                />
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">
@@ -147,17 +151,39 @@ function stopLoading() {
                     {{ info }}
                 </DialogDescription>
             </DialogHeader>
-            <Input v-model="channelId" :disabled="isLoading" placeholder="Your youtube channel Id" @keydown.enter="routeChat" />
-            <Button :disabled="!channelId.length || isLoading" class="flex gap-2" @click="routeChat">
+            <Input
+                v-model="channelId"
+                :disabled="isLoading"
+                placeholder="Your youtube channel Id"
+                @keydown.enter="routeChat"
+            />
+            <Button
+                :disabled="!channelId.length || isLoading"
+                class="flex gap-2"
+                @click="routeChat"
+            >
                 {{ t('start.channel.button') }}
-                <Icon v-if="isLoading" icon="svg-spinners:6-dots-rotate" class="text-2xl animate-spin" />
+                <Icon
+                    v-if="isLoading"
+                    icon="svg-spinners:6-dots-rotate"
+                    class="text-2xl animate-spin"
+                />
             </Button>
             <hr class="border-dashed" />
             <DialogDescription class="grid gap-3">
                 {{ t('start.youtube.live-id.info') }}
             </DialogDescription>
-            <Input v-model="liveId" :disabled="isLoading" placeholder="Your youtube live Id" @keydown.enter="routeChat" />
-            <Button :disabled="isLoading" class="flex gap-2" @click="routeChat">
+            <Input
+                v-model="liveId"
+                :disabled="isLoading"
+                placeholder="Your youtube live Id"
+                @keydown.enter="routeChat"
+            />
+            <Button
+                :disabled="isLoading"
+                class="flex gap-2"
+                @click="routeChat"
+            >
                 {{ t('start.channel.button') }}
             </Button>
         </DialogContent>

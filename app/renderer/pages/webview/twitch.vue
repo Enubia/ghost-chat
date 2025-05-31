@@ -121,5 +121,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <WebView :tag-source="link" class="overflow-hidden" />
+    <WebView
+        :tag-source="link"
+        class="overflow-hidden"
+    />
 </template>

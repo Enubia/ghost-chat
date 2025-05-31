@@ -64,7 +64,10 @@ function applySourceFromList(item: string) {
     <Dialog>
         <DialogTrigger>
             <div class="flex justify-center p-4 rounded bg-secondary hover:cursor-pointer hover:bg-gray-400">
-                <Icon icon="fa6-solid:globe" class="w-10 h-12 text-blue-500" />
+                <Icon
+                    icon="fa6-solid:globe"
+                    class="w-10 h-12 text-blue-500"
+                />
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">
@@ -83,18 +86,34 @@ function applySourceFromList(item: string) {
                 @change="enableStartButton"
                 @keydown.enter="routeExternal"
             />
-            <small v-if="hasRegexError" class="text-xs text-red-500">{{ t('start.external.input.error') }}</small>
-            <Select v-if="sources.length" @update:model-value="applySourceFromList">
+            <small
+                v-if="hasRegexError"
+                class="text-xs text-red-500"
+                >{{ t('start.external.input.error') }}</small
+            >
+            <Select
+                v-if="sources.length"
+                @update:model-value="applySourceFromList"
+            >
                 <SelectTrigger>
                     <SelectValue :placeholder="t('start.external.sources-placeholder')" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem v-for="(item, index) of sources" :key="index" v-model="sources[index]" class="w-full" :value="item">
+                    <SelectItem
+                        v-for="(item, index) of sources"
+                        :key="index"
+                        v-model="sources[index]"
+                        class="w-full"
+                        :value="item"
+                    >
                         {{ item.substring(0, 30) + (item.length > 30 ? '...' : '') }}
                     </SelectItem>
                 </SelectContent>
             </Select>
-            <Button :disabled="!source.length || hasError" @click="routeExternal">
+            <Button
+                :disabled="!source.length || hasError"
+                @click="routeExternal"
+            >
                 {{ t('start.external.button') }}
             </Button>
         </DialogContent>

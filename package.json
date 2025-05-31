@@ -29,9 +29,10 @@
     ],
     "scripts": {
         "clean": "pnpm -r clean",
-        "check": "pnpm lint && pnpm format",
+        "check": "pnpm lint && pnpm format:check",
         "dev": "pnpm --filter=ghost-chat dev",
-        "format": "prettier -c --config ./.prettierrc app",
+        "format:check": "prettier --check --config ./.prettierrc app",
+        "format": "prettier --write --config ./.prettierrc app",
         "lint": "oxlint -c ./.oxlintrc.json",
         "postinstall": "simple-git-hooks"
     },
@@ -49,6 +50,9 @@
         "pre-commit": "pnpm dlx lint-staged"
     },
     "lint-staged": {
-        "**/*.{css,json,ts,vue}": "pnpm lint && pnpm format"
+        "**/*.{css,json,ts,vue}": [
+            "oxlint -c ./.oxlintrc.json",
+            "prettier --write --config ./.prettierrc"
+        ]
     }
 }

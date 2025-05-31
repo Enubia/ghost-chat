@@ -181,7 +181,12 @@ async function saveFadeTimeout(value: number) {
             <Label for="default-channel">
                 {{ t('settings.twitch.default-channel.input-label') }}
             </Label>
-            <Input id="default-channel" v-model="defaultChannel" :class="channelSuccess && 'border-green-600 border'" @change="saveDefaultChannel" />
+            <Input
+                id="default-channel"
+                v-model="defaultChannel"
+                :class="channelSuccess && 'border-green-600 border'"
+                @change="saveDefaultChannel"
+            />
             <small class="text-muted-foreground">{{ t('settings.twitch.default-channel.info') }}</small>
         </div>
 
@@ -189,7 +194,10 @@ async function saveFadeTimeout(value: number) {
             <Label for="theme">
                 {{ t('settings.twitch.chat-selector.label') }}
             </Label>
-            <Switch v-model:checked="useJChat" @update:checked="saveUseJChat" />
+            <Switch
+                v-model:checked="useJChat"
+                @update:checked="saveUseJChat"
+            />
             <small>{{ t('settings.twitch.chat-selector.info') }}</small>
         </div>
 
@@ -254,7 +262,11 @@ async function saveFadeTimeout(value: number) {
                 {{ t('settings.twitch.css-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.twitch.css-editor.info') }}</small>
-            <Editor id="css-editor" option="twitch" type="css" />
+            <Editor
+                id="css-editor"
+                option="twitch"
+                type="css"
+            />
         </div>
 
         <div class="flex flex-col gap-2">
@@ -262,7 +274,11 @@ async function saveFadeTimeout(value: number) {
                 {{ t('settings.twitch.js-editor.label') }}
             </Label>
             <small class="text-yellow-600">{{ t('settings.twitch.js-editor.info') }}</small>
-            <Editor id="js-editor" option="twitch" type="js" />
+            <Editor
+                id="js-editor"
+                option="twitch"
+                type="js"
+            />
         </div>
     </Settings>
 </template>

@@ -111,8 +111,15 @@ useIpcRendererOn(IpcEvent.Notification, (_, notification) => {
 </script>
 
 <template>
-    <div :key="rerenderKey" class="grid min-h-dvh grid-rows-[auto_1fr_auto]">
-        <header v-if="showMenuBar" class="flex justify-between w-full" :class="webviewRoutes.includes(route.name) ? 'absolute' : ''">
+    <div
+        :key="rerenderKey"
+        class="grid min-h-dvh grid-rows-[auto_1fr_auto]"
+    >
+        <header
+            v-if="showMenuBar"
+            class="flex justify-between w-full"
+            :class="webviewRoutes.includes(route.name) ? 'absolute' : ''"
+        >
             <DropDownMenu />
             <MenuButtons />
         </header>
@@ -120,30 +127,69 @@ useIpcRendererOn(IpcEvent.Notification, (_, notification) => {
             <router-view v-slot="{ Component }">
                 <template v-if="Component">
                     <Suspense>
-                        <component :is="Component" :key="$route.path" />
+                        <component
+                            :is="Component"
+                            :key="$route.path"
+                        />
                         <template #fallback>
-                            <Icon icon="svg-spinners:6-dots-rotate" class="text-4xl text-primary" />
+                            <Icon
+                                icon="svg-spinners:6-dots-rotate"
+                                class="text-4xl text-primary"
+                            />
                         </template>
                     </Suspense>
                 </template>
             </router-view>
         </main>
-        <footer v-if="showFooter" class="dark:text-background" :class="additionalFooterClasses.position">
-            <div v-if="notifications.showToggleUnbound" class="flex justify-center text-yellow-600 bg-yellow-200">
-                <Icon icon="fa6-solid:triangle-exclamation" class="mr-2 text-1xl" />
+        <footer
+            v-if="showFooter"
+            class="dark:text-background"
+            :class="additionalFooterClasses.position"
+        >
+            <div
+                v-if="notifications.showToggleUnbound"
+                class="flex justify-center text-yellow-600 bg-yellow-200"
+            >
+                <Icon
+                    icon="fa6-solid:triangle-exclamation"
+                    class="mr-2 text-1xl"
+                />
                 <small>{{ t('footer.toggle-missing') }}</small>
             </div>
             <div class="grid grid-cols-2">
-                <a :href="paypalLink" class="center-elements bg-[#009bde36] py-2" :class="additionalFooterClasses.pp">
-                    <img src="./assets/brands/paypal.png" alt="PayPal" class="size-5" />
+                <a
+                    :href="paypalLink"
+                    class="center-elements bg-[#009bde36] py-2"
+                    :class="additionalFooterClasses.pp"
+                >
+                    <img
+                        src="./assets/brands/paypal.png"
+                        alt="PayPal"
+                        class="size-5"
+                    />
                 </a>
-                <a :href="kofiLink" class="center-elements bg-[#ff633379] py-2" :class="additionalFooterClasses.kofi">
-                    <img src="./assets/brands/kofi_symbol.svg" alt="Ko-fi" class="size-5" />
+                <a
+                    :href="kofiLink"
+                    class="center-elements bg-[#ff633379] py-2"
+                    :class="additionalFooterClasses.kofi"
+                >
+                    <img
+                        src="./assets/brands/kofi_symbol.svg"
+                        alt="Ko-fi"
+                        class="size-5"
+                    />
                 </a>
             </div>
-            <a v-if="versionStore.new.length" :href="downloadLink" class="py-2 bg-green-600 center-elements">
+            <a
+                v-if="versionStore.new.length"
+                :href="downloadLink"
+                class="py-2 bg-green-600 center-elements"
+            >
                 <small>{{ t('footer.download-link', { new: versionStore.new }) }}</small>
-                <Icon icon="mdi:open-in-new" class="ml-2" />
+                <Icon
+                    icon="mdi:open-in-new"
+                    class="ml-2"
+                />
             </a>
         </footer>
     </div>

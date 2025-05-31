@@ -46,13 +46,27 @@ watch(immediateRedirect, (val) => {
 </script>
 
 <template>
-    <div class="flex-col m-auto gap-2 center-elements h-dvh">
-        <Icon icon="svg-spinners:ring-resize" class="mb-5 text-5xl" style="color: #762ce6" />
+    <div class="flex-col gap-2 m-auto center-elements h-dvh">
+        <Icon
+            icon="svg-spinners:ring-resize"
+            class="mb-5 text-5xl"
+            style="color: #762ce6"
+        />
         <span class="text-center">{{ message }}</span>
-        <a v-if="showLink" :href="downloadLink" class="center-elements">
-            <Button variant="secondary" class="mt-5">
+        <a
+            v-if="showLink"
+            :href="downloadLink"
+            class="center-elements"
+        >
+            <Button
+                variant="secondary"
+                class="mt-5"
+            >
                 {{ t('version-check.download-link') }}
-                <Icon icon="mdi:open-in-new" class="ml-2" />
+                <Icon
+                    icon="mdi:open-in-new"
+                    class="ml-2"
+                />
             </Button>
         </a>
     </div>

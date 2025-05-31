@@ -81,10 +81,16 @@ watch(
             @keydown.prevent
         />
         <div class="flex flex-col">
-            <small v-if="showMetaError" class="text-red-500">
+            <small
+                v-if="showMetaError"
+                class="text-red-500"
+            >
                 {{ t('settings.general.keybind-change.meta-error') }}
             </small>
-            <small v-if="showSingleKeyError" class="text-red-500">
+            <small
+                v-if="showSingleKeyError"
+                class="text-red-500"
+            >
                 {{ t('settings.general.keybind-change.single-key-error') }}
             </small>
         </div>

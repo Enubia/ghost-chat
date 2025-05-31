@@ -51,15 +51,24 @@ useIpcRendererOn(IpcEvent.CloseSettings, () => {
 <template>
     <DropdownMenu>
         <DropdownMenuTrigger as-child>
-            <Button variant="ghost" class="rounded-none">
-                <Icon icon="fa6-solid:bars" class="text-2xl" />
+            <Button
+                variant="ghost"
+                class="rounded-none"
+            >
+                <Icon
+                    icon="fa6-solid:bars"
+                    class="text-2xl"
+                />
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
             <DropdownMenuItem @click="router.push('/')">
                 {{ t('header.dropdown.start') }}
             </DropdownMenuItem>
-            <DropdownMenuItem v-if="!isSettingsOpen" @click="showSettings">
+            <DropdownMenuItem
+                v-if="!isSettingsOpen"
+                @click="showSettings"
+            >
                 {{ t('header.dropdown.settings') }}
             </DropdownMenuItem>
             <DropdownMenuItem @click="toggleTheme">

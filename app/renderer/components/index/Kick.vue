@@ -41,7 +41,11 @@ async function routeChat() {
     <Dialog>
         <DialogTrigger>
             <div class="flex justify-center p-4 rounded bg-secondary hover:cursor-pointer hover:bg-gray-400">
-                <img src="../../assets/brands/kick.png" class="h-12" alt="kick" />
+                <img
+                    src="../../assets/brands/kick.png"
+                    class="h-12"
+                    alt="kick"
+                />
             </div>
         </DialogTrigger>
         <DialogContent class="w-3/4 rounded">
@@ -53,8 +57,15 @@ async function routeChat() {
                     {{ t('start.channel.info') }}
                 </DialogDescription>
             </DialogHeader>
-            <Input v-model="channel" placeholder="Channel" @keydown.enter="routeChat" />
-            <Button :disabled="!channel.length" @click="routeChat">
+            <Input
+                v-model="channel"
+                placeholder="Channel"
+                @keydown.enter="routeChat"
+            />
+            <Button
+                :disabled="!channel.length"
+                @click="routeChat"
+            >
                 {{ t('start.channel.button') }}
             </Button>
         </DialogContent>

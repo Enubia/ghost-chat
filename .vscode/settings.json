@@ -16,10 +16,11 @@
     // CODE FORMATTING (Prettier)
     "prettier.enable": true,
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modifications",
-    "editor.formatOnPaste": true,
     "editor.formatOnType": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "prettier.requireConfig": true,
 
     // CODE ACTIONS (Fix + Organize)

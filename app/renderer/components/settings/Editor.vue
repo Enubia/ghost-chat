@@ -48,7 +48,10 @@ useEventListener(editor, 'focusout', save);
 </script>
 
 <template>
-    <div ref="editor" class="flex flex-col gap-2">
+    <div
+        ref="editor"
+        class="flex flex-col gap-2"
+    >
         <CodeEditor
             v-model="code"
             :line-nums="true"
