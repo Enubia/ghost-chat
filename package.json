@@ -53,6 +53,7 @@
         "**/*.{css,json,ts,vue}": [
             "oxlint -c ./.oxlintrc.json",
             "prettier --write --config ./.prettierrc"
-        ]
+        ],
+        "**/*.md": "prettier --write --config ./.prettierrc"
     }
 }
