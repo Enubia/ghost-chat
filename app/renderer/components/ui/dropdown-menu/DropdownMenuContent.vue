@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { cn } from '#lib/utils/cn';
 import type { DropdownMenuContentEmits, DropdownMenuContentProps } from 'radix-vue';
 import { DropdownMenuContent, DropdownMenuPortal, useForwardPropsEmits } from 'radix-vue';
 import type { HTMLAttributes } from 'vue';
 import { computed } from 'vue';
+
+import { cn } from '#lib/utils/cn';
 
 const props = withDefaults(defineProps<DropdownMenuContentProps & { class?: HTMLAttributes['class'] }>(), {
     sideOffset: 4,

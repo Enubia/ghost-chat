@@ -1,11 +1,12 @@
-import { IpcEvent } from '#ipc/constants/events.js';
-import type { AppStore, Updater } from '#ipc/types/store.js';
 import type { BrowserWindow } from 'electron';
 import { ipcMain } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
 import type { AppUpdater } from 'electron-updater';
 import { autoUpdater } from 'electron-updater';
+
+import { IpcEvent } from '#ipc/constants/events.js';
+import type { AppStore, Updater } from '#ipc/types/store.js';
 
 export default class ManualUpdater {
     private logPrefix = this.constructor.name;

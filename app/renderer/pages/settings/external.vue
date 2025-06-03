@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import Editor from '#components/settings/Editor.vue';
 import { Button } from '#components/ui/button';
 import { Input } from '#components/ui/input';
@@ -8,10 +13,6 @@ import Settings from '#layouts/settings.vue';
 import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
-import { Icon } from '@iconify/vue';
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 

@@ -1,10 +1,12 @@
-import { IpcEvent } from '#ipc/constants/events.js';
-import { StoreKeys } from '#ipc/constants/store/keys.js';
-import type { AppStore, WindowState } from '#ipc/types/store.js';
 import type { IpcMainEvent, Rectangle } from 'electron';
 import { BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
+
+import { IpcEvent } from '#ipc/constants/events.js';
+import { StoreKeys } from '#ipc/constants/store/keys.js';
+import type { AppStore, WindowState } from '#ipc/types/store.js';
+
 import Settings from './window/settings.js';
 
 export default class IpcEvents {

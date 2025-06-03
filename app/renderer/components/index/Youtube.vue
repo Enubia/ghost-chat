@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { StoreDefaults } from '#ipc/constants/store/defaults';
-import * as IpcHandler from '#lib/ipchandler';
-import { delay } from '#lib/utils/delay';
 import { Icon } from '@iconify/vue';
 import { useFetch } from '@vueuse/core';
 import { computed, onMounted, shallowRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+
+import { StoreDefaults } from '#ipc/constants/store/defaults';
+import * as IpcHandler from '#lib/ipchandler';
+import { delay } from '#lib/utils/delay';
+
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Input } from '../ui/input';

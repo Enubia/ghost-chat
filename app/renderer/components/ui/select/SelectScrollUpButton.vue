@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { cn } from '#lib/utils/cn';
 import { ChevronUpIcon } from '@radix-icons/vue';
 import type { SelectScrollUpButtonProps } from 'radix-vue';
 import { SelectScrollUpButton, useForwardProps } from 'radix-vue';
 import type { HTMLAttributes } from 'vue';
 import { computed } from 'vue';
+
+import { cn } from '#lib/utils/cn';
 
 const props = defineProps<SelectScrollUpButtonProps & { class?: HTMLAttributes['class'] }>();
 

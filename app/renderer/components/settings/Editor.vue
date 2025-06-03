@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { IpcEvent } from '#ipc/constants/events';
-import type { Options } from '#ipc/types/store';
-import * as IpcHandler from '#lib/ipchandler';
 import { useEventListener } from '@vueuse/core';
 import { useIpcRenderer } from '@vueuse/electron';
 import hljs from 'highlight.js';
 import CodeEditor from 'simple-code-editor';
 import { onMounted, shallowRef, useTemplateRef } from 'vue';
+
+import { IpcEvent } from '#ipc/constants/events';
+import type { Options } from '#ipc/types/store';
+import * as IpcHandler from '#lib/ipchandler';
 
 const props = defineProps<{ option: keyof Options; type: 'css' | 'js' }>();
 

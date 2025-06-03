@@ -1,9 +1,10 @@
-import { StoreKeys } from '#ipc/constants/store/keys.js';
-import type { AppStore } from '#ipc/types/store.js';
 import type { BrowserWindowConstructorOptions, WebPreferences } from 'electron';
-import { app, BrowserWindow, nativeTheme, shell } from 'electron';
+import { BrowserWindow, app, nativeTheme, shell } from 'electron';
 import log from 'electron-log';
 import type ElectronStore from 'electron-store';
+
+import { StoreKeys } from '#ipc/constants/store/keys.js';
+import type { AppStore } from '#ipc/types/store.js';
 
 export default class Main {
     constructor(private store: ElectronStore<AppStore>) {}

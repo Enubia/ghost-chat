@@ -3,11 +3,11 @@ import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { routes } from 'vue-router/auto-routes';
-import App from './App.vue';
-import * as IpcHandler from './lib/ipchandler';
 
+import App from './App.vue';
 // oxlint-disable-next-line no-unassigned-import
 import './assets/css/index.css';
+import * as IpcHandler from './lib/ipchandler';
 
 const router = createRouter({
     routes,

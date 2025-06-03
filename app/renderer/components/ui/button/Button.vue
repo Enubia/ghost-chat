@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { cn } from '#lib//utils/cn';
 import type { PrimitiveProps } from 'radix-vue';
 import { Primitive } from 'radix-vue';
 import type { HTMLAttributes } from 'vue';
+
+import { cn } from '#lib//utils/cn';
+
 import type { ButtonVariants } from '.';
 import { buttonVariants } from '.';
 

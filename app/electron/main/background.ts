@@ -1,7 +1,9 @@
-import { IpcEvent } from '#ipc/constants/events.js';
-import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
+import { BrowserWindow, app, globalShortcut, ipcMain } from 'electron';
 import log from 'electron-log';
 import path from 'node:path';
+
+import { IpcEvent } from '#ipc/constants/events.js';
+
 import { cleanLogs, quit } from '../utils/index.js';
 import AutoUpdater from './autoUpdater.js';
 import IpcEvents from './ipcEvents.js';

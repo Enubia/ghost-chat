@@ -1,4 +1,5 @@
 import type { AppStore } from '#ipc/types/store.js';
+
 import { FontSize } from './fontsize.js';
 import { Stroke } from './stroke.js';
 

@@ -1,3 +1,6 @@
+import { ipcRenderer } from 'electron';
+
+import { IpcEvent } from '#ipc/constants/events';
 import type {
     AppStore,
     ExternalBrowserSource,
@@ -14,8 +17,6 @@ import type {
     Youtube,
 } from '#ipc/types/store';
 
-import { IpcEvent } from '#ipc/constants/events';
-import { ipcRenderer } from 'electron';
 import { cloneValue } from './utils/cloneValue';
 
 /**

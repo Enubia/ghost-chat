@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+
 import { Button } from '../ui/button';
 
 const { t } = useI18n();

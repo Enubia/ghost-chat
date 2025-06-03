@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import Editor from '#components/settings/Editor.vue';
 import JChat from '#components/settings/twitch/JChat.vue';
 import KapChat from '#components/settings/twitch/KapChat.vue';
@@ -12,9 +16,6 @@ import Settings from '#layouts/settings.vue';
 import * as IpcHandler from '#lib/ipchandler';
 import { enableSuccessIndicator } from '#lib/utils/enableSuccessIndicator';
 import { save } from '#lib/utils/save';
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
 
 const { t, rt, tm } = useI18n();
 

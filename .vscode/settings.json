@@ -26,8 +26,8 @@
     // CODE ACTIONS (Fix + Organize)
     "editor.codeActions.triggerOnFocusChange": true, // Trigger on focus change
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "explicit"
+        "source.fixAll.eslint": "explicit"
+        // "source.organizeImports": "explicit"
     },
     "files.trimTrailingWhitespace": true,
 

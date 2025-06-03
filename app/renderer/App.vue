@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { IpcEvent } from '#ipc/constants/events';
-import { StoreDefaults } from '#ipc/constants/store/defaults';
 import { Icon } from '@iconify/vue';
 import { useIpcRendererOn } from '@vueuse/electron';
 import { onMounted, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
+
+import { IpcEvent } from '#ipc/constants/events';
+import { StoreDefaults } from '#ipc/constants/store/defaults';
+
 import MenuButtons from './components/header/Buttons.vue';
 import DropDownMenu from './components/header/Dropdown.vue';
 import { downloadLink, kofiLink, paypalLink } from './constants/links';

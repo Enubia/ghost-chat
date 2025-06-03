@@ -2,14 +2,13 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n';
 import iconify from '@tomjs/vite-plugin-iconify';
 import vue from '@vitejs/plugin-vue';
 import autoprefixer from 'autoprefixer';
+import { rmSync } from 'node:fs';
+import { resolve } from 'node:path';
 import tailwind from 'tailwindcss';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
-
-import { rmSync } from 'node:fs';
-import { resolve } from 'node:path';
 
 export default defineConfig(({ command }) => {
     rmSync('out', { recursive: true, force: true });

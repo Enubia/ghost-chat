@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { hotkeyToString, isFunctionKey, KeyToCode } from '#lib/utils/keyToCode';
 import { shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+
+import { KeyToCode, hotkeyToString, isFunctionKey } from '#lib/utils/keyToCode';
+
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 
