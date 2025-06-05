@@ -37,7 +37,7 @@ importers:
         version: 13.3.0(vue@3.5.16(typescript@5.8.3))
       '@vueuse/electron':
         specifier: 13.3.0
-        version: 13.3.0(electron@35.5.0)(vue@3.5.16(typescript@5.8.3))
+        version: 13.3.0(electron@35.5.1)(vue@3.5.16(typescript@5.8.3))
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -94,8 +94,8 @@ importers:
         specifier: 10.4.21
         version: 10.4.21(postcss@8.5.3)
       electron:
-        specifier: 35.5.0
-        version: 35.5.0
+        specifier: 35.5.1
+        version: 35.5.1
       electron-builder:
         specifier: 26.0.12
         version: 26.0.12(electron-builder-squirrel-windows@26.0.12)
@@ -1745,8 +1745,8 @@ packages:
     resolution: {integrity: sha512-bO3y10YikuUwUuDUQRM4KfwNkKhnpVO7IPdbsrejwN9/AABJzzTQ4GeHwyzNSrVO+tEH3/Np255a3sVZpZDjvg==}
     engines: {node: '>=8.0.0'}
 
-  electron@35.5.0:
-    resolution: {integrity: sha512-16ScwDuKgnuL7tSrEgBvQe1Hm4CSK0vbOusPFrDs4oIs3QOdEFtrP9i8+4yKQGXpszj4f4F0MQjKv1tu9E4Gvg==}
+  electron@35.5.1:
+    resolution: {integrity: sha512-kkbGXz56safvXcxqAZyMS2nJGYK9NFG/iKOJsAO5e0HPH8y3EnV4Fi87tvbfFpeLiaruFS+eN0YFy6f1StpSgQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4726,10 +4726,10 @@ snapshots:
       '@vueuse/shared': 13.3.0(vue@3.5.16(typescript@5.8.3))
       vue: 3.5.16(typescript@5.8.3)
 
-  '@vueuse/electron@13.3.0(electron@35.5.0)(vue@3.5.16(typescript@5.8.3))':
+  '@vueuse/electron@13.3.0(electron@35.5.1)(vue@3.5.16(typescript@5.8.3))':
     dependencies:
       '@vueuse/shared': 13.3.0(vue@3.5.16(typescript@5.8.3))
-      electron: 35.5.0
+      electron: 35.5.1
       vue: 3.5.16(typescript@5.8.3)
 
   '@vueuse/metadata@10.11.1': {}
@@ -5453,7 +5453,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@35.5.0:
+  electron@35.5.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 22.15.18
