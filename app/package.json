@@ -47,7 +47,7 @@
         "vue-router": "4.5.1"
     },
     "devDependencies": {
-        "@iconify/json": "2.2.345",
+        "@iconify/json": "2.2.346",
         "@intlify/unplugin-vue-i18n": "6.0.8",
         "@tomjs/vite-plugin-iconify": "1.2.1",
         "@vitejs/plugin-vue": "5.2.4",
