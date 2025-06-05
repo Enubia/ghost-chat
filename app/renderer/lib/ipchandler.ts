@@ -17,7 +17,7 @@ import type {
     Youtube,
 } from '#ipc/types/store';
 
-import { cloneValue } from './utils/cloneValue';
+import { cloneValue } from './utils/clonevalue';
 
 /**
  * Only parent keys can be deleted
