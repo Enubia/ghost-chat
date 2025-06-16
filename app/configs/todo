@@ -6,8 +6,12 @@ v3.5 (Youtube integration):
 
 v3.5.1 (code cleanup):
     ☐ refactor settings pages, we have so much duplicated code (looking at you success enabling functions)
-    
+
     ☐ cleanup translation files, lots of duplicated messages which can be combined probably
+
+v3.5.2 (small features):
+    ☐ jchat custom fonts
+    ☐ hotkey for clearing chat (not sure yet how to do that properly)
 
 v3.6 (Multistream):
     ☐ keep all the current functionality
