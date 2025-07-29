@@ -40,7 +40,7 @@
         "electron-updater": "6.6.2",
         "highlight.js": "11.8.0",
         "radix-vue": "1.9.17",
-        "simple-code-editor": "2.0.9",
+        "simple-code-editor": "2.1.0",
         "tailwind-merge": "2.6.0",
         "vue": "3.5.18",
         "vue-i18n": "11.1.10",

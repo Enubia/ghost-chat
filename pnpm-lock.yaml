@@ -60,8 +60,8 @@ importers:
         specifier: 1.9.17
         version: 1.9.17(vue@3.5.18(typescript@5.8.3))
       simple-code-editor:
-        specifier: 2.0.9
-        version: 2.0.9
+        specifier: 2.1.0
+        version: 2.1.0
       tailwind-merge:
         specifier: 2.6.0
         version: 2.6.0
@@ -3192,8 +3192,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simple-code-editor@2.0.9:
-    resolution: {integrity: sha512-bDekCSgcaFn79kiB6N+S07/m9fLLfgHchVsKhMLyKsqZNaRC5GWxn2fpbMZPKmORDyWzUML3hy2mrN3XWyGSfA==}
+  simple-code-editor@2.1.0:
+    resolution: {integrity: sha512-mQ0bNhkOKgRFyoDF54zwuhWt8Wcj+T0sciCvyD3qJnNMOv01x4guRhq8ksUDUGUmAm3vPOWvkhP+YwKja0yh2g==}
 
   simple-git-hooks@2.13.0:
     resolution: {integrity: sha512-N+goiLxlkHJlyaYEglFypzVNMaNplPAk5syu0+OPp/Bk6dwVoXF6FfOw2vO0Dp+JHsBaI+w6cm8TnFl2Hw6tDA==}
@@ -6988,7 +6988,7 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-code-editor@2.0.9:
+  simple-code-editor@2.1.0:
     dependencies:
       highlight.js: 11.8.0
 
