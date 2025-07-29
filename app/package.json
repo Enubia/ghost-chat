@@ -31,8 +31,8 @@
     "dependencies": {
         "@iconify/vue": "5.0.0",
         "@radix-icons/vue": "1.0.0",
-        "@vueuse/core": "13.3.0",
-        "@vueuse/electron": "13.3.0",
+        "@vueuse/core": "13.6.0",
+        "@vueuse/electron": "13.6.0",
         "class-variance-authority": "0.7.1",
         "clsx": "2.1.1",
         "electron-log": "5.4.1",
