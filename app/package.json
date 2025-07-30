@@ -50,7 +50,7 @@
         "@iconify/json": "2.2.363",
         "@intlify/unplugin-vue-i18n": "6.0.8",
         "@tomjs/vite-plugin-iconify": "1.2.1",
-        "@vitejs/plugin-vue": "5.2.4",
+        "@vitejs/plugin-vue": "6.0.1",
         "auto-changelog": "2.5.0",
         "autoprefixer": "10.4.21",
         "electron": "35.7.2",
