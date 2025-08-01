@@ -45,7 +45,7 @@
         "lint-staged": "16.1.2",
         "oxlint": "1.9.0",
         "prettier": "3.6.2",
-        "simple-git-hooks": "2.13.0"
+        "simple-git-hooks": "2.13.1"
     },
     "simple-git-hooks": {
         "pre-commit": "pnpm dlx lint-staged"
