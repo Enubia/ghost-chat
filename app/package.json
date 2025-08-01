@@ -35,7 +35,7 @@
         "@vueuse/electron": "13.6.0",
         "class-variance-authority": "0.7.1",
         "clsx": "2.1.1",
-        "electron-log": "5.4.1",
+        "electron-log": "5.4.2",
         "electron-store": "10.0.1",
         "electron-updater": "6.6.2",
         "highlight.js": "11.8.0",
