@@ -21,8 +21,8 @@ importers:
         specifier: 3.6.2
         version: 3.6.2
       simple-git-hooks:
-        specifier: 2.13.0
-        version: 2.13.0
+        specifier: 2.13.1
+        version: 2.13.1
 
   app:
     dependencies:
@@ -3216,8 +3216,8 @@ packages:
   simple-code-editor@2.1.0:
     resolution: {integrity: sha512-mQ0bNhkOKgRFyoDF54zwuhWt8Wcj+T0sciCvyD3qJnNMOv01x4guRhq8ksUDUGUmAm3vPOWvkhP+YwKja0yh2g==}
 
-  simple-git-hooks@2.13.0:
-    resolution: {integrity: sha512-N+goiLxlkHJlyaYEglFypzVNMaNplPAk5syu0+OPp/Bk6dwVoXF6FfOw2vO0Dp+JHsBaI+w6cm8TnFl2Hw6tDA==}
+  simple-git-hooks@2.13.1:
+    resolution: {integrity: sha512-WszCLXwT4h2k1ufIXAgsbiTOazqqevFCIncOuUBZJ91DdvWcC5+OFkluWRQPrcuSYd8fjq+o2y1QfWqYMoAToQ==}
     hasBin: true
 
   simple-update-notifier@2.0.0:
@@ -7018,7 +7018,7 @@ snapshots:
     dependencies:
       highlight.js: 11.8.0
 
-  simple-git-hooks@2.13.0: {}
+  simple-git-hooks@2.13.1: {}
 
   simple-update-notifier@2.0.0:
     dependencies:
