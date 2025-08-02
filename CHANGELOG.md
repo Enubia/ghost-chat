@@ -31,6 +31,8 @@ Like the app? Consider supporting me!
   [`152c288`](https://github.com/Enubia/ghost-chat/commit/152c288ecce386041cc6dc7772501f9feb19e43c)
 - chore: update changelog
   [`dcc62ed`](https://github.com/Enubia/ghost-chat/commit/dcc62edc5cabd16d7c462a77fe303c7595bdc1a0)
+- chore: update changelog
+  [`2490457`](https://github.com/Enubia/ghost-chat/commit/2490457e43e4b6fff2b725b672ed46513700c271)
 - fix: naming of import
   [`46cffee`](https://github.com/Enubia/ghost-chat/commit/46cffeee3deaab6f04fad21bd9e201a5f837db98)
 - chore: fix version numbers in todo
@@ -41,6 +43,8 @@ Like the app? Consider supporting me!
   [`5c0255c`](https://github.com/Enubia/ghost-chat/commit/5c0255cf307e61e2bc5234c2df40c8555284515b)
 - fix: config
   [`4ed2ebb`](https://github.com/Enubia/ghost-chat/commit/4ed2ebb4015191b5ad3602290948488b3fc6927a)
+- fix: changelog update
+  [`55445ed`](https://github.com/Enubia/ghost-chat/commit/55445eda8458a5ca475695077d0f0a3e992ef083)
 - chore: update packageManager version to pnpm@10.14.0
   [`bd2f97e`](https://github.com/Enubia/ghost-chat/commit/bd2f97e375f14168dd754734fb26fe57b2f290ab)
 - chore: upgrade pnpm
