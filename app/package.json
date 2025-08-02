@@ -64,7 +64,7 @@
         "vite": "7.0.6",
         "vite-plugin-electron": "0.29.0",
         "vite-plugin-electron-renderer": "0.14.6",
-        "vue-tsc": "3.0.4"
+        "vue-tsc": "3.0.5"
     },
     "overrides": {
         "simple-code-editor": {
