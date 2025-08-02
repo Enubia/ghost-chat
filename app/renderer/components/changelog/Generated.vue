@@ -1,5 +1,105 @@
 <template>
-<h2 class='py-2 text-2xl font-semibold'>Latest | 31 May 2025</h2>
+<h2 class='py-2 text-2xl font-semibold'>Latest | 2 August 2025</h2>
+
+<div class='grid gap-1'>
+<span>
+
+fix(deps): update dependency electron-log to v5.4.2
+<a href=https://github.com/Enubia/ghost-chat/pull/1238 class='text-blue-500'>#1238</a>
+</span>
+<span>
+
+fix(deps): update vueuse monorepo to v13.6.0
+<a href=https://github.com/Enubia/ghost-chat/pull/1231 class='text-blue-500'>#1231</a>
+</span>
+<span>
+
+fix(deps): update dependency simple-code-editor to v2.1.0
+<a href=https://github.com/Enubia/ghost-chat/pull/1230 class='text-blue-500'>#1230</a>
+</span>
+<span>
+
+fix(deps): update dependency vue-i18n to v11.1.11
+<a href=https://github.com/Enubia/ghost-chat/pull/1229 class='text-blue-500'>#1229</a>
+</span>
+<span>
+
+fix(deps): update dependency vue-i18n to v11.1.10 [security]
+<a href=https://github.com/Enubia/ghost-chat/pull/1222 class='text-blue-500'>#1222</a>
+</span>
+<span>
+
+fix(deps): update dependency electron-log to v5.4.1
+<a href=https://github.com/Enubia/ghost-chat/pull/1214 class='text-blue-500'>#1214</a>
+</span>
+<span>
+
+fix(deps): update dependency vue to v3.5.18
+<a href=https://github.com/Enubia/ghost-chat/pull/1215 class='text-blue-500'>#1215</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: changelog location
+<a href=https://github.com/Enubia/ghost-chat/commit/9be9ae38c55787086a5a6a618884793b48d26eec class='text-blue-500'>9be9ae3</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: changelog location
+<a href=https://github.com/Enubia/ghost-chat/commit/a56a1bb1d623319780348fc0969ef34d998dbec0 class='text-blue-500'>a56a1bb</a>
+</span>
+<span>
+
+<span class="px-1 text-purple-400 bg-purple-900">refactor</span>: import sort prettier plugin
+<a href=https://github.com/Enubia/ghost-chat/commit/152c288ecce386041cc6dc7772501f9feb19e43c class='text-blue-500'>152c288</a>
+</span>
+<span>
+
+<span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: naming of import
+<a href=https://github.com/Enubia/ghost-chat/commit/46cffeee3deaab6f04fad21bd9e201a5f837db98 class='text-blue-500'>46cffee</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: fix version numbers in todo
+<a href=https://github.com/Enubia/ghost-chat/commit/28524d2a849b42459c42a6a944c2835404e92e44 class='text-blue-500'>28524d2</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: added todos from discord feature request
+<a href=https://github.com/Enubia/ghost-chat/commit/8369e960993b2b600641ce92ecf2926dca3e1d21 class='text-blue-500'>8369e96</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update linting plugins and package manager version
+<a href=https://github.com/Enubia/ghost-chat/commit/5c0255cf307e61e2bc5234c2df40c8555284515b class='text-blue-500'>5c0255c</a>
+</span>
+<span>
+
+<span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: config
+<a href=https://github.com/Enubia/ghost-chat/commit/4ed2ebb4015191b5ad3602290948488b3fc6927a class='text-blue-500'>4ed2ebb</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update packageManager version to pnpm@10.14.0
+<a href=https://github.com/Enubia/ghost-chat/commit/bd2f97e375f14168dd754734fb26fe57b2f290ab class='text-blue-500'>bd2f97e</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: upgrade pnpm
+<a href=https://github.com/Enubia/ghost-chat/commit/d4f77e550825789fb76e8a6e55651d9435c8b8ba class='text-blue-500'>d4f77e5</a>
+</span>
+<span>
+
+<span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: changelog script output location
+<a href=https://github.com/Enubia/ghost-chat/commit/fb91d6ee14075aab822ae450218ef1082decf676 class='text-blue-500'>fb91d6e</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: add .nvmrc file with Node.js version 22.17.1
+<a href=https://github.com/Enubia/ghost-chat/commit/472ab303f6246cfd27655843d8a10bfc6d60a2de class='text-blue-500'>472ab30</a>
+</span>
+</div>
+<hr class='mt-2' />
+<h2 class='py-2 text-2xl font-semibold'>v3.6.2 | 31 May 2025</h2>
 
 <div class='grid gap-1'>
 <span>
@@ -11,6 +111,11 @@
 
 <span class="px-1 text-blue-400 bg-blue-900">chore</span>: replaced eslint
 <a href=https://github.com/Enubia/ghost-chat/commit/722aa8fd3185c84b388c851209ab420bab90875f class='text-blue-500'>722aa8f</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/197fac88454108ae6f11ca842f14b6f13a1dd85e class='text-blue-500'>197fac8</a>
 </span>
 <span>
 
