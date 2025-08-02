@@ -54,6 +54,16 @@ fix(deps): update dependency vue to v3.5.18
 </span>
 <span>
 
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/dcc62edc5cabd16d7c462a77fe303c7595bdc1a0 class='text-blue-500'>dcc62ed</a>
+</span>
+<span>
+
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/2490457e43e4b6fff2b725b672ed46513700c271 class='text-blue-500'>2490457</a>
+</span>
+<span>
+
 <span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: naming of import
 <a href=https://github.com/Enubia/ghost-chat/commit/46cffeee3deaab6f04fad21bd9e201a5f837db98 class='text-blue-500'>46cffee</a>
 </span>
@@ -69,6 +79,11 @@ fix(deps): update dependency vue to v3.5.18
 </span>
 <span>
 
+<span class="px-1 text-blue-400 bg-blue-900">chore</span>: update changelog
+<a href=https://github.com/Enubia/ghost-chat/commit/c2d154955dccac82552d2578cc433896a69a0b76 class='text-blue-500'>c2d1549</a>
+</span>
+<span>
+
 <span class="px-1 text-blue-400 bg-blue-900">chore</span>: update linting plugins and package manager version
 <a href=https://github.com/Enubia/ghost-chat/commit/5c0255cf307e61e2bc5234c2df40c8555284515b class='text-blue-500'>5c0255c</a>
 </span>
@@ -76,6 +91,16 @@ fix(deps): update dependency vue to v3.5.18
 
 <span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: config
 <a href=https://github.com/Enubia/ghost-chat/commit/4ed2ebb4015191b5ad3602290948488b3fc6927a class='text-blue-500'>4ed2ebb</a>
+</span>
+<span>
+
+<span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: changelog update
+<a href=https://github.com/Enubia/ghost-chat/commit/e96be04139a86666e4c91ff905336fa6a5dd79be class='text-blue-500'>e96be04</a>
+</span>
+<span>
+
+<span class="px-1 text-yellow-400 bg-yellow-900">fix</span>: changelog update
+<a href=https://github.com/Enubia/ghost-chat/commit/55445eda8458a5ca475695077d0f0a3e992ef083 class='text-blue-500'>55445ed</a>
 </span>
 <span>
 

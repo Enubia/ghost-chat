@@ -39,10 +39,14 @@ Like the app? Consider supporting me!
   [`28524d2`](https://github.com/Enubia/ghost-chat/commit/28524d2a849b42459c42a6a944c2835404e92e44)
 - chore: added todos from discord feature request
   [`8369e96`](https://github.com/Enubia/ghost-chat/commit/8369e960993b2b600641ce92ecf2926dca3e1d21)
+- chore: update changelog
+  [`c2d1549`](https://github.com/Enubia/ghost-chat/commit/c2d154955dccac82552d2578cc433896a69a0b76)
 - chore: update linting plugins and package manager version
   [`5c0255c`](https://github.com/Enubia/ghost-chat/commit/5c0255cf307e61e2bc5234c2df40c8555284515b)
 - fix: config
   [`4ed2ebb`](https://github.com/Enubia/ghost-chat/commit/4ed2ebb4015191b5ad3602290948488b3fc6927a)
+- fix: changelog update
+  [`e96be04`](https://github.com/Enubia/ghost-chat/commit/e96be04139a86666e4c91ff905336fa6a5dd79be)
 - fix: changelog update
   [`55445ed`](https://github.com/Enubia/ghost-chat/commit/55445eda8458a5ca475695077d0f0a3e992ef083)
 - chore: update packageManager version to pnpm@10.14.0
