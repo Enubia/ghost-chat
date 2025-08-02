@@ -14,11 +14,54 @@ Like the app? Consider supporting me!
 
 ## Latest |
 
+2 August 2025
+
+- fix(deps): update dependency electron-log to v5.4.2 [`#1238`](https://github.com/Enubia/ghost-chat/pull/1238)
+- fix(deps): update vueuse monorepo to v13.6.0 [`#1231`](https://github.com/Enubia/ghost-chat/pull/1231)
+- fix(deps): update dependency simple-code-editor to v2.1.0 [`#1230`](https://github.com/Enubia/ghost-chat/pull/1230)
+- fix(deps): update dependency vue-i18n to v11.1.11 [`#1229`](https://github.com/Enubia/ghost-chat/pull/1229)
+- fix(deps): update dependency vue-i18n to v11.1.10 [security] [`#1222`](https://github.com/Enubia/ghost-chat/pull/1222)
+- fix(deps): update dependency electron-log to v5.4.1 [`#1214`](https://github.com/Enubia/ghost-chat/pull/1214)
+- fix(deps): update dependency vue to v3.5.18 [`#1215`](https://github.com/Enubia/ghost-chat/pull/1215)
+- chore: changelog location
+  [`9be9ae3`](https://github.com/Enubia/ghost-chat/commit/9be9ae38c55787086a5a6a618884793b48d26eec)
+- chore: changelog location
+  [`a56a1bb`](https://github.com/Enubia/ghost-chat/commit/a56a1bb1d623319780348fc0969ef34d998dbec0)
+- refactor: import sort prettier plugin
+  [`152c288`](https://github.com/Enubia/ghost-chat/commit/152c288ecce386041cc6dc7772501f9feb19e43c)
+- chore: update changelog
+  [`dcc62ed`](https://github.com/Enubia/ghost-chat/commit/dcc62edc5cabd16d7c462a77fe303c7595bdc1a0)
+- fix: naming of import
+  [`46cffee`](https://github.com/Enubia/ghost-chat/commit/46cffeee3deaab6f04fad21bd9e201a5f837db98)
+- chore: fix version numbers in todo
+  [`28524d2`](https://github.com/Enubia/ghost-chat/commit/28524d2a849b42459c42a6a944c2835404e92e44)
+- chore: added todos from discord feature request
+  [`8369e96`](https://github.com/Enubia/ghost-chat/commit/8369e960993b2b600641ce92ecf2926dca3e1d21)
+- chore: update linting plugins and package manager version
+  [`5c0255c`](https://github.com/Enubia/ghost-chat/commit/5c0255cf307e61e2bc5234c2df40c8555284515b)
+- fix: config
+  [`4ed2ebb`](https://github.com/Enubia/ghost-chat/commit/4ed2ebb4015191b5ad3602290948488b3fc6927a)
+- chore: update packageManager version to pnpm@10.14.0
+  [`bd2f97e`](https://github.com/Enubia/ghost-chat/commit/bd2f97e375f14168dd754734fb26fe57b2f290ab)
+- chore: upgrade pnpm
+  [`d4f77e5`](https://github.com/Enubia/ghost-chat/commit/d4f77e550825789fb76e8a6e55651d9435c8b8ba)
+- fix: changelog script output location
+  [`fb91d6e`](https://github.com/Enubia/ghost-chat/commit/fb91d6ee14075aab822ae450218ef1082decf676)
+- chore: add .nvmrc file with Node.js version 22.17.1
+  [`472ab30`](https://github.com/Enubia/ghost-chat/commit/472ab303f6246cfd27655843d8a10bfc6d60a2de)
+    ***
+
+###
+
+v3.6.2
+|
 31 May 2025
 
 - Update ru-RU.json [`#1204`](https://github.com/Enubia/ghost-chat/pull/1204)
 - chore: replaced eslint
   [`722aa8f`](https://github.com/Enubia/ghost-chat/commit/722aa8fd3185c84b388c851209ab420bab90875f)
+- chore: update changelog
+  [`197fac8`](https://github.com/Enubia/ghost-chat/commit/197fac88454108ae6f11ca842f14b6f13a1dd85e)
 - chore: formatting fixes
   [`1f3b4d2`](https://github.com/Enubia/ghost-chat/commit/1f3b4d2ae0865062c8aa0a9ab437dbdc8cddeb25)
 - chore: recommended extensions
