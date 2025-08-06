@@ -1,5 +1,3 @@
-import { ipcRenderer } from 'electron';
-
 import { IpcEvent } from '#ipc/constants/events';
 import type {
     AppStore,
@@ -16,7 +14,7 @@ import type {
     WindowState,
     Youtube,
 } from '#ipc/types/store';
-
+import { ipcRenderer } from 'electron';
 import { cloneValue } from './utils/clonevalue';
 
 /**

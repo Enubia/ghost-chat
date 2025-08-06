@@ -1,5 +1,5 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.tsdk": "/app/node_modules/typescript/lib",
     "typescript.preferences.autoImportFileExcludePatterns": ["vue-router$"],
 
     "json.schemas": [
@@ -13,12 +13,11 @@
     "oxc.enable": true,
     "oxc.lint.run": "onType",
 
-    // CODE FORMATTING (Prettier)
-    "prettier.enable": true,
+    // CODE FORMATTING
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "prettier.requireConfig": true,
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "typescript.format.semicolons": "insert",
     "headwind.classRegex": {
         "vue": "\\bclass\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\']"
     },
@@ -26,7 +25,9 @@
     // CODE ACTIONS (Fix + Organize)
     "editor.codeActions.triggerOnFocusChange": true, // Trigger on focus change
     "editor.codeActionsOnSave": {
-        "source.fixAll.oxc": "explicit"
+        "source.fixAll.oxc": "explicit",
+        "source.addMissingImports.ts": "explicit",
+        "source.organizeImports": "explicit",
     },
     "files.trimTrailingWhitespace": true,
 

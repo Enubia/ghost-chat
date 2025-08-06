@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { useIpcRenderer } from '@vueuse/electron';
-import { ipcRenderer } from 'electron';
-import { onMounted, shallowRef } from 'vue';
-import { useI18n } from 'vue-i18n';
-
 import { languageMappingList } from '#components/languageMappingList';
 import HotKeyInput from '#components/settings/HotKeyInput.vue';
 import { Label } from '#components/ui/label';
@@ -14,6 +9,10 @@ import { StoreDefaults } from '#ipc/constants/store/defaults';
 import Settings from '#layouts/settings.vue';
 import * as IpcHandler from '#lib/ipchandler';
 import { save } from '#lib/utils/save';
+import { useIpcRenderer } from '@vueuse/electron';
+import { ipcRenderer } from 'electron';
+import { onMounted, shallowRef } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 

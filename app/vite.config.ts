@@ -22,7 +22,8 @@ export default defineConfig(({ command }) => {
         },
         css: {
             postcss: {
-                plugins: [tailwind(), autoprefixer()],
+                // not sure why compiler is complaining about this
+                plugins: [tailwind(), autoprefixer()] as any,
             },
         },
         plugins: [

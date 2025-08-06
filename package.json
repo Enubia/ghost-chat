@@ -44,7 +44,6 @@
         "@trivago/prettier-plugin-sort-imports": "5.2.2",
         "lint-staged": "16.1.2",
         "oxlint": "1.9.0",
-        "prettier": "3.6.2",
         "simple-git-hooks": "2.13.1"
     },
     "simple-git-hooks": {
@@ -52,9 +51,7 @@
     },
     "lint-staged": {
         "**/*.{css,json,ts,vue}": [
-            "oxlint -c ./.oxlintrc.json",
-            "prettier --write --config ./.prettierrc"
-        ],
-        "**/*.md": "prettier --write --config ./.prettierrc"
+            "oxlint -c ./.oxlintrc.json"
+        ]
     }
 }
