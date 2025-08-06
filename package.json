@@ -29,10 +29,7 @@
     ],
     "scripts": {
         "clean": "pnpm -r clean",
-        "check": "pnpm lint && pnpm format:check",
         "dev": "pnpm --filter=ghost-chat dev",
-        "format:check": "prettier --check --config ./.prettierrc app",
-        "format": "prettier --write --config ./.prettierrc app",
         "lint": "oxlint -c ./.oxlintrc.json",
         "postinstall": "simple-git-hooks"
     },
