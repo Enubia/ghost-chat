@@ -24,13 +24,13 @@ module.exports = {
         target: 'nsis',
         publish: ['github'],
     },
-    // "linux": {
-    //     "artifactName": "${productName}-linux.${ext}",
-    //     "target": ["AppImage"],
-    //     "publish": ["github"],
-    //     "desktop": {
-    //         "Name": "GhostChat",
-    //         "Terminal": false
+    // linux: {
+    //     artifactName: '${productName}-linux.${ext}',
+    //     target: ['AppImage'],
+    //     publish: ['github'],
+    //     desktop: {
+    //         Name: 'GhostChat',
+    //         Terminal: false
     //     }
     // },
     nsis: {

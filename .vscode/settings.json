@@ -9,6 +9,8 @@
         }
     ],
 
+    "eslint.enable": false,
+
     // LINTING (Oxlint)
     "oxc.enable": true,
     "oxc.lint.run": "onType",
