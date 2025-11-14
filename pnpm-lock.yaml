@@ -73,14 +73,14 @@ importers:
         version: 4.5.1(vue@3.5.18(typescript@5.9.2))
     devDependencies:
       '@iconify/json':
-        specifier: 2.2.364
-        version: 2.2.364
+        specifier: 2.2.407
+        version: 2.2.407
       '@intlify/unplugin-vue-i18n':
         specifier: 6.0.8
         version: 6.0.8(@vue/compiler-dom@3.5.18)(eslint@9.27.0(jiti@2.4.2))(rollup@4.40.2)(typescript@5.9.2)(vue-i18n@11.1.11(vue@3.5.18(typescript@5.9.2)))(vue@3.5.18(typescript@5.9.2))
       '@tomjs/vite-plugin-iconify':
         specifier: 1.2.1
-        version: 1.2.1(@iconify/json@2.2.364)(vite@7.0.6(@types/node@22.15.18)(jiti@2.4.2)(yaml@2.8.0))
+        version: 1.2.1(@iconify/json@2.2.407)(vite@7.0.6(@types/node@22.15.18)(jiti@2.4.2)(yaml@2.8.0))
       '@vitejs/plugin-vue':
         specifier: 6.0.1
         version: 6.0.1(vite@7.0.6(@types/node@22.15.18)(jiti@2.4.2)(yaml@2.8.0))(vue@3.5.18(typescript@5.9.2))
@@ -452,8 +452,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@iconify/json@2.2.364':
-    resolution: {integrity: sha512-+ekQRRGXObKZ4JK+GszoxWn6jSo9ItRNrIBXdfO+e3ySqZIDkNS7AVHuQ8+2ta8WlgBliU9Vth1aFAa0iSvB1w==}
+  '@iconify/json@2.2.407':
+    resolution: {integrity: sha512-GI81Sh05/31UyyIK2+hhMpzJb3PgvAJq/w6B0xgfQcTMwsWOaLL0QV50WNgoIHltt8FvqgR+BK/nOGnrTqugiQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -4029,10 +4029,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@iconify/json@2.2.364':
+  '@iconify/json@2.2.407':
     dependencies:
       '@iconify/types': 2.0.0
-      pathe: 1.1.2
+      pathe: 2.0.3
 
   '@iconify/types@2.0.0': {}
 
@@ -4493,9 +4493,9 @@ snapshots:
       '@tanstack/virtual-core': 3.13.8
       vue: 3.5.18(typescript@5.9.2)
 
-  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.364)(vite@7.0.6(@types/node@22.15.18)(jiti@2.4.2)(yaml@2.8.0))':
+  '@tomjs/vite-plugin-iconify@1.2.1(@iconify/json@2.2.407)(vite@7.0.6(@types/node@22.15.18)(jiti@2.4.2)(yaml@2.8.0))':
     dependencies:
-      '@iconify/json': 2.2.364
+      '@iconify/json': 2.2.407
       cac: 6.7.14
       fs-extra: 11.3.0
       lodash.clonedeep: 4.5.0
