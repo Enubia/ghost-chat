@@ -50,10 +50,10 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] **Learn**: Read [Wails v2 docs](https://wails.io/docs/introduction) — understand bindings, events, runtime API, window options
 
 ### 0.4 Understand Wails ↔ Frontend communication
-- [ ] Add a Go method to `app.go` that returns a string, call it from Vue
-- [ ] Emit an event from Go, receive it in Vue (`runtime.EventsEmit` / `runtime.EventsOn`)
-- [ ] Emit an event from Vue, receive it in Go (`runtime.EventsOn` on Go side)
-- [ ] **Learn**: This replaces Electron's `ipcMain`/`ipcRenderer`. All bound Go methods return promises on the JS side.
+- [x] Add a Go method to `app.go` that returns a string, call it from Vue
+- [x] Emit an event from Go, receive it in Vue (`runtime.EventsEmit` / `runtime.EventsOn`)
+- [x] Emit an event from Vue, receive it in Go (`runtime.EventsOn` on Go side)
+- [x] **Learn**: This replaces Electron's `ipcMain`/`ipcRenderer`. All bound Go methods return promises on the JS side.
 
 ---
 

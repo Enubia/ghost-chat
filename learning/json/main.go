@@ -12,6 +12,12 @@ type AppConfig struct {
 	Port    int    `json:"port"`
 }
 
+func sdf(we int) int {
+	wer := we
+
+	return wer
+}
+
 func main() {
 	appConfig := AppConfig{
 		Name:    "Ghost-Chat",

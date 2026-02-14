@@ -1,10 +1,19 @@
 <script lang="ts" setup>
 import {reactive} from 'vue'
-import {Greet} from '../../wailsjs/go/main/App'
+import {Greet, GetAppInfo, SendTestEvent} from '../../wailsjs/go/main/App'
+import {EventsOn, EventsEmit} from '../../wailsjs/runtime/runtime'
 
 const data = reactive({
   name: "",
   resultText: "Please enter your name below 👇",
+})
+
+const appInfo = reactive({
+  info: "",
+});
+
+const helloEvent = reactive({
+  message: "",
 })
 
 function greet() {
@@ -13,10 +22,29 @@ function greet() {
   })
 }
 
+function getAppInfo() {
+  GetAppInfo().then(result => {
+    appInfo.info = result
+  })
+}
+
+EventsOn("test:hello", (message) => {
+  helloEvent.message = message
+})
+
+function emitTestEvent() {
+  EventsEmit("test:from-frontend", "Hello from Vue!")
+}
+
 </script>
 
 <template>
   <main>
+    <button class="btn" @click="emitTestEvent">Emit Test Event</button>
+    <button class="btn" @click="getAppInfo">Get App Info</button>
+    <div id="app-info" class="result">{{ appInfo.info }}</div>
+    <button class="btn" @click="SendTestEvent">Send Test Event</button>
+    <div id="hello-event" class="result">{{ helloEvent.message }}</div>
     <div id="result" class="result">{{ data.resultText }}</div>
     <div id="input" class="input-box">
       <input id="name" v-model="data.name" autocomplete="off" class="input" type="text"/>
