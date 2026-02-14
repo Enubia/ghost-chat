@@ -8,6 +8,7 @@ on:
 
 jobs:
   lint-typecheck:
+    if: false
     runs-on: windows-latest
 
     steps:

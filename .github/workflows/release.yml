@@ -8,6 +8,7 @@ on:
 
 jobs:
   release-windows:
+    if: false
     runs-on: windows-latest
 
     steps:
@@ -31,6 +32,7 @@ jobs:
         run: pnpm build:release
   
   release-mac:
+    if: false
     needs: release-windows
 
     runs-on: macos-latest

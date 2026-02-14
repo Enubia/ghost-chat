@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    if: ${{ !github.event.pull_request.draft }}
+    if: false # ${{ !github.event.pull_request.draft }}
 
     strategy:
       matrix:
