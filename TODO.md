@@ -1,8 +1,8 @@
-# Ghost Chat Rewrite — Go + Wails + Vue 3
+# Ghost Chat Rewrite — Go + Wails + React
 
 ## Overview
 
-Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue 3 + TypeScript** frontend.
+Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **React + TypeScript** frontend.
 
 ### Key changes from the original app
 - **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection
@@ -13,7 +13,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 | Concern | Old (Electron) | New (Wails) |
 |---|---|---|
 | Chat data | Loaded via third-party webview URLs | Go backend connects to Twitch IRC + YouTube API, pushes messages to frontend via Wails events |
-| Rendering | Third-party HTML/CSS in nested `<webview>` | Vue components render chat messages natively |
+| Rendering | Third-party HTML/CSS in nested `<webview>` | React components render chat messages natively |
 | IPC | `ipcRenderer.invoke` / `ipcMain.handle` | Wails bindings (Go functions callable from JS) + Wails events (bidirectional) |
 | Persistence | `electron-store` (JSON) | Go reads/writes JSON config file |
 | Window mgmt | Electron `BrowserWindow` API | Wails window options + runtime API |
@@ -44,15 +44,15 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [x] Explore the generated project structure:
   - `main.go` — app entry point
   - `app.go` — Go struct with bound methods
-  - `frontend/` — Vue 3 + Vite app
+  - `frontend/` — React + Vite app
   - `wails.json` — project config
 - [x] Run `wails dev` and confirm the template app launches
 - [ ] **Learn**: Read [Wails v2 docs](https://wails.io/docs/introduction) — understand bindings, events, runtime API, window options
 
 ### 0.4 Understand Wails ↔ Frontend communication
-- [x] Add a Go method to `app.go` that returns a string, call it from Vue
-- [x] Emit an event from Go, receive it in Vue (`runtime.EventsEmit` / `runtime.EventsOn`)
-- [x] Emit an event from Vue, receive it in Go (`runtime.EventsOn` on Go side)
+- [x] Add a Go method to `app.go` that returns a string, call it from frontend
+- [x] Emit an event from Go, receive it in frontend (`runtime.EventsEmit` / `runtime.EventsOn`)
+- [x] Emit an event from frontend, receive it in Go (`runtime.EventsOn` on Go side)
 - [x] **Learn**: This replaces Electron's `ipcMain`/`ipcRenderer`. All bound Go methods return promises on the JS side.
 
 ---
@@ -84,14 +84,14 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   │   │   └── hotkey.go        # Global hotkey registration
   │   └── tray/
   │       └── tray.go          # System tray setup
-  ├── frontend/                # Vue 3 + Vite app
+  ├── frontend/                # React + Vite app
   │   ├── src/
-  │   │   ├── App.vue
-  │   │   ├── main.ts
+  │   │   ├── App.tsx
+  │   │   ├── main.tsx
   │   │   ├── pages/
   │   │   ├── components/
-  │   │   ├── composables/
-  │   │   ├── stores/          # Pinia stores
+  │   │   ├── hooks/
+  │   │   ├── stores/          # Zustand stores
   │   │   ├── i18n/
   │   │   ├── themes/          # Theme templates
   │   │   └── types/
@@ -136,7 +136,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   - `GetConfigValue(path string) any` (optional, if you want dot-path access like the old app)
   - `SetConfigValue(path string, value any) error`
   - `SaveConfig() error`
-- [ ] Test from Vue: fetch config on mount, display a value, change it, save, restart, confirm persistence
+- [ ] Test from React: fetch config on mount, display a value, change it, save, restart, confirm persistence
 - [ ] **Learn**: Wails auto-generates TypeScript types for bound Go structs. Check `frontend/wailsjs/go/` after running `wails dev`.
 
 ### 1.5 Window configuration
@@ -154,19 +154,20 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 
 ---
 
-## Phase 2 — Frontend Foundation (Vue 3)
+## Phase 2 — Frontend Foundation (React)
 
-> **Goal**: Set up the Vue app shell, routing, i18n, and base UI components.
+> **Goal**: Set up the React app shell, routing, i18n, and base UI components using Mantine.
 
-### 2.1 Vue project setup
-- [ ] Clean out the Wails template frontend, set up your own Vue 3 + TypeScript + Vite config
-- [ ] Install dependencies: `vue-router`, `pinia`, `vue-i18n`, `tailwindcss`, a component library of your choice (shadcn-vue, PrimeVue, etc.)
-- [ ] Configure Tailwind with dark mode (`class` strategy)
+### 2.1 React project setup
+- [x] Swap Wails Vue template for React + TypeScript + Vite
+- [x] Update `wails.json` to use pnpm
+- [ ] Install dependencies: `@mantine/core`, `@mantine/hooks`, `react-router-dom`, `zustand`, `i18next`, `react-i18next`
+- [ ] Wrap app in `MantineProvider` with dark/light color scheme support
 - [ ] Set up path aliases in `vite.config.ts` and `tsconfig.json`
 - [ ] Verify `wails dev` still works with hot reload
 
 ### 2.2 Routing
-- [ ] Set up Vue Router with these routes:
+- [ ] Set up React Router with these routes:
   - `/` — Home (platform selection)
   - `/chat` — Chat overlay view (unified, replaces per-platform webview pages)
   - `/settings/general` — General settings
@@ -177,7 +178,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   - `/changelog` — Changelog
 
 ### 2.3 i18n setup
-- [ ] Configure `vue-i18n` with lazy-loaded locale files
+- [ ] Configure `i18next` + `react-i18next` with lazy-loaded locale files
 - [ ] Port `en-US.json` from the old app as the base (adjust keys for new features, remove Kick-related keys)
 - [ ] Add locale switcher that saves selection to config via Go binding
 - [ ] Other language files can be ported/updated later
@@ -187,18 +188,18 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   - Custom title bar (frameless window needs drag region + window controls)
   - Header with: back button, vanish button (on chat view), minimize, close
   - Hamburger dropdown menu: Home, Settings, Theme, Changelog
-- [ ] Build the settings layout:
+- [ ] Build the settings layout using Mantine `AppShell` + `NavLink`:
   - Sidebar navigation (General, Twitch, YouTube, External, Themes)
   - Content area with scroll
-- [ ] Implement dark/light theme toggle (CSS class on `<html>`, persist to config)
+- [ ] Implement dark/light theme toggle (Mantine `useMantineColorScheme`, persist to config)
 - [ ] Wire up window control buttons to Wails runtime:
   - Minimize → `runtime.WindowMinimise()`
   - Close → `runtime.Quit()`
-  - Back → `router.push('/')`
+  - Back → `navigate('/')`
   - Vanish → call Go method to toggle vanish
 
 ### 2.5 Config store integration (frontend)
-- [ ] Create a Pinia store that loads config from Go on app startup
+- [ ] Create a Zustand store that loads config from Go on app startup
 - [ ] Implement reactive config access — when a setting changes in the UI, call Go binding to persist
 - [ ] Optionally: listen for Go→Frontend config change events (for when config changes from tray menu, etc.)
 
@@ -206,7 +207,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 
 ## Phase 3 — Twitch Chat (Custom Renderer)
 
-> **Goal**: Connect to Twitch IRC from Go, parse messages, render them in Vue.
+> **Goal**: Connect to Twitch IRC from Go, parse messages, render them in React.
 
 ### 3.1 Twitch IRC client (Go)
 - [ ] Implement WebSocket connection to `wss://irc-ws.chat.twitch.tv:443`
@@ -260,8 +261,8 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] Emit moderation events: `chat:clear`, `chat:delete-message`
 - [ ] Bind control methods so frontend can call: `ConnectTwitch(channel)`, `DisconnectTwitch()`
 
-### 3.4 Chat message component (Vue)
-- [ ] Create `ChatMessage.vue` component that renders a single message:
+### 3.4 Chat message component (React)
+- [ ] Create `ChatMessage.tsx` component that renders a single message:
   - Badge icons (use Twitch badge CDN URLs based on badge set + version)
   - Username with color
   - Message text with emotes replaced by `<img>` tags (Twitch CDN: `https://static-cdn.jtvnbs.net/emoticons/v2/{id}/default/dark/1.0`)
@@ -269,7 +270,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   - /me (action) styling
 - [ ] Handle message moderation: remove messages by user on `chat:clear`, remove specific message on `chat:delete-message`
 
-### 3.5 Chat view (Vue)
+### 3.5 Chat view (React)
 - [ ] Create the chat overlay page (`/chat`):
   - Scrollable message list (auto-scroll to bottom, pause on scroll-up)
   - Receive messages via `EventsOn("chat:message", ...)`
@@ -279,7 +280,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] Implement message fade-out (CSS animation that removes messages after configurable timeout)
 - [ ] Apply current theme template to messages
 
-### 3.6 Twitch settings page (Vue)
+### 3.6 Twitch settings page (React)
 - [ ] Build the Twitch settings form:
   - Default channel input
   - Fade toggle + timeout (seconds)
@@ -323,7 +324,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] Handle Super Chat / Super Sticker messages (`snippet.superChatDetails`)
 - [ ] Emit via same `chat:message` event with `platform: "youtube"`
 
-### 4.3 YouTube settings page (Vue)
+### 4.3 YouTube settings page (React)
 - [ ] Build YouTube settings form:
   - Channel ID / Video URL input
   - API key input (if using Data API approach)
@@ -355,7 +356,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] Expose methods: `GetActiveConnections() []string`, `DisconnectAll()`
 - [ ] Handle errors per-platform without crashing the other
 
-### 5.3 Home page — connection UI (Vue)
+### 5.3 Home page — connection UI (React)
 - [ ] Redesign the home page:
   - Twitch card: channel input + connect button
   - YouTube card: channel/video input + connect button
@@ -406,9 +407,9 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   - **Compact**: Smaller spacing, no avatars, dense
   - **Bubble**: Chat bubbles with rounded backgrounds per message
 
-### 7.2 Theme engine (Vue)
+### 7.2 Theme engine (React)
 - [ ] Themes map to CSS custom properties applied to the chat container
-- [ ] `ChatMessage.vue` uses these CSS variables for all visual properties
+- [ ] `ChatMessage.tsx` uses these CSS variables for all visual properties
 - [ ] Theme switching is instant (just swap the CSS variables)
 - [ ] Example theme structure:
   ```json
@@ -425,7 +426,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
   }
   ```
 
-### 7.3 Theme editor page (Vue)
+### 7.3 Theme editor page (React)
 - [ ] Build a visual theme editor at `/settings/themes`:
   - Live preview panel showing sample chat messages
   - Controls for each themeable property (color pickers, sliders, font selectors, toggles)
@@ -461,7 +462,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] On hotkey press, trigger vanish toggle
 - [ ] **Learn**: CGo might be needed for some hotkey approaches — understand the basics of CGo if required
 
-### 8.3 Hotkey settings (Vue)
+### 8.3 Hotkey settings (React)
 - [ ] Port the `HotKeyInput` component from the old app
 - [ ] Capture key combinations, format as string, save to config
 - [ ] Show current keybind, allow clearing
@@ -470,7 +471,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 
 ## Phase 9 — Settings Pages (remaining)
 
-### 9.1 General settings (Vue)
+### 9.1 General settings (React)
 - [ ] Language selector (locale switcher)
 - [ ] Vanish hotkey input
 - [ ] macOS-specific options (quit on close, hide dock icon) — conditionally shown based on `runtime.Environment().Platform`
@@ -515,7 +516,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Vue
 - [ ] Detect old config location on startup, offer to migrate
 
 ### 11.2 Update CLAUDE.md
-- [ ] Rewrite CLAUDE.md for the new Go + Wails + Vue architecture
+- [ ] Rewrite CLAUDE.md for the new Go + Wails + React architecture
 - [ ] Document new commands, project structure, conventions
 
 ### 11.3 Update README and CONTRIBUTING

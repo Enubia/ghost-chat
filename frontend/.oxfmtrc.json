@@ -1,0 +1,27 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "endOfLine": "lf",
+    "singleQuote": true,
+    "experimentalSortImports": {
+        "groups": [
+            ["type-import"],
+            ["type-internal"],
+            ["type-parent", "type-sibling", "type-index"],
+            ["value-builtin", "value-external"],
+            ["value-internal"],
+            ["value-parent", "value-sibling", "value-index"],
+            ["ts-equals-import"],
+            ["side-effect"],
+            ["unknown"]
+        ],
+        "newlinesBetween": true,
+        "internalPattern": ["@src"]
+    },
+    "printWidth": 120,
+    "tabWidth": 4,
+    "semi": true,
+    "trailingComma": "es5",
+    "objectWrap": "preserve",
+    "singleAttributePerLine": true,
+    "ignorePatterns": ["**/*.d.ts"]
+}

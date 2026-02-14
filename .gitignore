@@ -9,6 +9,7 @@ frontend/dist
 *.log
 
 # Editor directories and files
+.vscode/settings.json
 .vscode/.debug.env
 .idea
 .DS_Store

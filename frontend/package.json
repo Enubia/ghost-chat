@@ -1,21 +1,28 @@
 {
-  "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.2.37"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.3",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.7",
-    "vue-tsc": "^1.8.27",
-    "@babel/types": "^7.18.10"
-  }
+    "name": "frontend",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "fix": "oxlint --fix --type-aware && oxfmt --write",
+        "format": "oxfmt ",
+        "lint": "oxlint --type-aware",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "react": "19.2.4",
+        "react-dom": "19.2.4"
+    },
+    "devDependencies": {
+        "@types/react": "19.2.14",
+        "@types/react-dom": "19.2.3",
+        "@vitejs/plugin-react": "5.1.4",
+        "oxfmt": "0.32.0",
+        "oxlint": "1.47.0",
+        "oxlint-tsgolint": "0.12.2",
+        "typescript": "5.9.3",
+        "vite": "7.3.1"
+    }
 }
