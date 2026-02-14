@@ -11,7 +11,8 @@
         "esModuleInterop": true,
         "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
-        "noEmit": true
+        "noEmit": true,
+        "strictNullChecks": true
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]
