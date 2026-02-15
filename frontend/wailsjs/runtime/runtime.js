@@ -49,7 +49,7 @@ export function EventsOff(eventName, ...additionalEventNames) {
 }
 
 export function EventsOffAll() {
-    return window.runtime.EventsOffAll();
+  return window.runtime.EventsOffAll();
 }
 
 export function EventsOnce(eventName, callback) {

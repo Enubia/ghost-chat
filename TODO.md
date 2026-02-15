@@ -4,6 +4,9 @@
 
 Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **React + TypeScript** frontend.
 
+### Learning approach
+When introducing new Go syntax or concepts, always provide a **Node.js/TypeScript equivalent** for comparison. For example: `goroutine` ≈ `Promise`/`async`, `channel` ≈ `EventEmitter`, `interface` ≈ `interface` (but implicit), `defer` ≈ `finally`, etc.
+
 ### Key changes from the original app
 - **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection
 - **Keep**: Twitch, YouTube, External sources, system tray, i18n, global hotkeys, transparent overlay, dark/light theme
@@ -28,14 +31,14 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Rea
 - [x] Install Go (1.22+) via your package manager or https://go.dev/dl
 - [x] Verify: `go version` → go1.25.7 linux/amd64
 - [x] Set up your editor (VS Code + Go extension, or GoLand)
-- [ ] **Learn**: Read [A Tour of Go](https://go.dev/tour/) — covers variables, types, functions, control flow, structs, interfaces, goroutines, channels
+- [x] **Learn**: Read [A Tour of Go](https://go.dev/tour/) — covers variables, types, functions, control flow, structs, interfaces, goroutines, channels
 
 ### 0.2 Go warm-up exercises
 - [x] Write a "hello world" main package
 - [x] Write a program that reads/writes a JSON file (this is the pattern you'll use for the config store)
 - [x] Write a program that connects to a WebSocket and prints incoming messages (this is the pattern for Twitch IRC)
 - [x] Write a program that makes HTTP requests and parses JSON responses (this is the pattern for YouTube API)
-- [ ] **Learn**: Understand `struct`, `interface`, `error` handling, `goroutine` + `channel`, `context.Context` for cancellation
+- [x] **Learn**: Understand `struct`, `interface`, `error` handling, `goroutine` + `channel`, `context.Context` for cancellation
 
 ### 0.3 Install Wails and scaffold project
 - [x] Install Wails CLI: `go install github.com/wailsapp/wails/v2/cmd/wails@latest`
@@ -47,7 +50,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Rea
   - `frontend/` — React + Vite app
   - `wails.json` — project config
 - [x] Run `wails dev` and confirm the template app launches
-- [ ] **Learn**: Read [Wails v2 docs](https://wails.io/docs/introduction) — understand bindings, events, runtime API, window options
+- [x] **Learn**: Read [Wails v2 docs](https://wails.io/docs/introduction) — understand bindings, events, runtime API, window options
 
 ### 0.4 Understand Wails ↔ Frontend communication
 - [x] Add a Go method to `app.go` that returns a string, call it from frontend
@@ -62,7 +65,7 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Rea
 > **Goal**: Set up the real project structure, config persistence, and window basics.
 
 ### 1.1 Project structure
-- [ ] Reorganize the scaffolded project into this layout:
+- [x] Reorganize the scaffolded project into this layout:
   ```
   ghost-chat/
   ├── main.go                  # Entry point
@@ -101,28 +104,16 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Rea
   │   └── package.json
   └── wails.json
   ```
-- [ ] **Learn**: The `internal/` directory is a Go convention — packages inside cannot be imported by external modules. It signals "private to this project."
+- [x] **Learn**: The `internal/` directory is a Go convention — packages inside cannot be imported by external modules. It signals "private to this project."
 
 ### 1.2 Config store (Go)
-- [ ] Define the `Config` struct in `internal/config/config.go` mirroring your app's settings:
-  ```go
-  type Config struct {
-      Version     string       `json:"version"`
-      Window      WindowState  `json:"window"`
-      Settings    Settings     `json:"settings"`
-      General     General      `json:"general"`
-      Keybinds    Keybinds     `json:"keybinds"`
-      Twitch      TwitchConfig `json:"twitch"`
-      YouTube     YouTubeConfig `json:"youtube"`
-      External    ExternalConfig `json:"external"`
-  }
-  ```
-- [ ] Implement `Load(path string) (*Config, error)` — reads JSON file, returns config with defaults for missing fields
-- [ ] Implement `Save(path string) error` — writes config to JSON file
-- [ ] Implement `GetConfigPath() string` — platform-specific config directory (`os.UserConfigDir()`)
-- [ ] Add default values (equivalent to `StoreDefaults` in the old app)
-- [ ] Write unit tests for Load/Save round-trip
-- [ ] **Learn**: Go error handling (`if err != nil`), `encoding/json` struct tags, `os` package for file I/O
+- [x] Define the `Config` struct in `internal/config/config.go` mirroring your app's settings
+- [x] Implement `Load(path string) (*Config, error)` — reads JSON file, returns config with defaults for missing fields
+- [x] Implement `Save(config *Config, path string) error` — writes config to JSON file
+- [x] Implement `GetConfigPath() (string, error)` — platform-specific config directory (`os.UserConfigDir()`)
+- [x] Add default values (equivalent to `StoreDefaults` in the old app)
+- [x] Write unit tests for Load/Save round-trip
+- [x] **Learn**: Go error handling (`if err != nil`), `encoding/json` struct tags, `os` package for file I/O
 
 ### 1.3 Config migration system (Go)
 - [ ] Implement a migration runner that compares `config.Version` against app version
