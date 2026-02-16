@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "npx tsc && vite build",
         "fix": "oxlint --fix --type-aware && oxfmt --write",
         "format": "oxfmt ",
         "lint": "oxlint --type-aware",
