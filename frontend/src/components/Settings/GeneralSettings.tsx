@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { useConfigStore } from '@/stores/config';
 
 const languages = [
@@ -8,16 +10,22 @@ const languages = [
 ];
 
 export function GeneralSettings() {
+    const { t, i18n } = useTranslation();
     const config = useConfigStore((s) => s.config);
     const update = useConfigStore((s) => s.update);
+
+    const handleLanguageChange = (lang: string) => {
+        void i18n.changeLanguage(lang);
+        void update({ general: { language: lang } });
+    };
 
     return (
         <>
             <div className="field">
-                <label className="field-label">Language</label>
+                <label className="field-label">{t('settings.general.language')}</label>
                 <select
                     value={config?.general?.language ?? 'en-US'}
-                    onChange={(e) => update({ general: { language: e.target.value } })}
+                    onChange={(e) => handleLanguageChange(e.target.value)}
                 >
                     {languages.map((lang) => (
                         <option

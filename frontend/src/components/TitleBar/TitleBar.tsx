@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import ghostSvg from '@/assets/ghost.svg';
 import { WindowMinimise, Quit } from '~/wailsjs/runtime/runtime';
 
@@ -9,6 +11,8 @@ interface TitleBarProps {
 }
 
 export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.titlebar}>
             <div className={styles.drag}>
@@ -23,7 +27,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 <button
                     className={`${styles.controlBtn} ${settingsOpen ? styles.active : ''}`}
                     onClick={onSettingsToggle}
-                    title="Settings"
+                    title={t('titlebar.settings')}
                 >
                     <svg
                         width="14"
@@ -46,7 +50,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 <button
                     className={styles.controlBtn}
                     onClick={() => WindowMinimise()}
-                    title="Minimize"
+                    title={t('titlebar.minimize')}
                 >
                     <svg
                         width="12"
@@ -67,7 +71,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 <button
                     className={`${styles.controlBtn} ${styles.close}`}
                     onClick={() => Quit()}
-                    title="Close"
+                    title={t('titlebar.close')}
                 >
                     <svg
                         width="12"

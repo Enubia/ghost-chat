@@ -157,13 +157,14 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
   - Boolean state `settingsOpen` controls visibility
   - Settings panel with tab navigation: General, Twitch, YouTube, External, Themes
   - Settings forms with real fields matching Go config struct
-- [ ] Wire up Go window resize on settings toggle: `ExpandForSettings()`, `ShrinkToChat()`
+- [x] Wire up Go window resize on settings toggle: `ExpandForSettings()`, `ShrinkToChat()`
 
 ### 2.3 i18n setup
-- [ ] Configure `i18next` + `react-i18next` with lazy-loaded locale files
-- [ ] Port `en-US.json` from the old app as the base (adjust keys for new features, remove Kick-related keys)
-- [ ] Add locale switcher that saves selection to config via Go binding
-- [ ] Other language files can be ported/updated later
+- [x] Configure `i18next` + `react-i18next` with lazy-loaded locale files (`i18next-http-backend`)
+- [x] Create `en-US` translation file with all UI strings
+- [x] Create `de-DE` translation file
+- [x] Add locale switcher that saves selection to config via Go binding + syncs i18n language on load
+- [x] Other language files can be added later
 
 ### 2.4 App shell & layout
 - [x] Build the main app layout:
@@ -175,12 +176,13 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
   - Right side: main app content (chat preview area)
 - [x] Define base color scheme (neutral) via CSS custom properties
 - [x] Wire up window control buttons to Wails runtime (Minimize, Close)
-- [ ] Add Go methods for window resize: `ExpandForSettings()`, `ShrinkToChat()` using `runtime.WindowSetSize`
+- [x] Add Go methods for window resize: `ExpandForSettings()`, `ShrinkToChat()` using `runtime.WindowSetSize`
 
 ### 2.5 Config store integration (frontend)
 - [x] Create a Zustand store that loads config from Go on app startup
 - [x] Implement reactive config access — settings changes call Go `UpdateConfig()` to persist
-- [ ] Listen for Go→Frontend config change events (for when config changes from tray menu, etc.)
+- [x] Use proper Wails-generated types (`config.Config`, `DeepPartial<T>`) across stores and settings components
+- [ ] Listen for Go→Frontend config change events (deferred to Phase 8 — needs tray menu first)
 
 ---
 

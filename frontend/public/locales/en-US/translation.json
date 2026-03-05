@@ -1,0 +1,64 @@
+{
+    "titlebar": {
+        "settings": "Settings",
+        "minimize": "Minimize",
+        "close": "Close"
+    },
+    "home": {
+        "twitch": "Twitch",
+        "youtube": "YouTube",
+        "external": "External",
+        "connect": "Connect",
+        "disconnect": "Disconnect",
+        "open_chat": "Open Chat",
+        "placeholder": {
+            "channel": "Channel name",
+            "channel_id": "Channel ID",
+            "url": "URL"
+        }
+    },
+    "chat": {
+        "back": "Back",
+        "waiting": "Waiting for messages..."
+    },
+    "settings": {
+        "tabs": {
+            "general": "General",
+            "twitch": "Twitch",
+            "youtube": "YouTube",
+            "external": "External",
+            "themes": "Themes"
+        },
+        "general": {
+            "language": "Language"
+        },
+        "twitch": {
+            "channel": "Channel",
+            "default_channel": "Default Channel",
+            "fade": "Fade Messages",
+            "fade_timeout": "Fade Timeout (seconds)",
+            "bots": "Show Bots",
+            "hide_commands": "Hide Commands",
+            "hide_badges": "Hide Badges",
+            "user_blacklist": "User Blacklist",
+            "user_blacklist_placeholder": "user1, user2, ..."
+        },
+        "youtube": {
+            "channel_id": "Channel ID",
+            "default_channel_id": "Default Channel ID",
+            "video_url": "Video URL",
+            "retries": "Retries",
+            "fetch_delay": "Fetch Delay (seconds)",
+            "user_blacklist": "User Blacklist",
+            "user_blacklist_placeholder": "user1, user2, ..."
+        },
+        "external": {
+            "default_url": "Default URL",
+            "sources": "Sources",
+            "sources_placeholder": "https://url1.com, https://url2.com"
+        },
+        "themes": {
+            "coming_soon": "Theme editor coming soon"
+        }
+    }
+}

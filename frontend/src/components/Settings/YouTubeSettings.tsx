@@ -1,9 +1,12 @@
 import type { DeepPartial } from '@/types/utils';
 import type { config } from '~/wailsjs/go/models';
 
+import { useTranslation } from 'react-i18next';
+
 import { useConfigStore } from '@/stores/config';
 
 export function YouTubeSettings() {
+    const { t } = useTranslation();
     const yt = useConfigStore((s) => s.config?.youtube);
     const update = useConfigStore((s) => s.update);
 
@@ -12,7 +15,7 @@ export function YouTubeSettings() {
     return (
         <>
             <div className="field">
-                <label className="field-label">Channel ID</label>
+                <label className="field-label">{t('settings.youtube.channel_id')}</label>
                 <input
                     type="text"
                     value={yt?.channel_id ?? ''}
@@ -22,7 +25,7 @@ export function YouTubeSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">Default Channel ID</label>
+                <label className="field-label">{t('settings.youtube.default_channel_id')}</label>
                 <input
                     type="text"
                     value={yt?.default_channel_id ?? ''}
@@ -32,7 +35,7 @@ export function YouTubeSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">Video URL</label>
+                <label className="field-label">{t('settings.youtube.video_url')}</label>
                 <input
                     type="url"
                     value={yt?.video_url ?? ''}
@@ -42,7 +45,7 @@ export function YouTubeSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">Retries</label>
+                <label className="field-label">{t('settings.youtube.retries')}</label>
                 <input
                     type="number"
                     value={yt?.retries ?? 50}
@@ -52,7 +55,7 @@ export function YouTubeSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">Fetch Delay (seconds)</label>
+                <label className="field-label">{t('settings.youtube.fetch_delay')}</label>
                 <input
                     type="number"
                     value={yt?.fetch_delay ?? 5}
@@ -62,7 +65,7 @@ export function YouTubeSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">User Blacklist</label>
+                <label className="field-label">{t('settings.youtube.user_blacklist')}</label>
                 <input
                     type="text"
                     value={(yt?.user_blacklist ?? []).join(', ')}
@@ -74,7 +77,7 @@ export function YouTubeSettings() {
                                 .filter(Boolean),
                         })
                     }
-                    placeholder="user1, user2, ..."
+                    placeholder={t('settings.youtube.user_blacklist_placeholder')}
                 />
             </div>
         </>

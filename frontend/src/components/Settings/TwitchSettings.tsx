@@ -1,10 +1,13 @@
 import type { DeepPartial } from '@/types/utils';
 import type { config } from '~/wailsjs/go/models';
 
+import { useTranslation } from 'react-i18next';
+
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 
 export function TwitchSettings() {
+    const { t } = useTranslation();
     const twitch = useConfigStore((s) => s.config?.twitch);
     const update = useConfigStore((s) => s.update);
 
@@ -13,27 +16,27 @@ export function TwitchSettings() {
     return (
         <>
             <div className="field">
-                <label className="field-label">Channel</label>
+                <label className="field-label">{t('settings.twitch.channel')}</label>
                 <input
                     type="text"
                     value={twitch?.channel ?? ''}
                     onChange={(e) => set({ channel: e.target.value })}
-                    placeholder="Channel name"
+                    placeholder={t('home.placeholder.channel')}
                 />
             </div>
 
             <div className="field">
-                <label className="field-label">Default Channel</label>
+                <label className="field-label">{t('settings.twitch.default_channel')}</label>
                 <input
                     type="text"
                     value={twitch?.default_channel ?? ''}
                     onChange={(e) => set({ default_channel: e.target.value })}
-                    placeholder="Default channel"
+                    placeholder={t('settings.twitch.default_channel')}
                 />
             </div>
 
             <div className="field-row">
-                <label className="field-label">Fade Messages</label>
+                <label className="field-label">{t('settings.twitch.fade')}</label>
                 <Toggle
                     checked={twitch?.fade ?? false}
                     onChange={(v) => set({ fade: v })}
@@ -42,7 +45,7 @@ export function TwitchSettings() {
 
             {twitch?.fade && (
                 <div className="field">
-                    <label className="field-label">Fade Timeout (seconds)</label>
+                    <label className="field-label">{t('settings.twitch.fade_timeout')}</label>
                     <input
                         type="number"
                         value={twitch?.fade_timeout ?? 30}
@@ -53,7 +56,7 @@ export function TwitchSettings() {
             )}
 
             <div className="field-row">
-                <label className="field-label">Show Bots</label>
+                <label className="field-label">{t('settings.twitch.bots')}</label>
                 <Toggle
                     checked={twitch?.bots ?? false}
                     onChange={(v) => set({ bots: v })}
@@ -61,7 +64,7 @@ export function TwitchSettings() {
             </div>
 
             <div className="field-row">
-                <label className="field-label">Hide Commands</label>
+                <label className="field-label">{t('settings.twitch.hide_commands')}</label>
                 <Toggle
                     checked={twitch?.hide_commands ?? false}
                     onChange={(v) => set({ hide_commands: v })}
@@ -69,7 +72,7 @@ export function TwitchSettings() {
             </div>
 
             <div className="field-row">
-                <label className="field-label">Hide Badges</label>
+                <label className="field-label">{t('settings.twitch.hide_badges')}</label>
                 <Toggle
                     checked={twitch?.hide_badges ?? false}
                     onChange={(v) => set({ hide_badges: v })}
@@ -77,7 +80,7 @@ export function TwitchSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">User Blacklist</label>
+                <label className="field-label">{t('settings.twitch.user_blacklist')}</label>
                 <input
                     type="text"
                     value={(twitch?.user_blacklist ?? []).join(', ')}
@@ -89,7 +92,7 @@ export function TwitchSettings() {
                                 .filter(Boolean),
                         })
                     }
-                    placeholder="user1, user2, ..."
+                    placeholder={t('settings.twitch.user_blacklist_placeholder')}
                 />
             </div>
         </>

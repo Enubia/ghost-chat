@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useConfigStore } from '@/stores/config';
 
@@ -8,11 +9,12 @@ import styles from './Settings.module.css';
 import { TwitchSettings } from './TwitchSettings';
 import { YouTubeSettings } from './YouTubeSettings';
 
-const tabs = ['General', 'Twitch', 'YouTube', 'External', 'Themes'] as const;
-type Tab = (typeof tabs)[number];
+const tabKeys = ['general', 'twitch', 'youtube', 'external', 'themes'] as const;
+type Tab = (typeof tabKeys)[number];
 
 export function Settings() {
-    const [activeTab, setActiveTab] = useState<Tab>('General');
+    const [activeTab, setActiveTab] = useState<Tab>('general');
+    const { t } = useTranslation();
     const config = useConfigStore((s) => s.config);
 
     if (!config) {
@@ -22,22 +24,22 @@ export function Settings() {
     return (
         <div className={styles.settings}>
             <nav className={styles.sidebar}>
-                {tabs.map((tab) => (
+                {tabKeys.map((key) => (
                     <button
-                        key={tab}
-                        className={`${styles.tab} ${activeTab === tab ? styles.active : ''}`}
-                        onClick={() => setActiveTab(tab)}
+                        key={key}
+                        className={`${styles.tab} ${activeTab === key ? styles.active : ''}`}
+                        onClick={() => setActiveTab(key)}
                     >
-                        {tab}
+                        {t(`settings.tabs.${key}`)}
                     </button>
                 ))}
             </nav>
             <div className={styles.content}>
-                {activeTab === 'General' && <GeneralSettings />}
-                {activeTab === 'Twitch' && <TwitchSettings />}
-                {activeTab === 'YouTube' && <YouTubeSettings />}
-                {activeTab === 'External' && <ExternalSettings />}
-                {activeTab === 'Themes' && <div className={styles.placeholder}>Theme editor coming soon</div>}
+                {activeTab === 'general' && <GeneralSettings />}
+                {activeTab === 'twitch' && <TwitchSettings />}
+                {activeTab === 'youtube' && <YouTubeSettings />}
+                {activeTab === 'external' && <ExternalSettings />}
+                {activeTab === 'themes' && <div className={styles.placeholder}>{t('settings.themes.coming_soon')}</div>}
             </div>
         </div>
     );

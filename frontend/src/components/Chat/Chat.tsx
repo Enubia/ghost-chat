@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './Chat.module.css';
 
 export function Chat() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     return (
@@ -24,12 +26,12 @@ export function Chat() {
                     >
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
-                    Back
+                    {t('chat.back')}
                 </button>
             </div>
             <div className={styles.messages}>
                 <div className={styles.empty}>
-                    <span>Waiting for messages...</span>
+                    <span>{t('chat.waiting')}</span>
                 </div>
             </div>
         </div>

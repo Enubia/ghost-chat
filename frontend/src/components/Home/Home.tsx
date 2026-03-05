@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import twitchIcon from '@/assets/brands/twitch.png';
@@ -13,6 +14,7 @@ interface PlatformState {
 }
 
 export function Home() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const config = useConfigStore((s) => s.config);
     const [platforms, setPlatforms] = useState<PlatformState>({
@@ -41,13 +43,13 @@ export function Home() {
                                 alt=""
                                 className={styles.platformIcon}
                             />
-                            Twitch
+                            {t('home.twitch')}
                         </span>
                         <span className={`${styles.status} ${platforms.twitch.connected ? styles.connected : ''}`} />
                     </div>
                     <input
                         type="text"
-                        placeholder="Channel name"
+                        placeholder={t('home.placeholder.channel')}
                         value={platforms.twitch.channel}
                         onChange={(e) =>
                             setPlatforms((p) => ({ ...p, twitch: { ...p.twitch, channel: e.target.value } }))
@@ -58,7 +60,7 @@ export function Home() {
                         onClick={() => handleConnect('twitch')}
                         disabled={!platforms.twitch.channel}
                     >
-                        {platforms.twitch.connected ? 'Disconnect' : 'Connect'}
+                        {platforms.twitch.connected ? t('home.disconnect') : t('home.connect')}
                     </button>
                 </div>
 
@@ -74,13 +76,13 @@ export function Home() {
                             >
                                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                             </svg>
-                            YouTube
+                            {t('home.youtube')}
                         </span>
                         <span className={`${styles.status} ${platforms.youtube.connected ? styles.connected : ''}`} />
                     </div>
                     <input
                         type="text"
-                        placeholder="Channel ID"
+                        placeholder={t('home.placeholder.channel_id')}
                         value={platforms.youtube.channelId}
                         onChange={(e) =>
                             setPlatforms((p) => ({ ...p, youtube: { ...p.youtube, channelId: e.target.value } }))
@@ -91,7 +93,7 @@ export function Home() {
                         onClick={() => handleConnect('youtube')}
                         disabled={!platforms.youtube.channelId}
                     >
-                        {platforms.youtube.connected ? 'Disconnect' : 'Connect'}
+                        {platforms.youtube.connected ? t('home.disconnect') : t('home.connect')}
                     </button>
                 </div>
 
@@ -122,13 +124,13 @@ export function Home() {
                                 />
                                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                             </svg>
-                            External
+                            {t('home.external')}
                         </span>
                         <span className={`${styles.status} ${platforms.external.connected ? styles.connected : ''}`} />
                     </div>
                     <input
                         type="url"
-                        placeholder="URL"
+                        placeholder={t('home.placeholder.url')}
                         value={platforms.external.url}
                         onChange={(e) =>
                             setPlatforms((p) => ({ ...p, external: { ...p.external, url: e.target.value } }))
@@ -139,7 +141,7 @@ export function Home() {
                         onClick={() => handleConnect('external')}
                         disabled={!platforms.external.url}
                     >
-                        {platforms.external.connected ? 'Disconnect' : 'Connect'}
+                        {platforms.external.connected ? t('home.disconnect') : t('home.connect')}
                     </button>
                 </div>
             </div>
@@ -149,7 +151,7 @@ export function Home() {
                     className="btn btn-primary"
                     onClick={() => navigate('/chat')}
                 >
-                    Open Chat
+                    {t('home.open_chat')}
                 </button>
             )}
         </div>

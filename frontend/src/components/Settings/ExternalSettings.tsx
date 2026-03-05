@@ -1,9 +1,12 @@
 import type { DeepPartial } from '@/types/utils';
 import type { config } from '~/wailsjs/go/models';
 
+import { useTranslation } from 'react-i18next';
+
 import { useConfigStore } from '@/stores/config';
 
 export function ExternalSettings() {
+    const { t } = useTranslation();
     const ext = useConfigStore((s) => s.config?.external);
     const update = useConfigStore((s) => s.update);
 
@@ -12,7 +15,7 @@ export function ExternalSettings() {
     return (
         <>
             <div className="field">
-                <label className="field-label">Default URL</label>
+                <label className="field-label">{t('settings.external.default_url')}</label>
                 <input
                     type="url"
                     value={ext?.default_url ?? ''}
@@ -22,7 +25,7 @@ export function ExternalSettings() {
             </div>
 
             <div className="field">
-                <label className="field-label">Sources</label>
+                <label className="field-label">{t('settings.external.sources')}</label>
                 <input
                     type="text"
                     value={(ext?.sources ?? []).join(', ')}
@@ -34,7 +37,7 @@ export function ExternalSettings() {
                                 .filter(Boolean),
                         })
                     }
-                    placeholder="https://url1.com, https://url2.com"
+                    placeholder={t('settings.external.sources_placeholder')}
                 />
             </div>
         </>

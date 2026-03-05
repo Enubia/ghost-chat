@@ -1,0 +1,64 @@
+{
+    "titlebar": {
+        "settings": "Einstellungen",
+        "minimize": "Minimieren",
+        "close": "Schließen"
+    },
+    "home": {
+        "twitch": "Twitch",
+        "youtube": "YouTube",
+        "external": "Extern",
+        "connect": "Verbinden",
+        "disconnect": "Trennen",
+        "open_chat": "Chat öffnen",
+        "placeholder": {
+            "channel": "Kanalname",
+            "channel_id": "Kanal-ID",
+            "url": "URL"
+        }
+    },
+    "chat": {
+        "back": "Zurück",
+        "waiting": "Warte auf Nachrichten..."
+    },
+    "settings": {
+        "tabs": {
+            "general": "Allgemein",
+            "twitch": "Twitch",
+            "youtube": "YouTube",
+            "external": "Extern",
+            "themes": "Designs"
+        },
+        "general": {
+            "language": "Sprache"
+        },
+        "twitch": {
+            "channel": "Kanal",
+            "default_channel": "Standardkanal",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
+            "bots": "Bots anzeigen",
+            "hide_commands": "Befehle ausblenden",
+            "hide_badges": "Abzeichen ausblenden",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "youtube": {
+            "channel_id": "Kanal-ID",
+            "default_channel_id": "Standard-Kanal-ID",
+            "video_url": "Video-URL",
+            "retries": "Versuche",
+            "fetch_delay": "Abrufverzögerung (Sekunden)",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "external": {
+            "default_url": "Standard-URL",
+            "sources": "Quellen",
+            "sources_placeholder": "https://url1.com, https://url2.com"
+        },
+        "themes": {
+            "coming_soon": "Design-Editor kommt bald"
+        }
+    }
+}

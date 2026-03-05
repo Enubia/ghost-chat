@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -12,8 +13,10 @@ import styles from './App.module.css';
 
 function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const { i18n } = useTranslation();
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
+    const language = useConfigStore((s) => s.config?.general?.language);
 
     const toggleSettings = () => {
         if (settingsOpen) {
@@ -27,6 +30,12 @@ function App() {
     useEffect(() => {
         void load();
     }, [load]);
+
+    useEffect(() => {
+        if (language && language !== i18n.language) {
+            void i18n.changeLanguage(language);
+        }
+    }, [language, i18n]);
 
     if (!loaded) {
         return null;
