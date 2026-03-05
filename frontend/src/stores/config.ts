@@ -1,13 +1,15 @@
+import type { DeepPartial } from '@/types/utils';
+import type { config } from '~/wailsjs/go/models';
+
 import { create } from 'zustand';
 
 import { GetConfig, UpdateConfig } from '~/wailsjs/go/main/App';
 
 interface ConfigState {
-    config: Record<string, any> | null;
+    config: config.Config | null;
     loaded: boolean;
     load: () => Promise<void>;
-    update: (partial: Record<string, any>) => Promise<void>;
-    set: (config: Record<string, any>) => void;
+    update: (partial: DeepPartial<config.Config>) => Promise<void>;
 }
 
 export const useConfigStore = create<ConfigState>((set, get) => ({
@@ -17,7 +19,7 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
     load: async () => {
         try {
             const cfg = await GetConfig();
-            set({ config: cfg as unknown as Record<string, any>, loaded: true });
+            set({ config: cfg, loaded: true });
         } catch {
             console.warn('Failed to load config from Go backend');
             set({ loaded: true });
@@ -32,29 +34,45 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
 
         const merged = deepMerge(current, partial);
         try {
-            await UpdateConfig(merged as any);
+            await UpdateConfig(merged);
             set({ config: merged });
         } catch (err) {
             console.error('Failed to update config:', err);
         }
     },
-
-    set: (config) => set({ config }),
 }));
 
-function deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
-    const result = { ...target };
-    for (const key of Object.keys(source)) {
-        if (
-            source[key] &&
-            typeof source[key] === 'object' &&
-            !Array.isArray(source[key]) &&
-            target[key] &&
-            typeof target[key] === 'object'
-        ) {
-            result[key] = deepMerge(target[key], source[key]);
+function deepMerge(target: config.Config, source: DeepPartial<config.Config>): config.Config {
+    return mergeObject(target, source) as config.Config;
+}
+
+function mergeObject(target: unknown, source: unknown): unknown {
+    if (
+        !source ||
+        typeof source !== 'object' ||
+        Array.isArray(source) ||
+        !target ||
+        typeof target !== 'object' ||
+        Array.isArray(target)
+    ) {
+        return source;
+    }
+
+    const tgt = target as Record<string, unknown>;
+    const src = source as Record<string, unknown>;
+    const result = Object.assign(
+        Object.create(Object.getPrototypeOf(target) as object) as Record<string, unknown>,
+        tgt
+    );
+
+    for (const key of Object.keys(src)) {
+        const srcVal = src[key];
+        const tgtVal = tgt[key];
+
+        if (srcVal && typeof srcVal === 'object' && !Array.isArray(srcVal) && tgtVal && typeof tgtVal === 'object') {
+            result[key] = mergeObject(tgtVal, srcVal);
         } else {
-            result[key] = source[key];
+            result[key] = srcVal;
         }
     }
     return result;

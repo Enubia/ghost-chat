@@ -1,11 +1,13 @@
+import type { DeepPartial } from '@/types/utils';
+import type { config } from '~/wailsjs/go/models';
+
 import { useConfigStore } from '@/stores/config';
 
 export function ExternalSettings() {
-    const config = useConfigStore((s) => s.config);
+    const ext = useConfigStore((s) => s.config?.external);
     const update = useConfigStore((s) => s.update);
-    const ext = config?.external;
 
-    const set = (partial: Record<string, any>) => update({ external: partial });
+    const set = (partial: DeepPartial<config.ExternalConfig>) => update({ external: partial });
 
     return (
         <>
@@ -28,7 +30,7 @@ export function ExternalSettings() {
                         set({
                             sources: e.target.value
                                 .split(',')
-                                .map((s: string) => s.trim())
+                                .map((s) => s.trim())
                                 .filter(Boolean),
                         })
                     }

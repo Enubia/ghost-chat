@@ -1,11 +1,13 @@
+import type { DeepPartial } from '@/types/utils';
+import type { config } from '~/wailsjs/go/models';
+
 import { useConfigStore } from '@/stores/config';
 
 export function YouTubeSettings() {
-    const config = useConfigStore((s) => s.config);
+    const yt = useConfigStore((s) => s.config?.youtube);
     const update = useConfigStore((s) => s.update);
-    const yt = config?.youtube;
 
-    const set = (partial: Record<string, any>) => update({ youtube: partial });
+    const set = (partial: DeepPartial<config.YouTubeConfig>) => update({ youtube: partial });
 
     return (
         <>
@@ -68,7 +70,7 @@ export function YouTubeSettings() {
                         set({
                             user_blacklist: e.target.value
                                 .split(',')
-                                .map((s: string) => s.trim())
+                                .map((s) => s.trim())
                                 .filter(Boolean),
                         })
                     }

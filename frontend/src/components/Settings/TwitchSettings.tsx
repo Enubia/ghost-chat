@@ -1,12 +1,14 @@
+import type { DeepPartial } from '@/types/utils';
+import type { config } from '~/wailsjs/go/models';
+
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 
 export function TwitchSettings() {
-    const config = useConfigStore((s) => s.config);
+    const twitch = useConfigStore((s) => s.config?.twitch);
     const update = useConfigStore((s) => s.update);
-    const twitch = config?.twitch;
 
-    const set = (partial: Record<string, any>) => update({ twitch: partial });
+    const set = (partial: DeepPartial<config.TwitchConfig>) => update({ twitch: partial });
 
     return (
         <>
@@ -83,7 +85,7 @@ export function TwitchSettings() {
                         set({
                             user_blacklist: e.target.value
                                 .split(',')
-                                .map((s: string) => s.trim())
+                                .map((s) => s.trim())
                                 .filter(Boolean),
                         })
                     }

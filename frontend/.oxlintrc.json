@@ -13,12 +13,7 @@
         "node": true,
         "shared-node-browser": true
     },
-    "ignorePatterns": [
-        "**/node_modules",
-        "**/pnpm-lock.yaml",
-        ".claude",
-        "**/wailsjs/**"
-    ],
+    "ignorePatterns": ["**/node_modules", "**/pnpm-lock.yaml", ".claude", "**/wailsjs/**"],
     "rules": {
         "curly": ["error", "all"],
         "eqeqeq": ["error", "smart"],
