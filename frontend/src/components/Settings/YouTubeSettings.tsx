@@ -65,7 +65,12 @@ export function YouTubeSettings() {
                     type="text"
                     value={(yt?.user_blacklist ?? []).join(', ')}
                     onChange={(e) =>
-                        set({ user_blacklist: e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean) })
+                        set({
+                            user_blacklist: e.target.value
+                                .split(',')
+                                .map((s: string) => s.trim())
+                                .filter(Boolean),
+                        })
                     }
                     placeholder="user1, user2, ..."
                 />

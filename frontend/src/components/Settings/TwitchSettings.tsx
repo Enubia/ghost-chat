@@ -1,5 +1,5 @@
-import { useConfigStore } from '@/stores/config';
 import { Toggle } from '@/components/Toggle';
+import { useConfigStore } from '@/stores/config';
 
 export function TwitchSettings() {
     const config = useConfigStore((s) => s.config);
@@ -80,7 +80,12 @@ export function TwitchSettings() {
                     type="text"
                     value={(twitch?.user_blacklist ?? []).join(', ')}
                     onChange={(e) =>
-                        set({ user_blacklist: e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean) })
+                        set({
+                            user_blacklist: e.target.value
+                                .split(',')
+                                .map((s: string) => s.trim())
+                                .filter(Boolean),
+                        })
                     }
                     placeholder="user1, user2, ..."
                 />

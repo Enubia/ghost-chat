@@ -14,7 +14,8 @@
         "noEmit": true,
         "strictNullChecks": true,
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "~/wailsjs/*": ["./wailsjs/*"]
         }
     },
     "include": ["src"],

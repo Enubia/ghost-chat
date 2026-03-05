@@ -15,7 +15,7 @@
             ["unknown"]
         ],
         "newlinesBetween": true,
-        "internalPattern": ["@src"]
+        "internalPattern": ["@/", "~/"]
     },
     "printWidth": 120,
     "tabWidth": 4,
@@ -23,5 +23,5 @@
     "trailingComma": "es5",
     "objectWrap": "preserve",
     "singleAttributePerLine": true,
-    "ignorePatterns": ["**/*.d.ts"]
+    "ignorePatterns": ["**/*.d.ts", "**/wailsjs/**"]
 }

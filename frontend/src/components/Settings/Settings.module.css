@@ -22,7 +22,9 @@
     color: var(--color-text-muted);
     border-radius: var(--radius-sm);
     text-align: left;
-    transition: background var(--transition-fast), color var(--transition-fast);
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
 
     &:hover {
         background: var(--color-bg-hover);

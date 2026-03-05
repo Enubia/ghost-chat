@@ -20,7 +20,10 @@ export function GeneralSettings() {
                     onChange={(e) => update({ general: { language: e.target.value } })}
                 >
                     {languages.map((lang) => (
-                        <option key={lang.value} value={lang.value}>
+                        <option
+                            key={lang.value}
+                            value={lang.value}
+                        >
                             {lang.label}
                         </option>
                     ))}

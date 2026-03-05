@@ -15,12 +15,9 @@
     },
     "ignorePatterns": [
         "**/node_modules",
-        "**/out",
         "**/pnpm-lock.yaml",
-        "**/.next",
-        "**/db.d.ts",
-        "**/next-env.d.ts",
-        ".claude"
+        ".claude",
+        "**/wailsjs/**"
     ],
     "rules": {
         "curly": ["error", "all"],

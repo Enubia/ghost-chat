@@ -25,7 +25,12 @@ export function ExternalSettings() {
                     type="text"
                     value={(ext?.sources ?? []).join(', ')}
                     onChange={(e) =>
-                        set({ sources: e.target.value.split(',').map((s: string) => s.trim()).filter(Boolean) })
+                        set({
+                            sources: e.target.value
+                                .split(',')
+                                .map((s: string) => s.trim())
+                                .filter(Boolean),
+                        })
                     }
                     placeholder="https://url1.com, https://url2.com"
                 />

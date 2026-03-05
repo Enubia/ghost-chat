@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { GetConfig, UpdateConfig } from '../../wailsjs/go/main/App';
+
+import { GetConfig, UpdateConfig } from '~/wailsjs/go/main/App';
 
 interface ConfigState {
     config: Record<string, any> | null;

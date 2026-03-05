@@ -1,10 +1,12 @@
 import { useState } from 'react';
+
 import { useConfigStore } from '@/stores/config';
+
+import { ExternalSettings } from './ExternalSettings';
 import { GeneralSettings } from './GeneralSettings';
+import styles from './Settings.module.css';
 import { TwitchSettings } from './TwitchSettings';
 import { YouTubeSettings } from './YouTubeSettings';
-import { ExternalSettings } from './ExternalSettings';
-import styles from './Settings.module.css';
 
 const tabs = ['General', 'Twitch', 'YouTube', 'External', 'Themes'] as const;
 type Tab = (typeof tabs)[number];
@@ -35,9 +37,7 @@ export function Settings() {
                 {activeTab === 'Twitch' && <TwitchSettings />}
                 {activeTab === 'YouTube' && <YouTubeSettings />}
                 {activeTab === 'External' && <ExternalSettings />}
-                {activeTab === 'Themes' && (
-                    <div className={styles.placeholder}>Theme editor coming soon</div>
-                )}
+                {activeTab === 'Themes' && <div className={styles.placeholder}>Theme editor coming soon</div>}
             </div>
         </div>
     );

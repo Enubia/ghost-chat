@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { useConfigStore } from '@/stores/config';
-import { TitleBar } from '@/components/TitleBar/TitleBar';
-import { Settings } from '@/components/Settings/Settings';
-import { Home } from '@/components/Home/Home';
+
 import { Chat } from '@/components/Chat/Chat';
+import { Home } from '@/components/Home/Home';
+import { Settings } from '@/components/Settings/Settings';
+import { TitleBar } from '@/components/TitleBar/TitleBar';
+import { useConfigStore } from '@/stores/config';
+import { ExpandForSettings, ShrinkToChat } from '~/wailsjs/go/main/App';
+
 import styles from './App.module.css';
 
 function App() {
@@ -12,8 +15,17 @@ function App() {
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
 
+    const toggleSettings = () => {
+        if (settingsOpen) {
+            void ShrinkToChat();
+        } else {
+            void ExpandForSettings();
+        }
+        setSettingsOpen((v) => !v);
+    };
+
     useEffect(() => {
-        load();
+        void load();
     }, [load]);
 
     if (!loaded) {
@@ -24,7 +36,7 @@ function App() {
         <HashRouter>
             <div className={`${styles.app} ${settingsOpen ? styles.withSettings : ''}`}>
                 <TitleBar
-                    onSettingsToggle={() => setSettingsOpen((v) => !v)}
+                    onSettingsToggle={toggleSettings}
                     settingsOpen={settingsOpen}
                 />
                 <div className={styles.body}>
@@ -35,8 +47,14 @@ function App() {
                     )}
                     <div className={styles.main}>
                         <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/chat" element={<Chat />} />
+                            <Route
+                                path="/"
+                                element={<Home />}
+                            />
+                            <Route
+                                path="/chat"
+                                element={<Chat />}
+                            />
                         </Routes>
                     </div>
                 </div>

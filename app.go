@@ -68,16 +68,12 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 	return nil
 }
 
-// ---------------------------- testing only, remove later ----------------------------
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+func (a *App) ExpandForSettings() {
+	_, h := wailsRuntime.WindowGetSize(a.ctx)
+	wailsRuntime.WindowSetSize(a.ctx, 1000, h)
 }
 
-func (a *App) GetAppInfo() string {
-	return "Ghost Chat v4.0.0"
-}
-
-func (a *App) SendTestEvent() {
-	wailsRuntime.EventsEmit(a.ctx, "test:hello", "Hello from Go!")
+func (a *App) ShrinkToChat() {
+	_, h := wailsRuntime.WindowGetSize(a.ctx)
+	wailsRuntime.WindowSetSize(a.ctx, a.config.WindowState.Width, h)
 }

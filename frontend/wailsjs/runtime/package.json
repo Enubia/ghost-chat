@@ -1,24 +1,23 @@
 {
-  "name": "@wailsapp/runtime",
-  "version": "2.0.0",
-  "description": "Wails Javascript runtime library",
-  "main": "runtime.js",
-  "types": "runtime.d.ts",
-  "scripts": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wailsapp/wails.git"
-  },
-  "keywords": [
-    "Wails",
-    "Javascript",
-    "Go"
-  ],
-  "author": "Lea Anthony <lea.anthony@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/wailsapp/wails/issues"
-  },
-  "homepage": "https://github.com/wailsapp/wails#readme"
+    "name": "@wailsapp/runtime",
+    "version": "2.0.0",
+    "description": "Wails Javascript runtime library",
+    "keywords": [
+        "Go",
+        "Javascript",
+        "Wails"
+    ],
+    "homepage": "https://github.com/wailsapp/wails#readme",
+    "bugs": {
+        "url": "https://github.com/wailsapp/wails/issues"
+    },
+    "license": "MIT",
+    "author": "Lea Anthony <lea.anthony@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wailsapp/wails.git"
+    },
+    "main": "runtime.js",
+    "types": "runtime.d.ts",
+    "scripts": {}
 }
