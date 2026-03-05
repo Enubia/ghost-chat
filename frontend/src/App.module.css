@@ -1,0 +1,23 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.settingsPanel {
+    width: 400px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.main {
+    flex: 1;
+    overflow: hidden;
+}

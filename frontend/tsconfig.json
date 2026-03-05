@@ -12,7 +12,10 @@
         "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
         "noEmit": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

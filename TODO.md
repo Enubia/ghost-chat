@@ -146,21 +146,18 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 ### 2.1 React project setup
 - [x] Swap Wails Vue template for React + TypeScript + Vite
 - [x] Update `wails.json` to use pnpm
-- [ ] Install dependencies: `react-router-dom`, `zustand`, `i18next`, `react-i18next`
-- [ ] Set up CSS modules (Vite supports them out of the box — `*.module.css`)
-- [ ] Set up path aliases in `vite.config.ts` and `tsconfig.json`
-- [ ] Verify `wails dev` still works with hot reload
+- [x] Install dependencies: `react-router-dom`, `zustand`
+- [x] Set up CSS modules (Vite supports them out of the box — `*.module.css`)
+- [x] Set up path aliases (`@/` → `src/`) in `vite.config.ts` and `tsconfig.json`
+- [x] Verify `wails dev` still works with hot reload
 
-### 2.2 Routing
-- [ ] Set up React Router with these routes:
-  - `/` — Home (platform selection)
-  - `/chat` — Chat overlay view (unified, replaces per-platform webview pages)
-  - `/settings/general` — General settings
-  - `/settings/twitch` — Twitch settings
-  - `/settings/youtube` — YouTube settings
-  - `/settings/external` — External source settings
-  - `/settings/themes` — Theme editor (new)
-  - `/changelog` — Changelog
+### 2.2 Routing & settings panel
+- [x] Set up React Router (HashRouter) with routes: `/` (Home), `/chat` (Chat overlay)
+- [x] Settings as a toggleable panel (not a route):
+  - Boolean state `settingsOpen` controls visibility
+  - Settings panel with tab navigation: General, Twitch, YouTube, External, Themes
+  - Settings forms with real fields matching Go config struct
+- [ ] Wire up Go window resize on settings toggle: `ExpandForSettings()`, `ShrinkToChat()`
 
 ### 2.3 i18n setup
 - [ ] Configure `i18next` + `react-i18next` with lazy-loaded locale files
@@ -169,24 +166,21 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [ ] Other language files can be ported/updated later
 
 ### 2.4 App shell & layout
-- [ ] Build the main app layout:
-  - Custom title bar (frameless window needs drag region + window controls)
-  - Header with: back button, vanish button (on chat view), minimize, close
-  - Hamburger dropdown menu: Home, Settings, Theme, Changelog
-- [ ] Build the settings layout with CSS modules:
-  - Sidebar navigation (General, Twitch, YouTube, External, Themes)
-  - Content area with scroll
-- [ ] Define base color scheme (neutral, neither too dark nor too light) via CSS custom properties
-- [ ] Wire up window control buttons to Wails runtime:
-  - Minimize → `runtime.WindowMinimise()`
-  - Close → `runtime.Quit()`
-  - Back → `navigate('/')`
-  - Vanish → call Go method to toggle vanish
+- [x] Build the main app layout:
+  - Custom title bar with ghost logo, drag region, window controls (minimize, close), settings gear icon
+  - Home page with platform cards (Twitch, YouTube, External) + brand icons
+  - Chat overlay page (empty, ready for Phase 3)
+- [x] Build the settings layout with CSS modules:
+  - Left side: settings sidebar nav + settings content
+  - Right side: main app content (chat preview area)
+- [x] Define base color scheme (neutral) via CSS custom properties
+- [x] Wire up window control buttons to Wails runtime (Minimize, Close)
+- [ ] Add Go methods for window resize: `ExpandForSettings()`, `ShrinkToChat()` using `runtime.WindowSetSize`
 
 ### 2.5 Config store integration (frontend)
-- [ ] Create a Zustand store that loads config from Go on app startup
-- [ ] Implement reactive config access — when a setting changes in the UI, call Go binding to persist
-- [ ] Optionally: listen for Go→Frontend config change events (for when config changes from tray menu, etc.)
+- [x] Create a Zustand store that loads config from Go on app startup
+- [x] Implement reactive config access — settings changes call Go `UpdateConfig()` to persist
+- [ ] Listen for Go→Frontend config change events (for when config changes from tray menu, etc.)
 
 ---
 
