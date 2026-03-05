@@ -116,10 +116,10 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [x] **Learn**: Go error handling (`if err != nil`), `encoding/json` struct tags, `os` package for file I/O
 
 ### 1.3 Config migration system (Go)
-- [ ] Implement a migration runner that compares `config.Version` against app version
-- [ ] Implement migration as a slice of `{Version string, Migrate func(*Config)}` — runs all migrations newer than stored version, in order
-- [ ] Write a test that verifies migrations run correctly
-- [ ] **Learn**: Slices, function types, semantic version comparison (use `golang.org/x/mod/semver` or write a simple one)
+- [x] Implement a migration runner that compares `config.Version` against app version
+- [x] Implement migration as a slice of `{Version string, Migrate func(*Config)}` — runs all migrations newer than stored version, in order
+- [x] Write a test that verifies migrations run correctly
+- [x] **Learn**: Slices, function types, semantic version comparison (use `golang.org/x/mod/semver` or write a simple one)
 
 ### 1.4 Bind config to frontend
 - [ ] Add methods on the Wails app struct to expose config operations:
