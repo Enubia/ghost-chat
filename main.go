@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"ghost-chat/internal/config"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -12,22 +13,40 @@ import (
 var assets embed.FS
 
 func main() {
-	// Create an instance of the app structure
-	app := NewApp()
+	configPath, err := config.GetConfigPath()
 
-	// Create application with options
-	err := wails.Run(&options.App{
+	if err != nil {
+		println("Error getting config path:", err.Error())
+		return
+	}
+
+	cfg, err := config.Load(configPath)
+
+	if err != nil {
+		println("Error loading config:", err.Error())
+		return
+	}
+
+	app := NewApp(cfg, configPath)
+
+	err = wails.Run(&options.App{
 		Title:  "ghost-chat",
-		Width:  1024,
-		Height: 768,
+		Width:  cfg.WindowState.Width,
+		Height: cfg.WindowState.Height,
+		// we set this so that the app doesn't flash in the default position before moving to the saved position in startup
+		// https://github.com/wailsapp/wails/issues/1702
+		StartHidden: true,
+		Frameless:   true,
+		AlwaysOnTop: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
+		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 0},
 		OnStartup:        app.startup,
 		Bind: []any{
 			app,
 		},
+		OnBeforeClose: app.onBeforeClose,
 	})
 
 	if err != nil {

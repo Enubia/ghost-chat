@@ -122,38 +122,32 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [x] **Learn**: Slices, function types, semantic version comparison (use `golang.org/x/mod/semver` or write a simple one)
 
 ### 1.4 Bind config to frontend
-- [ ] Add methods on the Wails app struct to expose config operations:
-  - `GetConfig() Config`
-  - `GetConfigValue(path string) any` (optional, if you want dot-path access like the old app)
-  - `SetConfigValue(path string, value any) error`
-  - `SaveConfig() error`
-- [ ] Test from React: fetch config on mount, display a value, change it, save, restart, confirm persistence
-- [ ] **Learn**: Wails auto-generates TypeScript types for bound Go structs. Check `frontend/wailsjs/go/` after running `wails dev`.
+- [x] Add methods on the Wails app struct to expose config operations:
+  - `GetConfig() *Config`
+  - `UpdateConfig(cfg *Config) error` (replaces whole config + saves with rollback on failure)
+- [x] Test from React: fetch config on mount, display a value, change it, save, restart, confirm persistence
+- [x] **Learn**: Wails auto-generates TypeScript types for bound Go structs. Check `frontend/wailsjs/go/` after running `wails dev`.
 
 ### 1.5 Window configuration
-- [ ] Configure Wails window options in `main.go`:
-  - Frameless (`Frameless: true`)
-  - Transparent (`WindowIsTranslucent: true` on macOS, transparent background on Windows)
-  - Always on top (`AlwaysOnTop: true`)
-  - Initial size from saved config (or 400x800 default)
-  - Start position from saved config (or centered)
-- [ ] Save window position/size on close using `OnBeforeClose` hook
-- [ ] Implement vanish toggle (transparent + click-through):
-  - Use `runtime.WindowSetAlwaysOnTop`, `runtime.WindowSetBackgroundColour` for transparency
-  - **Note**: Click-through is tricky in Wails v2. Research platform-specific approaches.
-- [ ] **Learn**: Wails lifecycle hooks (`OnStartup`, `OnBeforeClose`, `OnShutdown`), runtime API
+- [x] Configure Wails window options in `main.go`:
+  - Frameless, always on top, start hidden (to avoid position flash)
+  - Initial size from saved config (or 400x600 default)
+  - Start position from saved config (set in `startup`, then `WindowShow`)
+- [x] Save window position/size on close using `OnBeforeClose` hook
+- [ ] Implement vanish toggle (deferred to Phase 8 — needs platform-specific research)
+- [x] **Learn**: Wails lifecycle hooks (`OnStartup`, `OnBeforeClose`, `OnShutdown`), runtime API
 
 ---
 
 ## Phase 2 — Frontend Foundation (React)
 
-> **Goal**: Set up the React app shell, routing, i18n, and base UI components using Mantine.
+> **Goal**: Set up the React app shell, routing, i18n, and base UI with CSS modules.
 
 ### 2.1 React project setup
 - [x] Swap Wails Vue template for React + TypeScript + Vite
 - [x] Update `wails.json` to use pnpm
-- [ ] Install dependencies: `@mantine/core`, `@mantine/hooks`, `react-router-dom`, `zustand`, `i18next`, `react-i18next`
-- [ ] Wrap app in `MantineProvider` with dark/light color scheme support
+- [ ] Install dependencies: `react-router-dom`, `zustand`, `i18next`, `react-i18next`
+- [ ] Set up CSS modules (Vite supports them out of the box — `*.module.css`)
 - [ ] Set up path aliases in `vite.config.ts` and `tsconfig.json`
 - [ ] Verify `wails dev` still works with hot reload
 
@@ -179,10 +173,10 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
   - Custom title bar (frameless window needs drag region + window controls)
   - Header with: back button, vanish button (on chat view), minimize, close
   - Hamburger dropdown menu: Home, Settings, Theme, Changelog
-- [ ] Build the settings layout using Mantine `AppShell` + `NavLink`:
+- [ ] Build the settings layout with CSS modules:
   - Sidebar navigation (General, Twitch, YouTube, External, Themes)
   - Content area with scroll
-- [ ] Implement dark/light theme toggle (Mantine `useMantineColorScheme`, persist to config)
+- [ ] Define base color scheme (neutral, neither too dark nor too light) via CSS custom properties
 - [ ] Wire up window control buttons to Wails runtime:
   - Minimize → `runtime.WindowMinimise()`
   - Close → `runtime.Quit()`
@@ -444,7 +438,13 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [ ] Tray icon (reuse existing `trayicon.png` or create new one)
 - [ ] **Learn**: Wails `menu` package, `runtime.Clipboard` API
 
-### 8.2 Global hotkeys (Go)
+### 8.2 Vanish toggle (deferred from Phase 1.5)
+- [ ] Implement vanish toggle (transparent + click-through):
+  - Use `runtime.WindowSetAlwaysOnTop`, `runtime.WindowSetBackgroundColour` for transparency
+  - Research platform-specific click-through approaches
+- [ ] Wire vanish to tray menu + hotkey
+
+### 8.3 Global hotkeys (Go)
 - [ ] Research global hotkey libraries for Go:
   - `golang.design/x/hotkey` — cross-platform global hotkey registration
   - Or platform-specific approaches
@@ -453,7 +453,7 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [ ] On hotkey press, trigger vanish toggle
 - [ ] **Learn**: CGo might be needed for some hotkey approaches — understand the basics of CGo if required
 
-### 8.3 Hotkey settings (React)
+### 8.4 Hotkey settings (React)
 - [ ] Port the `HotKeyInput` component from the old app
 - [ ] Capture key combinations, format as string, save to config
 - [ ] Show current keybind, allow clearing
@@ -466,7 +466,7 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 - [ ] Language selector (locale switcher)
 - [ ] Vanish hotkey input
 - [ ] macOS-specific options (quit on close, hide dock icon) — conditionally shown based on `runtime.Environment().Platform`
-- [ ] Dark/light theme toggle (or move to header)
+- [x] ~~Dark/light theme toggle~~ — removed, using single neutral color scheme
 
 ### 9.2 Polish settings UX
 - [ ] Settings should apply immediately (no save button — write on change)

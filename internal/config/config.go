@@ -1,13 +1,12 @@
 package config
 
 type WindowState struct {
-	X              int    `json:"x"`
-	Y              int    `json:"y"`
-	Width          int    `json:"width"`
-	Height         int    `json:"height"`
-	IsClickThrough bool   `json:"is_click_through"`
-	IsTransparent  bool   `json:"is_transparent"`
-	Theme          string `json:"theme"` // "dark" | "light"
+	X              int  `json:"x"`
+	Y              int  `json:"y"`
+	Width          int  `json:"width"`
+	Height         int  `json:"height"`
+	IsClickThrough bool `json:"is_click_through"`
+	IsTransparent  bool `json:"is_transparent"`
 }
 
 type MacOptions struct {
@@ -70,7 +69,6 @@ func DefaultConfig() Config {
 		WindowState: WindowState{
 			Width:  400,
 			Height: 600,
-			Theme:  "dark",
 		},
 		General: General{
 			Language:   "en-US",
