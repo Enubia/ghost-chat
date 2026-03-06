@@ -47,7 +47,11 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
 	if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-		wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
+		if runtime.GOOS != "linux" {
+			// skip position on linux
+			// we can't be sure if the user isn't using a tiling window manager
+			wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
+		}
 	}
 
 	wailsRuntime.WindowShow(a.ctx)
