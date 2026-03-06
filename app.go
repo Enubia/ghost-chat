@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"ghost-chat/internal/config"
+	"runtime"
 
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -25,8 +26,13 @@ func (a *App) onBeforeClose(ctx context.Context) bool {
 	x, y := wailsRuntime.WindowGetPosition(a.ctx)
 	w, h := wailsRuntime.WindowGetSize(a.ctx)
 
-	a.config.WindowState.X = x
-	a.config.WindowState.Y = y
+	// skip position on linux
+	// we can't be sure if the user isn't using a tiling window manager
+	if runtime.GOOS != "linux" {
+		a.config.WindowState.X = x
+		a.config.WindowState.Y = y
+	}
+
 	a.config.WindowState.Width = w
 	a.config.WindowState.Height = h
 

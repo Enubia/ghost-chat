@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"ghost-chat/internal/config"
+	"runtime"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -35,7 +36,7 @@ func main() {
 		Height: cfg.WindowState.Height,
 		// we set this so that the app doesn't flash in the default position before moving to the saved position in startup
 		// https://github.com/wailsapp/wails/issues/1702
-		StartHidden: true,
+		StartHidden: runtime.GOOS != "linux",
 		Frameless:   true,
 		AlwaysOnTop: true,
 		AssetServer: &assetserver.Options{
