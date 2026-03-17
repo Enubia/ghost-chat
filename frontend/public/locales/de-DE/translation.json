@@ -13,7 +13,8 @@
         "open_chat": "Chat öffnen",
         "placeholder": {
             "channel": "Kanalname",
-            "channel_id": "Kanal-ID"
+            "channel_id": "Kanal-ID",
+            "channel_or_url": "Kanal, @handle oder Video-URL"
         }
     },
     "chat": {
@@ -44,11 +45,10 @@
             "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
         },
         "youtube": {
-            "channel_id": "Kanal-ID",
-            "default_channel_id": "Standard-Kanal-ID",
-            "video_url": "Video-URL",
-            "retries": "Versuche",
-            "fetch_delay": "Abrufverzögerung (Sekunden)",
+            "channel": "Kanal / Video-URL",
+            "channel_placeholder": "@handle, Kanal-ID oder Video-URL",
+            "detect": "Erkennen",
+            "detecting": "Erkenne...",
             "user_blacklist": "Benutzer-Sperrliste",
             "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
         },

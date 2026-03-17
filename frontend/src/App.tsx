@@ -7,7 +7,9 @@ import { Home } from '@/components/Home/Home';
 import { Settings } from '@/components/Settings/Settings';
 import { TitleBar } from '@/components/TitleBar/TitleBar';
 import { useConfigStore } from '@/stores/config';
+import { useConnectionStore } from '@/stores/connection';
 import { ExpandForSettings, ShrinkToChat } from '~/wailsjs/go/main/App';
+import { EventsOn } from '~/wailsjs/runtime/runtime';
 
 import styles from './App.module.css';
 
@@ -17,6 +19,7 @@ function App() {
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
     const language = useConfigStore((s) => s.config?.general?.language);
+    const setConnected = useConnectionStore((s) => s.setConnected);
 
     const toggleSettings = () => {
         if (settingsOpen) {
@@ -30,6 +33,21 @@ function App() {
     useEffect(() => {
         void load();
     }, [load]);
+
+    useEffect(() => {
+        const cancelConnected = EventsOn('chat:connected', (data: unknown) => {
+            const platform = typeof data === 'string' ? 'twitch' : 'youtube';
+            setConnected(platform, true);
+        });
+        const cancelDisconnected = EventsOn('chat:disconnected', (data: unknown) => {
+            const platform = (data as { platform?: string })?.platform === 'youtube' ? 'youtube' : 'twitch';
+            setConnected(platform, false);
+        });
+        return () => {
+            cancelConnected();
+            cancelDisconnected();
+        };
+    }, [setConnected]);
 
     useEffect(() => {
         if (language && language !== i18n.language) {

@@ -6,8 +6,16 @@ export function ConnectTwitch(arg1) {
   return window['go']['main']['App']['ConnectTwitch'](arg1);
 }
 
+export function ConnectYouTube(arg1) {
+  return window['go']['main']['App']['ConnectYouTube'](arg1);
+}
+
 export function DisconnectTwitch() {
   return window['go']['main']['App']['DisconnectTwitch']();
+}
+
+export function DisconnectYouTube() {
+  return window['go']['main']['App']['DisconnectYouTube']();
 }
 
 export function ExpandForSettings() {
@@ -16,6 +24,10 @@ export function ExpandForSettings() {
 
 export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
+}
+
+export function ResolveYouTubeVideo(arg1) {
+  return window['go']['main']['App']['ResolveYouTubeVideo'](arg1);
 }
 
 export function ShrinkToChat() {

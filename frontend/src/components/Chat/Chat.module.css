@@ -35,6 +35,39 @@
     font-size: 12px;
 }
 
+.filters {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    margin-right: 4px;
+}
+
+.filterBtn {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-dim);
+    background: transparent;
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+
+    &:hover {
+        color: var(--color-text-muted);
+        background: var(--color-bg-hover);
+    }
+}
+
+.filterActive {
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+    background: var(--color-surface);
+}
+
 .scrollBtn {
     position: absolute;
     bottom: 8px;

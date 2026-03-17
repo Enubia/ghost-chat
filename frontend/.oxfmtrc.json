@@ -10,8 +10,7 @@
             ["value-builtin", "value-external"],
             ["value-internal"],
             ["value-parent", "value-sibling", "value-index"],
-            ["ts-equals-import"],
-            ["side-effect"],
+            ["side_effect"],
             ["unknown"]
         ],
         "newlinesBetween": true,

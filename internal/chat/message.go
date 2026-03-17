@@ -15,6 +15,21 @@ type Emote struct {
 	URL   string `json:"url"`
 }
 
+// MessageFragment is a single segment of a chat message — either plain text or an emote/emoji image.
+// Used by YouTube (runs-based) messages. Twitch messages use Text + Emotes instead.
+type MessageFragment struct {
+	Type string `json:"type"` // "text" or "emote"
+	Text string `json:"text"` // display text (plain text content, or emote shortcode like ":_pekoName:")
+	URL  string `json:"url"`  // image URL (only set when Type == "emote")
+}
+
+// SuperChatDetails holds YouTube Super Chat metadata.
+type SuperChatDetails struct {
+	Amount      string `json:"amount"`      // pre-formatted amount string, e.g. "€10.00"
+	HeaderColor string `json:"headerColor"` // ARGB int converted to "#RRGGBB" hex
+	BodyColor   string `json:"bodyColor"`   // ARGB int converted to "#RRGGBB" hex
+}
+
 type ChatMessage struct {
 	ID        string            `json:"id"`
 	Platform  string            `json:"platform"`
@@ -26,4 +41,10 @@ type ChatMessage struct {
 	Timestamp time.Time         `json:"timestamp"`
 	IsAction  bool              `json:"isAction"`
 	Tags      map[string]string `json:"tags"`
+
+	// YouTube-specific fields (zero values for Twitch messages)
+	Avatar          string            `json:"avatar"`          // profile image URL
+	Fragments       []MessageFragment `json:"fragments"`       // structured message segments (text + emotes interleaved)
+	SuperChat       *SuperChatDetails `json:"superChat"`       // non-nil for Super Chat messages
+	MembershipEvent bool              `json:"membershipEvent"` // true for membership join/gift events
 }

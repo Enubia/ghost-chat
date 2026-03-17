@@ -11,6 +11,18 @@ export interface Emote {
     url: string;
 }
 
+export interface MessageFragment {
+    type: 'text' | 'emote';
+    text: string;
+    url: string;
+}
+
+export interface SuperChatDetails {
+    amount: string;
+    headerColor: string;
+    bodyColor: string;
+}
+
 export interface ChatMessage {
     id: string;
     platform: 'twitch' | 'youtube';
@@ -22,4 +34,9 @@ export interface ChatMessage {
     timestamp: string;
     isAction: boolean;
     tags: Record<string, string>;
+    // YouTube-specific (absent / zero-value for Twitch)
+    avatar: string;
+    fragments: MessageFragment[];
+    superChat: SuperChatDetails | null;
+    membershipEvent: boolean;
 }

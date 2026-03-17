@@ -250,42 +250,137 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 ## Phase 4 — YouTube Live Chat (Custom Renderer)
 
-> **Goal**: Fetch YouTube live chat messages from Go, render them alongside Twitch.
+> **Goal**: Fetch YouTube live chat messages via the innertube internal API (no API key required), parse the rich message format, and render them in the overlay with emotes, badges, and Super Chat support.
+>
+> **Approach**: YouTube's internal innertube API (`/youtubei/v1/live_chat/get_live_chat`) — same API the YouTube web UI uses. No API key or OAuth needed. Polling-based with continuation tokens. Unofficial and subject to breaking changes.
 
-### 4.1 YouTube Live Chat client (Go)
-- [ ] Research approach: YouTube Data API v3 `liveChatMessages.list` endpoint
-  - Requires an API key (user provides in settings) or OAuth
-  - Polling-based: fetch, get `nextPageToken` + `pollingIntervalMillis`, repeat
-  - **Alternative**: Scrape the `youtube.com/live_chat` page (fragile but no API key needed) — decide which approach to take
-- [ ] Implement live video ID detection from channel ID:
-  - Fetch `https://www.youtube.com/channel/{channelId}/live` or `https://www.youtube.com/embed/live_stream?channel={channelId}`
-  - Extract video ID from response (regex or HTML parsing)
-  - Retry logic with configurable attempts and delay
-- [ ] Implement chat message polling loop:
-  - `GET https://www.googleapis.com/youtube/v3/liveChat/messages?liveChatId={id}&part=snippet,authorDetails`
-  - Parse response into `ChatMessage` structs
-  - Respect `pollingIntervalMillis` from API response
-  - Handle quota errors gracefully
-- [ ] Implement `ConnectYouTube(channelIdOrVideoId string)`, `DisconnectYouTube()`
-- [ ] **Learn**: `net/http` package, JSON unmarshaling into nested structs, polling with `time.Ticker` + `context`
+### 4.1 Define YouTube innertube types (Go)
 
-### 4.2 YouTube message parser (Go)
-- [ ] Map YouTube API response fields to `ChatMessage`:
-  - `authorDetails.displayName` → username
-  - `snippet.displayMessage` → text
-  - `authorDetails.profileImageUrl` → avatar (new field on ChatMessage)
-  - `authorDetails.isChatOwner`, `isChatModerator` → badges
-  - `snippet.publishedAt` → timestamp
-- [ ] Handle Super Chat / Super Sticker messages (`snippet.superChatDetails`)
-- [ ] Emit via same `chat:message` event with `platform: "youtube"`
+- [ ] Create `internal/chat/youtube/types.go` with raw innertube response structs:
+  - `LiveChatResponse` → `continuationContents.liveChatContinuation` with `actions` + `continuations`
+  - `Action` → `addChatItemAction.item` (polymorphic: one of the renderer keys below)
+  - `LiveChatTextMessageRenderer` — base message renderer:
+    - `Id`, `TimestampUsec string`
+    - `AuthorName struct{ SimpleText string }`
+    - `AuthorExternalChannelId string`
+    - `AuthorPhoto struct{ Thumbnails []Thumbnail }`
+    - `AuthorBadges []AuthorBadge`
+    - `Message struct{ Runs []Run }`
+  - `LiveChatPaidMessageRenderer` — Super Chat (embeds all base fields plus):
+    - `PurchaseAmountText struct{ SimpleText string }` — pre-formatted e.g. `"€10.00"`
+    - `HeaderBackgroundColor`, `BodyBackgroundColor`, `HeaderTextColor`, `BodyTextColor int64` — ARGB
+    - `Message struct{ Runs []Run }` (may be absent for low-tier super chats)
+  - `LiveChatMembershipItemRenderer` — new/gifted member (embeds base fields plus):
+    - `HeaderSubtext struct{ Runs []Run }` — membership tier/milestone text (no `message` field)
+  - `LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer` — gift membership purchased
+  - `Run` — polymorphic text-or-emoji:
+    - `Text string` — plain text segment (also used for standard Unicode emoji)
+    - `Emoji *EmojiRun` — custom emoji segment (nil for text runs)
+  - `EmojiRun`:
+    - `EmojiId string` — format: `{channelId}/{opaqueId}` for custom, plain id for built-in
+    - `IsCustomEmoji bool`
+    - `Shortcuts []string` — shortcodes, e.g. `[":_pekoName:", ":pekoName:"]`
+    - `Image struct{ Thumbnails []Thumbnail; Accessibility AccessibilityData }`
+  - `AuthorBadge → liveChatAuthorBadgeRenderer`:
+    - `Icon *struct{ IconType string }` — for mod/owner/verified: `"MODERATOR"`, `"OWNER"`, `"VERIFIED"`
+    - `CustomThumbnail *struct{ Thumbnails []Thumbnail }` — for member badges (has image URLs)
+    - `Tooltip string` — e.g. `"Moderator"`, `"Member (2 months)"`
+  - `Thumbnail struct{ Url string; Width, Height int }`
+  - `TimedContinuationData struct{ Continuation string; TimeoutMs int }`
+- [ ] **Learn**: Nested struct unmarshaling, pointer fields for optional/polymorphic JSON keys
 
-### 4.3 YouTube settings page (React)
-- [ ] Build YouTube settings form:
-  - Channel ID / Video URL input
-  - API key input (if using Data API approach)
-  - Retry count + fetch delay settings
-  - User blacklist
-- [ ] Auto-detect video ID button (calls Go method that fetches and extracts)
+### 4.2 Innertube HTTP client (Go)
+
+- [ ] Create `internal/chat/youtube/client.go`:
+  - `Client` struct holding `ctx context.Context`, `cancel`, `cfg YtCfg`, `continuation string`, `appCtx *app.Context` (for event emission)
+  - `YtCfg` struct: `InnertubeApiKey`, `InnertubeClientVersion`, `InnertubeClientName string` — extracted from page HTML
+- [ ] Implement `fetchInitialData(videoURL string) (continuation string, cfg YtCfg, err error)`:
+  - `GET https://www.youtube.com/watch?v={videoId}` with browser-like `User-Agent` header
+  - Extract `ytInitialData` JSON blob from HTML (regex: `ytInitialData\s*=\s*({.+?});`)
+  - Extract `ytcfg.set(...)` blob for `INNERTUBE_API_KEY`, `INNERTUBE_CLIENT_VERSION`, `INNERTUBE_CLIENT_NAME`
+  - Navigate `ytInitialData` → `contents.liveChatRenderer.continuations[0].reloadContinuationData.continuation`
+- [ ] Implement `pollChatOnce(continuation string, cfg YtCfg) (messages []ChatMessage, nextContinuation string, timeoutMs int, err error)`:
+  - `POST https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key={apiKey}`
+  - Request body: `{ "continuation": "...", "context": { "client": { "clientName": "...", "clientVersion": "..." } } }`
+  - Headers: `Content-Type: application/json`, browser-like `User-Agent`
+  - Unmarshal response into `LiveChatResponse`
+  - Extract next continuation from `timedContinuationData` or `invalidationContinuationData`
+  - Parse actions into `[]ChatMessage` (call parser)
+  - Return `timeoutMs` from continuation data for adaptive polling interval
+- [ ] Implement `Connect(videoURL string) error` — fetches initial data, starts poll loop goroutine
+- [ ] Implement `Disconnect()` — cancels context, stops goroutine
+- [ ] Poll loop: `time.Sleep(timeoutMs)` between requests, respect continuation timeout, handle errors with exponential backoff
+- [ ] **Learn**: `time.Sleep` with dynamic duration, `context` cancellation in a polling loop
+
+### 4.3 Video ID / channel resolution (Go)
+
+- [ ] Implement `ResolveVideoURL(input string) (videoURL string, err error)` in `internal/chat/youtube/resolve.go`:
+  - Input can be: full `youtube.com/watch?v=...` URL, short `youtu.be/...` URL, channel handle `@channelname`, or channel ID `UCxxxxxxx`
+  - For channel/handle input: fetch `https://www.youtube.com/@{handle}/live` (or `/channel/{id}/live`) and follow redirect / extract canonical video URL
+  - For video URL input: validate and normalise
+  - Return a canonical `https://www.youtube.com/watch?v={videoId}` URL
+- [ ] Expose `ResolveYouTubeVideo(input string) (string, error)` as a bound Go method on `App` for the frontend auto-detect button
+
+### 4.4 YouTube message parser (Go)
+
+- [ ] Create `internal/chat/youtube/parser.go`:
+- [ ] Implement `parseActions(actions []Action) []chat.ChatMessage` — routes each action to the correct sub-parser
+- [ ] Implement `parseTextMessage(r LiveChatTextMessageRenderer) chat.ChatMessage`:
+  - `Platform: "youtube"`
+  - `Id` from `r.Id`
+  - `Username` from `r.AuthorName.SimpleText`
+  - `Color: ""` — YouTube has no user color, leave empty (frontend picks a default)
+  - `Timestamp` from `r.TimestampUsec` (parse microseconds → `time.Time`)
+  - `Avatar` from `r.AuthorPhoto.Thumbnails` — pick 64px URL
+  - `Badges` from `r.AuthorBadges` — see badge parsing below
+  - `Fragments` from `r.Message.Runs` — see fragment parsing below
+- [ ] Implement `parseRuns(runs []Run) []chat.MessageFragment`:
+  - Text run → `chat.MessageFragment{ Type: "text", Text: run.Text }`
+  - Custom emoji run (`IsCustomEmoji: true`) → `chat.MessageFragment{ Type: "emote", Text: shortcuts[0], Url: image.thumbnails[largest].url }`
+  - Built-in YouTube emoji (`IsCustomEmoji: false`, has image) → same as custom but `Type: "emote"`
+- [ ] Implement badge parsing from `[]AuthorBadge`:
+  - `iconType == "OWNER"` → `chat.Badge{ Type: "owner", Title: "Owner" }` (no image URL — frontend uses icon)
+  - `iconType == "MODERATOR"` → `chat.Badge{ Type: "moderator", Title: "Moderator" }`
+  - `iconType == "VERIFIED"` → `chat.Badge{ Type: "verified", Title: "Verified" }`
+  - `customThumbnail` present → `chat.Badge{ Type: "member", Title: badge.Tooltip, Url: thumbnails[largest].url }`
+- [ ] Implement `parsePaidMessage(r LiveChatPaidMessageRenderer) chat.ChatMessage`:
+  - All base fields from `parseTextMessage`
+  - `SuperChat: &chat.SuperChat{ Amount: r.PurchaseAmountText.SimpleText, HeaderColor: argbToHex(r.HeaderBackgroundColor), BodyColor: argbToHex(r.BodyBackgroundColor) }`
+  - `message` runs are optional — set fragments to empty slice if absent
+- [ ] Implement `parseMembership(r LiveChatMembershipItemRenderer) chat.ChatMessage`:
+  - Base fields, no message runs — text from `r.HeaderSubtext.Runs`
+  - `MembershipEvent: true` flag on ChatMessage
+- [ ] Add `SuperChat` and `MembershipEvent` fields to the shared `chat.ChatMessage` struct in `internal/chat/message.go`
+- [ ] Write unit tests with fixture JSON samples for each renderer type (text, paid, membership)
+
+### 4.5 Emit messages to frontend (Go)
+
+- [x] Emit `chat:message` Wails event for each parsed `ChatMessage` (same event as Twitch)
+- [x] Emit `chat:connected` / `chat:disconnected` with `platform: "youtube"`
+- [x] Bind `ConnectYouTube(input string)`, `DisconnectYouTube()` on the `App` struct
+- [x] Disconnect YouTube client in `onBeforeClose`
+
+### 4.6 Extend `ChatMessage` struct (Go)
+
+- [x] Add to `internal/chat/message.go`: `Avatar`, `SuperChat`, `MembershipEvent`, `Fragments`
+- [x] `SuperChatDetails struct{ Amount string; HeaderColor string; BodyColor string }`
+- [x] Twitch parser leaves new fields as zero values
+
+### 4.7 YouTube chat message rendering (React)
+
+- [x] Avatar as circular profile image
+- [x] Member badge image URLs rendered as `<img>`
+- [x] Mod/owner/verified rendered as text badges
+- [x] Custom emoji rendered as `<img>` via fragments
+- [x] Super Chat: colored header band with amount + username, optional colored body
+- [x] Membership event: green left-border banner
+- [x] Platform indicator: small YouTube icon next to username
+
+### 4.8 YouTube settings page (React)
+
+- [x] Channel handle / video URL input with auto-detect button
+- [x] User blacklist
+- [x] Wired to `ConnectYouTube` / `DisconnectYouTube` via Home page
 
 ---
 
@@ -294,30 +389,22 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 > **Goal**: Merge Twitch and YouTube messages into a single unified chat stream.
 
 ### 5.1 Unified message stream
-- [ ] Both Twitch and YouTube emit the same `chat:message` event with the shared `ChatMessage` struct
-- [ ] The chat view already handles both — messages interleave chronologically
-- [ ] Add a small platform indicator on each message (Twitch/YouTube icon)
-- [ ] Add filtering: toggle to show/hide each platform in the combined view
+- [x] Both Twitch and YouTube emit the same `chat:message` event with the shared `ChatMessage` struct
+- [x] The chat view handles both — messages interleave as they arrive
+- [x] Platform indicator on each message (YouTube icon)
+- [x] Add filtering: T / YT toggle pills in chat header, only shown when both platforms connected
 
 ### 5.2 Multi-channel connection management (Go)
-- [ ] Support connecting to Twitch + YouTube simultaneously
-- [ ] Add a `ConnectionManager` that tracks active connections:
-  ```go
-  type ConnectionManager struct {
-      twitch  *twitch.Client
-      youtube *youtube.Client
-  }
-  ```
-- [ ] Expose methods: `GetActiveConnections() []string`, `DisconnectAll()`
-- [ ] Handle errors per-platform without crashing the other
+- [x] Twitch + YouTube connect simultaneously — both clients live on `App` struct, errors are per-platform
+- [ ] `DisconnectAll()` binding — deferred until there's a UI need (tray menu, Phase 7)
 
 ### 5.3 Home page — connection UI (React)
 - [x] Home page with Twitch + YouTube cards (channel input + connect/disconnect)
-- [x] Connection status indicators per platform
+- [x] Connection status indicators per platform — persisted in `connectionStore`, survive navigation
 - [x] "Open Chat" button when at least one platform is connected
 - [x] Loading state on connect button
 - [x] Error display on connection failure
-- [ ] Wire YouTube connect to Go backend (pending Phase 4)
+- [x] YouTube wired to Go backend
 
 ---
 
@@ -493,6 +580,6 @@ These concepts map to specific tasks above. Check them off as you encounter and 
 - [x] **String manipulation**: `strings` package, parsing IRC messages (Phase 3.2)
 - [x] **Sync**: `sync.Mutex`, `sync.RWMutex` for thread-safe shared state (Phase 3.1)
 - [x] **make()**: Initializing maps and slices with size hints (Phase 3.2)
-- [ ] **Channels**: Communicate between goroutines (Phase 4.1)
-- [ ] **Time**: `time.Ticker`, `time.After`, timestamps (Phase 4.1)
+- [x] **Channels**: Communicate between goroutines (Phase 4.2)
+- [x] **Time**: `time.Sleep` with dynamic duration, `time.Time`, microsecond timestamps (Phase 4.2, 4.4)
 - [x] **Modules**: `go.mod`, `go get`, dependency management (Phase 0.3)

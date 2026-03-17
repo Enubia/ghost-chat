@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useConfigStore } from '@/stores/config';
+import { useConnectionStore } from '@/stores/connection';
 import { EventsOn } from '~/wailsjs/runtime/runtime';
 
 import styles from './Chat.module.css';
@@ -33,8 +34,13 @@ export function Chat() {
     const navigate = useNavigate();
     const config = useConfigStore((s) => s.config);
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
-    const [connected, setConnected] = useState(true);
     const [autoScroll, setAutoScroll] = useState(true);
+    const [showTwitch, setShowTwitch] = useState(true);
+    const [showYoutube, setShowYoutube] = useState(true);
+    const twitchConnected = useConnectionStore((s) => s.twitch);
+    const youtubeConnected = useConnectionStore((s) => s.youtube);
+    const connected = twitchConnected || youtubeConnected;
+    const bothConnected = twitchConnected && youtubeConnected;
     const messagesRef = useRef<HTMLDivElement>(null);
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
@@ -70,14 +76,6 @@ export function Chat() {
             });
         });
 
-        const cancelConnected = EventsOn('chat:connected', () => {
-            setConnected(true);
-        });
-
-        const cancelDisconnected = EventsOn('chat:disconnected', () => {
-            setConnected(false);
-        });
-
         const cancelClear = EventsOn('chat:clear', (username: string) => {
             setMessages((prev) => prev.filter((m) => m.username.toLowerCase() !== username.toLowerCase()));
         });
@@ -88,8 +86,6 @@ export function Chat() {
 
         return () => {
             cancelMessage();
-            cancelConnected();
-            cancelDisconnected();
             cancelClear();
             cancelDelete();
         };
@@ -109,6 +105,16 @@ export function Chat() {
         const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
         setAutoScroll(atBottom);
     };
+
+    const visibleMessages = messages.filter((m) => {
+        if (m.platform === 'twitch') {
+            return showTwitch;
+        }
+        if (m.platform === 'youtube') {
+            return showYoutube;
+        }
+        return true;
+    });
 
     return (
         <div className={styles.chat}>
@@ -131,6 +137,24 @@ export function Chat() {
                     </svg>
                     {t('chat.back')}
                 </button>
+                {bothConnected && (
+                    <div className={styles.filters}>
+                        <button
+                            className={`${styles.filterBtn} ${showTwitch ? styles.filterActive : ''}`}
+                            onClick={() => setShowTwitch((v) => !v)}
+                            title="Toggle Twitch messages"
+                        >
+                            T
+                        </button>
+                        <button
+                            className={`${styles.filterBtn} ${showYoutube ? styles.filterActive : ''}`}
+                            onClick={() => setShowYoutube((v) => !v)}
+                            title="Toggle YouTube messages"
+                        >
+                            YT
+                        </button>
+                    </div>
+                )}
                 {!connected && <span className={styles.disconnected}>{t('chat.disconnected')}</span>}
             </div>
             <div
@@ -138,12 +162,12 @@ export function Chat() {
                 className={styles.messages}
                 onScroll={handleScroll}
             >
-                {messages.length === 0 ? (
+                {visibleMessages.length === 0 ? (
                     <div className={styles.empty}>
                         <span>{t('chat.waiting')}</span>
                     </div>
                 ) : (
-                    messages.map((msg) => (
+                    visibleMessages.map((msg) => (
                         <ChatMessage
                             key={msg.id}
                             message={msg}

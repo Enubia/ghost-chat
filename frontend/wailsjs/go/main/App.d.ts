@@ -4,11 +4,17 @@ import {config} from '../models';
 
 export function ConnectTwitch(arg1:string):Promise<void>;
 
+export function ConnectYouTube(arg1:string):Promise<void>;
+
 export function DisconnectTwitch():Promise<void>;
+
+export function DisconnectYouTube():Promise<void>;
 
 export function ExpandForSettings():Promise<void>;
 
 export function GetConfig():Promise<config.Config>;
+
+export function ResolveYouTubeVideo(arg1:string):Promise<string>;
 
 export function ShrinkToChat():Promise<void>;
 

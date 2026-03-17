@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"ghost-chat/internal/chat"
 	"ghost-chat/internal/chat/twitch"
+	"ghost-chat/internal/chat/youtube"
 	"ghost-chat/internal/config"
 
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
@@ -15,6 +16,7 @@ type App struct {
 	config         *config.Config
 	configPath     string
 	twitch         *twitch.Client
+	youtube        *youtube.Client
 	preExpandWidth int
 }
 
@@ -24,20 +26,34 @@ func NewApp(cfg *config.Config, configPath string) *App {
 		configPath: configPath,
 	}
 
-	app.twitch = twitch.NewClient(
-		func(msg chat.ChatMessage) {
-			wailsRuntime.EventsEmit(app.ctx, "chat:message", msg)
-		},
-		func(event string, data any) {
-			wailsRuntime.EventsEmit(app.ctx, event, data)
-		},
-	)
+	onMessage := func(msg chat.ChatMessage) {
+		wailsRuntime.EventsEmit(app.ctx, "chat:message", msg)
+	}
+	onEvent := func(event string, data any) {
+		wailsRuntime.EventsEmit(app.ctx, event, data)
+	}
+
+	app.twitch = twitch.NewClient(onMessage, onEvent)
+	app.youtube = youtube.NewClient(onMessage, onEvent)
 
 	return app
 }
 
+func (a *App) ConnectYouTube(input string) error {
+	return a.youtube.Connect(input)
+}
+
+func (a *App) DisconnectYouTube() {
+	a.youtube.Disconnect()
+}
+
+func (a *App) ResolveYouTubeVideo(input string) (string, error) {
+	return youtube.ResolveVideoURL(input)
+}
+
 func (a *App) onBeforeClose(ctx context.Context) bool {
 	a.twitch.Disconnect()
+	a.youtube.Disconnect()
 
 	x, y := wailsRuntime.WindowGetPosition(a.ctx)
 	w, h := wailsRuntime.WindowGetSize(a.ctx)

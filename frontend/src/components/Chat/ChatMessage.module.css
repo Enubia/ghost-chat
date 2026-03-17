@@ -5,6 +5,16 @@
     padding: 2px 0;
 }
 
+.twitch .platformIcon {
+    opacity: 1;
+    color: #9146ff;
+}
+
+.youtube .platformIcon {
+    opacity: 1;
+    color: #ff0000;
+}
+
 .action {
     font-style: italic;
 }
@@ -61,6 +71,78 @@
     height: 28px;
     vertical-align: middle;
     margin: -4px 1px;
+}
+
+.avatar {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 4px;
+    object-fit: cover;
+}
+
+.platformIcon {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    vertical-align: middle;
+    margin-right: 3px;
+    opacity: 0.45;
+}
+
+.superChatWrapper {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.superChatHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    font-weight: 600;
+}
+
+.superChatUsername {
+    flex: 1;
+    font-size: 13px;
+}
+
+.superChatAmount {
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.superChatBody {
+    padding: 4px 8px 6px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.membershipWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(111, 204, 138, 0.08);
+    border-left: 2px solid var(--color-success);
+    margin: 2px 0;
+}
+
+.membershipUsername {
+    font-weight: 600;
+    color: var(--color-success);
+    white-space: nowrap;
+}
+
+.membershipText {
+    color: var(--color-text-muted);
+    font-size: 13px;
 }
 
 .fade {
