@@ -5,6 +5,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Chat } from '@/components/Chat/Chat';
 import { Home } from '@/components/Home/Home';
 import { Settings } from '@/components/Settings/Settings';
+import { ThemePreview } from '@/components/Settings/ThemePreview';
 import { TitleBar } from '@/components/TitleBar/TitleBar';
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
@@ -15,6 +16,7 @@ import styles from './App.module.css';
 
 function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [settingsTab, setSettingsTab] = useState('general');
     const { i18n } = useTranslation();
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
@@ -71,20 +73,23 @@ function App() {
                 <div className={styles.body}>
                     {settingsOpen && (
                         <div className={styles.settingsPanel}>
-                            <Settings />
+                            <Settings onTabChange={setSettingsTab} />
                         </div>
                     )}
                     <div className={styles.main}>
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={<Home />}
-                            />
-                            <Route
-                                path="/chat"
-                                element={<Chat />}
-                            />
-                        </Routes>
+                        {settingsOpen && settingsTab === 'themes' && <ThemePreview />}
+                        <div style={{ display: settingsOpen && settingsTab === 'themes' ? 'none' : 'contents' }}>
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={<Home />}
+                                />
+                                <Route
+                                    path="/chat"
+                                    element={<Chat />}
+                                />
+                            </Routes>
+                        </div>
                     </div>
                 </div>
             </div>

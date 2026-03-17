@@ -82,19 +82,23 @@ export function getThemeById(id: string, customThemes: Theme[] = []): Theme {
     return BUILT_IN_THEMES.find((t) => t.id === id) ?? customThemes.find((t) => t.id === id) ?? BUILT_IN_THEMES[0];
 }
 
+// Reference font size (14px = Default theme). Slider values for badge/emote/avatar
+// are defined relative to this size and scale proportionally when font_size changes.
+const REF_FONT_SIZE = 14;
+
 export function themeToCSS(theme: Theme): Record<string, string> {
     return {
         '--theme-font-family': theme.font_family,
-        '--theme-font-size': `${theme.font_size}px`,
+        '--theme-font-size': `${theme.font_size || 14}px`,
         '--theme-line-height': String(theme.line_height),
         '--theme-message-bg': theme.message_bg,
         '--theme-message-padding': theme.message_padding,
         '--theme-message-radius': `${theme.message_radius}px`,
         '--theme-message-gap': `${theme.message_gap}px`,
         '--theme-username-weight': String(theme.username_weight),
-        '--theme-badge-size': `${theme.badge_size}px`,
-        '--theme-emote-size': `${theme.emote_size}px`,
-        '--theme-avatar-size': `${theme.avatar_size}px`,
+        '--theme-badge-size': `${(theme.badge_size / REF_FONT_SIZE).toFixed(3)}em`,
+        '--theme-emote-size': `${(theme.emote_size / REF_FONT_SIZE).toFixed(3)}em`,
+        '--theme-avatar-size': `${(theme.avatar_size / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-text-shadow': theme.text_shadow,
         '--theme-text-color': theme.text_color,
     };

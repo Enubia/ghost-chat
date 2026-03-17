@@ -77,6 +77,36 @@
     }
 }
 
+.supportLinks {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.supportText {
+    font-size: 10px;
+    color: var(--color-text-dim);
+    text-align: center;
+    padding-bottom: 2px;
+}
+
+.supportLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
 .placeholder {
     display: flex;
     align-items: center;

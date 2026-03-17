@@ -26,6 +26,7 @@
         "scroll_to_bottom": "Nach unten scrollen"
     },
     "settings": {
+        "support": "Ghost Chat gefällt dir? Unterstütze das Projekt!",
         "tabs": {
             "general": "Allgemein",
             "twitch": "Twitch",
@@ -67,7 +68,31 @@
         },
         "themes": {
             "active_theme": "Aktives Design",
-            "description": "Aktuell wird das {{name}}-Design verwendet."
+            "duplicate": "Duplizieren",
+            "delete": "Entfernen",
+            "name": "Designname",
+            "readonly_hint": "Standarddesigns sind schreibgeschützt. Duplizieren zum Anpassen.",
+            "typography": "Typografie",
+            "font_family": "Schriftart",
+            "font_size": "Schriftgröße",
+            "line_height": "Zeilenhöhe",
+            "message": "Nachricht",
+            "message_bg": "Hintergrund",
+            "message_padding": "Innenabstand",
+            "message_radius": "Eckenradius",
+            "message_gap": "Abstand",
+            "text_color": "Textfarbe",
+            "text_shadow": "Textschatten",
+            "username_section": "Benutzername",
+            "username_weight": "Schriftstärke",
+            "show_colon": "Doppelpunkt anzeigen",
+            "elements": "Elemente",
+            "badge_size": "Abzeichengröße",
+            "emote_size": "Emotegröße",
+            "show_avatars": "Avatare anzeigen",
+            "avatar_size": "Avatargröße",
+            "export": "Exportieren",
+            "import": "Importieren"
         }
     }
 }

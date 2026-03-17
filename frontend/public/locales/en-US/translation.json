@@ -26,6 +26,7 @@
         "scroll_to_bottom": "Scroll to bottom"
     },
     "settings": {
+        "support": "Enjoying Ghost Chat? Consider supporting the project!",
         "tabs": {
             "general": "General",
             "twitch": "Twitch",
@@ -67,7 +68,31 @@
         },
         "themes": {
             "active_theme": "Active Theme",
-            "description": "Currently using the {{name}} theme."
+            "duplicate": "Duplicate",
+            "delete": "Delete",
+            "name": "Theme Name",
+            "readonly_hint": "Built-in themes are read-only. Duplicate to customize.",
+            "typography": "Typography",
+            "font_family": "Font Family",
+            "font_size": "Font Size",
+            "line_height": "Line Height",
+            "message": "Message",
+            "message_bg": "Background",
+            "message_padding": "Padding",
+            "message_radius": "Border Radius",
+            "message_gap": "Spacing",
+            "text_color": "Text Color",
+            "text_shadow": "Text Shadow",
+            "username_section": "Username",
+            "username_weight": "Font Weight",
+            "show_colon": "Show Colon",
+            "elements": "Elements",
+            "badge_size": "Badge Size",
+            "emote_size": "Emote Size",
+            "show_avatars": "Show Avatars",
+            "avatar_size": "Avatar Size",
+            "export": "Export",
+            "import": "Import"
         }
     }
 }

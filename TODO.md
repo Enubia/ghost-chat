@@ -399,48 +399,27 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 > **Goal**: Let users customize how chat messages look.
 
 ### 6.1 Design the theming model
-- [ ] Define what's themeable:
-  - Message layout (badges → username → text, or variations)
-  - Colors (background, text, username, badges)
-  - Font family, size, weight
-  - Badge size and visibility
-  - Message spacing and padding
-  - Fade animation style and timing
-  - Shadow/stroke on text
-  - Rounded corners, borders
-  - Emote size
-- [ ] Store themes as JSON objects in the config (or separate theme files)
-- [ ] Ship 2-3 built-in themes:
-  - **Default**: Clean, minimal (similar to current JChat look)
-  - **Compact**: Smaller spacing, no avatars, dense
-  - **Bubble**: Chat bubbles with rounded backgrounds per message
+
+- [x] `Theme` struct (Go + TS) with 17 properties: font family/size/line-height, message bg/padding/radius/gap, username weight, show colon, badge/emote/avatar sizes, show avatars, text shadow/color
+- [x] `ThemeConfig` in config: `active_theme_id` + `custom_themes[]`
+- [x] 3 built-in themes (frontend constants): Default, Compact, Bubble
 
 ### 6.2 Theme engine (React)
-- [ ] Themes map to CSS custom properties applied to the chat container
-- [ ] `ChatMessage.tsx` uses these CSS variables for all visual properties
-- [ ] Theme switching is instant (just swap the CSS variables)
-- [ ] Example theme structure:
-  ```json
-  {
-    "name": "Default",
-    "font-family": "Inter, sans-serif",
-    "font-size": "14px",
-    "message-bg": "transparent",
-    "username-weight": "bold",
-    "badge-size": "18px",
-    "message-gap": "4px",
-    "fade-enabled": true,
-    "fade-timeout": 30
-  }
-  ```
 
-### 6.3 Theme editor page (React)
-- [ ] Build a visual theme editor at `/settings/themes`:
-  - Live preview panel showing sample chat messages
-  - Controls for each themeable property (color pickers, sliders, font selectors, toggles)
-  - Save/rename/delete themes
-  - Import/export themes as JSON files
-- [ ] Built-in themes are read-only but can be duplicated and customized
+- [x] `themeToCSS()` converts Theme → `--theme-*` CSS custom properties on the messages container
+- [x] `ChatMessage.module.css` uses `var(--theme-*)` for all visual properties
+- [x] Badge/emote/avatar sizes use `em` units (relative to 14px reference) — scale proportionally with font size
+- [x] Messages use `display: flex; align-items: center` for clean element alignment
+- [x] Theme switching is instant (swap CSS vars)
+
+### 6.3 Theme editor (React)
+
+- [x] Full-width live preview panel in the main content area (12 sample messages with real Twitch emotes/badges, YouTube avatars, Kick messages)
+- [x] Controls grouped by section: Typography (font family, size, line height), Message (bg, padding, radius, gap, text color, shadow), Username (weight, show colon), Elements (badge/emote/avatar sizes, show avatars)
+- [x] Sliders for numeric values, text inputs for CSS values, toggles for booleans
+- [x] Duplicate/delete custom themes, rename
+- [x] Import/export as JSON files
+- [x] Built-in themes are read-only — duplicate to customize
 
 ---
 

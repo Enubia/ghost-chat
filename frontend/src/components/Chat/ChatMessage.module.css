@@ -1,5 +1,7 @@
 .message {
-    display: block;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     font-family: var(--theme-font-family, inherit);
     font-size: var(--theme-font-size, 14px);
     line-height: var(--theme-line-height, 1.6);
@@ -38,16 +40,16 @@
 }
 
 .badges {
-    display: inline;
+    display: flex;
+    align-items: center;
+    gap: 2px;
     margin-right: 4px;
-    vertical-align: middle;
 }
 
 .badgeImg {
-    width: var(--theme-badge-size, 18px);
-    height: var(--theme-badge-size, 18px);
+    width: var(--theme-badge-size, 1.286em);
+    height: var(--theme-badge-size, 1.286em);
     margin-right: 2px;
-    vertical-align: middle;
 }
 
 .badge {
@@ -60,7 +62,6 @@
     background: var(--color-surface);
     border-radius: var(--radius-sm);
     color: var(--color-text-muted);
-    vertical-align: middle;
     margin-right: 2px;
 }
 
@@ -71,35 +72,31 @@
 
 .separator {
     color: var(--color-text-muted);
+    margin-right: 0.25em;
 }
 
 .text {
     word-wrap: break-word;
+    min-width: 0;
 }
 
 .emote {
-    display: inline-block;
-    height: var(--theme-emote-size, 28px);
-    vertical-align: middle;
-    margin: -4px 1px;
+    height: var(--theme-emote-size, 2em);
+    margin: -0.4em 1px;
 }
 
 .avatar {
-    display: inline-block;
-    width: var(--theme-avatar-size, 18px);
-    height: var(--theme-avatar-size, 18px);
+    width: var(--theme-avatar-size, 1.286em);
+    height: var(--theme-avatar-size, 1.286em);
     border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 4px;
+    margin-right: 0.3em;
     object-fit: cover;
 }
 
 .platformIcon {
-    display: inline-block;
-    width: 11px;
-    height: 11px;
-    vertical-align: middle;
-    margin-right: 3px;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.2em;
     opacity: 0.45;
 }
 
