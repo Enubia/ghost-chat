@@ -49,6 +49,8 @@
             "channel_placeholder": "@handle, channel ID, or video URL",
             "detect": "Detect",
             "detecting": "Detecting...",
+            "fade": "Fade Messages",
+            "fade_timeout": "Fade Timeout (seconds)",
             "user_blacklist": "User Blacklist",
             "user_blacklist_placeholder": "user1, user2, ..."
         },

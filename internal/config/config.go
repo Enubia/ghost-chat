@@ -34,12 +34,11 @@ type TwitchConfig struct {
 }
 
 type YouTubeConfig struct {
-	ChannelID        string   `json:"channel_id"`
-	DefaultChannelID string   `json:"default_channel_id"`
-	VideoURL         string   `json:"video_url"`
-	Retries          int      `json:"retries"`
-	FetchDelay       int      `json:"fetch_delay"`
-	UserBlacklist    []string `json:"user_blacklist"`
+	ChannelID     string   `json:"channel_id"`
+	VideoURL      string   `json:"video_url"`
+	Fade          bool     `json:"fade"`
+	FadeTimeout   int      `json:"fade_timeout"`
+	UserBlacklist []string `json:"user_blacklist"`
 }
 
 type Config struct {
@@ -53,7 +52,7 @@ type Config struct {
 
 func DefaultConfig() Config {
 	return Config{
-		Version: "1.0.0",
+		Version: "4.0.0",
 		WindowState: WindowState{
 			Width:  400,
 			Height: 600,
@@ -70,8 +69,7 @@ func DefaultConfig() Config {
 			FadeTimeout: 30,
 		},
 		YouTube: YouTubeConfig{
-			Retries:    50,
-			FetchDelay: 5,
+			FadeTimeout: 30,
 		},
 	}
 }

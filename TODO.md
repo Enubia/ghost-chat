@@ -11,14 +11,14 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 For Go code: Claude scaffolds files with type signatures, hints, and tests. I implement the logic. For frontend (React/TS) code: Claude writes it directly.
 
 ### Key changes from the original app
-- **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection, external sources, dark/light theme (single neutral scheme), Mac-specific options
+- **Drop**: JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection, external sources, dark/light theme (single neutral scheme), Mac-specific options
 - **Keep**: Twitch, YouTube, system tray, i18n, global hotkeys, transparent overlay
-- **New**: Custom Twitch IRC chat renderer (Go backend), custom YouTube Live Chat renderer (Go backend), combined multi-platform chat view, user theming/template system, BTTV/FFZ/7TV emote support
+- **New**: Custom Twitch IRC chat renderer (Go backend), custom YouTube Live Chat renderer (Go backend), custom Kick chat renderer (Go backend via Pusher WebSocket), combined multi-platform chat view, user theming/template system, BTTV/FFZ/7TV emote support
 
 ### Architecture shift
 | Concern | Old (Electron) | New (Wails) |
 |---|---|---|
-| Chat data | Loaded via third-party webview URLs | Go backend connects to Twitch IRC + YouTube API, pushes messages to frontend via Wails events |
+| Chat data | Loaded via third-party webview URLs | Go backend connects to Twitch IRC, YouTube innertube poller, and Kick Pusher WebSocket — pushes messages to frontend via Wails events |
 | Rendering | Third-party HTML/CSS in nested `<webview>` | React components render chat messages natively |
 | IPC | `ipcRenderer.invoke` / `ipcMain.handle` | Wails bindings (Go functions callable from JS) + Wails events (bidirectional) |
 | Persistence | `electron-store` (JSON) | Go reads/writes JSON config file |
@@ -256,102 +256,21 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 ### 4.1 Define YouTube innertube types (Go)
 
-- [ ] Create `internal/chat/youtube/types.go` with raw innertube response structs:
-  - `LiveChatResponse` → `continuationContents.liveChatContinuation` with `actions` + `continuations`
-  - `Action` → `addChatItemAction.item` (polymorphic: one of the renderer keys below)
-  - `LiveChatTextMessageRenderer` — base message renderer:
-    - `Id`, `TimestampUsec string`
-    - `AuthorName struct{ SimpleText string }`
-    - `AuthorExternalChannelId string`
-    - `AuthorPhoto struct{ Thumbnails []Thumbnail }`
-    - `AuthorBadges []AuthorBadge`
-    - `Message struct{ Runs []Run }`
-  - `LiveChatPaidMessageRenderer` — Super Chat (embeds all base fields plus):
-    - `PurchaseAmountText struct{ SimpleText string }` — pre-formatted e.g. `"€10.00"`
-    - `HeaderBackgroundColor`, `BodyBackgroundColor`, `HeaderTextColor`, `BodyTextColor int64` — ARGB
-    - `Message struct{ Runs []Run }` (may be absent for low-tier super chats)
-  - `LiveChatMembershipItemRenderer` — new/gifted member (embeds base fields plus):
-    - `HeaderSubtext struct{ Runs []Run }` — membership tier/milestone text (no `message` field)
-  - `LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer` — gift membership purchased
-  - `Run` — polymorphic text-or-emoji:
-    - `Text string` — plain text segment (also used for standard Unicode emoji)
-    - `Emoji *EmojiRun` — custom emoji segment (nil for text runs)
-  - `EmojiRun`:
-    - `EmojiId string` — format: `{channelId}/{opaqueId}` for custom, plain id for built-in
-    - `IsCustomEmoji bool`
-    - `Shortcuts []string` — shortcodes, e.g. `[":_pekoName:", ":pekoName:"]`
-    - `Image struct{ Thumbnails []Thumbnail; Accessibility AccessibilityData }`
-  - `AuthorBadge → liveChatAuthorBadgeRenderer`:
-    - `Icon *struct{ IconType string }` — for mod/owner/verified: `"MODERATOR"`, `"OWNER"`, `"VERIFIED"`
-    - `CustomThumbnail *struct{ Thumbnails []Thumbnail }` — for member badges (has image URLs)
-    - `Tooltip string` — e.g. `"Moderator"`, `"Member (2 months)"`
-  - `Thumbnail struct{ Url string; Width, Height int }`
-  - `TimedContinuationData struct{ Continuation string; TimeoutMs int }`
-- [ ] **Learn**: Nested struct unmarshaling, pointer fields for optional/polymorphic JSON keys
+- [x] `internal/chat/youtube/types.go` — full innertube response structs: `LiveChatResponse`, `Action`, `ChatItem`, all renderer types, `Run`, `Emoji`, `AuthorBadge`, `BadgeIcon`, `Thumbnail`, `Continuation`, `TimedContinuationData`
 
 ### 4.2 Innertube HTTP client (Go)
 
-- [ ] Create `internal/chat/youtube/client.go`:
-  - `Client` struct holding `ctx context.Context`, `cancel`, `cfg YtCfg`, `continuation string`, `appCtx *app.Context` (for event emission)
-  - `YtCfg` struct: `InnertubeApiKey`, `InnertubeClientVersion`, `InnertubeClientName string` — extracted from page HTML
-- [ ] Implement `fetchInitialData(videoURL string) (continuation string, cfg YtCfg, err error)`:
-  - `GET https://www.youtube.com/watch?v={videoId}` with browser-like `User-Agent` header
-  - Extract `ytInitialData` JSON blob from HTML (regex: `ytInitialData\s*=\s*({.+?});`)
-  - Extract `ytcfg.set(...)` blob for `INNERTUBE_API_KEY`, `INNERTUBE_CLIENT_VERSION`, `INNERTUBE_CLIENT_NAME`
-  - Navigate `ytInitialData` → `contents.liveChatRenderer.continuations[0].reloadContinuationData.continuation`
-- [ ] Implement `pollChatOnce(continuation string, cfg YtCfg) (messages []ChatMessage, nextContinuation string, timeoutMs int, err error)`:
-  - `POST https://www.youtube.com/youtubei/v1/live_chat/get_live_chat?key={apiKey}`
-  - Request body: `{ "continuation": "...", "context": { "client": { "clientName": "...", "clientVersion": "..." } } }`
-  - Headers: `Content-Type: application/json`, browser-like `User-Agent`
-  - Unmarshal response into `LiveChatResponse`
-  - Extract next continuation from `timedContinuationData` or `invalidationContinuationData`
-  - Parse actions into `[]ChatMessage` (call parser)
-  - Return `timeoutMs` from continuation data for adaptive polling interval
-- [ ] Implement `Connect(videoURL string) error` — fetches initial data, starts poll loop goroutine
-- [ ] Implement `Disconnect()` — cancels context, stops goroutine
-- [ ] Poll loop: `time.Sleep(timeoutMs)` between requests, respect continuation timeout, handle errors with exponential backoff
-- [ ] **Learn**: `time.Sleep` with dynamic duration, `context` cancellation in a polling loop
+- [x] `internal/chat/youtube/client.go` — `Client` struct, `Connect`, `Disconnect`, `pollLoop` with adaptive interval + exponential backoff, `fetchInitialData` (HTML scrape for continuation token + ytcfg field extraction), `pollChatOnce`, `buildPollRequestBody`, `extractContinuation`, `navigateJSON`, `extractJSONObject`, `extractStringField`
 
 ### 4.3 Video ID / channel resolution (Go)
 
-- [ ] Implement `ResolveVideoURL(input string) (videoURL string, err error)` in `internal/chat/youtube/resolve.go`:
-  - Input can be: full `youtube.com/watch?v=...` URL, short `youtu.be/...` URL, channel handle `@channelname`, or channel ID `UCxxxxxxx`
-  - For channel/handle input: fetch `https://www.youtube.com/@{handle}/live` (or `/channel/{id}/live`) and follow redirect / extract canonical video URL
-  - For video URL input: validate and normalise
-  - Return a canonical `https://www.youtube.com/watch?v={videoId}` URL
-- [ ] Expose `ResolveYouTubeVideo(input string) (string, error)` as a bound Go method on `App` for the frontend auto-detect button
+- [x] `internal/chat/youtube/resolve.go` — `ResolveVideoURL` handles `@handle`, channel ID, `youtu.be/`, watch URL, channel URL; `resolveLiveURL` fetches `/live` page, checks redirect URL then scans HTML for video ID via regex
+- [x] `ResolveYouTubeVideo` bound on `App` for frontend auto-detect button
 
 ### 4.4 YouTube message parser (Go)
 
-- [ ] Create `internal/chat/youtube/parser.go`:
-- [ ] Implement `parseActions(actions []Action) []chat.ChatMessage` — routes each action to the correct sub-parser
-- [ ] Implement `parseTextMessage(r LiveChatTextMessageRenderer) chat.ChatMessage`:
-  - `Platform: "youtube"`
-  - `Id` from `r.Id`
-  - `Username` from `r.AuthorName.SimpleText`
-  - `Color: ""` — YouTube has no user color, leave empty (frontend picks a default)
-  - `Timestamp` from `r.TimestampUsec` (parse microseconds → `time.Time`)
-  - `Avatar` from `r.AuthorPhoto.Thumbnails` — pick 64px URL
-  - `Badges` from `r.AuthorBadges` — see badge parsing below
-  - `Fragments` from `r.Message.Runs` — see fragment parsing below
-- [ ] Implement `parseRuns(runs []Run) []chat.MessageFragment`:
-  - Text run → `chat.MessageFragment{ Type: "text", Text: run.Text }`
-  - Custom emoji run (`IsCustomEmoji: true`) → `chat.MessageFragment{ Type: "emote", Text: shortcuts[0], Url: image.thumbnails[largest].url }`
-  - Built-in YouTube emoji (`IsCustomEmoji: false`, has image) → same as custom but `Type: "emote"`
-- [ ] Implement badge parsing from `[]AuthorBadge`:
-  - `iconType == "OWNER"` → `chat.Badge{ Type: "owner", Title: "Owner" }` (no image URL — frontend uses icon)
-  - `iconType == "MODERATOR"` → `chat.Badge{ Type: "moderator", Title: "Moderator" }`
-  - `iconType == "VERIFIED"` → `chat.Badge{ Type: "verified", Title: "Verified" }`
-  - `customThumbnail` present → `chat.Badge{ Type: "member", Title: badge.Tooltip, Url: thumbnails[largest].url }`
-- [ ] Implement `parsePaidMessage(r LiveChatPaidMessageRenderer) chat.ChatMessage`:
-  - All base fields from `parseTextMessage`
-  - `SuperChat: &chat.SuperChat{ Amount: r.PurchaseAmountText.SimpleText, HeaderColor: argbToHex(r.HeaderBackgroundColor), BodyColor: argbToHex(r.BodyBackgroundColor) }`
-  - `message` runs are optional — set fragments to empty slice if absent
-- [ ] Implement `parseMembership(r LiveChatMembershipItemRenderer) chat.ChatMessage`:
-  - Base fields, no message runs — text from `r.HeaderSubtext.Runs`
-  - `MembershipEvent: true` flag on ChatMessage
-- [ ] Add `SuperChat` and `MembershipEvent` fields to the shared `chat.ChatMessage` struct in `internal/chat/message.go`
-- [ ] Write unit tests with fixture JSON samples for each renderer type (text, paid, membership)
+- [x] `internal/chat/youtube/parser.go` — `parseActions`, `parseTextMessage`, `parsePaidMessage`, `parseMembership`, `parseRuns`, `flattenRuns`, `parseBadges`, `parseTimestampUsec`, `argbToHex`, `largestThumbnail`
+- [x] Unit tests for all parser functions with inline fixture data (`parser_test.go`)
 
 ### 4.5 Emit messages to frontend (Go)
 
@@ -379,6 +298,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 ### 4.8 YouTube settings page (React)
 
 - [x] Channel handle / video URL input with auto-detect button
+- [x] Fade toggle + fade timeout (mirrors Twitch settings)
 - [x] User blacklist
 - [x] Wired to `ConnectYouTube` / `DisconnectYouTube` via Home page
 
@@ -405,6 +325,126 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [x] Loading state on connect button
 - [x] Error display on connection failure
 - [x] YouTube wired to Go backend
+
+---
+
+## Phase 5.5 — Kick Chat
+
+> **Goal**: Connect to Kick.com live chat via the Pusher WebSocket (no API key required), parse messages, and render them in the overlay alongside Twitch and YouTube.
+>
+> **Approach**: Kick's web frontend uses Pusher (`wss://ws-us2.pusher.com`, app key `32cbd69e4b950bf97679`, cluster `us2`). Subscribe to `chatrooms.{chatroomID}.v2`, receive `App\\Events\\ChatMessageEvent` events. No authentication needed for read-only access. Chatroom ID resolved from `GET https://kick.com/api/v1/channels/{slug}`.
+>
+> **Note**: Unofficial — Kick could change their Pusher key or channel scheme at any time.
+
+### 5.5.1 Define Kick types (Go)
+
+- [ ] Create `internal/chat/kick/types.go` with Pusher protocol and message structs:
+  - `PusherMessage struct{ Event string; Data string; Channel string }` — outer Pusher envelope (data is a JSON string, must be double-decoded)
+  - `KickChatMessage` — inner payload of `App\\Events\\ChatMessageEvent`:
+    - `ID string`, `ChatroomID int`, `Content string`, `Type string`, `CreatedAt string`
+    - `Sender KickSender`
+  - `KickSender`:
+    - `ID int`, `Username string`, `Slug string`
+    - `Identity *KickIdentity` (nil for users with no color/badges set)
+  - `KickIdentity`:
+    - `Color string` — hex string e.g. `"#FF5733"`
+    - `Badges []KickBadge`
+  - `KickBadge`:
+    - `Type string` — `"moderator"`, `"subscriber"`, `"sub_gifter"`, `"verified"`, `"broadcaster"`, `"og"`
+    - `Text string` — display label e.g. `"Moderator"`
+    - `Count int` — for `sub_gifter` and `subscriber` (months)
+  - `ChannelResponse struct{ Chatroom struct{ ID int } }` — for channel resolution API
+
+### 5.5.2 Channel resolution (Go)
+
+- [ ] Create `internal/chat/kick/resolve.go`:
+- [ ] Implement `ResolveChannelSlug(input string) (slug string, err error)`:
+  - Strip `https://kick.com/` prefix if present, lowercase, trim spaces
+  - Return the bare slug (e.g. `"xqc"`)
+- [ ] Implement `FetchChatroomID(slug string) (int, error)`:
+  - `GET https://kick.com/api/v1/channels/{slug}`
+  - Must send browser-like headers (`User-Agent`, `Accept`, `Referer: https://kick.com/`, `Origin: https://kick.com`) to pass Cloudflare
+  - Unmarshal into `ChannelResponse`, return `chatroom.id`
+
+### 5.5.3 Pusher WebSocket client (Go)
+
+- [ ] Create `internal/chat/kick/client.go`:
+- [ ] `Client` struct: `ctx`, `cancel`, `conn *websocket.Conn`, `mu sync.Mutex`, `OnMessage`, `OnEvent`
+- [ ] Implement `Connect(input string) error`:
+  1. Call `ResolveChannelSlug(input)` → slug
+  2. Call `FetchChatroomID(slug)` → chatroom ID
+  3. Dial `wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false` with browser User-Agent
+  4. Wait for `pusher:connection_established` message
+  5. Send subscribe: `{"event":"pusher:subscribe","data":{"auth":"","channel":"chatrooms.{id}.v2"}}`
+  6. Emit `chat:connected` with `platform: "kick"`
+  7. Start `go readLoop()` and `go heartbeatLoop()`
+- [ ] Implement `Disconnect()` — cancel context, close conn, emit `chat:disconnected`
+- [ ] Implement `readLoop()`:
+  - Read Pusher messages, decode outer `PusherMessage`
+  - On `pusher:ping` → reply `pusher:pong`
+  - On `App\\Events\\ChatMessageEvent` → double-decode `data` field, parse, call `OnMessage`
+  - On disconnect → reconnect with exponential backoff (same pattern as Twitch client)
+- [ ] Implement `heartbeatLoop()`:
+  - Every 30s send `{"event":"pusher:ping","data":{}}`
+  - Stop on ctx cancel
+- [ ] `NewClient(onMessage, onEvent)` constructor
+
+### 5.5.4 Message parser (Go)
+
+- [ ] Create `internal/chat/kick/parser.go`:
+- [ ] Implement `parseMessage(km KickChatMessage) chat.ChatMessage`:
+  - `Platform: "kick"`, `ID: km.ID`, `Username: km.Sender.Username`
+  - `Color`: from `km.Sender.Identity.Color` (or `""` if Identity is nil)
+  - `Timestamp`: parse `km.CreatedAt` ISO 8601 → `time.Time`
+  - `Badges`: from `km.Sender.Identity.Badges` → `parseBadges()`
+  - `Fragments` + `Text`: from `km.Content` → `parseContent()`
+- [ ] Implement `parseContent(content string) ([]chat.MessageFragment, string)`:
+  - Scan for `[emote:{id}:{name}]` tokens using a regex
+  - Interleave text fragments and emote fragments
+  - Emote image URL: `https://files.kick.com/emotes/{id}/fullsize`
+  - Return both `[]MessageFragment` (for rich rendering) and plain-text string (for `Text` field)
+- [ ] Implement `parseBadges(badges []KickBadge) []chat.Badge`:
+  - Map badge types to `chat.Badge{Name: type, Version: text}`
+  - No image URLs available in the payload — frontend renders these as text badges (same fallback path already exists in `ChatMessage.tsx`)
+- [ ] Write unit tests with fixture payloads for `parseContent` (plain text, single emote, multiple emotes, emote at start/end)
+
+### 5.5.5 Wire to app (Go)
+
+- [ ] Add `kick *kick.Client` field to `App` struct in `app.go`
+- [ ] Initialize in `NewApp` with same `onMessage`/`onEvent` callbacks
+- [ ] Add bound methods: `ConnectKick(input string) error`, `DisconnectKick()`
+- [ ] Disconnect in `onBeforeClose`
+
+### 5.5.6 Wails bindings + connection store (Frontend)
+
+- [ ] Add `ConnectKick`, `DisconnectKick` to `frontend/wailsjs/go/main/App.js` and `App.d.ts`
+- [ ] Add `kick: boolean` and `kickInput: string` to `connectionStore.ts`
+- [ ] Handle `platform: "kick"` in `App.tsx` event listener (`chat:connected` / `chat:disconnected`)
+
+### 5.5.7 Home page — Kick card (React)
+
+- [ ] Add a Kick card to `Home.tsx` (same layout as Twitch/YouTube cards):
+  - Kick logo/icon
+  - Channel slug input (placeholder: `channelname`)
+  - Connect/Disconnect button wired to `ConnectKick`/`DisconnectKick`
+  - Connection status indicator
+- [ ] Add Kick to the `bothConnected` → filter pill logic in `Chat.tsx` (extend to three-way: T / YT / K)
+
+### 5.5.8 Chat message rendering (React)
+
+- [ ] Add `platform === 'kick'` color to `ChatMessage.module.css` (Kick green: `#53fc18`)
+- [ ] Add `KickIcon` SVG and include it in `PlatformIcon`
+- [ ] Kick messages use `fragments` for emotes — already handled by `renderFragments`
+- [ ] Badges render as text fallback — already handled by `BadgeList`
+
+### 5.5.9 Kick settings page (React)
+
+- [ ] Build `KickSettings.tsx`:
+  - Default channel slug input (save on blur)
+  - User blacklist
+- [ ] Add "Kick" tab to `Settings.tsx` tab nav
+- [ ] Add `kick` config section to Go `Config` struct and `DefaultConfig()`
+- [ ] Update Wails-generated `models.ts` (run `wails dev` to regenerate, or update manually)
 
 ---
 
@@ -551,8 +591,11 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [ ] Detect old config location on startup, offer to migrate
 
 ### 10.2 Update CLAUDE.md
-- [ ] Rewrite CLAUDE.md for the new Go + Wails + React architecture
+- [ ] Update project structure diagram (add `kick/`, remove placeholder `hotkey/` and `tray/` dirs)
 - [ ] Document new commands, project structure, conventions
+
+### 10.4 Config cleanup
+- [x] Remove stale `YouTubeConfig` fields (`retries`, `fetch_delay`, `default_channel_id`) — migrated in v4.0.0
 
 ### 10.3 Update README and CONTRIBUTING
 - [ ] Update prerequisites (Go, Wails CLI instead of Node + Electron)

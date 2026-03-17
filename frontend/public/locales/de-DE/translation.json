@@ -49,6 +49,8 @@
             "channel_placeholder": "@handle, Kanal-ID oder Video-URL",
             "detect": "Erkennen",
             "detecting": "Erkenne...",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
             "user_blacklist": "Benutzer-Sperrliste",
             "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
         },

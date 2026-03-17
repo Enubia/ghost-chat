@@ -27,8 +27,8 @@ func TestLoadReturnsDefaultsWhenMissing(t *testing.T) {
 		t.Errorf("got %v, want %v", config.WindowState.Width, defaultConfig.WindowState.Width)
 	}
 
-	if config.YouTube.Retries != defaultConfig.YouTube.Retries {
-		t.Errorf("got %v, want %v", config.YouTube.Retries, defaultConfig.YouTube.Retries)
+	if config.YouTube.FadeTimeout != defaultConfig.YouTube.FadeTimeout {
+		t.Errorf("got %v, want %v", config.YouTube.FadeTimeout, defaultConfig.YouTube.FadeTimeout)
 	}
 }
 

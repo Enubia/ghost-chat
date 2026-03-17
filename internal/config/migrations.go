@@ -11,7 +11,19 @@ type Migration struct {
 	Migrate func(*Config)
 }
 
-var migrations = []Migration{}
+var migrations = []Migration{
+	{
+		// Remove stale YouTubeConfig fields (retries, fetch_delay, default_channel_id)
+		// that were left over from the old YouTube Data API approach.
+		// Add youtube.fade and youtube.fade_timeout with sensible defaults.
+		Version: "4.0.0",
+		Migrate: func(cfg *Config) {
+			if cfg.YouTube.FadeTimeout == 0 {
+				cfg.YouTube.FadeTimeout = 30
+			}
+		},
+	},
+}
 
 func parseSemver(version string) (major, minor, patch int, err error) {
 	parts := strings.Split(version, ".")

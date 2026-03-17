@@ -2,23 +2,21 @@ export namespace config {
 	
 	export class YouTubeConfig {
 	    channel_id: string;
-	    default_channel_id: string;
 	    video_url: string;
-	    retries: number;
-	    fetch_delay: number;
+	    fade: boolean;
+	    fade_timeout: number;
 	    user_blacklist: string[];
-	
+
 	    static createFrom(source: any = {}) {
 	        return new YouTubeConfig(source);
 	    }
-	
+
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.channel_id = source["channel_id"];
-	        this.default_channel_id = source["default_channel_id"];
 	        this.video_url = source["video_url"];
-	        this.retries = source["retries"];
-	        this.fetch_delay = source["fetch_delay"];
+	        this.fade = source["fade"];
+	        this.fade_timeout = source["fade_timeout"];
 	        this.user_blacklist = source["user_blacklist"];
 	    }
 	}

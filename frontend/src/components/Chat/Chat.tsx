@@ -45,8 +45,10 @@ export function Chat() {
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
     const showTimestamp = config?.general?.show_timestamps ?? false;
-    const fade = config?.twitch?.fade ?? false;
-    const fadeTimeout = config?.twitch?.fade_timeout ?? 30;
+    const twitchFade = config?.twitch?.fade ?? false;
+    const twitchFadeTimeout = config?.twitch?.fade_timeout ?? 30;
+    const youtubeFade = config?.youtube?.fade ?? false;
+    const youtubeFadeTimeout = config?.youtube?.fade_timeout ?? 30;
 
     useEffect(() => {
         const cancelMessage = EventsOn('chat:message', (msg: ChatMessageType) => {
@@ -173,8 +175,8 @@ export function Chat() {
                             message={msg}
                             hideBadges={hideBadges}
                             showTimestamp={showTimestamp}
-                            fade={fade}
-                            fadeTimeout={fadeTimeout}
+                            fade={msg.platform === 'youtube' ? youtubeFade : twitchFade}
+                            fadeTimeout={msg.platform === 'youtube' ? youtubeFadeTimeout : twitchFadeTimeout}
                             onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                         />
                     ))

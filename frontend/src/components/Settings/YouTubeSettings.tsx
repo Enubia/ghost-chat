@@ -4,6 +4,7 @@ import type { config } from '~/wailsjs/go/models';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 import { ResolveYouTubeVideo } from '~/wailsjs/go/main/App';
 
@@ -89,6 +90,26 @@ export function YouTubeSettings() {
                     </span>
                 )}
             </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.youtube.fade')}</label>
+                <Toggle
+                    checked={yt?.fade ?? false}
+                    onChange={(v) => set({ fade: v })}
+                />
+            </div>
+
+            {yt?.fade && (
+                <div className="field">
+                    <label className="field-label">{t('settings.youtube.fade_timeout')}</label>
+                    <input
+                        type="number"
+                        value={yt?.fade_timeout ?? 30}
+                        onChange={(e) => set({ fade_timeout: Number(e.target.value) })}
+                        min={1}
+                    />
+                </div>
+            )}
 
             <div className="field">
                 <label className="field-label">{t('settings.youtube.user_blacklist')}</label>
