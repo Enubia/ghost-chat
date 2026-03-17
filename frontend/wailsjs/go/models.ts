@@ -1,19 +1,5 @@
 export namespace config {
 	
-	export class ExternalConfig {
-	    default_url: string;
-	    sources: string[];
-	
-	    static createFrom(source: any = {}) {
-	        return new ExternalConfig(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.default_url = source["default_url"];
-	        this.sources = source["sources"];
-	    }
-	}
 	export class YouTubeConfig {
 	    channel_id: string;
 	    default_channel_id: string;
@@ -147,7 +133,6 @@ export namespace config {
 	    keybinds: Keybinds;
 	    twitch: TwitchConfig;
 	    youtube: YouTubeConfig;
-	    external: ExternalConfig;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -161,7 +146,6 @@ export namespace config {
 	        this.keybinds = this.convertValues(source["keybinds"], Keybinds);
 	        this.twitch = this.convertValues(source["twitch"], TwitchConfig);
 	        this.youtube = this.convertValues(source["youtube"], YouTubeConfig);
-	        this.external = this.convertValues(source["external"], ExternalConfig);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -182,7 +166,6 @@ export namespace config {
 		    return a;
 		}
 	}
-	
 	
 	
 	

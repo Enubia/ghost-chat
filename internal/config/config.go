@@ -42,19 +42,13 @@ type YouTubeConfig struct {
 	UserBlacklist    []string `json:"user_blacklist"`
 }
 
-type ExternalConfig struct {
-	DefaultURL string   `json:"default_url"`
-	Sources    []string `json:"sources"`
-}
-
 type Config struct {
-	Version     string         `json:"version"`
-	WindowState WindowState    `json:"window_state"`
-	General     General        `json:"general"`
-	Keybinds    Keybinds       `json:"keybinds"`
-	Twitch      TwitchConfig   `json:"twitch"`
-	YouTube     YouTubeConfig  `json:"youtube"`
-	External    ExternalConfig `json:"external"`
+	Version     string        `json:"version"`
+	WindowState WindowState   `json:"window_state"`
+	General     General       `json:"general"`
+	Keybinds    Keybinds      `json:"keybinds"`
+	Twitch      TwitchConfig  `json:"twitch"`
+	YouTube     YouTubeConfig `json:"youtube"`
 }
 
 func DefaultConfig() Config {
@@ -79,6 +73,5 @@ func DefaultConfig() Config {
 			Retries:    50,
 			FetchDelay: 5,
 		},
-		External: ExternalConfig{},
 	}
 }

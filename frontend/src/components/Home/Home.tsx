@@ -11,7 +11,6 @@ import styles from './Home.module.css';
 interface PlatformState {
     twitch: { channel: string; connected: boolean };
     youtube: { channelId: string; connected: boolean };
-    external: { url: string; connected: boolean };
 }
 
 export function Home() {
@@ -21,12 +20,11 @@ export function Home() {
     const [platforms, setPlatforms] = useState<PlatformState>({
         twitch: { channel: config?.twitch?.default_channel ?? '', connected: false },
         youtube: { channelId: config?.youtube?.default_channel_id ?? '', connected: false },
-        external: { url: config?.external?.default_url ?? '', connected: false },
     });
     const [error, setError] = useState<string | null>(null);
     const [connecting, setConnecting] = useState(false);
 
-    const anyConnected = platforms.twitch.connected || platforms.youtube.connected || platforms.external.connected;
+    const anyConnected = platforms.twitch.connected || platforms.youtube.connected;
 
     const handleTwitchToggle = async () => {
         setError(null);
@@ -46,10 +44,10 @@ export function Home() {
         }
     };
 
-    const handleConnect = (platform: 'youtube' | 'external') => {
+    const handleYouTubeToggle = () => {
         setPlatforms((prev) => ({
             ...prev,
-            [platform]: { ...prev[platform], connected: !prev[platform].connected },
+            youtube: { ...prev.youtube, connected: !prev.youtube.connected },
         }));
     };
 
@@ -116,58 +114,10 @@ export function Home() {
                     />
                     <button
                         className={`btn ${platforms.youtube.connected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={() => handleConnect('youtube')}
+                        onClick={handleYouTubeToggle}
                         disabled={!platforms.youtube.channelId}
                     >
                         {platforms.youtube.connected ? t('home.disconnect') : t('home.connect')}
-                    </button>
-                </div>
-
-                <div className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <span className={styles.platformLabel}>
-                            <svg
-                                className={styles.platformIcon}
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                />
-                                <line
-                                    x1="2"
-                                    y1="12"
-                                    x2="22"
-                                    y2="12"
-                                />
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>
-                            {t('home.external')}
-                        </span>
-                        <span className={`${styles.status} ${platforms.external.connected ? styles.connected : ''}`} />
-                    </div>
-                    <input
-                        type="url"
-                        placeholder={t('home.placeholder.url')}
-                        value={platforms.external.url}
-                        onChange={(e) =>
-                            setPlatforms((p) => ({ ...p, external: { ...p.external, url: e.target.value } }))
-                        }
-                    />
-                    <button
-                        className={`btn ${platforms.external.connected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={() => handleConnect('external')}
-                        disabled={!platforms.external.url}
-                    >
-                        {platforms.external.connected ? t('home.disconnect') : t('home.connect')}
                     </button>
                 </div>
             </div>

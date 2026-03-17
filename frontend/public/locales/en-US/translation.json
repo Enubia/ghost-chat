@@ -7,15 +7,13 @@
     "home": {
         "twitch": "Twitch",
         "youtube": "YouTube",
-        "external": "External",
         "connect": "Connect",
         "connecting": "Connecting...",
         "disconnect": "Disconnect",
         "open_chat": "Open Chat",
         "placeholder": {
             "channel": "Channel name",
-            "channel_id": "Channel ID",
-            "url": "URL"
+            "channel_id": "Channel ID"
         }
     },
     "chat": {
@@ -29,7 +27,6 @@
             "general": "General",
             "twitch": "Twitch",
             "youtube": "YouTube",
-            "external": "External",
             "themes": "Themes"
         },
         "general": {
@@ -54,11 +51,6 @@
             "fetch_delay": "Fetch Delay (seconds)",
             "user_blacklist": "User Blacklist",
             "user_blacklist_placeholder": "user1, user2, ..."
-        },
-        "external": {
-            "default_url": "Default URL",
-            "sources": "Sources",
-            "sources_placeholder": "https://url1.com, https://url2.com"
         },
         "themes": {
             "coming_soon": "Theme editor coming soon"

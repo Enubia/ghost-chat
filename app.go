@@ -11,10 +11,11 @@ import (
 )
 
 type App struct {
-	ctx        context.Context
-	config     *config.Config
-	configPath string
-	twitch     *twitch.Client
+	ctx            context.Context
+	config         *config.Config
+	configPath     string
+	twitch         *twitch.Client
+	preExpandWidth int
 }
 
 func NewApp(cfg *config.Config, configPath string) *App {
@@ -44,7 +45,11 @@ func (a *App) onBeforeClose(ctx context.Context) bool {
 	a.config.WindowState.X = x
 	a.config.WindowState.Y = y
 
-	a.config.WindowState.Width = w
+	if a.preExpandWidth > 0 {
+		a.config.WindowState.Width = a.preExpandWidth
+	} else {
+		a.config.WindowState.Width = w
+	}
 	a.config.WindowState.Height = h
 
 	if err := config.Save(a.config, a.configPath); err != nil {
@@ -90,11 +95,16 @@ func (a *App) DisconnectTwitch() {
 }
 
 func (a *App) ExpandForSettings() {
-	_, h := wailsRuntime.WindowGetSize(a.ctx)
+	w, h := wailsRuntime.WindowGetSize(a.ctx)
+	a.preExpandWidth = w
 	wailsRuntime.WindowSetSize(a.ctx, 1000, h)
 }
 
 func (a *App) ShrinkToChat() {
 	_, h := wailsRuntime.WindowGetSize(a.ctx)
-	wailsRuntime.WindowSetSize(a.ctx, a.config.WindowState.Width, h)
+	width := a.preExpandWidth
+	if width == 0 {
+		width = a.config.WindowState.Width
+	}
+	wailsRuntime.WindowSetSize(a.ctx, width, h)
 }
