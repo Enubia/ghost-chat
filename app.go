@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"ghost-chat/internal/chat"
+	"ghost-chat/internal/chat/twitch"
 	"ghost-chat/internal/config"
-	"runtime"
 
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -13,25 +14,35 @@ type App struct {
 	ctx        context.Context
 	config     *config.Config
 	configPath string
+	twitch     *twitch.Client
 }
 
 func NewApp(cfg *config.Config, configPath string) *App {
-	return &App{
+	app := &App{
 		config:     cfg,
 		configPath: configPath,
 	}
+
+	app.twitch = twitch.NewClient(
+		func(msg chat.ChatMessage) {
+			wailsRuntime.EventsEmit(app.ctx, "chat:message", msg)
+		},
+		func(event string, data any) {
+			wailsRuntime.EventsEmit(app.ctx, event, data)
+		},
+	)
+
+	return app
 }
 
 func (a *App) onBeforeClose(ctx context.Context) bool {
+	a.twitch.Disconnect()
+
 	x, y := wailsRuntime.WindowGetPosition(a.ctx)
 	w, h := wailsRuntime.WindowGetSize(a.ctx)
 
-	// skip position on linux
-	// we can't be sure if the user isn't using a tiling window manager
-	if runtime.GOOS != "linux" {
-		a.config.WindowState.X = x
-		a.config.WindowState.Y = y
-	}
+	a.config.WindowState.X = x
+	a.config.WindowState.Y = y
 
 	a.config.WindowState.Width = w
 	a.config.WindowState.Height = h
@@ -47,18 +58,10 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
 	if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-		if runtime.GOOS != "linux" {
-			// skip position on linux
-			// we can't be sure if the user isn't using a tiling window manager
-			wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
-		}
+		wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
 	}
 
 	wailsRuntime.WindowShow(a.ctx)
-
-	wailsRuntime.EventsOn(a.ctx, "test:from-frontend", func(optionalData ...any) {
-		fmt.Println(optionalData)
-	})
 }
 
 func (a *App) GetConfig() *config.Config {
@@ -76,6 +79,14 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 	}
 
 	return nil
+}
+
+func (a *App) ConnectTwitch(channel string) error {
+	return a.twitch.Connect(channel)
+}
+
+func (a *App) DisconnectTwitch() {
+	a.twitch.Disconnect()
 }
 
 func (a *App) ExpandForSettings() {

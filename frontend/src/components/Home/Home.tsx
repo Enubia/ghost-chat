@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import twitchIcon from '@/assets/brands/twitch.png';
 import { useConfigStore } from '@/stores/config';
+import { ConnectTwitch, DisconnectTwitch } from '~/wailsjs/go/main/App';
 
 import styles from './Home.module.css';
 
@@ -22,10 +23,30 @@ export function Home() {
         youtube: { channelId: config?.youtube?.default_channel_id ?? '', connected: false },
         external: { url: config?.external?.default_url ?? '', connected: false },
     });
+    const [error, setError] = useState<string | null>(null);
+    const [connecting, setConnecting] = useState(false);
 
     const anyConnected = platforms.twitch.connected || platforms.youtube.connected || platforms.external.connected;
 
-    const handleConnect = (platform: keyof PlatformState) => {
+    const handleTwitchToggle = async () => {
+        setError(null);
+        if (platforms.twitch.connected) {
+            void DisconnectTwitch();
+            setPlatforms((p) => ({ ...p, twitch: { ...p.twitch, connected: false } }));
+        } else {
+            setConnecting(true);
+            try {
+                await ConnectTwitch(platforms.twitch.channel);
+                setPlatforms((p) => ({ ...p, twitch: { ...p.twitch, connected: true } }));
+            } catch (err) {
+                setError(String(err));
+            } finally {
+                setConnecting(false);
+            }
+        }
+    };
+
+    const handleConnect = (platform: 'youtube' | 'external') => {
         setPlatforms((prev) => ({
             ...prev,
             [platform]: { ...prev[platform], connected: !prev[platform].connected },
@@ -34,6 +55,7 @@ export function Home() {
 
     return (
         <div className={styles.home}>
+            {error && <div className={styles.error}>{error}</div>}
             <div className={styles.cards}>
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
@@ -57,10 +79,14 @@ export function Home() {
                     />
                     <button
                         className={`btn ${platforms.twitch.connected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={() => handleConnect('twitch')}
-                        disabled={!platforms.twitch.channel}
+                        onClick={handleTwitchToggle}
+                        disabled={!platforms.twitch.channel || connecting}
                     >
-                        {platforms.twitch.connected ? t('home.disconnect') : t('home.connect')}
+                        {connecting
+                            ? t('home.connecting')
+                            : platforms.twitch.connected
+                              ? t('home.disconnect')
+                              : t('home.connect')}
                     </button>
                 </div>
 

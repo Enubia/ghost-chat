@@ -59,3 +59,13 @@
         background: var(--color-success);
     }
 }
+
+.error {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--color-danger);
+    background: rgba(224, 111, 111, 0.1);
+    border: 1px solid rgba(224, 111, 111, 0.2);
+    border-radius: var(--radius-sm);
+}

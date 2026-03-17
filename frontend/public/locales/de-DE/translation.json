@@ -9,6 +9,7 @@
         "youtube": "YouTube",
         "external": "Extern",
         "connect": "Verbinden",
+        "connecting": "Verbinde...",
         "disconnect": "Trennen",
         "open_chat": "Chat öffnen",
         "placeholder": {
@@ -19,7 +20,9 @@
     },
     "chat": {
         "back": "Zurück",
-        "waiting": "Warte auf Nachrichten..."
+        "waiting": "Warte auf Nachrichten...",
+        "disconnected": "Getrennt",
+        "scroll_to_bottom": "Nach unten scrollen"
     },
     "settings": {
         "tabs": {

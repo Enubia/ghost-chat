@@ -7,6 +7,9 @@ Rewrite Ghost Chat from Electron to **Wails v2** with a **Go** backend and **Rea
 ### Learning approach
 When introducing new Go syntax or concepts, always provide a **Node.js/TypeScript equivalent** for comparison. For example: `goroutine` ≈ `Promise`/`async`, `channel` ≈ `EventEmitter`, `interface` ≈ `interface` (but implicit), `defer` ≈ `finally`, etc.
 
+### Collaboration approach
+For Go code: Claude scaffolds files with type signatures, hints, and tests. I implement the logic. For frontend (React/TS) code: Claude writes it directly.
+
 ### Key changes from the original app
 - **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection
 - **Keep**: Twitch, YouTube, External sources, system tray, i18n, global hotkeys, transparent overlay, dark/light theme

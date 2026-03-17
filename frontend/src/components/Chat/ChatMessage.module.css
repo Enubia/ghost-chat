@@ -1,0 +1,70 @@
+.message {
+    display: block;
+    line-height: 1.6;
+    word-wrap: break-word;
+    padding: 2px 0;
+}
+
+.action {
+    font-style: italic;
+}
+
+.badges {
+    display: inline;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.badgeImg {
+    width: 18px;
+    height: 18px;
+    margin-right: 2px;
+    vertical-align: middle;
+}
+
+.badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 1px 4px;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+.username {
+    font-weight: 600;
+    cursor: default;
+}
+
+.separator {
+    color: var(--color-text-muted);
+}
+
+.text {
+    word-wrap: break-word;
+}
+
+.emote {
+    display: inline-block;
+    height: 28px;
+    vertical-align: middle;
+    margin: -4px 1px;
+}
+
+.fade {
+    animation: fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
