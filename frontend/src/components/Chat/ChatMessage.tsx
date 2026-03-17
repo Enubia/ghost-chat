@@ -13,6 +13,8 @@ interface Props {
     hideBadges?: boolean;
     showTimestamp?: boolean;
     showPlatformIcon?: boolean;
+    showColon?: boolean;
+    showAvatars?: boolean;
     fade?: boolean;
     fadeTimeout?: number;
     onFaded?: (id: string) => void;
@@ -182,6 +184,8 @@ export function ChatMessage({
     hideBadges,
     showTimestamp,
     showPlatformIcon,
+    showColon = true,
+    showAvatars = true,
     fade,
     fadeTimeout,
     onFaded,
@@ -276,7 +280,7 @@ export function ChatMessage({
                 <span className={styles.timestamp}>{formatTime(message.timestamp)}</span>
             )}
             {showPlatformIcon && <PlatformIcon platform={message.platform} />}
-            {message.avatar && (
+            {showAvatars && message.avatar && (
                 <img
                     className={styles.avatar}
                     src={message.avatar}
@@ -293,7 +297,7 @@ export function ChatMessage({
             >
                 {message.username}
             </span>
-            <span className={styles.separator}>{message.isAction ? ' ' : ': '}</span>
+            <span className={styles.separator}>{message.isAction ? ' ' : showColon ? ': ' : ' '}</span>
             <span className={styles.text}>{body}</span>
         </div>
     );

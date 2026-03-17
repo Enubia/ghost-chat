@@ -1,3 +1,5 @@
+import type React from 'react';
+
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { useEffect, useRef, useState } from 'react';
@@ -6,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
+import { getThemeById, themeToCSS } from '@/types/theme';
 import { EventsOn } from '~/wailsjs/runtime/runtime';
 
 import styles from './Chat.module.css';
@@ -44,6 +47,11 @@ export function Chat() {
     const connected = twitchConnected || youtubeConnected || kickConnected;
     const connectedCount = [twitchConnected, youtubeConnected, kickConnected].filter(Boolean).length;
     const messagesRef = useRef<HTMLDivElement>(null);
+
+    const activeThemeId = config?.theme?.active_theme_id ?? 'default';
+    const customThemes = config?.theme?.custom_themes ?? [];
+    const theme = getThemeById(activeThemeId, customThemes);
+    const themeCSSVars = themeToCSS(theme);
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
     const showTimestamp = config?.general?.show_timestamps ?? false;
@@ -214,6 +222,7 @@ export function Chat() {
             <div
                 ref={messagesRef}
                 className={styles.messages}
+                style={themeCSSVars as React.CSSProperties}
                 onScroll={handleScroll}
             >
                 {visibleMessages.length === 0 ? (
@@ -228,6 +237,8 @@ export function Chat() {
                             hideBadges={hideBadges}
                             showTimestamp={showTimestamp}
                             showPlatformIcon={connectedCount > 1}
+                            showColon={theme.show_colon}
+                            showAvatars={theme.show_avatars}
                             fade={getFade(msg.platform)}
                             fadeTimeout={getFadeTimeout(msg.platform)}
                             onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}

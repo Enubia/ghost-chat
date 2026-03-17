@@ -48,11 +48,37 @@ type KickConfig struct {
 	UserBlacklist  []string `json:"user_blacklist"`
 }
 
+type Theme struct {
+	ID             string  `json:"id"`
+	Name           string  `json:"name"`
+	FontFamily     string  `json:"font_family"`
+	FontSize       int     `json:"font_size"`
+	LineHeight     float64 `json:"line_height"`
+	MessageBg      string  `json:"message_bg"`
+	MessagePadding string  `json:"message_padding"`
+	MessageRadius  int     `json:"message_radius"`
+	MessageGap     int     `json:"message_gap"`
+	UsernameWeight int     `json:"username_weight"`
+	ShowColon      bool    `json:"show_colon"`
+	BadgeSize      int     `json:"badge_size"`
+	EmoteSize      int     `json:"emote_size"`
+	ShowAvatars    bool    `json:"show_avatars"`
+	AvatarSize     int     `json:"avatar_size"`
+	TextShadow     string  `json:"text_shadow"`
+	TextColor      string  `json:"text_color"`
+}
+
+type ThemeConfig struct {
+	ActiveThemeID string  `json:"active_theme_id"`
+	CustomThemes  []Theme `json:"custom_themes"`
+}
+
 type Config struct {
 	Version     string        `json:"version"`
 	WindowState WindowState   `json:"window_state"`
 	General     General       `json:"general"`
 	Keybinds    Keybinds      `json:"keybinds"`
+	Theme       ThemeConfig   `json:"theme"`
 	Twitch      TwitchConfig  `json:"twitch"`
 	YouTube     YouTubeConfig `json:"youtube"`
 	Kick        KickConfig    `json:"kick"`
@@ -72,6 +98,9 @@ func DefaultConfig() Config {
 			Vanish: VanishKeybind{
 				ActivationMessage: "VanishKeybind triggered",
 			},
+		},
+		Theme: ThemeConfig{
+			ActiveThemeID: "default",
 		},
 		Twitch: TwitchConfig{
 			FadeTimeout: 30,

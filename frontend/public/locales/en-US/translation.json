@@ -66,7 +66,8 @@
             "user_blacklist_placeholder": "user1, user2, ..."
         },
         "themes": {
-            "coming_soon": "Theme editor coming soon"
+            "active_theme": "Active Theme",
+            "description": "Currently using the {{name}} theme."
         }
     }
 }

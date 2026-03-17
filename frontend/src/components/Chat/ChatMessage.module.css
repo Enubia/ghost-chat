@@ -1,8 +1,15 @@
 .message {
     display: block;
-    line-height: 1.6;
+    font-family: var(--theme-font-family, inherit);
+    font-size: var(--theme-font-size, 14px);
+    line-height: var(--theme-line-height, 1.6);
+    background: var(--theme-message-bg, transparent);
+    padding: var(--theme-message-padding, 2px 0);
+    border-radius: var(--theme-message-radius, 0);
+    margin-bottom: var(--theme-message-gap, 0);
+    text-shadow: var(--theme-text-shadow, none);
+    color: var(--theme-text-color, inherit);
     word-wrap: break-word;
-    padding: 2px 0;
 }
 
 .twitch .platformIcon {
@@ -37,8 +44,8 @@
 }
 
 .badgeImg {
-    width: 18px;
-    height: 18px;
+    width: var(--theme-badge-size, 18px);
+    height: var(--theme-badge-size, 18px);
     margin-right: 2px;
     vertical-align: middle;
 }
@@ -58,7 +65,7 @@
 }
 
 .username {
-    font-weight: 600;
+    font-weight: var(--theme-username-weight, 600);
     cursor: default;
 }
 
@@ -72,15 +79,15 @@
 
 .emote {
     display: inline-block;
-    height: 28px;
+    height: var(--theme-emote-size, 28px);
     vertical-align: middle;
     margin: -4px 1px;
 }
 
 .avatar {
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: var(--theme-avatar-size, 18px);
+    height: var(--theme-avatar-size, 18px);
     border-radius: 50%;
     vertical-align: middle;
     margin-right: 4px;

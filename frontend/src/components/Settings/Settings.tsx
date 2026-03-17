@@ -6,6 +6,7 @@ import { useConfigStore } from '@/stores/config';
 import { GeneralSettings } from './GeneralSettings';
 import { KickSettings } from './KickSettings';
 import styles from './Settings.module.css';
+import { ThemeSettings } from './ThemeSettings';
 import { TwitchSettings } from './TwitchSettings';
 import { YouTubeSettings } from './YouTubeSettings';
 
@@ -40,7 +41,7 @@ export function Settings() {
                 {activeTab === 'twitch' && <TwitchSettings />}
                 {activeTab === 'youtube' && <YouTubeSettings />}
                 {activeTab === 'kick' && <KickSettings />}
-                {activeTab === 'themes' && <div className={styles.placeholder}>{t('settings.themes.coming_soon')}</div>}
+                {activeTab === 'themes' && <ThemeSettings />}
             </div>
             {saved && <span className={styles.saved}>Saved</span>}
         </div>
