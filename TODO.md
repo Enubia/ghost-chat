@@ -194,86 +194,57 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 > **Goal**: Connect to Twitch IRC from Go, parse messages, render them in React.
 
 ### 3.1 Twitch IRC client (Go)
-- [ ] Implement WebSocket connection to `wss://irc-ws.chat.twitch.tv:443`
-- [ ] Send IRC handshake:
-  ```
-  CAP REQ :twitch.tv/tags twitch.tv/commands
-  PASS SCHMOOPIIE
-  NICK justinfan12345
-  ```
-  (Anonymous read-only connection — no auth needed)
-- [ ] Send `JOIN #channelname` to join a channel
-- [ ] Read incoming messages in a goroutine, parse IRC lines
-- [ ] Respond to `PING` with `PONG` (keepalive)
-- [ ] Handle reconnection on disconnect (exponential backoff)
-- [ ] Implement `Connect(channel string)`, `Disconnect()`, `ChangeChannel(channel string)` methods
-- [ ] **Learn**: `gorilla/websocket` or `nhooyr.io/websocket` package, goroutines for concurrent read loops, `context.Context` for cancellation/cleanup
+- [x] Implement WebSocket connection to `wss://irc-ws.chat.twitch.tv:443`
+- [x] Send IRC handshake (CAP REQ, PASS, NICK, JOIN)
+- [x] Read incoming messages in a goroutine, parse IRC lines
+- [x] Handle multiple messages per WebSocket frame (`\r\n` splitting)
+- [x] Respond to `PING` with `PONG` (keepalive)
+- [x] Handle reconnection on disconnect (exponential backoff)
+- [x] Implement `Connect(channel)`, `Disconnect()`, `ChangeChannel(channel)` methods
+- [x] **Learned**: `gorilla/websocket`, goroutines, `context.Context`, `sync.Mutex`
 
 ### 3.2 IRC message parser (Go)
-- [ ] Parse IRC tags (the `@key=value;key=value` prefix) into a map
-- [ ] Extract from PRIVMSG:
-  - `display-name` — username to show
-  - `color` — user's chosen name color (hex)
-  - `badges` — badge list (e.g., `broadcaster/1,subscriber/12`)
-  - `emotes` — emote positions (e.g., `25:0-4,12-16` for Kappa)
-  - `id` — message ID (for deduplication)
-  - `first-msg` — first-time chatter flag
-  - Message body (the text after the second `:`)
-- [ ] Handle USERNOTICE (subs, raids, etc.) — extract `system-msg` and `msg-id` for event type
-- [ ] Handle CLEARCHAT (bans/timeouts) and CLEARMSG (single message deletion)
-- [ ] Define a unified `ChatMessage` struct:
-  ```go
-  type ChatMessage struct {
-      ID        string            `json:"id"`
-      Platform  string            `json:"platform"` // "twitch" | "youtube"
-      Username  string            `json:"username"`
-      Color     string            `json:"color"`
-      Text      string            `json:"text"`
-      Badges    []Badge           `json:"badges"`
-      Emotes    []Emote           `json:"emotes"`
-      Timestamp time.Time         `json:"timestamp"`
-      IsAction  bool              `json:"isAction"`  // /me messages
-      Tags      map[string]string `json:"tags"`
-  }
-  ```
-- [ ] Write unit tests with real IRC message samples
-- [ ] **Learn**: String parsing in Go, `strings.Split`, `regexp`, struct embedding
+- [x] Parse IRC tags, prefix, command, channel, params
+- [x] Extract PRIVMSG fields (display-name, color, badges, emotes, id, timestamp)
+- [x] Handle CLEARCHAT (bans/timeouts) and CLEARMSG (single message deletion)
+- [x] Handle ROOMSTATE (triggers badge + emote fetching)
+- [x] Define unified `ChatMessage`, `Badge`, `Emote` structs
+- [x] Write unit tests with real IRC message samples
+- [ ] Handle USERNOTICE (subs, raids) — deferred
+- [x] **Learned**: `strings.Split`, `strings.Cut`, `strconv`, struct types, `make()`
 
 ### 3.3 Emit messages to frontend
-- [ ] On each parsed PRIVMSG, emit a Wails event: `runtime.EventsEmit(ctx, "chat:message", chatMessage)`
-- [ ] Emit connection status events: `chat:connected`, `chat:disconnected`, `chat:error`
-- [ ] Emit moderation events: `chat:clear`, `chat:delete-message`
-- [ ] Bind control methods so frontend can call: `ConnectTwitch(channel)`, `DisconnectTwitch()`
+- [x] Emit `chat:message` Wails event on each PRIVMSG
+- [x] Emit `chat:connected`, `chat:disconnected` status events
+- [x] Emit `chat:clear`, `chat:delete-message` moderation events
+- [x] Bind `ConnectTwitch(channel)`, `DisconnectTwitch()` for frontend
+- [x] Disconnect twitch client on app close (`onBeforeClose`)
 
 ### 3.4 Chat message component (React)
-- [ ] Create `ChatMessage.tsx` component that renders a single message:
-  - Badge icons (use Twitch badge CDN URLs based on badge set + version)
-  - Username with color
-  - Message text with emotes replaced by `<img>` tags (Twitch CDN: `https://static-cdn.jtvnbs.net/emoticons/v2/{id}/default/dark/1.0`)
-  - Timestamp (optional, theme-dependent)
-  - /me (action) styling
-- [ ] Handle message moderation: remove messages by user on `chat:clear`, remove specific message on `chat:delete-message`
+- [x] `ChatMessage.tsx` renders badges, colored username, emotes as images, /me styling
+- [x] Badge images via Twitch GQL API (global + channel, fetched on ROOMSTATE)
+- [x] Native Twitch emotes via CDN
+- [x] Third-party emotes: BTTV, FFZ, 7TV (global + channel)
+- [x] Text fallback for badges when image URL unavailable
+- [x] Moderation: remove messages by user on `chat:clear`, by ID on `chat:delete-message`
 
 ### 3.5 Chat view (React)
-- [ ] Create the chat overlay page (`/chat`):
-  - Scrollable message list (auto-scroll to bottom, pause on scroll-up)
-  - Receive messages via `EventsOn("chat:message", ...)`
-  - Message limit (keep last N messages in memory, remove oldest)
-  - Connection status indicator
-- [ ] Implement user blacklist filtering on the frontend (skip messages from blacklisted usernames)
-- [ ] Implement message fade-out (CSS animation that removes messages after configurable timeout)
-- [ ] Apply current theme template to messages
+- [x] Scrollable message list with auto-scroll (pause on scroll-up, resume button)
+- [x] Receive messages via `EventsOn("chat:message", ...)`
+- [x] Message limit (500 max, remove oldest)
+- [x] Connection status indicator (disconnected label)
+- [x] User blacklist filtering
+- [x] Hide commands (`!` prefix) filtering
+- [x] Fade-out animation (CSS, configurable timeout)
+- [ ] Apply theme template to messages — deferred to Phase 7
 
 ### 3.6 Twitch settings page (React)
-- [ ] Build the Twitch settings form:
-  - Default channel input
-  - Fade toggle + timeout (seconds)
-  - Show/hide bots toggle
-  - Hide commands (messages starting with `!`) toggle
-  - Show/hide badges toggle
-  - User blacklist (comma-separated input)
-- [ ] All settings save to config via Go binding
-- [ ] Changing settings while connected should emit a re-render/reconnect event as needed
+- [x] All settings save to config via Go binding (save on blur for text, immediate for toggles)
+- [x] Settings apply reactively to chat view (hide badges, hide commands, blacklist, fade, timestamps)
+- [x] "Saved" toast notification on config change
+- [x] Removed unused channel + mac_options config fields
+- [x] Known-bots filtering (Nightbot, StreamElements, etc.)
+- [x] Added show_timestamps setting in General
 
 ---
 

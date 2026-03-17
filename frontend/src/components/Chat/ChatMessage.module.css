@@ -9,6 +9,13 @@
     font-style: italic;
 }
 
+.timestamp {
+    font-size: 11px;
+    color: var(--color-text-dim);
+    font-family: var(--font-mono);
+    margin-right: 6px;
+}
+
 .badges {
     display: inline;
     margin-right: 4px;

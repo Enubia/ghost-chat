@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 
 const languages = [
@@ -36,6 +37,14 @@ export function GeneralSettings() {
                         </option>
                     ))}
                 </select>
+            </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.general.show_timestamps')}</label>
+                <Toggle
+                    checked={config?.general?.show_timestamps ?? false}
+                    onChange={(v) => void update({ general: { show_timestamps: v } })}
+                />
             </div>
         </>
     );

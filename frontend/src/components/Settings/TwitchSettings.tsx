@@ -1,6 +1,7 @@
 import type { DeepPartial } from '@/types/utils';
 import type { config } from '~/wailsjs/go/models';
 
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
@@ -10,27 +11,29 @@ export function TwitchSettings() {
     const { t } = useTranslation();
     const twitch = useConfigStore((s) => s.config?.twitch);
     const update = useConfigStore((s) => s.update);
+    const [defaultChannelText, setDefaultChannelText] = useState(twitch?.default_channel ?? '');
+    const [blacklistText, setBlacklistText] = useState((twitch?.user_blacklist ?? []).join(', '));
 
     const set = (partial: DeepPartial<config.TwitchConfig>) => update({ twitch: partial });
+
+    const saveBlacklist = () => {
+        void set({
+            user_blacklist: blacklistText
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean),
+        });
+    };
 
     return (
         <>
             <div className="field">
-                <label className="field-label">{t('settings.twitch.channel')}</label>
-                <input
-                    type="text"
-                    value={twitch?.channel ?? ''}
-                    onChange={(e) => set({ channel: e.target.value })}
-                    placeholder={t('home.placeholder.channel')}
-                />
-            </div>
-
-            <div className="field">
                 <label className="field-label">{t('settings.twitch.default_channel')}</label>
                 <input
                     type="text"
-                    value={twitch?.default_channel ?? ''}
-                    onChange={(e) => set({ default_channel: e.target.value })}
+                    value={defaultChannelText}
+                    onChange={(e) => setDefaultChannelText(e.target.value)}
+                    onBlur={() => set({ default_channel: defaultChannelText })}
                     placeholder={t('settings.twitch.default_channel')}
                 />
             </div>
@@ -83,15 +86,9 @@ export function TwitchSettings() {
                 <label className="field-label">{t('settings.twitch.user_blacklist')}</label>
                 <input
                     type="text"
-                    value={(twitch?.user_blacklist ?? []).join(', ')}
-                    onChange={(e) =>
-                        set({
-                            user_blacklist: e.target.value
-                                .split(',')
-                                .map((s) => s.trim())
-                                .filter(Boolean),
-                        })
-                    }
+                    value={blacklistText}
+                    onChange={(e) => setBlacklistText(e.target.value)}
+                    onBlur={saveBlacklist}
                     placeholder={t('settings.twitch.user_blacklist_placeholder')}
                 />
             </div>

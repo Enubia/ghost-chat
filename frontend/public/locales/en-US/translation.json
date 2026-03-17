@@ -33,10 +33,10 @@
             "themes": "Themes"
         },
         "general": {
-            "language": "Language"
+            "language": "Language",
+            "show_timestamps": "Show Timestamps"
         },
         "twitch": {
-            "channel": "Channel",
             "default_channel": "Default Channel",
             "fade": "Fade Messages",
             "fade_timeout": "Fade Timeout (seconds)",

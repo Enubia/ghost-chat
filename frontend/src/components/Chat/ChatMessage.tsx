@@ -2,6 +2,8 @@ import type React from 'react';
 
 import type { ChatMessage as ChatMessageType, Emote } from '@/types/chat';
 
+import { useEffect, useState } from 'react';
+
 import styles from './ChatMessage.module.css';
 
 const TWITCH_EMOTE_CDN = 'https://static-cdn.jtvnw.net/emoticons/v2';
@@ -9,8 +11,18 @@ const TWITCH_EMOTE_CDN = 'https://static-cdn.jtvnw.net/emoticons/v2';
 interface Props {
     message: ChatMessageType;
     hideBadges?: boolean;
+    showTimestamp?: boolean;
     fade?: boolean;
     fadeTimeout?: number;
+    onFaded?: (id: string) => void;
+}
+
+function formatTime(ts: string) {
+    const date = new Date(ts);
+    if (Number.isNaN(date.getTime())) {
+        return '';
+    }
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
 function renderTextWithEmotes(text: string, emotes: Emote[]) {
@@ -46,14 +58,31 @@ function renderTextWithEmotes(text: string, emotes: Emote[]) {
     return <span>{parts}</span>;
 }
 
-export function ChatMessage({ message, hideBadges, fade, fadeTimeout }: Props) {
-    const fadeStyle = fade && fadeTimeout ? { animationDelay: `${fadeTimeout}s`, animationDuration: '1s' } : undefined;
+export function ChatMessage({ message, hideBadges, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
+    const [fading, setFading] = useState(false);
+
+    useEffect(() => {
+        if (!fade || !fadeTimeout) {
+            return;
+        }
+        const timer = setTimeout(() => setFading(true), fadeTimeout * 1000);
+        return () => clearTimeout(timer);
+    }, [fade, fadeTimeout]);
+
+    const handleAnimationEnd = () => {
+        if (onFaded) {
+            onFaded(message.id);
+        }
+    };
 
     return (
         <div
-            className={`${styles.message} ${message.isAction ? styles.action : ''} ${fade ? styles.fade : ''}`}
-            style={fadeStyle}
+            className={`${styles.message} ${message.isAction ? styles.action : ''} ${fading ? styles.fade : ''}`}
+            onAnimationEnd={handleAnimationEnd}
         >
+            {showTimestamp && message.timestamp && (
+                <span className={styles.timestamp}>{formatTime(message.timestamp)}</span>
+            )}
             {!hideBadges && message.badges && message.badges.length > 0 && (
                 <span className={styles.badges}>
                     {message.badges.map((badge) =>

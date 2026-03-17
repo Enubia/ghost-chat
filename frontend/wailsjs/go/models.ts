@@ -37,7 +37,6 @@ export namespace config {
 	    }
 	}
 	export class TwitchConfig {
-	    channel: string;
 	    default_channel: string;
 	    fade: boolean;
 	    fade_timeout: number;
@@ -52,7 +51,6 @@ export namespace config {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.channel = source["channel"];
 	        this.default_channel = source["default_channel"];
 	        this.fade = source["fade"];
 	        this.fade_timeout = source["fade_timeout"];
@@ -106,23 +104,9 @@ export namespace config {
 		    return a;
 		}
 	}
-	export class MacOptions {
-	    quit_on_close: boolean;
-	    hide_dock_icon: boolean;
-	
-	    static createFrom(source: any = {}) {
-	        return new MacOptions(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.quit_on_close = source["quit_on_close"];
-	        this.hide_dock_icon = source["hide_dock_icon"];
-	    }
-	}
 	export class General {
 	    language: string;
-	    mac_options: MacOptions;
+	    show_timestamps: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new General(source);
@@ -131,26 +115,8 @@ export namespace config {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.language = source["language"];
-	        this.mac_options = this.convertValues(source["mac_options"], MacOptions);
+	        this.show_timestamps = source["show_timestamps"];
 	    }
-	
-		convertValues(a: any, classs: any, asMap: boolean = false): any {
-		    if (!a) {
-		        return a;
-		    }
-		    if (a.slice && a.map) {
-		        return (a as any[]).map(elem => this.convertValues(elem, classs));
-		    } else if ("object" === typeof a) {
-		        if (asMap) {
-		            for (const key of Object.keys(a)) {
-		                a[key] = new classs(a[key]);
-		            }
-		            return a;
-		        }
-		        return new classs(a);
-		    }
-		    return a;
-		}
 	}
 	export class WindowState {
 	    x: number;
@@ -216,7 +182,6 @@ export namespace config {
 		    return a;
 		}
 	}
-	
 	
 	
 	

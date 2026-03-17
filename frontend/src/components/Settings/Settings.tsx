@@ -16,6 +16,7 @@ export function Settings() {
     const [activeTab, setActiveTab] = useState<Tab>('general');
     const { t } = useTranslation();
     const config = useConfigStore((s) => s.config);
+    const saved = useConfigStore((s) => s.saved);
 
     if (!config) {
         return null;
@@ -41,6 +42,7 @@ export function Settings() {
                 {activeTab === 'external' && <ExternalSettings />}
                 {activeTab === 'themes' && <div className={styles.placeholder}>{t('settings.themes.coming_soon')}</div>}
             </div>
+            {saved && <span className={styles.saved}>Saved</span>}
         </div>
     );
 }

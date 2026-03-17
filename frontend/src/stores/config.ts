@@ -8,6 +8,7 @@ import { GetConfig, UpdateConfig } from '~/wailsjs/go/main/App';
 interface ConfigState {
     config: config.Config | null;
     loaded: boolean;
+    saved: boolean;
     load: () => Promise<void>;
     update: (partial: DeepPartial<config.Config>) => Promise<void>;
 }
@@ -15,6 +16,7 @@ interface ConfigState {
 export const useConfigStore = create<ConfigState>((set, get) => ({
     config: null,
     loaded: false,
+    saved: false,
 
     load: async () => {
         try {
@@ -35,7 +37,8 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
         const merged = deepMerge(current, partial);
         try {
             await UpdateConfig(merged);
-            set({ config: merged });
+            set({ config: merged, saved: true });
+            setTimeout(() => set({ saved: false }), 1500);
         } catch (err) {
             console.error('Failed to update config:', err);
         }

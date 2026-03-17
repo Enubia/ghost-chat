@@ -9,14 +9,9 @@ type WindowState struct {
 	IsTransparent  bool `json:"is_transparent"`
 }
 
-type MacOptions struct {
-	QuitOnClose  bool `json:"quit_on_close"`
-	HideDockIcon bool `json:"hide_dock_icon"`
-}
-
 type General struct {
-	Language   string     `json:"language"` // default "en-US"
-	MacOptions MacOptions `json:"mac_options"`
+	Language       string `json:"language"` // default "en-US"
+	ShowTimestamps bool   `json:"show_timestamps"`
 }
 
 type VanishKeybind struct {
@@ -29,7 +24,6 @@ type Keybinds struct {
 }
 
 type TwitchConfig struct {
-	Channel        string   `json:"channel"`
 	DefaultChannel string   `json:"default_channel"`
 	Fade           bool     `json:"fade"`
 	FadeTimeout    int      `json:"fade_timeout"`
@@ -71,8 +65,7 @@ func DefaultConfig() Config {
 			Height: 600,
 		},
 		General: General{
-			Language:   "en-US",
-			MacOptions: MacOptions{},
+			Language: "en-US",
 		},
 		Keybinds: Keybinds{
 			Vanish: VanishKeybind{

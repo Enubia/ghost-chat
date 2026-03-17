@@ -2,6 +2,7 @@
     display: flex;
     height: 100%;
     border-right: 1px solid var(--color-border);
+    position: relative;
 }
 
 .sidebar {
@@ -44,6 +45,36 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+}
+
+.saved {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-success);
+    background: var(--color-bg-raised);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 4px 14px;
+    box-shadow: var(--shadow-md);
+    animation: fadeInOut 1.5s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .placeholder {

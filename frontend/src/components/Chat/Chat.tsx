@@ -12,6 +12,22 @@ import { ChatMessage } from './ChatMessage';
 
 const MAX_MESSAGES = 500;
 
+const KNOWN_BOTS = new Set([
+    'nightbot',
+    'streamelements',
+    'streamlabs',
+    'moobot',
+    'fossabot',
+    'wizebot',
+    'coebot',
+    'deepbot',
+    'phantombot',
+    'stay_hydrated_bot',
+    'soundalerts',
+    'botrix',
+    'sery_bot',
+]);
+
 export function Chat() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -21,18 +37,27 @@ export function Chat() {
     const [autoScroll, setAutoScroll] = useState(true);
     const messagesRef = useRef<HTMLDivElement>(null);
 
-    const blacklist = config?.twitch?.user_blacklist ?? [];
     const hideBadges = config?.twitch?.hide_badges ?? false;
-    const hideCommands = config?.twitch?.hide_commands ?? false;
+    const showTimestamp = config?.general?.show_timestamps ?? false;
     const fade = config?.twitch?.fade ?? false;
     const fadeTimeout = config?.twitch?.fade_timeout ?? 30;
 
     useEffect(() => {
         const cancelMessage = EventsOn('chat:message', (msg: ChatMessageType) => {
-            if (blacklist.includes(msg.username.toLowerCase())) {
+            const cfg = useConfigStore.getState().config;
+            const blacklist = cfg?.twitch?.user_blacklist ?? [];
+            const hideCommands = cfg?.twitch?.hide_commands ?? false;
+            const showBots = cfg?.twitch?.bots ?? false;
+
+            const lowerUsername = msg.username.toLowerCase();
+
+            if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
                 return;
             }
             if (hideCommands && msg.text.startsWith('!')) {
+                return;
+            }
+            if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
                 return;
             }
 
@@ -68,7 +93,7 @@ export function Chat() {
             cancelClear();
             cancelDelete();
         };
-    }, [blacklist, hideCommands]);
+    }, []);
 
     useEffect(() => {
         if (autoScroll && messagesRef.current) {
@@ -123,8 +148,10 @@ export function Chat() {
                             key={msg.id}
                             message={msg}
                             hideBadges={hideBadges}
+                            showTimestamp={showTimestamp}
                             fade={fade}
                             fadeTimeout={fadeTimeout}
+                            onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                         />
                     ))
                 )}
