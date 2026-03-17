@@ -11,9 +11,9 @@ When introducing new Go syntax or concepts, always provide a **Node.js/TypeScrip
 For Go code: Claude scaffolds files with type signatures, hints, and tests. I implement the logic. For frontend (React/TS) code: Claude writes it directly.
 
 ### Key changes from the original app
-- **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection
-- **Keep**: Twitch, YouTube, External sources, system tray, i18n, global hotkeys, transparent overlay, dark/light theme
-- **New**: Custom Twitch IRC chat renderer (Go backend), custom YouTube Live Chat renderer (Go backend), combined multi-platform chat view, user theming/template system
+- **Drop**: Kick support, JChat/KapChat third-party renderers, auto-updater (for now), custom CSS/JS injection, external sources, dark/light theme (single neutral scheme), Mac-specific options
+- **Keep**: Twitch, YouTube, system tray, i18n, global hotkeys, transparent overlay
+- **New**: Custom Twitch IRC chat renderer (Go backend), custom YouTube Live Chat renderer (Go backend), combined multi-platform chat view, user theming/template system, BTTV/FFZ/7TV emote support
 
 ### Architecture shift
 | Concern | Old (Electron) | New (Wails) |
@@ -158,7 +158,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [x] Set up React Router (HashRouter) with routes: `/` (Home), `/chat` (Chat overlay)
 - [x] Settings as a toggleable panel (not a route):
   - Boolean state `settingsOpen` controls visibility
-  - Settings panel with tab navigation: General, Twitch, YouTube, External, Themes
+  - Settings panel with tab navigation: General, Twitch, YouTube, Themes
   - Settings forms with real fields matching Go config struct
 - [x] Wire up Go window resize on settings toggle: `ExpandForSettings()`, `ShrinkToChat()`
 
@@ -172,7 +172,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 ### 2.4 App shell & layout
 - [x] Build the main app layout:
   - Custom title bar with ghost logo, drag region, window controls (minimize, close), settings gear icon
-  - Home page with platform cards (Twitch, YouTube, External) + brand icons
+  - Home page with platform cards (Twitch, YouTube) + brand icons
   - Chat overlay page (empty, ready for Phase 3)
 - [x] Build the settings layout with CSS modules:
   - Left side: settings sidebar nav + settings content
@@ -312,40 +312,26 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [ ] Handle errors per-platform without crashing the other
 
 ### 5.3 Home page — connection UI (React)
-- [ ] Redesign the home page:
-  - Twitch card: channel input + connect button
-  - YouTube card: channel/video input + connect button
-  - External card: URL input + open button
-  - Show connection status per platform (connected/disconnected/error)
-  - "Open Chat" button appears when at least one platform is connected → navigates to `/chat`
-- [ ] Support connecting multiple platforms before opening the chat view
+- [x] Home page with Twitch + YouTube cards (channel input + connect/disconnect)
+- [x] Connection status indicators per platform
+- [x] "Open Chat" button when at least one platform is connected
+- [x] Loading state on connect button
+- [x] Error display on connection failure
+- [ ] Wire YouTube connect to Go backend (pending Phase 4)
 
 ---
 
-## Phase 6 — External Sources
+## ~~Phase 6 — External Sources~~ (Removed)
 
-> **Goal**: Support loading arbitrary URLs in the overlay.
-
-### 6.1 Evaluate approach
-- [ ] Wails uses a single webview — no nested `<webview>` like Electron
-- [ ] Options:
-  - **iframe**: Load external URL in an `<iframe>` — works for many chat overlays but may hit CORS/X-Frame-Options
-  - **Proxy through Go**: Go fetches the page, serves it locally — complex but bypasses CORS
-  - **Open in system browser**: Simplest, but defeats the overlay purpose
-- [ ] Decide on approach and implement accordingly
-
-### 6.2 External source management
-- [ ] Saved sources list (add/remove URLs in settings)
-- [ ] Default URL setting
-- [ ] If using iframe approach: render the iframe in the chat view area
+> External source support has been dropped. All rendering is done natively.
 
 ---
 
-## Phase 7 — Theming / Template System
+## Phase 6 — Theming / Template System
 
 > **Goal**: Let users customize how chat messages look.
 
-### 7.1 Design the theming model
+### 6.1 Design the theming model
 - [ ] Define what's themeable:
   - Message layout (badges → username → text, or variations)
   - Colors (background, text, username, badges)
@@ -362,7 +348,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
   - **Compact**: Smaller spacing, no avatars, dense
   - **Bubble**: Chat bubbles with rounded backgrounds per message
 
-### 7.2 Theme engine (React)
+### 6.2 Theme engine (React)
 - [ ] Themes map to CSS custom properties applied to the chat container
 - [ ] `ChatMessage.tsx` uses these CSS variables for all visual properties
 - [ ] Theme switching is instant (just swap the CSS variables)
@@ -381,7 +367,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
   }
   ```
 
-### 7.3 Theme editor page (React)
+### 6.3 Theme editor page (React)
 - [ ] Build a visual theme editor at `/settings/themes`:
   - Live preview panel showing sample chat messages
   - Controls for each themeable property (color pickers, sliders, font selectors, toggles)
@@ -391,11 +377,11 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 ---
 
-## Phase 8 — System Tray & Global Hotkeys
+## Phase 7 — System Tray & Global Hotkeys
 
 > **Goal**: System tray menu and global keyboard shortcuts.
 
-### 8.1 System tray (Go)
+### 7.1 System tray (Go)
 - [ ] Set up system tray with Wails `Menu` and tray support:
   - App version (disabled label)
   - Toggle vanish
@@ -408,13 +394,13 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [ ] Tray icon (reuse existing `trayicon.png` or create new one)
 - [ ] **Learn**: Wails `menu` package, `runtime.Clipboard` API
 
-### 8.2 Vanish toggle (deferred from Phase 1.5)
+### 7.2 Vanish toggle (deferred from Phase 1.5)
 - [ ] Implement vanish toggle (transparent + click-through):
   - Use `runtime.WindowSetAlwaysOnTop`, `runtime.WindowSetBackgroundColour` for transparency
   - Research platform-specific click-through approaches
 - [ ] Wire vanish to tray menu + hotkey
 
-### 8.3 Global hotkeys (Go)
+### 7.3 Global hotkeys (Go)
 - [ ] Research global hotkey libraries for Go:
   - `golang.design/x/hotkey` — cross-platform global hotkey registration
   - Or platform-specific approaches
@@ -423,31 +409,32 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [ ] On hotkey press, trigger vanish toggle
 - [ ] **Learn**: CGo might be needed for some hotkey approaches — understand the basics of CGo if required
 
-### 8.4 Hotkey settings (React)
+### 7.4 Hotkey settings (React)
 - [ ] Port the `HotKeyInput` component from the old app
 - [ ] Capture key combinations, format as string, save to config
 - [ ] Show current keybind, allow clearing
 
 ---
 
-## Phase 9 — Settings Pages (remaining)
+## Phase 8 — Settings Polish
 
-### 9.1 General settings (React)
-- [ ] Language selector (locale switcher)
-- [ ] Vanish hotkey input
-- [ ] macOS-specific options (quit on close, hide dock icon) — conditionally shown based on `runtime.Environment().Platform`
-- [x] ~~Dark/light theme toggle~~ — removed, using single neutral color scheme
+### 8.1 General settings (React)
+- [x] Language selector (locale switcher)
+- [x] Show timestamps toggle
+- [ ] Vanish hotkey input (pending Phase 7)
+- [x] ~~Dark/light theme toggle~~ — removed, single neutral color scheme
+- [x] ~~macOS-specific options~~ — removed
 
-### 9.2 Polish settings UX
-- [ ] Settings should apply immediately (no save button — write on change)
-- [ ] Show success indicators on save
-- [ ] Validate inputs (e.g., channel names, URLs, numeric ranges)
+### 8.2 Polish settings UX
+- [x] Settings apply immediately (no save button — write on change, blur for text)
+- [x] "Saved" toast notification on config save
+- [ ] Validate inputs (e.g., channel names, numeric ranges)
 
 ---
 
-## Phase 10 — Build, Package & Ship
+## Phase 9 — Build, Package & Ship
 
-### 10.1 Build configuration
+### 9.1 Build configuration
 - [ ] Configure `wails.json` for production builds
 - [ ] Set up build commands:
   - `wails build` — production build
@@ -455,14 +442,14 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
   - `wails build -platform darwin/universal` — macOS universal binary
 - [ ] Configure app icon, metadata, version info
 
-### 10.2 Cross-platform testing
+### 9.2 Cross-platform testing
 - [ ] Test on Windows (primary platform for streamers)
-- [ ] Test on macOS (dock icon hiding, quit-on-close behavior)
+- [ ] Test on macOS
 - [ ] Test on Linux
 - [ ] Verify transparent window + click-through works on each platform
 - [ ] Verify system tray works on each platform
 
-### 10.3 CI/CD
+### 9.3 CI/CD
 - [ ] Set up GitHub Actions for:
   - Build on PR (all platforms)
   - Release build on tag (create GitHub release with binaries)
@@ -470,17 +457,17 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 ---
 
-## Phase 11 — Migration & Cleanup
+## Phase 10 — Migration & Cleanup
 
-### 11.1 Migrate user configs
+### 10.1 Migrate user configs
 - [ ] Write a one-time migration that reads old Electron Store JSON and converts to new config format
 - [ ] Detect old config location on startup, offer to migrate
 
-### 11.2 Update CLAUDE.md
+### 10.2 Update CLAUDE.md
 - [ ] Rewrite CLAUDE.md for the new Go + Wails + React architecture
 - [ ] Document new commands, project structure, conventions
 
-### 11.3 Update README and CONTRIBUTING
+### 10.3 Update README and CONTRIBUTING
 - [ ] Update prerequisites (Go, Wails CLI instead of Node + Electron)
 - [ ] Update development workflow
 - [ ] Update build/release instructions
@@ -491,19 +478,21 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 These concepts map to specific tasks above. Check them off as you encounter and understand them:
 
-- [ ] **Basics**: Variables, types, functions, control flow (Phase 0.1)
-- [ ] **Structs & interfaces**: Config types, ChatMessage (Phase 1.2, 3.2)
-- [ ] **Error handling**: `if err != nil` pattern, wrapping errors (Phase 1.2)
-- [ ] **JSON**: `encoding/json`, struct tags, Marshal/Unmarshal (Phase 1.2)
-- [ ] **File I/O**: `os.ReadFile`, `os.WriteFile`, `os.UserConfigDir` (Phase 1.2)
-- [ ] **Packages**: `internal/`, public vs private (capitalization), imports (Phase 1.1)
-- [ ] **Goroutines**: Concurrent WebSocket read loop, polling loop (Phase 3.1, 4.1)
-- [ ] **Channels**: Communicate between goroutines (Phase 3.1)
-- [ ] **Context**: Cancellation, timeouts, passing request-scoped data (Phase 3.1, 4.1)
-- [ ] **WebSockets**: `gorilla/websocket` or `nhooyr.io/websocket` (Phase 3.1)
-- [ ] **HTTP client**: `net/http`, making requests, reading responses (Phase 4.1)
-- [ ] **Testing**: `go test`, table-driven tests, `testify` (Phase 1.2, 3.2)
-- [ ] **Slices & maps**: Core data structures used everywhere (Phase 3.2)
-- [ ] **String manipulation**: `strings` package, parsing IRC messages (Phase 3.2)
+- [x] **Basics**: Variables, types, functions, control flow (Phase 0.1)
+- [x] **Structs & interfaces**: Config types, ChatMessage (Phase 1.2, 3.2)
+- [x] **Error handling**: `if err != nil` pattern, wrapping errors (Phase 1.2)
+- [x] **JSON**: `encoding/json`, struct tags, Marshal/Unmarshal (Phase 1.2, 3.x badges/emotes)
+- [x] **File I/O**: `os.ReadFile`, `os.WriteFile`, `os.UserConfigDir` (Phase 1.2)
+- [x] **Packages**: `internal/`, public vs private (capitalization), imports (Phase 1.1)
+- [x] **Goroutines**: Concurrent WebSocket read loop, badge/emote fetching (Phase 3.1)
+- [x] **Context**: Cancellation, timeouts, passing request-scoped data (Phase 3.1)
+- [x] **WebSockets**: `gorilla/websocket` (Phase 3.1)
+- [x] **HTTP client**: `net/http`, making requests, reading responses (Phase 3.x badges/emotes)
+- [x] **Testing**: `go test`, table-driven tests (Phase 1.2, 3.2)
+- [x] **Slices & maps**: Core data structures used everywhere (Phase 3.2)
+- [x] **String manipulation**: `strings` package, parsing IRC messages (Phase 3.2)
+- [x] **Sync**: `sync.Mutex`, `sync.RWMutex` for thread-safe shared state (Phase 3.1)
+- [x] **make()**: Initializing maps and slices with size hints (Phase 3.2)
+- [ ] **Channels**: Communicate between goroutines (Phase 4.1)
 - [ ] **Time**: `time.Ticker`, `time.After`, timestamps (Phase 4.1)
-- [ ] **Modules**: `go.mod`, `go get`, dependency management (Phase 0.3)
+- [x] **Modules**: `go.mod`, `go get`, dependency management (Phase 0.3)
