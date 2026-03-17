@@ -338,113 +338,53 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 
 ### 5.5.1 Define Kick types (Go)
 
-- [ ] Create `internal/chat/kick/types.go` with Pusher protocol and message structs:
-  - `PusherMessage struct{ Event string; Data string; Channel string }` — outer Pusher envelope (data is a JSON string, must be double-decoded)
-  - `KickChatMessage` — inner payload of `App\\Events\\ChatMessageEvent`:
-    - `ID string`, `ChatroomID int`, `Content string`, `Type string`, `CreatedAt string`
-    - `Sender KickSender`
-  - `KickSender`:
-    - `ID int`, `Username string`, `Slug string`
-    - `Identity *KickIdentity` (nil for users with no color/badges set)
-  - `KickIdentity`:
-    - `Color string` — hex string e.g. `"#FF5733"`
-    - `Badges []KickBadge`
-  - `KickBadge`:
-    - `Type string` — `"moderator"`, `"subscriber"`, `"sub_gifter"`, `"verified"`, `"broadcaster"`, `"og"`
-    - `Text string` — display label e.g. `"Moderator"`
-    - `Count int` — for `sub_gifter` and `subscriber` (months)
-  - `ChannelResponse struct{ Chatroom struct{ ID int } }` — for channel resolution API
+- [x] `internal/chat/kick/types.go` — `PusherMessage` (with `json.RawMessage` data for mixed JSON types), `KickChatMessage`, `KickSender`, `KickIdentity`, `KickBadge`, `ChannelResponse`
 
 ### 5.5.2 Channel resolution (Go)
 
-- [ ] Create `internal/chat/kick/resolve.go`:
-- [ ] Implement `ResolveChannelSlug(input string) (slug string, err error)`:
-  - Strip `https://kick.com/` prefix if present, lowercase, trim spaces
-  - Return the bare slug (e.g. `"xqc"`)
-- [ ] Implement `FetchChatroomID(slug string) (int, error)`:
-  - `GET https://kick.com/api/v1/channels/{slug}`
-  - Must send browser-like headers (`User-Agent`, `Accept`, `Referer: https://kick.com/`, `Origin: https://kick.com`) to pass Cloudflare
-  - Unmarshal into `ChannelResponse`, return `chatroom.id`
+- [x] `internal/chat/kick/resolve.go` — `ResolveChannelSlug` (strips kick.com prefix, lowercases), `FetchChatroomID` (browser-like headers to pass Cloudflare)
 
 ### 5.5.3 Pusher WebSocket client (Go)
 
-- [ ] Create `internal/chat/kick/client.go`:
-- [ ] `Client` struct: `ctx`, `cancel`, `conn *websocket.Conn`, `mu sync.Mutex`, `OnMessage`, `OnEvent`
-- [ ] Implement `Connect(input string) error`:
-  1. Call `ResolveChannelSlug(input)` → slug
-  2. Call `FetchChatroomID(slug)` → chatroom ID
-  3. Dial `wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false` with browser User-Agent
-  4. Wait for `pusher:connection_established` message
-  5. Send subscribe: `{"event":"pusher:subscribe","data":{"auth":"","channel":"chatrooms.{id}.v2"}}`
-  6. Emit `chat:connected` with `platform: "kick"`
-  7. Start `go readLoop()` and `go heartbeatLoop()`
-- [ ] Implement `Disconnect()` — cancel context, close conn, emit `chat:disconnected`
-- [ ] Implement `readLoop()`:
-  - Read Pusher messages, decode outer `PusherMessage`
-  - On `pusher:ping` → reply `pusher:pong`
-  - On `App\\Events\\ChatMessageEvent` → double-decode `data` field, parse, call `OnMessage`
-  - On disconnect → reconnect with exponential backoff (same pattern as Twitch client)
-- [ ] Implement `heartbeatLoop()`:
-  - Every 30s send `{"event":"pusher:ping","data":{}}`
-  - Stop on ctx cancel
-- [ ] `NewClient(onMessage, onEvent)` constructor
+- [x] `internal/chat/kick/client.go` — `Client` with `Connect`, `Disconnect`, `readLoop` (local conn ref, race-free), `heartbeatLoop` (30s ping), `reconnect` with exponential backoff, `dialPusher` + `subscribe` helpers
 
 ### 5.5.4 Message parser (Go)
 
-- [ ] Create `internal/chat/kick/parser.go`:
-- [ ] Implement `parseMessage(km KickChatMessage) chat.ChatMessage`:
-  - `Platform: "kick"`, `ID: km.ID`, `Username: km.Sender.Username`
-  - `Color`: from `km.Sender.Identity.Color` (or `""` if Identity is nil)
-  - `Timestamp`: parse `km.CreatedAt` ISO 8601 → `time.Time`
-  - `Badges`: from `km.Sender.Identity.Badges` → `parseBadges()`
-  - `Fragments` + `Text`: from `km.Content` → `parseContent()`
-- [ ] Implement `parseContent(content string) ([]chat.MessageFragment, string)`:
-  - Scan for `[emote:{id}:{name}]` tokens using a regex
-  - Interleave text fragments and emote fragments
-  - Emote image URL: `https://files.kick.com/emotes/{id}/fullsize`
-  - Return both `[]MessageFragment` (for rich rendering) and plain-text string (for `Text` field)
-- [ ] Implement `parseBadges(badges []KickBadge) []chat.Badge`:
-  - Map badge types to `chat.Badge{Name: type, Version: text}`
-  - No image URLs available in the payload — frontend renders these as text badges (same fallback path already exists in `ChatMessage.tsx`)
-- [ ] Write unit tests with fixture payloads for `parseContent` (plain text, single emote, multiple emotes, emote at start/end)
+- [x] `internal/chat/kick/parser.go` — `parseMessage` (color from identity, no badges), `parseContent` (regex `[emote:id:name]` → fragments + plain text, emote URLs from `files.kick.com/emotes/{id}/fullsize`)
+- [x] Unit tests: slug resolution, plain text, single/multiple/edge emotes, timestamp, full message (`parser_test.go`)
+- [x] Badges omitted — Kick provides no official badge images in the Pusher payload
 
 ### 5.5.5 Wire to app (Go)
 
-- [ ] Add `kick *kick.Client` field to `App` struct in `app.go`
-- [ ] Initialize in `NewApp` with same `onMessage`/`onEvent` callbacks
-- [ ] Add bound methods: `ConnectKick(input string) error`, `DisconnectKick()`
-- [ ] Disconnect in `onBeforeClose`
+- [x] `kick *kick.Client` on `App`, initialized in `NewApp`
+- [x] `ConnectKick`, `DisconnectKick` bound methods
+- [x] Disconnected in `onBeforeClose`
 
 ### 5.5.6 Wails bindings + connection store (Frontend)
 
-- [ ] Add `ConnectKick`, `DisconnectKick` to `frontend/wailsjs/go/main/App.js` and `App.d.ts`
-- [ ] Add `kick: boolean` and `kickInput: string` to `connectionStore.ts`
-- [ ] Handle `platform: "kick"` in `App.tsx` event listener (`chat:connected` / `chat:disconnected`)
+- [x] `ConnectKick`, `DisconnectKick` in `App.js` + `App.d.ts`
+- [x] `kick: boolean`, `kickInput: string` in `connectionStore.ts`
+- [x] `App.tsx` event listener handles `platform: "kick"`
 
 ### 5.5.7 Home page — Kick card (React)
 
-- [ ] Add a Kick card to `Home.tsx` (same layout as Twitch/YouTube cards):
-  - Kick logo/icon
-  - Channel slug input (placeholder: `channelname`)
-  - Connect/Disconnect button wired to `ConnectKick`/`DisconnectKick`
-  - Connection status indicator
-- [ ] Add Kick to the `bothConnected` → filter pill logic in `Chat.tsx` (extend to three-way: T / YT / K)
+- [x] Kick card with official K logo (green `#53fc18`, `viewBox="0 0 512 512"`), channel slug input, connect/disconnect wired to Go bindings
+- [x] Filter pills show per connected platform (`connectedCount > 1`), K pill added
+- [x] Platform icons on Home page use brand SVGs with hardcoded colors for all three platforms
 
 ### 5.5.8 Chat message rendering (React)
 
-- [ ] Add `platform === 'kick'` color to `ChatMessage.module.css` (Kick green: `#53fc18`)
-- [ ] Add `KickIcon` SVG and include it in `PlatformIcon`
-- [ ] Kick messages use `fragments` for emotes — already handled by `renderFragments`
-- [ ] Badges render as text fallback — already handled by `BadgeList`
+- [x] `KickIcon` uses official Kick K path (`viewBox="0 0 512 512"`, `fill="#53fc18"`)
+- [x] `PlatformIcon` includes Kick; icon only shown when multiple platforms connected (`showPlatformIcon` prop)
+- [x] Kick emotes rendered via `renderFragments` — same path as YouTube
+- [x] No badges shown for Kick (platform decision — no official images available)
 
 ### 5.5.9 Kick settings page (React)
 
-- [ ] Build `KickSettings.tsx`:
-  - Default channel slug input (save on blur)
-  - User blacklist
-- [ ] Add "Kick" tab to `Settings.tsx` tab nav
-- [ ] Add `kick` config section to Go `Config` struct and `DefaultConfig()`
-- [ ] Update Wails-generated `models.ts` (run `wails dev` to regenerate, or update manually)
+- [x] `KickSettings.tsx` — default channel, fade toggle + timeout, user blacklist
+- [x] "Kick" tab in `Settings.tsx`
+- [x] `KickConfig` struct in Go config with `DefaultChannel`, `Fade`, `FadeTimeout`, `UserBlacklist`
+- [x] `KickConfig` in `models.ts`, `kick` field on `Config`
 
 ---
 

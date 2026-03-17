@@ -12,6 +12,7 @@ interface Props {
     message: ChatMessageType;
     hideBadges?: boolean;
     showTimestamp?: boolean;
+    showPlatformIcon?: boolean;
     fade?: boolean;
     fadeTimeout?: number;
     onFaded?: (id: string) => void;
@@ -108,7 +109,7 @@ function BadgeList({ badges, hidden }: { badges: Badge[]; hidden?: boolean }) {
                         className={styles.badgeImg}
                         src={badge.url}
                         alt={badge.name}
-                        title={badge.name}
+                        title={badge.version || badge.name}
                     />
                 ) : (
                     <span
@@ -121,6 +122,19 @@ function BadgeList({ badges, hidden }: { badges: Badge[]; hidden?: boolean }) {
                 )
             )}
         </span>
+    );
+}
+
+function KickIcon() {
+    return (
+        <svg
+            className={styles.platformIcon}
+            viewBox="0 0 512 512"
+            fill="#53fc18"
+            aria-hidden="true"
+        >
+            <path d="M37 .036h164.448v113.621h54.71v-56.82h54.731V.036h164.448v170.777h-54.73v56.82h-54.711v56.8h54.71v56.82h54.73V512.03H310.89v-56.82h-54.73v-56.8h-54.711v113.62H37V.036z" />
+        </svg>
     );
 }
 
@@ -157,10 +171,21 @@ function PlatformIcon({ platform }: { platform: string }) {
     if (platform === 'youtube') {
         return <YouTubeIcon />;
     }
+    if (platform === 'kick') {
+        return <KickIcon />;
+    }
     return null;
 }
 
-export function ChatMessage({ message, hideBadges, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
+export function ChatMessage({
+    message,
+    hideBadges,
+    showTimestamp,
+    showPlatformIcon,
+    fade,
+    fadeTimeout,
+    onFaded,
+}: Props) {
     const [fading, setFading] = useState(false);
 
     useEffect(() => {
@@ -250,7 +275,7 @@ export function ChatMessage({ message, hideBadges, showTimestamp, fade, fadeTime
             {showTimestamp && message.timestamp && (
                 <span className={styles.timestamp}>{formatTime(message.timestamp)}</span>
             )}
-            <PlatformIcon platform={message.platform} />
+            {showPlatformIcon && <PlatformIcon platform={message.platform} />}
             {message.avatar && (
                 <img
                     className={styles.avatar}

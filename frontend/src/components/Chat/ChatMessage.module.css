@@ -15,6 +15,10 @@
     color: #ff0000;
 }
 
+.kick .platformIcon {
+    opacity: 1;
+}
+
 .action {
     font-style: italic;
 }

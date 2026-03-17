@@ -37,10 +37,12 @@ export function Chat() {
     const [autoScroll, setAutoScroll] = useState(true);
     const [showTwitch, setShowTwitch] = useState(true);
     const [showYoutube, setShowYoutube] = useState(true);
+    const [showKick, setShowKick] = useState(true);
     const twitchConnected = useConnectionStore((s) => s.twitch);
     const youtubeConnected = useConnectionStore((s) => s.youtube);
-    const connected = twitchConnected || youtubeConnected;
-    const bothConnected = twitchConnected && youtubeConnected;
+    const kickConnected = useConnectionStore((s) => s.kick);
+    const connected = twitchConnected || youtubeConnected || kickConnected;
+    const connectedCount = [twitchConnected, youtubeConnected, kickConnected].filter(Boolean).length;
     const messagesRef = useRef<HTMLDivElement>(null);
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
@@ -49,24 +51,38 @@ export function Chat() {
     const twitchFadeTimeout = config?.twitch?.fade_timeout ?? 30;
     const youtubeFade = config?.youtube?.fade ?? false;
     const youtubeFadeTimeout = config?.youtube?.fade_timeout ?? 30;
+    const kickFade = config?.kick?.fade ?? false;
+    const kickFadeTimeout = config?.kick?.fade_timeout ?? 30;
 
     useEffect(() => {
         const cancelMessage = EventsOn('chat:message', (msg: ChatMessageType) => {
             const cfg = useConfigStore.getState().config;
-            const blacklist = cfg?.twitch?.user_blacklist ?? [];
-            const hideCommands = cfg?.twitch?.hide_commands ?? false;
-            const showBots = cfg?.twitch?.bots ?? false;
 
             const lowerUsername = msg.username.toLowerCase();
 
-            if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
-                return;
-            }
-            if (hideCommands && msg.text.startsWith('!')) {
-                return;
-            }
-            if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
-                return;
+            if (msg.platform === 'twitch') {
+                const blacklist = cfg?.twitch?.user_blacklist ?? [];
+                const hideCommands = cfg?.twitch?.hide_commands ?? false;
+                const showBots = cfg?.twitch?.bots ?? false;
+                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
+                    return;
+                }
+                if (hideCommands && msg.text.startsWith('!')) {
+                    return;
+                }
+                if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
+                    return;
+                }
+            } else if (msg.platform === 'youtube') {
+                const blacklist = cfg?.youtube?.user_blacklist ?? [];
+                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
+                    return;
+                }
+            } else if (msg.platform === 'kick') {
+                const blacklist = cfg?.kick?.user_blacklist ?? [];
+                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
+                    return;
+                }
             }
 
             setMessages((prev) => {
@@ -108,12 +124,35 @@ export function Chat() {
         setAutoScroll(atBottom);
     };
 
+    const getFade = (platform: string) => {
+        if (platform === 'youtube') {
+            return youtubeFade;
+        }
+        if (platform === 'kick') {
+            return kickFade;
+        }
+        return twitchFade;
+    };
+
+    const getFadeTimeout = (platform: string) => {
+        if (platform === 'youtube') {
+            return youtubeFadeTimeout;
+        }
+        if (platform === 'kick') {
+            return kickFadeTimeout;
+        }
+        return twitchFadeTimeout;
+    };
+
     const visibleMessages = messages.filter((m) => {
         if (m.platform === 'twitch') {
             return showTwitch;
         }
         if (m.platform === 'youtube') {
             return showYoutube;
+        }
+        if (m.platform === 'kick') {
+            return showKick;
         }
         return true;
     });
@@ -139,22 +178,35 @@ export function Chat() {
                     </svg>
                     {t('chat.back')}
                 </button>
-                {bothConnected && (
+                {connectedCount > 1 && (
                     <div className={styles.filters}>
-                        <button
-                            className={`${styles.filterBtn} ${showTwitch ? styles.filterActive : ''}`}
-                            onClick={() => setShowTwitch((v) => !v)}
-                            title="Toggle Twitch messages"
-                        >
-                            T
-                        </button>
-                        <button
-                            className={`${styles.filterBtn} ${showYoutube ? styles.filterActive : ''}`}
-                            onClick={() => setShowYoutube((v) => !v)}
-                            title="Toggle YouTube messages"
-                        >
-                            YT
-                        </button>
+                        {twitchConnected && (
+                            <button
+                                className={`${styles.filterBtn} ${showTwitch ? styles.filterActive : ''}`}
+                                onClick={() => setShowTwitch((v) => !v)}
+                                title="Toggle Twitch messages"
+                            >
+                                T
+                            </button>
+                        )}
+                        {youtubeConnected && (
+                            <button
+                                className={`${styles.filterBtn} ${showYoutube ? styles.filterActive : ''}`}
+                                onClick={() => setShowYoutube((v) => !v)}
+                                title="Toggle YouTube messages"
+                            >
+                                YT
+                            </button>
+                        )}
+                        {kickConnected && (
+                            <button
+                                className={`${styles.filterBtn} ${showKick ? styles.filterActive : ''}`}
+                                onClick={() => setShowKick((v) => !v)}
+                                title="Toggle Kick messages"
+                            >
+                                K
+                            </button>
+                        )}
                     </div>
                 )}
                 {!connected && <span className={styles.disconnected}>{t('chat.disconnected')}</span>}
@@ -175,8 +227,9 @@ export function Chat() {
                             message={msg}
                             hideBadges={hideBadges}
                             showTimestamp={showTimestamp}
-                            fade={msg.platform === 'youtube' ? youtubeFade : twitchFade}
-                            fadeTimeout={msg.platform === 'youtube' ? youtubeFadeTimeout : twitchFadeTimeout}
+                            showPlatformIcon={connectedCount > 1}
+                            fade={getFade(msg.platform)}
+                            fadeTimeout={getFadeTimeout(msg.platform)}
                             onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                         />
                     ))

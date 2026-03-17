@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"ghost-chat/internal/chat"
+	"ghost-chat/internal/chat/kick"
 	"ghost-chat/internal/chat/twitch"
 	"ghost-chat/internal/chat/youtube"
 	"ghost-chat/internal/config"
@@ -17,6 +18,7 @@ type App struct {
 	configPath     string
 	twitch         *twitch.Client
 	youtube        *youtube.Client
+	kick           *kick.Client
 	preExpandWidth int
 }
 
@@ -35,6 +37,7 @@ func NewApp(cfg *config.Config, configPath string) *App {
 
 	app.twitch = twitch.NewClient(onMessage, onEvent)
 	app.youtube = youtube.NewClient(onMessage, onEvent)
+	app.kick = kick.NewClient(onMessage, onEvent)
 
 	return app
 }
@@ -51,9 +54,18 @@ func (a *App) ResolveYouTubeVideo(input string) (string, error) {
 	return youtube.ResolveVideoURL(input)
 }
 
+func (a *App) ConnectKick(input string) error {
+	return a.kick.Connect(input)
+}
+
+func (a *App) DisconnectKick() {
+	a.kick.Disconnect()
+}
+
 func (a *App) onBeforeClose(ctx context.Context) bool {
 	a.twitch.Disconnect()
 	a.youtube.Disconnect()
+	a.kick.Disconnect()
 
 	x, y := wailsRuntime.WindowGetPosition(a.ctx)
 	w, h := wailsRuntime.WindowGetSize(a.ctx)

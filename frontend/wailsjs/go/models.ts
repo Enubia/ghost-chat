@@ -1,16 +1,34 @@
 export namespace config {
 	
+	export class KickConfig {
+	    default_channel: string;
+	    fade: boolean;
+	    fade_timeout: number;
+	    user_blacklist: string[];
+	
+	    static createFrom(source: any = {}) {
+	        return new KickConfig(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.default_channel = source["default_channel"];
+	        this.fade = source["fade"];
+	        this.fade_timeout = source["fade_timeout"];
+	        this.user_blacklist = source["user_blacklist"];
+	    }
+	}
 	export class YouTubeConfig {
 	    channel_id: string;
 	    video_url: string;
 	    fade: boolean;
 	    fade_timeout: number;
 	    user_blacklist: string[];
-
+	
 	    static createFrom(source: any = {}) {
 	        return new YouTubeConfig(source);
 	    }
-
+	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.channel_id = source["channel_id"];
@@ -131,6 +149,7 @@ export namespace config {
 	    keybinds: Keybinds;
 	    twitch: TwitchConfig;
 	    youtube: YouTubeConfig;
+	    kick: KickConfig;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -144,6 +163,7 @@ export namespace config {
 	        this.keybinds = this.convertValues(source["keybinds"], Keybinds);
 	        this.twitch = this.convertValues(source["twitch"], TwitchConfig);
 	        this.youtube = this.convertValues(source["youtube"], YouTubeConfig);
+	        this.kick = this.convertValues(source["kick"], KickConfig);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -164,6 +184,7 @@ export namespace config {
 		    return a;
 		}
 	}
+	
 	
 	
 	

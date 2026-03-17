@@ -25,7 +25,7 @@ export interface SuperChatDetails {
 
 export interface ChatMessage {
     id: string;
-    platform: 'twitch' | 'youtube';
+    platform: 'twitch' | 'youtube' | 'kick';
     username: string;
     color: string;
     text: string;

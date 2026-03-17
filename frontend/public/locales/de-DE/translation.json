@@ -7,6 +7,7 @@
     "home": {
         "twitch": "Twitch",
         "youtube": "YouTube",
+        "kick": "Kick",
         "connect": "Verbinden",
         "connecting": "Verbinde...",
         "disconnect": "Trennen",
@@ -14,7 +15,8 @@
         "placeholder": {
             "channel": "Kanalname",
             "channel_id": "Kanal-ID",
-            "channel_or_url": "Kanal, @handle oder Video-URL"
+            "channel_or_url": "Kanal, @handle oder Video-URL",
+            "kick_channel": "Kanalname"
         }
     },
     "chat": {
@@ -28,6 +30,7 @@
             "general": "Allgemein",
             "twitch": "Twitch",
             "youtube": "YouTube",
+            "kick": "Kick",
             "themes": "Designs"
         },
         "general": {
@@ -49,6 +52,14 @@
             "channel_placeholder": "@handle, Kanal-ID oder Video-URL",
             "detect": "Erkennen",
             "detecting": "Erkenne...",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "kick": {
+            "default_channel": "Standardkanal",
+            "default_channel_placeholder": "kanalname",
             "fade": "Nachrichten ausblenden",
             "fade_timeout": "Ausblenden nach (Sekunden)",
             "user_blacklist": "Benutzer-Sperrliste",

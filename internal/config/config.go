@@ -41,6 +41,13 @@ type YouTubeConfig struct {
 	UserBlacklist []string `json:"user_blacklist"`
 }
 
+type KickConfig struct {
+	DefaultChannel string   `json:"default_channel"`
+	Fade           bool     `json:"fade"`
+	FadeTimeout    int      `json:"fade_timeout"`
+	UserBlacklist  []string `json:"user_blacklist"`
+}
+
 type Config struct {
 	Version     string        `json:"version"`
 	WindowState WindowState   `json:"window_state"`
@@ -48,6 +55,7 @@ type Config struct {
 	Keybinds    Keybinds      `json:"keybinds"`
 	Twitch      TwitchConfig  `json:"twitch"`
 	YouTube     YouTubeConfig `json:"youtube"`
+	Kick        KickConfig    `json:"kick"`
 }
 
 func DefaultConfig() Config {
@@ -69,6 +77,9 @@ func DefaultConfig() Config {
 			FadeTimeout: 30,
 		},
 		YouTube: YouTubeConfig{
+			FadeTimeout: 30,
+		},
+		Kick: KickConfig{
 			FadeTimeout: 30,
 		},
 	}

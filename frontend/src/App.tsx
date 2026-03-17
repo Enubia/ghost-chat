@@ -36,12 +36,14 @@ function App() {
 
     useEffect(() => {
         const cancelConnected = EventsOn('chat:connected', (data: unknown) => {
-            const platform = typeof data === 'string' ? 'twitch' : 'youtube';
-            setConnected(platform, true);
+            const platform =
+                typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
+            setConnected(platform as 'twitch' | 'youtube' | 'kick', true);
         });
         const cancelDisconnected = EventsOn('chat:disconnected', (data: unknown) => {
-            const platform = (data as { platform?: string })?.platform === 'youtube' ? 'youtube' : 'twitch';
-            setConnected(platform, false);
+            const platform =
+                typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
+            setConnected(platform as 'twitch' | 'youtube' | 'kick', false);
         });
         return () => {
             cancelConnected();
