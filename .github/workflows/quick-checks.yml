@@ -21,7 +21,7 @@ jobs:
         with:
           go-version: "1.25"
 
-      - run: go test ./internal/...
+      - run: CGO_ENABLED=0 go test ./internal/...
 
   frontend-lint:
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
         working-directory: frontend
 
-      - run: wails3 generate bindings -clean=true -ts
+      - run: CGO_ENABLED=0 wails3 generate bindings -clean=true -ts
 
       - run: pnpm lint
         working-directory: frontend
