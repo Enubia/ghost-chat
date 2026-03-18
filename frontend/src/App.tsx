@@ -1,3 +1,5 @@
+import { ExpandForSettings, ShrinkToChat } from '@bindings/ghost-chat/app.js';
+import { Events } from '@wailsio/runtime';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route } from 'react-router-dom';
@@ -9,8 +11,6 @@ import { ThemePreview } from '@/components/Settings/ThemePreview';
 import { TitleBar } from '@/components/TitleBar/TitleBar';
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
-import { ExpandForSettings, ShrinkToChat } from '~/wailsjs/go/main/App';
-import { EventsOn } from '~/wailsjs/runtime/runtime';
 
 import styles from './App.module.css';
 
@@ -38,16 +38,21 @@ function App() {
     }, [load]);
 
     useEffect(() => {
-        const cancelConnected = EventsOn('chat:connected', (data: unknown) => {
+        const cancelConnected = Events.On('chat:connected', (ev) => {
+            const data = ev.data as unknown;
             const platform =
                 typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
+
             setConnected(platform as 'twitch' | 'youtube' | 'kick', true);
         });
-        const cancelDisconnected = EventsOn('chat:disconnected', (data: unknown) => {
+        const cancelDisconnected = Events.On('chat:disconnected', (ev) => {
+            const data = ev.data as unknown;
             const platform =
                 typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
+
             setConnected(platform as 'twitch' | 'youtube' | 'kick', false);
         });
+
         return () => {
             cancelConnected();
             cancelDisconnected();
@@ -55,8 +60,8 @@ function App() {
     }, [setConnected]);
 
     useEffect(() => {
-        const cancelVanish = EventsOn('vanish:toggle', (v: boolean) => {
-            setVanished(v);
+        const cancelVanish = Events.On('vanish:toggle', (ev) => {
+            setVanished(ev.data as boolean);
         });
 
         return () => {

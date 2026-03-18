@@ -1,7 +1,4 @@
 .message {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     font-family: var(--theme-font-family, inherit);
     font-size: var(--theme-font-size, 14px);
     line-height: var(--theme-line-height, 1.6);
@@ -12,6 +9,7 @@
     text-shadow: var(--theme-text-shadow, none);
     color: var(--theme-text-color, inherit);
     word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .twitch .platformIcon {
@@ -40,9 +38,7 @@
 }
 
 .badges {
-    display: flex;
-    align-items: center;
-    gap: 2px;
+    display: inline;
     margin-right: 4px;
 }
 
@@ -50,6 +46,7 @@
     width: var(--theme-badge-size, 1.286em);
     height: var(--theme-badge-size, 1.286em);
     margin-right: 2px;
+    vertical-align: middle;
 }
 
 .badge {
@@ -83,6 +80,7 @@
 .emote {
     height: var(--theme-emote-size, 2em);
     margin: -0.4em 1px;
+    vertical-align: middle;
 }
 
 .avatar {
@@ -91,6 +89,7 @@
     border-radius: 50%;
     margin-right: 0.3em;
     object-fit: cover;
+    vertical-align: middle;
 }
 
 .platformIcon {
@@ -98,6 +97,7 @@
     height: 0.85em;
     margin-right: 0.2em;
     opacity: 0.45;
+    vertical-align: middle;
 }
 
 .superChatWrapper {

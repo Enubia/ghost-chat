@@ -1,5 +1,8 @@
 # Go
-build/bin/
+*bin/
+
+# Wails
+.task
 
 # Frontend
 node_modules

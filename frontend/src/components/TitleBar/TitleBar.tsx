@@ -1,7 +1,7 @@
+import { Window } from '@wailsio/runtime';
 import { useTranslation } from 'react-i18next';
 
 import ghostSvg from '@/assets/ghost.svg';
-import { WindowMinimise, Quit } from '~/wailsjs/runtime/runtime';
 
 import styles from './TitleBar.module.css';
 
@@ -49,7 +49,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 </button>
                 <button
                     className={styles.controlBtn}
-                    onClick={() => WindowMinimise()}
+                    onClick={() => Window.Minimise()}
                     title={t('titlebar.minimize')}
                 >
                     <svg
@@ -70,7 +70,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 </button>
                 <button
                     className={`${styles.controlBtn} ${styles.close}`}
-                    onClick={() => Quit()}
+                    onClick={() => void Window.Close()}
                     title={t('titlebar.close')}
                 >
                     <svg

@@ -10,14 +10,15 @@
         "isolatedModules": true,
         "esModuleInterop": true,
         "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "allowJs": true,
         "skipLibCheck": true,
         "noEmit": true,
         "strictNullChecks": true,
         "paths": {
             "@/*": ["./src/*"],
-            "~/wailsjs/*": ["./wailsjs/*"]
+            "@bindings/*": ["./bindings/*"]
         }
     },
-    "include": ["src"],
+    "include": ["src", "bindings"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

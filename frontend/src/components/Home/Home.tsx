@@ -1,9 +1,3 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-
-import { useConfigStore } from '@/stores/config';
-import { useConnectionStore } from '@/stores/connection';
 import {
     ConnectKick,
     ConnectTwitch,
@@ -11,7 +5,13 @@ import {
     DisconnectKick,
     DisconnectTwitch,
     DisconnectYouTube,
-} from '~/wailsjs/go/main/App';
+} from '@bindings/ghost-chat/app.js';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
+import { useConfigStore } from '@/stores/config';
+import { useConnectionStore } from '@/stores/connection';
 
 import styles from './Home.module.css';
 

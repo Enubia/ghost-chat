@@ -6,12 +6,14 @@
     "scripts": {
         "dev": "vite",
         "build": "npx tsc && vite build",
+        "build:dev": "vite build",
         "fix": "oxlint --fix --type-aware && oxfmt --write",
         "format": "oxfmt ",
         "lint": "oxlint --type-aware",
         "preview": "vite preview"
     },
     "dependencies": {
+        "@wailsio/runtime": "3.0.0-alpha.79",
         "i18next": "25.8.13",
         "i18next-http-backend": "3.0.2",
         "react": "19.2.4",

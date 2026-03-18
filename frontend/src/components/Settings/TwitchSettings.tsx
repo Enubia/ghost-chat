@@ -1,5 +1,6 @@
+import type { TwitchConfig } from '@bindings/ghost-chat/internal/config/models.js';
+
 import type { DeepPartial } from '@/types/utils';
-import type { config } from '~/wailsjs/go/models';
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,7 @@ export function TwitchSettings() {
     const [defaultChannelText, setDefaultChannelText] = useState(twitch?.default_channel ?? '');
     const [blacklistText, setBlacklistText] = useState((twitch?.user_blacklist ?? []).join(', '));
 
-    const set = (partial: DeepPartial<config.TwitchConfig>) => update({ twitch: partial });
+    const set = (partial: DeepPartial<TwitchConfig>) => update({ twitch: partial });
 
     const saveBlacklist = () => {
         void set({

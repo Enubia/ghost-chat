@@ -1,12 +1,10 @@
 package config
 
 type WindowState struct {
-	X              int  `json:"x"`
-	Y              int  `json:"y"`
-	Width          int  `json:"width"`
-	Height         int  `json:"height"`
-	IsClickThrough bool `json:"is_click_through"`
-	IsTransparent  bool `json:"is_transparent"`
+	X      int `json:"x"`
+	Y      int `json:"y"`
+	Width  int `json:"width"`
+	Height int `json:"height"`
 }
 
 type General struct {

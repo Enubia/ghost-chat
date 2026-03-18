@@ -1,12 +1,13 @@
-import type { DeepPartial } from '@/types/utils';
-import type { config } from '~/wailsjs/go/models';
+import type { YouTubeConfig } from '@bindings/ghost-chat/internal/config/models.js';
 
+import type { DeepPartial } from '@/types/utils';
+
+import { ResolveYouTubeVideo } from '@bindings/ghost-chat/app.js';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
-import { ResolveYouTubeVideo } from '~/wailsjs/go/main/App';
 
 export function YouTubeSettings() {
     const { t } = useTranslation();
@@ -19,7 +20,7 @@ export function YouTubeSettings() {
     const [resolveError, setResolveError] = useState<string | null>(null);
     const [resolvedUrl, setResolvedUrl] = useState<string | null>(null);
 
-    const set = (partial: DeepPartial<config.YouTubeConfig>) => update({ youtube: partial });
+    const set = (partial: DeepPartial<YouTubeConfig>) => update({ youtube: partial });
 
     const saveChannel = () => {
         setResolveError(null);

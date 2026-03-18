@@ -1,5 +1,6 @@
+import type { KickConfig } from '@bindings/ghost-chat/internal/config/models.js';
+
 import type { DeepPartial } from '@/types/utils';
-import type { config } from '~/wailsjs/go/models';
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +16,7 @@ export function KickSettings() {
     const [defaultChannelText, setDefaultChannelText] = useState(kick?.default_channel ?? '');
     const [blacklistText, setBlacklistText] = useState((kick?.user_blacklist ?? []).join(', '));
 
-    const set = (partial: DeepPartial<config.KickConfig>) => update({ kick: partial });
+    const set = (partial: DeepPartial<KickConfig>) => update({ kick: partial });
 
     const saveBlacklist = () => {
         void set({

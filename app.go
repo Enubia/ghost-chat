@@ -9,16 +9,17 @@ import (
 	"ghost-chat/internal/chat/youtube"
 	"ghost-chat/internal/config"
 	ghHotkey "ghost-chat/internal/hotkey"
-	"ghost-chat/internal/tray"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 
-	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
+	"github.com/wailsapp/wails/v3/pkg/application"
+	"github.com/wailsapp/wails/v3/pkg/events"
 )
 
 type App struct {
-	ctx            context.Context
+	app            *application.App
+	window         *application.WebviewWindow
 	config         *config.Config
 	configPath     string
 	twitch         *twitch.Client
@@ -26,85 +27,91 @@ type App struct {
 	kick           *kick.Client
 	preExpandWidth int
 	vanished       bool
-	trayIcon       []byte
+	lastX, lastY   int
+	lastW, lastH   int
 }
 
-func NewApp(cfg *config.Config, configPath string, trayIcon []byte) *App {
-	app := &App{
+func NewApp(cfg *config.Config, configPath string) *App {
+	return &App{
 		config:     cfg,
 		configPath: configPath,
-		trayIcon:   trayIcon,
+		lastX:      cfg.WindowState.X,
+		lastY:      cfg.WindowState.Y,
+		lastW:      cfg.WindowState.Width,
+		lastH:      cfg.WindowState.Height,
 	}
+}
+
+func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
+	a.app = app
+	a.window = win
 
 	onMessage := func(msg chat.ChatMessage) {
-		wailsRuntime.EventsEmit(app.ctx, "chat:message", msg)
+		a.app.Event.Emit("chat:message", msg)
 	}
 	onEvent := func(event string, data any) {
-		wailsRuntime.EventsEmit(app.ctx, event, data)
+		a.app.Event.Emit(event, data)
 	}
 
-	app.twitch = twitch.NewClient(onMessage, onEvent)
-	app.youtube = youtube.NewClient(onMessage, onEvent)
-	app.kick = kick.NewClient(onMessage, onEvent)
+	a.twitch = twitch.NewClient(onMessage, onEvent)
+	a.youtube = youtube.NewClient(onMessage, onEvent)
+	a.kick = kick.NewClient(onMessage, onEvent)
+}
 
-	tray.Init(cfg.Version, trayIcon, tray.Callbacks{
-		OnToggleVanish: func() { app.ToggleVanish() },
-		OnOpenConfig:   func() { app.OpenConfigFolder() },
-		OnQuit: func() {
-			if app.ctx != nil {
-				wailsRuntime.Quit(app.ctx)
-			}
-		},
+func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+	a.window.OnWindowEvent(events.Common.WindowRuntimeReady, func(e *application.WindowEvent) {
+		if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
+			a.window.SetPosition(a.config.WindowState.X, a.config.WindowState.Y)
+		}
+
+		a.window.Show()
 	})
 
-	return app
-}
+	a.window.OnWindowEvent(events.Common.WindowDidMove, func(e *application.WindowEvent) {
+		a.lastX, a.lastY = a.window.Position()
+	})
 
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
+	a.window.OnWindowEvent(events.Common.WindowDidResize, func(e *application.WindowEvent) {
+		a.lastW, a.lastH = a.window.Size()
+	})
 
-	if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-		wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
-	}
-
-	wailsRuntime.WindowShow(a.ctx)
-
-	tray.Start(a.config.Version, a.trayIcon)
-
-	if keybind := a.config.Keybinds.Vanish.Keybind; keybind != "" {
-		if err := ghHotkey.Register(keybind, a.ToggleVanish); err != nil {
-			fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+	go func() {
+		if keybind := a.config.Keybinds.Vanish.Keybind; keybind != "" {
+			if err := ghHotkey.Register(keybind, a.ToggleVanish); err != nil {
+				fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+			}
 		}
-	}
+	}()
+
+	return nil
 }
 
-func (a *App) onBeforeClose(ctx context.Context) bool {
-	a.twitch.Disconnect()
-	a.youtube.Disconnect()
-	a.kick.Disconnect()
-
-	ghHotkey.Unregister()
-	tray.Stop()
-
-	x, y := wailsRuntime.WindowGetPosition(a.ctx)
-	w, h := wailsRuntime.WindowGetSize(a.ctx)
-
-	a.config.WindowState.X = x
-	a.config.WindowState.Y = y
+func (a *App) SaveWindowState() {
+	a.config.WindowState.X = a.lastX
+	a.config.WindowState.Y = a.lastY
 
 	if a.preExpandWidth > 0 {
 		a.config.WindowState.Width = a.preExpandWidth
 	} else {
-		a.config.WindowState.Width = w
+		a.config.WindowState.Width = a.lastW
 	}
 
-	a.config.WindowState.Height = h
+	a.config.WindowState.Height = a.lastH
 
 	if err := config.Save(a.config, a.configPath); err != nil {
-		fmt.Printf("failed to save config on close: %s\n", err.Error())
+		fmt.Printf("failed to save config: %s\n", err.Error())
 	}
+}
 
-	return false
+func (a *App) ServiceShutdown() error {
+	go func() {
+		a.twitch.Disconnect()
+		a.youtube.Disconnect()
+		a.kick.Disconnect()
+		ghHotkey.Unregister()
+	}()
+
+	return nil
 }
 
 func (a *App) GetConfig() *config.Config {
@@ -160,27 +167,33 @@ func (a *App) DisconnectKick() {
 }
 
 func (a *App) ExpandForSettings() {
-	w, h := wailsRuntime.WindowGetSize(a.ctx)
+	w, h := a.window.Size()
 	a.preExpandWidth = w
 
-	wailsRuntime.WindowSetSize(a.ctx, 1000, h)
+	a.window.SetSize(1000, h)
 }
 
 func (a *App) ShrinkToChat() {
-	_, h := wailsRuntime.WindowGetSize(a.ctx)
+	_, h := a.window.Size()
 	width := a.preExpandWidth
 
 	if width == 0 {
 		width = a.config.WindowState.Width
 	}
 
-	wailsRuntime.WindowSetSize(a.ctx, width, h)
+	a.window.SetSize(width, h)
 }
 
 func (a *App) ToggleVanish() {
 	a.vanished = !a.vanished
 
-	wailsRuntime.EventsEmit(a.ctx, "vanish:toggle", a.vanished)
+	a.app.Event.Emit("vanish:toggle", a.vanished)
+
+	if a.vanished {
+		a.window.SetIgnoreMouseEvents(true)
+	} else {
+		a.window.SetIgnoreMouseEvents(false)
+	}
 }
 
 func (a *App) OpenConfigFolder() {
@@ -189,8 +202,6 @@ func (a *App) OpenConfigFolder() {
 	switch runtime.GOOS {
 	case "darwin":
 		exec.Command("open", dir).Start()
-	case "linux":
-		exec.Command("xdg-open", dir).Start()
 	case "windows":
 		exec.Command("explorer", dir).Start()
 	}

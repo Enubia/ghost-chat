@@ -2,6 +2,7 @@ import type React from 'react';
 
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
+import { Events } from '@wailsio/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
 import { getThemeById, themeToCSS } from '@/types/theme';
-import { EventsOn } from '~/wailsjs/runtime/runtime';
 
 import styles from './Chat.module.css';
 import { ChatMessage } from './ChatMessage';
@@ -63,7 +63,8 @@ export function Chat() {
     const kickFadeTimeout = config?.kick?.fade_timeout ?? 30;
 
     useEffect(() => {
-        const cancelMessage = EventsOn('chat:message', (msg: ChatMessageType) => {
+        const cancelMessage = Events.On('chat:message', (ev) => {
+            const msg = ev.data as ChatMessageType;
             const cfg = useConfigStore.getState().config;
             const lowerUsername = msg.username.toLowerCase();
 
@@ -106,11 +107,15 @@ export function Chat() {
             });
         });
 
-        const cancelClear = EventsOn('chat:clear', (username: string) => {
+        const cancelClear = Events.On('chat:clear', (ev) => {
+            const username = ev.data as string;
+
             setMessages((prev) => prev.filter((m) => m.username.toLowerCase() !== username.toLowerCase()));
         });
 
-        const cancelDelete = EventsOn('chat:delete-message', (msgId: string) => {
+        const cancelDelete = Events.On('chat:delete-message', (ev) => {
+            const msgId = ev.data as string;
+
             setMessages((prev) => prev.filter((m) => m.id !== msgId));
         });
 

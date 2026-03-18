@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@wailsio/runtime':
+        specifier: 3.0.0-alpha.79
+        version: 3.0.0-alpha.79
       i18next:
         specifier: 25.8.13
         version: 25.8.13(typescript@5.9.3)
@@ -768,6 +771,9 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+
+  '@wailsio/runtime@3.0.0-alpha.79':
+    resolution: {integrity: sha512-NITzxKmJsMEruc39L166lbPJVECxzcbdqpHVqOOF7Cu/7Zqk/e3B/gNpkUjhNyo5rVb3V1wpS8oEgLUmpu1cwA==}
 
   babel-plugin-react-compiler@1.0.0:
     resolution: {integrity: sha512-Ixm8tFfoKKIPYdCCKYTsqv+Fd4IJ0DQqMyEimo+pxUOMUR9cVPlwTrFt9Avu+3cb6Zp3mAzl+t1MrG2fxxKsxw==}
@@ -1550,6 +1556,8 @@ snapshots:
       vite: 7.3.1(@types/node@25.3.1)
     transitivePeerDependencies:
       - supports-color
+
+  '@wailsio/runtime@3.0.0-alpha.79': {}
 
   babel-plugin-react-compiler@1.0.0:
     dependencies:

@@ -1,16 +1,16 @@
-import type { DeepPartial } from '@/types/utils';
-import type { config } from '~/wailsjs/go/models';
+import type { Config } from '@bindings/ghost-chat/internal/config/models.js';
 
+import type { DeepPartial } from '@/types/utils';
+
+import { GetConfig, UpdateConfig } from '@bindings/ghost-chat/app.js';
 import { create } from 'zustand';
 
-import { GetConfig, UpdateConfig } from '~/wailsjs/go/main/App';
-
 interface ConfigState {
-    config: config.Config | null;
+    config: Config | null;
     loaded: boolean;
     saved: boolean;
     load: () => Promise<void>;
-    update: (partial: DeepPartial<config.Config>, opts?: { silent?: boolean }) => Promise<void>;
+    update: (partial: DeepPartial<Config>, opts?: { silent?: boolean }) => Promise<void>;
 }
 
 export const useConfigStore = create<ConfigState>((set, get) => ({
@@ -52,8 +52,8 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
     },
 }));
 
-function deepMerge(target: config.Config, source: DeepPartial<config.Config>): config.Config {
-    return mergeObject(target, source) as config.Config;
+function deepMerge(target: Config, source: DeepPartial<Config>): Config {
+    return mergeObject(target, source) as Config;
 }
 
 function mergeObject(target: unknown, source: unknown): unknown {
@@ -85,5 +85,6 @@ function mergeObject(target: unknown, source: unknown): unknown {
             result[key] = srcVal;
         }
     }
+
     return result;
 }
