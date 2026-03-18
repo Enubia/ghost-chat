@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 import { BUILT_IN_THEMES, getThemeById } from '@/types/theme';
+import { validateThemeName } from '@/utils/validate';
 
 import styles from './ThemeSettings.module.css';
 
@@ -29,6 +30,7 @@ export function ThemeSettings() {
     const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
     const pendingRef = useRef<Partial<Theme>>({});
     const [localTheme, setLocalTheme] = useState<Partial<Theme>>({});
+    const [nameError, setNameError] = useState<string | null>(null);
 
     const displayTheme = { ...theme, ...localTheme };
 
@@ -41,6 +43,16 @@ export function ThemeSettings() {
     const updateProp = <K extends keyof Theme>(key: K, value: Theme[K]) => {
         if (readonly) {
             return;
+        }
+
+        if (key === 'name') {
+            const error = validateThemeName(value as string);
+            setNameError(error);
+
+            if (error) {
+                setLocalTheme((prev) => ({ ...prev, [key]: value }));
+                return;
+            }
         }
 
         pendingRef.current = { ...pendingRef.current, [key]: value };
@@ -187,6 +199,7 @@ export function ThemeSettings() {
                         value={displayTheme.name}
                         onChange={(e) => updateProp('name', e.target.value)}
                     />
+                    {nameError && <span className="field-error">{t(nameError)}</span>}
                 </div>
             )}
 

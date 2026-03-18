@@ -1,6 +1,6 @@
 .message {
     font-family: var(--theme-font-family, inherit);
-    font-size: var(--theme-font-size, 14px);
+    font-size: var(--theme-font-size, 16px);
     line-height: var(--theme-line-height, 1.6);
     background: var(--theme-message-bg, transparent);
     padding: var(--theme-message-padding, 2px 0);

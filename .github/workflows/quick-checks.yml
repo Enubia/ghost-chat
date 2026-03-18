@@ -6,32 +6,52 @@ on:
       - "**"
       - "!main"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint-typecheck:
-    if: false
-    runs-on: windows-latest
+  go-tests:
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Set git to use LF
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol lf
-
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - run: go test ./internal/...
+
+  frontend-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - uses: pnpm/action-setup@v4
         with:
           version: latest
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.18.0
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
-      - name: Lint
-        run: pnpm lint
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
 
-      - name: Typecheck
-        run: pnpm -r typecheck
+      - run: wails3 generate bindings -clean=true -ts
+
+      - run: pnpm lint
+        working-directory: frontend
+
+      - run: pnpm build
+        working-directory: frontend

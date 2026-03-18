@@ -16,6 +16,8 @@ var trayIcon []byte
 //go:embed build/appicon.png
 var appIcon []byte
 
+var version = "dev"
+
 func main() {
 	configPath, err := config.GetConfigPath()
 
@@ -29,6 +31,18 @@ func main() {
 	if err != nil {
 		println("Error loading config:", err.Error())
 		return
+	}
+
+	normalizedVersion := config.NormalizeVersion(version)
+
+	if err := config.RunMigrations(cfg, normalizedVersion); err != nil {
+		println("Error running migrations:", err.Error())
+	}
+
+	cfg.Version = normalizedVersion
+
+	if err := config.Save(cfg, configPath); err != nil {
+		println("Error saving config:", err.Error())
 	}
 
 	svc := NewApp(cfg, configPath)
@@ -68,10 +82,10 @@ func main() {
 
 	tray := app.SystemTray.New()
 	tray.SetTemplateIcon(trayIcon)
-	tray.SetTooltip("Ghost Chat " + cfg.Version)
+	tray.SetTooltip("Ghost Chat " + version)
 
 	menu := app.NewMenu()
-	menu.Add("Ghost Chat " + cfg.Version).SetEnabled(false)
+	menu.Add("Ghost Chat " + version).SetEnabled(false)
 	menu.AddSeparator()
 	menu.Add("Toggle Vanish").OnClick(func(_ *application.Context) { svc.ToggleVanish() })
 	menu.Add("Open Config Folder").OnClick(func(_ *application.Context) { svc.OpenConfigFolder() })

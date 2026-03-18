@@ -2,31 +2,47 @@ name: Build
 
 on:
   pull_request:
-    types: ['opened', 'edited', 'reopened', 'synchronize', 'ready_for_review']
+    types: [opened, reopened, synchronize, ready_for_review]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    if: false # ${{ !github.event.pull_request.draft }}
+    if: ${{ !github.event.pull_request.draft }}
 
     strategy:
+      fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        include:
+          - os: macos-latest
+            task: build
+          - os: windows-latest
+            task: windows:build
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - uses: pnpm/action-setup@v4
         with:
           version: latest
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.18.0
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
-      - name: install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
-      - name: build
-        run: pnpm -r build
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
+
+      - run: wails3 task ${{ matrix.task }}

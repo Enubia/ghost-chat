@@ -484,52 +484,54 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 ### 8.2 Polish settings UX
 - [x] Settings apply immediately (no save button — write on change, blur for text)
 - [x] "Saved" toast notification on config save
-- [ ] Validate inputs (e.g., channel names, numeric ranges)
+- [x] Validate inputs (channel names, fade timeouts, theme names) — invalid inputs block save, show red error text below field
+- [x] Strip whitespace from channel and blacklist inputs on keystroke
 
 ---
 
 ## Phase 9 — Build, Package & Ship
 
+> Build infrastructure already scaffolded by Wails v3: `Taskfile.yml` (root) + `build/darwin/Taskfile.yml` + `build/windows/Taskfile.yml`. App metadata in `build/config.yml`.
+
 ### 9.1 Build configuration
-- [ ] Configure `wails.json` for production builds
-- [ ] Set up build commands:
-  - `wails build` — production build
-  - `wails build -nsis` — Windows installer
-  - `wails build -platform darwin/universal` — macOS universal binary
-- [ ] Configure app icon, metadata, version info
+- [x] `build/config.yml` — app name, version, identifier, description already configured
+- [x] Build commands already work:
+  - `wails3 task build` — production binary → `bin/ghost-chat` (9.3MB)
+  - `wails3 task package` — macOS `.app` bundle (ad-hoc signed)
+  - `wails3 task darwin:build:universal` — macOS universal binary (arm64 + amd64)
+  - `wails3 task windows:package` — Windows NSIS installer
+- [x] Verify production build runs correctly on macOS
+- [ ] Verify production build runs correctly on Windows — deferred to manual testing
+- [ ] Configure app icon (`build/appicon.png`) — replace placeholder with final icon
 
 ### 9.2 Cross-platform testing
-- [ ] Test on Windows (primary platform for streamers)
-- [ ] Test on macOS
-- [x] ~~Test on Linux~~ - removed, no official linux support
-- [ ] Verify transparent window + click-through works on each platform
-- [ ] Verify system tray works on each platform
+- [ ] Test on macOS (transparent window, click-through, tray, hotkeys) — manual
+- [ ] Test on Windows (transparent window, click-through, tray, hotkeys) — manual
+- [x] ~~Test on Linux~~ — removed, no official linux support
 
 ### 9.3 CI/CD
-- [ ] Set up GitHub Actions for:
-  - Build on PR (all platforms)
-  - Release build on tag (create GitHub release with binaries)
-- [ ] Wails has a [GitHub Actions template](https://wails.io/docs/guides/github-actions) — use it as a starting point
+- [x] Set up GitHub Actions workflows:
+  - `build.yml` — build on PR (macOS + Windows), cancel-in-progress
+  - `quick-checks.yml` — Go tests + frontend lint/typecheck on push
+  - `release.yml` — on tag push: build macOS universal `.app` (zipped) + Windows `.exe`, create draft GitHub release
+- [x] Version injection via `-ldflags -X main.version` from `git describe --tags --always`
 
 ---
 
 ## Phase 10 — Migration & Cleanup
 
-### 10.1 Migrate user configs
-- [ ] Write a one-time migration that reads old Electron Store JSON and converts to new config format
-- [ ] Detect old config location on startup, offer to migrate
+### 10.1 ~~Migrate user configs~~ — removed, v4 is a clean break
 
 ### 10.2 Update CLAUDE.md
-- [ ] Update project structure diagram (add `kick/`, remove placeholder `hotkey/` and `tray/` dirs)
-- [ ] Document new commands, project structure, conventions
+- [x] Update project structure diagram (added chat/kick/, chat/twitch/, chat/youtube/, utils/, types/, stores/, i18n/, .github/workflows/)
+- [x] Document version injection, connection store, locales, validation utils
 
 ### 10.4 Config cleanup
 - [x] Remove stale `YouTubeConfig` fields (`retries`, `fetch_delay`, `default_channel_id`) — migrated in v4.0.0
 
 ### 10.3 Update README and CONTRIBUTING
-- [ ] Update prerequisites (Go, Wails CLI instead of Node + Electron)
-- [ ] Update development workflow
-- [ ] Update build/release instructions
+- [x] Rewrite README for v4 (Go + Wails v3, features, download links, architecture table)
+- [x] Update CONTRIBUTING.md (v4 prerequisites, commands, conventions)
 
 ---
 

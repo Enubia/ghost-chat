@@ -1,78 +1,73 @@
 # Contributing to Ghost Chat
 
-Thank you for your interest in contributing to Ghost Chat! This document provides guidelines to help you contribute effectively.
+Thank you for your interest in contributing to Ghost Chat!
 
 ## Reporting Issues
 
-Please use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose) or our [Discord server](https://discord.gg/UVMX32dDcy) to report bugs and errors.
+Use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose) or our [Discord server](https://discord.gg/UVMX32dDcy) to report bugs.
 
-When reporting issues, please include:
-- A clear description of the bug
-- Steps to reproduce the issue
-- Expected and actual behavior
+Please include:
+- Steps to reproduce
+- Expected vs actual behavior
+- OS and Ghost Chat version (shown in the tray menu)
 - Screenshots if applicable
-- Your operating system and Ghost Chat version
 
 ## Development Setup
 
-### Prerequisites:
-- Node.js 22+ recommended
-- [pnpm](https://pnpm.io/) (our package manager of choice)
-- Git
+### Prerequisites
+- Go 1.25+
+- Node.js 20+
+- pnpm
+- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@latest`
+- macOS: Xcode Command Line Tools
+- Windows: WebView2 (included in Windows 10/11)
+
+Verify: `wails3 doctor`
+
+### Running locally
+
+```bash
+wails3 dev                # dev mode with hot-reload
+go test ./internal/...    # Go tests
+cd frontend && pnpm fix   # lint + format (oxlint + oxfmt)
+cd frontend && pnpm build # typecheck + production build
+```
+
+### Building
+
+```bash
+wails3 task build         # production binary → bin/ghost-chat
+wails3 task package       # .app bundle (macOS) or .exe (Windows)
+```
 
 ## Contribution Workflow
 
-1. **Fork** the repo on GitHub
-2. **Clone** the project to your own machine
-3. **Create a branch** for your feature or bugfix
-4. **Make your changes** and commit them with clear messages
-5. **Push** your work back up to your fork
-6. Submit a **Pull request** so that we can review your changes
+1. Fork the repo
+2. Create a branch for your feature or fix
+3. Make changes, ensure tests pass and linting is clean
+4. Push and open a Pull Request
 
-**NOTE:** Be sure to merge the latest from "upstream" before making a pull request!
+Merge the latest from upstream before submitting.
 
-## Code Style and Conventions
+## Code Conventions
 
-We [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) for fast linting and [Prettier](https://prettier.io/) for code formatting. All code should pass linting and formatting before being submitted:
+- **Go**: `internal/` packages, lowercase error messages, `%w` wrapping
+- **Frontend**: CSS Modules, no UI libraries, oxlint/oxfmt (not eslint/prettier)
+- **No comments** unless logic is non-obvious
+- **Pin dependencies** to exact versions (no `^` or `~`)
+- Run `cd frontend && pnpm fix` before committing any frontend changes
 
-- Git hooks automatically run linting and formatting before commits
-- GitHub Actions will verify your code meets our standards
-- Run `pnpm check` locally to check your code
-
-## Building and Testing
-
-To test your changes locally:
-1. Run `pnpm dev` to start the development server
-2. Make your changes and verify they work as expected
-3. Run `pnpm build` to ensure the application builds correctly
-
-## Adding New Features
-
-When adding new features:
-- Ensure all code is properly typed with TypeScript
-- Add appropriate translations for any user-facing text
-- Update documentation if necessary
-- Consider cross-platform compatibility
+See [CLAUDE.md](CLAUDE.md) for full conventions and project structure.
 
 ## Translations
 
-If you're adding or updating translations:
-1. Refer to the reference file in `app/renderer/i18n/locales/en-US.json`
-2. Create or update the relevant language file
-3. Ensure all keys are present and correctly translated
-
-## Pull Request Process
-
-1. Update the documentation with details of changes if applicable
-2. Ensure your PR passes all GitHub Actions checks
-3. Be responsive to feedback and requests for changes
-4. A maintainer will merge your PR once it meets all requirements
+1. Copy `frontend/public/locales/en-US/translation.json`
+2. Create a folder with your locale code (e.g. `fr-FR`)
+3. Translate all strings
+4. Submit a PR
 
 ## Need Help?
 
-If you need help with your contribution, feel free to:
-- Join our [Discord server](https://discord.gg/UVMX32dDcy)
+- [Discord server](https://discord.gg/UVMX32dDcy)
 - Comment on the relevant GitHub issue
-- Ask questions in your work-in-progress PR
-
-Thank you for contributing to Ghost Chat!
+- Ask in your work-in-progress PR

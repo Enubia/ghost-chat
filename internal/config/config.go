@@ -83,7 +83,6 @@ type Config struct {
 
 func DefaultConfig() Config {
 	return Config{
-		Version: "4.0.0",
 		WindowState: WindowState{
 			Width:  400,
 			Height: 600,

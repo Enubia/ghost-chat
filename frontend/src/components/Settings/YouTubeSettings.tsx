@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
+import { stripWhitespace, validateFadeTimeout } from '@/utils/validate';
 
 export function YouTubeSettings() {
     const { t } = useTranslation();
@@ -19,6 +20,7 @@ export function YouTubeSettings() {
     const [resolving, setResolving] = useState(false);
     const [resolveError, setResolveError] = useState<string | null>(null);
     const [resolvedUrl, setResolvedUrl] = useState<string | null>(null);
+    const [fadeError, setFadeError] = useState<string | null>(null);
 
     const set = (partial: DeepPartial<YouTubeConfig>) => update({ youtube: partial });
 
@@ -26,6 +28,16 @@ export function YouTubeSettings() {
         setResolveError(null);
         setResolvedUrl(null);
         void set({ channel_id: channelText });
+    };
+
+    const saveFadeTimeout = (value: string) => {
+        const num = Number(value);
+        const error = validateFadeTimeout(num);
+        setFadeError(error);
+
+        if (!error) {
+            void set({ fade_timeout: num });
+        }
     };
 
     const saveBlacklist = () => {
@@ -67,7 +79,7 @@ export function YouTubeSettings() {
                         type="text"
                         value={channelText}
                         onChange={(e) => {
-                            setChannelText(e.target.value);
+                            setChannelText(stripWhitespace(e.target.value));
                             setResolvedUrl(null);
                             setResolveError(null);
                         }}
@@ -88,11 +100,7 @@ export function YouTubeSettings() {
                         {resolvedUrl}
                     </span>
                 )}
-                {resolveError && (
-                    <span style={{ fontSize: '11px', color: 'var(--color-danger)', marginTop: '2px' }}>
-                        {resolveError}
-                    </span>
-                )}
+                {resolveError && <span className="field-error">{resolveError}</span>}
             </div>
 
             <div className="field-row">
@@ -109,9 +117,11 @@ export function YouTubeSettings() {
                     <input
                         type="number"
                         value={yt?.fade_timeout ?? 30}
-                        onChange={(e) => set({ fade_timeout: Number(e.target.value) })}
+                        onChange={(e) => saveFadeTimeout(e.target.value)}
                         min={1}
+                        max={300}
                     />
+                    {fadeError && <span className="field-error">{t(fadeError)}</span>}
                 </div>
             )}
 
@@ -120,7 +130,7 @@ export function YouTubeSettings() {
                 <input
                     type="text"
                     value={blacklistText}
-                    onChange={(e) => setBlacklistText(e.target.value)}
+                    onChange={(e) => setBlacklistText(stripWhitespace(e.target.value))}
                     onBlur={saveBlacklist}
                     placeholder={t('settings.youtube.user_blacklist_placeholder')}
                 />

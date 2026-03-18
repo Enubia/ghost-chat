@@ -152,6 +152,12 @@ button {
     letter-spacing: 0.5px;
 }
 
+.field-error {
+    font-size: 11px;
+    color: var(--color-danger);
+    margin-top: 2px;
+}
+
 .field-row {
     display: flex;
     align-items: center;

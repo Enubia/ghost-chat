@@ -76,6 +76,25 @@
     background: var(--color-surface);
 }
 
+.vanishBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-dim);
+    margin-left: 4px;
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast);
+
+    &:hover {
+        color: var(--color-accent);
+        background: var(--color-bg-hover);
+    }
+}
+
 .scrollBtn {
     position: absolute;
     bottom: 8px;

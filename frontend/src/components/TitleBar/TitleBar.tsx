@@ -2,6 +2,7 @@ import { Window } from '@wailsio/runtime';
 import { useTranslation } from 'react-i18next';
 
 import ghostSvg from '@/assets/ghost.svg';
+import { useConfigStore } from '@/stores/config';
 
 import styles from './TitleBar.module.css';
 
@@ -12,6 +13,7 @@ interface TitleBarProps {
 
 export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
     const { t } = useTranslation();
+    const hotkeySet = useConfigStore((s) => !!s.config?.keybinds?.vanish?.keybind);
 
     return (
         <div className={styles.titlebar}>
@@ -22,6 +24,7 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                     className={styles.logo}
                 />
                 <span className={styles.title}>Ghost Chat</span>
+                {!hotkeySet && <span className={styles.hotkeyHint}>{t('titlebar.no_hotkey')}</span>}
             </div>
             <div className={styles.controls}>
                 <button

@@ -2,6 +2,7 @@ import type React from 'react';
 
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
+import { ToggleVanish } from '@bindings/ghost-chat/app.js';
 import { Events } from '@wailsio/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -236,6 +237,29 @@ export function Chat() {
                         )}
                     </div>
                 )}
+                <button
+                    className={styles.vanishBtn}
+                    onClick={() => void ToggleVanish()}
+                    title={t('chat.vanish')}
+                >
+                    <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        />
+                    </svg>
+                </button>
                 {!connected && <span className={styles.disconnected}>{t('chat.disconnected')}</span>}
             </div>
             <div

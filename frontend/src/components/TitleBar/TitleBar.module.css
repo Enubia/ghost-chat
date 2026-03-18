@@ -30,6 +30,15 @@
     letter-spacing: 0.3px;
 }
 
+.hotkeyHint {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-warning);
+    background: rgba(212, 160, 83, 0.15);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
 .controls {
     display: flex;
     align-items: center;

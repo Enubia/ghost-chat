@@ -2,28 +2,19 @@ package config
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 )
+
+var semverRe = regexp.MustCompile(`(\d+\.\d+\.\d+)`)
 
 type Migration struct {
 	Version string
 	Migrate func(*Config)
 }
 
-var migrations = []Migration{
-	{
-		// Remove stale YouTubeConfig fields (retries, fetch_delay, default_channel_id)
-		// that were left over from the old YouTube Data API approach.
-		// Add youtube.fade and youtube.fade_timeout with sensible defaults.
-		Version: "4.0.0",
-		Migrate: func(cfg *Config) {
-			if cfg.YouTube.FadeTimeout == 0 {
-				cfg.YouTube.FadeTimeout = 30
-			}
-		},
-	},
-}
+var migrations = []Migration{}
 
 func parseSemver(version string) (major, minor, patch int, err error) {
 	parts := strings.Split(version, ".")
@@ -127,4 +118,14 @@ func runMigrations(cfg *Config, migrations []Migration, targetVersion string) er
 
 func RunMigrations(cfg *Config, targetVersion string) error {
 	return runMigrations(cfg, migrations, targetVersion)
+}
+
+func NormalizeVersion(version string) string {
+	match := semverRe.FindString(version)
+
+	if match == "" {
+		return version
+	}
+
+	return match
 }

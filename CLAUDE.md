@@ -36,19 +36,38 @@ cd frontend && pnpm build    # tsc + vite build
 
 ```
 ghost-chat/
-├── main.go                     # entry point, config loading, app/window/tray setup
+├── main.go                     # entry point, config loading, migrations, app/window/tray setup
 ├── app.go                      # App struct, bound methods, service lifecycle
-├── Taskfile.yml                # Wails v3 build tasks (root)
+├── Taskfile.yml                # Wails v3 build tasks (root), version injection
 ├── internal/
 │   ├── config/
 │   │   ├── config.go           # Config struct + DefaultConfig()
 │   │   ├── store.go            # Load/Save/GetConfigPath
-│   │   ├── migrations.go       # semver comparison + RunMigrations
+│   │   ├── migrations.go       # semver comparison, RunMigrations, NormalizeVersion
 │   │   └── migrations_test.go
+│   ├── chat/
+│   │   ├── message.go          # Unified ChatMessage, Badge, Emote, Fragment structs
+│   │   ├── twitch/
+│   │   │   ├── client.go       # Twitch IRC WebSocket client (connect, reconnect, PING/PONG)
+│   │   │   ├── parser.go       # IRC message parser (PRIVMSG, CLEARCHAT, CLEARMSG, ROOMSTATE)
+│   │   │   ├── badges.go       # Twitch badge fetching (GQL API, global + channel)
+│   │   │   ├── emotes.go       # Third-party emotes (BTTV, FFZ, 7TV)
+│   │   │   └── *_test.go
+│   │   ├── youtube/
+│   │   │   ├── client.go       # YouTube innertube live chat poller (continuation tokens)
+│   │   │   ├── parser.go       # Innertube response → ChatMessage (text, super chat, membership)
+│   │   │   ├── resolve.go      # Video ID resolution (@handle, channel URL, video URL)
+│   │   │   ├── types.go        # Innertube response structs
+│   │   │   └── *_test.go
+│   │   └── kick/
+│   │       ├── client.go       # Kick Pusher WebSocket client (subscribe, heartbeat, reconnect)
+│   │       ├── parser.go       # Kick message → ChatMessage (emote fragments)
+│   │       ├── resolve.go      # Channel slug → chatroom ID resolution
+│   │       ├── types.go        # Pusher/Kick message structs
+│   │       └── *_test.go
 │   └── hotkey/
 │       ├── hotkey.go           # Global hotkey registration + key parsing
 │       ├── modifiers_darwin.go # macOS modifier mappings
-│       ├── modifiers_linux.go  # Linux modifier mappings
 │       └── modifiers_windows.go # Windows modifier mappings
 ├── frontend/
 │   ├── src/
@@ -57,16 +76,27 @@ ghost-chat/
 │   │   ├── index.css           # CSS custom properties, global styles, utility classes
 │   │   ├── main.tsx            # React entry
 │   │   ├── stores/
-│   │   │   └── config.ts       # Zustand store wrapping Go GetConfig/UpdateConfig
+│   │   │   ├── config.ts       # Zustand store wrapping Go GetConfig/UpdateConfig
+│   │   │   └── connection.ts   # Platform connection state (Twitch/YouTube/Kick)
 │   │   ├── components/
 │   │   │   ├── TitleBar/       # frameless window title bar + controls
 │   │   │   ├── Home/           # platform cards (Twitch/YouTube/Kick)
 │   │   │   ├── Chat/           # chat overlay (messages, filtering, themes)
-│   │   │   ├── Settings/       # toggleable panel with tabbed nav
+│   │   │   ├── Settings/       # toggleable panel with tabbed nav (General, Twitch, YouTube, Kick, Themes)
 │   │   │   └── Toggle.tsx      # reusable toggle switch
+│   │   ├── types/
+│   │   │   ├── chat.ts         # ChatMessage types (mirrors Go structs)
+│   │   │   ├── theme.ts        # Theme type + built-in themes (Default, Compact, Bubble)
+│   │   │   └── utils.ts        # DeepPartial utility type
+│   │   ├── utils/
+│   │   │   └── validate.ts     # Input validation (channels, fade timeout, theme name)
+│   │   ├── i18n/
+│   │   │   └── index.ts        # i18next config (lazy-loaded locales)
 │   │   └── assets/
 │   │       ├── ghost.svg       # app logo
 │   │       └── trayicon.png    # system tray icon
+│   ├── public/
+│   │   └── locales/            # i18n translation files (en-US, de-DE)
 │   ├── bindings/               # auto-generated Wails v3 bindings (DO NOT EDIT)
 │   ├── .oxlintrc.json
 │   ├── .oxfmtrc.json
@@ -75,8 +105,13 @@ ghost-chat/
 │   ├── Taskfile.yml            # shared build tasks (pnpm, bindings, icons)
 │   ├── config.yml              # app metadata (name, version, identifier)
 │   ├── appicon.png             # 512x512 app icon source
-│   ├── darwin/                 # macOS build files (Info.plist, icons.icns)
-│   └── windows/                # Windows build files (icon.ico)
+│   ├── darwin/                 # macOS build files (Info.plist, icons.icns, Taskfile.yml)
+│   └── windows/                # Windows build files (icon.ico, info.json, Taskfile.yml)
+├── .github/
+│   └── workflows/
+│       ├── build.yml           # PR build (macOS + Windows)
+│       ├── quick-checks.yml    # Go tests + frontend lint on push
+│       └── release.yml         # Tag → draft GitHub release with binaries
 └── TODO.md                     # phased development plan
 ```
 
@@ -88,6 +123,7 @@ ghost-chat/
 - Config: single `*config.Config` pointer shared via App struct
 - Exported methods on App struct become JS-callable bindings (Wails v3 services)
 - App implements `ServiceStartup`/`ServiceShutdown` interfaces for lifecycle
+- Version injected via `-ldflags -X main.version` at build time (from `git describe --tags`)
 
 ### Frontend
 - Path aliases: `@/` → `src/`, `@bindings/` → `bindings/`

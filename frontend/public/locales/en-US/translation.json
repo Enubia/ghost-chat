@@ -2,7 +2,8 @@
     "titlebar": {
         "settings": "Settings",
         "minimize": "Minimize",
-        "close": "Close"
+        "close": "Close",
+        "no_hotkey": "No vanish hotkey set"
     },
     "home": {
         "twitch": "Twitch",
@@ -23,7 +24,8 @@
         "back": "Back",
         "waiting": "Waiting for messages...",
         "disconnected": "Disconnected",
-        "scroll_to_bottom": "Scroll to bottom"
+        "scroll_to_bottom": "Scroll to bottom",
+        "vanish": "Toggle vanish mode"
     },
     "settings": {
         "support": "Enjoying Ghost Chat? Consider supporting the project!",
@@ -97,5 +99,13 @@
             "export": "Export",
             "import": "Import"
         }
+    },
+    "validation": {
+        "twitch_channel_length": "Must be 3-25 characters",
+        "twitch_channel_chars": "Only letters, numbers, and underscores",
+        "kick_channel_length": "Must be 3-26 characters",
+        "kick_channel_chars": "Only letters, numbers, underscores, and hyphens",
+        "fade_timeout": "Must be a whole number between 1 and 300",
+        "theme_name_empty": "Theme name cannot be empty"
     }
 }
