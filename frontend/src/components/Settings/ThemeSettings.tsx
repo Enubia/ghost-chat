@@ -2,7 +2,7 @@ import type React from 'react';
 
 import type { Theme } from '@/types/theme';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
@@ -26,24 +26,42 @@ export function ThemeSettings() {
     const allThemes = [...BUILT_IN_THEMES, ...customThemes];
     const theme = getThemeById(activeId, customThemes);
     const readonly = isBuiltIn(activeId);
+    const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
+    const pendingRef = useRef<Partial<Theme>>({});
+    const [localTheme, setLocalTheme] = useState<Partial<Theme>>({});
+
+    const displayTheme = { ...theme, ...localTheme };
 
     const setActiveTheme = (id: string) => {
-        void update({ theme: { active_theme_id: id } });
+        pendingRef.current = {};
+        setLocalTheme({});
+        void update({ theme: { active_theme_id: id } }, { silent: isBuiltIn(id) });
     };
 
     const updateProp = <K extends keyof Theme>(key: K, value: Theme[K]) => {
         if (readonly) {
             return;
         }
-        const updated = customThemes.map((ct) => (ct.id === activeId ? { ...ct, [key]: value } : ct));
-        void update({ theme: { custom_themes: updated } });
+        pendingRef.current = { ...pendingRef.current, [key]: value };
+        setLocalTheme((prev) => ({ ...prev, [key]: value }));
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+        }
+        debounceRef.current = setTimeout(() => {
+            const changes = pendingRef.current;
+            pendingRef.current = {};
+            setLocalTheme({});
+            const current = (useConfigStore.getState().config?.theme?.custom_themes as Theme[]) ?? [];
+            const updated = current.map((ct) => (ct.id === activeId ? { ...ct, ...changes } : ct));
+            void update({ theme: { custom_themes: updated } });
+        }, 500);
     };
 
     const duplicateTheme = () => {
         const newTheme: Theme = {
-            ...theme,
+            ...displayTheme,
             id: `custom-${Date.now()}`,
-            name: `${theme.name} (copy)`,
+            name: `${displayTheme.name} (copy)`,
         };
         void update({
             theme: {
@@ -71,7 +89,7 @@ export function ThemeSettings() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${theme.name.toLowerCase().replace(/\s+/g, '-')}.json`;
+        a.download = `${displayTheme.name.toLowerCase().replace(/\s+/g, '-')}.json`;
         a.click();
         URL.revokeObjectURL(url);
     };
@@ -147,7 +165,7 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.name')}</label>
                     <input
                         type="text"
-                        value={theme.name}
+                        value={displayTheme.name}
                         onChange={(e) => updateProp('name', e.target.value)}
                     />
                 </div>
@@ -159,14 +177,14 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.font_family')}</label>
                     <input
                         type="text"
-                        value={theme.font_family}
+                        value={displayTheme.font_family}
                         disabled={readonly}
                         onChange={(e) => updateProp('font_family', e.target.value)}
                     />
                 </div>
                 <Slider
                     label={t('settings.themes.font_size')}
-                    value={theme.font_size}
+                    value={displayTheme.font_size}
                     min={8}
                     max={24}
                     unit="px"
@@ -175,7 +193,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.line_height')}
-                    value={theme.line_height}
+                    value={displayTheme.line_height}
                     min={1}
                     max={2.5}
                     step={0.1}
@@ -190,7 +208,7 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.message_bg')}</label>
                     <input
                         type="text"
-                        value={theme.message_bg}
+                        value={displayTheme.message_bg}
                         disabled={readonly}
                         onChange={(e) => updateProp('message_bg', e.target.value)}
                         placeholder="transparent"
@@ -200,7 +218,7 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.message_padding')}</label>
                     <input
                         type="text"
-                        value={theme.message_padding}
+                        value={displayTheme.message_padding}
                         disabled={readonly}
                         onChange={(e) => updateProp('message_padding', e.target.value)}
                         placeholder="2px 0"
@@ -208,7 +226,7 @@ export function ThemeSettings() {
                 </div>
                 <Slider
                     label={t('settings.themes.message_radius')}
-                    value={theme.message_radius}
+                    value={displayTheme.message_radius}
                     min={0}
                     max={20}
                     unit="px"
@@ -217,7 +235,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.message_gap')}
-                    value={theme.message_gap}
+                    value={displayTheme.message_gap}
                     min={0}
                     max={12}
                     unit="px"
@@ -228,7 +246,7 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.text_color')}</label>
                     <input
                         type="text"
-                        value={theme.text_color}
+                        value={displayTheme.text_color}
                         disabled={readonly}
                         onChange={(e) => updateProp('text_color', e.target.value)}
                         placeholder="inherit"
@@ -238,7 +256,7 @@ export function ThemeSettings() {
                     <label className="field-label">{t('settings.themes.text_shadow')}</label>
                     <input
                         type="text"
-                        value={theme.text_shadow}
+                        value={displayTheme.text_shadow}
                         disabled={readonly}
                         onChange={(e) => updateProp('text_shadow', e.target.value)}
                         placeholder="none"
@@ -250,7 +268,7 @@ export function ThemeSettings() {
                 <span className={styles.sectionTitle}>{t('settings.themes.username_section')}</span>
                 <Slider
                     label={t('settings.themes.username_weight')}
-                    value={theme.username_weight}
+                    value={displayTheme.username_weight}
                     min={400}
                     max={900}
                     step={100}
@@ -260,7 +278,7 @@ export function ThemeSettings() {
                 <div className="field-row">
                     <label className="field-label">{t('settings.themes.show_colon')}</label>
                     <Toggle
-                        checked={theme.show_colon}
+                        checked={displayTheme.show_colon}
                         onChange={(v) => updateProp('show_colon', v)}
                         disabled={readonly}
                     />
@@ -271,7 +289,7 @@ export function ThemeSettings() {
                 <span className={styles.sectionTitle}>{t('settings.themes.elements')}</span>
                 <Slider
                     label={t('settings.themes.badge_size')}
-                    value={theme.badge_size}
+                    value={displayTheme.badge_size}
                     min={10}
                     max={28}
                     unit="px"
@@ -280,7 +298,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.emote_size')}
-                    value={theme.emote_size}
+                    value={displayTheme.emote_size}
                     min={16}
                     max={48}
                     unit="px"
@@ -290,15 +308,15 @@ export function ThemeSettings() {
                 <div className="field-row">
                     <label className="field-label">{t('settings.themes.show_avatars')}</label>
                     <Toggle
-                        checked={theme.show_avatars}
+                        checked={displayTheme.show_avatars}
                         onChange={(v) => updateProp('show_avatars', v)}
                         disabled={readonly}
                     />
                 </div>
-                {theme.show_avatars && (
+                {displayTheme.show_avatars && (
                     <Slider
                         label={t('settings.themes.avatar_size')}
-                        value={theme.avatar_size}
+                        value={displayTheme.avatar_size}
                         min={12}
                         max={32}
                         unit="px"

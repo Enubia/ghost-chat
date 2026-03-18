@@ -10,7 +10,7 @@ interface ConfigState {
     loaded: boolean;
     saved: boolean;
     load: () => Promise<void>;
-    update: (partial: DeepPartial<config.Config>) => Promise<void>;
+    update: (partial: DeepPartial<config.Config>, opts?: { silent?: boolean }) => Promise<void>;
 }
 
 export const useConfigStore = create<ConfigState>((set, get) => ({
@@ -28,7 +28,7 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
         }
     },
 
-    update: async (partial) => {
+    update: async (partial, opts) => {
         const current = get().config;
         if (!current) {
             return;
@@ -37,8 +37,12 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
         const merged = deepMerge(current, partial);
         try {
             await UpdateConfig(merged);
-            set({ config: merged, saved: true });
-            setTimeout(() => set({ saved: false }), 1500);
+            if (opts?.silent) {
+                set({ config: merged });
+            } else {
+                set({ config: merged, saved: true });
+                setTimeout(() => set({ saved: false }), 1500);
+            }
         } catch (err) {
             console.error('Failed to update config:', err);
         }

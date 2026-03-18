@@ -6,8 +6,6 @@ import { useConfigStore } from '@/stores/config';
 const languages = [
     { value: 'en-US', label: 'English' },
     { value: 'de-DE', label: 'Deutsch' },
-    { value: 'fr-FR', label: 'Français' },
-    { value: 'es-ES', label: 'Español' },
 ];
 
 export function GeneralSettings() {
