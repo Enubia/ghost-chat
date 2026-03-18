@@ -11,20 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  go-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "1.25"
-
-      - run: CGO_ENABLED=0 go test ./internal/...
-
-  frontend-lint:
-    runs-on: ubuntu-latest
+  checks:
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -45,10 +33,12 @@ jobs:
 
       - run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
+      - run: go test ./internal/...
+
       - run: pnpm install --frozen-lockfile
         working-directory: frontend
 
-      - run: CGO_ENABLED=0 wails3 generate bindings -clean=true -ts
+      - run: wails3 generate bindings -clean=true -ts
 
       - run: pnpm lint
         working-directory: frontend
