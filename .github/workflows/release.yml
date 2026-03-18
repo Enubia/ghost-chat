@@ -22,6 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
@@ -43,6 +45,8 @@ jobs:
         working-directory: frontend
 
       - run: wails3 task darwin:package:universal
+        env:
+          VERSION: ${{ env.VERSION_TAG }}
 
       - name: Zip app bundle
         run: cd bin && zip -r ghost-chat-macos.zip ghost-chat.app
@@ -57,6 +61,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
@@ -78,6 +84,8 @@ jobs:
         working-directory: frontend
 
       - run: wails3 task build
+        env:
+          VERSION: ${{ env.VERSION_TAG }}
 
       - uses: actions/upload-artifact@v4
         with:
