@@ -5,6 +5,13 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. v4.0.1)"
+        required: true
+
+env:
+  VERSION_TAG: ${{ github.event.inputs.version || github.ref_name }}
 
 permissions:
   contents: write
@@ -89,7 +96,7 @@ jobs:
 
       - name: Generate electron-updater manifests
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${VERSION_TAG#v}"
           DATE="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
           DUMMY_SHA="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
@@ -117,6 +124,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.VERSION_TAG }}
           draft: true
           generate_release_notes: true
           files: |
