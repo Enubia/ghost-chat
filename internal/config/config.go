@@ -13,8 +13,7 @@ type General struct {
 }
 
 type VanishKeybind struct {
-	Keybind           string `json:"keybind"` // empty by default
-	ActivationMessage string `json:"activation_message"`
+	Keybind string `json:"keybind"` // empty by default
 }
 
 type Keybinds struct {
@@ -93,9 +92,7 @@ func DefaultConfig() Config {
 			Language: "en-US",
 		},
 		Keybinds: Keybinds{
-			Vanish: VanishKeybind{
-				ActivationMessage: "VanishKeybind triggered",
-			},
+			Vanish: VanishKeybind{},
 		},
 		Theme: ThemeConfig{
 			ActiveThemeID: "default",

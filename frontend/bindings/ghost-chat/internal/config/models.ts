@@ -340,15 +340,11 @@ export class VanishKeybind {
      * empty by default
      */
     "keybind": string;
-    "activation_message": string;
 
     /** Creates a new VanishKeybind instance. */
     constructor($$source: Partial<VanishKeybind> = {}) {
         if (!("keybind" in $$source)) {
             this["keybind"] = "";
-        }
-        if (!("activation_message" in $$source)) {
-            this["activation_message"] = "";
         }
 
         Object.assign(this, $$source);
