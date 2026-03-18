@@ -1,21 +1,18 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Go
+*bin/
 
+# Wails
+.task
+
+# Frontend
 node_modules
-out
-release
-*.local
+frontend/dist
 
-# eslint
-.eslintcache
+# Logs
+*.log
 
 # Editor directories and files
+.vscode/settings.json
 .vscode/.debug.env
 .idea
 .DS_Store
@@ -25,10 +22,14 @@ release
 *.sln
 *.sw?
 
-# lockfile
+# OS
+Thumbs.db
+
+# Lockfile (pnpm only)
 package-lock.json
 yarn.lock
 
-.pnpm-store
+# Learning exercises output
+learning/**/config.json
 
-*.timestamp
+.claude

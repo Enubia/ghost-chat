@@ -1,0 +1,37 @@
+{
+    "name": "frontend",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "npx tsc && vite build",
+        "build:dev": "vite build",
+        "fix": "oxlint --fix --type-aware && oxfmt --write",
+        "format": "oxfmt ",
+        "lint": "oxlint --type-aware",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@wailsio/runtime": "3.0.0-alpha.79",
+        "i18next": "25.8.13",
+        "i18next-http-backend": "3.0.2",
+        "react": "19.2.4",
+        "react-dom": "19.2.4",
+        "react-i18next": "16.5.4",
+        "react-router-dom": "7.13.1",
+        "zustand": "5.0.11"
+    },
+    "devDependencies": {
+        "@types/node": "25.3.1",
+        "@types/react": "19.2.14",
+        "@types/react-dom": "19.2.3",
+        "@vitejs/plugin-react": "5.1.4",
+        "babel-plugin-react-compiler": "1.0.0",
+        "oxfmt": "0.32.0",
+        "oxlint": "1.47.0",
+        "oxlint-tsgolint": "0.12.2",
+        "typescript": "5.9.3",
+        "vite": "7.3.1"
+    }
+}

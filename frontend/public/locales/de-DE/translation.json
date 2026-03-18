@@ -1,0 +1,112 @@
+{
+    "titlebar": {
+        "settings": "Einstellungen",
+        "minimize": "Minimieren",
+        "close": "Schließen",
+        "no_hotkey": "Keine Vanish-Taste gesetzt",
+        "update_available": "Update {{version}}"
+    },
+    "home": {
+        "twitch": "Twitch",
+        "youtube": "YouTube",
+        "kick": "Kick",
+        "connect": "Verbinden",
+        "connecting": "Verbinde...",
+        "disconnect": "Trennen",
+        "open_chat": "Chat öffnen",
+        "placeholder": {
+            "channel": "Kanalname",
+            "channel_id": "Kanal-ID",
+            "channel_or_url": "Kanal, @handle oder Video-URL",
+            "kick_channel": "Kanalname"
+        }
+    },
+    "chat": {
+        "back": "Zurück",
+        "waiting": "Warte auf Nachrichten...",
+        "disconnected": "Getrennt",
+        "scroll_to_bottom": "Nach unten scrollen",
+        "vanish": "Vanish-Modus umschalten"
+    },
+    "settings": {
+        "support": "Ghost Chat gefällt dir? Unterstütze das Projekt!",
+        "tabs": {
+            "general": "Allgemein",
+            "twitch": "Twitch",
+            "youtube": "YouTube",
+            "kick": "Kick",
+            "themes": "Designs"
+        },
+        "general": {
+            "language": "Sprache",
+            "show_timestamps": "Zeitstempel anzeigen",
+            "vanish_hotkey": "Vanish-Tastenkombination",
+            "press_keys": "Tastenkombination drücken...",
+            "not_set": "Nicht gesetzt"
+        },
+        "twitch": {
+            "default_channel": "Standardkanal",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
+            "bots": "Bots anzeigen",
+            "hide_commands": "Befehle ausblenden",
+            "hide_badges": "Abzeichen ausblenden",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "youtube": {
+            "channel": "Kanal / Video-URL",
+            "channel_placeholder": "@handle, Kanal-ID oder Video-URL",
+            "detect": "Erkennen",
+            "detecting": "Erkenne...",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "kick": {
+            "default_channel": "Standardkanal",
+            "default_channel_placeholder": "kanalname",
+            "fade": "Nachrichten ausblenden",
+            "fade_timeout": "Ausblenden nach (Sekunden)",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "themes": {
+            "active_theme": "Aktives Design",
+            "duplicate": "Duplizieren",
+            "delete": "Entfernen",
+            "name": "Designname",
+            "readonly_hint": "Standarddesigns sind schreibgeschützt. Duplizieren zum Anpassen.",
+            "typography": "Typografie",
+            "font_family": "Schriftart",
+            "font_size": "Schriftgröße",
+            "line_height": "Zeilenhöhe",
+            "message": "Nachricht",
+            "message_bg": "Hintergrund",
+            "message_padding": "Innenabstand",
+            "message_radius": "Eckenradius",
+            "message_gap": "Abstand",
+            "text_color": "Textfarbe",
+            "text_shadow": "Textschatten",
+            "username_section": "Benutzername",
+            "username_weight": "Schriftstärke",
+            "show_colon": "Doppelpunkt anzeigen",
+            "elements": "Elemente",
+            "badge_size": "Abzeichengröße",
+            "emote_size": "Emotegröße",
+            "show_avatars": "Avatare anzeigen",
+            "avatar_size": "Avatargröße",
+            "export": "Exportieren",
+            "import": "Importieren"
+        }
+    },
+    "validation": {
+        "twitch_channel_length": "Muss 3-25 Zeichen lang sein",
+        "twitch_channel_chars": "Nur Buchstaben, Zahlen und Unterstriche",
+        "kick_channel_length": "Muss 3-26 Zeichen lang sein",
+        "kick_channel_chars": "Nur Buchstaben, Zahlen, Unterstriche und Bindestriche",
+        "fade_timeout": "Muss eine ganze Zahl zwischen 1 und 300 sein",
+        "theme_name_empty": "Designname darf nicht leer sein"
+    }
+}

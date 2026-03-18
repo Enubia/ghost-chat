@@ -1,0 +1,148 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": ["node", "import", "typescript", "unicorn", "eslint"],
+    "categories": {
+        "correctness": "error",
+        "suspicious": "warn"
+    },
+    "env": {
+        "builtin": true,
+        "browser": true,
+        "commonjs": true,
+        "es2024": true,
+        "node": true,
+        "shared-node-browser": true
+    },
+    "ignorePatterns": ["**/node_modules", "**/pnpm-lock.yaml", ".claude", "**/wailsjs/**", "**/bindings/**"],
+    "rules": {
+        "curly": ["error", "all"],
+        "eqeqeq": ["error", "smart"],
+        "new-cap": [
+            "error",
+            {
+                "capIsNew": false,
+                "newIsCap": true,
+                "properties": true
+            }
+        ],
+        "no-console": [
+            "warn",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "no-empty": [
+            "error",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
+        "no-empty-character-class": "off",
+        "no-invalid-regexp": "off",
+        "no-labels": [
+            "error",
+            {
+                "allowLoop": false,
+                "allowSwitch": false
+            }
+        ],
+        "no-redeclare": [
+            "error",
+            {
+                "builtinGlobals": false
+            }
+        ],
+        "no-restricted-globals": [
+            "error",
+            {
+                "message": "Use `globalThis` instead.",
+                "name": "global"
+            },
+            {
+                "message": "Use `globalThis` instead.",
+                "name": "self"
+            }
+        ],
+        "no-self-assign": [
+            "error",
+            {
+                "props": true
+            }
+        ],
+        "no-unneeded-ternary": [
+            "error",
+            {
+                "defaultAssignment": false
+            }
+        ],
+        "no-unused-expressions": [
+            "error",
+            {
+                "allowShortCircuit": true,
+                "allowTaggedTemplates": true,
+                "allowTernary": true
+            }
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "args": "none",
+                "caughtErrors": "none",
+                "ignoreRestSiblings": true,
+                "vars": "all"
+            }
+        ],
+        "no-useless-backreference": "off",
+        "no-duplicated-imports": "error",
+        "preserve-caught-error": "off",
+        "unicode-bom": ["error", "never"],
+        "use-isnan": [
+            "error",
+            {
+                "enforceForIndexOf": true,
+                "enforceForSwitchCase": true
+            }
+        ],
+        "valid-typeof": [
+            "error",
+            {
+                "requireStringLiterals": true
+            }
+        ],
+        "yoda": ["error", "never"],
+        "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+        "import/first": "error",
+        "import/no-mutable-exports": "error",
+        "import/no-named-default": "error",
+        "import/no-webpack-loader-syntax": "error",
+        "node/no-exports-assign": "error",
+        "node/no-new-require": "error",
+        "typescript/consistent-type-imports": "error",
+        "typescript/no-import-type-side-effects": "error",
+        "typescript/no-unsafe-type-assertion": "off",
+        "unicorn/consistent-empty-array-spread": "error",
+        "unicorn/error-message": "error",
+        "unicorn/escape-case": "error",
+        "unicorn/new-for-builtins": "error",
+        "unicorn/no-instanceof-builtins": "error",
+        "unicorn/no-new-array": "error",
+        "unicorn/no-new-buffer": "error",
+        "unicorn/number-literal-case": "error",
+        "unicorn/prefer-dom-node-text-content": "error",
+        "unicorn/prefer-includes": "error",
+        "unicorn/prefer-node-protocol": "error",
+        "unicorn/prefer-number-properties": "error",
+        "unicorn/prefer-string-starts-ends-with": "error",
+        "unicorn/prefer-type-error": "error",
+        "unicorn/throw-new-error": "error"
+    },
+    "overrides": [
+        {
+            "files": ["test/**"],
+            "rules": {
+                "no-console": "off",
+                "typescript/no-unnecessary-type-assertion": "off"
+            }
+        }
+    ]
+}

@@ -1,9 +1,0 @@
-packages:
-  - app
-onlyBuiltDependencies:
-  - electron
-  - electron-winstaller
-  - esbuild
-  - simple-git-hooks
-  - unrs-resolver
-  - vue-demi

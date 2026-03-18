@@ -1,0 +1,90 @@
+.titlebar {
+    display: flex;
+    align-items: center;
+    height: var(--titlebar-height);
+    background: var(--color-bg-sunken);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.drag {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 12px;
+    --wails-draggable: drag;
+}
+
+.logo {
+    width: 18px;
+    height: 18px;
+}
+
+.title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.3px;
+}
+
+.hotkeyHint {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-warning);
+    background: rgba(212, 160, 83, 0.15);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.updateBadge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-success);
+    background: rgba(111, 204, 138, 0.15);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    --wails-draggable: none;
+
+    &:hover {
+        background: rgba(111, 204, 138, 0.25);
+    }
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding-right: 8px;
+}
+
+.controlBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+
+    &:hover {
+        background: var(--color-bg-hover);
+        color: var(--color-text);
+    }
+
+    &.active {
+        color: var(--color-accent);
+    }
+
+    &.close:hover {
+        background: var(--color-danger);
+        color: #fff;
+    }
+}

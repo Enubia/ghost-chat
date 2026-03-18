@@ -1,0 +1,13 @@
+minimumReleaseAge: 10080 # one week
+minimumReleaseAgeExclude:
+    - oxlint
+    - '@oxlint/*'
+    - oxlint-tsgolint
+    - '@oxlint-tsgolint/*'
+    - oxfmt
+    - '@oxfmt/*'
+    - typescript
+    - react
+    - react-dom
+onlyBuiltDependencies:
+    - esbuild

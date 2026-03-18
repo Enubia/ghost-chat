@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "jsx": "react-jsx",
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "strictNullChecks": true,
+        "paths": {
+            "@/*": ["./src/*"],
+            "@bindings/*": ["./bindings/*"]
+        }
+    },
+    "include": ["src", "bindings"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+}

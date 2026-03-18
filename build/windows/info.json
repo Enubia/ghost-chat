@@ -1,0 +1,15 @@
+{
+	"fixed": {
+		"file_version": "4.0.0"
+	},
+	"info": {
+		"0000": {
+			"ProductVersion": "4.0.0",
+			"CompanyName": "enubia",
+			"FileDescription": "Desktop chat overlay for streamers",
+			"LegalCopyright": "(c) 2026, enubia",
+			"ProductName": "Ghost Chat",
+			"Comments": "This is a comment"
+		}
+	}
+}

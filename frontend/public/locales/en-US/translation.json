@@ -1,0 +1,112 @@
+{
+    "titlebar": {
+        "settings": "Settings",
+        "minimize": "Minimize",
+        "close": "Close",
+        "no_hotkey": "No vanish hotkey set",
+        "update_available": "Update {{version}}"
+    },
+    "home": {
+        "twitch": "Twitch",
+        "youtube": "YouTube",
+        "kick": "Kick",
+        "connect": "Connect",
+        "connecting": "Connecting...",
+        "disconnect": "Disconnect",
+        "open_chat": "Open Chat",
+        "placeholder": {
+            "channel": "Channel name",
+            "channel_id": "Channel ID",
+            "channel_or_url": "Channel, @handle, or video URL",
+            "kick_channel": "Channel name"
+        }
+    },
+    "chat": {
+        "back": "Back",
+        "waiting": "Waiting for messages...",
+        "disconnected": "Disconnected",
+        "scroll_to_bottom": "Scroll to bottom",
+        "vanish": "Toggle vanish mode"
+    },
+    "settings": {
+        "support": "Enjoying Ghost Chat? Consider supporting the project!",
+        "tabs": {
+            "general": "General",
+            "twitch": "Twitch",
+            "youtube": "YouTube",
+            "kick": "Kick",
+            "themes": "Themes"
+        },
+        "general": {
+            "language": "Language",
+            "show_timestamps": "Show Timestamps",
+            "vanish_hotkey": "Vanish Hotkey",
+            "press_keys": "Press a key combination...",
+            "not_set": "Not set"
+        },
+        "twitch": {
+            "default_channel": "Default Channel",
+            "fade": "Fade Messages",
+            "fade_timeout": "Fade Timeout (seconds)",
+            "bots": "Show Bots",
+            "hide_commands": "Hide Commands",
+            "hide_badges": "Hide Badges",
+            "user_blacklist": "User Blacklist",
+            "user_blacklist_placeholder": "user1, user2, ..."
+        },
+        "youtube": {
+            "channel": "Channel / Video URL",
+            "channel_placeholder": "@handle, channel ID, or video URL",
+            "detect": "Detect",
+            "detecting": "Detecting...",
+            "fade": "Fade Messages",
+            "fade_timeout": "Fade Timeout (seconds)",
+            "user_blacklist": "User Blacklist",
+            "user_blacklist_placeholder": "user1, user2, ..."
+        },
+        "kick": {
+            "default_channel": "Default Channel",
+            "default_channel_placeholder": "channelname",
+            "fade": "Fade Messages",
+            "fade_timeout": "Fade Timeout (seconds)",
+            "user_blacklist": "User Blacklist",
+            "user_blacklist_placeholder": "user1, user2, ..."
+        },
+        "themes": {
+            "active_theme": "Active Theme",
+            "duplicate": "Duplicate",
+            "delete": "Delete",
+            "name": "Theme Name",
+            "readonly_hint": "Built-in themes are read-only. Duplicate to customize.",
+            "typography": "Typography",
+            "font_family": "Font Family",
+            "font_size": "Font Size",
+            "line_height": "Line Height",
+            "message": "Message",
+            "message_bg": "Background",
+            "message_padding": "Padding",
+            "message_radius": "Border Radius",
+            "message_gap": "Spacing",
+            "text_color": "Text Color",
+            "text_shadow": "Text Shadow",
+            "username_section": "Username",
+            "username_weight": "Font Weight",
+            "show_colon": "Show Colon",
+            "elements": "Elements",
+            "badge_size": "Badge Size",
+            "emote_size": "Emote Size",
+            "show_avatars": "Show Avatars",
+            "avatar_size": "Avatar Size",
+            "export": "Export",
+            "import": "Import"
+        }
+    },
+    "validation": {
+        "twitch_channel_length": "Must be 3-25 characters",
+        "twitch_channel_chars": "Only letters, numbers, and underscores",
+        "kick_channel_length": "Must be 3-26 characters",
+        "kick_channel_chars": "Only letters, numbers, underscores, and hyphens",
+        "fade_timeout": "Must be a whole number between 1 and 300",
+        "theme_name_empty": "Theme name cannot be empty"
+    }
+}
