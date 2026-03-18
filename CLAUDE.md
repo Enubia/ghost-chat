@@ -2,12 +2,30 @@
 
 Desktop chat overlay for streamers. Go + Wails v3 + React + TypeScript.
 
+## Prerequisites
+
+### macOS
+- Go 1.25+ — `brew install go` or https://go.dev/dl
+- Node.js 20+ — `brew install node`
+- pnpm — `npm install -g pnpm`
+- Xcode Command Line Tools — `xcode-select --install`
+- Wails v3 CLI — `go install github.com/wailsapp/wails/v3/cmd/wails3@latest`
+
+### Windows
+- Go 1.25+ — https://go.dev/dl (Windows installer)
+- Node.js 20+ — https://nodejs.org
+- pnpm — `npm install -g pnpm`
+- WebView2 — included in Windows 10/11 by default
+- Wails v3 CLI — `go install github.com/wailsapp/wails/v3/cmd/wails3@latest`
+
+Verify setup: `wails3 doctor`
+
 ## Commands
 
 ```bash
 wails3 dev                   # dev mode (hot-reload Go + Vite frontend)
 wails3 task build            # production build → ./bin/ghost-chat
-wails3 task package          # production .app bundle → ./bin/ghost-chat.app
+wails3 task package          # production .app bundle (macOS) or .exe (Windows)
 open ./bin/ghost-chat.app    # run on macOS
 go test ./internal/...       # run Go tests
 cd frontend && pnpm lint     # oxlint
