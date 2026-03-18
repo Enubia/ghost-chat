@@ -35,6 +35,20 @@ func Load(path string) (*Config, error) {
 		return nil, err
 	}
 
+	// Detect v3 config (camelCase keys like "savedWindowState", "options")
+	// which doesn't match v4's snake_case struct tags. Discard and start fresh.
+	var raw map[string]json.RawMessage
+
+	if err = json.Unmarshal(bytes, &raw); err != nil {
+		return nil, err
+	}
+
+	if _, hasV3Key := raw["savedWindowState"]; hasV3Key {
+		defaultConfig := DefaultConfig()
+
+		return &defaultConfig, nil
+	}
+
 	var config Config
 
 	if err = json.Unmarshal(bytes, &config); err != nil {
