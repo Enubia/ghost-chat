@@ -117,6 +117,8 @@ func (a *App) SaveWindowState() {
 }
 
 func (a *App) ServiceShutdown() error {
+	a.SaveWindowState()
+
 	go func() {
 		a.twitch.Disconnect()
 		a.youtube.Disconnect()
