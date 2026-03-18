@@ -34,12 +34,20 @@ export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
 }
 
+export function OpenConfigFolder() {
+  return window['go']['main']['App']['OpenConfigFolder']();
+}
+
 export function ResolveYouTubeVideo(arg1) {
   return window['go']['main']['App']['ResolveYouTubeVideo'](arg1);
 }
 
 export function ShrinkToChat() {
   return window['go']['main']['App']['ShrinkToChat']();
+}
+
+export function ToggleVanish() {
+  return window['go']['main']['App']['ToggleVanish']();
 }
 
 export function UpdateConfig(arg1) {

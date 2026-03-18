@@ -2,7 +2,10 @@ module ghost-chat
 
 go 1.23
 
-require github.com/wailsapp/wails/v2 v2.11.0
+require (
+	github.com/wailsapp/wails/v2 v2.11.0
+	golang.design/x/hotkey v0.4.1
+)
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect

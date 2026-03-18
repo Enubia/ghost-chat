@@ -36,7 +36,10 @@
         },
         "general": {
             "language": "Sprache",
-            "show_timestamps": "Zeitstempel anzeigen"
+            "show_timestamps": "Zeitstempel anzeigen",
+            "vanish_hotkey": "Vanish-Tastenkombination",
+            "press_keys": "Tastenkombination drücken...",
+            "not_set": "Nicht gesetzt"
         },
         "twitch": {
             "default_channel": "Standardkanal",

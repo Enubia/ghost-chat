@@ -8,6 +8,11 @@ import (
 	"ghost-chat/internal/chat/twitch"
 	"ghost-chat/internal/chat/youtube"
 	"ghost-chat/internal/config"
+	ghHotkey "ghost-chat/internal/hotkey"
+	"ghost-chat/internal/tray"
+	"os/exec"
+	"path/filepath"
+	"runtime"
 
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -20,12 +25,15 @@ type App struct {
 	youtube        *youtube.Client
 	kick           *kick.Client
 	preExpandWidth int
+	vanished       bool
+	trayIcon       []byte
 }
 
-func NewApp(cfg *config.Config, configPath string) *App {
+func NewApp(cfg *config.Config, configPath string, trayIcon []byte) *App {
 	app := &App{
 		config:     cfg,
 		configPath: configPath,
+		trayIcon:   trayIcon,
 	}
 
 	onMessage := func(msg chat.ChatMessage) {
@@ -39,33 +47,44 @@ func NewApp(cfg *config.Config, configPath string) *App {
 	app.youtube = youtube.NewClient(onMessage, onEvent)
 	app.kick = kick.NewClient(onMessage, onEvent)
 
+	tray.Init(cfg.Version, trayIcon, tray.Callbacks{
+		OnToggleVanish: func() { app.ToggleVanish() },
+		OnOpenConfig:   func() { app.OpenConfigFolder() },
+		OnQuit: func() {
+			if app.ctx != nil {
+				wailsRuntime.Quit(app.ctx)
+			}
+		},
+	})
+
 	return app
 }
 
-func (a *App) ConnectYouTube(input string) error {
-	return a.youtube.Connect(input)
-}
+func (a *App) startup(ctx context.Context) {
+	a.ctx = ctx
 
-func (a *App) DisconnectYouTube() {
-	a.youtube.Disconnect()
-}
+	if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
+		wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
+	}
 
-func (a *App) ResolveYouTubeVideo(input string) (string, error) {
-	return youtube.ResolveVideoURL(input)
-}
+	wailsRuntime.WindowShow(a.ctx)
 
-func (a *App) ConnectKick(input string) error {
-	return a.kick.Connect(input)
-}
+	tray.Start(a.config.Version, a.trayIcon)
 
-func (a *App) DisconnectKick() {
-	a.kick.Disconnect()
+	if keybind := a.config.Keybinds.Vanish.Keybind; keybind != "" {
+		if err := ghHotkey.Register(keybind, a.ToggleVanish); err != nil {
+			fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+		}
+	}
 }
 
 func (a *App) onBeforeClose(ctx context.Context) bool {
 	a.twitch.Disconnect()
 	a.youtube.Disconnect()
 	a.kick.Disconnect()
+
+	ghHotkey.Unregister()
+	tray.Stop()
 
 	x, y := wailsRuntime.WindowGetPosition(a.ctx)
 	w, h := wailsRuntime.WindowGetSize(a.ctx)
@@ -88,28 +107,25 @@ func (a *App) onBeforeClose(ctx context.Context) bool {
 	return false
 }
 
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
-
-	if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-		wailsRuntime.WindowSetPosition(a.ctx, a.config.WindowState.X, a.config.WindowState.Y)
-	}
-
-	wailsRuntime.WindowShow(a.ctx)
-}
-
 func (a *App) GetConfig() *config.Config {
 	return a.config
 }
 
 func (a *App) UpdateConfig(cfg *config.Config) error {
 	oldConfig := a.config
+	oldKeybind := a.config.Keybinds.Vanish.Keybind
 
 	a.config = cfg
 
 	if err := config.Save(a.config, a.configPath); err != nil {
 		a.config = oldConfig
 		return err
+	}
+
+	if cfg.Keybinds.Vanish.Keybind != oldKeybind {
+		if err := ghHotkey.Register(cfg.Keybinds.Vanish.Keybind, a.ToggleVanish); err != nil {
+			fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+		}
 	}
 
 	return nil
@@ -121,6 +137,26 @@ func (a *App) ConnectTwitch(channel string) error {
 
 func (a *App) DisconnectTwitch() {
 	a.twitch.Disconnect()
+}
+
+func (a *App) ConnectYouTube(input string) error {
+	return a.youtube.Connect(input)
+}
+
+func (a *App) DisconnectYouTube() {
+	a.youtube.Disconnect()
+}
+
+func (a *App) ResolveYouTubeVideo(input string) (string, error) {
+	return youtube.ResolveVideoURL(input)
+}
+
+func (a *App) ConnectKick(input string) error {
+	return a.kick.Connect(input)
+}
+
+func (a *App) DisconnectKick() {
+	a.kick.Disconnect()
 }
 
 func (a *App) ExpandForSettings() {
@@ -139,4 +175,23 @@ func (a *App) ShrinkToChat() {
 	}
 
 	wailsRuntime.WindowSetSize(a.ctx, width, h)
+}
+
+func (a *App) ToggleVanish() {
+	a.vanished = !a.vanished
+
+	wailsRuntime.EventsEmit(a.ctx, "vanish:toggle", a.vanished)
+}
+
+func (a *App) OpenConfigFolder() {
+	dir := filepath.Dir(a.configPath)
+
+	switch runtime.GOOS {
+	case "darwin":
+		exec.Command("open", dir).Start()
+	case "linux":
+		exec.Command("xdg-open", dir).Start()
+	case "windows":
+		exec.Command("explorer", dir).Start()
+	}
 }

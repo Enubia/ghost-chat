@@ -36,7 +36,10 @@
         },
         "general": {
             "language": "Language",
-            "show_timestamps": "Show Timestamps"
+            "show_timestamps": "Show Timestamps",
+            "vanish_hotkey": "Vanish Hotkey",
+            "press_keys": "Press a key combination...",
+            "not_set": "Not set"
         },
         "twitch": {
             "default_channel": "Default Channel",

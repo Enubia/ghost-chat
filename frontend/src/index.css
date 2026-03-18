@@ -208,6 +208,15 @@ button {
     }
 }
 
+html[data-vanished],
+html[data-vanished] body {
+    background: transparent !important;
+}
+
+html[data-vanished] ::-webkit-scrollbar {
+    display: none;
+}
+
 ::-webkit-scrollbar {
     width: 6px;
 }

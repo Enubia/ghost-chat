@@ -428,37 +428,35 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 > **Goal**: System tray menu and global keyboard shortcuts.
 
 ### 7.1 System tray (Go)
-- [ ] Set up system tray with Wails `Menu` and tray support:
+- [x] Set up system tray with `fyne.io/systray` + `RunWithExternalLoop` (Wails v2 has no built-in tray):
   - App version (disabled label)
   - Toggle vanish
   - Open config folder
-  - Open logs folder
-  - Clear logs
-  - Reset config
-  - Copy debug info to clipboard
   - Quit
-- [ ] Tray icon (reuse existing `trayicon.png` or create new one)
-- [ ] **Learn**: Wails `menu` package, `runtime.Clipboard` API
+- [x] Tray icon (embedded `trayicon.png` via `//go:embed`)
+- [ ] Open logs folder — deferred (no logging system yet)
+- [ ] Clear logs — deferred
+- [ ] Reset config — deferred
+- [ ] Copy debug info to clipboard — deferred
 
 ### 7.2 Vanish toggle (deferred from Phase 1.5)
-- [ ] Implement vanish toggle (transparent + click-through):
-  - Use `runtime.WindowSetAlwaysOnTop`, `runtime.WindowSetBackgroundColour` for transparency
-  - Research platform-specific click-through approaches
-- [ ] Wire vanish to tray menu + hotkey
+- [x] Implement vanish toggle (WindowHide/WindowShow)
+- [x] Wire vanish to tray menu + hotkey
+- [ ] Click-through mode — deferred (needs platform-specific research)
 
 ### 7.3 Global hotkeys (Go)
-- [ ] Research global hotkey libraries for Go:
-  - `golang.design/x/hotkey` — cross-platform global hotkey registration
-  - Or platform-specific approaches
-- [ ] Register vanish hotkey from config on startup
-- [ ] Re-register when user changes the hotkey in settings
-- [ ] On hotkey press, trigger vanish toggle
-- [ ] **Learn**: CGo might be needed for some hotkey approaches — understand the basics of CGo if required
+- [x] `golang.design/x/hotkey` — cross-platform global hotkey registration
+- [x] Platform-specific modifier mappings (build-tagged files for darwin/linux/windows)
+- [x] Parse keybind strings (e.g. "ctrl+shift+d") into modifier + key
+- [x] Register vanish hotkey from config on startup
+- [x] Re-register when user changes the hotkey in settings (detected in `UpdateConfig`)
+- [x] On hotkey press, trigger vanish toggle
 
 ### 7.4 Hotkey settings (React)
-- [ ] Port the `HotKeyInput` component from the old app
-- [ ] Capture key combinations, format as string, save to config
-- [ ] Show current keybind, allow clearing
+- [x] `HotkeyInput` component — captures key combinations on focus
+- [x] Format as lowercase string (e.g. "ctrl+shift+d"), save to config
+- [x] Show current keybind, allow clearing
+- [x] Added to General settings tab
 
 ---
 
@@ -467,7 +465,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 ### 8.1 General settings (React)
 - [x] Language selector (locale switcher)
 - [x] Show timestamps toggle
-- [ ] Vanish hotkey input (pending Phase 7)
+- [x] Vanish hotkey input (Phase 7)
 - [x] ~~Dark/light theme toggle~~ — removed, single neutral color scheme
 - [x] ~~macOS-specific options~~ — removed
 
@@ -491,7 +489,7 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 ### 9.2 Cross-platform testing
 - [ ] Test on Windows (primary platform for streamers)
 - [ ] Test on macOS
-- [ ] Test on Linux
+- [x] ~~Test on Linux~~ - removed, no official linux support
 - [ ] Verify transparent window + click-through works on each platform
 - [ ] Verify system tray works on each platform
 

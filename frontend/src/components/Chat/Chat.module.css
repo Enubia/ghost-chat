@@ -3,6 +3,10 @@
     flex-direction: column;
     height: 100%;
     position: relative;
+
+    :global([data-vanished]) & {
+        background: transparent;
+    }
 }
 
 .header {
@@ -12,6 +16,10 @@
     padding: 6px 8px;
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
+
+    :global([data-vanished]) & {
+        display: none;
+    }
 }
 
 .disconnected {
@@ -79,4 +87,8 @@
     border-radius: var(--radius-sm);
     padding: 4px 12px;
     box-shadow: var(--shadow-sm);
+
+    :global([data-vanished]) & {
+        display: none;
+    }
 }

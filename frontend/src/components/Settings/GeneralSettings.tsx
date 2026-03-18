@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
 
+import { HotkeyInput } from './HotkeyInput';
+
 const languages = [
     { value: 'en-US', label: 'English' },
     { value: 'de-DE', label: 'Deutsch' },
@@ -42,6 +44,14 @@ export function GeneralSettings() {
                 <Toggle
                     checked={config?.general?.show_timestamps ?? false}
                     onChange={(v) => void update({ general: { show_timestamps: v } })}
+                />
+            </div>
+
+            <div className="field">
+                <label className="field-label">{t('settings.general.vanish_hotkey')}</label>
+                <HotkeyInput
+                    value={config?.keybinds?.vanish?.keybind ?? ''}
+                    onChange={(v) => void update({ keybinds: { vanish: { keybind: v } } })}
                 />
             </div>
         </>

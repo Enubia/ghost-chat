@@ -17,6 +17,7 @@ import styles from './App.module.css';
 function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [settingsTab, setSettingsTab] = useState('general');
+    const [vanished, setVanished] = useState(false);
     const { i18n } = useTranslation();
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
@@ -54,6 +55,24 @@ function App() {
     }, [setConnected]);
 
     useEffect(() => {
+        const cancelVanish = EventsOn('vanish:toggle', (v: boolean) => {
+            setVanished(v);
+        });
+
+        return () => {
+            cancelVanish();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (vanished) {
+            document.documentElement.setAttribute('data-vanished', '');
+        } else {
+            document.documentElement.removeAttribute('data-vanished');
+        }
+    }, [vanished]);
+
+    useEffect(() => {
         if (language && language !== i18n.language) {
             void i18n.changeLanguage(language);
         }
@@ -65,20 +84,29 @@ function App() {
 
     return (
         <HashRouter>
-            <div className={`${styles.app} ${settingsOpen ? styles.withSettings : ''}`}>
-                <TitleBar
-                    onSettingsToggle={toggleSettings}
-                    settingsOpen={settingsOpen}
-                />
+            <div
+                className={`${styles.app} ${settingsOpen ? styles.withSettings : ''} ${vanished ? styles.vanished : ''}`}
+                data-vanished={vanished || undefined}
+            >
+                {!vanished && (
+                    <TitleBar
+                        onSettingsToggle={toggleSettings}
+                        settingsOpen={settingsOpen}
+                    />
+                )}
                 <div className={styles.body}>
-                    {settingsOpen && (
+                    {settingsOpen && !vanished && (
                         <div className={styles.settingsPanel}>
                             <Settings onTabChange={setSettingsTab} />
                         </div>
                     )}
                     <div className={styles.main}>
-                        {settingsOpen && settingsTab === 'themes' && <ThemePreview />}
-                        <div style={{ display: settingsOpen && settingsTab === 'themes' ? 'none' : 'contents' }}>
+                        {settingsOpen && !vanished && settingsTab === 'themes' && <ThemePreview />}
+                        <div
+                            style={{
+                                display: settingsOpen && !vanished && settingsTab === 'themes' ? 'none' : 'contents',
+                            }}
+                        >
                             <Routes>
                                 <Route
                                     path="/"

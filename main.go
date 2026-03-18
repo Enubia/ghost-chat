@@ -7,10 +7,14 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 )
 
 //go:embed all:frontend/dist
 var assets embed.FS
+
+//go:embed frontend/src/assets/trayicon.png
+var trayIcon []byte
 
 func main() {
 	configPath, err := config.GetConfigPath()
@@ -27,7 +31,7 @@ func main() {
 		return
 	}
 
-	app := NewApp(cfg, configPath)
+	app := NewApp(cfg, configPath, trayIcon)
 
 	err = wails.Run(&options.App{
 		Title:  "ghost-chat",
@@ -42,7 +46,10 @@ func main() {
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 0, G: 0, B: 0, A: 0},
-		OnStartup:        app.startup,
+		Mac: &mac.Options{
+			WebviewIsTransparent: true,
+		},
+		OnStartup: app.startup,
 		Bind: []any{
 			app,
 		},
