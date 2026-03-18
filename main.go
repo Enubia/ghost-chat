@@ -45,7 +45,7 @@ func main() {
 		println("Error saving config:", err.Error())
 	}
 
-	svc := NewApp(cfg, configPath)
+	svc := NewApp(cfg, configPath, version)
 
 	app := application.New(application.Options{
 		Name: "Ghost Chat",

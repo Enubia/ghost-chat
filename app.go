@@ -9,6 +9,7 @@ import (
 	"ghost-chat/internal/chat/youtube"
 	"ghost-chat/internal/config"
 	ghHotkey "ghost-chat/internal/hotkey"
+	"ghost-chat/internal/updater"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -25,16 +26,18 @@ type App struct {
 	twitch         *twitch.Client
 	youtube        *youtube.Client
 	kick           *kick.Client
+	version        string
 	preExpandWidth int
 	vanished       bool
 	lastX, lastY   int
 	lastW, lastH   int
 }
 
-func NewApp(cfg *config.Config, configPath string) *App {
+func NewApp(cfg *config.Config, configPath string, version string) *App {
 	return &App{
 		config:     cfg,
 		configPath: configPath,
+		version:    version,
 		lastX:      cfg.WindowState.X,
 		lastY:      cfg.WindowState.Y,
 		lastW:      cfg.WindowState.Width,
@@ -65,6 +68,16 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 		}
 
 		a.window.Show()
+
+		go func() {
+			info, err := updater.CheckForUpdate(a.version)
+
+			if err != nil || info == nil {
+				return
+			}
+
+			a.app.Event.Emit("update:available", info)
+		}()
 	})
 
 	a.window.OnWindowEvent(events.Common.WindowDidMove, func(e *application.WindowEvent) {

@@ -44,7 +44,7 @@ func parseSemver(version string) (major, minor, patch int, err error) {
 	return major, minor, patch, nil
 }
 
-func compareSemver(a, b string) (int, error) {
+func CompareSemver(a, b string) (int, error) {
 	majorA, minorA, patchA, err := parseSemver(a)
 
 	if err != nil {
@@ -87,7 +87,7 @@ func compareSemver(a, b string) (int, error) {
 // helper function so that we can test the migration logic
 func runMigrations(cfg *Config, migrations []Migration, targetVersion string) error {
 	for _, migration := range migrations {
-		comparison, err := compareSemver(migration.Version, cfg.Version)
+		comparison, err := CompareSemver(migration.Version, cfg.Version)
 
 		if err != nil {
 			return fmt.Errorf("failed to compare versions: %w", err)
@@ -98,7 +98,7 @@ func runMigrations(cfg *Config, migrations []Migration, targetVersion string) er
 			continue
 		}
 
-		comparison, err = compareSemver(migration.Version, targetVersion)
+		comparison, err = CompareSemver(migration.Version, targetVersion)
 
 		if err != nil {
 			return fmt.Errorf("failed to compare versions: %w", err)

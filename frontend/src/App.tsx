@@ -18,6 +18,7 @@ function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [settingsTab, setSettingsTab] = useState('general');
     const [vanished, setVanished] = useState(false);
+    const [updateInfo, setUpdateInfo] = useState<{ version: string; url: string } | null>(null);
     const { i18n } = useTranslation();
     const load = useConfigStore((s) => s.load);
     const loaded = useConfigStore((s) => s.loaded);
@@ -70,6 +71,16 @@ function App() {
     }, []);
 
     useEffect(() => {
+        const cancelUpdate = Events.On('update:available', (ev) => {
+            setUpdateInfo(ev.data as { version: string; url: string });
+        });
+
+        return () => {
+            cancelUpdate();
+        };
+    }, []);
+
+    useEffect(() => {
         if (vanished) {
             document.documentElement.setAttribute('data-vanished', '');
         } else {
@@ -97,6 +108,7 @@ function App() {
                     <TitleBar
                         onSettingsToggle={toggleSettings}
                         settingsOpen={settingsOpen}
+                        updateInfo={updateInfo}
                     />
                 )}
                 <div className={styles.body}>

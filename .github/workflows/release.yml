@@ -87,6 +87,34 @@ jobs:
           path: artifacts
           merge-multiple: true
 
+      - name: Generate electron-updater manifests
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          DATE="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          DUMMY_SHA="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+          cat > artifacts/latest.yml <<EOF
+          version: ${VERSION}
+          files:
+            - url: ghost-chat-Setup-${VERSION}.exe
+              sha512: ${DUMMY_SHA}
+              size: 1
+          path: ghost-chat-Setup-${VERSION}.exe
+          sha512: ${DUMMY_SHA}
+          releaseDate: '${DATE}'
+          EOF
+
+          cat > artifacts/latest-mac.yml <<EOF
+          version: ${VERSION}
+          files:
+            - url: ghost-chat-${VERSION}.dmg
+              sha512: ${DUMMY_SHA}
+              size: 1
+          path: ghost-chat-${VERSION}.dmg
+          sha512: ${DUMMY_SHA}
+          releaseDate: '${DATE}'
+          EOF
+
       - uses: softprops/action-gh-release@v2
         with:
           draft: true
@@ -94,3 +122,5 @@ jobs:
           files: |
             artifacts/ghost-chat-macos.zip
             artifacts/ghost-chat.exe
+            artifacts/latest.yml
+            artifacts/latest-mac.yml

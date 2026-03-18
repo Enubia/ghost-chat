@@ -1,4 +1,4 @@
-import { Window } from '@wailsio/runtime';
+import { Window, Browser } from '@wailsio/runtime';
 import { useTranslation } from 'react-i18next';
 
 import ghostSvg from '@/assets/ghost.svg';
@@ -9,9 +9,10 @@ import styles from './TitleBar.module.css';
 interface TitleBarProps {
     onSettingsToggle: () => void;
     settingsOpen: boolean;
+    updateInfo: { version: string; url: string } | null;
 }
 
-export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
+export function TitleBar({ onSettingsToggle, settingsOpen, updateInfo }: TitleBarProps) {
     const { t } = useTranslation();
     const hotkeySet = useConfigStore((s) => !!s.config?.keybinds?.vanish?.keybind);
 
@@ -25,6 +26,15 @@ export function TitleBar({ onSettingsToggle, settingsOpen }: TitleBarProps) {
                 />
                 <span className={styles.title}>Ghost Chat</span>
                 {!hotkeySet && <span className={styles.hotkeyHint}>{t('titlebar.no_hotkey')}</span>}
+                {updateInfo && (
+                    <button
+                        className={styles.updateBadge}
+                        onClick={() => void Browser.OpenURL(updateInfo.url)}
+                        title={t('titlebar.update_available', { version: updateInfo.version })}
+                    >
+                        {t('titlebar.update_available', { version: updateInfo.version })}
+                    </button>
+                )}
             </div>
             <div className={styles.controls}>
                 <button

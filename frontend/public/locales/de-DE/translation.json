@@ -3,7 +3,8 @@
         "settings": "Einstellungen",
         "minimize": "Minimieren",
         "close": "Schließen",
-        "no_hotkey": "Keine Vanish-Taste gesetzt"
+        "no_hotkey": "Keine Vanish-Taste gesetzt",
+        "update_available": "Update {{version}}"
     },
     "home": {
         "twitch": "Twitch",

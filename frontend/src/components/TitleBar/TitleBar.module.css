@@ -39,6 +39,22 @@
     border-radius: var(--radius-sm);
 }
 
+.updateBadge {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-success);
+    background: rgba(111, 204, 138, 0.15);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    --wails-draggable: none;
+
+    &:hover {
+        background: rgba(111, 204, 138, 0.25);
+    }
+}
+
 .controls {
     display: flex;
     align-items: center;
