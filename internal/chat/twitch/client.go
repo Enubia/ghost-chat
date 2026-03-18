@@ -49,15 +49,20 @@ func NewClient(onMessage MessageHandler, onEvent EventHandler) *Client {
 func (c *Client) Connect(channel string) error {
 	c.mu.Lock()
 
+	if c.cancel != nil {
+		c.cancel()
+		c.cancel = nil
+	}
+
 	if c.conn != nil {
-		c.mu.Unlock() // unlock before calling Disconnect to avoid deadlock
-		c.Disconnect()
-		c.mu.Lock() // re-lock after disconnecting
+		c.conn.Close()
+		c.conn = nil
 	}
 
 	conn, _, err := websocket.DefaultDialer.Dial(twitchIRCURL, nil)
 
 	if err != nil {
+		c.mu.Unlock()
 		return err
 	}
 
@@ -77,7 +82,7 @@ func (c *Client) Connect(channel string) error {
 		return err
 	}
 
-	c.OnEvent("chat:connected", channel)
+	c.OnEvent("chat:connected", map[string]string{"platform": "twitch"})
 
 	go c.readLoop()
 
@@ -99,7 +104,7 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", nil)
+	c.OnEvent("chat:disconnected", map[string]string{"platform": "twitch"})
 }
 
 func (c *Client) ChangeChannel(channel string) error {
@@ -232,15 +237,21 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 }
 
 func (c *Client) reconnect() {
+	c.mu.Lock()
+	ctx := c.ctx
+	channel := c.channel
+	c.mu.Unlock()
+
 	backoff := 1 * time.Second
+
 	for {
 		select {
-		case <-c.ctx.Done():
-			return // cancelled, don't reconnect
+		case <-ctx.Done():
+			return
 		case <-time.After(backoff):
-			err := c.Connect(c.channel)
+			err := c.Connect(channel)
 
-			if err == nil && c.conn != nil {
+			if err == nil {
 				return
 			}
 

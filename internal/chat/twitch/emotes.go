@@ -6,9 +6,12 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"ghost-chat/internal/chat"
 )
+
+var httpClient = &http.Client{Timeout: 10 * time.Second}
 
 type EmoteStore struct {
 	mu     sync.RWMutex
@@ -85,27 +88,34 @@ func (e *EmoteStore) ResolveEmotes(text string, existing []chat.Emote) []chat.Em
 	e.mu.RLock()
 	defer e.mu.RUnlock()
 
+	runes := []rune(text)
 	result := existing
-	words := strings.Fields(text)
 	pos := 0
 
-	for _, word := range words {
-		idx := strings.Index(text[pos:], word)
-		if idx == -1 {
+	for pos < len(runes) {
+		if runes[pos] == ' ' {
+			pos++
 			continue
 		}
-		start := pos + idx
+
+		end := pos
+
+		for end < len(runes) && runes[end] != ' ' {
+			end++
+		}
+
+		word := string(runes[pos:end])
 
 		if url, ok := e.emotes[word]; ok {
 			result = append(result, chat.Emote{
 				ID:    word,
-				Start: start,
-				End:   start + len(word) - 1,
+				Start: pos,
+				End:   end - 1,
 				URL:   url,
 			})
 		}
 
-		pos = start + len(word)
+		pos = end
 	}
 
 	return result
@@ -120,7 +130,7 @@ func (e *EmoteStore) store(emotes map[string]string) {
 }
 
 func httpGetJSON(url string, target any) error {
-	resp, err := http.Get(url)
+	resp, err := httpClient.Get(url)
 	if err != nil {
 		return err
 	}

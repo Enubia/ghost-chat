@@ -6,7 +6,10 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
+
+var httpClient = &http.Client{Timeout: 10 * time.Second}
 
 // ResolveChannelSlug normalises any user input to a bare Kick channel slug.
 // Accepts: "xqc", "https://kick.com/xqc", "kick.com/xqc".
@@ -43,7 +46,7 @@ func FetchChatroomID(slug string) (int, error) {
 	req.Header.Set("Referer", "https://kick.com/")
 	req.Header.Set("Origin", "https://kick.com")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return 0, fmt.Errorf("failed to fetch channel: %w", err)
 	}

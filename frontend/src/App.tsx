@@ -40,18 +40,13 @@ function App() {
 
     useEffect(() => {
         const cancelConnected = Events.On('chat:connected', (ev) => {
-            const data = ev.data as unknown;
-            const platform =
-                typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
-
-            setConnected(platform as 'twitch' | 'youtube' | 'kick', true);
+            const { platform } = ev.data as { platform: 'twitch' | 'youtube' | 'kick' };
+            setConnected(platform, true);
         });
-        const cancelDisconnected = Events.On('chat:disconnected', (ev) => {
-            const data = ev.data as unknown;
-            const platform =
-                typeof data === 'string' ? 'twitch' : ((data as { platform?: string })?.platform ?? 'twitch');
 
-            setConnected(platform as 'twitch' | 'youtube' | 'kick', false);
+        const cancelDisconnected = Events.On('chat:disconnected', (ev) => {
+            const { platform } = ev.data as { platform: 'twitch' | 'youtube' | 'kick' };
+            setConnected(platform, false);
         });
 
         return () => {

@@ -22,6 +22,8 @@ const (
 	maxBackoff          = 60 * time.Second
 )
 
+var httpClient = &http.Client{Timeout: 10 * time.Second}
+
 type MessageHandler func(chat.ChatMessage)
 type EventHandler func(event string, data any)
 
@@ -324,7 +326,7 @@ func doRequest(method, url string, body []byte) ([]byte, error) {
 	req.Header.Set("User-Agent", browserUA)
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -341,6 +343,7 @@ func doRequest(method, url string, body []byte) ([]byte, error) {
 // including redirects. Used by resolve.go.
 func newHTTPClient() *http.Client {
 	return &http.Client{
+		Timeout:   10 * time.Second,
 		Transport: browserRoundTripper{},
 	}
 }

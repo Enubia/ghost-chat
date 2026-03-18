@@ -5,8 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"sync"
 )
+
+var validChannelLogin = regexp.MustCompile(`^[a-zA-Z0-9_]{1,25}$`)
 
 const (
 	twitchGQLURL      = "https://gql.twitch.tv/gql"
@@ -74,6 +77,10 @@ func (b *BadgeStore) FetchGlobal() error {
 }
 
 func (b *BadgeStore) FetchChannel(channelLogin string) error {
+	if !validChannelLogin.MatchString(channelLogin) {
+		return fmt.Errorf("invalid channel login: %s", channelLogin)
+	}
+
 	query := fmt.Sprintf(
 		`{"query":"query { user(login: \"%s\") { broadcastBadges { imageURL(size: NORMAL) setID version } } }"}`,
 		channelLogin,
@@ -103,7 +110,7 @@ func gqlRequest(body string) (*http.Response, error) {
 	req.Header.Set("Client-Id", twitchGQLClientID)
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
