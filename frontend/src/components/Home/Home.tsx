@@ -37,10 +37,12 @@ export function Home() {
 
     const handleTwitchToggle = async () => {
         setError(null);
+
         if (twitchConnected) {
             void DisconnectTwitch();
         } else {
             setConnecting('twitch');
+
             try {
                 await ConnectTwitch(twitchChannel);
             } catch (err) {
@@ -53,10 +55,12 @@ export function Home() {
 
     const handleYouTubeToggle = async () => {
         setError(null);
+
         if (youtubeConnected) {
             void DisconnectYouTube();
         } else {
             setConnecting('youtube');
+
             try {
                 await ConnectYouTube(youtubeInput);
             } catch (err) {
@@ -69,10 +73,12 @@ export function Home() {
 
     const handleKickToggle = async () => {
         setError(null);
+
         if (kickConnected) {
             void DisconnectKick();
         } else {
             setConnecting('kick');
+
             try {
                 await ConnectKick(kickInput);
             } catch (err) {

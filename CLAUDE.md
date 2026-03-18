@@ -88,6 +88,11 @@ cd frontend && pnpm fix
 ```
 This runs `oxlint --fix --type-aware && oxfmt --write`. Do not skip this step.
 
+### Code Spacing (applies to all TS/TSX and Go files)
+- Variable declarations can be grouped together
+- One blank line before and after function calls, if statements, loops, and closures
+- One blank line before and after assignments; multiple sequential assignments can be grouped
+
 ### Style
 - No comments in code unless logic is non-obvious
 - No emoji in code or UI

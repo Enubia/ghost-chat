@@ -78,6 +78,7 @@ func (a *App) onBeforeClose(ctx context.Context) bool {
 	} else {
 		a.config.WindowState.Width = w
 	}
+
 	a.config.WindowState.Height = h
 
 	if err := config.Save(a.config, a.configPath); err != nil {
@@ -125,14 +126,17 @@ func (a *App) DisconnectTwitch() {
 func (a *App) ExpandForSettings() {
 	w, h := wailsRuntime.WindowGetSize(a.ctx)
 	a.preExpandWidth = w
+
 	wailsRuntime.WindowSetSize(a.ctx, 1000, h)
 }
 
 func (a *App) ShrinkToChat() {
 	_, h := wailsRuntime.WindowGetSize(a.ctx)
 	width := a.preExpandWidth
+
 	if width == 0 {
 		width = a.config.WindowState.Width
 	}
+
 	wailsRuntime.WindowSetSize(a.ctx, width, h)
 }

@@ -42,17 +42,24 @@ export function ThemeSettings() {
         if (readonly) {
             return;
         }
+
         pendingRef.current = { ...pendingRef.current, [key]: value };
+
         setLocalTheme((prev) => ({ ...prev, [key]: value }));
+
         if (debounceRef.current) {
             clearTimeout(debounceRef.current);
         }
+
         debounceRef.current = setTimeout(() => {
             const changes = pendingRef.current;
             pendingRef.current = {};
+
             setLocalTheme({});
+
             const current = (useConfigStore.getState().config?.theme?.custom_themes as Theme[]) ?? [];
             const updated = current.map((ct) => (ct.id === activeId ? { ...ct, ...changes } : ct));
+
             void update({ theme: { custom_themes: updated } });
         }, 500);
     };
@@ -63,6 +70,7 @@ export function ThemeSettings() {
             id: `custom-${Date.now()}`,
             name: `${displayTheme.name} (copy)`,
         };
+
         void update({
             theme: {
                 active_theme_id: newTheme.id,
@@ -75,7 +83,9 @@ export function ThemeSettings() {
         if (readonly) {
             return;
         }
+
         const filtered = customThemes.filter((ct) => ct.id !== activeId);
+
         void update({
             theme: {
                 active_theme_id: 'default',
@@ -88,25 +98,32 @@ export function ThemeSettings() {
         const blob = new Blob([JSON.stringify(theme, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
+
         a.href = url;
         a.download = `${displayTheme.name.toLowerCase().replace(/\s+/g, '-')}.json`;
+
         a.click();
         URL.revokeObjectURL(url);
     };
 
     const importTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
+
         if (!file) {
             return;
         }
+
         const reader = new FileReader();
+
         reader.addEventListener('load', () => {
             try {
                 const imported = JSON.parse(reader.result as string) as Theme;
                 imported.id = `custom-${Date.now()}`;
+
                 if (!imported.name) {
                     imported.name = 'Imported';
                 }
+
                 void update({
                     theme: {
                         active_theme_id: imported.id,
@@ -117,7 +134,9 @@ export function ThemeSettings() {
                 // invalid JSON, ignore
             }
         });
+
         reader.readAsText(file);
+
         if (importRef.current) {
             importRef.current.value = '';
         }

@@ -22,9 +22,11 @@ interface Props {
 
 function formatTime(ts: string) {
     const date = new Date(ts);
+
     if (Number.isNaN(date.getTime())) {
         return '';
     }
+
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
@@ -32,6 +34,7 @@ function isDark(hex: string): boolean {
     const r = Number.parseInt(hex.slice(1, 3), 16);
     const g = Number.parseInt(hex.slice(3, 5), 16);
     const b = Number.parseInt(hex.slice(5, 7), 16);
+
     return 0.299 * r + 0.587 * g + 0.114 * b < 128;
 }
 
@@ -39,9 +42,11 @@ function platformClass(platform: string) {
     if (platform === 'twitch') {
         return styles.twitch;
     }
+
     if (platform === 'youtube') {
         return styles.youtube;
     }
+
     return '';
 }
 
@@ -58,7 +63,9 @@ function renderTextWithEmotes(text: string, emotes: ChatMessageType['emotes']) {
         if (emote.start > cursor) {
             parts.push(text.slice(cursor, emote.start));
         }
+
         const emoteName = text.slice(emote.start, emote.end + 1);
+
         parts.push(
             <img
                 key={`${emote.id}-${emote.start}`}
@@ -68,6 +75,7 @@ function renderTextWithEmotes(text: string, emotes: ChatMessageType['emotes']) {
                 title={emoteName}
             />
         );
+
         cursor = emote.end + 1;
     }
 
@@ -167,16 +175,16 @@ function YouTubeIcon() {
 }
 
 function PlatformIcon({ platform }: { platform: string }) {
-    if (platform === 'twitch') {
-        return <TwitchIcon />;
+    switch (platform) {
+        case 'twitch':
+            return <TwitchIcon />;
+        case 'youtube':
+            return <YouTubeIcon />;
+        case 'kick':
+            return <KickIcon />;
+        default:
+            return null;
     }
-    if (platform === 'youtube') {
-        return <YouTubeIcon />;
-    }
-    if (platform === 'kick') {
-        return <KickIcon />;
-    }
-    return null;
 }
 
 export function ChatMessage({
@@ -217,6 +225,7 @@ export function ChatMessage({
         const { headerColor, bodyColor, amount } = message.superChat;
         const headerTextColor = isDark(headerColor) ? '#ffffff' : 'rgba(0,0,0,0.87)';
         const bodyTextColor = isDark(bodyColor) ? '#ffffff' : 'rgba(0,0,0,0.87)';
+
         return (
             <div
                 className={`${styles.message} ${styles.superChatWrapper} ${pc} ${fading ? styles.fade : ''}`}

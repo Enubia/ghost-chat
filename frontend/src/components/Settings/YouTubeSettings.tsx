@@ -40,11 +40,14 @@ export function YouTubeSettings() {
         if (!channelText) {
             return;
         }
+
         setResolving(true);
         setResolveError(null);
         setResolvedUrl(null);
+
         try {
             const url = await ResolveYouTubeVideo(channelText);
+
             setResolvedUrl(url);
             void set({ channel_id: channelText, video_url: url });
         } catch (err) {

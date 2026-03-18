@@ -30,13 +30,16 @@ export const useConfigStore = create<ConfigState>((set, get) => ({
 
     update: async (partial, opts) => {
         const current = get().config;
+
         if (!current) {
             return;
         }
 
         const merged = deepMerge(current, partial);
+
         try {
             await UpdateConfig(merged);
+
             if (opts?.silent) {
                 set({ config: merged });
             } else {

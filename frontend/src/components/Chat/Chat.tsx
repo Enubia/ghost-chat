@@ -65,29 +65,33 @@ export function Chat() {
     useEffect(() => {
         const cancelMessage = EventsOn('chat:message', (msg: ChatMessageType) => {
             const cfg = useConfigStore.getState().config;
-
             const lowerUsername = msg.username.toLowerCase();
 
             if (msg.platform === 'twitch') {
                 const blacklist = cfg?.twitch?.user_blacklist ?? [];
                 const hideCommands = cfg?.twitch?.hide_commands ?? false;
                 const showBots = cfg?.twitch?.bots ?? false;
+
                 if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
                     return;
                 }
+
                 if (hideCommands && msg.text.startsWith('!')) {
                     return;
                 }
+
                 if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
                     return;
                 }
             } else if (msg.platform === 'youtube') {
                 const blacklist = cfg?.youtube?.user_blacklist ?? [];
+
                 if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
                     return;
                 }
             } else if (msg.platform === 'kick') {
                 const blacklist = cfg?.kick?.user_blacklist ?? [];
+
                 if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
                     return;
                 }
@@ -125,10 +129,13 @@ export function Chat() {
 
     const handleScroll = () => {
         const el = messagesRef.current;
+
         if (!el) {
             return;
         }
+
         const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
+
         setAutoScroll(atBottom);
     };
 
@@ -136,9 +143,11 @@ export function Chat() {
         if (platform === 'youtube') {
             return youtubeFade;
         }
+
         if (platform === 'kick') {
             return kickFade;
         }
+
         return twitchFade;
     };
 
@@ -146,9 +155,11 @@ export function Chat() {
         if (platform === 'youtube') {
             return youtubeFadeTimeout;
         }
+
         if (platform === 'kick') {
             return kickFadeTimeout;
         }
+
         return twitchFadeTimeout;
     };
 
@@ -156,12 +167,15 @@ export function Chat() {
         if (m.platform === 'twitch') {
             return showTwitch;
         }
+
         if (m.platform === 'youtube') {
             return showYoutube;
         }
+
         if (m.platform === 'kick') {
             return showKick;
         }
+
         return true;
     });
 
