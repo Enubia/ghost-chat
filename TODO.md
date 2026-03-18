@@ -428,27 +428,27 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 > **Goal**: System tray menu and global keyboard shortcuts.
 
 ### 7.1 System tray (Go)
-- [x] Set up system tray with `fyne.io/systray` + `RunWithExternalLoop` (Wails v2 has no built-in tray):
+- [x] Set up system tray via Wails v3 native `app.SystemTray.New()`:
   - App version (disabled label)
   - Toggle vanish
   - Open config folder
   - Quit
-- [x] Tray icon (embedded `trayicon.png` via `//go:embed`)
+- [x] Tray icon (embedded `trayicon.png` via `//go:embed`, `SetTemplateIcon` for macOS)
 - [ ] Open logs folder — deferred (no logging system yet)
 - [ ] Clear logs — deferred
 - [ ] Reset config — deferred
 - [ ] Copy debug info to clipboard — deferred
 
 ### 7.2 Vanish toggle (deferred from Phase 1.5)
-- [x] Implement vanish toggle (WindowHide/WindowShow)
+- [x] Implement vanish toggle — hides UI chrome, transparent background, chat messages float
 - [x] Wire vanish to tray menu + hotkey
-- [ ] Click-through mode — deferred (needs platform-specific research)
+- [x] Click-through mode via Wails v3 `SetIgnoreMouseEvents(true)` (macOS + Windows)
 
 ### 7.3 Global hotkeys (Go)
 - [x] `golang.design/x/hotkey` — cross-platform global hotkey registration
 - [x] Platform-specific modifier mappings (build-tagged files for darwin/linux/windows)
 - [x] Parse keybind strings (e.g. "ctrl+shift+d") into modifier + key
-- [x] Register vanish hotkey from config on startup
+- [x] Register vanish hotkey from config on startup (in goroutine to avoid main thread conflict)
 - [x] Re-register when user changes the hotkey in settings (detected in `UpdateConfig`)
 - [x] On hotkey press, trigger vanish toggle
 
@@ -457,6 +457,18 @@ For Go code: Claude scaffolds files with type signatures, hints, and tests. I im
 - [x] Format as lowercase string (e.g. "ctrl+shift+d"), save to config
 - [x] Show current keybind, allow clearing
 - [x] Added to General settings tab
+
+### 7.5 Wails v3 migration
+- [x] Migrated from Wails v2 to v3 alpha.74
+- [x] `go.mod` bumped to `go 1.25`, `wails/v3 v3.0.0-alpha.74`
+- [x] `main.go` — `application.New()` + `app.Window.NewWithOptions()` + native tray
+- [x] `app.go` — `ServiceStartup`/`ServiceShutdown` interfaces, `app.Event.Emit()`, window event tracking for position/size
+- [x] Deleted `internal/tray/` (6 cgo files) — replaced by v3 native tray
+- [x] Deleted `wails.json` — replaced by `Taskfile.yml` + `build/config.yml`
+- [x] Deleted `frontend/wailsjs/` — replaced by auto-generated `frontend/bindings/`
+- [x] Frontend: `@wailsio/runtime` for events/window/app, `@bindings/` for Go method calls
+- [x] Transparent background via `MacBackdropTransparent`
+- [x] `ApplicationShouldTerminateAfterLastWindowClosed` + `Window.Close()` for clean quit
 
 ---
 

@@ -1,13 +1,14 @@
 # Ghost Chat v4
 
-Desktop chat overlay for streamers. Go + Wails v2 + React + TypeScript.
+Desktop chat overlay for streamers. Go + Wails v3 + React + TypeScript.
 
 ## Commands
 
 ```bash
-wails dev                    # dev mode (Go 1.23 in go.mod required)
-wails build                  # production build → ./build/bin/ghost-chat.app
-open ./build/bin/ghost-chat.app  # run on macOS
+wails3 dev                   # dev mode (hot-reload Go + Vite frontend)
+wails3 task build            # production build → ./bin/ghost-chat
+wails3 task package          # production .app bundle → ./bin/ghost-chat.app
+open ./bin/ghost-chat.app    # run on macOS
 go test ./internal/...       # run Go tests
 cd frontend && pnpm lint     # oxlint
 cd frontend && pnpm build    # tsc + vite build
@@ -17,17 +18,23 @@ cd frontend && pnpm build    # tsc + vite build
 
 ```
 ghost-chat/
-├── main.go                     # entry point, config loading, wails.Run
-├── app.go                      # App struct, bound methods, lifecycle hooks
+├── main.go                     # entry point, config loading, app/window/tray setup
+├── app.go                      # App struct, bound methods, service lifecycle
+├── Taskfile.yml                # Wails v3 build tasks (root)
 ├── internal/
-│   └── config/
-│       ├── config.go           # Config struct + DefaultConfig()
-│       ├── store.go            # Load/Save/GetConfigPath
-│       ├── migrations.go       # semver comparison + RunMigrations
-│       └── migrations_test.go
+│   ├── config/
+│   │   ├── config.go           # Config struct + DefaultConfig()
+│   │   ├── store.go            # Load/Save/GetConfigPath
+│   │   ├── migrations.go       # semver comparison + RunMigrations
+│   │   └── migrations_test.go
+│   └── hotkey/
+│       ├── hotkey.go           # Global hotkey registration + key parsing
+│       ├── modifiers_darwin.go # macOS modifier mappings
+│       ├── modifiers_linux.go  # Linux modifier mappings
+│       └── modifiers_windows.go # Windows modifier mappings
 ├── frontend/
 │   ├── src/
-│   │   ├── App.tsx             # root: HashRouter, settings toggle, config load
+│   │   ├── App.tsx             # root: HashRouter, settings toggle, vanish, config load
 │   │   ├── App.module.css
 │   │   ├── index.css           # CSS custom properties, global styles, utility classes
 │   │   ├── main.tsx            # React entry
@@ -35,28 +42,23 @@ ghost-chat/
 │   │   │   └── config.ts       # Zustand store wrapping Go GetConfig/UpdateConfig
 │   │   ├── components/
 │   │   │   ├── TitleBar/       # frameless window title bar + controls
-│   │   │   ├── Home/           # platform cards (Twitch/YouTube/External)
-│   │   │   ├── Chat/           # chat overlay (messages area, empty for now)
+│   │   │   ├── Home/           # platform cards (Twitch/YouTube/Kick)
+│   │   │   ├── Chat/           # chat overlay (messages, filtering, themes)
 │   │   │   ├── Settings/       # toggleable panel with tabbed nav
-│   │   │   │   ├── Settings.tsx
-│   │   │   │   ├── GeneralSettings.tsx
-│   │   │   │   ├── TwitchSettings.tsx
-│   │   │   │   ├── YouTubeSettings.tsx
-│   │   │   │   └── ExternalSettings.tsx
 │   │   │   └── Toggle.tsx      # reusable toggle switch
 │   │   └── assets/
 │   │       ├── ghost.svg       # app logo
-│   │       ├── trayicon.png    # system tray icon
-│   │       └── brands/         # platform icons
-│   ├── wailsjs/                # auto-generated Wails bindings (DO NOT EDIT)
-│   │   ├── go/main/App.{js,d.ts}
-│   │   ├── go/models.ts
-│   │   └── runtime/
+│   │       └── trayicon.png    # system tray icon
+│   ├── bindings/               # auto-generated Wails v3 bindings (DO NOT EDIT)
 │   ├── .oxlintrc.json
 │   ├── .oxfmtrc.json
 │   └── package.json
-├── build/                      # app icons, platform build configs
-├── wails.json                  # Wails project config (pnpm)
+├── build/                      # Taskfile, app icons, platform build configs
+│   ├── Taskfile.yml            # shared build tasks (pnpm, bindings, icons)
+│   ├── config.yml              # app metadata (name, version, identifier)
+│   ├── appicon.png             # 512x512 app icon source
+│   ├── darwin/                 # macOS build files (Info.plist, icons.icns)
+│   └── windows/                # Windows build files (icon.ico)
 └── TODO.md                     # phased development plan
 ```
 
@@ -66,11 +68,11 @@ ghost-chat/
 - `internal/` for private packages
 - Error messages: lowercase, no punctuation, use `%w` for wrapping
 - Config: single `*config.Config` pointer shared via App struct
-- Exported methods on App struct become JS-callable bindings
-- `go.mod` must stay at `go 1.23` (Wails v2 compat with Go 1.26 runtime)
+- Exported methods on App struct become JS-callable bindings (Wails v3 services)
+- App implements `ServiceStartup`/`ServiceShutdown` interfaces for lifecycle
 
 ### Frontend
-- Path aliases: `@/` → `src/`, `~/` → `frontend/` root (for wailsjs imports)
+- Path aliases: `@/` → `src/`, `@bindings/` → `bindings/`
 - CSS modules for component styles (`*.module.css`)
 - Global styles/utilities in `index.css` using CSS custom properties
 - Modern CSS: nesting, no preprocessors
@@ -98,17 +100,24 @@ This runs `oxlint --fix --type-aware && oxfmt --write`. Do not skip this step.
 - No emoji in code or UI
 - Neutral color scheme (CSS custom properties in index.css)
 
-## Wails Bindings
+## Wails v3 Bindings
 
-Go methods on `App` struct auto-generate TypeScript in `frontend/wailsjs/go/main/App.d.ts`:
-- `GetConfig() → Promise<config.Config>`
-- `UpdateConfig(cfg) → Promise<void>`
-- `ExpandForSettings() → Promise<void>`
-- `ShrinkToChat() → Promise<void>`
+Go methods on `App` struct auto-generate TypeScript in `frontend/bindings/ghost-chat/app.ts`.
 
-Wails runtime: `frontend/wailsjs/runtime/runtime` — WindowMinimise, Quit, EventsOn, EventsEmit, etc.
+Regenerate bindings after changing Go method signatures:
+```bash
+wails3 generate bindings
+```
+
+Frontend imports:
+- Bound methods: `import { GetConfig, UpdateConfig } from '@bindings/ghost-chat/app.js'`
+- Config types: `import { Config } from '@bindings/ghost-chat/internal/config/models.js'`
+- Runtime: `import { Events, Window, Application } from '@wailsio/runtime'`
+
+Events use `Events.On('name', (ev) => ev.data)` — callback receives `WailsEvent` with `.data` property.
 
 ## Known Issues
 
-- `wails dev` window doesn't open if `go.mod` has `go 1.25+` — keep at `go 1.23`
-- `wails dev` may not show window on macOS 15+ (known Wails issue) — use `wails build && open` as fallback
+- `wails3 dev` watcher stays alive after app closes — press Ctrl+C to stop
+- macOS dock quit goes through `ShouldQuit` → saves window state → clean exit
+- `golang.design/x/hotkey` must register in a goroutine (not main thread) to avoid SIGTRAP on macOS
