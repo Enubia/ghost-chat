@@ -9,6 +9,7 @@ import styles from './Settings.module.css';
 import { ThemeSettings } from './ThemeSettings';
 import { TwitchSettings } from './TwitchSettings';
 import { YouTubeSettings } from './YouTubeSettings';
+import { Browser } from '@wailsio/runtime';
 
 const tabKeys = ['general', 'twitch', 'youtube', 'kick', 'themes'] as const;
 type Tab = (typeof tabKeys)[number];
@@ -40,24 +41,20 @@ export function Settings({ onTabChange }: { onTabChange?: (tab: string) => void 
                 ))}
                 <div className={styles.supportLinks}>
                     <span className={styles.supportText}>{t('settings.support')}</span>
-                    <a
+                    <button
                         className={styles.supportLink}
-                        href="https://ko-fi.com/enubia"
-                        target="_blank"
-                        rel="noreferrer"
+                        onClick={() => void Browser.OpenURL("https://ko-fi.com/enubia")}
                         style={{ background: 'rgba(255, 99, 51, 0.15)', color: '#ff6333' }}
                     >
                         Ko-fi
-                    </a>
-                    <a
+                    </button>
+                    <button
                         className={styles.supportLink}
-                        href="https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW"
-                        target="_blank"
-                        rel="noreferrer"
+                        onClick={() => void Browser.OpenURL("https://www.paypal.com/donate/?hosted_button_id=JMYLMVGSKXXEW")}
                         style={{ background: 'rgba(0, 155, 222, 0.15)', color: '#009bde' }}
                     >
                         PayPal
-                    </a>
+                    </button>
                 </div>
             </nav>
             <div className={styles.content}>

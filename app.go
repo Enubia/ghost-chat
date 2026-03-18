@@ -67,6 +67,10 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 			a.window.SetPosition(a.config.WindowState.X, a.config.WindowState.Y)
 		}
 
+		if runtime.GOOS == "windows" {
+			a.window.SetSize(a.config.WindowState.Width, a.config.WindowState.Height)
+		}
+
 		a.window.Show()
 
 		go func() {
