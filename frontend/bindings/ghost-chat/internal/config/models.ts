@@ -88,6 +88,7 @@ export class General {
      */
     "language": string;
     "show_timestamps": boolean;
+    "show_waiting_message": boolean;
 
     /** Creates a new General instance. */
     constructor($$source: Partial<General> = {}) {
@@ -96,6 +97,9 @@ export class General {
         }
         if (!("show_timestamps" in $$source)) {
             this["show_timestamps"] = false;
+        }
+        if (!("show_waiting_message" in $$source)) {
+            this["show_waiting_message"] = false;
         }
 
         Object.assign(this, $$source);

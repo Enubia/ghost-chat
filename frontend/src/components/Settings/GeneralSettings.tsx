@@ -47,6 +47,14 @@ export function GeneralSettings() {
                 />
             </div>
 
+            <div className="field-row">
+                <label className="field-label">{t('settings.general.show_waiting_message')}</label>
+                <Toggle
+                    checked={config?.general?.show_waiting_message ?? true}
+                    onChange={(v) => void update({ general: { show_waiting_message: v } })}
+                />
+            </div>
+
             <div className="field">
                 <label className="field-label">{t('settings.general.vanish_hotkey')}</label>
                 <HotkeyInput

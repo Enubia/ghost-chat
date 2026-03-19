@@ -49,7 +49,7 @@ func Load(path string) (*Config, error) {
 		return &defaultConfig, nil
 	}
 
-	var config Config
+	config := DefaultConfig()
 
 	if err = json.Unmarshal(bytes, &config); err != nil {
 		return nil, err

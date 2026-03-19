@@ -268,26 +268,26 @@ export function Chat() {
                 style={themeCSSVars as React.CSSProperties}
                 onScroll={handleScroll}
             >
-                {visibleMessages.length === 0 ? (
-                    <div className={styles.empty}>
-                        <span>{t('chat.waiting')}</span>
-                    </div>
-                ) : (
-                    visibleMessages.map((msg) => (
-                        <ChatMessage
-                            key={msg.id}
-                            message={msg}
-                            hideBadges={hideBadges}
-                            showTimestamp={showTimestamp}
-                            showPlatformIcon={connectedCount > 1}
-                            showColon={theme.show_colon}
-                            showAvatars={theme.show_avatars}
-                            fade={getFade(msg.platform)}
-                            fadeTimeout={getFadeTimeout(msg.platform)}
-                            onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
-                        />
-                    ))
-                )}
+                {visibleMessages.length === 0
+                    ? config?.general?.show_waiting_message !== false && (
+                          <div className={styles.empty}>
+                              <span>{t('chat.waiting')}</span>
+                          </div>
+                      )
+                    : visibleMessages.map((msg) => (
+                          <ChatMessage
+                              key={msg.id}
+                              message={msg}
+                              hideBadges={hideBadges}
+                              showTimestamp={showTimestamp}
+                              showPlatformIcon={connectedCount > 1}
+                              showColon={theme.show_colon}
+                              showAvatars={theme.show_avatars}
+                              fade={getFade(msg.platform)}
+                              fadeTimeout={getFadeTimeout(msg.platform)}
+                              onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
+                          />
+                      ))}
             </div>
             {!autoScroll && (
                 <button

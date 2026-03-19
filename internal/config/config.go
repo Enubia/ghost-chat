@@ -8,8 +8,9 @@ type WindowState struct {
 }
 
 type General struct {
-	Language       string `json:"language"` // default "en-US"
-	ShowTimestamps bool   `json:"show_timestamps"`
+	Language           string `json:"language"` // default "en-US"
+	ShowTimestamps     bool   `json:"show_timestamps"`
+	ShowWaitingMessage bool   `json:"show_waiting_message"`
 }
 
 type VanishKeybind struct {
@@ -88,7 +89,8 @@ func DefaultConfig() Config {
 			Height: 600,
 		},
 		General: General{
-			Language: "en-US",
+			Language:           "en-US",
+			ShowWaitingMessage: true,
 		},
 		Keybinds: Keybinds{
 			Vanish: VanishKeybind{},

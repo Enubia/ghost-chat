@@ -43,6 +43,7 @@
             "vanish_hotkey": "Vanish Hotkey",
             "press_keys": "Press a key combination...",
             "not_set": "Not set",
+            "show_waiting_message": "Show Waiting Message",
             "hotkey_hint": "Requires one of Ctrl, Alt, or Shift plus another key. E.g. Ctrl+Shift+V"
         },
         "twitch": {

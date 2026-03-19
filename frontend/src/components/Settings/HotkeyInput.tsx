@@ -99,11 +99,7 @@ export function HotkeyInput({ value, onChange }: HotkeyInputProps) {
                     </button>
                 )}
             </div>
-            <span
-                className={styles.hotkeyHint}
-            >
-                {t('settings.general.hotkey_hint')}
-            </span>
+            <span className={styles.hotkeyHint}>{t('settings.general.hotkey_hint')}</span>
         </>
     );
 }

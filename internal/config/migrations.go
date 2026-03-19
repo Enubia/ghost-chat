@@ -14,7 +14,11 @@ type Migration struct {
 	Migrate func(*Config)
 }
 
-var migrations = []Migration{}
+var migrations = []Migration{
+	{Version: "4.0.2", Migrate: func(cfg *Config) {
+		cfg.General.ShowWaitingMessage = true
+	}},
+}
 
 func parseSemver(version string) (major, minor, patch int, err error) {
 	parts := strings.Split(version, ".")

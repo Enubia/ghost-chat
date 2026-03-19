@@ -89,6 +89,26 @@ func TestThrowsErrorOnInvalidVersion(t *testing.T) {
 	}
 }
 
+func TestShowWaitingMessageMigration(t *testing.T) {
+	cfg := DefaultConfig()
+	cfg.Version = "4.0.1"
+	cfg.General.ShowWaitingMessage = false
+
+	err := RunMigrations(&cfg, "4.0.2")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !cfg.General.ShowWaitingMessage {
+		t.Error("expected ShowWaitingMessage to be true after migration")
+	}
+
+	if cfg.Version != "4.0.2" {
+		t.Errorf("got version %s, want 4.0.2", cfg.Version)
+	}
+}
+
 func TestSkipsMigrationsNewerThanTarget(t *testing.T) {
 	cfg := DefaultConfig()
 	cfg.Version = "1.0.0"
