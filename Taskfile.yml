@@ -10,7 +10,7 @@ vars:
   BIN_DIR: "bin"
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
   VERSION:
-    sh: git describe --tags --always 2>/dev/null || echo "dev"
+    sh: echo "${VERSION:-$(git describe --tags --always 2>/dev/null || echo dev)}"
 
 tasks:
   build:

@@ -42,7 +42,8 @@
             "show_timestamps": "Show Timestamps",
             "vanish_hotkey": "Vanish Hotkey",
             "press_keys": "Press a key combination...",
-            "not_set": "Not set"
+            "not_set": "Not set",
+            "hotkey_hint": "Requires one of Ctrl, Alt, or Shift plus another key. E.g. Ctrl+Shift+V"
         },
         "twitch": {
             "default_channel": "Default Channel",

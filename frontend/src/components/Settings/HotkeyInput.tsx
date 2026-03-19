@@ -78,24 +78,32 @@ export function HotkeyInput({ value, onChange }: HotkeyInputProps) {
     };
 
     return (
-        <div className={styles.container}>
-            <input
-                className={`${styles.input} ${capturing ? styles.capturing : ''}`}
-                type="text"
-                readOnly
-                value={capturing ? t('settings.general.press_keys') : value || t('settings.general.not_set')}
-                onFocus={() => setCapturing(true)}
-                onBlur={() => setCapturing(false)}
-                onKeyDown={handleKeyDown}
-            />
-            {value && (
-                <button
-                    className={styles.clearBtn}
-                    onClick={handleClear}
-                >
-                    x
-                </button>
-            )}
-        </div>
+        <>
+            <div className={styles.container}>
+                <input
+                    id="hotkey-input"
+                    className={`${styles.input} ${capturing ? styles.capturing : ''}`}
+                    type="text"
+                    readOnly
+                    value={capturing ? t('settings.general.press_keys') : value || t('settings.general.not_set')}
+                    onFocus={() => setCapturing(true)}
+                    onBlur={() => setCapturing(false)}
+                    onKeyDown={handleKeyDown}
+                />
+                {value && (
+                    <button
+                        className={styles.clearBtn}
+                        onClick={handleClear}
+                    >
+                        x
+                    </button>
+                )}
+            </div>
+            <span
+                className={styles.hotkeyHint}
+            >
+                {t('settings.general.hotkey_hint')}
+            </span>
+        </>
     );
 }
