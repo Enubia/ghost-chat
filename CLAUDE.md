@@ -170,6 +170,14 @@ Frontend imports:
 
 Events use `Events.On('name', (ev) => ev.data)` — callback receives `WailsEvent` with `.data` property.
 
+## Website (getghostchat.com)
+
+Landing page hosted on Cloudflare Pages, source in `website/`.
+
+When adding or updating a platform (e.g. Rumble), also update:
+- `website/index.html` — hero description, features section, FAQ ("What platforms are supported?")
+- `website/assets/` — take fresh screenshots of the app and replace the existing ones
+
 ## Known Issues
 
 - `wails3 dev` watcher stays alive after app closes — press Ctrl+C to stop
