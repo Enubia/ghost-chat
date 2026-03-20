@@ -1,9 +1,6 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       version:
@@ -11,7 +8,7 @@ on:
         required: true
 
 env:
-  VERSION_TAG: ${{ github.event.inputs.version || github.ref_name }}
+  VERSION_TAG: ${{ github.event.inputs.version }}
 
 permissions:
   contents: write
@@ -21,23 +18,21 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "1.25"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: latest
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
-          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
@@ -51,7 +46,7 @@ jobs:
       - name: Zip app bundle
         run: cd bin && zip -r ghost-chat-macos.zip ghost-chat.app
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ghost-chat-macos
           path: bin/ghost-chat-macos.zip
@@ -60,23 +55,21 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "1.25"
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: latest
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
-          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - run: go install github.com/wailsapp/wails/v3/cmd/wails3@latest
 
@@ -87,7 +80,7 @@ jobs:
         env:
           VERSION: ${{ env.VERSION_TAG }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ghost-chat-windows
           path: bin/ghost-chat.exe
@@ -97,7 +90,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Create and push tag
+        run: |
+          git tag "$VERSION_TAG"
+          git push origin "$VERSION_TAG"
+
+      - uses: actions/download-artifact@v8
         with:
           path: artifacts
           merge-multiple: true
