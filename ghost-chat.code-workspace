@@ -1,7 +1,10 @@
 {
     "folders": [
         {
-            "path": ".",
+            "path": "."
+        },
+        {
+            "path": "frontend"
         }
     ],
     "settings": {
@@ -16,11 +19,6 @@
             }
         },
         "oxc.typeAware": true,
-        "oxc.configPath": "./frontend/.oxlintrc.json",
-        "oxc.fmt.configPath": "./frontend/.oxfmtrc.json",
-        "oxc.path.oxfmt": "./frontend/node_modules/oxfmt/bin/oxfmt",
-        "oxc.path.oxlint": "./frontend/node_modules/oxlint/bin/oxlint",
-        "oxc.path.tsgolint": "./frontend/node_modules/oxlint-tsgolint/bin/tsgolint.js",
         "[javascriptreact][typescriptreact][javascript][typescript]": {
             "editor.defaultFormatter": "oxc.oxc-vscode",
             "editor.formatOnSave": true,

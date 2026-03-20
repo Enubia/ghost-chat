@@ -222,6 +222,15 @@ func (c *Client) handleMessage(raw string) {
 		c.resolveBadgeURLs(chatMsg.Badges)
 		chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
 		c.OnMessage(chatMsg)
+	case "USERNOTICE":
+		chatMsg := ToEventMessage(message)
+		c.resolveBadgeURLs(chatMsg.Badges)
+
+		if chatMsg.Text != "" {
+			chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
+		}
+
+		c.OnMessage(chatMsg)
 	case "CLEARCHAT":
 		c.OnEvent("chat:clear", message.Params)
 	case "CLEARMSG":

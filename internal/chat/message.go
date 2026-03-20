@@ -42,6 +42,11 @@ type ChatMessage struct {
 	IsAction  bool              `json:"isAction"`
 	Tags      map[string]string `json:"tags"`
 
+	// Twitch USERNOTICE event fields (zero values for regular messages)
+	EventType     string            `json:"eventType"`     // e.g. "sub", "resub", "subgift", "raid", "announcement"
+	SystemMessage string            `json:"systemMessage"` // Twitch-generated text (e.g. "X subscribed for 12 months")
+	EventData     map[string]string `json:"eventData"`     // extra metadata (gift count, viewer count, sub plan, etc.)
+
 	// YouTube-specific fields (zero values for Twitch messages)
 	Avatar          string            `json:"avatar"`          // profile image URL
 	Fragments       []MessageFragment `json:"fragments"`       // structured message segments (text + emotes interleaved)

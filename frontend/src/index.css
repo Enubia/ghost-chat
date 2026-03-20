@@ -165,6 +165,26 @@ button {
     gap: 12px;
 }
 
+.field-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+}
+
+.field-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.field-hint {
+    font-size: 11px;
+    color: var(--color-text-dim);
+}
+
 .toggle {
     position: relative;
     width: 36px;

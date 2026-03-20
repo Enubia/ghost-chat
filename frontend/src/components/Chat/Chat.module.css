@@ -36,8 +36,8 @@
     flex-direction: column;
 }
 
-.messagesBottom {
-    justify-content: flex-end;
+.messagesSpacer {
+    flex: 1;
 }
 
 .empty {
