@@ -21,15 +21,28 @@ var version = "dev"
 
 // initialWidth returns the starting window width. On Windows, frameless transparent
 // windows have a WebView2 bug where the hit-test surface doesn't update after
-// programmatic resize, so we start at the max settings width (1000) and shrink
+// programmatic resize, so we start at the max settings width (2000) and shrink
 // down in ServiceStartup. This ensures the surface covers the full area.
 // https://github.com/wailsapp/wails/issues/4871
 func initialWidth(savedWidth int) int {
 	if runtime.GOOS == "windows" {
-		return 1000
+		return 2000
 	}
 
 	return savedWidth
+}
+
+// initialHeight returns the starting window height. On Windows, frameless transparent
+// windows have a WebView2 bug where the hit-test surface doesn't update after
+// programmatic resize, so we start at the max settings height (2000) and shrink
+// down in ServiceStartup. This ensures the surface covers the full area.
+// https://github.com/wailsapp/wails/issues/4871
+func initialHeight(savedHeight int) int {
+	if runtime.GOOS == "windows" {
+		return 2000
+	}
+
+	return savedHeight
 }
 
 func main() {
@@ -82,7 +95,7 @@ func main() {
 	win := app.Window.NewWithOptions(application.WebviewWindowOptions{
 		Title:          "ghost-chat",
 		Width:          initialWidth(cfg.WindowState.Width),
-		Height:         cfg.WindowState.Height,
+		Height:         initialHeight(cfg.WindowState.Height),
 		Hidden:         true,
 		Frameless:      true,
 		AlwaysOnTop:    true,
@@ -101,6 +114,7 @@ func main() {
 	menu := app.NewMenu()
 	menu.Add("Ghost Chat " + version).SetEnabled(false)
 	menu.AddSeparator()
+	menu.Add("Center on Screen").OnClick(func(_ *application.Context) { svc.CenterOnScreen() })
 	menu.Add("Toggle Vanish").OnClick(func(_ *application.Context) { svc.ToggleVanish() })
 	menu.Add("Open Config Folder").OnClick(func(_ *application.Context) { svc.OpenConfigFolder() })
 	menu.AddSeparator()

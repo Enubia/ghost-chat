@@ -6,6 +6,10 @@
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
     user-select: none;
+
+    :global([data-vanished]) & {
+        visibility: hidden;
+    }
 }
 
 .drag {

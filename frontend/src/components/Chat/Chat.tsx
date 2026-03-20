@@ -54,6 +54,8 @@ export function Chat() {
     const theme = getThemeById(activeThemeId, customThemes);
     const themeCSSVars = themeToCSS(theme);
 
+    const topToBottom = theme.top_to_bottom ?? false;
+
     const hideBadges = config?.twitch?.hide_badges ?? false;
     const showTimestamp = config?.general?.show_timestamps ?? false;
     const twitchFade = config?.twitch?.fade ?? false;
@@ -129,9 +131,9 @@ export function Chat() {
 
     useEffect(() => {
         if (autoScroll && messagesRef.current) {
-            messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+            messagesRef.current.scrollTop = topToBottom ? 0 : messagesRef.current.scrollHeight;
         }
-    }, [messages, autoScroll]);
+    }, [messages, autoScroll, topToBottom]);
 
     const handleScroll = () => {
         const el = messagesRef.current;
@@ -140,9 +142,12 @@ export function Chat() {
             return;
         }
 
-        const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
-
-        setAutoScroll(atBottom);
+        if (topToBottom) {
+            setAutoScroll(el.scrollTop < 40);
+        } else {
+            const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
+            setAutoScroll(atBottom);
+        }
     };
 
     const getFade = (platform: string) => {
@@ -169,7 +174,9 @@ export function Chat() {
         return twitchFadeTimeout;
     };
 
-    const visibleMessages = messages.filter((m) => {
+    const displayMessages = topToBottom ? [...messages].toReversed() : messages;
+
+    const visibleMessages = displayMessages.filter((m) => {
         if (m.platform === 'twitch') {
             return showTwitch;
         }
@@ -264,7 +271,7 @@ export function Chat() {
             </div>
             <div
                 ref={messagesRef}
-                className={styles.messages}
+                className={`${styles.messages} ${topToBottom ? '' : styles.messagesBottom}`}
                 style={themeCSSVars as React.CSSProperties}
                 onScroll={handleScroll}
             >
@@ -294,7 +301,10 @@ export function Chat() {
                     className={`btn btn-ghost ${styles.scrollBtn}`}
                     onClick={() => {
                         setAutoScroll(true);
-                        messagesRef.current?.scrollTo({ top: messagesRef.current.scrollHeight, behavior: 'smooth' });
+                        messagesRef.current?.scrollTo({
+                            top: topToBottom ? messagesRef.current.scrollHeight : 0,
+                            behavior: 'smooth',
+                        });
                     }}
                 >
                     {t('chat.scroll_to_bottom')}

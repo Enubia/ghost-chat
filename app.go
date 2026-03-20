@@ -215,6 +215,18 @@ func (a *App) ToggleVanish() {
 	}
 }
 
+func (a *App) CenterOnScreen() {
+	primary := a.app.Screen.GetPrimary()
+	w, h := a.window.Size()
+
+	x := primary.WorkArea.X + (primary.WorkArea.Width-w)/2
+	y := primary.WorkArea.Y + (primary.WorkArea.Height-h)/2
+
+	a.window.SetPosition(x, y)
+	a.window.Show()
+	a.window.Focus()
+}
+
 func (a *App) OpenConfigFolder() {
 	dir := filepath.Dir(a.configPath)
 

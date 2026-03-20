@@ -12,6 +12,10 @@ import * as config$0 from "./internal/config/models.js";
 // @ts-ignore: Unused imports
 import * as application$0 from "../github.com/wailsapp/wails/v3/pkg/application/models.js";
 
+export function CenterOnScreen(): $CancellablePromise<void> {
+    return $Call.ByID(4082082385);
+}
+
 export function ConnectKick(input: string): $CancellablePromise<void> {
     return $Call.ByID(3727196235, input);
 }

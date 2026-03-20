@@ -62,8 +62,10 @@ type Theme struct {
 	EmoteSize      int     `json:"emote_size"`
 	ShowAvatars    bool    `json:"show_avatars"`
 	AvatarSize     int     `json:"avatar_size"`
+	TextWeight     int     `json:"text_weight"`
 	TextShadow     string  `json:"text_shadow"`
 	TextColor      string  `json:"text_color"`
+	TopToBottom    bool    `json:"top_to_bottom"`
 }
 
 type ThemeConfig struct {

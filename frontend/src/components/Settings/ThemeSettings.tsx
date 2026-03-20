@@ -107,7 +107,34 @@ export function ThemeSettings() {
     };
 
     const exportTheme = () => {
-        const blob = new Blob([JSON.stringify(theme, null, 2)], { type: 'application/json' });
+        const exportData = {
+            ...theme,
+            _llm_instructions: [
+                'This is a Ghost Chat theme file. You can modify the values below and import it back.',
+                'Fields:',
+                '  name: Display name for the theme',
+                '  font_family: CSS font-family value (e.g. "Arial, sans-serif", "inherit")',
+                '  font_size: Font size in pixels (8-24)',
+                '  line_height: Line height multiplier (1-2.5)',
+                '  message_bg: CSS background value (e.g. "transparent", "rgba(0,0,0,0.3)", "#1a1a2e")',
+                '  message_padding: CSS padding value (e.g. "2px 0", "4px 8px")',
+                '  message_radius: Border radius in pixels (0-20)',
+                '  message_gap: Vertical spacing between messages in pixels (0-12)',
+                '  username_weight: CSS font-weight for usernames (400-900, step 100)',
+                '  show_colon: Show ":" after username (true/false)',
+                '  badge_size: Badge icon size in pixels (10-28)',
+                '  emote_size: Emote size in pixels (16-48)',
+                '  show_avatars: Show user avatars (true/false)',
+                '  avatar_size: Avatar size in pixels (12-32)',
+                '  text_weight: CSS font-weight for message text (100-900, step 100; 400=normal, 700=bold)',
+                '  text_shadow: CSS text-shadow value (e.g. "none", "0 1px 2px rgba(0,0,0,0.5)")',
+                '  text_color: CSS color value (e.g. "inherit", "#ffffff")',
+                '  top_to_bottom: Show newest messages at top (true/false)',
+                'Do NOT modify the "id" field. Only return valid JSON.',
+            ],
+        };
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
 
@@ -129,7 +156,9 @@ export function ThemeSettings() {
 
         reader.addEventListener('load', () => {
             try {
-                const imported = JSON.parse(reader.result as string) as Theme;
+                const raw = JSON.parse(reader.result as string);
+                delete raw._llm_instructions;
+                const imported = raw as Theme;
                 imported.id = `custom-${Date.now()}`;
 
                 if (!imported.name) {
@@ -212,10 +241,13 @@ export function ThemeSettings() {
                         value={displayTheme.font_family}
                         disabled={readonly}
                         onChange={(e) => updateProp('font_family', e.target.value)}
+                        placeholder={t('settings.themes.font_family_hint')}
                     />
+                    <span className={styles.fieldHint}>{t('settings.themes.font_family_desc')}</span>
                 </div>
                 <Slider
                     label={t('settings.themes.font_size')}
+                    hint={t('settings.themes.font_size_desc')}
                     value={displayTheme.font_size}
                     min={8}
                     max={24}
@@ -225,6 +257,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.line_height')}
+                    hint={t('settings.themes.line_height_desc')}
                     value={displayTheme.line_height}
                     min={1}
                     max={2.5}
@@ -236,6 +269,17 @@ export function ThemeSettings() {
 
             <div className={styles.section}>
                 <span className={styles.sectionTitle}>{t('settings.themes.message')}</span>
+                <div>
+                    <div className="field-row">
+                        <label className="field-label">{t('settings.themes.top_to_bottom')}</label>
+                        <Toggle
+                            checked={displayTheme.top_to_bottom ?? false}
+                            onChange={(v) => updateProp('top_to_bottom', v)}
+                            disabled={readonly}
+                        />
+                    </div>
+                    <span className={styles.fieldHint}>{t('settings.themes.top_to_bottom_desc')}</span>
+                </div>
                 <div className="field">
                     <label className="field-label">{t('settings.themes.message_bg')}</label>
                     <input
@@ -243,8 +287,9 @@ export function ThemeSettings() {
                         value={displayTheme.message_bg}
                         disabled={readonly}
                         onChange={(e) => updateProp('message_bg', e.target.value)}
-                        placeholder="transparent"
+                        placeholder={t('settings.themes.message_bg_hint')}
                     />
+                    <span className={styles.fieldHint}>{t('settings.themes.message_bg_desc')}</span>
                 </div>
                 <div className="field">
                     <label className="field-label">{t('settings.themes.message_padding')}</label>
@@ -253,11 +298,13 @@ export function ThemeSettings() {
                         value={displayTheme.message_padding}
                         disabled={readonly}
                         onChange={(e) => updateProp('message_padding', e.target.value)}
-                        placeholder="2px 0"
+                        placeholder={t('settings.themes.message_padding_hint')}
                     />
+                    <span className={styles.fieldHint}>{t('settings.themes.message_padding_desc')}</span>
                 </div>
                 <Slider
                     label={t('settings.themes.message_radius')}
+                    hint={t('settings.themes.message_radius_desc')}
                     value={displayTheme.message_radius}
                     min={0}
                     max={20}
@@ -267,6 +314,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.message_gap')}
+                    hint={t('settings.themes.message_gap_desc')}
                     value={displayTheme.message_gap}
                     min={0}
                     max={12}
@@ -281,9 +329,20 @@ export function ThemeSettings() {
                         value={displayTheme.text_color}
                         disabled={readonly}
                         onChange={(e) => updateProp('text_color', e.target.value)}
-                        placeholder="inherit"
+                        placeholder={t('settings.themes.text_color_hint')}
                     />
+                    <span className={styles.fieldHint}>{t('settings.themes.text_color_desc')}</span>
                 </div>
+                <Slider
+                    label={t('settings.themes.text_weight')}
+                    hint={t('settings.themes.text_weight_desc')}
+                    value={displayTheme.text_weight}
+                    min={100}
+                    max={900}
+                    step={100}
+                    disabled={readonly}
+                    onChange={(v) => updateProp('text_weight', v)}
+                />
                 <div className="field">
                     <label className="field-label">{t('settings.themes.text_shadow')}</label>
                     <input
@@ -291,8 +350,9 @@ export function ThemeSettings() {
                         value={displayTheme.text_shadow}
                         disabled={readonly}
                         onChange={(e) => updateProp('text_shadow', e.target.value)}
-                        placeholder="none"
+                        placeholder={t('settings.themes.text_shadow_hint')}
                     />
+                    <span className={styles.fieldHint}>{t('settings.themes.text_shadow_desc')}</span>
                 </div>
             </div>
 
@@ -300,6 +360,7 @@ export function ThemeSettings() {
                 <span className={styles.sectionTitle}>{t('settings.themes.username_section')}</span>
                 <Slider
                     label={t('settings.themes.username_weight')}
+                    hint={t('settings.themes.username_weight_desc')}
                     value={displayTheme.username_weight}
                     min={400}
                     max={900}
@@ -307,13 +368,16 @@ export function ThemeSettings() {
                     disabled={readonly}
                     onChange={(v) => updateProp('username_weight', v)}
                 />
-                <div className="field-row">
-                    <label className="field-label">{t('settings.themes.show_colon')}</label>
-                    <Toggle
-                        checked={displayTheme.show_colon}
-                        onChange={(v) => updateProp('show_colon', v)}
-                        disabled={readonly}
-                    />
+                <div>
+                    <div className="field-row">
+                        <label className="field-label">{t('settings.themes.show_colon')}</label>
+                        <Toggle
+                            checked={displayTheme.show_colon}
+                            onChange={(v) => updateProp('show_colon', v)}
+                            disabled={readonly}
+                        />
+                    </div>
+                    <span className={styles.fieldHint}>{t('settings.themes.show_colon_desc')}</span>
                 </div>
             </div>
 
@@ -321,6 +385,7 @@ export function ThemeSettings() {
                 <span className={styles.sectionTitle}>{t('settings.themes.elements')}</span>
                 <Slider
                     label={t('settings.themes.badge_size')}
+                    hint={t('settings.themes.badge_size_desc')}
                     value={displayTheme.badge_size}
                     min={10}
                     max={28}
@@ -330,6 +395,7 @@ export function ThemeSettings() {
                 />
                 <Slider
                     label={t('settings.themes.emote_size')}
+                    hint={t('settings.themes.emote_size_desc')}
                     value={displayTheme.emote_size}
                     min={16}
                     max={48}
@@ -337,17 +403,21 @@ export function ThemeSettings() {
                     disabled={readonly}
                     onChange={(v) => updateProp('emote_size', v)}
                 />
-                <div className="field-row">
-                    <label className="field-label">{t('settings.themes.show_avatars')}</label>
-                    <Toggle
-                        checked={displayTheme.show_avatars}
-                        onChange={(v) => updateProp('show_avatars', v)}
-                        disabled={readonly}
-                    />
+                <div>
+                    <div className="field-row">
+                        <label className="field-label">{t('settings.themes.show_avatars')}</label>
+                        <Toggle
+                            checked={displayTheme.show_avatars}
+                            onChange={(v) => updateProp('show_avatars', v)}
+                            disabled={readonly}
+                        />
+                    </div>
+                    <span className={styles.fieldHint}>{t('settings.themes.show_avatars_desc')}</span>
                 </div>
                 {displayTheme.show_avatars && (
                     <Slider
                         label={t('settings.themes.avatar_size')}
+                        hint={t('settings.themes.avatar_size_desc')}
                         value={displayTheme.avatar_size}
                         min={12}
                         max={32}
@@ -379,12 +449,14 @@ export function ThemeSettings() {
                     onChange={importTheme}
                 />
             </div>
+            <span className={styles.llmHint}>{t('settings.themes.llm_hint')}</span>
         </div>
     );
 }
 
 function Slider({
     label,
+    hint,
     value,
     min,
     max,
@@ -394,6 +466,7 @@ function Slider({
     onChange,
 }: {
     label: string;
+    hint?: string;
     value: number;
     min: number;
     max: number;
@@ -403,21 +476,24 @@ function Slider({
     onChange: (v: number) => void;
 }) {
     return (
-        <div className={styles.sliderRow}>
-            <label>{label}</label>
-            <input
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                disabled={disabled}
-                onChange={(e) => onChange(Number(e.target.value))}
-            />
-            <span className={styles.value}>
-                {value}
-                {unit}
-            </span>
+        <div className={styles.sliderGroup}>
+            <div className={styles.sliderRow}>
+                <label>{label}</label>
+                <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={value}
+                    disabled={disabled}
+                    onChange={(e) => onChange(Number(e.target.value))}
+                />
+                <span className={styles.value}>
+                    {value}
+                    {unit}
+                </span>
+            </div>
+            {hint && <span className={styles.fieldHint}>{hint}</span>}
         </div>
     );
 }

@@ -14,8 +14,10 @@ export interface Theme {
     emote_size: number;
     show_avatars: boolean;
     avatar_size: number;
+    text_weight: number;
     text_shadow: string;
     text_color: string;
+    top_to_bottom: boolean;
 }
 
 export const BUILT_IN_THEMES: Theme[] = [
@@ -35,8 +37,10 @@ export const BUILT_IN_THEMES: Theme[] = [
         emote_size: 28,
         show_avatars: true,
         avatar_size: 18,
+        text_weight: 400,
         text_shadow: 'none',
         text_color: 'inherit',
+        top_to_bottom: false,
     },
     {
         id: 'compact',
@@ -54,8 +58,10 @@ export const BUILT_IN_THEMES: Theme[] = [
         emote_size: 20,
         show_avatars: false,
         avatar_size: 0,
+        text_weight: 400,
         text_shadow: 'none',
         text_color: 'inherit',
+        top_to_bottom: false,
     },
     {
         id: 'bubble',
@@ -73,8 +79,10 @@ export const BUILT_IN_THEMES: Theme[] = [
         emote_size: 28,
         show_avatars: true,
         avatar_size: 20,
+        text_weight: 400,
         text_shadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
         text_color: '#ffffff',
+        top_to_bottom: false,
     },
 ];
 
@@ -99,6 +107,7 @@ export function themeToCSS(theme: Theme): Record<string, string> {
         '--theme-badge-size': `${(theme.badge_size / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-emote-size': `${(theme.emote_size / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-avatar-size': `${(theme.avatar_size / REF_FONT_SIZE).toFixed(3)}em`,
+        '--theme-text-weight': String(theme.text_weight),
         '--theme-text-shadow': theme.text_shadow,
         '--theme-text-color': theme.text_color,
     };

@@ -6,6 +6,7 @@
     padding: var(--theme-message-padding, 2px 0);
     border-radius: var(--theme-message-radius, 0);
     margin-bottom: var(--theme-message-gap, 0);
+    font-weight: var(--theme-text-weight, 400);
     text-shadow: var(--theme-text-shadow, none);
     color: var(--theme-text-color, inherit);
     word-wrap: break-word;

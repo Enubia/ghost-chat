@@ -192,8 +192,10 @@ export class Theme {
     "emote_size": number;
     "show_avatars": boolean;
     "avatar_size": number;
+    "text_weight": number;
     "text_shadow": string;
     "text_color": string;
+    "top_to_bottom": boolean;
 
     /** Creates a new Theme instance. */
     constructor($$source: Partial<Theme> = {}) {
@@ -242,11 +244,17 @@ export class Theme {
         if (!("avatar_size" in $$source)) {
             this["avatar_size"] = 0;
         }
+        if (!("text_weight" in $$source)) {
+            this["text_weight"] = 0;
+        }
         if (!("text_shadow" in $$source)) {
             this["text_shadow"] = "";
         }
         if (!("text_color" in $$source)) {
             this["text_color"] = "";
+        }
+        if (!("top_to_bottom" in $$source)) {
+            this["top_to_bottom"] = false;
         }
 
         Object.assign(this, $$source);

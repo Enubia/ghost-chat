@@ -67,6 +67,12 @@
     padding-bottom: 4px;
 }
 
+.sliderGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .sliderRow {
     display: flex;
     align-items: center;
@@ -99,6 +105,18 @@
 }
 
 .readonlyHint {
+    font-size: 11px;
+    color: var(--color-text-dim);
+    font-style: italic;
+}
+
+.fieldHint {
+    font-size: 10px;
+    color: var(--color-text-dim);
+    line-height: 1.3;
+}
+
+.llmHint {
     font-size: 11px;
     color: var(--color-text-dim);
     font-style: italic;

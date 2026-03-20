@@ -99,13 +99,11 @@ function App() {
                 className={`${styles.app} ${settingsOpen ? styles.withSettings : ''} ${vanished ? styles.vanished : ''}`}
                 data-vanished={vanished || undefined}
             >
-                {!vanished && (
-                    <TitleBar
-                        onSettingsToggle={toggleSettings}
-                        settingsOpen={settingsOpen}
-                        updateInfo={updateInfo}
-                    />
-                )}
+                <TitleBar
+                    onSettingsToggle={toggleSettings}
+                    settingsOpen={settingsOpen}
+                    updateInfo={updateInfo}
+                />
                 <div className={styles.body}>
                     {settingsOpen && !vanished && (
                         <div className={styles.settingsPanel}>
