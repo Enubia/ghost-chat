@@ -12,11 +12,48 @@ const KEY_ALIASES: Record<string, string> = {
     arrowdown: 'down',
     ' ': 'space',
     backspace: 'delete',
+    '-': 'minus',
+    '=': 'equal',
+    ',': 'comma',
+    '.': 'period',
+    '/': 'slash',
+    ';': 'semicolon',
+    "'": 'quote',
+    '[': 'bracketleft',
+    ']': 'bracketright',
+    '\\': 'backslash',
+    '`': 'backquote',
+};
+
+const NUMPAD_CODE_MAP: Record<string, string> = {
+    numpad0: 'numpad0',
+    numpad1: 'numpad1',
+    numpad2: 'numpad2',
+    numpad3: 'numpad3',
+    numpad4: 'numpad4',
+    numpad5: 'numpad5',
+    numpad6: 'numpad6',
+    numpad7: 'numpad7',
+    numpad8: 'numpad8',
+    numpad9: 'numpad9',
+    numpadmultiply: 'numpadmultiply',
+    numpadadd: 'numpadadd',
+    numpadsubtract: 'numpadsubtract',
+    numpaddecimal: 'numpaddecimal',
+    numpaddivide: 'numpaddivide',
+    numpadenter: 'numpadenter',
 };
 
 const MODIFIER_KEYS = new Set(['control', 'shift', 'alt', 'meta']);
 
-function normalizeKey(key: string): string {
+function normalizeKey(key: string, code: string): string {
+    const lowerCode = code.toLowerCase();
+    const numpadKey = NUMPAD_CODE_MAP[lowerCode];
+
+    if (numpadKey) {
+        return numpadKey;
+    }
+
     const lower = key.toLowerCase();
 
     return KEY_ALIASES[lower] ?? lower;
@@ -67,7 +104,7 @@ export function HotkeyInput({ value, onChange }: HotkeyInputProps) {
             return;
         }
 
-        parts.push(normalizeKey(e.key));
+        parts.push(normalizeKey(e.key, e.code));
 
         onChange(parts.join('+'));
         setCapturing(false);

@@ -1,6 +1,7 @@
 package hotkey
 
 import (
+	"maps"
 	"strings"
 
 	"golang.design/x/hotkey"
@@ -95,4 +96,8 @@ var keyMap = map[string]hotkey.Key{
 	"space": hotkey.KeySpace, "tab": hotkey.KeyTab, "escape": hotkey.KeyEscape,
 	"return": hotkey.KeyReturn, "enter": hotkey.KeyReturn, "delete": hotkey.KeyDelete,
 	"left": hotkey.KeyLeft, "right": hotkey.KeyRight, "up": hotkey.KeyUp, "down": hotkey.KeyDown,
+}
+
+func init() {
+	maps.Copy(keyMap, platformKeys)
 }
