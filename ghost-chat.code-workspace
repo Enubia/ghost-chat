@@ -26,6 +26,7 @@
                 "source.fixAll.oxc": "explicit",
                 "source.removeUnusedImports": "explicit"
             }
-        }
+        },
+        "liveServer.settings.multiRootWorkspaceName": "ghost-chat"
     }
 }

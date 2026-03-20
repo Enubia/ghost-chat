@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Chat — Desktop Chat Overlay for Streamers</title>
+    <meta name="description" content="Free, open-source desktop chat overlay for streamers. Supports Twitch, YouTube, and Kick with a transparent, customizable overlay.">
+    <link rel="canonical" href="https://getghostchat.com">
+    <link rel="icon" type="image/svg+xml" href="assets/ghost.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">
+            <img src="assets/ghost.svg" alt="" width="28" height="28">
+            <span>Ghost Chat</span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#tutorial">Tutorial</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://github.com/Enubia/ghost-chat" target="_blank" rel="noopener" class="nav-github" aria-label="GitHub">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-content reveal">
+            <div class="hero-text">
+                <div class="hero-badge">Free and open source</div>
+                <h1>Desktop chat overlay<br>for streamers</h1>
+                <p class="hero-description">Ghost Chat puts your live chat on screen with a transparent, customizable overlay. Supports Twitch, YouTube, and Kick — no login required.</p>
+                <div class="hero-actions">
+                    <a href="https://github.com/Enubia/ghost-chat/releases" target="_blank" rel="noopener" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                    </a>
+                    <a href="https://github.com/Enubia/ghost-chat" target="_blank" rel="noopener" class="btn btn-secondary">
+                        View on GitHub
+                    </a>
+                </div>
+                <p class="hero-platforms">Available for macOS and Windows</p>
+            </div>
+            <div class="hero-screenshot">
+                <img src="assets/screenshot-home.png" alt="Ghost Chat home screen showing Twitch, YouTube, and Kick connection options" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Built for streamers</h2>
+                <p>Everything you need to keep chat visible while you stream, nothing you don't.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    </div>
+                    <h3>Multi-platform</h3>
+                    <p>Connect to Twitch, YouTube, and Kick simultaneously. Rumble support is on the way.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Custom themes</h3>
+                    <p>Choose from built-in themes or create your own. Full control over colors, fonts, and layout.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v16"/><path d="M2 8h8"/><path d="M2 12h8"/><path d="M2 16h8"/></svg>
+                    </div>
+                    <h3>Global hotkey</h3>
+                    <p>Toggle the overlay on and off with a single keypress. Works from any application.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-dasharray="4 2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                    </div>
+                    <h3>Transparent overlay</h3>
+                    <p>The chat window sits on top of your content with a fully transparent background.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h3>Lightweight and native</h3>
+                    <p>Built with Go and WebView. Minimal resource usage, instant startup, no Electron bloat.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                    </div>
+                    <h3>Open source</h3>
+                    <p>Fully open source. Inspect the code, contribute, or fork it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tutorial" class="tutorial">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Getting started</h2>
+                <p>Watch the tutorial to get up and running in minutes.</p>
+            </div>
+            <div class="video-wrapper reveal">
+                <!-- Replace VIDEO_ID with the actual YouTube video ID -->
+                <div class="video-placeholder" id="video-container">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>Tutorial video coming soon</span>
+                </div>
+                <!--
+                    To embed the video, replace the div above with:
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+                        title="Ghost Chat Tutorial"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <section id="screenshots" class="screenshots">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>See it in action</h2>
+                <p>A few glimpses of Ghost Chat in use.</p>
+            </div>
+            <div class="screenshots-grid reveal">
+                <div class="screenshot-slot">
+                    <img src="assets/screenshot-home.png" alt="Ghost Chat home screen" loading="lazy">
+                    <span>Home screen</span>
+                </div>
+                <div class="screenshot-slot">
+                    <img src="assets/screenshot-overlay.png" alt="Transparent chat overlay on stream" loading="lazy">
+                    <span>Transparent overlay</span>
+                </div>
+                <div class="screenshot-slot">
+                    <img src="assets/screenshot-settings.png" alt="Ghost Chat settings panel" loading="lazy">
+                    <span>Settings panel</span>
+                </div>
+                <div class="screenshot-slot">
+                    <img src="assets/screenshot-themes.png" alt="Ghost Chat theme editor" loading="lazy">
+                    <span>Theme editor</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Frequently asked questions</h2>
+            </div>
+            <div class="faq-list reveal">
+                <details class="faq-item">
+                    <summary>What platforms are supported?</summary>
+                    <div class="faq-answer">
+                        <p>Ghost Chat currently supports Twitch, YouTube, and Kick. Rumble support is in development and will be available in a future update.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Is Ghost Chat free?</summary>
+                    <div class="faq-answer">
+                        <p>Yes, completely free and open source. No premium tiers, no subscriptions, no ads.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Does it work on Mac and Windows?</summary>
+                    <div class="faq-answer">
+                        <p>Yes. Ghost Chat provides native builds for both macOS and Windows. Download the right version for your system from the <a href="https://github.com/Enubia/ghost-chat/releases" target="_blank" rel="noopener">releases page</a>.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Do I need to log in?</summary>
+                    <div class="faq-answer">
+                        <p>No. Ghost Chat connects to chat anonymously. You don't need to provide a login, OAuth token, or API key. Just enter a channel name and go.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How do I set it up with OBS?</summary>
+                    <div class="faq-answer">
+                        <p>Add a Window Capture source in OBS and point it to the Ghost Chat window. The transparent background will be captured automatically, so chat messages appear directly over your stream content.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Windows shows a "Windows protected your PC" warning</summary>
+                    <div class="faq-answer">
+                        <p>This is Windows Defender SmartScreen and it appears because Ghost Chat isn't signed with a Microsoft certificate. Click "More info" and then "Run anyway." You only need to do this once.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>macOS says Ghost Chat can't be opened or is damaged</summary>
+                    <div class="faq-answer">
+                        <p>This happens because Ghost Chat isn't code-signed with an Apple developer certificate. To fix it, open a terminal and run:</p>
+                        <p><code>xattr -rd com.apple.quarantine /Applications/ghost-chat.app</code></p>
+                        <p>Alternatively, you can right-click (Control+Click) the app in Finder, select Open, and confirm. macOS will remember your choice for future launches.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Why doesn't Ghost Chat appear on top of my game?</summary>
+                    <div class="faq-answer">
+                        <p>This depends on your game's display mode. Games running in exclusive fullscreen take full control of the display, so no overlay can appear on top. Switch your game to windowed or borderless fullscreen mode and Ghost Chat will be able to overlay it.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Ghost Chat isn't launching or is behaving unexpectedly</summary>
+                    <div class="faq-answer">
+                        <p>This is usually caused by a corrupted config file. Delete the config and relaunch — Ghost Chat will recreate it with default settings. The config file is located at:</p>
+                        <p><code>Windows: %APPDATA%/ghost-chat/config.json</code><br><code>Mac: ~/Library/Application Support/ghost-chat/config.json</code></p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Where can I report bugs or request features?</summary>
+                    <div class="faq-answer">
+                        <p>Head over to the <a href="https://github.com/Enubia/ghost-chat/issues" target="_blank" rel="noopener">GitHub issues page</a> or join the <a href="https://discord.gg/UVMX32dDcy" target="_blank" rel="noopener">Discord server</a>. Bug reports and feature requests are always welcome.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <img src="assets/ghost.svg" alt="" width="22" height="22">
+            <span>Ghost Chat</span>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/Enubia/ghost-chat" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/Enubia/ghost-chat/releases" target="_blank" rel="noopener">Releases</a>
+            <a href="https://github.com/Enubia/ghost-chat/issues" target="_blank" rel="noopener">Issues</a>
+            <a href="https://discord.gg/UVMX32dDcy" target="_blank" rel="noopener">Discord</a>
+        </div>
+        <p class="footer-copy">Made by enubia. &copy; 2026</p>
+    </div>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            }
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    for (const el of document.querySelectorAll(".reveal")) {
+        observer.observe(el);
+    }
+
+    const lightbox = document.createElement("div");
+    lightbox.className = "lightbox";
+    lightbox.innerHTML = '<img src="" alt="">';
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector("img");
+
+    for (const slot of document.querySelectorAll(".screenshot-slot")) {
+        slot.style.cursor = "pointer";
+
+        slot.addEventListener("click", () => {
+            const img = slot.querySelector("img");
+
+            if (img) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+        });
+    }
+
+    lightbox.addEventListener("click", () => {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("active")) {
+            lightbox.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+    });
+</script>
+
+</body>
+</html>
