@@ -121,6 +121,79 @@ export function TwitchSettings() {
                     placeholder={t('settings.twitch.user_blacklist_placeholder')}
                 />
             </div>
+
+            <div className="field-section">
+                <label className="field-section-label">{t('settings.twitch.events')}</label>
+                <span className="field-hint">{t('settings.twitch.events_hint')}</span>
+            </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.twitch.events_subs')}</label>
+                <Toggle
+                    checked={twitch?.events?.subscriptions !== false}
+                    onChange={(v) =>
+                        set({
+                            events: {
+                                subscriptions: v,
+                                raids: twitch?.events?.raids,
+                                announcements: twitch?.events?.announcements,
+                                other: twitch?.events?.other,
+                            },
+                        })
+                    }
+                />
+            </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.twitch.events_raids')}</label>
+                <Toggle
+                    checked={twitch?.events?.raids !== false}
+                    onChange={(v) =>
+                        set({
+                            events: {
+                                subscriptions: twitch?.events?.subscriptions,
+                                raids: v,
+                                announcements: twitch?.events?.announcements,
+                                other: twitch?.events?.other,
+                            },
+                        })
+                    }
+                />
+            </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.twitch.events_announcements')}</label>
+                <Toggle
+                    checked={twitch?.events?.announcements !== false}
+                    onChange={(v) =>
+                        set({
+                            events: {
+                                subscriptions: twitch?.events?.subscriptions,
+                                raids: twitch?.events?.raids,
+                                announcements: v,
+                                other: twitch?.events?.other,
+                            },
+                        })
+                    }
+                />
+            </div>
+
+            <div className="field-row">
+                <label className="field-label">{t('settings.twitch.events_other')}</label>
+                <Toggle
+                    checked={twitch?.events?.other !== false}
+                    onChange={(v) =>
+                        set({
+                            events: {
+                                subscriptions: twitch?.events?.subscriptions,
+                                raids: twitch?.events?.raids,
+                                announcements: twitch?.events?.announcements,
+                                other: v,
+                            },
+                        })
+                    }
+                />
+            </div>
         </>
     );
 }

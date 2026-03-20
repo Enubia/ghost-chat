@@ -1,0 +1,72 @@
+.event {
+    font-family: var(--theme-font-family, inherit);
+    font-size: var(--theme-font-size, 16px);
+    line-height: var(--theme-line-height, 1.6);
+    font-weight: var(--theme-text-weight, 400);
+    text-shadow: var(--theme-text-shadow, none);
+    color: var(--theme-text-color, inherit);
+    padding: 3px 6px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--theme-message-gap, 0);
+    border-left: 2px solid var(--color-text-dim);
+    background: rgba(255, 255, 255, 0.04);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.sub {
+    border-left-color: #9146ff;
+    background: rgba(145, 70, 255, 0.08);
+}
+
+.raid {
+    border-left-color: #d4a053;
+    background: rgba(212, 160, 83, 0.08);
+}
+
+.announcement {
+    border-left-color: #5b9bd5;
+    background: rgba(91, 155, 213, 0.08);
+}
+
+.other {
+    border-left-color: var(--color-text-dim);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.timestamp {
+    font-size: 11px;
+    color: var(--color-text-dim);
+    font-family: var(--font-mono);
+    margin-right: 6px;
+}
+
+.systemMessage {
+    font-size: 0.9em;
+    color: var(--color-text-muted);
+}
+
+.userMessage {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.95em;
+}
+
+.emote {
+    height: var(--theme-emote-size, 2em);
+    margin: -0.4em 1px;
+    vertical-align: middle;
+}
+
+.fade {
+    animation: fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

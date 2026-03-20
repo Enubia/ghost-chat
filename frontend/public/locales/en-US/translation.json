@@ -26,6 +26,7 @@
         "waiting": "Waiting for messages...",
         "disconnected": "Disconnected",
         "scroll_to_bottom": "Scroll to bottom",
+        "scroll_to_top": "Scroll to top",
         "vanish": "Toggle vanish mode"
     },
     "settings": {
@@ -54,7 +55,13 @@
             "hide_commands": "Hide Commands",
             "hide_badges": "Hide Badges",
             "user_blacklist": "User Blacklist",
-            "user_blacklist_placeholder": "user1, user2, ..."
+            "user_blacklist_placeholder": "user1, user2, ...",
+            "events": "Events",
+            "events_hint": "Show inline notifications for channel events (no login required)",
+            "events_subs": "Subscriptions",
+            "events_raids": "Raids",
+            "events_announcements": "Announcements",
+            "events_other": "Other Events"
         },
         "youtube": {
             "channel": "Channel / Video URL",

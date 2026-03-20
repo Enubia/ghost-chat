@@ -2,6 +2,7 @@ package twitch
 
 import (
 	"log"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -150,6 +151,95 @@ func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 		Timestamp: timestamp,
 		IsAction:  isAction,
 		Tags:      msg.Tags,
+	}
+}
+
+// ToEventMessage converts a USERNOTICE IRCMessage into a ChatMessage with event fields.
+//
+// USERNOTICE structure:
+//
+//	@tags :tmi.twitch.tv USERNOTICE #channel :optional user message
+//
+// Key tags:
+//   - "msg-id" → EventType (sub, resub, subgift, raid, announcement, etc.)
+//   - "system-msg" → URL-encoded system message
+//   - "msg-param-*" → event-specific metadata
+//   - "display-name", "color", "badges", "emotes" → same as PRIVMSG (for the user)
+//
+// The trailing params (after :) contain an optional user message (e.g. resub message).
+func ToEventMessage(msg IRCMessage) chat.ChatMessage {
+	eventType := msg.Tags["msg-id"]
+
+	systemMsg, _ := url.QueryUnescape(strings.ReplaceAll(msg.Tags["system-msg"], "\\s", " "))
+
+	eventData := make(map[string]string)
+
+	switch eventType {
+	case "sub", "resub":
+		extractEventParam(msg.Tags, eventData, "msg-param-cumulative-months", "months")
+		extractEventParam(msg.Tags, eventData, "msg-param-sub-plan", "plan")
+		extractEventParam(msg.Tags, eventData, "msg-param-sub-plan-name", "plan_name")
+
+	case "subgift":
+		extractEventParam(msg.Tags, eventData, "msg-param-recipient-display-name", "recipient")
+		extractEventParam(msg.Tags, eventData, "msg-param-gift-months", "gift_months")
+		extractEventParam(msg.Tags, eventData, "msg-param-sub-plan", "plan")
+
+	case "submysterygift":
+		extractEventParam(msg.Tags, eventData, "msg-param-mass-gift-count", "gift_count")
+		extractEventParam(msg.Tags, eventData, "msg-param-sub-plan", "plan")
+
+	case "giftpaidupgrade", "anongiftpaidupgrade":
+		extractEventParam(msg.Tags, eventData, "msg-param-sender-login", "sender")
+		extractEventParam(msg.Tags, eventData, "msg-param-sender-name", "sender_name")
+
+	case "primepaidupgrade":
+		extractEventParam(msg.Tags, eventData, "msg-param-sub-plan", "plan")
+
+	case "standardpayforward":
+		extractEventParam(msg.Tags, eventData, "msg-param-recipient-display-name", "recipient")
+		extractEventParam(msg.Tags, eventData, "msg-param-prior-gifter-display-name", "gifter")
+
+	case "communitypayforward":
+		extractEventParam(msg.Tags, eventData, "msg-param-prior-gifter-display-name", "gifter")
+
+	case "raid":
+		extractEventParam(msg.Tags, eventData, "msg-param-viewerCount", "viewers")
+		extractEventParam(msg.Tags, eventData, "msg-param-displayName", "raider")
+
+	case "bitsbadgetier":
+		extractEventParam(msg.Tags, eventData, "msg-param-threshold", "threshold")
+
+	case "announcement":
+		extractEventParam(msg.Tags, eventData, "msg-param-color", "color")
+	}
+
+	username := msg.Tags["display-name"]
+
+	if username == "" {
+		prefix, _, _ := strings.Cut(msg.Prefix, "!")
+		username = prefix
+	}
+
+	return chat.ChatMessage{
+		Platform:      "twitch",
+		ID:            msg.Tags["id"],
+		Username:      username,
+		Color:         msg.Tags["color"],
+		Text:          msg.Params,
+		Badges:        ParseBadges(msg.Tags["badges"]),
+		Emotes:        ParseEmotes(msg.Tags["emotes"]),
+		Timestamp:     ParseTimestamp(msg.Tags["tmi-sent-ts"]),
+		Tags:          msg.Tags,
+		EventType:     eventType,
+		SystemMessage: systemMsg,
+		EventData:     eventData,
+	}
+}
+
+func extractEventParam(tags map[string]string, data map[string]string, tagKey string, dataKey string) {
+	if val, ok := tags[tagKey]; ok && val != "" {
+		data[dataKey] = val
 	}
 }
 

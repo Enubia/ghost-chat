@@ -26,6 +26,7 @@
         "waiting": "Warte auf Nachrichten...",
         "disconnected": "Getrennt",
         "scroll_to_bottom": "Nach unten scrollen",
+        "scroll_to_top": "Nach oben scrollen",
         "vanish": "Vanish-Modus umschalten"
     },
     "settings": {
@@ -54,7 +55,13 @@
             "hide_commands": "Befehle ausblenden",
             "hide_badges": "Abzeichen ausblenden",
             "user_blacklist": "Benutzer-Sperrliste",
-            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ...",
+            "events": "Ereignisse",
+            "events_hint": "Inline-Benachrichtigungen fuer Kanalereignisse anzeigen (kein Login erforderlich)",
+            "events_subs": "Abonnements",
+            "events_raids": "Raids",
+            "events_announcements": "Ankuendigungen",
+            "events_other": "Sonstige Ereignisse"
         },
         "youtube": {
             "channel": "Kanal / Video-URL",

@@ -21,14 +21,22 @@ type Keybinds struct {
 	Vanish VanishKeybind `json:"vanish"`
 }
 
+type TwitchEvents struct {
+	Subscriptions bool `json:"subscriptions"`
+	Raids         bool `json:"raids"`
+	Announcements bool `json:"announcements"`
+	Other         bool `json:"other"`
+}
+
 type TwitchConfig struct {
-	DefaultChannel string   `json:"default_channel"`
-	Fade           bool     `json:"fade"`
-	FadeTimeout    int      `json:"fade_timeout"`
-	Bots           bool     `json:"bots"`
-	HideCommands   bool     `json:"hide_commands"`
-	HideBadges     bool     `json:"hide_badges"`
-	UserBlacklist  []string `json:"user_blacklist"`
+	DefaultChannel string       `json:"default_channel"`
+	Fade           bool         `json:"fade"`
+	FadeTimeout    int          `json:"fade_timeout"`
+	Bots           bool         `json:"bots"`
+	HideCommands   bool         `json:"hide_commands"`
+	HideBadges     bool         `json:"hide_badges"`
+	UserBlacklist  []string     `json:"user_blacklist"`
+	Events         TwitchEvents `json:"events"`
 }
 
 type YouTubeConfig struct {
@@ -102,6 +110,12 @@ func DefaultConfig() Config {
 		},
 		Twitch: TwitchConfig{
 			FadeTimeout: 30,
+			Events: TwitchEvents{
+				Subscriptions: true,
+				Raids:         true,
+				Announcements: true,
+				Other:         true,
+			},
 		},
 		YouTube: YouTubeConfig{
 			FadeTimeout: 30,

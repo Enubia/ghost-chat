@@ -14,8 +14,43 @@ import { getThemeById, themeToCSS } from '@/types/theme';
 
 import styles from './Chat.module.css';
 import { ChatMessage } from './ChatMessage';
+import { EventMessage } from './EventMessage';
 
 const MAX_MESSAGES = 500;
+
+const SUB_EVENTS = new Set([
+    'sub',
+    'resub',
+    'subgift',
+    'submysterygift',
+    'giftpaidupgrade',
+    'anongiftpaidupgrade',
+    'primepaidupgrade',
+    'standardpayforward',
+    'communitypayforward',
+]);
+
+const RAID_EVENTS = new Set(['raid', 'unraid']);
+const ANNOUNCEMENT_EVENTS = new Set(['announcement']);
+
+function isEventAllowed(
+    eventType: string,
+    events: { subscriptions?: boolean; raids?: boolean; announcements?: boolean; other?: boolean }
+): boolean {
+    if (SUB_EVENTS.has(eventType)) {
+        return events.subscriptions !== false;
+    }
+
+    if (RAID_EVENTS.has(eventType)) {
+        return events.raids !== false;
+    }
+
+    if (ANNOUNCEMENT_EVENTS.has(eventType)) {
+        return events.announcements !== false;
+    }
+
+    return events.other !== false;
+}
 
 const KNOWN_BOTS = new Set([
     'nightbot',
@@ -39,6 +74,8 @@ export function Chat() {
     const config = useConfigStore((s) => s.config);
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
     const [autoScroll, setAutoScroll] = useState(true);
+    const autoScrollRef = useRef(true);
+    const userScrollingRef = useRef(false);
     const [showTwitch, setShowTwitch] = useState(true);
     const [showYoutube, setShowYoutube] = useState(true);
     const [showKick, setShowKick] = useState(true);
@@ -87,6 +124,10 @@ export function Chat() {
                 if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
                     return;
                 }
+
+                if (msg.eventType && !isEventAllowed(msg.eventType, cfg?.twitch?.events ?? {})) {
+                    return;
+                }
             } else if (msg.platform === 'youtube') {
                 const blacklist = cfg?.youtube?.user_blacklist ?? [];
 
@@ -130,10 +171,43 @@ export function Chat() {
     }, []);
 
     useEffect(() => {
-        if (autoScroll && messagesRef.current) {
+        if (autoScrollRef.current && !userScrollingRef.current && messagesRef.current) {
             messagesRef.current.scrollTop = topToBottom ? 0 : messagesRef.current.scrollHeight;
         }
-    }, [messages, autoScroll, topToBottom]);
+    }, [messages, topToBottom]);
+
+    useEffect(() => {
+        const el = messagesRef.current;
+
+        if (!el) {
+            return;
+        }
+
+        let scrollTimer: ReturnType<typeof setTimeout>;
+
+        const handleWheel = (e: WheelEvent) => {
+            const scrollingAway = topToBottom ? e.deltaY > 0 : e.deltaY < 0;
+
+            if (scrollingAway) {
+                userScrollingRef.current = true;
+                autoScrollRef.current = false;
+                setAutoScroll(false);
+
+                clearTimeout(scrollTimer);
+
+                scrollTimer = setTimeout(() => {
+                    userScrollingRef.current = false;
+                }, 150);
+            }
+        };
+
+        el.addEventListener('wheel', handleWheel, { passive: true });
+
+        return () => {
+            el.removeEventListener('wheel', handleWheel);
+            clearTimeout(scrollTimer);
+        };
+    }, [topToBottom]);
 
     const handleScroll = () => {
         const el = messagesRef.current;
@@ -142,11 +216,17 @@ export function Chat() {
             return;
         }
 
+        let atEdge: boolean;
+
         if (topToBottom) {
-            setAutoScroll(el.scrollTop < 40);
+            atEdge = el.scrollTop < 40;
         } else {
-            const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
-            setAutoScroll(atBottom);
+            atEdge = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
+        }
+
+        if (atEdge && !autoScrollRef.current) {
+            autoScrollRef.current = true;
+            setAutoScroll(true);
         }
     };
 
@@ -271,43 +351,56 @@ export function Chat() {
             </div>
             <div
                 ref={messagesRef}
-                className={`${styles.messages} ${topToBottom ? '' : styles.messagesBottom}`}
+                className={styles.messages}
                 style={themeCSSVars as React.CSSProperties}
                 onScroll={handleScroll}
             >
+                {!topToBottom && <div className={styles.messagesSpacer} />}
                 {visibleMessages.length === 0
                     ? config?.general?.show_waiting_message !== false && (
                           <div className={styles.empty}>
                               <span>{t('chat.waiting')}</span>
                           </div>
                       )
-                    : visibleMessages.map((msg) => (
-                          <ChatMessage
-                              key={msg.id}
-                              message={msg}
-                              hideBadges={hideBadges}
-                              showTimestamp={showTimestamp}
-                              showPlatformIcon={connectedCount > 1}
-                              showColon={theme.show_colon}
-                              showAvatars={theme.show_avatars}
-                              fade={getFade(msg.platform)}
-                              fadeTimeout={getFadeTimeout(msg.platform)}
-                              onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
-                          />
-                      ))}
+                    : visibleMessages.map((msg) =>
+                          msg.eventType ? (
+                              <EventMessage
+                                  key={msg.id}
+                                  message={msg}
+                                  showTimestamp={showTimestamp}
+                                  fade={getFade(msg.platform)}
+                                  fadeTimeout={getFadeTimeout(msg.platform)}
+                                  onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
+                              />
+                          ) : (
+                              <ChatMessage
+                                  key={msg.id}
+                                  message={msg}
+                                  hideBadges={hideBadges}
+                                  showTimestamp={showTimestamp}
+                                  showPlatformIcon={connectedCount > 1}
+                                  showColon={theme.show_colon}
+                                  showAvatars={theme.show_avatars}
+                                  fade={getFade(msg.platform)}
+                                  fadeTimeout={getFadeTimeout(msg.platform)}
+                                  onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
+                              />
+                          )
+                      )}
             </div>
             {!autoScroll && (
                 <button
                     className={`btn btn-ghost ${styles.scrollBtn}`}
                     onClick={() => {
+                        autoScrollRef.current = true;
                         setAutoScroll(true);
                         messagesRef.current?.scrollTo({
-                            top: topToBottom ? messagesRef.current.scrollHeight : 0,
+                            top: topToBottom ? 0 : messagesRef.current.scrollHeight,
                             behavior: 'smooth',
                         });
                     }}
                 >
-                    {t('chat.scroll_to_bottom')}
+                    {topToBottom ? t('chat.scroll_to_top') : t('chat.scroll_to_bottom')}
                 </button>
             )}
         </div>

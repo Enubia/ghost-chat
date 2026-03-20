@@ -4,6 +4,7 @@ import type { ChatMessage as ChatMessageType } from '@/types/chat';
 import type { Theme } from '@/types/theme';
 
 import { ChatMessage } from '@/components/Chat/ChatMessage';
+import { EventMessage } from '@/components/Chat/EventMessage';
 import { useConfigStore } from '@/stores/config';
 import { getThemeById, themeToCSS } from '@/types/theme';
 
@@ -126,6 +127,31 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
         membershipEvent: false,
     },
     {
+        id: 'e1',
+        platform: 'twitch',
+        username: 'Subscriber42',
+        color: '#00b8d4',
+        text: 'Love being part of this community!',
+        badges: [
+            {
+                name: 'subscriber',
+                version: '12',
+                url: 'https://static-cdn.jtvnw.net/badges/v1/5d9f2208-5dd8-11e7-8513-2ff4adfae661/1',
+            },
+        ],
+        emotes: [],
+        timestamp: new Date().toISOString(),
+        isAction: false,
+        tags: {},
+        avatar: '',
+        fragments: [],
+        superChat: null,
+        membershipEvent: false,
+        eventType: 'resub',
+        systemMessage: 'Subscriber42 has subscribed for 12 months!',
+        eventData: { months: '12', plan: '1000' },
+    },
+    {
         id: 'p6',
         platform: 'youtube',
         username: 'MemberPro',
@@ -196,6 +222,69 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
         membershipEvent: false,
     },
     {
+        id: 'e2',
+        platform: 'twitch',
+        username: 'GenerousGifter',
+        color: '#ff8c00',
+        text: '',
+        badges: [],
+        emotes: [],
+        timestamp: new Date().toISOString(),
+        isAction: false,
+        tags: {},
+        avatar: '',
+        fragments: [],
+        superChat: null,
+        membershipEvent: false,
+        eventType: 'subgift',
+        systemMessage: 'GenerousGifter gifted a Tier 1 sub to LuckyViewer!',
+        eventData: { months: '1', plan: '1000', recipient: 'LuckyViewer' },
+    },
+    {
+        id: 'e3',
+        platform: 'twitch',
+        username: 'CoolStreamer',
+        color: '#ff69b4',
+        text: '',
+        badges: [],
+        emotes: [],
+        timestamp: new Date().toISOString(),
+        isAction: false,
+        tags: {},
+        avatar: '',
+        fragments: [],
+        superChat: null,
+        membershipEvent: false,
+        eventType: 'raid',
+        systemMessage: '150 raiders from CoolStreamer have joined!',
+        eventData: { viewers: '150', raider: 'CoolStreamer' },
+    },
+    {
+        id: 'e4',
+        platform: 'twitch',
+        username: 'ModeratorMax',
+        color: '#00ff7f',
+        text: 'Stream schedule has been updated for next week!',
+        badges: [
+            {
+                name: 'moderator',
+                version: '1',
+                url: 'https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/1',
+            },
+        ],
+        emotes: [],
+        timestamp: new Date().toISOString(),
+        isAction: false,
+        tags: {},
+        avatar: '',
+        fragments: [],
+        superChat: null,
+        membershipEvent: false,
+        eventType: 'announcement',
+        systemMessage: 'Announcement',
+        eventData: {},
+    },
+    {
         id: 'p10',
         platform: 'youtube',
         username: 'TechWatcher',
@@ -250,6 +339,9 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
         fragments: [{ type: 'text', text: 'First time watching, this is awesome!', url: '' }],
         superChat: null,
         membershipEvent: false,
+        eventType: '',
+        systemMessage: '',
+        eventData: {},
     },
 ];
 
@@ -267,16 +359,23 @@ export function ThemePreview() {
                 className={styles.messages}
                 style={cssVars as React.CSSProperties}
             >
-                {SAMPLE_MESSAGES.map((msg) => (
-                    <ChatMessage
-                        key={msg.id}
-                        message={msg}
-                        showColon={theme.show_colon}
-                        showAvatars={theme.show_avatars}
-                        showPlatformIcon
-                        showTimestamp={false}
-                    />
-                ))}
+                {SAMPLE_MESSAGES.map((msg) =>
+                    msg.eventType ? (
+                        <EventMessage
+                            key={msg.id}
+                            message={msg}
+                        />
+                    ) : (
+                        <ChatMessage
+                            key={msg.id}
+                            message={msg}
+                            showColon={theme.show_colon}
+                            showAvatars={theme.show_avatars}
+                            showPlatformIcon
+                            showTimestamp={false}
+                        />
+                    )
+                )}
             </div>
         </div>
     );

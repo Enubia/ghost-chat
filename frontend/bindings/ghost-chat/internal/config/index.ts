@@ -9,7 +9,8 @@ export {
     Theme,
     ThemeConfig,
     TwitchConfig,
+    TwitchEvents,
     VanishKeybind,
     WindowState,
-    YouTubeConfig
-} from "./models.js";
+    YouTubeConfig,
+} from './models.js';
