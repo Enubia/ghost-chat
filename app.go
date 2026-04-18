@@ -63,12 +63,20 @@ func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
 
 func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
 	a.window.OnWindowEvent(events.Common.WindowRuntimeReady, func(e *application.WindowEvent) {
-		if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-			a.window.SetPosition(a.config.WindowState.X, a.config.WindowState.Y)
-		}
-
 		if runtime.GOOS == "windows" {
 			a.window.SetSize(a.config.WindowState.Width, a.config.WindowState.Height)
+		}
+
+		if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
+			a.window.SetPosition(a.config.WindowState.X, a.config.WindowState.Y)
+		} else {
+			primary := a.app.Screen.GetPrimary()
+			w, h := a.window.Size()
+
+			x := primary.WorkArea.X + (primary.WorkArea.Width-w)/2
+			y := primary.WorkArea.Y + (primary.WorkArea.Height-h)/2
+
+			a.window.SetPosition(x, y)
 		}
 
 		a.window.Show()

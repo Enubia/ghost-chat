@@ -3,43 +3,43 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import { Create as $Create } from '@wailsio/runtime';
+import { Create as $Create } from "@wailsio/runtime";
 
 export class Config {
-    'version': string;
-    'window_state': WindowState;
-    'general': General;
-    'keybinds': Keybinds;
-    'theme': ThemeConfig;
-    'twitch': TwitchConfig;
-    'youtube': YouTubeConfig;
-    'kick': KickConfig;
+    "version": string;
+    "window_state": WindowState;
+    "general": General;
+    "keybinds": Keybinds;
+    "theme": ThemeConfig;
+    "twitch": TwitchConfig;
+    "youtube": YouTubeConfig;
+    "kick": KickConfig;
 
     /** Creates a new Config instance. */
     constructor($$source: Partial<Config> = {}) {
-        if (!('version' in $$source)) {
-            this['version'] = '';
+        if (!("version" in $$source)) {
+            this["version"] = "";
         }
-        if (!('window_state' in $$source)) {
-            this['window_state'] = new WindowState();
+        if (!("window_state" in $$source)) {
+            this["window_state"] = (new WindowState());
         }
-        if (!('general' in $$source)) {
-            this['general'] = new General();
+        if (!("general" in $$source)) {
+            this["general"] = (new General());
         }
-        if (!('keybinds' in $$source)) {
-            this['keybinds'] = new Keybinds();
+        if (!("keybinds" in $$source)) {
+            this["keybinds"] = (new Keybinds());
         }
-        if (!('theme' in $$source)) {
-            this['theme'] = new ThemeConfig();
+        if (!("theme" in $$source)) {
+            this["theme"] = (new ThemeConfig());
         }
-        if (!('twitch' in $$source)) {
-            this['twitch'] = new TwitchConfig();
+        if (!("twitch" in $$source)) {
+            this["twitch"] = (new TwitchConfig());
         }
-        if (!('youtube' in $$source)) {
-            this['youtube'] = new YouTubeConfig();
+        if (!("youtube" in $$source)) {
+            this["youtube"] = (new YouTubeConfig());
         }
-        if (!('kick' in $$source)) {
-            this['kick'] = new KickConfig();
+        if (!("kick" in $$source)) {
+            this["kick"] = (new KickConfig());
         }
 
         Object.assign(this, $$source);
@@ -57,26 +57,26 @@ export class Config {
         const $$createField6_0 = $$createType5;
         const $$createField7_0 = $$createType6;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('window_state' in $$parsedSource) {
-            $$parsedSource['window_state'] = $$createField1_0($$parsedSource['window_state']);
+        if ("window_state" in $$parsedSource) {
+            $$parsedSource["window_state"] = $$createField1_0($$parsedSource["window_state"]);
         }
-        if ('general' in $$parsedSource) {
-            $$parsedSource['general'] = $$createField2_0($$parsedSource['general']);
+        if ("general" in $$parsedSource) {
+            $$parsedSource["general"] = $$createField2_0($$parsedSource["general"]);
         }
-        if ('keybinds' in $$parsedSource) {
-            $$parsedSource['keybinds'] = $$createField3_0($$parsedSource['keybinds']);
+        if ("keybinds" in $$parsedSource) {
+            $$parsedSource["keybinds"] = $$createField3_0($$parsedSource["keybinds"]);
         }
-        if ('theme' in $$parsedSource) {
-            $$parsedSource['theme'] = $$createField4_0($$parsedSource['theme']);
+        if ("theme" in $$parsedSource) {
+            $$parsedSource["theme"] = $$createField4_0($$parsedSource["theme"]);
         }
-        if ('twitch' in $$parsedSource) {
-            $$parsedSource['twitch'] = $$createField5_0($$parsedSource['twitch']);
+        if ("twitch" in $$parsedSource) {
+            $$parsedSource["twitch"] = $$createField5_0($$parsedSource["twitch"]);
         }
-        if ('youtube' in $$parsedSource) {
-            $$parsedSource['youtube'] = $$createField6_0($$parsedSource['youtube']);
+        if ("youtube" in $$parsedSource) {
+            $$parsedSource["youtube"] = $$createField6_0($$parsedSource["youtube"]);
         }
-        if ('kick' in $$parsedSource) {
-            $$parsedSource['kick'] = $$createField7_0($$parsedSource['kick']);
+        if ("kick" in $$parsedSource) {
+            $$parsedSource["kick"] = $$createField7_0($$parsedSource["kick"]);
         }
         return new Config($$parsedSource as Partial<Config>);
     }
@@ -86,20 +86,20 @@ export class General {
     /**
      * default "en-US"
      */
-    'language': string;
-    'show_timestamps': boolean;
-    'show_waiting_message': boolean;
+    "language": string;
+    "show_timestamps": boolean;
+    "show_waiting_message": boolean;
 
     /** Creates a new General instance. */
     constructor($$source: Partial<General> = {}) {
-        if (!('language' in $$source)) {
-            this['language'] = '';
+        if (!("language" in $$source)) {
+            this["language"] = "";
         }
-        if (!('show_timestamps' in $$source)) {
-            this['show_timestamps'] = false;
+        if (!("show_timestamps" in $$source)) {
+            this["show_timestamps"] = false;
         }
-        if (!('show_waiting_message' in $$source)) {
-            this['show_waiting_message'] = false;
+        if (!("show_waiting_message" in $$source)) {
+            this["show_waiting_message"] = false;
         }
 
         Object.assign(this, $$source);
@@ -115,12 +115,12 @@ export class General {
 }
 
 export class Keybinds {
-    'vanish': VanishKeybind;
+    "vanish": VanishKeybind;
 
     /** Creates a new Keybinds instance. */
     constructor($$source: Partial<Keybinds> = {}) {
-        if (!('vanish' in $$source)) {
-            this['vanish'] = new VanishKeybind();
+        if (!("vanish" in $$source)) {
+            this["vanish"] = (new VanishKeybind());
         }
 
         Object.assign(this, $$source);
@@ -132,32 +132,32 @@ export class Keybinds {
     static createFrom($$source: any = {}): Keybinds {
         const $$createField0_0 = $$createType7;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('vanish' in $$parsedSource) {
-            $$parsedSource['vanish'] = $$createField0_0($$parsedSource['vanish']);
+        if ("vanish" in $$parsedSource) {
+            $$parsedSource["vanish"] = $$createField0_0($$parsedSource["vanish"]);
         }
         return new Keybinds($$parsedSource as Partial<Keybinds>);
     }
 }
 
 export class KickConfig {
-    'default_channel': string;
-    'fade': boolean;
-    'fade_timeout': number;
-    'user_blacklist': string[];
+    "default_channel": string;
+    "fade": boolean;
+    "fade_timeout": number;
+    "user_blacklist": string[];
 
     /** Creates a new KickConfig instance. */
     constructor($$source: Partial<KickConfig> = {}) {
-        if (!('default_channel' in $$source)) {
-            this['default_channel'] = '';
+        if (!("default_channel" in $$source)) {
+            this["default_channel"] = "";
         }
-        if (!('fade' in $$source)) {
-            this['fade'] = false;
+        if (!("fade" in $$source)) {
+            this["fade"] = false;
         }
-        if (!('fade_timeout' in $$source)) {
-            this['fade_timeout'] = 0;
+        if (!("fade_timeout" in $$source)) {
+            this["fade_timeout"] = 0;
         }
-        if (!('user_blacklist' in $$source)) {
-            this['user_blacklist'] = [];
+        if (!("user_blacklist" in $$source)) {
+            this["user_blacklist"] = [];
         }
 
         Object.assign(this, $$source);
@@ -169,92 +169,92 @@ export class KickConfig {
     static createFrom($$source: any = {}): KickConfig {
         const $$createField3_0 = $$createType8;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('user_blacklist' in $$parsedSource) {
-            $$parsedSource['user_blacklist'] = $$createField3_0($$parsedSource['user_blacklist']);
+        if ("user_blacklist" in $$parsedSource) {
+            $$parsedSource["user_blacklist"] = $$createField3_0($$parsedSource["user_blacklist"]);
         }
         return new KickConfig($$parsedSource as Partial<KickConfig>);
     }
 }
 
 export class Theme {
-    'id': string;
-    'name': string;
-    'font_family': string;
-    'font_size': number;
-    'line_height': number;
-    'message_bg': string;
-    'message_padding': string;
-    'message_radius': number;
-    'message_gap': number;
-    'username_weight': number;
-    'show_colon': boolean;
-    'badge_size': number;
-    'emote_size': number;
-    'show_avatars': boolean;
-    'avatar_size': number;
-    'text_weight': number;
-    'text_shadow': string;
-    'text_color': string;
-    'top_to_bottom': boolean;
+    "id": string;
+    "name": string;
+    "font_family": string;
+    "font_size": number;
+    "line_height": number;
+    "message_bg": string;
+    "message_padding": string;
+    "message_radius": number;
+    "message_gap": number;
+    "username_weight": number;
+    "show_colon": boolean;
+    "badge_size": number;
+    "emote_size": number;
+    "show_avatars": boolean;
+    "avatar_size": number;
+    "text_weight": number;
+    "text_shadow": string;
+    "text_color": string;
+    "top_to_bottom": boolean;
 
     /** Creates a new Theme instance. */
     constructor($$source: Partial<Theme> = {}) {
-        if (!('id' in $$source)) {
-            this['id'] = '';
+        if (!("id" in $$source)) {
+            this["id"] = "";
         }
-        if (!('name' in $$source)) {
-            this['name'] = '';
+        if (!("name" in $$source)) {
+            this["name"] = "";
         }
-        if (!('font_family' in $$source)) {
-            this['font_family'] = '';
+        if (!("font_family" in $$source)) {
+            this["font_family"] = "";
         }
-        if (!('font_size' in $$source)) {
-            this['font_size'] = 0;
+        if (!("font_size" in $$source)) {
+            this["font_size"] = 0;
         }
-        if (!('line_height' in $$source)) {
-            this['line_height'] = 0;
+        if (!("line_height" in $$source)) {
+            this["line_height"] = 0;
         }
-        if (!('message_bg' in $$source)) {
-            this['message_bg'] = '';
+        if (!("message_bg" in $$source)) {
+            this["message_bg"] = "";
         }
-        if (!('message_padding' in $$source)) {
-            this['message_padding'] = '';
+        if (!("message_padding" in $$source)) {
+            this["message_padding"] = "";
         }
-        if (!('message_radius' in $$source)) {
-            this['message_radius'] = 0;
+        if (!("message_radius" in $$source)) {
+            this["message_radius"] = 0;
         }
-        if (!('message_gap' in $$source)) {
-            this['message_gap'] = 0;
+        if (!("message_gap" in $$source)) {
+            this["message_gap"] = 0;
         }
-        if (!('username_weight' in $$source)) {
-            this['username_weight'] = 0;
+        if (!("username_weight" in $$source)) {
+            this["username_weight"] = 0;
         }
-        if (!('show_colon' in $$source)) {
-            this['show_colon'] = false;
+        if (!("show_colon" in $$source)) {
+            this["show_colon"] = false;
         }
-        if (!('badge_size' in $$source)) {
-            this['badge_size'] = 0;
+        if (!("badge_size" in $$source)) {
+            this["badge_size"] = 0;
         }
-        if (!('emote_size' in $$source)) {
-            this['emote_size'] = 0;
+        if (!("emote_size" in $$source)) {
+            this["emote_size"] = 0;
         }
-        if (!('show_avatars' in $$source)) {
-            this['show_avatars'] = false;
+        if (!("show_avatars" in $$source)) {
+            this["show_avatars"] = false;
         }
-        if (!('avatar_size' in $$source)) {
-            this['avatar_size'] = 0;
+        if (!("avatar_size" in $$source)) {
+            this["avatar_size"] = 0;
         }
-        if (!('text_weight' in $$source)) {
-            this['text_weight'] = 0;
+        if (!("text_weight" in $$source)) {
+            this["text_weight"] = 0;
         }
-        if (!('text_shadow' in $$source)) {
-            this['text_shadow'] = '';
+        if (!("text_shadow" in $$source)) {
+            this["text_shadow"] = "";
         }
-        if (!('text_color' in $$source)) {
-            this['text_color'] = '';
+        if (!("text_color" in $$source)) {
+            this["text_color"] = "";
         }
-        if (!('top_to_bottom' in $$source)) {
-            this['top_to_bottom'] = false;
+        if (!("top_to_bottom" in $$source)) {
+            this["top_to_bottom"] = false;
         }
 
         Object.assign(this, $$source);
@@ -270,16 +270,16 @@ export class Theme {
 }
 
 export class ThemeConfig {
-    'active_theme_id': string;
-    'custom_themes': Theme[];
+    "active_theme_id": string;
+    "custom_themes": Theme[];
 
     /** Creates a new ThemeConfig instance. */
     constructor($$source: Partial<ThemeConfig> = {}) {
-        if (!('active_theme_id' in $$source)) {
-            this['active_theme_id'] = '';
+        if (!("active_theme_id" in $$source)) {
+            this["active_theme_id"] = "";
         }
-        if (!('custom_themes' in $$source)) {
-            this['custom_themes'] = [];
+        if (!("custom_themes" in $$source)) {
+            this["custom_themes"] = [];
         }
 
         Object.assign(this, $$source);
@@ -291,48 +291,48 @@ export class ThemeConfig {
     static createFrom($$source: any = {}): ThemeConfig {
         const $$createField1_0 = $$createType10;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('custom_themes' in $$parsedSource) {
-            $$parsedSource['custom_themes'] = $$createField1_0($$parsedSource['custom_themes']);
+        if ("custom_themes" in $$parsedSource) {
+            $$parsedSource["custom_themes"] = $$createField1_0($$parsedSource["custom_themes"]);
         }
         return new ThemeConfig($$parsedSource as Partial<ThemeConfig>);
     }
 }
 
 export class TwitchConfig {
-    'default_channel': string;
-    'fade': boolean;
-    'fade_timeout': number;
-    'bots': boolean;
-    'hide_commands': boolean;
-    'hide_badges': boolean;
-    'user_blacklist': string[];
-    'events': TwitchEvents;
+    "default_channel": string;
+    "fade": boolean;
+    "fade_timeout": number;
+    "bots": boolean;
+    "hide_commands": boolean;
+    "hide_badges": boolean;
+    "user_blacklist": string[];
+    "events": TwitchEvents;
 
     /** Creates a new TwitchConfig instance. */
     constructor($$source: Partial<TwitchConfig> = {}) {
-        if (!('default_channel' in $$source)) {
-            this['default_channel'] = '';
+        if (!("default_channel" in $$source)) {
+            this["default_channel"] = "";
         }
-        if (!('fade' in $$source)) {
-            this['fade'] = false;
+        if (!("fade" in $$source)) {
+            this["fade"] = false;
         }
-        if (!('fade_timeout' in $$source)) {
-            this['fade_timeout'] = 0;
+        if (!("fade_timeout" in $$source)) {
+            this["fade_timeout"] = 0;
         }
-        if (!('bots' in $$source)) {
-            this['bots'] = false;
+        if (!("bots" in $$source)) {
+            this["bots"] = false;
         }
-        if (!('hide_commands' in $$source)) {
-            this['hide_commands'] = false;
+        if (!("hide_commands" in $$source)) {
+            this["hide_commands"] = false;
         }
-        if (!('hide_badges' in $$source)) {
-            this['hide_badges'] = false;
+        if (!("hide_badges" in $$source)) {
+            this["hide_badges"] = false;
         }
-        if (!('user_blacklist' in $$source)) {
-            this['user_blacklist'] = [];
+        if (!("user_blacklist" in $$source)) {
+            this["user_blacklist"] = [];
         }
-        if (!('events' in $$source)) {
-            this['events'] = new TwitchEvents();
+        if (!("events" in $$source)) {
+            this["events"] = (new TwitchEvents());
         }
 
         Object.assign(this, $$source);
@@ -345,35 +345,35 @@ export class TwitchConfig {
         const $$createField6_0 = $$createType8;
         const $$createField7_0 = $$createType11;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('user_blacklist' in $$parsedSource) {
-            $$parsedSource['user_blacklist'] = $$createField6_0($$parsedSource['user_blacklist']);
+        if ("user_blacklist" in $$parsedSource) {
+            $$parsedSource["user_blacklist"] = $$createField6_0($$parsedSource["user_blacklist"]);
         }
-        if ('events' in $$parsedSource) {
-            $$parsedSource['events'] = $$createField7_0($$parsedSource['events']);
+        if ("events" in $$parsedSource) {
+            $$parsedSource["events"] = $$createField7_0($$parsedSource["events"]);
         }
         return new TwitchConfig($$parsedSource as Partial<TwitchConfig>);
     }
 }
 
 export class TwitchEvents {
-    'subscriptions': boolean;
-    'raids': boolean;
-    'announcements': boolean;
-    'other': boolean;
+    "subscriptions": boolean;
+    "raids": boolean;
+    "announcements": boolean;
+    "other": boolean;
 
     /** Creates a new TwitchEvents instance. */
     constructor($$source: Partial<TwitchEvents> = {}) {
-        if (!('subscriptions' in $$source)) {
-            this['subscriptions'] = false;
+        if (!("subscriptions" in $$source)) {
+            this["subscriptions"] = false;
         }
-        if (!('raids' in $$source)) {
-            this['raids'] = false;
+        if (!("raids" in $$source)) {
+            this["raids"] = false;
         }
-        if (!('announcements' in $$source)) {
-            this['announcements'] = false;
+        if (!("announcements" in $$source)) {
+            this["announcements"] = false;
         }
-        if (!('other' in $$source)) {
-            this['other'] = false;
+        if (!("other" in $$source)) {
+            this["other"] = false;
         }
 
         Object.assign(this, $$source);
@@ -392,12 +392,12 @@ export class VanishKeybind {
     /**
      * empty by default
      */
-    'keybind': string;
+    "keybind": string;
 
     /** Creates a new VanishKeybind instance. */
     constructor($$source: Partial<VanishKeybind> = {}) {
-        if (!('keybind' in $$source)) {
-            this['keybind'] = '';
+        if (!("keybind" in $$source)) {
+            this["keybind"] = "";
         }
 
         Object.assign(this, $$source);
@@ -413,24 +413,24 @@ export class VanishKeybind {
 }
 
 export class WindowState {
-    'x': number;
-    'y': number;
-    'width': number;
-    'height': number;
+    "x": number;
+    "y": number;
+    "width": number;
+    "height": number;
 
     /** Creates a new WindowState instance. */
     constructor($$source: Partial<WindowState> = {}) {
-        if (!('x' in $$source)) {
-            this['x'] = 0;
+        if (!("x" in $$source)) {
+            this["x"] = 0;
         }
-        if (!('y' in $$source)) {
-            this['y'] = 0;
+        if (!("y" in $$source)) {
+            this["y"] = 0;
         }
-        if (!('width' in $$source)) {
-            this['width'] = 0;
+        if (!("width" in $$source)) {
+            this["width"] = 0;
         }
-        if (!('height' in $$source)) {
-            this['height'] = 0;
+        if (!("height" in $$source)) {
+            this["height"] = 0;
         }
 
         Object.assign(this, $$source);
@@ -446,28 +446,28 @@ export class WindowState {
 }
 
 export class YouTubeConfig {
-    'channel_id': string;
-    'video_url': string;
-    'fade': boolean;
-    'fade_timeout': number;
-    'user_blacklist': string[];
+    "channel_id": string;
+    "video_url": string;
+    "fade": boolean;
+    "fade_timeout": number;
+    "user_blacklist": string[];
 
     /** Creates a new YouTubeConfig instance. */
     constructor($$source: Partial<YouTubeConfig> = {}) {
-        if (!('channel_id' in $$source)) {
-            this['channel_id'] = '';
+        if (!("channel_id" in $$source)) {
+            this["channel_id"] = "";
         }
-        if (!('video_url' in $$source)) {
-            this['video_url'] = '';
+        if (!("video_url" in $$source)) {
+            this["video_url"] = "";
         }
-        if (!('fade' in $$source)) {
-            this['fade'] = false;
+        if (!("fade" in $$source)) {
+            this["fade"] = false;
         }
-        if (!('fade_timeout' in $$source)) {
-            this['fade_timeout'] = 0;
+        if (!("fade_timeout" in $$source)) {
+            this["fade_timeout"] = 0;
         }
-        if (!('user_blacklist' in $$source)) {
-            this['user_blacklist'] = [];
+        if (!("user_blacklist" in $$source)) {
+            this["user_blacklist"] = [];
         }
 
         Object.assign(this, $$source);
@@ -479,8 +479,8 @@ export class YouTubeConfig {
     static createFrom($$source: any = {}): YouTubeConfig {
         const $$createField4_0 = $$createType8;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        if ('user_blacklist' in $$parsedSource) {
-            $$parsedSource['user_blacklist'] = $$createField4_0($$parsedSource['user_blacklist']);
+        if ("user_blacklist" in $$parsedSource) {
+            $$parsedSource["user_blacklist"] = $$createField4_0($$parsedSource["user_blacklist"]);
         }
         return new YouTubeConfig($$parsedSource as Partial<YouTubeConfig>);
     }
