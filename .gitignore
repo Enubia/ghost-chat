@@ -32,4 +32,4 @@ yarn.lock
 # Learning exercises output
 learning/**/config.json
 
-.claude
+.claude/settings.local.json

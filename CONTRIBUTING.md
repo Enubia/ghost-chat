@@ -4,7 +4,7 @@ Thank you for your interest in contributing to Ghost Chat!
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose) or our [Discord server](https://discord.gg/UVMX32dDcy) to report bugs.
+Use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose) to report bugs.
 
 Please include:
 - Steps to reproduce
@@ -68,6 +68,5 @@ See [CLAUDE.md](CLAUDE.md) for full conventions and project structure.
 
 ## Need Help?
 
-- [Discord server](https://discord.gg/UVMX32dDcy)
 - Comment on the relevant GitHub issue
 - Ask in your work-in-progress PR
