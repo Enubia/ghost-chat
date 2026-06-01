@@ -19,4 +19,7 @@ export default defineConfig({
             '@bindings': path.resolve(__dirname, 'bindings'),
         },
     },
+    server: {
+        host: '127.0.0.1',
+    },
 });
