@@ -63,22 +63,21 @@ func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
 
 func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
 	a.window.OnWindowEvent(events.Common.WindowRuntimeReady, func(e *application.WindowEvent) {
+		w, h := sanitizeWindowSize(a.config.WindowState.Width, a.config.WindowState.Height)
+
 		if runtime.GOOS == "windows" {
-			a.window.SetSize(a.config.WindowState.Width, a.config.WindowState.Height)
+			a.window.SetSize(w, h)
 		}
 
-		if a.config.WindowState.X != 0 || a.config.WindowState.Y != 0 {
-			a.window.SetPosition(a.config.WindowState.X, a.config.WindowState.Y)
-		} else {
-			primary := a.app.Screen.GetPrimary()
-			w, h := a.window.Size()
+		x, y := a.config.WindowState.X, a.config.WindowState.Y
 
-			x := primary.WorkArea.X + (primary.WorkArea.Width-w)/2
-			y := primary.WorkArea.Y + (primary.WorkArea.Height-h)/2
+		unset := x == 0 && y == 0
 
-			a.window.SetPosition(x, y)
+		if unset || !positionVisible(screenWorkAreas(a.app.Screen.GetAll()), x, y, w, h) {
+			x, y = a.centeredPosition(w, h)
 		}
 
+		a.window.SetPosition(x, y)
 		a.window.Show()
 
 		go func() {
@@ -223,12 +222,19 @@ func (a *App) ToggleVanish() {
 	}
 }
 
-func (a *App) CenterOnScreen() {
+func (a *App) centeredPosition(w, h int) (int, int) {
 	primary := a.app.Screen.GetPrimary()
-	w, h := a.window.Size()
 
-	x := primary.WorkArea.X + (primary.WorkArea.Width-w)/2
-	y := primary.WorkArea.Y + (primary.WorkArea.Height-h)/2
+	if primary == nil {
+		return 0, 0
+	}
+
+	return centerInWorkArea(primary.WorkArea, w, h)
+}
+
+func (a *App) CenterOnScreen() {
+	w, h := a.window.Size()
+	x, y := a.centeredPosition(w, h)
 
 	a.window.SetPosition(x, y)
 	a.window.Show()
