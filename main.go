@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"ghost-chat/internal/config"
-	"runtime"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -18,32 +17,6 @@ var trayIcon []byte
 var appIcon []byte
 
 var version = "dev"
-
-// initialWidth returns the starting window width. On Windows, frameless transparent
-// windows have a WebView2 bug where the hit-test surface doesn't update after
-// programmatic resize, so we start at the max settings width (2000) and shrink
-// down in ServiceStartup. This ensures the surface covers the full area.
-// https://github.com/wailsapp/wails/issues/4871
-func initialWidth(savedWidth int) int {
-	if runtime.GOOS == "windows" {
-		return 2000
-	}
-
-	return savedWidth
-}
-
-// initialHeight returns the starting window height. On Windows, frameless transparent
-// windows have a WebView2 bug where the hit-test surface doesn't update after
-// programmatic resize, so we start at the max settings height (2000) and shrink
-// down in ServiceStartup. This ensures the surface covers the full area.
-// https://github.com/wailsapp/wails/issues/4871
-func initialHeight(savedHeight int) int {
-	if runtime.GOOS == "windows" {
-		return 2000
-	}
-
-	return savedHeight
-}
 
 func main() {
 	configPath, err := config.GetConfigPath()
@@ -74,6 +47,8 @@ func main() {
 
 	svc := NewApp(cfg, configPath, version)
 
+	initialW, initialH := sanitizeWindowSize(cfg.WindowState.Width, cfg.WindowState.Height)
+
 	app := application.New(application.Options{
 		Name: "Ghost Chat",
 		Icon: appIcon,
@@ -94,8 +69,8 @@ func main() {
 
 	win := app.Window.NewWithOptions(application.WebviewWindowOptions{
 		Title:          "ghost-chat",
-		Width:          initialWidth(cfg.WindowState.Width),
-		Height:         initialHeight(cfg.WindowState.Height),
+		Width:          initialW,
+		Height:         initialH,
 		Hidden:         true,
 		Frameless:      true,
 		AlwaysOnTop:    true,
