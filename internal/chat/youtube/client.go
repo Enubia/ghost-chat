@@ -4,9 +4,13 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"math/rand/v2"
 	"net/http"
+	"net/http/cookiejar"
+	"net/url"
 	"regexp"
 	"strings"
 	"sync"
@@ -16,13 +20,24 @@ import (
 )
 
 const (
-	browserUA           = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-	liveChatURL         = "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat"
-	defaultPollInterval = 2 * time.Second
-	maxBackoff          = 60 * time.Second
+	browserUA               = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+	liveChatURL             = "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat"
+	defaultPollInterval     = 2 * time.Second
+	maxBackoff              = 60 * time.Second
+	rateLimitBackoffBase    = 30 * time.Second
+	rateLimitBackoffMax     = 5 * time.Minute
+	maxFailuresBeforeReboot = 3
 )
 
-var httpClient = &http.Client{Timeout: 10 * time.Second}
+// ErrRateLimited means YouTube served its anti-bot interstitial (the /sorry page)
+// or a 429. The IP is temporarily blocked; only a long backoff helps.
+var ErrRateLimited = errors.New("youtube rate-limited this ip (anti-bot)")
+
+// ErrAuthStale means the request was rejected as unauthenticated (401/403),
+// usually because the continuation token or innertube config has expired.
+var ErrAuthStale = errors.New("youtube auth/config stale")
+
+var httpClient = newHTTPClient()
 
 type MessageHandler func(chat.ChatMessage)
 type EventHandler func(event string, data any)
@@ -57,18 +72,20 @@ func (c *Client) Connect(input string) error {
 		return fmt.Errorf("failed to resolve video URL: %w", err)
 	}
 
-	continuation, cfg, err := fetchInitialData(videoURL)
+	ctx, cancel := context.WithCancel(context.Background())
+
+	continuation, cfg, err := fetchInitialData(ctx, videoURL)
 	if err != nil {
+		cancel()
 		return fmt.Errorf("failed to fetch initial data: %w", err)
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
 	c.ctx = ctx
 	c.cancel = cancel
 
 	c.OnEvent("chat:connected", map[string]string{"platform": "youtube"})
 
-	go c.pollLoop(continuation, cfg)
+	go c.pollLoop(videoURL, continuation, cfg)
 
 	return nil
 }
@@ -86,8 +103,10 @@ func (c *Client) Disconnect() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": "youtube"})
 }
 
-func (c *Client) pollLoop(continuation string, cfg YtCfg) {
+func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 	backoff := defaultPollInterval
+	rlFailures := 0
+	failures := 0
 
 	for {
 		select {
@@ -96,25 +115,56 @@ func (c *Client) pollLoop(continuation string, cfg YtCfg) {
 		default:
 		}
 
-		messages, nextCont, timeoutMs, err := pollChatOnce(continuation, cfg)
+		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(c.ctx, continuation, cfg)
 		if err != nil {
-			logf("poll error: %v, retrying in %v", err, backoff)
+			if c.ctx.Err() != nil {
+				return
+			}
+
+			var wait time.Duration
+
+			switch {
+			case errors.Is(err, ErrRateLimited):
+				rlFailures++
+				wait = rateLimitBackoff(rlFailures)
+				logf("rate-limited, backing off %v", wait)
+
+			case errors.Is(err, ErrAuthStale):
+				logf("auth/config stale, re-bootstrapping: %v", err)
+				if c.rebootstrap(videoURL, &continuation, &cfg) {
+					failures, backoff = 0, defaultPollInterval
+					continue
+				}
+				wait, backoff = backoff, nextBackoff(backoff)
+
+			default:
+				failures++
+				logf("poll error: %v (failure %d/%d)", err, failures, maxFailuresBeforeReboot)
+				if failures >= maxFailuresBeforeReboot && c.rebootstrap(videoURL, &continuation, &cfg) {
+					failures, backoff = 0, defaultPollInterval
+					continue
+				}
+				wait, backoff = backoff, nextBackoff(backoff)
+			}
+
 			select {
 			case <-c.ctx.Done():
 				return
-			case <-time.After(backoff):
+			case <-time.After(wait):
 			}
-			backoff *= 2
-			if backoff > maxBackoff {
-				backoff = maxBackoff
-			}
+
 			continue
 		}
 
+		rlFailures, failures = 0, 0
 		backoff = defaultPollInterval
 
 		for _, msg := range messages {
 			c.OnMessage(msg)
+		}
+
+		for _, id := range deletions {
+			c.OnEvent("chat:delete-message", id)
 		}
 
 		if nextCont != "" {
@@ -134,10 +184,25 @@ func (c *Client) pollLoop(continuation string, cfg YtCfg) {
 	}
 }
 
+// rebootstrap re-fetches the watch page to recover a fresh continuation token and
+// innertube config, used when the current ones go stale. Returns true on success.
+func (c *Client) rebootstrap(videoURL string, continuation *string, cfg *YtCfg) bool {
+	newCont, newCfg, err := fetchInitialData(c.ctx, videoURL)
+	if err != nil {
+		logf("re-bootstrap failed: %v", err)
+		return false
+	}
+
+	*continuation = newCont
+	*cfg = newCfg
+
+	return true
+}
+
 // fetchInitialData fetches a YouTube watch page, extracts the first live chat
 // continuation token and innertube client config.
-func fetchInitialData(videoURL string) (continuation string, cfg YtCfg, err error) {
-	body, err := doRequest("GET", videoURL, nil)
+func fetchInitialData(ctx context.Context, videoURL string) (continuation string, cfg YtCfg, err error) {
+	body, err := doRequest(ctx, "GET", videoURL, nil, nil)
 	if err != nil {
 		return "", YtCfg{}, fmt.Errorf("failed to fetch page: %w", err)
 	}
@@ -178,25 +243,34 @@ func fetchInitialData(videoURL string) (continuation string, cfg YtCfg, err erro
 		return "", YtCfg{}, fmt.Errorf("continuation token is not a string")
 	}
 
-	// Extract ytcfg values directly with regexes — more robust than parsing the
-	// whole ytcfg.set(...) call, which can appear in non-JSON forms on the page.
-	apiKey := extractStringField(html, "INNERTUBE_API_KEY")
-	clientName := extractStringField(html, "INNERTUBE_CLIENT_NAME")
-	clientVersion := extractStringField(html, "INNERTUBE_CLIENT_VERSION")
+	cfg = YtCfg{
+		InnertubeAPIKey:        extractStringField(html, "INNERTUBE_API_KEY"),
+		InnertubeClientName:    extractStringField(html, "INNERTUBE_CLIENT_NAME"),
+		InnertubeClientVersion: extractStringField(html, "INNERTUBE_CLIENT_VERSION"),
+		ClientNameNumeric:      extractNumberField(html, "INNERTUBE_CONTEXT_CLIENT_NAME"),
+	}
 
-	return cont, YtCfg{
-		InnertubeAPIKey:        apiKey,
-		InnertubeClientName:    clientName,
-		InnertubeClientVersion: clientVersion,
-	}, nil
+	// Prefer the whole INNERTUBE_CONTEXT object — it carries visitorData and any
+	// fields YouTube starts requiring, so the poll body stays valid across changes.
+	if ctxJSON, err := extractJSONObject(html, `"INNERTUBE_CONTEXT"`); err == nil {
+		var ctxObj map[string]any
+		if json.Unmarshal(ctxJSON, &ctxObj) == nil {
+			cfg.Context = ctxObj
+		}
+	}
+
+	cfg.VisitorData = extractVisitorData(html, cfg.Context)
+
+	return cont, cfg, nil
 }
 
 // pollChatOnce sends one request to the innertube live_chat endpoint and returns
-// the parsed messages, the next continuation token, and the suggested polling interval.
-func pollChatOnce(continuation string, cfg YtCfg) (messages []chat.ChatMessage, nextContinuation string, timeoutMs int, err error) {
+// the parsed messages, deletion target IDs, the next continuation token, and the
+// suggested polling interval.
+func pollChatOnce(ctx context.Context, continuation string, cfg YtCfg) (messages []chat.ChatMessage, deletions []string, nextContinuation string, timeoutMs int, err error) {
 	reqBody, err := buildPollRequestBody(continuation, cfg)
 	if err != nil {
-		return nil, "", 0, err
+		return nil, nil, "", 0, err
 	}
 
 	pollURL := liveChatURL
@@ -204,33 +278,57 @@ func pollChatOnce(continuation string, cfg YtCfg) (messages []chat.ChatMessage, 
 		pollURL += "?key=" + cfg.InnertubeAPIKey
 	}
 
-	respBody, err := doRequest("POST", pollURL, reqBody)
+	hdr := http.Header{}
+	if cfg.VisitorData != "" {
+		hdr.Set("X-Goog-Visitor-Id", cfg.VisitorData)
+	}
+	if cfg.ClientNameNumeric != "" {
+		hdr.Set("X-YouTube-Client-Name", cfg.ClientNameNumeric)
+	}
+	if cfg.InnertubeClientVersion != "" {
+		hdr.Set("X-YouTube-Client-Version", cfg.InnertubeClientVersion)
+	}
+
+	respBody, err := doRequest(ctx, "POST", pollURL, reqBody, hdr)
 	if err != nil {
-		return nil, "", 0, err
+		return nil, nil, "", 0, err
+	}
+
+	// A blocked request can return 200 with an HTML interstitial instead of JSON.
+	if looksLikeHTML(respBody) {
+		return nil, nil, "", 0, ErrRateLimited
 	}
 
 	var resp LiveChatResponse
 	if err := json.Unmarshal(respBody, &resp); err != nil {
-		return nil, "", 0, fmt.Errorf("failed to parse response: %w", err)
+		return nil, nil, "", 0, fmt.Errorf("failed to parse response: %w", err)
 	}
 
 	lcc := resp.ContinuationContents.LiveChatContinuation
 	nextCont, timeout := extractContinuation(lcc.Continuations)
-	msgs := parseActions(lcc.Actions)
+	msgs, dels := parseActions(lcc.Actions)
 
-	return msgs, nextCont, timeout, nil
+	return msgs, dels, nextCont, timeout, nil
 }
 
 func buildPollRequestBody(continuation string, cfg YtCfg) ([]byte, error) {
-	body := map[string]any{
-		"continuation": continuation,
-		"context": map[string]any{
+	var clientContext any
+	if cfg.Context != nil {
+		clientContext = cfg.Context
+	} else {
+		clientContext = map[string]any{
 			"client": map[string]any{
 				"clientName":    cfg.InnertubeClientName,
 				"clientVersion": cfg.InnertubeClientVersion,
 			},
-		},
+		}
 	}
+
+	body := map[string]any{
+		"context":      clientContext,
+		"continuation": continuation,
+	}
+
 	return json.Marshal(body)
 }
 
@@ -246,11 +344,35 @@ func extractContinuation(continuations []Continuation) (token string, timeoutMs 
 	return "", 0
 }
 
+// extractVisitorData pulls the session's visitorData, preferring the value inside
+// the parsed INNERTUBE_CONTEXT and falling back to a raw scrape of the page.
+func extractVisitorData(html string, ctxObj map[string]any) string {
+	if ctxObj != nil {
+		if client, ok := ctxObj["client"].(map[string]any); ok {
+			if vd, ok := client["visitorData"].(string); ok && vd != "" {
+				return vd
+			}
+		}
+	}
+	return extractStringField(html, "VISITOR_DATA")
+}
+
 // extractStringField extracts the value of a JSON string field anywhere in the
 // HTML source, e.g. extractStringField(html, "INNERTUBE_API_KEY") returns the
 // value of the first `"INNERTUBE_API_KEY":"<value>"` occurrence.
 func extractStringField(s, key string) string {
 	re := regexp.MustCompile(`"` + regexp.QuoteMeta(key) + `"\s*:\s*"([^"]+)"`)
+	m := re.FindStringSubmatch(s)
+	if len(m) < 2 {
+		return ""
+	}
+	return m[1]
+}
+
+// extractNumberField extracts the value of an unquoted numeric JSON field,
+// e.g. `"INNERTUBE_CONTEXT_CLIENT_NAME":1` returns "1".
+func extractNumberField(s, key string) string {
+	re := regexp.MustCompile(`"` + regexp.QuoteMeta(key) + `"\s*:\s*(\d+)`)
 	m := re.FindStringSubmatch(s)
 	if len(m) < 2 {
 		return ""
@@ -311,49 +433,135 @@ func navigateJSON(v any, keys ...any) (any, error) {
 	return current, nil
 }
 
-// doRequest performs an HTTP request with a browser User-Agent.
-func doRequest(method, url string, body []byte) ([]byte, error) {
+// doRequest performs an HTTP request with a browser-like header set and classifies
+// the common failure modes (rate-limit, stale auth) into typed errors.
+func doRequest(ctx context.Context, method, requestURL string, body []byte, extraHeaders http.Header) ([]byte, error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
 	var bodyReader io.Reader
 	if body != nil {
 		bodyReader = bytes.NewReader(body)
 	}
 
-	req, err := http.NewRequest(method, url, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, method, requestURL, bodyReader)
 	if err != nil {
 		return nil, err
 	}
 
-	req.Header.Set("User-Agent", browserUA)
-	req.Header.Set("Content-Type", "application/json")
+	setBrowserHeaders(req)
+
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
+
+	for k, vs := range extraHeaders {
+		for _, v := range vs {
+			req.Header.Set(k, v)
+		}
+	}
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
+		if errors.Is(err, ErrRateLimited) {
+			return nil, ErrRateLimited
+		}
 		return nil, err
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("http %d from %s", resp.StatusCode, url)
+	switch {
+	case resp.StatusCode == http.StatusTooManyRequests:
+		return nil, ErrRateLimited
+	case resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden:
+		return nil, fmt.Errorf("%w: http %d", ErrAuthStale, resp.StatusCode)
+	case resp.StatusCode != http.StatusOK:
+		return nil, fmt.Errorf("http %d from %s", resp.StatusCode, requestURL)
 	}
 
 	return io.ReadAll(resp.Body)
 }
 
-// newHTTPClient returns an HTTP client with browser User-Agent on every request,
-// including redirects. Used by resolve.go.
+// setBrowserHeaders applies a header set resembling a real Chrome request. GET
+// requests are treated as top-level navigations, everything else as a CORS fetch
+// (matching how the innertube API is called from the page).
+func setBrowserHeaders(req *http.Request) {
+	req.Header.Set("User-Agent", browserUA)
+	req.Header.Set("Accept-Language", "en-US,en;q=0.9")
+	req.Header.Set("Sec-Ch-Ua", `"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"`)
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", `"Windows"`)
+
+	if req.Method == http.MethodGet {
+		req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")
+		req.Header.Set("Sec-Fetch-Dest", "document")
+		req.Header.Set("Sec-Fetch-Mode", "navigate")
+		req.Header.Set("Sec-Fetch-User", "?1")
+		req.Header.Set("Sec-Fetch-Site", "none")
+		return
+	}
+
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+}
+
+// newHTTPClient returns the shared HTTP client: a cookie jar seeded with consent
+// cookies so the resolve → page → poll sequence looks like one browser session,
+// and a redirect guard that detects YouTube's anti-bot /sorry interstitial.
 func newHTTPClient() *http.Client {
+	jar, _ := cookiejar.New(nil)
+	seedConsentCookies(jar)
+
 	return &http.Client{
-		Timeout:   10 * time.Second,
-		Transport: browserRoundTripper{},
+		Timeout: 10 * time.Second,
+		Jar:     jar,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			if isSorryURL(req.URL) {
+				return ErrRateLimited
+			}
+			if len(via) >= 10 {
+				return errors.New("stopped after 10 redirects")
+			}
+			return nil
+		},
 	}
 }
 
-type browserRoundTripper struct{}
+func seedConsentCookies(jar http.CookieJar) {
+	for _, host := range []string{"https://www.youtube.com", "https://www.google.com"} {
+		u, err := url.Parse(host)
+		if err != nil {
+			continue
+		}
+		jar.SetCookies(u, []*http.Cookie{
+			{Name: "SOCS", Value: "CAI", Path: "/"},
+			{Name: "CONSENT", Value: "YES+", Path: "/"},
+		})
+	}
+}
 
-func (browserRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-	req = req.Clone(req.Context())
-	req.Header.Set("User-Agent", browserUA)
-	return http.DefaultTransport.RoundTrip(req)
+// isSorryURL reports whether u is Google's anti-bot interstitial.
+func isSorryURL(u *url.URL) bool {
+	if u == nil {
+		return false
+	}
+	return strings.HasPrefix(u.Path, "/sorry") || strings.HasPrefix(u.Host, "consent.")
+}
+
+func looksLikeHTML(b []byte) bool {
+	return bytes.HasPrefix(bytes.TrimSpace(b), []byte("<"))
+}
+
+func rateLimitBackoff(failures int) time.Duration {
+	d := min(rateLimitBackoffBase*time.Duration(failures), rateLimitBackoffMax)
+	return d + time.Duration(rand.Int64N(int64(5*time.Second)))
+}
+
+func nextBackoff(d time.Duration) time.Duration {
+	return min(d*2, maxBackoff)
 }
 
 func logf(format string, args ...any) {

@@ -1,6 +1,7 @@
 package youtube
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -80,10 +81,13 @@ func resolveLiveURL(liveURL string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("User-Agent", browserUA)
+	setBrowserHeaders(req)
 
-	resp, err := newHTTPClient().Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
+		if errors.Is(err, ErrRateLimited) {
+			return "", ErrRateLimited
+		}
 		return "", fmt.Errorf("failed to fetch live page: %w", err)
 	}
 	defer resp.Body.Close()

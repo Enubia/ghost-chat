@@ -51,15 +51,15 @@ Twitch IRC already delivers event notifications as `USERNOTICE` messages to anon
 > **Goal**: Parse USERNOTICE IRC messages and emit them to the frontend as a distinct event type.
 
 ### 1.1 Extend ChatMessage struct
-- [ ] Add `EventType string` field to `ChatMessage` (e.g. `"sub"`, `"resub"`, `"subgift"`, `"raid"`, `"announcement"`)
-- [ ] Add `SystemMessage string` field for the Twitch-generated system text (e.g. "X subscribed for 12 months")
-- [ ] Add `EventData map[string]string` field for extra metadata (gift count, raid viewer count, sub plan, etc.)
+- [x] Add `EventType string` field to `ChatMessage` (e.g. `"sub"`, `"resub"`, `"subgift"`, `"raid"`, `"announcement"`)
+- [x] Add `SystemMessage string` field for the Twitch-generated system text (e.g. "X subscribed for 12 months")
+- [x] Add `EventData map[string]string` field for extra metadata (gift count, raid viewer count, sub plan, etc.)
 
 ### 1.2 Parse USERNOTICE in parser.go
-- [ ] Add `USERNOTICE` case to `handleMessage` in `client.go`
-- [ ] Parse `msg-id` tag to determine event type — handle all "must have" types, pass through others with raw `msg-id` as event type
-- [ ] Extract system message from tags (`system-msg`, URL-decoded)
-- [ ] Extract relevant metadata per event type:
+- [x] Add `USERNOTICE` case to `handleMessage` in `client.go`
+- [x] Parse `msg-id` tag to determine event type — handle all "must have" types, pass through others with raw `msg-id` as event type
+- [x] Extract system message from tags (`system-msg`, URL-decoded)
+- [x] Extract relevant metadata per event type:
   - Sub/resub: `msg-param-cumulative-months`, `msg-param-sub-plan`, `msg-param-sub-plan-name`
   - Gift: `msg-param-recipient-display-name`, `msg-param-gift-months`
   - Mystery gift: `msg-param-mass-gift-count`
@@ -69,19 +69,19 @@ Twitch IRC already delivers event notifications as `USERNOTICE` messages to anon
   - Pay forward: `msg-param-recipient-display-name` (standard), `msg-param-prior-gifter-display-name`
   - Bits badge: `msg-param-threshold`
   - Announcement: `msg-param-color`
-- [ ] Parse optional user message (the trailing param after USERNOTICE) — resubs can include a personal message
-- [ ] Resolve badges and emotes on the user message (same as PRIVMSG)
+- [x] Parse optional user message (the trailing param after USERNOTICE) — resubs can include a personal message
+- [x] Resolve badges and emotes on the user message (same as PRIVMSG)
 
 ### 1.3 Emit events to frontend
-- [ ] Emit USERNOTICE messages as `chat:message` events with `EventType` set (same pipeline as regular messages so they appear inline)
-- [ ] Unrecognized `msg-id` values still get emitted (future-proof) — frontend renders them with the generic system message
+- [x] Emit USERNOTICE messages as `chat:message` events with `EventType` set (same pipeline as regular messages so they appear inline)
+- [x] Unrecognized `msg-id` values still get emitted (future-proof) — frontend renders them with the generic system message
 
 ### 1.4 Unit tests
-- [ ] Add real USERNOTICE IRC samples for each "must have" `msg-id` type
-- [ ] Test system message URL decoding
-- [ ] Test metadata extraction per event type
-- [ ] Test that optional user message is parsed with emotes/badges
-- [ ] Test that unknown `msg-id` values pass through gracefully
+- [x] Add real USERNOTICE IRC samples for each "must have" `msg-id` type
+- [x] Test system message URL decoding
+- [x] Test metadata extraction per event type
+- [x] Test that optional user message is parsed with emotes/badges
+- [x] Test that unknown `msg-id` values pass through gracefully
 
 ---
 
@@ -90,24 +90,24 @@ Twitch IRC already delivers event notifications as `USERNOTICE` messages to anon
 > **Goal**: Display event notifications inline in the chat overlay with distinct styling.
 
 ### 2.1 Update chat types
-- [ ] Add `eventType`, `systemMessage`, `eventData` fields to the frontend `ChatMessage` type
+- [x] Add `eventType`, `systemMessage`, `eventData` fields to the frontend `ChatMessage` type
 
 ### 2.2 Event message component
-- [ ] Create `EventMessage` component for rendering inline notifications
-- [ ] System message as primary text (e.g. "UserX subscribed for 12 months")
-- [ ] Optional user message below (e.g. the resub message) — rendered with emotes/badges like a normal message
-- [ ] Distinct visual style: subtle background highlight, left border accent, no username row
-- [ ] Style variants per event type (sub = purple accent, raid = orange accent, announcement = blue accent)
-- [ ] Generic fallback style for unrecognized event types
+- [x] Create `EventMessage` component for rendering inline notifications
+- [x] System message as primary text (e.g. "UserX subscribed for 12 months")
+- [x] Optional user message below (e.g. the resub message) — rendered with emotes/badges like a normal message
+- [x] Distinct visual style: subtle background highlight, left border accent, no username row
+- [x] Style variants per event type (sub = purple accent, raid = orange accent, announcement = blue accent)
+- [x] Generic fallback style for unrecognized event types
 
 ### 2.3 Integrate into chat view
-- [ ] Branch on `eventType` in the message list renderer — use `EventMessage` when set, `ChatMessage` otherwise
-- [ ] Event messages respect existing settings: fade, message limit, auto-scroll
+- [x] Branch on `eventType` in the message list renderer — use `EventMessage` when set, `ChatMessage` otherwise
+- [x] Event messages respect existing settings: fade, message limit, auto-scroll
 
 ### 2.4 Theme support
-- [ ] Add theme properties for event messages (background opacity, border color, font size)
-- [ ] Built-in themes include sensible defaults for event styling
-- [ ] Event styles editable in theme editor
+- [x] Add theme properties for event messages (background opacity, border color, font size)
+- [x] Built-in themes include sensible defaults for event styling
+- [x] Event styles editable in theme editor
 
 ---
 
@@ -116,18 +116,18 @@ Twitch IRC already delivers event notifications as `USERNOTICE` messages to anon
 > **Goal**: Let users control which events appear and how.
 
 ### 3.1 Twitch config
-- [ ] Add `Events` section to `TwitchConfig` with grouped toggles:
+- [x] Add `Events` section to `TwitchConfig` with grouped toggles:
   - Subscriptions (covers `sub`, `resub`, `subgift`, `submysterygift`, `giftpaidupgrade`, `anongiftpaidupgrade`, `primepaidupgrade`, `standardpayforward`, `communitypayforward`)
   - Raids (covers `raid`, `unraid`)
   - Announcements (covers `announcement`)
   - Other (covers `bitsbadgetier`, `ritual`, `viewermilestone`, `charitydonation`, `rewardgift`, `sharedchatnotice`)
-- [ ] All enabled by default
+- [x] All enabled by default
 
 ### 3.2 Twitch settings UI
-- [ ] "Events" section in Twitch settings tab
-- [ ] Toggle per event group with descriptive labels
-- [ ] Brief explanation that these are IRC-based (no login required)
+- [x] "Events" section in Twitch settings tab
+- [x] Toggle per event group with descriptive labels
+- [x] Brief explanation that these are IRC-based (no login required)
 
 ### 3.3 Frontend filtering
-- [ ] Filter event messages in the chat view based on config toggles
-- [ ] Filtered events never enter the message list (not just hidden)
+- [x] Filter event messages in the chat view based on config toggles
+- [x] Filtered events never enter the message list (not just hidden)

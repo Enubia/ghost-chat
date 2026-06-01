@@ -6,6 +6,9 @@ type YtCfg struct {
 	InnertubeAPIKey        string
 	InnertubeClientName    string
 	InnertubeClientVersion string
+	ClientNameNumeric      string         // INNERTUBE_CONTEXT_CLIENT_NAME (e.g. "1" for WEB), used for the X-YouTube-Client-Name header
+	VisitorData            string         // ties requests to a session; sent as X-Goog-Visitor-Id
+	Context                map[string]any // full INNERTUBE_CONTEXT object; preferred over the scalar fields when present
 }
 
 // --- Innertube response types ---
@@ -22,7 +25,12 @@ type LiveChatResponse struct {
 }
 
 type Action struct {
-	AddChatItemAction *AddChatItemAction `json:"addChatItemAction"`
+	AddChatItemAction           *AddChatItemAction           `json:"addChatItemAction"`
+	MarkChatItemAsDeletedAction *MarkChatItemAsDeletedAction `json:"markChatItemAsDeletedAction"`
+}
+
+type MarkChatItemAsDeletedAction struct {
+	TargetItemID string `json:"targetItemId"`
 }
 
 type AddChatItemAction struct {

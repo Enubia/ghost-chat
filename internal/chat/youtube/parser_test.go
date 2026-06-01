@@ -292,15 +292,64 @@ func TestParseActions(t *testing.T) {
 		}},
 	}
 
-	msgs := parseActions(actions)
+	msgs, deletions := parseActions(actions)
 
 	if len(msgs) != 2 {
 		t.Fatalf("expected 2 messages, got %d", len(msgs))
+	}
+	if len(deletions) != 0 {
+		t.Errorf("expected no deletions, got %v", deletions)
 	}
 	if msgs[0].Username != "User1" {
 		t.Errorf("msgs[0].Username = %q", msgs[0].Username)
 	}
 	if !msgs[1].MembershipEvent {
 		t.Errorf("msgs[1] should be a membership event")
+	}
+}
+
+func TestParseActionsDeletion(t *testing.T) {
+	actions := []Action{
+		{MarkChatItemAsDeletedAction: &MarkChatItemAsDeletedAction{TargetItemID: "del-1"}},
+		{AddChatItemAction: &AddChatItemAction{
+			Item: ChatItem{
+				LiveChatTextMessageRenderer: &LiveChatTextMessageRenderer{
+					MessageRendererBase: MessageRendererBase{ID: "keep", AuthorName: SimpleText{SimpleText: "User1"}},
+					Message:             Runs{Runs: []Run{{Text: "hi"}}},
+				},
+			},
+		}},
+		{MarkChatItemAsDeletedAction: &MarkChatItemAsDeletedAction{TargetItemID: ""}},
+	}
+
+	msgs, deletions := parseActions(actions)
+
+	if len(msgs) != 1 {
+		t.Fatalf("expected 1 message, got %d", len(msgs))
+	}
+	if len(deletions) != 1 || deletions[0] != "del-1" {
+		t.Errorf("expected deletions [del-1], got %v", deletions)
+	}
+}
+
+func TestParseGiftPurchase(t *testing.T) {
+	r := LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer{
+		MessageRendererBase: MessageRendererBase{
+			ID:         "gift-1",
+			AuthorName: SimpleText{SimpleText: "Gifter"},
+		},
+	}
+	r.Header.LiveChatSponsorshipsHeaderRenderer.PrimaryText = Runs{Runs: []Run{{Text: "gifted 5 memberships"}}}
+
+	msg := parseGiftPurchase(r)
+
+	if !msg.MembershipEvent {
+		t.Errorf("MembershipEvent should be true")
+	}
+	if msg.Text != "gifted 5 memberships" {
+		t.Errorf("Text = %q", msg.Text)
+	}
+	if msg.Username != "Gifter" {
+		t.Errorf("Username = %q", msg.Username)
 	}
 }

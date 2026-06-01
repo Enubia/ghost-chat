@@ -9,10 +9,17 @@ import (
 	"ghost-chat/internal/chat"
 )
 
-func parseActions(actions []Action) []chat.ChatMessage {
-	messages := make([]chat.ChatMessage, 0, len(actions))
+func parseActions(actions []Action) (messages []chat.ChatMessage, deletions []string) {
+	messages = make([]chat.ChatMessage, 0, len(actions))
 
 	for _, action := range actions {
+		if action.MarkChatItemAsDeletedAction != nil {
+			if id := action.MarkChatItemAsDeletedAction.TargetItemID; id != "" {
+				deletions = append(deletions, id)
+			}
+			continue
+		}
+
 		if action.AddChatItemAction == nil {
 			continue
 		}
@@ -26,10 +33,12 @@ func parseActions(actions []Action) []chat.ChatMessage {
 			messages = append(messages, parsePaidMessage(*item.LiveChatPaidMessageRenderer))
 		case item.LiveChatMembershipItemRenderer != nil:
 			messages = append(messages, parseMembership(*item.LiveChatMembershipItemRenderer))
+		case item.LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer != nil:
+			messages = append(messages, parseGiftPurchase(*item.LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer))
 		}
 	}
 
-	return messages
+	return messages, deletions
 }
 
 func parseTextMessage(r LiveChatTextMessageRenderer) chat.ChatMessage {
@@ -72,6 +81,20 @@ func parseMembership(r LiveChatMembershipItemRenderer) chat.ChatMessage {
 	base.MembershipEvent = true
 	base.Fragments = parseRuns(r.HeaderSubtext.Runs)
 	base.Text = flattenRuns(r.HeaderSubtext.Runs)
+	return base
+}
+
+func parseGiftPurchase(r LiveChatSponsorshipsGiftPurchaseAnnouncementRenderer) chat.ChatMessage {
+	base := parseTextMessage(LiveChatTextMessageRenderer{
+		MessageRendererBase: r.MessageRendererBase,
+	})
+
+	runs := r.Header.LiveChatSponsorshipsHeaderRenderer.PrimaryText.Runs
+
+	base.MembershipEvent = true
+	base.Fragments = parseRuns(runs)
+	base.Text = flattenRuns(runs)
+
 	return base
 }
 
