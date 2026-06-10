@@ -24,7 +24,7 @@ func Fragmentize(text string, emotes []Emote) []MessageFragment {
 		return valid[i].Start < valid[j].Start
 	})
 
-	deduped := make([]Emote, 0, len(valid))
+	nonOverlapping := make([]Emote, 0, len(valid))
 	cursor := 0
 
 	for _, e := range valid {
@@ -32,18 +32,18 @@ func Fragmentize(text string, emotes []Emote) []MessageFragment {
 			continue
 		}
 
-		deduped = append(deduped, e)
+		nonOverlapping = append(nonOverlapping, e)
 		cursor = e.End + 1
 	}
 
-	if len(deduped) == 0 {
+	if len(nonOverlapping) == 0 {
 		return []MessageFragment{{Type: "text", Text: text}}
 	}
 
-	frags := make([]MessageFragment, 0, len(deduped)*2+1)
+	frags := make([]MessageFragment, 0, len(nonOverlapping)*2+1)
 	pos := 0
 
-	for _, e := range deduped {
+	for _, e := range nonOverlapping {
 		if e.Start > pos {
 			frags = append(frags, MessageFragment{
 				Type: "text",
