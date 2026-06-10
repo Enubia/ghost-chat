@@ -52,21 +52,25 @@ describe('shouldDisplay', () => {
     describe('blacklist', () => {
         it('allows messages not on the blacklist', () => {
             const config = makeTwitchConfig({ user_blacklist: ['blockeduser'] });
+
             expect(shouldDisplay(makeMsg({ username: 'normaluser' }), config)).toBe(true);
         });
 
         it('blocks exact match on blacklist', () => {
             const config = makeTwitchConfig({ user_blacklist: ['blockeduser'] });
+
             expect(shouldDisplay(makeMsg({ username: 'blockeduser' }), config)).toBe(false);
         });
 
         it('blocks blacklist match case-insensitively', () => {
             const config = makeTwitchConfig({ user_blacklist: ['BlockedUser'] });
+
             expect(shouldDisplay(makeMsg({ username: 'blockeduser' }), config)).toBe(false);
         });
 
         it('blocks when username has different casing than blacklist entry', () => {
             const config = makeTwitchConfig({ user_blacklist: ['blockeduser'] });
+
             expect(shouldDisplay(makeMsg({ username: 'BLOCKEDUSER' }), config)).toBe(false);
         });
 
@@ -102,16 +106,19 @@ describe('shouldDisplay', () => {
     describe('command hiding', () => {
         it('allows commands when hide_commands is false', () => {
             const config = makeTwitchConfig({ hide_commands: false });
+
             expect(shouldDisplay(makeMsg({ text: '!command' }), config)).toBe(true);
         });
 
         it('blocks commands when hide_commands is true', () => {
             const config = makeTwitchConfig({ hide_commands: true });
+
             expect(shouldDisplay(makeMsg({ text: '!command' }), config)).toBe(false);
         });
 
         it('allows non-command messages when hide_commands is true', () => {
             const config = makeTwitchConfig({ hide_commands: true });
+
             expect(shouldDisplay(makeMsg({ text: 'hello world' }), config)).toBe(true);
         });
     });
@@ -119,21 +126,25 @@ describe('shouldDisplay', () => {
     describe('bot visibility', () => {
         it('hides known bot when bots setting is false', () => {
             const config = makeTwitchConfig({ bots: false });
+
             expect(shouldDisplay(makeMsg({ username: 'nightbot' }), config)).toBe(false);
         });
 
         it('shows known bot when bots setting is true', () => {
             const config = makeTwitchConfig({ bots: true });
+
             expect(shouldDisplay(makeMsg({ username: 'nightbot' }), config)).toBe(true);
         });
 
         it('hides known bot case-insensitively', () => {
             const config = makeTwitchConfig({ bots: false });
+
             expect(shouldDisplay(makeMsg({ username: 'NightBot' }), config)).toBe(false);
         });
 
         it('allows unknown users when bots is false', () => {
             const config = makeTwitchConfig({ bots: false });
+
             expect(shouldDisplay(makeMsg({ username: 'regularuser' }), config)).toBe(true);
         });
     });
@@ -143,6 +154,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(true);
         });
 
@@ -150,6 +162,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: false, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(false);
         });
 
@@ -157,6 +170,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: false, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'resub' }), config)).toBe(false);
         });
 
@@ -164,6 +178,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'raid' }), config)).toBe(true);
         });
 
@@ -171,6 +186,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: false, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'raid' }), config)).toBe(false);
         });
 
@@ -178,6 +194,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'announcement' }), config)).toBe(true);
         });
 
@@ -185,6 +202,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: false, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'announcement' }), config)).toBe(false);
         });
 
@@ -192,6 +210,7 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: true, other: true },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'somefutureevent' }), config)).toBe(true);
         });
 
@@ -199,11 +218,13 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({
                 events: { subscriptions: true, raids: true, announcements: true, other: false },
             });
+
             expect(shouldDisplay(makeMsg({ eventType: 'somefutureevent' }), config)).toBe(false);
         });
 
         it('treats missing events config as allowed (default true)', () => {
             const config = makeTwitchConfig({ events: {} as Config['twitch']['events'] });
+
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(true);
         });
     });
@@ -220,12 +241,14 @@ describe('fadePolicy', () => {
 
     it('returns configured twitch fade settings', () => {
         const config = makeTwitchConfig({ fade: true, fade_timeout: 15 });
+
         expect(fadePolicy(Platform.PlatformTwitch, config)).toEqual({ fade: true, timeoutSeconds: 15 });
     });
 
-    it('returns 30 seconds default when twitch fade_timeout is 0', () => {
+    it('passes through twitch fade_timeout of 0 as-is', () => {
         const config = makeTwitchConfig({ fade: true, fade_timeout: 0 });
-        expect(fadePolicy(Platform.PlatformTwitch, config)).toEqual({ fade: true, timeoutSeconds: 30 });
+
+        expect(fadePolicy(Platform.PlatformTwitch, config)).toEqual({ fade: true, timeoutSeconds: 0 });
     });
 
     it('returns configured youtube fade settings', () => {
@@ -236,12 +259,12 @@ describe('fadePolicy', () => {
         expect(fadePolicy(Platform.PlatformYouTube, config)).toEqual({ fade: true, timeoutSeconds: 20 });
     });
 
-    it('returns 30 seconds default when youtube fade_timeout is 0', () => {
+    it('passes through youtube fade_timeout of 0 as-is', () => {
         const config = {
             youtube: { fade: false, fade_timeout: 0, channel_id: '', video_url: '', user_blacklist: [] },
         } as unknown as Config;
 
-        expect(fadePolicy(Platform.PlatformYouTube, config)).toEqual({ fade: false, timeoutSeconds: 30 });
+        expect(fadePolicy(Platform.PlatformYouTube, config)).toEqual({ fade: false, timeoutSeconds: 0 });
     });
 
     it('returns configured kick fade settings', () => {
@@ -252,12 +275,12 @@ describe('fadePolicy', () => {
         expect(fadePolicy(Platform.PlatformKick, config)).toEqual({ fade: true, timeoutSeconds: 45 });
     });
 
-    it('returns 30 seconds default when kick fade_timeout is 0', () => {
+    it('passes through kick fade_timeout of 0 as-is', () => {
         const config = {
             kick: { fade: false, fade_timeout: 0, default_channel: '', user_blacklist: [] },
         } as unknown as Config;
 
-        expect(fadePolicy(Platform.PlatformKick, config)).toEqual({ fade: false, timeoutSeconds: 30 });
+        expect(fadePolicy(Platform.PlatformKick, config)).toEqual({ fade: false, timeoutSeconds: 0 });
     });
 });
 

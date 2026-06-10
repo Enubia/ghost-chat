@@ -58,20 +58,20 @@ export function fadePolicy(
     if (platform === Platform.PlatformYouTube) {
         return {
             fade: config?.youtube?.fade ?? false,
-            timeoutSeconds: config?.youtube?.fade_timeout || 30,
+            timeoutSeconds: config?.youtube?.fade_timeout ?? 30,
         };
     }
 
     if (platform === Platform.PlatformKick) {
         return {
             fade: config?.kick?.fade ?? false,
-            timeoutSeconds: config?.kick?.fade_timeout || 30,
+            timeoutSeconds: config?.kick?.fade_timeout ?? 30,
         };
     }
 
     return {
         fade: config?.twitch?.fade ?? false,
-        timeoutSeconds: config?.twitch?.fade_timeout || 30,
+        timeoutSeconds: config?.twitch?.fade_timeout ?? 30,
     };
 }
 
