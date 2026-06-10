@@ -44,7 +44,6 @@ type EventHandler func(event string, data any)
 
 type Client struct {
 	mu     sync.Mutex
-	ctx    context.Context
 	cancel context.CancelFunc
 
 	OnMessage MessageHandler
@@ -80,7 +79,6 @@ func (c *Client) Connect(input string) error {
 		return fmt.Errorf("failed to fetch initial data: %w", err)
 	}
 
-	c.ctx = ctx
 	c.cancel = cancel
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})

@@ -24,7 +24,6 @@ type EventHandler func(event string, data any)
 
 type Client struct {
 	mu         sync.Mutex
-	ctx        context.Context
 	cancel     context.CancelFunc
 	conn       *websocket.Conn
 	chatroomID int
@@ -75,14 +74,13 @@ func (c *Client) Connect(input string) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	c.ctx = ctx
 	c.cancel = cancel
 	c.conn = conn
 	c.chatroomID = chatroomID
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformKick)})
 
-	go c.readLoop(conn, ctx)
+	go c.readLoop(ctx, conn)
 	go c.heartbeatLoop(ctx)
 
 	return nil
@@ -106,7 +104,7 @@ func (c *Client) Disconnect() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformKick)})
 }
 
-func (c *Client) readLoop(conn *websocket.Conn, ctx context.Context) {
+func (c *Client) readLoop(ctx context.Context, conn *websocket.Conn) {
 	for {
 		select {
 		case <-ctx.Done():
@@ -173,7 +171,7 @@ func (c *Client) reconnect(ctx context.Context) {
 		c.conn = conn
 		c.mu.Unlock()
 
-		go c.readLoop(conn, ctx)
+		go c.readLoop(ctx, conn)
 
 		return
 	}

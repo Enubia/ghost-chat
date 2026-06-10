@@ -28,9 +28,7 @@ type Client struct {
 	badges  *BadgeStore
 	emotes  *EmoteStore
 
-	mu sync.Mutex
-
-	ctx    context.Context
+	mu     sync.Mutex
 	cancel context.CancelFunc
 
 	OnMessage MessageHandler
@@ -71,7 +69,6 @@ func (c *Client) Connect(channel string) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	c.ctx = ctx
 	c.cancel = cancel
 
 	c.mu.Unlock()
@@ -79,12 +76,14 @@ func (c *Client) Connect(channel string) error {
 	err = c.sendHandshake(conn, channel)
 
 	if err != nil {
+		conn.Close()
+		cancel()
 		return err
 	}
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
 
-	go c.readLoop(conn, ctx)
+	go c.readLoop(ctx, conn)
 
 	return nil
 }
@@ -139,7 +138,7 @@ func (c *Client) sendHandshake(conn *websocket.Conn, channel string) error {
 	return nil
 }
 
-func (c *Client) readLoop(conn *websocket.Conn, ctx context.Context) {
+func (c *Client) readLoop(ctx context.Context, conn *websocket.Conn) {
 	for {
 		select {
 		case <-ctx.Done():
@@ -285,7 +284,7 @@ func (c *Client) reconnect(ctx context.Context) {
 			continue
 		}
 
-		go c.readLoop(conn, ctx)
+		go c.readLoop(ctx, conn)
 
 		return
 	}

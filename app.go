@@ -52,12 +52,22 @@ func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
 		a.app.Event.Emit(event, data)
 	}
 
+	a.wireClients()
+}
+
+func makeHandlers(emit func(string, any)) (func(chat.ChatMessage), func(string, any)) {
 	onMessage := func(msg chat.ChatMessage) {
-		a.emit("chat:message", msg)
+		emit("chat:message", msg)
 	}
 	onEvent := func(event string, data any) {
-		a.emit(event, data)
+		emit(event, data)
 	}
+
+	return onMessage, onEvent
+}
+
+func (a *App) wireClients() {
+	onMessage, onEvent := makeHandlers(a.emit)
 
 	a.clients = map[chat.Platform]chat.Client{
 		chat.PlatformTwitch:  twitch.NewClient(onMessage, onEvent),
