@@ -3,15 +3,15 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import { Create as $Create } from '@wailsio/runtime';
+import { Create as $Create } from "@wailsio/runtime";
 
 export enum Platform {
     /**
      * The Go zero value for the underlying type of the enum.
      */
-    $zero = '',
+    $zero = "",
 
-    PlatformTwitch = 'twitch',
-    PlatformYouTube = 'youtube',
-    PlatformKick = 'kick',
-}
+    PlatformTwitch = "twitch",
+    PlatformYouTube = "youtube",
+    PlatformKick = "kick",
+};
