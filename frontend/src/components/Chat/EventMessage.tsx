@@ -2,6 +2,8 @@ import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { useEffect, useState } from 'react';
 
+import { classifyEvent } from '@/filter/messageFilter';
+
 import styles from './EventMessage.module.css';
 
 const TWITCH_EMOTE_CDN = 'https://static-cdn.jtvnw.net/emoticons/v2';
@@ -24,27 +26,12 @@ function formatTime(ts: string) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function eventAccentClass(eventType: string) {
-    switch (eventType) {
-        case 'sub':
-        case 'resub':
-        case 'subgift':
-        case 'submysterygift':
-        case 'giftpaidupgrade':
-        case 'anongiftpaidupgrade':
-        case 'primepaidupgrade':
-        case 'standardpayforward':
-        case 'communitypayforward':
-            return styles.sub;
-        case 'raid':
-        case 'unraid':
-            return styles.raid;
-        case 'announcement':
-            return styles.announcement;
-        default:
-            return styles.other;
-    }
-}
+const EVENT_ACCENT_CLASS: Record<string, string> = {
+    sub: styles.sub,
+    raid: styles.raid,
+    announcement: styles.announcement,
+    other: styles.other,
+};
 
 function renderUserMessage(text: string, emotes: ChatMessageType['emotes']) {
     if (!emotes || emotes.length === 0) {
@@ -101,7 +88,7 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
         }
     };
 
-    const accentClass = eventAccentClass(message.eventType ?? '');
+    const accentClass = EVENT_ACCENT_CLASS[classifyEvent(message.eventType ?? '')] ?? styles.other;
 
     return (
         <div
