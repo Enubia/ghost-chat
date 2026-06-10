@@ -14,6 +14,8 @@ on:
 permissions:
   contents: write
 
+concurrency: release
+
 jobs:
   determine-version:
     runs-on: ubuntu-latest
@@ -26,7 +28,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - id: version
+      - name: Compute release version
+        id: version
         env:
           RC: ${{ inputs.release-candidate }}
           OVERRIDE: ${{ inputs.version }}
@@ -42,6 +45,11 @@ jobs:
           fi
 
           version="$(bash .github/scripts/next-version.sh "${args[@]}")"
+
+          if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "tag $version already exists" >&2
+            exit 1
+          fi
 
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "Release version: \`$version\`" >> "$GITHUB_STEP_SUMMARY"
@@ -171,7 +179,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.determine-version.outputs.version }}
+          tag_name: ${{ env.VERSION_TAG }}
           draft: true
           prerelease: ${{ inputs.release-candidate }}
           generate_release_notes: true
