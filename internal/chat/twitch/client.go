@@ -77,8 +77,18 @@ func (c *Client) Connect(channel string) error {
 	err = c.sendHandshake(conn, channel)
 
 	if err != nil {
+		c.mu.Lock()
+
+		if c.conn == conn {
+			c.conn = nil
+			c.cancel = nil
+		}
+
+		c.mu.Unlock()
+
 		conn.Close()
 		cancel()
+
 		return err
 	}
 
@@ -301,6 +311,8 @@ func (c *Client) reconnect(ctx context.Context) {
 			backoff = min(backoff*2, maxBackoff)
 			continue
 		}
+
+		c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
 
 		go c.readLoop(ctx, conn)
 
