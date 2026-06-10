@@ -215,7 +215,7 @@ Expected: 16 `ok:` lines, final line `all assertions passed`, exit code 0.
 - [ ] **Step 5: Sanity-check against the real repo**
 
 Run from the repo root: `bash .github/scripts/next-version.sh` and `bash .github/scripts/next-version.sh --rc`
-Expected: last stable tag is `v4.2.0`; commits since include `fix(windows): ...` (#1292) but no `feat:` → output `v4.2.1` and `v4.2.1-rc.1`.
+Expected: last stable tag is `v4.2.0`; commits since include `fix(windows): ...` (#1292) but no `feat:` → output `v4.2.1` and `v4.2.1-rc.1`. (This held at execution time; once this branch's own `feat(ci):` commits exist, the same commands correctly yield `v4.3.0`.)
 
 - [ ] **Step 6: Commit**
 
@@ -251,9 +251,11 @@ on:
 
 permissions:
   contents: write
+
+concurrency: release
 ```
 
-Note the global `env: VERSION_TAG` block is removed — jobs read the version from the new job's output instead.
+Note the global `env: VERSION_TAG` block is removed — jobs read the version from the new job's output instead. The `concurrency` group queues a second dispatch behind a running release instead of letting them race.
 
 Then add this as the first job under `jobs:`:
 
@@ -269,7 +271,8 @@ Then add this as the first job under `jobs:`:
         with:
           fetch-depth: 0
 
-      - id: version
+      - name: Compute release version
+        id: version
         env:
           RC: ${{ inputs.release-candidate }}
           OVERRIDE: ${{ inputs.version }}
@@ -286,9 +289,16 @@ Then add this as the first job under `jobs:`:
 
           version="$(bash .github/scripts/next-version.sh "${args[@]}")"
 
+          if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "tag $version already exists" >&2
+            exit 1
+          fi
+
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "Release version: \`$version\`" >> "$GITHUB_STEP_SUMMARY"
 ```
+
+The tag-existence check fails the run in seconds (e.g. a duplicate override) instead of after both platform builds.
 
 - [ ] **Step 2: Point the build jobs at the job output**
 
@@ -338,7 +348,7 @@ In the `softprops/action-gh-release@v2` step, update `tag_name` and add `prerele
 ```yaml
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.determine-version.outputs.version }}
+          tag_name: ${{ env.VERSION_TAG }}
           draft: true
           prerelease: ${{ inputs.release-candidate }}
           generate_release_notes: true

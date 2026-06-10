@@ -66,9 +66,14 @@ Logic:
 - No commits since the last stable tag: script exits with an error instead of minting a
   pointless patch release.
 - Override version given alongside the RC checkbox: the override wins verbatim; the script
-  does not append `-rc.N` to an override.
-- Tag collision (computed tag already exists): `git push origin <tag>` in `create-release`
-  fails the workflow, which is the desired signal that something is off.
+  does not append `-rc.N` to an override. The GitHub release is still marked prerelease in
+  that combination, since the checkbox drives the `prerelease` flag independently.
+- Tag collision (computed or overridden tag already exists): the `determine-version` job
+  checks `git rev-parse --verify refs/tags/<tag>` and fails fast, before any platform build
+  runs.
+- Concurrent dispatches: a workflow-level `concurrency: release` group queues a second run
+  behind the first; the queued run then fails the collision check after the first one pushes
+  its tag.
 
 ## Testing
 
