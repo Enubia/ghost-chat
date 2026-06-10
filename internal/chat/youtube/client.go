@@ -83,7 +83,7 @@ func (c *Client) Connect(input string) error {
 	c.ctx = ctx
 	c.cancel = cancel
 
-	c.OnEvent("chat:connected", map[string]string{"platform": "youtube"})
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
 
 	go c.pollLoop(videoURL, continuation, cfg)
 
@@ -100,7 +100,7 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": "youtube"})
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
 func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {

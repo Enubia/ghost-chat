@@ -82,7 +82,7 @@ func (c *Client) Connect(channel string) error {
 		return err
 	}
 
-	c.OnEvent("chat:connected", map[string]string{"platform": "twitch"})
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
 
 	go c.readLoop()
 
@@ -104,7 +104,7 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": "twitch"})
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformTwitch)})
 }
 
 func (c *Client) sendHandshake() error {

@@ -11,6 +11,7 @@ type fakeClient struct {
 	mu        sync.Mutex
 	connected bool
 	lastInput string
+	calls     []string
 	onMessage func(chat.ChatMessage)
 }
 
@@ -18,8 +19,14 @@ func (f *fakeClient) Connect(input string) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
+	if f.connected {
+		f.connected = false
+		f.calls = append(f.calls, "disconnect")
+	}
+
 	f.connected = true
 	f.lastInput = input
+	f.calls = append(f.calls, "connect:"+input)
 
 	return nil
 }
@@ -29,6 +36,7 @@ func (f *fakeClient) Disconnect() {
 	defer f.mu.Unlock()
 
 	f.connected = false
+	f.calls = append(f.calls, "disconnect")
 }
 
 func (f *fakeClient) deliver(msg chat.ChatMessage) {
@@ -126,6 +134,38 @@ func TestDisconnectCallsClient(t *testing.T) {
 
 	if fc.connected {
 		t.Error("expected client to be disconnected")
+	}
+}
+
+func TestConnectWhileConnectedDisconnectsFirst(t *testing.T) {
+	a, fc, _ := newTestApp()
+
+	if err := a.Connect(chat.PlatformTwitch, "first"); err != nil {
+		t.Fatalf("first Connect: %v", err)
+	}
+
+	if err := a.Connect(chat.PlatformTwitch, "second"); err != nil {
+		t.Fatalf("second Connect: %v", err)
+	}
+
+	fc.mu.Lock()
+	calls := append([]string(nil), fc.calls...)
+	fc.mu.Unlock()
+
+	if len(calls) < 3 {
+		t.Fatalf("expected at least 3 calls, got %d: %v", len(calls), calls)
+	}
+
+	if calls[0] != "connect:first" {
+		t.Errorf("calls[0] = %q, want %q", calls[0], "connect:first")
+	}
+
+	if calls[1] != "disconnect" {
+		t.Errorf("calls[1] = %q, want %q (disconnect must precede second connect)", calls[1], "disconnect")
+	}
+
+	if calls[2] != "connect:second" {
+		t.Errorf("calls[2] = %q, want %q", calls[2], "connect:second")
 	}
 }
 
