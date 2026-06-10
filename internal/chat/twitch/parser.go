@@ -96,24 +96,11 @@ func ParseTags(raw string) map[string]string {
 	return tags
 }
 
-// ToChatMessage converts a PRIVMSG IRCMessage into a unified ChatMessage.
-//
-// Extract from tags:
-//   - "display-name" → Username
-//   - "color" → Color
-//   - "id" → ID
-//   - "badges" → parse with ParseBadges
-//   - "emotes" → parse with ParseEmotes
-//   - "tmi-sent-ts" → parse unix millis to time.Time
-//
-// Check if the message body starts with "\x01ACTION " and ends with "\x01"
-// → if so, it's a /me message: strip those markers, set IsAction = true
 func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 	var username string
 	var color string
 	var id string
 	var badges []chat.Badge
-	var emotes []chat.Emote
 	var timestamp time.Time
 	var isAction bool
 
@@ -125,7 +112,6 @@ func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 	color = msg.Tags["color"]
 	id = msg.Tags["id"]
 	badges = ParseBadges(msg.Tags["badges"])
-	emotes = ParseEmotes(msg.Tags["emotes"])
 	timestamp = ParseTimestamp(msg.Tags["tmi-sent-ts"])
 
 	if strings.HasPrefix(msg.Params, "\x01ACTION ") && strings.HasSuffix(msg.Params, "\x01") {
@@ -147,26 +133,12 @@ func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 		Color:     color,
 		Text:      msg.Params,
 		Badges:    badges,
-		Emotes:    emotes,
 		Timestamp: timestamp,
 		IsAction:  isAction,
 		Tags:      msg.Tags,
 	}
 }
 
-// ToEventMessage converts a USERNOTICE IRCMessage into a ChatMessage with event fields.
-//
-// USERNOTICE structure:
-//
-//	@tags :tmi.twitch.tv USERNOTICE #channel :optional user message
-//
-// Key tags:
-//   - "msg-id" → EventType (sub, resub, subgift, raid, announcement, etc.)
-//   - "system-msg" → URL-encoded system message
-//   - "msg-param-*" → event-specific metadata
-//   - "display-name", "color", "badges", "emotes" → same as PRIVMSG (for the user)
-//
-// The trailing params (after :) contain an optional user message (e.g. resub message).
 func ToEventMessage(msg IRCMessage) chat.ChatMessage {
 	eventType := msg.Tags["msg-id"]
 
@@ -228,7 +200,6 @@ func ToEventMessage(msg IRCMessage) chat.ChatMessage {
 		Color:         msg.Tags["color"],
 		Text:          msg.Params,
 		Badges:        ParseBadges(msg.Tags["badges"]),
-		Emotes:        ParseEmotes(msg.Tags["emotes"]),
 		Timestamp:     ParseTimestamp(msg.Tags["tmi-sent-ts"]),
 		Tags:          msg.Tags,
 		EventType:     eventType,

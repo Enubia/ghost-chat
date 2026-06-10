@@ -14,8 +14,9 @@ import (
 )
 
 const (
-	twitchIRCURL = "wss://irc-ws.chat.twitch.tv:443"
-	maxBackoff   = 30 * time.Second
+	twitchIRCURL    = "wss://irc-ws.chat.twitch.tv:443"
+	twitchEmoteCDN  = "https://static-cdn.jtvnw.net/emoticons/v2"
+	maxBackoff      = 30 * time.Second
 )
 
 type MessageHandler func(chat.ChatMessage)
@@ -220,14 +221,20 @@ func (c *Client) handleMessage(raw string) {
 	case "PRIVMSG":
 		chatMsg := ToChatMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
-		chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
+
+		emotes := fillNativeEmoteURLs(ParseEmotes(chatMsg.Tags["emotes"]))
+		emotes = c.emotes.ResolveEmotes(chatMsg.Text, emotes)
+		chatMsg.Fragments = chat.Fragmentize(chatMsg.Text, emotes)
+
 		c.OnMessage(chatMsg)
 	case "USERNOTICE":
 		chatMsg := ToEventMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
 		if chatMsg.Text != "" {
-			chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
+			emotes := fillNativeEmoteURLs(ParseEmotes(chatMsg.Tags["emotes"]))
+			emotes = c.emotes.ResolveEmotes(chatMsg.Text, emotes)
+			chatMsg.Fragments = chat.Fragmentize(chatMsg.Text, emotes)
 		}
 
 		c.OnMessage(chatMsg)
@@ -243,6 +250,16 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 	for i := range badges {
 		badges[i].URL = c.badges.GetURL(badges[i].Name, badges[i].Version)
 	}
+}
+
+func fillNativeEmoteURLs(emotes []chat.Emote) []chat.Emote {
+	for i := range emotes {
+		if emotes[i].URL == "" {
+			emotes[i].URL = twitchEmoteCDN + "/" + emotes[i].ID + "/default/dark/1.0"
+		}
+	}
+
+	return emotes
 }
 
 func (c *Client) reconnect(ctx context.Context) {

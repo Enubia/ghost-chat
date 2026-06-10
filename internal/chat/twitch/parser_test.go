@@ -162,8 +162,8 @@ func TestToChatMessage_Basic(t *testing.T) {
 	if len(msg.Badges) != 1 || msg.Badges[0].Name != "broadcaster" {
 		t.Errorf("Badges = %+v, want [{broadcaster 1}]", msg.Badges)
 	}
-	if len(msg.Emotes) != 1 || msg.Emotes[0].ID != "25" {
-		t.Errorf("Emotes = %+v, want [{25 0 4}]", msg.Emotes)
+	if msg.Tags["emotes"] != "25:0-4" {
+		t.Errorf("Tags[emotes] = %q, want 25:0-4", msg.Tags["emotes"])
 	}
 	if msg.IsAction {
 		t.Error("IsAction should be false")
