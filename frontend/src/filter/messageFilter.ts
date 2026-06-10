@@ -75,16 +75,20 @@ export function fadePolicy(
     };
 }
 
-export function shouldDisplay(msg: ChatMessage, config: Config | null | undefined): boolean {
-    const lowerUsername = msg.username.toLowerCase();
+function isBlacklisted(username: string, blacklist: string[]): boolean {
+    const lower = username.toLowerCase();
 
+    return blacklist.some((u) => u.toLowerCase() === lower);
+}
+
+export function shouldDisplay(msg: ChatMessage, config: Config | null | undefined): boolean {
     if (msg.platform === Platform.PlatformTwitch) {
         const blacklist = config?.twitch?.user_blacklist ?? [];
         const hideCommands = config?.twitch?.hide_commands ?? false;
         const showBots = config?.twitch?.bots ?? false;
         const events = config?.twitch?.events ?? {};
 
-        if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
+        if (isBlacklisted(msg.username, blacklist)) {
             return false;
         }
 
@@ -92,7 +96,7 @@ export function shouldDisplay(msg: ChatMessage, config: Config | null | undefine
             return false;
         }
 
-        if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
+        if (!showBots && KNOWN_BOTS.has(msg.username.toLowerCase())) {
             return false;
         }
 
@@ -104,15 +108,11 @@ export function shouldDisplay(msg: ChatMessage, config: Config | null | undefine
     }
 
     if (msg.platform === Platform.PlatformYouTube) {
-        const blacklist = config?.youtube?.user_blacklist ?? [];
-
-        return !blacklist.some((u) => u.toLowerCase() === lowerUsername);
+        return !isBlacklisted(msg.username, config?.youtube?.user_blacklist ?? []);
     }
 
     if (msg.platform === Platform.PlatformKick) {
-        const blacklist = config?.kick?.user_blacklist ?? [];
-
-        return !blacklist.some((u) => u.toLowerCase() === lowerUsername);
+        return !isBlacklisted(msg.username, config?.kick?.user_blacklist ?? []);
     }
 
     return true;
