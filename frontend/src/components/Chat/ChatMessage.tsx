@@ -2,6 +2,7 @@ import type React from 'react';
 
 import type { Badge, ChatMessage as ChatMessageType, MessageFragment } from '@/types/chat';
 
+import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 import { useEffect, useState } from 'react';
 
 import styles from './ChatMessage.module.css';
@@ -38,12 +39,12 @@ function isDark(hex: string): boolean {
     return 0.299 * r + 0.587 * g + 0.114 * b < 128;
 }
 
-function platformClass(platform: string) {
-    if (platform === 'twitch') {
+function platformClass(platform: Platform) {
+    if (platform === Platform.PlatformTwitch) {
         return styles.twitch;
     }
 
-    if (platform === 'youtube') {
+    if (platform === Platform.PlatformYouTube) {
         return styles.youtube;
     }
 
@@ -174,13 +175,13 @@ function YouTubeIcon() {
     );
 }
 
-function PlatformIcon({ platform }: { platform: string }) {
+function PlatformIcon({ platform }: { platform: Platform }) {
     switch (platform) {
-        case 'twitch':
+        case Platform.PlatformTwitch:
             return <TwitchIcon />;
-        case 'youtube':
+        case Platform.PlatformYouTube:
             return <YouTubeIcon />;
-        case 'kick':
+        case Platform.PlatformKick:
             return <KickIcon />;
         default:
             return null;

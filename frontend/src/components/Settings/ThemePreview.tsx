@@ -3,6 +3,8 @@ import type React from 'react';
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 import type { Theme } from '@/types/theme';
 
+import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
 import { ChatMessage } from '@/components/Chat/ChatMessage';
 import { EventMessage } from '@/components/Chat/EventMessage';
 import { useConfigStore } from '@/stores/config';
@@ -13,7 +15,7 @@ import styles from './ThemePreview.module.css';
 const SAMPLE_MESSAGES: ChatMessageType[] = [
     {
         id: 'p1',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'NightOwl',
         color: '#9146ff',
         text: 'Hello chat! Kappa How is everyone?',
@@ -42,7 +44,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p2',
-        platform: 'youtube',
+        platform: Platform.PlatformYouTube,
         username: 'StreamViewer',
         color: '',
         text: '',
@@ -58,7 +60,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p3',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'ChatFan',
         color: '#e06f6f',
         text: 'is excited for the stream',
@@ -74,7 +76,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p4',
-        platform: 'kick',
+        platform: Platform.PlatformKick,
         username: 'KickUser99',
         color: '#53fc18',
         text: '',
@@ -93,7 +95,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p5',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'Subscriber42',
         color: '#00b8d4',
         text: 'Love the new overlay PogChamp look LUL',
@@ -128,7 +130,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'e1',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'Subscriber42',
         color: '#00b8d4',
         text: 'Love being part of this community!',
@@ -153,7 +155,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p6',
-        platform: 'youtube',
+        platform: Platform.PlatformYouTube,
         username: 'MemberPro',
         color: '',
         text: '',
@@ -169,7 +171,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p7',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'ModeratorMax',
         color: '#00ff7f',
         text: 'Remember to follow the chat rules everyone!',
@@ -191,7 +193,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p8',
-        platform: 'kick',
+        platform: Platform.PlatformKick,
         username: 'GreenGamer',
         color: '#ff6b35',
         text: '',
@@ -207,7 +209,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p9',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'LurkerLisa',
         color: '#ff69b4',
         text: 'finally decided to say something in chat',
@@ -223,7 +225,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'e2',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'GenerousGifter',
         color: '#ff8c00',
         text: '',
@@ -242,7 +244,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'e3',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'CoolStreamer',
         color: '#ff69b4',
         text: '',
@@ -261,7 +263,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'e4',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'ModeratorMax',
         color: '#00ff7f',
         text: 'Stream schedule has been updated for next week!',
@@ -286,7 +288,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p10',
-        platform: 'youtube',
+        platform: Platform.PlatformYouTube,
         username: 'TechWatcher',
         color: '',
         text: '',
@@ -302,7 +304,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p11',
-        platform: 'twitch',
+        platform: Platform.PlatformTwitch,
         username: 'EmoteKing',
         color: '#daa520',
         text: 'LOL HeyGuys that was hilarious',
@@ -326,7 +328,7 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
     },
     {
         id: 'p12',
-        platform: 'kick',
+        platform: Platform.PlatformKick,
         username: 'FirstTimer',
         color: '#87ceeb',
         text: '',

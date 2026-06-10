@@ -1,3 +1,7 @@
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
+export type { Platform };
+
 export interface Badge {
     name: string;
     version: string;
@@ -25,7 +29,7 @@ export interface SuperChatDetails {
 
 export interface ChatMessage {
     id: string;
-    platform: 'twitch' | 'youtube' | 'kick';
+    platform: Platform;
     username: string;
     color: string;
     text: string;

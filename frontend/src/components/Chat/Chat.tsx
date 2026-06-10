@@ -3,6 +3,7 @@ import type React from 'react';
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { ToggleVanish } from '@bindings/ghost-chat/app.js';
+import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 import { Events } from '@wailsio/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -79,9 +80,9 @@ export function Chat() {
     const [showTwitch, setShowTwitch] = useState(true);
     const [showYoutube, setShowYoutube] = useState(true);
     const [showKick, setShowKick] = useState(true);
-    const twitchConnected = useConnectionStore((s) => s.twitch);
-    const youtubeConnected = useConnectionStore((s) => s.youtube);
-    const kickConnected = useConnectionStore((s) => s.kick);
+    const twitchConnected = useConnectionStore((s) => s.connected[Platform.PlatformTwitch]);
+    const youtubeConnected = useConnectionStore((s) => s.connected[Platform.PlatformYouTube]);
+    const kickConnected = useConnectionStore((s) => s.connected[Platform.PlatformKick]);
     const connected = twitchConnected || youtubeConnected || kickConnected;
     const connectedCount = [twitchConnected, youtubeConnected, kickConnected].filter(Boolean).length;
     const messagesRef = useRef<HTMLDivElement>(null);
@@ -108,7 +109,7 @@ export function Chat() {
             const cfg = useConfigStore.getState().config;
             const lowerUsername = msg.username.toLowerCase();
 
-            if (msg.platform === 'twitch') {
+            if (msg.platform === Platform.PlatformTwitch) {
                 const blacklist = cfg?.twitch?.user_blacklist ?? [];
                 const hideCommands = cfg?.twitch?.hide_commands ?? false;
                 const showBots = cfg?.twitch?.bots ?? false;
@@ -128,13 +129,13 @@ export function Chat() {
                 if (msg.eventType && !isEventAllowed(msg.eventType, cfg?.twitch?.events ?? {})) {
                     return;
                 }
-            } else if (msg.platform === 'youtube') {
+            } else if (msg.platform === Platform.PlatformYouTube) {
                 const blacklist = cfg?.youtube?.user_blacklist ?? [];
 
                 if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
                     return;
                 }
-            } else if (msg.platform === 'kick') {
+            } else if (msg.platform === Platform.PlatformKick) {
                 const blacklist = cfg?.kick?.user_blacklist ?? [];
 
                 if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
@@ -230,24 +231,24 @@ export function Chat() {
         }
     };
 
-    const getFade = (platform: string) => {
-        if (platform === 'youtube') {
+    const getFade = (platform: Platform) => {
+        if (platform === Platform.PlatformYouTube) {
             return youtubeFade;
         }
 
-        if (platform === 'kick') {
+        if (platform === Platform.PlatformKick) {
             return kickFade;
         }
 
         return twitchFade;
     };
 
-    const getFadeTimeout = (platform: string) => {
-        if (platform === 'youtube') {
+    const getFadeTimeout = (platform: Platform) => {
+        if (platform === Platform.PlatformYouTube) {
             return youtubeFadeTimeout;
         }
 
-        if (platform === 'kick') {
+        if (platform === Platform.PlatformKick) {
             return kickFadeTimeout;
         }
 
@@ -257,15 +258,15 @@ export function Chat() {
     const displayMessages = topToBottom ? [...messages].toReversed() : messages;
 
     const visibleMessages = displayMessages.filter((m) => {
-        if (m.platform === 'twitch') {
+        if (m.platform === Platform.PlatformTwitch) {
             return showTwitch;
         }
 
-        if (m.platform === 'youtube') {
+        if (m.platform === Platform.PlatformYouTube) {
             return showYoutube;
         }
 
-        if (m.platform === 'kick') {
+        if (m.platform === Platform.PlatformKick) {
             return showKick;
         }
 

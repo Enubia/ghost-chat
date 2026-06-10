@@ -1,11 +1,5 @@
-import {
-    ConnectKick,
-    ConnectTwitch,
-    ConnectYouTube,
-    DisconnectKick,
-    DisconnectTwitch,
-    DisconnectYouTube,
-} from '@bindings/ghost-chat/app.js';
+import { Connect, Disconnect } from '@bindings/ghost-chat/app.js';
+import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -20,67 +14,34 @@ export function Home() {
     const navigate = useNavigate();
     const config = useConfigStore((s) => s.config);
 
-    const {
-        twitch: twitchConnected,
-        youtube: youtubeConnected,
-        kick: kickConnected,
-        setChannel,
-    } = useConnectionStore();
-    const twitchChannel = useConnectionStore((s) => s.twitchChannel) || (config?.twitch?.default_channel ?? '');
-    const youtubeInput = useConnectionStore((s) => s.youtubeInput) || (config?.youtube?.channel_id ?? '');
-    const kickInput = useConnectionStore((s) => s.kickInput) || (config?.kick?.default_channel ?? '');
-
+    const { connected, inputs, setInput } = useConnectionStore();
     const [error, setError] = useState<string | null>(null);
-    const [connecting, setConnecting] = useState<'twitch' | 'youtube' | 'kick' | null>(null);
+    const [connecting, setConnecting] = useState<Platform | null>(null);
 
-    const anyConnected = twitchConnected || youtubeConnected || kickConnected;
-
-    const handleTwitchToggle = async () => {
-        setError(null);
-
-        if (twitchConnected) {
-            void DisconnectTwitch();
-        } else {
-            setConnecting('twitch');
-
-            try {
-                await ConnectTwitch(twitchChannel);
-            } catch (err) {
-                setError(String(err));
-            } finally {
-                setConnecting(null);
-            }
+    const getInput = (platform: Platform): string => {
+        if (platform === Platform.PlatformTwitch) {
+            return inputs[platform] || (config?.twitch?.default_channel ?? '');
         }
+
+        if (platform === Platform.PlatformYouTube) {
+            return inputs[platform] || (config?.youtube?.channel_id ?? '');
+        }
+
+        return inputs[platform] || (config?.kick?.default_channel ?? '');
     };
 
-    const handleYouTubeToggle = async () => {
+    const anyConnected = Object.values(connected).some(Boolean);
+
+    const handleToggle = async (platform: Platform) => {
         setError(null);
 
-        if (youtubeConnected) {
-            void DisconnectYouTube();
+        if (connected[platform]) {
+            void Disconnect(platform);
         } else {
-            setConnecting('youtube');
+            setConnecting(platform);
 
             try {
-                await ConnectYouTube(youtubeInput);
-            } catch (err) {
-                setError(String(err));
-            } finally {
-                setConnecting(null);
-            }
-        }
-    };
-
-    const handleKickToggle = async () => {
-        setError(null);
-
-        if (kickConnected) {
-            void DisconnectKick();
-        } else {
-            setConnecting('kick');
-
-            try {
-                await ConnectKick(kickInput);
+                await Connect(platform, getInput(platform));
             } catch (err) {
                 setError(String(err));
             } finally {
@@ -105,22 +66,24 @@ export function Home() {
                             </svg>
                             {t('home.twitch')}
                         </span>
-                        <span className={`${styles.status} ${twitchConnected ? styles.connected : ''}`} />
+                        <span
+                            className={`${styles.status} ${connected[Platform.PlatformTwitch] ? styles.connected : ''}`}
+                        />
                     </div>
                     <input
                         type="text"
                         placeholder={t('home.placeholder.channel')}
-                        value={twitchChannel}
-                        onChange={(e) => setChannel('twitch', e.target.value)}
+                        value={getInput(Platform.PlatformTwitch)}
+                        onChange={(e) => setInput(Platform.PlatformTwitch, e.target.value)}
                     />
                     <button
-                        className={`btn ${twitchConnected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={handleTwitchToggle}
-                        disabled={!twitchChannel || connecting !== null}
+                        className={`btn ${connected[Platform.PlatformTwitch] ? 'btn-danger' : 'btn-primary'}`}
+                        onClick={() => void handleToggle(Platform.PlatformTwitch)}
+                        disabled={!getInput(Platform.PlatformTwitch) || connecting !== null}
                     >
-                        {connecting === 'twitch'
+                        {connecting === Platform.PlatformTwitch
                             ? t('home.connecting')
-                            : twitchConnected
+                            : connected[Platform.PlatformTwitch]
                               ? t('home.disconnect')
                               : t('home.connect')}
                     </button>
@@ -138,24 +101,26 @@ export function Home() {
                             </svg>
                             {t('home.youtube')}
                         </span>
-                        <span className={`${styles.status} ${youtubeConnected ? styles.connected : ''}`} />
+                        <span
+                            className={`${styles.status} ${connected[Platform.PlatformYouTube] ? styles.connected : ''}`}
+                        />
                     </div>
                     <input
                         type="text"
                         placeholder={t('home.placeholder.channel_or_url', {
                             defaultValue: '@handle, channel ID, or video URL',
                         })}
-                        value={youtubeInput}
-                        onChange={(e) => setChannel('youtube', e.target.value)}
+                        value={getInput(Platform.PlatformYouTube)}
+                        onChange={(e) => setInput(Platform.PlatformYouTube, e.target.value)}
                     />
                     <button
-                        className={`btn ${youtubeConnected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={handleYouTubeToggle}
-                        disabled={!youtubeInput || connecting !== null}
+                        className={`btn ${connected[Platform.PlatformYouTube] ? 'btn-danger' : 'btn-primary'}`}
+                        onClick={() => void handleToggle(Platform.PlatformYouTube)}
+                        disabled={!getInput(Platform.PlatformYouTube) || connecting !== null}
                     >
-                        {connecting === 'youtube'
+                        {connecting === Platform.PlatformYouTube
                             ? t('home.connecting')
-                            : youtubeConnected
+                            : connected[Platform.PlatformYouTube]
                               ? t('home.disconnect')
                               : t('home.connect')}
                     </button>
@@ -175,22 +140,24 @@ export function Home() {
                             </svg>
                             {t('home.kick')}
                         </span>
-                        <span className={`${styles.status} ${kickConnected ? styles.connected : ''}`} />
+                        <span
+                            className={`${styles.status} ${connected[Platform.PlatformKick] ? styles.connected : ''}`}
+                        />
                     </div>
                     <input
                         type="text"
                         placeholder={t('home.placeholder.kick_channel')}
-                        value={kickInput}
-                        onChange={(e) => setChannel('kick', e.target.value)}
+                        value={getInput(Platform.PlatformKick)}
+                        onChange={(e) => setInput(Platform.PlatformKick, e.target.value)}
                     />
                     <button
-                        className={`btn ${kickConnected ? 'btn-danger' : 'btn-primary'}`}
-                        onClick={handleKickToggle}
-                        disabled={!kickInput || connecting !== null}
+                        className={`btn ${connected[Platform.PlatformKick] ? 'btn-danger' : 'btn-primary'}`}
+                        onClick={() => void handleToggle(Platform.PlatformKick)}
+                        disabled={!getInput(Platform.PlatformKick) || connecting !== null}
                     >
-                        {connecting === 'kick'
+                        {connecting === Platform.PlatformKick
                             ? t('home.connecting')
-                            : kickConnected
+                            : connected[Platform.PlatformKick]
                               ? t('home.disconnect')
                               : t('home.connect')}
                     </button>

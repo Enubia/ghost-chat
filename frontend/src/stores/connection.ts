@@ -1,35 +1,25 @@
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
 import { create } from 'zustand';
 
-type Platform = 'twitch' | 'youtube' | 'kick';
-
 interface ConnectionState {
-    twitch: boolean;
-    youtube: boolean;
-    kick: boolean;
-    twitchChannel: string;
-    youtubeInput: string;
-    kickInput: string;
-    setConnected: (platform: Platform, connected: boolean) => void;
-    setChannel: (platform: Platform, value: string) => void;
+    connected: Record<Platform, boolean>;
+    inputs: Record<Platform, string>;
+    setConnected: (platform: Platform, value: boolean) => void;
+    setInput: (platform: Platform, value: string) => void;
 }
 
-export const useConnectionStore = create<ConnectionState>((set) => ({
-    twitch: false,
-    youtube: false,
-    kick: false,
-    twitchChannel: '',
-    youtubeInput: '',
-    kickInput: '',
+export const useConnectionStore = create<ConnectionState>(() => ({
+    connected: { twitch: false, youtube: false, kick: false } as Record<Platform, boolean>,
+    inputs: { twitch: '', youtube: '', kick: '' } as Record<Platform, string>,
 
-    setConnected: (platform, connected) => set((s) => ({ ...s, [platform]: connected })),
+    setConnected: (platform, value) =>
+        useConnectionStore.setState((s) => ({
+            connected: { ...s.connected, [platform]: value },
+        })),
 
-    setChannel: (platform, value) => {
-        if (platform === 'twitch') {
-            set({ twitchChannel: value });
-        } else if (platform === 'youtube') {
-            set({ youtubeInput: value });
-        } else {
-            set({ kickInput: value });
-        }
-    },
+    setInput: (platform, value) =>
+        useConnectionStore.setState((s) => ({
+            inputs: { ...s.inputs, [platform]: value },
+        })),
 }));

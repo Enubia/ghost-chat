@@ -1,3 +1,5 @@
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
 import { ExpandForSettings, ShrinkToChat } from '@bindings/ghost-chat/app.js';
 import { Events } from '@wailsio/runtime';
 import { useEffect, useState } from 'react';
@@ -40,12 +42,12 @@ function App() {
 
     useEffect(() => {
         const cancelConnected = Events.On('chat:connected', (ev) => {
-            const { platform } = ev.data as { platform: 'twitch' | 'youtube' | 'kick' };
+            const { platform } = ev.data as { platform: Platform };
             setConnected(platform, true);
         });
 
         const cancelDisconnected = Events.On('chat:disconnected', (ev) => {
-            const { platform } = ev.data as { platform: 'twitch' | 'youtube' | 'kick' };
+            const { platform } = ev.data as { platform: Platform };
             setConnected(platform, false);
         });
 
