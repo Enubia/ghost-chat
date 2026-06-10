@@ -49,6 +49,14 @@ function makeTwitchConfig(overrides: Partial<Config['twitch']> = {}): Config {
 }
 
 describe('shouldDisplay', () => {
+    it('returns true when config is null (default-allow before config loads)', () => {
+        expect(shouldDisplay(makeMsg(), null)).toBe(true);
+    });
+
+    it('returns true for unknown platform (fallthrough)', () => {
+        expect(shouldDisplay(makeMsg({ platform: 'unknown' as Platform }), null)).toBe(true);
+    });
+
     describe('blacklist', () => {
         it('allows messages not on the blacklist', () => {
             const config = makeTwitchConfig({ user_blacklist: ['blockeduser'] });

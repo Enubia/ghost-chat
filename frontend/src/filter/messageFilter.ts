@@ -1,4 +1,4 @@
-import type { Config } from '@bindings/ghost-chat/internal/config/models.js';
+import type { Config, TwitchEvents } from '@bindings/ghost-chat/internal/config/models.js';
 
 import type { ChatMessage } from '@/types/chat';
 
@@ -81,6 +81,24 @@ function isBlacklisted(username: string, blacklist: string[]): boolean {
     return blacklist.some((u) => u.toLowerCase() === lower);
 }
 
+function isEventAllowed(eventType: string, events: Partial<TwitchEvents>): boolean {
+    const category = classifyEvent(eventType);
+
+    if (category === 'sub') {
+        return events.subscriptions !== false;
+    }
+
+    if (category === 'raid') {
+        return events.raids !== false;
+    }
+
+    if (category === 'announcement') {
+        return events.announcements !== false;
+    }
+
+    return events.other !== false;
+}
+
 export function shouldDisplay(msg: ChatMessage, config: Config | null | undefined): boolean {
     if (msg.platform === Platform.PlatformTwitch) {
         const blacklist = config?.twitch?.user_blacklist ?? [];
@@ -116,25 +134,4 @@ export function shouldDisplay(msg: ChatMessage, config: Config | null | undefine
     }
 
     return true;
-}
-
-function isEventAllowed(
-    eventType: string,
-    events: { subscriptions?: boolean; raids?: boolean; announcements?: boolean; other?: boolean }
-): boolean {
-    const category = classifyEvent(eventType);
-
-    if (category === 'sub') {
-        return events.subscriptions !== false;
-    }
-
-    if (category === 'raid') {
-        return events.raids !== false;
-    }
-
-    if (category === 'announcement') {
-        return events.announcements !== false;
-    }
-
-    return events.other !== false;
 }

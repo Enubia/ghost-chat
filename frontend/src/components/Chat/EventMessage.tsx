@@ -26,7 +26,7 @@ function formatTime(ts: string) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-const EVENT_ACCENT_CLASS: Record<string, string> = {
+const EVENT_ACCENT_CLASS: Record<ReturnType<typeof classifyEvent>, string> = {
     sub: styles.sub,
     raid: styles.raid,
     announcement: styles.announcement,
@@ -88,7 +88,7 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
         }
     };
 
-    const accentClass = EVENT_ACCENT_CLASS[classifyEvent(message.eventType ?? '')] ?? styles.other;
+    const accentClass = EVENT_ACCENT_CLASS[classifyEvent(message.eventType ?? '')];
 
     return (
         <div

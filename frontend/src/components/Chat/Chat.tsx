@@ -253,14 +253,16 @@ export function Chat() {
                               <span>{t('chat.waiting')}</span>
                           </div>
                       )
-                    : visibleMessages.map((msg) =>
-                          msg.eventType ? (
+                    : visibleMessages.map((msg) => {
+                          const { fade, timeoutSeconds } = fadePolicy(msg.platform, config);
+
+                          return msg.eventType ? (
                               <EventMessage
                                   key={msg.id}
                                   message={msg}
                                   showTimestamp={showTimestamp}
-                                  fade={fadePolicy(msg.platform, config).fade}
-                                  fadeTimeout={fadePolicy(msg.platform, config).timeoutSeconds}
+                                  fade={fade}
+                                  fadeTimeout={timeoutSeconds}
                                   onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                               />
                           ) : (
@@ -272,12 +274,12 @@ export function Chat() {
                                   showPlatformIcon={connectedCount > 1}
                                   showColon={theme.show_colon}
                                   showAvatars={theme.show_avatars}
-                                  fade={fadePolicy(msg.platform, config).fade}
-                                  fadeTimeout={fadePolicy(msg.platform, config).timeoutSeconds}
+                                  fade={fade}
+                                  fadeTimeout={timeoutSeconds}
                                   onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                               />
-                          )
-                      )}
+                          );
+                      })}
             </div>
             {!autoScroll && (
                 <button
