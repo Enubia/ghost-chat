@@ -48,13 +48,13 @@
             "hotkey_hint": "Erfordert Strg, Alt oder Shift plus eine weitere Taste. Z.B. Strg+Shift+V"
         },
         "platform": {
+            "default_channel": "Standardkanal",
             "fade": "Nachrichten ausblenden",
             "fade_timeout": "Ausblenden nach (Sekunden)",
             "user_blacklist": "Benutzer-Sperrliste",
             "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
         },
         "twitch": {
-            "default_channel": "Standardkanal",
             "bots": "Bots anzeigen",
             "hide_commands": "Befehle ausblenden",
             "hide_badges": "Abzeichen ausblenden",
@@ -72,7 +72,6 @@
             "detecting": "Erkenne..."
         },
         "kick": {
-            "default_channel": "Standardkanal",
             "default_channel_placeholder": "kanalname"
         },
         "themes": {

@@ -23,8 +23,8 @@ export function TwitchSettings() {
         <>
             <ChannelField
                 initialValue={twitch?.default_channel ?? ''}
-                labelKey="settings.twitch.default_channel"
-                placeholderKey="settings.twitch.default_channel"
+                labelKey="settings.platform.default_channel"
+                placeholderKey="settings.platform.default_channel"
                 onSave={(v) => set({ default_channel: v })}
                 validator={validateTwitchChannel}
             />

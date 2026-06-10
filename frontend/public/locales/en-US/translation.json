@@ -48,13 +48,13 @@
             "hotkey_hint": "Requires one of Ctrl, Alt, or Shift plus another key. E.g. Ctrl+Shift+V"
         },
         "platform": {
+            "default_channel": "Default Channel",
             "fade": "Fade Messages",
             "fade_timeout": "Fade Timeout (seconds)",
             "user_blacklist": "User Blacklist",
             "user_blacklist_placeholder": "user1, user2, ..."
         },
         "twitch": {
-            "default_channel": "Default Channel",
             "bots": "Show Bots",
             "hide_commands": "Hide Commands",
             "hide_badges": "Hide Badges",
@@ -72,7 +72,6 @@
             "detecting": "Detecting..."
         },
         "kick": {
-            "default_channel": "Default Channel",
             "default_channel_placeholder": "channelname"
         },
         "themes": {

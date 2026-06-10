@@ -19,7 +19,7 @@ export function KickSettings() {
         <>
             <ChannelField
                 initialValue={kick?.default_channel ?? ''}
-                labelKey="settings.kick.default_channel"
+                labelKey="settings.platform.default_channel"
                 placeholderKey="settings.kick.default_channel_placeholder"
                 onSave={(v) => set({ default_channel: v })}
                 validator={validateKickChannel}
