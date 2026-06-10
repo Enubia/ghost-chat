@@ -141,7 +141,7 @@ func TestEmitSeam_MessageFlowsThroughEmitter(t *testing.T) {
 
 	msg := chat.ChatMessage{
 		ID:       "test-id",
-		Platform: string(chat.PlatformTwitch),
+		Platform: chat.PlatformTwitch,
 		Username: "viewer",
 		Text:     "hello",
 	}

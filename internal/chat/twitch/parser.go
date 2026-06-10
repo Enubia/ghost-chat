@@ -127,7 +127,7 @@ func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 	}
 
 	return chat.ChatMessage{
-		Platform:  string(chat.PlatformTwitch),
+		Platform:  chat.PlatformTwitch,
 		ID:        id,
 		Username:  username,
 		Color:     color,
@@ -194,7 +194,7 @@ func ToEventMessage(msg IRCMessage) chat.ChatMessage {
 	}
 
 	return chat.ChatMessage{
-		Platform:      string(chat.PlatformTwitch),
+		Platform:      chat.PlatformTwitch,
 		ID:            msg.Tags["id"],
 		Username:      username,
 		Color:         msg.Tags["color"],

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { stripWhitespace } from '@/utils/validate';
 
 interface ChannelFieldProps {
+    // captured once on mount; pass a `key` to remount if the config can change externally
     initialValue: string;
     labelKey: string;
     placeholderKey: string;

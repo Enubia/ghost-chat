@@ -29,7 +29,7 @@ type SuperChatDetails struct {
 
 type ChatMessage struct {
 	ID        string            `json:"id"`
-	Platform  string            `json:"platform"`
+	Platform  Platform          `json:"platform"`
 	Username  string            `json:"username"`
 	Color     string            `json:"color"`
 	Text      string            `json:"text"`

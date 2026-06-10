@@ -1,8 +1,9 @@
-import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
 import { create } from 'zustand';
 
-type ConnectedMap = Record<Platform, boolean>;
-type InputMap = Record<Platform, string>;
+type ConnectedMap = Partial<Record<Platform, boolean>>;
+type InputMap = Partial<Record<Platform, string>>;
 
 interface ConnectionState {
     connected: ConnectedMap;
@@ -11,31 +12,17 @@ interface ConnectionState {
     setInput: (platform: Platform, value: string) => void;
 }
 
-const initialConnected: ConnectedMap = {
-    [Platform.$zero]: false,
-    [Platform.PlatformTwitch]: false,
-    [Platform.PlatformYouTube]: false,
-    [Platform.PlatformKick]: false,
-};
-
-const initialInputs: InputMap = {
-    [Platform.$zero]: '',
-    [Platform.PlatformTwitch]: '',
-    [Platform.PlatformYouTube]: '',
-    [Platform.PlatformKick]: '',
-};
-
-export const useConnectionStore = create<ConnectionState>(() => ({
-    connected: initialConnected,
-    inputs: initialInputs,
+export const useConnectionStore = create<ConnectionState>((set) => ({
+    connected: {},
+    inputs: {},
 
     setConnected: (platform, value) =>
-        useConnectionStore.setState((s) => ({
+        set((s) => ({
             connected: { ...s.connected, [platform]: value },
         })),
 
     setInput: (platform, value) =>
-        useConnectionStore.setState((s) => ({
+        set((s) => ({
             inputs: { ...s.inputs, [platform]: value },
         })),
 }));

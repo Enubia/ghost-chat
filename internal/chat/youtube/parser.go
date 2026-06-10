@@ -44,7 +44,7 @@ func parseActions(actions []Action) (messages []chat.ChatMessage, deletions []st
 func parseTextMessage(r LiveChatTextMessageRenderer) chat.ChatMessage {
 	runs := r.Message.Runs
 	return chat.ChatMessage{
-		Platform:  string(chat.PlatformYouTube),
+		Platform:  chat.PlatformYouTube,
 		ID:        r.ID,
 		Username:  r.AuthorName.SimpleText,
 		Avatar:    largestThumbnail(r.AuthorPhoto.Thumbnails),

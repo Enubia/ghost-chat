@@ -27,7 +27,8 @@ export interface ChatMessage {
     color: string;
     text: string;
     badges: Badge[];
-    fragments: MessageFragment[];
+    // Go's Fragmentize returns a nil slice for empty text, which serializes as null
+    fragments: MessageFragment[] | null;
     timestamp: string;
     isAction: boolean;
     tags: Record<string, string>;
