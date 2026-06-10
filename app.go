@@ -23,9 +23,8 @@ type App struct {
 	window         *application.WebviewWindow
 	config         *config.Config
 	configPath     string
-	twitch         *twitch.Client
-	youtube        *youtube.Client
-	kick           *kick.Client
+	clients        map[chat.Platform]chat.Client
+	emit           func(event string, data any)
 	version        string
 	preExpandWidth int
 	vanished       bool
@@ -49,16 +48,22 @@ func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
 	a.app = app
 	a.window = win
 
-	onMessage := func(msg chat.ChatMessage) {
-		a.app.Event.Emit("chat:message", msg)
-	}
-	onEvent := func(event string, data any) {
+	a.emit = func(event string, data any) {
 		a.app.Event.Emit(event, data)
 	}
 
-	a.twitch = twitch.NewClient(onMessage, onEvent)
-	a.youtube = youtube.NewClient(onMessage, onEvent)
-	a.kick = kick.NewClient(onMessage, onEvent)
+	onMessage := func(msg chat.ChatMessage) {
+		a.emit("chat:message", msg)
+	}
+	onEvent := func(event string, data any) {
+		a.emit(event, data)
+	}
+
+	a.clients = map[chat.Platform]chat.Client{
+		chat.PlatformTwitch:  twitch.NewClient(onMessage, onEvent),
+		chat.PlatformYouTube: youtube.NewClient(onMessage, onEvent),
+		chat.PlatformKick:    kick.NewClient(onMessage, onEvent),
+	}
 }
 
 func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
@@ -131,9 +136,9 @@ func (a *App) ServiceShutdown() error {
 	a.SaveWindowState()
 
 	go func() {
-		a.twitch.Disconnect()
-		a.youtube.Disconnect()
-		a.kick.Disconnect()
+		for _, c := range a.clients {
+			c.Disconnect()
+		}
 		ghHotkey.Unregister()
 	}()
 
@@ -164,32 +169,30 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 	return nil
 }
 
-func (a *App) ConnectTwitch(channel string) error {
-	return a.twitch.Connect(channel)
+func (a *App) Connect(platform chat.Platform, input string) error {
+	c, ok := a.clients[platform]
+
+	if !ok {
+		return fmt.Errorf("unknown platform: %s", platform)
+	}
+
+	return c.Connect(input)
 }
 
-func (a *App) DisconnectTwitch() {
-	a.twitch.Disconnect()
-}
+func (a *App) Disconnect(platform chat.Platform) error {
+	c, ok := a.clients[platform]
 
-func (a *App) ConnectYouTube(input string) error {
-	return a.youtube.Connect(input)
-}
+	if !ok {
+		return fmt.Errorf("unknown platform: %s", platform)
+	}
 
-func (a *App) DisconnectYouTube() {
-	a.youtube.Disconnect()
+	c.Disconnect()
+
+	return nil
 }
 
 func (a *App) ResolveYouTubeVideo(input string) (string, error) {
 	return youtube.ResolveVideoURL(input)
-}
-
-func (a *App) ConnectKick(input string) error {
-	return a.kick.Connect(input)
-}
-
-func (a *App) DisconnectKick() {
-	a.kick.Disconnect()
 }
 
 func (a *App) ExpandForSettings() {

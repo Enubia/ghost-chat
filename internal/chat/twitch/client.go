@@ -107,11 +107,6 @@ func (c *Client) Disconnect() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": "twitch"})
 }
 
-func (c *Client) ChangeChannel(channel string) error {
-	c.Disconnect()
-	return c.Connect(channel)
-}
-
 func (c *Client) sendHandshake() error {
 	if len(c.channel) == 0 {
 		return fmt.Errorf("channel is empty")
