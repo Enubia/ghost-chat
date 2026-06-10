@@ -61,7 +61,7 @@ func TestSaveAndLoad(t *testing.T) {
 	}
 }
 
-func TestLoadReturnsErrorForInvalidJSON(t *testing.T) {
+func TestLoadRecoversFromInvalidJSON(t *testing.T) {
 	tmpDir := t.TempDir()
 
 	path := filepath.Join(tmpDir, "ghost-chat", "config.json")
@@ -70,17 +70,39 @@ func TestLoadReturnsErrorForInvalidJSON(t *testing.T) {
 		t.Fatal("Failed to create tmp dir", err)
 	}
 
-	if err := os.WriteFile(path, []byte("not json"), 0644); err != nil {
+	garbageBytes := []byte("not json")
+
+	if err := os.WriteFile(path, garbageBytes, 0644); err != nil {
 		t.Fatal("Failed to write garbage data", err)
 	}
 
 	config, err := Load(path)
 
-	if err == nil {
-		t.Error("Expected error for invalid JSON, got nil")
+	if err != nil {
+		t.Fatal("Expected nil error for invalid JSON, got", err)
 	}
 
-	if config != nil {
-		t.Error("Expected nil config, got", config)
+	if config == nil {
+		t.Fatal("Expected default config, got nil")
+	}
+
+	defaultConfig := DefaultConfig()
+
+	if config.General.Language != defaultConfig.General.Language {
+		t.Errorf("got %v, want %v", config.General.Language, defaultConfig.General.Language)
+	}
+
+	backupBytes, err := os.ReadFile(path + ".corrupted")
+
+	if err != nil {
+		t.Fatal("Expected corrupted backup file to exist, got", err)
+	}
+
+	if string(backupBytes) != string(garbageBytes) {
+		t.Errorf("got backup bytes %q, want %q", backupBytes, garbageBytes)
+	}
+
+	if _, err := os.Stat(path); !os.IsNotExist(err) {
+		t.Errorf("Expected corrupted file at %s to be removed, but it still exists", path)
 	}
 }

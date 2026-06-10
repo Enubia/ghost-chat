@@ -3,6 +3,9 @@ package main
 import (
 	"embed"
 	"ghost-chat/internal/config"
+	"os"
+	"path/filepath"
+	"runtime"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
@@ -49,9 +52,20 @@ func main() {
 
 	initialW, initialH := sanitizeWindowSize(cfg.WindowState.Width, cfg.WindowState.Height)
 
+	var webviewUserDataPath string
+
+	if runtime.GOOS == "windows" {
+		if localAppData := os.Getenv("LOCALAPPDATA"); localAppData != "" {
+			webviewUserDataPath = filepath.Join(localAppData, "ghost-chat", "webview")
+		}
+	}
+
 	app := application.New(application.Options{
 		Name: "Ghost Chat",
 		Icon: appIcon,
+		Windows: application.WindowsOptions{
+			WebviewUserDataPath: webviewUserDataPath,
+		},
 		ShouldQuit: func() bool {
 			svc.SaveWindowState()
 			return true
@@ -68,13 +82,17 @@ func main() {
 	})
 
 	win := app.Window.NewWithOptions(application.WebviewWindowOptions{
-		Title:          "ghost-chat",
-		Width:          initialW,
-		Height:         initialH,
-		Hidden:         true,
-		Frameless:      true,
-		AlwaysOnTop:    true,
-		BackgroundType: application.BackgroundTypeTransparent,
+		Title:            "ghost-chat",
+		Width:            initialW,
+		Height:           initialH,
+		Hidden:           true,
+		Frameless:        true,
+		AlwaysOnTop:      true,
+		BackgroundType:   application.BackgroundTypeTransparent,
+		BackgroundColour: application.NewRGBA(0, 0, 0, 0),
+		Windows: application.WindowsWindow{
+			DisableFramelessWindowDecorations: true,
+		},
 		Mac: application.MacWindow{
 			Backdrop: application.MacBackdropTransparent,
 		},
