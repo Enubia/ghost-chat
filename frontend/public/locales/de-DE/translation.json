@@ -47,15 +47,17 @@
             "show_waiting_message": "Wartenachricht anzeigen",
             "hotkey_hint": "Erfordert Strg, Alt oder Shift plus eine weitere Taste. Z.B. Strg+Shift+V"
         },
-        "twitch": {
-            "default_channel": "Standardkanal",
+        "platform": {
             "fade": "Nachrichten ausblenden",
             "fade_timeout": "Ausblenden nach (Sekunden)",
+            "user_blacklist": "Benutzer-Sperrliste",
+            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+        },
+        "twitch": {
+            "default_channel": "Standardkanal",
             "bots": "Bots anzeigen",
             "hide_commands": "Befehle ausblenden",
             "hide_badges": "Abzeichen ausblenden",
-            "user_blacklist": "Benutzer-Sperrliste",
-            "user_blacklist_placeholder": "benutzer1, benutzer2, ...",
             "events": "Ereignisse",
             "events_hint": "Inline-Benachrichtigungen fuer Kanalereignisse anzeigen (kein Login erforderlich)",
             "events_subs": "Abonnements",
@@ -67,19 +69,11 @@
             "channel": "Kanal / Video-URL",
             "channel_placeholder": "@handle, Kanal-ID oder Video-URL",
             "detect": "Erkennen",
-            "detecting": "Erkenne...",
-            "fade": "Nachrichten ausblenden",
-            "fade_timeout": "Ausblenden nach (Sekunden)",
-            "user_blacklist": "Benutzer-Sperrliste",
-            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+            "detecting": "Erkenne..."
         },
         "kick": {
             "default_channel": "Standardkanal",
-            "default_channel_placeholder": "kanalname",
-            "fade": "Nachrichten ausblenden",
-            "fade_timeout": "Ausblenden nach (Sekunden)",
-            "user_blacklist": "Benutzer-Sperrliste",
-            "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
+            "default_channel_placeholder": "kanalname"
         },
         "themes": {
             "active_theme": "Aktives Design",
