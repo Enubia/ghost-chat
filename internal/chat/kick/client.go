@@ -132,6 +132,10 @@ func (c *Client) readLoop(conn *websocket.Conn, ctx context.Context) {
 }
 
 func (c *Client) reconnect(ctx context.Context) {
+	c.mu.Lock()
+	chatroomID := c.chatroomID
+	c.mu.Unlock()
+
 	backoff := time.Second
 
 	for {
@@ -150,7 +154,7 @@ func (c *Client) reconnect(ctx context.Context) {
 			continue
 		}
 
-		if err := subscribe(conn, c.chatroomID); err != nil {
+		if err := subscribe(conn, chatroomID); err != nil {
 			conn.Close()
 			logf("reconnect subscribe failed: %v", err)
 			backoff = min(backoff*2, maxBackoff)
@@ -158,6 +162,11 @@ func (c *Client) reconnect(ctx context.Context) {
 		}
 
 		c.mu.Lock()
+		if ctx.Err() != nil {
+			c.mu.Unlock()
+			conn.Close()
+			return
+		}
 		if c.conn != nil {
 			c.conn.Close()
 		}

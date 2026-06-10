@@ -207,12 +207,10 @@ func TestSendHandshake(t *testing.T) {
 	if err != nil {
 		t.Fatalf("dial failed: %v", err)
 	}
-	client.conn = conn
-	client.channel = "testchannel"
 
 	time.Sleep(50 * time.Millisecond)
 
-	err = client.sendHandshake()
+	err = client.sendHandshake(conn, "testchannel")
 	if err != nil {
 		t.Fatalf("sendHandshake error: %v", err)
 	}

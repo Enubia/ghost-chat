@@ -76,7 +76,7 @@ func (c *Client) Connect(channel string) error {
 
 	c.mu.Unlock()
 
-	err = c.sendHandshake()
+	err = c.sendHandshake(conn, channel)
 
 	if err != nil {
 		return err
@@ -107,32 +107,32 @@ func (c *Client) Disconnect() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformTwitch)})
 }
 
-func (c *Client) sendHandshake() error {
-	if len(c.channel) == 0 {
+func (c *Client) sendHandshake(conn *websocket.Conn, channel string) error {
+	if len(channel) == 0 {
 		return fmt.Errorf("channel is empty")
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("CAP REQ :twitch.tv/tags twitch.tv/commands")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("CAP REQ :twitch.tv/tags twitch.tv/commands")); err != nil {
 		return err
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("PASS SCHMOOPIIE")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("PASS SCHMOOPIIE")); err != nil {
 		return err
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("NICK justinfan12345")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("NICK justinfan12345")); err != nil {
 		return err
 	}
 
 	joinLine := "JOIN "
 
-	if c.channel[0] != '#' {
+	if channel[0] != '#' {
 		joinLine += "#"
 	}
 
-	joinLine += c.channel
+	joinLine += channel
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte(joinLine)); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte(joinLine)); err != nil {
 		return err
 	}
 
@@ -268,14 +268,18 @@ func (c *Client) reconnect(ctx context.Context) {
 		}
 
 		c.mu.Lock()
+		if ctx.Err() != nil {
+			c.mu.Unlock()
+			conn.Close()
+			return
+		}
 		if c.conn != nil {
 			c.conn.Close()
 		}
 		c.conn = conn
-		c.channel = channel
 		c.mu.Unlock()
 
-		if err := c.sendHandshake(); err != nil {
+		if err := c.sendHandshake(conn, channel); err != nil {
 			conn.Close()
 			backoff = min(backoff*2, maxBackoff)
 			continue
