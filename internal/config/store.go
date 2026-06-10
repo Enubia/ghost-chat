@@ -40,7 +40,7 @@ func Load(path string) (*Config, error) {
 	var raw map[string]json.RawMessage
 
 	if err = json.Unmarshal(bytes, &raw); err != nil {
-		return nil, err
+		return recoverCorrupted(path, bytes, err)
 	}
 
 	if _, hasV3Key := raw["savedWindowState"]; hasV3Key {
@@ -52,10 +52,21 @@ func Load(path string) (*Config, error) {
 	config := DefaultConfig()
 
 	if err = json.Unmarshal(bytes, &config); err != nil {
-		return nil, err
+		return recoverCorrupted(path, bytes, err)
 	}
 
 	return &config, nil
+}
+
+func recoverCorrupted(path string, bytes []byte, err error) (*Config, error) {
+	println("Warning: config file is corrupted, backing up and starting fresh:", err.Error())
+
+	_ = os.WriteFile(path+".corrupted", bytes, 0644)
+	_ = os.Remove(path)
+
+	defaultConfig := DefaultConfig()
+
+	return &defaultConfig, nil
 }
 
 func Save(config *Config, path string) error {
@@ -69,5 +80,31 @@ func Save(config *Config, path string) error {
 		return err
 	}
 
-	return os.WriteFile(path, bytes, 0644)
+	tempPath := path + ".tmp"
+
+	f, err := os.OpenFile(tempPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		f.Close()
+
+		_ = os.Remove(tempPath)
+	}()
+
+	if _, err = f.Write(bytes); err != nil {
+		return err
+	}
+
+	if err = f.Sync(); err != nil {
+		return err
+	}
+
+	if err = f.Close(); err != nil {
+		return err
+	}
+
+	return os.Rename(tempPath, path)
 }
