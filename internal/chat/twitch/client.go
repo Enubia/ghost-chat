@@ -84,7 +84,7 @@ func (c *Client) Connect(channel string) error {
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
 
-	go c.readLoop()
+	go c.readLoop(conn, ctx)
 
 	return nil
 }
@@ -139,25 +139,31 @@ func (c *Client) sendHandshake() error {
 	return nil
 }
 
-func (c *Client) readLoop() {
+func (c *Client) readLoop(conn *websocket.Conn, ctx context.Context) {
 	for {
 		select {
-		case <-c.ctx.Done():
-			return // context was cancelled, stop the loop
+		case <-ctx.Done():
+			return
 		default:
-			_, message, err := c.conn.ReadMessage()
+		}
 
-			if err != nil {
-				// connection died — log it, emit error event, try reconnect
-				go c.reconnect()
+		_, message, err := conn.ReadMessage()
+
+		if err != nil {
+			select {
+			case <-ctx.Done():
 				return
+			default:
 			}
 
-			// Twitch may send multiple messages in one packet, split them and handle separately
-			for _, line := range strings.Split(string(message), "\r\n") {
-				if line != "" {
-					c.handleMessage(line)
-				}
+			go c.reconnect(ctx)
+
+			return
+		}
+
+		for _, line := range strings.Split(string(message), "\r\n") {
+			if line != "" {
+				c.handleMessage(line)
 			}
 		}
 	}
@@ -240,9 +246,8 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 	}
 }
 
-func (c *Client) reconnect() {
+func (c *Client) reconnect(ctx context.Context) {
 	c.mu.Lock()
-	ctx := c.ctx
 	channel := c.channel
 	c.mu.Unlock()
 
@@ -253,17 +258,31 @@ func (c *Client) reconnect() {
 		case <-ctx.Done():
 			return
 		case <-time.After(backoff):
-			err := c.Connect(channel)
-
-			if err == nil {
-				return
-			}
-
-			backoff *= 2
-
-			if backoff > maxBackoff {
-				backoff = maxBackoff
-			}
 		}
+
+		conn, _, err := websocket.DefaultDialer.Dial(twitchIRCURL, nil)
+
+		if err != nil {
+			backoff = min(backoff*2, maxBackoff)
+			continue
+		}
+
+		c.mu.Lock()
+		if c.conn != nil {
+			c.conn.Close()
+		}
+		c.conn = conn
+		c.channel = channel
+		c.mu.Unlock()
+
+		if err := c.sendHandshake(); err != nil {
+			conn.Close()
+			backoff = min(backoff*2, maxBackoff)
+			continue
+		}
+
+		go c.readLoop(conn, ctx)
+
+		return
 	}
 }
