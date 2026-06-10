@@ -20,7 +20,7 @@ func Fragmentize(text string, emotes []Emote) []MessageFragment {
 		valid = append(valid, e)
 	}
 
-	sort.Slice(valid, func(i, j int) bool {
+	sort.SliceStable(valid, func(i, j int) bool {
 		return valid[i].Start < valid[j].Start
 	})
 

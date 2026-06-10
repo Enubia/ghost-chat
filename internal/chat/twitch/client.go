@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	twitchIRCURL    = "wss://irc-ws.chat.twitch.tv:443"
-	twitchEmoteCDN  = "https://static-cdn.jtvnw.net/emoticons/v2"
-	maxBackoff      = 30 * time.Second
+	twitchIRCURL   = "wss://irc-ws.chat.twitch.tv:443"
+	twitchEmoteCDN = "https://static-cdn.jtvnw.net/emoticons/v2"
+	maxBackoff     = 30 * time.Second
 )
 
 type MessageHandler func(chat.ChatMessage)
