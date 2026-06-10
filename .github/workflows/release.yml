@@ -4,17 +4,58 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (e.g. v4.0.1)"
-        required: true
-
-env:
-  VERSION_TAG: ${{ github.event.inputs.version }}
+        description: "Version override (e.g. v4.0.1) — leave empty to auto-detect from commits"
+        required: false
+      release-candidate:
+        description: "Draft a release candidate (vX.Y.Z-rc.N, marked as prerelease)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
 
+concurrency: release
+
 jobs:
+  determine-version:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Compute release version
+        id: version
+        env:
+          RC: ${{ inputs.release-candidate }}
+          OVERRIDE: ${{ inputs.version }}
+        run: |
+          args=()
+
+          if [ "$RC" = "true" ]; then
+            args+=(--rc)
+          fi
+
+          if [ -n "$OVERRIDE" ]; then
+            args+=(--override "$OVERRIDE")
+          fi
+
+          version="$(bash .github/scripts/next-version.sh "${args[@]}")"
+
+          if git rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            echo "tag $version already exists" >&2
+            exit 1
+          fi
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Release version: \`$version\`" >> "$GITHUB_STEP_SUMMARY"
+
   build-macos:
+    needs: determine-version
     runs-on: macos-latest
 
     steps:
@@ -41,7 +82,7 @@ jobs:
 
       - run: wails3 task darwin:package:universal
         env:
-          VERSION: ${{ env.VERSION_TAG }}
+          VERSION: ${{ needs.determine-version.outputs.version }}
 
       - name: Zip app bundle
         run: cd bin && zip -r ghost-chat-macos.zip ghost-chat.app
@@ -52,6 +93,7 @@ jobs:
           path: bin/ghost-chat-macos.zip
 
   build-windows:
+    needs: determine-version
     runs-on: windows-latest
 
     steps:
@@ -78,7 +120,7 @@ jobs:
 
       - run: wails3 task build
         env:
-          VERSION: ${{ env.VERSION_TAG }}
+          VERSION: ${{ needs.determine-version.outputs.version }}
 
       - uses: actions/upload-artifact@v7
         with:
@@ -86,8 +128,11 @@ jobs:
           path: bin/ghost-chat.exe
 
   create-release:
-    needs: [build-macos, build-windows]
+    needs: [determine-version, build-macos, build-windows]
     runs-on: ubuntu-latest
+
+    env:
+      VERSION_TAG: ${{ needs.determine-version.outputs.version }}
 
     steps:
       - uses: actions/checkout@v6
@@ -136,6 +181,7 @@ jobs:
         with:
           tag_name: ${{ env.VERSION_TAG }}
           draft: true
+          prerelease: ${{ inputs.release-candidate }}
           generate_release_notes: true
           append_body: true
           body: |

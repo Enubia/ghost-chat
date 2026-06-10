@@ -45,7 +45,7 @@ wails3 task package       # .app bundle (macOS) or .exe (Windows)
 1. Fork the repo
 2. Create a branch for your feature or fix
 3. Make changes, ensure tests pass and linting is clean
-4. Push and open a Pull Request
+4. Push and open a Pull Request with a [conventional commit](https://www.conventionalcommits.org/) title, e.g. `fix(windows): ...` or `feat: ...` — PRs are squash-merged, and the title becomes the commit that determines the next release version
 
 Merge the latest from upstream before submitting.
 
