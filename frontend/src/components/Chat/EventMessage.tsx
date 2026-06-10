@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import { classifyEvent } from '@/filter/messageFilter';
 
 import styles from './EventMessage.module.css';
-
-const TWITCH_EMOTE_CDN = 'https://static-cdn.jtvnw.net/emoticons/v2';
+import { renderFragments } from './renderFragments';
 
 interface Props {
     message: ChatMessageType;
@@ -32,42 +31,6 @@ const EVENT_ACCENT_CLASS: Record<ReturnType<typeof classifyEvent>, string> = {
     announcement: styles.announcement,
     other: styles.other,
 };
-
-function renderUserMessage(text: string, emotes: ChatMessageType['emotes']) {
-    if (!emotes || emotes.length === 0) {
-        return <span>{text}</span>;
-    }
-
-    const sorted = [...emotes].toSorted((a, b) => a.start - b.start);
-    const parts: (string | React.ReactElement)[] = [];
-    let cursor = 0;
-
-    for (const emote of sorted) {
-        if (emote.start > cursor) {
-            parts.push(text.slice(cursor, emote.start));
-        }
-
-        const emoteName = text.slice(emote.start, emote.end + 1);
-
-        parts.push(
-            <img
-                key={`${emote.id}-${emote.start}`}
-                className={styles.emote}
-                src={emote.url || `${TWITCH_EMOTE_CDN}/${emote.id}/default/dark/1.0`}
-                alt={emoteName}
-                title={emoteName}
-            />
-        );
-
-        cursor = emote.end + 1;
-    }
-
-    if (cursor < text.length) {
-        parts.push(text.slice(cursor));
-    }
-
-    return <span>{parts}</span>;
-}
 
 export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
     const [fading, setFading] = useState(false);
@@ -100,7 +63,13 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
             )}
             <span className={styles.systemMessage}>{message.systemMessage}</span>
             {message.text && (
-                <span className={styles.userMessage}>{renderUserMessage(message.text, message.emotes)}</span>
+                <span className={styles.userMessage}>
+                    {message.fragments && message.fragments.length > 0 ? (
+                        renderFragments(message.fragments)
+                    ) : (
+                        <span>{message.text}</span>
+                    )}
+                </span>
             )}
         </div>
     );

@@ -8,13 +8,6 @@ export interface Badge {
     url: string;
 }
 
-export interface Emote {
-    id: string;
-    start: number;
-    end: number;
-    url: string;
-}
-
 export interface MessageFragment {
     type: 'text' | 'emote';
     text: string;
@@ -34,17 +27,14 @@ export interface ChatMessage {
     color: string;
     text: string;
     badges: Badge[];
-    emotes: Emote[];
+    fragments: MessageFragment[];
     timestamp: string;
     isAction: boolean;
     tags: Record<string, string>;
-    // Twitch USERNOTICE event fields (absent for regular messages)
     eventType?: string;
     systemMessage?: string;
     eventData?: Record<string, string>;
-    // YouTube-specific (absent / zero-value for Twitch)
     avatar: string;
-    fragments: MessageFragment[];
     superChat: SuperChatDetails | null;
     membershipEvent: boolean;
 }

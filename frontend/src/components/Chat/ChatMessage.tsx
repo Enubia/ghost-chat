@@ -1,13 +1,10 @@
-import type React from 'react';
-
-import type { Badge, ChatMessage as ChatMessageType, MessageFragment } from '@/types/chat';
+import type { Badge, ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 import { useEffect, useState } from 'react';
 
 import styles from './ChatMessage.module.css';
-
-const TWITCH_EMOTE_CDN = 'https://static-cdn.jtvnw.net/emoticons/v2';
+import { renderFragments } from './renderFragments';
 
 interface Props {
     message: ChatMessageType;
@@ -49,62 +46,6 @@ function platformClass(platform: Platform) {
     }
 
     return '';
-}
-
-function renderTextWithEmotes(text: string, emotes: ChatMessageType['emotes']) {
-    if (!emotes || emotes.length === 0) {
-        return <span>{text}</span>;
-    }
-
-    const sorted = [...emotes].toSorted((a, b) => a.start - b.start);
-    const parts: (string | React.ReactElement)[] = [];
-    let cursor = 0;
-
-    for (const emote of sorted) {
-        if (emote.start > cursor) {
-            parts.push(text.slice(cursor, emote.start));
-        }
-
-        const emoteName = text.slice(emote.start, emote.end + 1);
-
-        parts.push(
-            <img
-                key={`${emote.id}-${emote.start}`}
-                className={styles.emote}
-                src={emote.url || `${TWITCH_EMOTE_CDN}/${emote.id}/default/dark/1.0`}
-                alt={emoteName}
-                title={emoteName}
-            />
-        );
-
-        cursor = emote.end + 1;
-    }
-
-    if (cursor < text.length) {
-        parts.push(text.slice(cursor));
-    }
-
-    return <span>{parts}</span>;
-}
-
-function renderFragments(fragments: MessageFragment[]) {
-    return (
-        <span>
-            {fragments.map((frag, i) =>
-                frag.type === 'emote' ? (
-                    <img
-                        key={i}
-                        className={styles.emote}
-                        src={frag.url}
-                        alt={frag.text}
-                        title={frag.text}
-                    />
-                ) : (
-                    <span key={i}>{frag.text}</span>
-                )
-            )}
-        </span>
-    );
 }
 
 function BadgeList({ badges, hidden }: { badges: Badge[]; hidden?: boolean }) {
@@ -218,9 +159,11 @@ export function ChatMessage({
     const pc = platformClass(message.platform);
     const wrapperClass = `${styles.message} ${pc} ${fading ? styles.fade : ''}`;
     const body =
-        message.fragments && message.fragments.length > 0
-            ? renderFragments(message.fragments)
-            : renderTextWithEmotes(message.text, message.emotes);
+        message.fragments && message.fragments.length > 0 ? (
+            renderFragments(message.fragments)
+        ) : (
+            <span>{message.text}</span>
+        );
 
     if (message.superChat) {
         const { headerColor, bodyColor, amount } = message.superChat;
