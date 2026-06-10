@@ -60,8 +60,17 @@ git tag v6.0.0
 commit -m "Architecture seams: non-conventional subject"
 assert_version v6.0.1
 
+commit -m "chore: casual mention" -m "note: this is not a BREAKING CHANGE, just a refactor"
+assert_version v6.0.1
+
 assert_version v9.9.9 --override v9.9.9
 assert_version v9.9.9 --rc --override v9.9.9
+
+git tag v7.0.0
+assert_version "no commits since v7.0.0"
+
+assert_version "--override requires a value" --override
+assert_version "--override requires a value" --override ""
 
 if [ "$failures" -gt 0 ]; then
   echo "$failures assertion(s) failed"

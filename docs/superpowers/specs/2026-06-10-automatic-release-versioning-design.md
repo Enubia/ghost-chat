@@ -37,7 +37,8 @@ Logic:
 2. Find the last stable tag: highest `v*.*.*` tag excluding prereleases (version sort).
 3. Scan commits in `<last-stable>..HEAD` (subjects via `--format=%s`, bodies via `%b` for
    the breaking-change check):
-   - any subject matching `^[a-z]+(\(.+\))?!:` or body containing `BREAKING CHANGE` → major
+   - any subject matching `^[a-z]+(\(.+\))?!:` or a body line starting with `BREAKING CHANGE: `
+     or `BREAKING-CHANGE: ` (a conventional-commits footer) → major
    - else any subject matching `^feat(\(.+\))?:` → minor
    - else → patch (always at least patch; non-conventional subjects land here)
 4. Apply the bump to the last stable version.
@@ -62,6 +63,8 @@ Logic:
 ## Error handling
 
 - No stable tag found: script exits with an error (this repo always has stable tags).
+- No commits since the last stable tag: script exits with an error instead of minting a
+  pointless patch release.
 - Override version given alongside the RC checkbox: the override wins verbatim; the script
   does not append `-rc.N` to an override.
 - Tag collision (computed tag already exists): `git push origin <tag>` in `create-release`

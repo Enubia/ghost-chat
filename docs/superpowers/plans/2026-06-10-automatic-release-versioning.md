@@ -94,8 +94,17 @@ git tag v6.0.0
 commit -m "Architecture seams: non-conventional subject"
 assert_version v6.0.1
 
+commit -m "chore: casual mention" -m "note: this is not a BREAKING CHANGE, just a refactor"
+assert_version v6.0.1
+
 assert_version v9.9.9 --override v9.9.9
 assert_version v9.9.9 --rc --override v9.9.9
+
+git tag v7.0.0
+assert_version "no commits since v7.0.0"
+
+assert_version "--override requires a value" --override
+assert_version "--override requires a value" --override ""
 
 if [ "$failures" -gt 0 ]; then
   echo "$failures assertion(s) failed"
@@ -108,7 +117,7 @@ echo "all assertions passed"
 - [ ] **Step 2: Run the tests to verify they fail**
 
 Run: `bash .github/scripts/next-version.test.sh`
-Expected: every assertion prints `FAIL` (the script under test does not exist yet), final line `12 assertion(s) failed`, exit code 1.
+Expected: every assertion prints `FAIL` (the script under test does not exist yet), final line `16 assertion(s) failed`, exit code 1.
 
 - [ ] **Step 3: Write the version script**
 
@@ -127,6 +136,11 @@ while [ $# -gt 0 ]; do
       rc=true
       ;;
     --override)
+      if [ -z "${2:-}" ]; then
+        echo "--override requires a value" >&2
+        exit 1
+      fi
+
       override="$2"
       shift
       ;;
@@ -153,9 +167,14 @@ fi
 subjects="$(git log --format=%s "${last_stable}..HEAD")"
 bodies="$(git log --format=%b "${last_stable}..HEAD")"
 
+if [ -z "$subjects" ]; then
+  echo "no commits since ${last_stable}" >&2
+  exit 1
+fi
+
 bump=patch
 
-if echo "$subjects" | grep -qE '^[a-z]+(\(.+\))?!:' || echo "$bodies" | grep -qE 'BREAKING[ -]CHANGE'; then
+if echo "$subjects" | grep -qE '^[a-z]+(\(.+\))?!:' || echo "$bodies" | grep -qE '^BREAKING[ -]CHANGE: '; then
   bump=major
 elif echo "$subjects" | grep -qE '^feat(\(.+\))?:'; then
   bump=minor
@@ -191,7 +210,7 @@ echo "$next"
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `bash .github/scripts/next-version.test.sh`
-Expected: 12 `ok:` lines, final line `all assertions passed`, exit code 0.
+Expected: 16 `ok:` lines, final line `all assertions passed`, exit code 0.
 
 - [ ] **Step 5: Sanity-check against the real repo**
 

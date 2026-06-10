@@ -10,6 +10,11 @@ while [ $# -gt 0 ]; do
       rc=true
       ;;
     --override)
+      if [ -z "${2:-}" ]; then
+        echo "--override requires a value" >&2
+        exit 1
+      fi
+
       override="$2"
       shift
       ;;
@@ -36,9 +41,14 @@ fi
 subjects="$(git log --format=%s "${last_stable}..HEAD")"
 bodies="$(git log --format=%b "${last_stable}..HEAD")"
 
+if [ -z "$subjects" ]; then
+  echo "no commits since ${last_stable}" >&2
+  exit 1
+fi
+
 bump=patch
 
-if echo "$subjects" | grep -qE '^[a-z]+(\(.+\))?!:' || echo "$bodies" | grep -qE 'BREAKING[ -]CHANGE'; then
+if echo "$subjects" | grep -qE '^[a-z]+(\(.+\))?!:' || echo "$bodies" | grep -qE '^BREAKING[ -]CHANGE: '; then
   bump=major
 elif echo "$subjects" | grep -qE '^feat(\(.+\))?:'; then
   bump=minor
