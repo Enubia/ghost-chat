@@ -3,41 +3,28 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Create } from "@wailsio/runtime";
+import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Create } from '@wailsio/runtime';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import * as config$0 from "./internal/config/models.js";
+import * as application$0 from '../github.com/wailsapp/wails/v3/pkg/application/models.js';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import * as application$0 from "../github.com/wailsapp/wails/v3/pkg/application/models.js";
+import * as chat$0 from './internal/chat/models.js';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
+import * as config$0 from './internal/config/models.js';
 
 export function CenterOnScreen(): $CancellablePromise<void> {
     return $Call.ByID(4082082385);
 }
 
-export function ConnectKick(input: string): $CancellablePromise<void> {
-    return $Call.ByID(3727196235, input);
+export function Connect(platform: chat$0.Platform, input: string): $CancellablePromise<void> {
+    return $Call.ByID(164877153, platform, input);
 }
 
-export function ConnectTwitch(channel: string): $CancellablePromise<void> {
-    return $Call.ByID(1215296654, channel);
-}
-
-export function ConnectYouTube(input: string): $CancellablePromise<void> {
-    return $Call.ByID(1847883930, input);
-}
-
-export function DisconnectKick(): $CancellablePromise<void> {
-    return $Call.ByID(1101507841);
-}
-
-export function DisconnectTwitch(): $CancellablePromise<void> {
-    return $Call.ByID(419249248);
-}
-
-export function DisconnectYouTube(): $CancellablePromise<void> {
-    return $Call.ByID(2941614640);
+export function Disconnect(platform: chat$0.Platform): $CancellablePromise<void> {
+    return $Call.ByID(3864343059, platform);
 }
 
 export function ExpandForSettings(): $CancellablePromise<void> {
@@ -62,7 +49,10 @@ export function SaveWindowState(): $CancellablePromise<void> {
     return $Call.ByID(2713230737);
 }
 
-export function SetApp(app: application$0.App | null, win: application$0.WebviewWindow | null): $CancellablePromise<void> {
+export function SetApp(
+    app: application$0.App | null,
+    win: application$0.WebviewWindow | null
+): $CancellablePromise<void> {
     return $Call.ByID(4256893662, app, win);
 }
 
