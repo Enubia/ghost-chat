@@ -152,9 +152,20 @@ button {
     letter-spacing: 0.5px;
 }
 
+.field-input-row {
+    display: flex;
+    gap: 6px;
+}
+
 .field-error {
     font-size: 11px;
     color: var(--color-danger);
+    margin-top: 2px;
+}
+
+.field-success {
+    font-size: 11px;
+    color: var(--color-success);
     margin-top: 2px;
 }
 

@@ -61,6 +61,12 @@ export function YouTubeSettings() {
                     setResolvedUrl(null);
                     setResolveError(null);
                 }}
+                footer={
+                    <>
+                        {resolvedUrl && <span className="field-success">{resolvedUrl}</span>}
+                        {resolveError && <span className="field-error">{resolveError}</span>}
+                    </>
+                }
             >
                 <button
                     className="btn btn-ghost"
@@ -71,11 +77,6 @@ export function YouTubeSettings() {
                     {resolving ? t('settings.youtube.detecting') : t('settings.youtube.detect')}
                 </button>
             </ChannelField>
-
-            {resolvedUrl && (
-                <span style={{ fontSize: '11px', color: 'var(--color-success)', marginTop: '2px' }}>{resolvedUrl}</span>
-            )}
-            {resolveError && <span className="field-error">{resolveError}</span>}
 
             <FadeControls
                 fade={yt?.fade ?? false}

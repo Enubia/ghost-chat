@@ -26,6 +26,7 @@ export function TwitchSettings() {
                 labelKey="settings.platform.default_channel"
                 placeholderKey="settings.platform.default_channel"
                 onSave={(v) => set({ default_channel: v })}
+                normalize={(v) => v.toLowerCase()}
                 validator={validateTwitchChannel}
             />
 

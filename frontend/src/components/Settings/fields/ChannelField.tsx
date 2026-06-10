@@ -8,9 +8,11 @@ interface ChannelFieldProps {
     labelKey: string;
     placeholderKey: string;
     onSave: (value: string) => void;
+    normalize?: (value: string) => string;
     validator?: (value: string) => string | null;
     onTextChange?: (value: string) => void;
     children?: React.ReactNode;
+    footer?: React.ReactNode;
 }
 
 export function ChannelField({
@@ -18,9 +20,11 @@ export function ChannelField({
     labelKey,
     placeholderKey,
     onSave,
+    normalize,
     validator,
     onTextChange,
     children,
+    footer,
 }: ChannelFieldProps) {
     const { t } = useTranslation();
 
@@ -42,11 +46,10 @@ export function ChannelField({
             if (err) {
                 return;
             }
-
-            onSave(text.trim().toLowerCase());
-        } else {
-            onSave(text.trim());
         }
+
+        const normalized = normalize ? normalize(text.trim()) : text.trim();
+        onSave(normalized);
     };
 
     const input = (
@@ -63,7 +66,7 @@ export function ChannelField({
         <div className="field">
             <label className="field-label">{t(labelKey)}</label>
             {children ? (
-                <div style={{ display: 'flex', gap: '6px' }}>
+                <div className="field-input-row">
                     {input}
                     {children}
                 </div>
@@ -71,6 +74,7 @@ export function ChannelField({
                 input
             )}
             {error && <span className="field-error">{t(error)}</span>}
+            {footer}
         </div>
     );
 }

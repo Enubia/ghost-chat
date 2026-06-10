@@ -22,6 +22,7 @@ export function KickSettings() {
                 labelKey="settings.platform.default_channel"
                 placeholderKey="settings.kick.default_channel_placeholder"
                 onSave={(v) => set({ default_channel: v })}
+                normalize={(v) => v.toLowerCase()}
                 validator={validateKickChannel}
             />
 
