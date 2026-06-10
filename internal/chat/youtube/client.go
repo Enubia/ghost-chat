@@ -44,7 +44,6 @@ type EventHandler func(event string, data any)
 
 type Client struct {
 	mu     sync.Mutex
-	ctx    context.Context
 	cancel context.CancelFunc
 
 	OnMessage MessageHandler
@@ -80,12 +79,11 @@ func (c *Client) Connect(input string) error {
 		return fmt.Errorf("failed to fetch initial data: %w", err)
 	}
 
-	c.ctx = ctx
 	c.cancel = cancel
 
-	c.OnEvent("chat:connected", map[string]string{"platform": "youtube"})
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
 
-	go c.pollLoop(videoURL, continuation, cfg)
+	go c.pollLoop(ctx, videoURL, continuation, cfg)
 
 	return nil
 }
@@ -100,24 +98,24 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": "youtube"})
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
+func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cfg YtCfg) {
 	backoff := defaultPollInterval
 	rlFailures := 0
 	failures := 0
 
 	for {
 		select {
-		case <-c.ctx.Done():
+		case <-ctx.Done():
 			return
 		default:
 		}
 
-		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(c.ctx, continuation, cfg)
+		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, continuation, cfg)
 		if err != nil {
-			if c.ctx.Err() != nil {
+			if ctx.Err() != nil {
 				return
 			}
 
@@ -131,7 +129,7 @@ func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 
 			case errors.Is(err, ErrAuthStale):
 				logf("auth/config stale, re-bootstrapping: %v", err)
-				if c.rebootstrap(videoURL, &continuation, &cfg) {
+				if c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
 				}
@@ -140,7 +138,7 @@ func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 			default:
 				failures++
 				logf("poll error: %v (failure %d/%d)", err, failures, maxFailuresBeforeReboot)
-				if failures >= maxFailuresBeforeReboot && c.rebootstrap(videoURL, &continuation, &cfg) {
+				if failures >= maxFailuresBeforeReboot && c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
 				}
@@ -148,7 +146,7 @@ func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 			}
 
 			select {
-			case <-c.ctx.Done():
+			case <-ctx.Done():
 				return
 			case <-time.After(wait):
 			}
@@ -177,7 +175,7 @@ func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 		}
 
 		select {
-		case <-c.ctx.Done():
+		case <-ctx.Done():
 			return
 		case <-time.After(interval):
 		}
@@ -186,8 +184,8 @@ func (c *Client) pollLoop(videoURL, continuation string, cfg YtCfg) {
 
 // rebootstrap re-fetches the watch page to recover a fresh continuation token and
 // innertube config, used when the current ones go stale. Returns true on success.
-func (c *Client) rebootstrap(videoURL string, continuation *string, cfg *YtCfg) bool {
-	newCont, newCfg, err := fetchInitialData(c.ctx, videoURL)
+func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) bool {
+	newCont, newCfg, err := fetchInitialData(ctx, videoURL)
 	if err != nil {
 		logf("re-bootstrap failed: %v", err)
 		return false

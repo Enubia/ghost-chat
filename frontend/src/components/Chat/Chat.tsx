@@ -3,11 +3,13 @@ import type React from 'react';
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { ToggleVanish } from '@bindings/ghost-chat/app.js';
+import { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 import { Events } from '@wailsio/runtime';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { fadePolicy, shouldDisplay } from '@/filter/messageFilter';
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
 import { getThemeById, themeToCSS } from '@/types/theme';
@@ -17,56 +19,6 @@ import { ChatMessage } from './ChatMessage';
 import { EventMessage } from './EventMessage';
 
 const MAX_MESSAGES = 500;
-
-const SUB_EVENTS = new Set([
-    'sub',
-    'resub',
-    'subgift',
-    'submysterygift',
-    'giftpaidupgrade',
-    'anongiftpaidupgrade',
-    'primepaidupgrade',
-    'standardpayforward',
-    'communitypayforward',
-]);
-
-const RAID_EVENTS = new Set(['raid', 'unraid']);
-const ANNOUNCEMENT_EVENTS = new Set(['announcement']);
-
-function isEventAllowed(
-    eventType: string,
-    events: { subscriptions?: boolean; raids?: boolean; announcements?: boolean; other?: boolean }
-): boolean {
-    if (SUB_EVENTS.has(eventType)) {
-        return events.subscriptions !== false;
-    }
-
-    if (RAID_EVENTS.has(eventType)) {
-        return events.raids !== false;
-    }
-
-    if (ANNOUNCEMENT_EVENTS.has(eventType)) {
-        return events.announcements !== false;
-    }
-
-    return events.other !== false;
-}
-
-const KNOWN_BOTS = new Set([
-    'nightbot',
-    'streamelements',
-    'streamlabs',
-    'moobot',
-    'fossabot',
-    'wizebot',
-    'coebot',
-    'deepbot',
-    'phantombot',
-    'stay_hydrated_bot',
-    'soundalerts',
-    'botrix',
-    'sery_bot',
-]);
 
 export function Chat() {
     const { t } = useTranslation();
@@ -79,9 +31,9 @@ export function Chat() {
     const [showTwitch, setShowTwitch] = useState(true);
     const [showYoutube, setShowYoutube] = useState(true);
     const [showKick, setShowKick] = useState(true);
-    const twitchConnected = useConnectionStore((s) => s.twitch);
-    const youtubeConnected = useConnectionStore((s) => s.youtube);
-    const kickConnected = useConnectionStore((s) => s.kick);
+    const twitchConnected = useConnectionStore((s) => s.connected[Platform.PlatformTwitch]);
+    const youtubeConnected = useConnectionStore((s) => s.connected[Platform.PlatformYouTube]);
+    const kickConnected = useConnectionStore((s) => s.connected[Platform.PlatformKick]);
     const connected = twitchConnected || youtubeConnected || kickConnected;
     const connectedCount = [twitchConnected, youtubeConnected, kickConnected].filter(Boolean).length;
     const messagesRef = useRef<HTMLDivElement>(null);
@@ -95,51 +47,14 @@ export function Chat() {
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
     const showTimestamp = config?.general?.show_timestamps ?? false;
-    const twitchFade = config?.twitch?.fade ?? false;
-    const twitchFadeTimeout = config?.twitch?.fade_timeout ?? 30;
-    const youtubeFade = config?.youtube?.fade ?? false;
-    const youtubeFadeTimeout = config?.youtube?.fade_timeout ?? 30;
-    const kickFade = config?.kick?.fade ?? false;
-    const kickFadeTimeout = config?.kick?.fade_timeout ?? 30;
 
     useEffect(() => {
         const cancelMessage = Events.On('chat:message', (ev) => {
             const msg = ev.data as ChatMessageType;
             const cfg = useConfigStore.getState().config;
-            const lowerUsername = msg.username.toLowerCase();
 
-            if (msg.platform === 'twitch') {
-                const blacklist = cfg?.twitch?.user_blacklist ?? [];
-                const hideCommands = cfg?.twitch?.hide_commands ?? false;
-                const showBots = cfg?.twitch?.bots ?? false;
-
-                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
-                    return;
-                }
-
-                if (hideCommands && msg.text.startsWith('!')) {
-                    return;
-                }
-
-                if (!showBots && KNOWN_BOTS.has(lowerUsername)) {
-                    return;
-                }
-
-                if (msg.eventType && !isEventAllowed(msg.eventType, cfg?.twitch?.events ?? {})) {
-                    return;
-                }
-            } else if (msg.platform === 'youtube') {
-                const blacklist = cfg?.youtube?.user_blacklist ?? [];
-
-                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
-                    return;
-                }
-            } else if (msg.platform === 'kick') {
-                const blacklist = cfg?.kick?.user_blacklist ?? [];
-
-                if (blacklist.some((u) => u.toLowerCase() === lowerUsername)) {
-                    return;
-                }
+            if (!shouldDisplay(msg, cfg)) {
+                return;
             }
 
             setMessages((prev) => {
@@ -230,42 +145,18 @@ export function Chat() {
         }
     };
 
-    const getFade = (platform: string) => {
-        if (platform === 'youtube') {
-            return youtubeFade;
-        }
-
-        if (platform === 'kick') {
-            return kickFade;
-        }
-
-        return twitchFade;
-    };
-
-    const getFadeTimeout = (platform: string) => {
-        if (platform === 'youtube') {
-            return youtubeFadeTimeout;
-        }
-
-        if (platform === 'kick') {
-            return kickFadeTimeout;
-        }
-
-        return twitchFadeTimeout;
-    };
-
     const displayMessages = topToBottom ? [...messages].toReversed() : messages;
 
     const visibleMessages = displayMessages.filter((m) => {
-        if (m.platform === 'twitch') {
+        if (m.platform === Platform.PlatformTwitch) {
             return showTwitch;
         }
 
-        if (m.platform === 'youtube') {
+        if (m.platform === Platform.PlatformYouTube) {
             return showYoutube;
         }
 
-        if (m.platform === 'kick') {
+        if (m.platform === Platform.PlatformKick) {
             return showKick;
         }
 
@@ -362,14 +253,16 @@ export function Chat() {
                               <span>{t('chat.waiting')}</span>
                           </div>
                       )
-                    : visibleMessages.map((msg) =>
-                          msg.eventType ? (
+                    : visibleMessages.map((msg) => {
+                          const { fade, timeoutSeconds } = fadePolicy(msg.platform, config);
+
+                          return msg.eventType ? (
                               <EventMessage
                                   key={msg.id}
                                   message={msg}
                                   showTimestamp={showTimestamp}
-                                  fade={getFade(msg.platform)}
-                                  fadeTimeout={getFadeTimeout(msg.platform)}
+                                  fade={fade}
+                                  fadeTimeout={timeoutSeconds}
                                   onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                               />
                           ) : (
@@ -381,12 +274,12 @@ export function Chat() {
                                   showPlatformIcon={connectedCount > 1}
                                   showColon={theme.show_colon}
                                   showAvatars={theme.show_avatars}
-                                  fade={getFade(msg.platform)}
-                                  fadeTimeout={getFadeTimeout(msg.platform)}
+                                  fade={fade}
+                                  fadeTimeout={timeoutSeconds}
                                   onFaded={(id) => setMessages((prev) => prev.filter((m) => m.id !== id))}
                               />
-                          )
-                      )}
+                          );
+                      })}
             </div>
             {!autoScroll && (
                 <button

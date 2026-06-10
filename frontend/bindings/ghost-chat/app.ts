@@ -7,6 +7,9 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import * as chat$0 from "./internal/chat/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import * as config$0 from "./internal/config/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -16,28 +19,12 @@ export function CenterOnScreen(): $CancellablePromise<void> {
     return $Call.ByID(4082082385);
 }
 
-export function ConnectKick(input: string): $CancellablePromise<void> {
-    return $Call.ByID(3727196235, input);
+export function Connect(platform: chat$0.Platform, input: string): $CancellablePromise<void> {
+    return $Call.ByID(164877153, platform, input);
 }
 
-export function ConnectTwitch(channel: string): $CancellablePromise<void> {
-    return $Call.ByID(1215296654, channel);
-}
-
-export function ConnectYouTube(input: string): $CancellablePromise<void> {
-    return $Call.ByID(1847883930, input);
-}
-
-export function DisconnectKick(): $CancellablePromise<void> {
-    return $Call.ByID(1101507841);
-}
-
-export function DisconnectTwitch(): $CancellablePromise<void> {
-    return $Call.ByID(419249248);
-}
-
-export function DisconnectYouTube(): $CancellablePromise<void> {
-    return $Call.ByID(2941614640);
+export function Disconnect(platform: chat$0.Platform): $CancellablePromise<void> {
+    return $Call.ByID(3864343059, platform);
 }
 
 export function ExpandForSettings(): $CancellablePromise<void> {

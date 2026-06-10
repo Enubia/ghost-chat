@@ -22,5 +22,5 @@
     "trailingComma": "es5",
     "objectWrap": "preserve",
     "singleAttributePerLine": true,
-    "ignorePatterns": ["**/*.d.ts", "**/wailsjs/**"]
+    "ignorePatterns": ["**/*.d.ts", "**/wailsjs/**", "bindings/**"]
 }

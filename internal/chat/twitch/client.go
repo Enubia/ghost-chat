@@ -14,8 +14,9 @@ import (
 )
 
 const (
-	twitchIRCURL = "wss://irc-ws.chat.twitch.tv:443"
-	maxBackoff   = 30 * time.Second
+	twitchIRCURL   = "wss://irc-ws.chat.twitch.tv:443"
+	twitchEmoteCDN = "https://static-cdn.jtvnw.net/emoticons/v2"
+	maxBackoff     = 30 * time.Second
 )
 
 type MessageHandler func(chat.ChatMessage)
@@ -28,9 +29,7 @@ type Client struct {
 	badges  *BadgeStore
 	emotes  *EmoteStore
 
-	mu sync.Mutex
-
-	ctx    context.Context
+	mu     sync.Mutex
 	cancel context.CancelFunc
 
 	OnMessage MessageHandler
@@ -71,20 +70,31 @@ func (c *Client) Connect(channel string) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	c.ctx = ctx
 	c.cancel = cancel
 
 	c.mu.Unlock()
 
-	err = c.sendHandshake()
+	err = c.sendHandshake(conn, channel)
 
 	if err != nil {
+		c.mu.Lock()
+
+		if c.conn == conn {
+			c.conn = nil
+			c.cancel = nil
+		}
+
+		c.mu.Unlock()
+
+		conn.Close()
+		cancel()
+
 		return err
 	}
 
-	c.OnEvent("chat:connected", map[string]string{"platform": "twitch"})
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
 
-	go c.readLoop()
+	go c.readLoop(ctx, conn)
 
 	return nil
 }
@@ -104,65 +114,66 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": "twitch"})
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformTwitch)})
 }
 
-func (c *Client) ChangeChannel(channel string) error {
-	c.Disconnect()
-	return c.Connect(channel)
-}
-
-func (c *Client) sendHandshake() error {
-	if len(c.channel) == 0 {
+func (c *Client) sendHandshake(conn *websocket.Conn, channel string) error {
+	if len(channel) == 0 {
 		return fmt.Errorf("channel is empty")
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("CAP REQ :twitch.tv/tags twitch.tv/commands")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("CAP REQ :twitch.tv/tags twitch.tv/commands")); err != nil {
 		return err
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("PASS SCHMOOPIIE")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("PASS SCHMOOPIIE")); err != nil {
 		return err
 	}
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte("NICK justinfan12345")); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte("NICK justinfan12345")); err != nil {
 		return err
 	}
 
 	joinLine := "JOIN "
 
-	if c.channel[0] != '#' {
+	if channel[0] != '#' {
 		joinLine += "#"
 	}
 
-	joinLine += c.channel
+	joinLine += channel
 
-	if err := c.conn.WriteMessage(websocket.TextMessage, []byte(joinLine)); err != nil {
+	if err := conn.WriteMessage(websocket.TextMessage, []byte(joinLine)); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (c *Client) readLoop() {
+func (c *Client) readLoop(ctx context.Context, conn *websocket.Conn) {
 	for {
 		select {
-		case <-c.ctx.Done():
-			return // context was cancelled, stop the loop
+		case <-ctx.Done():
+			return
 		default:
-			_, message, err := c.conn.ReadMessage()
+		}
 
-			if err != nil {
-				// connection died — log it, emit error event, try reconnect
-				go c.reconnect()
+		_, message, err := conn.ReadMessage()
+
+		if err != nil {
+			select {
+			case <-ctx.Done():
 				return
+			default:
 			}
 
-			// Twitch may send multiple messages in one packet, split them and handle separately
-			for _, line := range strings.Split(string(message), "\r\n") {
-				if line != "" {
-					c.handleMessage(line)
-				}
+			go c.reconnect(ctx)
+
+			return
+		}
+
+		for _, line := range strings.Split(string(message), "\r\n") {
+			if line != "" {
+				c.handleMessage(line)
 			}
 		}
 	}
@@ -220,15 +231,15 @@ func (c *Client) handleMessage(raw string) {
 	case "PRIVMSG":
 		chatMsg := ToChatMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
-		chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
+
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"])
+
 		c.OnMessage(chatMsg)
 	case "USERNOTICE":
 		chatMsg := ToEventMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
-		if chatMsg.Text != "" {
-			chatMsg.Emotes = c.emotes.ResolveEmotes(chatMsg.Text, chatMsg.Emotes)
-		}
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"])
 
 		c.OnMessage(chatMsg)
 	case "CLEARCHAT":
@@ -245,9 +256,25 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 	}
 }
 
-func (c *Client) reconnect() {
+func (c *Client) buildFragments(text, emotesTag string) []chat.MessageFragment {
+	emotes := fillNativeEmoteURLs(ParseEmotes(emotesTag))
+	emotes = c.emotes.ResolveEmotes(text, emotes)
+
+	return chat.Fragmentize(text, emotes)
+}
+
+func fillNativeEmoteURLs(emotes []chat.Emote) []chat.Emote {
+	for i := range emotes {
+		if emotes[i].URL == "" {
+			emotes[i].URL = twitchEmoteCDN + "/" + emotes[i].ID + "/default/dark/1.0"
+		}
+	}
+
+	return emotes
+}
+
+func (c *Client) reconnect(ctx context.Context) {
 	c.mu.Lock()
-	ctx := c.ctx
 	channel := c.channel
 	c.mu.Unlock()
 
@@ -258,17 +285,37 @@ func (c *Client) reconnect() {
 		case <-ctx.Done():
 			return
 		case <-time.After(backoff):
-			err := c.Connect(channel)
-
-			if err == nil {
-				return
-			}
-
-			backoff *= 2
-
-			if backoff > maxBackoff {
-				backoff = maxBackoff
-			}
 		}
+
+		conn, _, err := websocket.DefaultDialer.Dial(twitchIRCURL, nil)
+
+		if err != nil {
+			backoff = min(backoff*2, maxBackoff)
+			continue
+		}
+
+		c.mu.Lock()
+		if ctx.Err() != nil {
+			c.mu.Unlock()
+			conn.Close()
+			return
+		}
+		if c.conn != nil {
+			c.conn.Close()
+		}
+		c.conn = conn
+		c.mu.Unlock()
+
+		if err := c.sendHandshake(conn, channel); err != nil {
+			conn.Close()
+			backoff = min(backoff*2, maxBackoff)
+			continue
+		}
+
+		c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformTwitch)})
+
+		go c.readLoop(ctx, conn)
+
+		return
 	}
 }

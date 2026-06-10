@@ -24,7 +24,6 @@ type EventHandler func(event string, data any)
 
 type Client struct {
 	mu         sync.Mutex
-	ctx        context.Context
 	cancel     context.CancelFunc
 	conn       *websocket.Conn
 	chatroomID int
@@ -49,6 +48,11 @@ func (c *Client) Connect(input string) error {
 		c.cancel = nil
 	}
 
+	if c.conn != nil {
+		c.conn.Close()
+		c.conn = nil
+	}
+
 	slug, err := ResolveChannelSlug(input)
 	if err != nil {
 		return fmt.Errorf("failed to resolve channel: %w", err)
@@ -70,15 +74,14 @@ func (c *Client) Connect(input string) error {
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
-	c.ctx = ctx
 	c.cancel = cancel
 	c.conn = conn
 	c.chatroomID = chatroomID
 
-	c.OnEvent("chat:connected", map[string]string{"platform": "kick"})
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformKick)})
 
-	go c.readLoop(conn)
-	go c.heartbeatLoop()
+	go c.readLoop(ctx, conn)
+	go c.heartbeatLoop(ctx)
 
 	return nil
 }
@@ -98,17 +101,13 @@ func (c *Client) Disconnect() {
 
 	c.mu.Unlock()
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": "kick"})
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformKick)})
 }
 
-// readLoop reads messages from conn until it errors or ctx is cancelled.
-// On error it attempts to reconnect with exponential backoff.
-// conn is passed as a parameter so the goroutine always reads from the connection
-// it was started with, avoiding races when c.conn is replaced during reconnect.
-func (c *Client) readLoop(conn *websocket.Conn) {
+func (c *Client) readLoop(ctx context.Context, conn *websocket.Conn) {
 	for {
 		select {
-		case <-c.ctx.Done():
+		case <-ctx.Done():
 			return
 		default:
 		}
@@ -116,11 +115,13 @@ func (c *Client) readLoop(conn *websocket.Conn) {
 		_, raw, err := conn.ReadMessage()
 		if err != nil {
 			select {
-			case <-c.ctx.Done():
+			case <-ctx.Done():
 				return
 			default:
 			}
-			go c.reconnect()
+
+			go c.reconnect(ctx)
+
 			return
 		}
 
@@ -128,12 +129,16 @@ func (c *Client) readLoop(conn *websocket.Conn) {
 	}
 }
 
-func (c *Client) reconnect() {
+func (c *Client) reconnect(ctx context.Context) {
+	c.mu.Lock()
+	chatroomID := c.chatroomID
+	c.mu.Unlock()
+
 	backoff := time.Second
 
 	for {
 		select {
-		case <-c.ctx.Done():
+		case <-ctx.Done():
 			return
 		case <-time.After(backoff):
 		}
@@ -147,7 +152,7 @@ func (c *Client) reconnect() {
 			continue
 		}
 
-		if err := subscribe(conn, c.chatroomID); err != nil {
+		if err := subscribe(conn, chatroomID); err != nil {
 			conn.Close()
 			logf("reconnect subscribe failed: %v", err)
 			backoff = min(backoff*2, maxBackoff)
@@ -155,24 +160,30 @@ func (c *Client) reconnect() {
 		}
 
 		c.mu.Lock()
+		if ctx.Err() != nil {
+			c.mu.Unlock()
+			conn.Close()
+			return
+		}
 		if c.conn != nil {
 			c.conn.Close()
 		}
 		c.conn = conn
 		c.mu.Unlock()
 
-		go c.readLoop(conn)
+		go c.readLoop(ctx, conn)
+
 		return
 	}
 }
 
-func (c *Client) heartbeatLoop() {
+func (c *Client) heartbeatLoop(ctx context.Context) {
 	ticker := time.NewTicker(heartbeatInterval)
 	defer ticker.Stop()
 
 	for {
 		select {
-		case <-c.ctx.Done():
+		case <-ctx.Done():
 			return
 		case <-ticker.C:
 			ping, _ := json.Marshal(map[string]any{"event": "pusher:ping", "data": map[string]any{}})

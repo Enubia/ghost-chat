@@ -52,12 +52,6 @@
     font-size: 0.95em;
 }
 
-.emote {
-    height: var(--theme-emote-size, 2em);
-    margin: -0.4em 1px;
-    vertical-align: middle;
-}
-
 .fade {
     animation: fadeOut 1s ease forwards;
 }

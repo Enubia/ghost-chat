@@ -1,35 +1,28 @@
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
 import { create } from 'zustand';
 
-type Platform = 'twitch' | 'youtube' | 'kick';
+type ConnectedMap = Partial<Record<Platform, boolean>>;
+type InputMap = Partial<Record<Platform, string>>;
 
 interface ConnectionState {
-    twitch: boolean;
-    youtube: boolean;
-    kick: boolean;
-    twitchChannel: string;
-    youtubeInput: string;
-    kickInput: string;
-    setConnected: (platform: Platform, connected: boolean) => void;
-    setChannel: (platform: Platform, value: string) => void;
+    connected: ConnectedMap;
+    inputs: InputMap;
+    setConnected: (platform: Platform, value: boolean) => void;
+    setInput: (platform: Platform, value: string) => void;
 }
 
 export const useConnectionStore = create<ConnectionState>((set) => ({
-    twitch: false,
-    youtube: false,
-    kick: false,
-    twitchChannel: '',
-    youtubeInput: '',
-    kickInput: '',
+    connected: {},
+    inputs: {},
 
-    setConnected: (platform, connected) => set((s) => ({ ...s, [platform]: connected })),
+    setConnected: (platform, value) =>
+        set((s) => ({
+            connected: { ...s.connected, [platform]: value },
+        })),
 
-    setChannel: (platform, value) => {
-        if (platform === 'twitch') {
-            set({ twitchChannel: value });
-        } else if (platform === 'youtube') {
-            set({ youtubeInput: value });
-        } else {
-            set({ kickInput: value });
-        }
-    },
+    setInput: (platform, value) =>
+        set((s) => ({
+            inputs: { ...s.inputs, [platform]: value },
+        })),
 }));

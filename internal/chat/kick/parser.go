@@ -20,7 +20,7 @@ func parseMessage(km KickChatMessage) chat.ChatMessage {
 	}
 
 	return chat.ChatMessage{
-		Platform:  "kick",
+		Platform:  chat.PlatformKick,
 		ID:        km.ID,
 		Username:  km.Sender.Username,
 		Color:     color,

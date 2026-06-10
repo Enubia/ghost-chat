@@ -1,13 +1,10 @@
+import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
+
+export type { Platform };
+
 export interface Badge {
     name: string;
     version: string;
-    url: string;
-}
-
-export interface Emote {
-    id: string;
-    start: number;
-    end: number;
     url: string;
 }
 
@@ -25,22 +22,20 @@ export interface SuperChatDetails {
 
 export interface ChatMessage {
     id: string;
-    platform: 'twitch' | 'youtube' | 'kick';
+    platform: Platform;
     username: string;
     color: string;
     text: string;
     badges: Badge[];
-    emotes: Emote[];
+    // Go's Fragmentize returns a nil slice for empty text, which serializes as null
+    fragments: MessageFragment[] | null;
     timestamp: string;
     isAction: boolean;
     tags: Record<string, string>;
-    // Twitch USERNOTICE event fields (absent for regular messages)
     eventType?: string;
     systemMessage?: string;
     eventData?: Record<string, string>;
-    // YouTube-specific (absent / zero-value for Twitch)
     avatar: string;
-    fragments: MessageFragment[];
     superChat: SuperChatDetails | null;
     membershipEvent: boolean;
 }

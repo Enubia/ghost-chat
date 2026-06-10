@@ -3,7 +3,6 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
-    "packageManager": "pnpm@10.33.2",
     "scripts": {
         "dev": "vite",
         "build": "npx tsc && vite build",
@@ -11,7 +10,8 @@
         "fix": "oxlint --fix --type-aware && oxfmt --write",
         "format": "oxfmt ",
         "lint": "oxlint --type-aware",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "test": "vitest run"
     },
     "dependencies": {
         "@wailsio/runtime": "3.0.0-alpha.79",
@@ -29,10 +29,12 @@
         "@types/react-dom": "19.2.3",
         "@vitejs/plugin-react": "5.1.4",
         "babel-plugin-react-compiler": "1.0.0",
-        "oxfmt": "0.32.0",
+        "oxfmt": "0.54.0",
         "oxlint": "1.47.0",
         "oxlint-tsgolint": "0.12.2",
         "typescript": "5.9.3",
-        "vite": "7.3.1"
-    }
+        "vite": "7.3.1",
+        "vitest": "3.2.6"
+    },
+    "packageManager": "pnpm@10.33.2"
 }
