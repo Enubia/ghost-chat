@@ -54,3 +54,14 @@ Canonical role names map 1:1 to repo labels (existing `wontfix` reused; the othe
 ### Domain docs
 
 Single-context — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Executing work
+
+Once tasks are ready, execute them in-session with the
+`subagent-driven-development` skill: one fresh implementer subagent per task
+(building test-first via `tdd`), a spec+quality review after each, then a
+whole-branch review before merge. Task source: either a plan file with
+`## Task N` headings (SDD extracts each with its `task-brief` script) or an
+agent-ready brief handed over verbatim (e.g. a GitHub issue body — see
+`docs/agents/issue-tracker.md`). SDD's transient run artifacts live in
+self-ignored `.scratch/sdd/` — never committed. See `docs/agents/execution.md`.
