@@ -2,6 +2,7 @@ import type React from 'react';
 
 import type { Theme } from '@/types/theme';
 
+import { ExportTheme } from '@bindings/ghost-chat/app.js';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -129,20 +130,16 @@ export function ThemeSettings() {
                 '  text_weight: CSS font-weight for message text (100-900, step 100; 400=normal, 700=bold)',
                 '  text_shadow: CSS text-shadow value (e.g. "none", "0 1px 2px rgba(0,0,0,0.5)")',
                 '  text_color: CSS color value (e.g. "inherit", "#ffffff")',
+                '  text_stroke_width: Outline thickness around text in pixels (0-5, 0 = no outline)',
+                '  text_stroke_color: CSS color value for the text outline (e.g. "#000000")',
                 '  top_to_bottom: Show newest messages at top (true/false)',
                 'Do NOT modify the "id" field. Only return valid JSON.',
             ],
         };
 
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const filename = `${displayTheme.name.toLowerCase().replace(/\s+/g, '-')}.json`;
 
-        a.href = url;
-        a.download = `${displayTheme.name.toLowerCase().replace(/\s+/g, '-')}.json`;
-
-        a.click();
-        URL.revokeObjectURL(url);
+        void ExportTheme(filename, JSON.stringify(exportData, null, 2));
     };
 
     const importTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -354,6 +351,30 @@ export function ThemeSettings() {
                     />
                     <span className={styles.fieldHint}>{t('settings.themes.text_shadow_desc')}</span>
                 </div>
+                <Slider
+                    label={t('settings.themes.text_stroke_width')}
+                    hint={t('settings.themes.text_stroke_width_desc')}
+                    value={displayTheme.text_stroke_width}
+                    min={0}
+                    max={5}
+                    step={0.1}
+                    unit="px"
+                    disabled={readonly}
+                    onChange={(v) => updateProp('text_stroke_width', Math.round(v * 10) / 10)}
+                />
+                {displayTheme.text_stroke_width > 0 && (
+                    <div className="field">
+                        <label className="field-label">{t('settings.themes.text_stroke_color')}</label>
+                        <input
+                            type="text"
+                            value={displayTheme.text_stroke_color}
+                            disabled={readonly}
+                            onChange={(e) => updateProp('text_stroke_color', e.target.value)}
+                            placeholder={t('settings.themes.text_stroke_color_hint')}
+                        />
+                        <span className={styles.fieldHint}>{t('settings.themes.text_stroke_color_desc')}</span>
+                    </div>
+                )}
             </div>
 
             <div className={styles.section}>

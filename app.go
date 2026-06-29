@@ -10,6 +10,7 @@ import (
 	"ghost-chat/internal/config"
 	ghHotkey "ghost-chat/internal/hotkey"
 	"ghost-chat/internal/updater"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -263,4 +264,24 @@ func (a *App) OpenConfigFolder() {
 	case "windows":
 		exec.Command("explorer", dir).Start()
 	}
+}
+
+func (a *App) ExportTheme(filename string, content string) error {
+	dialog := a.app.Dialog.SaveFile()
+
+	dialog.SetFilename(filename)
+	dialog.AddFilter("JSON", "*.json")
+	dialog.CanCreateDirectories(true)
+	dialog.AttachToWindow(a.window)
+
+	path, err := dialog.PromptForSingleSelection()
+	if err != nil {
+		return fmt.Errorf("save dialog failed: %w", err)
+	}
+
+	if path == "" {
+		return nil
+	}
+
+	return os.WriteFile(path, []byte(content), 0o644)
 }

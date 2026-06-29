@@ -17,6 +17,8 @@ export interface Theme {
     text_weight: number;
     text_shadow: string;
     text_color: string;
+    text_stroke_width: number;
+    text_stroke_color: string;
     top_to_bottom: boolean;
 }
 
@@ -40,6 +42,8 @@ export const BUILT_IN_THEMES: Theme[] = [
         text_weight: 400,
         text_shadow: 'none',
         text_color: 'inherit',
+        text_stroke_width: 0,
+        text_stroke_color: '#000000',
         top_to_bottom: false,
     },
     {
@@ -61,6 +65,8 @@ export const BUILT_IN_THEMES: Theme[] = [
         text_weight: 400,
         text_shadow: 'none',
         text_color: 'inherit',
+        text_stroke_width: 0,
+        text_stroke_color: '#000000',
         top_to_bottom: false,
     },
     {
@@ -82,6 +88,8 @@ export const BUILT_IN_THEMES: Theme[] = [
         text_weight: 400,
         text_shadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
         text_color: '#ffffff',
+        text_stroke_width: 0,
+        text_stroke_color: '#000000',
         top_to_bottom: false,
     },
 ];
@@ -110,5 +118,8 @@ export function themeToCSS(theme: Theme): Record<string, string> {
         '--theme-text-weight': String(theme.text_weight),
         '--theme-text-shadow': theme.text_shadow,
         '--theme-text-color': theme.text_color,
+        '--theme-text-stroke': theme.text_stroke_width
+            ? `${theme.text_stroke_width}px ${theme.text_stroke_color}`
+            : '0',
     };
 }
