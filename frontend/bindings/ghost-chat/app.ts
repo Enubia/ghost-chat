@@ -31,6 +31,10 @@ export function ExpandForSettings(): $CancellablePromise<void> {
     return $Call.ByID(621393585);
 }
 
+export function ExportTheme(filename: string, content: string): $CancellablePromise<void> {
+    return $Call.ByID(3294236452, filename, content);
+}
+
 export function GetConfig(): $CancellablePromise<config$0.Config | null> {
     return $Call.ByID(1200034045).then(($result: any) => {
         return $$createType1($result);

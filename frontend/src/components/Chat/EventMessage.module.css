@@ -5,6 +5,8 @@
     font-weight: var(--theme-text-weight, 400);
     text-shadow: var(--theme-text-shadow, none);
     color: var(--theme-text-color, inherit);
+    -webkit-text-stroke: var(--theme-text-stroke, 0);
+    paint-order: stroke fill;
     padding: 3px 6px;
     border-radius: var(--radius-sm);
     margin-bottom: var(--theme-message-gap, 0);

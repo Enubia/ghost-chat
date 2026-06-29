@@ -195,6 +195,8 @@ export class Theme {
     "text_weight": number;
     "text_shadow": string;
     "text_color": string;
+    "text_stroke_width": number;
+    "text_stroke_color": string;
     "top_to_bottom": boolean;
 
     /** Creates a new Theme instance. */
@@ -252,6 +254,12 @@ export class Theme {
         }
         if (!("text_color" in $$source)) {
             this["text_color"] = "";
+        }
+        if (!("text_stroke_width" in $$source)) {
+            this["text_stroke_width"] = 0;
+        }
+        if (!("text_stroke_color" in $$source)) {
+            this["text_stroke_color"] = "";
         }
         if (!("top_to_bottom" in $$source)) {
             this["top_to_bottom"] = false;

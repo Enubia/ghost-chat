@@ -55,25 +55,27 @@ type KickConfig struct {
 }
 
 type Theme struct {
-	ID             string  `json:"id"`
-	Name           string  `json:"name"`
-	FontFamily     string  `json:"font_family"`
-	FontSize       int     `json:"font_size"`
-	LineHeight     float64 `json:"line_height"`
-	MessageBg      string  `json:"message_bg"`
-	MessagePadding string  `json:"message_padding"`
-	MessageRadius  int     `json:"message_radius"`
-	MessageGap     int     `json:"message_gap"`
-	UsernameWeight int     `json:"username_weight"`
-	ShowColon      bool    `json:"show_colon"`
-	BadgeSize      int     `json:"badge_size"`
-	EmoteSize      int     `json:"emote_size"`
-	ShowAvatars    bool    `json:"show_avatars"`
-	AvatarSize     int     `json:"avatar_size"`
-	TextWeight     int     `json:"text_weight"`
-	TextShadow     string  `json:"text_shadow"`
-	TextColor      string  `json:"text_color"`
-	TopToBottom    bool    `json:"top_to_bottom"`
+	ID              string  `json:"id"`
+	Name            string  `json:"name"`
+	FontFamily      string  `json:"font_family"`
+	FontSize        int     `json:"font_size"`
+	LineHeight      float64 `json:"line_height"`
+	MessageBg       string  `json:"message_bg"`
+	MessagePadding  string  `json:"message_padding"`
+	MessageRadius   int     `json:"message_radius"`
+	MessageGap      int     `json:"message_gap"`
+	UsernameWeight  int     `json:"username_weight"`
+	ShowColon       bool    `json:"show_colon"`
+	BadgeSize       int     `json:"badge_size"`
+	EmoteSize       int     `json:"emote_size"`
+	ShowAvatars     bool    `json:"show_avatars"`
+	AvatarSize      int     `json:"avatar_size"`
+	TextWeight      int     `json:"text_weight"`
+	TextShadow      string  `json:"text_shadow"`
+	TextColor       string  `json:"text_color"`
+	TextStrokeWidth float64 `json:"text_stroke_width"`
+	TextStrokeColor string  `json:"text_stroke_color"`
+	TopToBottom     bool    `json:"top_to_bottom"`
 }
 
 type ThemeConfig struct {
