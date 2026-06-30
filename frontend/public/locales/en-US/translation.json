@@ -19,6 +19,12 @@
             "channel_id": "Channel ID",
             "channel_or_url": "Channel, @handle, or video URL",
             "kick_channel": "Channel name"
+        },
+        "custom_source": {
+            "label": "Custom Overlay",
+            "placeholder": "https://your-overlay.example.com",
+            "open": "Open Overlay",
+            "hint": "Some sites block embedding and may render blank."
         }
     },
     "chat": {
