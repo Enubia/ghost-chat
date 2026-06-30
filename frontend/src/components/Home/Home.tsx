@@ -192,7 +192,7 @@ export function Home() {
                     <p className={styles.hint}>{t('home.custom_source.hint')}</p>
                     <button
                         className="btn btn-primary"
-                        onClick={() => handleOpenSource()}
+                        onClick={handleOpenSource}
                         disabled={!isValidSourceURL(sourceURL)}
                     >
                         {t('home.custom_source.open')}

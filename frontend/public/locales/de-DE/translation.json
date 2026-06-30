@@ -21,14 +21,15 @@
             "kick_channel": "Kanalname"
         },
         "custom_source": {
-            "label": "Custom Overlay",
+            "label": "Eigenes Overlay",
             "placeholder": "https://your-overlay.example.com",
-            "open": "Open Overlay",
-            "hint": "Some sites block embedding and may render blank."
+            "open": "Overlay öffnen",
+            "hint": "Manche Seiten blockieren das Einbetten und werden möglicherweise leer angezeigt."
         }
     },
     "chat": {
         "back": "Zurück",
+        "reload": "Neu laden",
         "waiting": "Warte auf Nachrichten...",
         "disconnected": "Getrennt",
         "scroll_to_bottom": "Nach unten scrollen",

@@ -1,5 +1,6 @@
 import { ToggleVanish } from '@bindings/ghost-chat/app.js';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useConfigStore } from '@/stores/config';
@@ -7,6 +8,7 @@ import { useConfigStore } from '@/stores/config';
 import styles from './CustomSource.module.css';
 
 export function CustomSource() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const config = useConfigStore((s) => s.config);
     const [reloadKey, setReloadKey] = useState(0);
@@ -19,7 +21,7 @@ export function CustomSource() {
                 <button
                     className="btn btn-ghost"
                     onClick={() => navigate('/')}
-                    title="Back"
+                    title={t('chat.back')}
                 >
                     <svg
                         width="14"
@@ -37,7 +39,7 @@ export function CustomSource() {
                 <button
                     className="btn btn-ghost"
                     onClick={() => setReloadKey((k) => k + 1)}
-                    title="Reload"
+                    title={t('chat.reload')}
                 >
                     <svg
                         width="14"
@@ -56,7 +58,7 @@ export function CustomSource() {
                 <button
                     className={styles.vanishBtn}
                     onClick={() => void ToggleVanish()}
-                    title="Vanish"
+                    title={t('chat.vanish')}
                 >
                     <svg
                         width="14"

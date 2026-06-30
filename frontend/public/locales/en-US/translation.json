@@ -29,6 +29,7 @@
     },
     "chat": {
         "back": "Back",
+        "reload": "Reload",
         "waiting": "Waiting for messages...",
         "disconnected": "Disconnected",
         "scroll_to_bottom": "Scroll to bottom",

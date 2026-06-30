@@ -18,13 +18,15 @@ describe('isValidSourceURL', () => {
     });
 
     describe('does not mutate the input string', () => {
-        it('returns a boolean and leaves the input unchanged', () => {
+        it('returns stable results across repeated calls with query+fragment', () => {
             const input = 'https://x.io/a?token=abc&b=1#frag';
-            const copy = input;
-            const result = isValidSourceURL(input);
 
-            expect(typeof result).toBe('boolean');
-            expect(input).toBe(copy);
+            const first = isValidSourceURL(input);
+            const second = isValidSourceURL(input);
+
+            expect(first).toBe(true);
+            expect(second).toBe(true);
+            expect(input).toBe('https://x.io/a?token=abc&b=1#frag');
         });
     });
 
