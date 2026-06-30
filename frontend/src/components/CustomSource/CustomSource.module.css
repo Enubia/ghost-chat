@@ -43,6 +43,7 @@
 .iframeWrapper {
     flex: 1;
     background: transparent;
+    overflow: hidden;
 }
 
 .iframe {

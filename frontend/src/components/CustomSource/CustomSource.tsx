@@ -19,6 +19,7 @@ export function CustomSource() {
                 <button
                     className="btn btn-ghost"
                     onClick={() => navigate('/')}
+                    title="Back"
                 >
                     <svg
                         width="14"
