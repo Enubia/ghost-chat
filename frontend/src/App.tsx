@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import { Chat } from '@/components/Chat/Chat';
+import { CustomSource } from '@/components/CustomSource/CustomSource';
 import { Home } from '@/components/Home/Home';
 import { Settings } from '@/components/Settings/Settings';
 import { ThemePreview } from '@/components/Settings/ThemePreview';
@@ -127,6 +128,10 @@ function App() {
                                 <Route
                                     path="/chat"
                                     element={<Chat />}
+                                />
+                                <Route
+                                    path="/source"
+                                    element={<CustomSource />}
                                 />
                             </Routes>
                         </div>
