@@ -52,7 +52,7 @@
             <div class="hero-text">
                 <div class="hero-badge">Free and open source</div>
                 <h1>Desktop chat overlay<br>for streamers</h1>
-                <p class="hero-description">Ghost Chat puts your live chat on screen with a transparent, customizable overlay. Supports Twitch, YouTube, and Kick — no login required.</p>
+                <p class="hero-description">Ghost Chat puts your live chat on screen with a transparent, customizable overlay. Supports Twitch, YouTube, and Kick — or render any overlay URL as a custom source. No login required.</p>
                 <div class="hero-actions">
                     <a href="https://github.com/Enubia/ghost-chat/releases" target="_blank" rel="noopener" class="btn btn-primary">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -83,6 +83,13 @@
                     </div>
                     <h3>Multi-platform</h3>
                     <p>Connect to Twitch, YouTube, and Kick simultaneously. Rumble support is on the way.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    </div>
+                    <h3>Custom source</h3>
+                    <p>Render any http(s) overlay URL in the chat window instead of a built-in platform. Bring your own chat widget or third-party overlay.</p>
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">
@@ -186,6 +193,13 @@
                     <summary>What platforms are supported?</summary>
                     <div class="faq-answer">
                         <p>Ghost Chat currently supports Twitch, YouTube, and Kick. Rumble support is in development and will be available in a future update.</p>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What is a custom source?</summary>
+                    <div class="faq-answer">
+                        <p>Custom source lets you enter any http(s) URL — such as a third-party chat widget or overlay — and render it in the Ghost Chat window in place of a built-in platform. There is no per-source CSS or JavaScript injection; the URL is displayed as-is inside an iframe.</p>
+                        <p>Note that some sites set headers (X-Frame-Options or Content-Security-Policy) that block embedding. If the page renders blank, the site is preventing iframe embedding and the custom source cannot be used with that URL.</p>
                     </div>
                 </details>
                 <details class="faq-item">
