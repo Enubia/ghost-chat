@@ -56,7 +56,7 @@ jobs:
 
   build-macos:
     needs: determine-version
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v6
