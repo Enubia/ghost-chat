@@ -83,15 +83,20 @@ type ThemeConfig struct {
 	CustomThemes  []Theme `json:"custom_themes"`
 }
 
+type CustomSource struct {
+	URL string `json:"url"`
+}
+
 type Config struct {
-	Version     string        `json:"version"`
-	WindowState WindowState   `json:"window_state"`
-	General     General       `json:"general"`
-	Keybinds    Keybinds      `json:"keybinds"`
-	Theme       ThemeConfig   `json:"theme"`
-	Twitch      TwitchConfig  `json:"twitch"`
-	YouTube     YouTubeConfig `json:"youtube"`
-	Kick        KickConfig    `json:"kick"`
+	Version      string        `json:"version"`
+	WindowState  WindowState   `json:"window_state"`
+	General      General       `json:"general"`
+	Keybinds     Keybinds      `json:"keybinds"`
+	Theme        ThemeConfig   `json:"theme"`
+	Twitch       TwitchConfig  `json:"twitch"`
+	YouTube      YouTubeConfig `json:"youtube"`
+	Kick         KickConfig    `json:"kick"`
+	CustomSource CustomSource  `json:"custom_source"`
 }
 
 func DefaultConfig() Config {

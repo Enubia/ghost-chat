@@ -14,6 +14,7 @@ export class Config {
     "twitch": TwitchConfig;
     "youtube": YouTubeConfig;
     "kick": KickConfig;
+    "custom_source": CustomSource;
 
     /** Creates a new Config instance. */
     constructor($$source: Partial<Config> = {}) {
@@ -41,6 +42,9 @@ export class Config {
         if (!("kick" in $$source)) {
             this["kick"] = (new KickConfig());
         }
+        if (!("custom_source" in $$source)) {
+            this["custom_source"] = (new CustomSource());
+        }
 
         Object.assign(this, $$source);
     }
@@ -56,6 +60,7 @@ export class Config {
         const $$createField5_0 = $$createType4;
         const $$createField6_0 = $$createType5;
         const $$createField7_0 = $$createType6;
+        const $$createField8_0 = $$createType7;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("window_state" in $$parsedSource) {
             $$parsedSource["window_state"] = $$createField1_0($$parsedSource["window_state"]);
@@ -78,7 +83,31 @@ export class Config {
         if ("kick" in $$parsedSource) {
             $$parsedSource["kick"] = $$createField7_0($$parsedSource["kick"]);
         }
+        if ("custom_source" in $$parsedSource) {
+            $$parsedSource["custom_source"] = $$createField8_0($$parsedSource["custom_source"]);
+        }
         return new Config($$parsedSource as Partial<Config>);
+    }
+}
+
+export class CustomSource {
+    "url": string;
+
+    /** Creates a new CustomSource instance. */
+    constructor($$source: Partial<CustomSource> = {}) {
+        if (!("url" in $$source)) {
+            this["url"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new CustomSource instance from a string or object.
+     */
+    static createFrom($$source: any = {}): CustomSource {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new CustomSource($$parsedSource as Partial<CustomSource>);
     }
 }
 
@@ -130,7 +159,7 @@ export class Keybinds {
      * Creates a new Keybinds instance from a string or object.
      */
     static createFrom($$source: any = {}): Keybinds {
-        const $$createField0_0 = $$createType7;
+        const $$createField0_0 = $$createType8;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("vanish" in $$parsedSource) {
             $$parsedSource["vanish"] = $$createField0_0($$parsedSource["vanish"]);
@@ -167,7 +196,7 @@ export class KickConfig {
      * Creates a new KickConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): KickConfig {
-        const $$createField3_0 = $$createType8;
+        const $$createField3_0 = $$createType9;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
             $$parsedSource["user_blacklist"] = $$createField3_0($$parsedSource["user_blacklist"]);
@@ -297,7 +326,7 @@ export class ThemeConfig {
      * Creates a new ThemeConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): ThemeConfig {
-        const $$createField1_0 = $$createType10;
+        const $$createField1_0 = $$createType11;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("custom_themes" in $$parsedSource) {
             $$parsedSource["custom_themes"] = $$createField1_0($$parsedSource["custom_themes"]);
@@ -350,8 +379,8 @@ export class TwitchConfig {
      * Creates a new TwitchConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): TwitchConfig {
-        const $$createField6_0 = $$createType8;
-        const $$createField7_0 = $$createType11;
+        const $$createField6_0 = $$createType9;
+        const $$createField7_0 = $$createType12;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
             $$parsedSource["user_blacklist"] = $$createField6_0($$parsedSource["user_blacklist"]);
@@ -485,7 +514,7 @@ export class YouTubeConfig {
      * Creates a new YouTubeConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): YouTubeConfig {
-        const $$createField4_0 = $$createType8;
+        const $$createField4_0 = $$createType9;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
             $$parsedSource["user_blacklist"] = $$createField4_0($$parsedSource["user_blacklist"]);
@@ -502,8 +531,9 @@ const $$createType3 = ThemeConfig.createFrom;
 const $$createType4 = TwitchConfig.createFrom;
 const $$createType5 = YouTubeConfig.createFrom;
 const $$createType6 = KickConfig.createFrom;
-const $$createType7 = VanishKeybind.createFrom;
-const $$createType8 = $Create.Array($Create.Any);
-const $$createType9 = Theme.createFrom;
-const $$createType10 = $Create.Array($$createType9);
-const $$createType11 = TwitchEvents.createFrom;
+const $$createType7 = CustomSource.createFrom;
+const $$createType8 = VanishKeybind.createFrom;
+const $$createType9 = $Create.Array($Create.Any);
+const $$createType10 = Theme.createFrom;
+const $$createType11 = $Create.Array($$createType10);
+const $$createType12 = TwitchEvents.createFrom;
