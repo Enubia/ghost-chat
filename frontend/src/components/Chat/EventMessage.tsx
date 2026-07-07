@@ -1,6 +1,7 @@
 import type { ChatMessage as ChatMessageType } from '@/types/chat';
 
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { classifyEvent } from '@/filter/messageFilter';
 
@@ -29,10 +30,12 @@ const EVENT_ACCENT_CLASS: Record<ReturnType<typeof classifyEvent>, string> = {
     sub: styles.sub,
     raid: styles.raid,
     announcement: styles.announcement,
+    redemption: styles.redemption,
     other: styles.other,
 };
 
 export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
+    const { t } = useTranslation();
     const [fading, setFading] = useState(false);
 
     useEffect(() => {
@@ -51,7 +54,17 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
         }
     };
 
-    const accentClass = EVENT_ACCENT_CLASS[classifyEvent(message.eventType ?? '')];
+    const category = classifyEvent(message.eventType ?? '');
+    const accentClass = EVENT_ACCENT_CLASS[category];
+
+    const headline =
+        category === 'redemption'
+            ? t('chat.redemption', {
+                  user: message.username,
+                  reward: message.eventData?.reward ?? '',
+                  cost: message.eventData?.cost ?? '',
+              })
+            : message.systemMessage;
 
     return (
         <div
@@ -61,7 +74,7 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
             {showTimestamp && message.timestamp && (
                 <span className={styles.timestamp}>{formatTime(message.timestamp)}</span>
             )}
-            <span className={styles.systemMessage}>{message.systemMessage}</span>
+            <span className={styles.systemMessage}>{headline}</span>
             {message.text && (
                 <span className={styles.userMessage}>
                     {message.fragments && message.fragments.length > 0 ? (

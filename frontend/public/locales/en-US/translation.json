@@ -34,7 +34,8 @@
         "disconnected": "Disconnected",
         "scroll_to_bottom": "Scroll to bottom",
         "scroll_to_top": "Scroll to top",
-        "vanish": "Toggle vanish mode"
+        "vanish": "Toggle vanish mode",
+        "redemption": "{{user}} redeemed {{reward}} ({{cost}} points)"
     },
     "settings": {
         "support": "Enjoying Ghost Chat? Consider supporting the project!",
@@ -70,6 +71,7 @@
             "events_subs": "Subscriptions",
             "events_raids": "Raids",
             "events_announcements": "Announcements",
+            "events_redemptions": "Channel Point Redemptions",
             "events_other": "Other Events"
         },
         "youtube": {

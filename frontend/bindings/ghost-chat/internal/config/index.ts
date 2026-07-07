@@ -9,6 +9,7 @@ export {
     KickConfig,
     Theme,
     ThemeConfig,
+    TwitchAccount,
     TwitchConfig,
     TwitchEvents,
     VanishKeybind,

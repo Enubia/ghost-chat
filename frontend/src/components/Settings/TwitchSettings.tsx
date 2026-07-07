@@ -96,6 +96,14 @@ export function TwitchSettings() {
             </div>
 
             <div className="field-row">
+                <label className="field-label">{t('settings.twitch.events_redemptions')}</label>
+                <Toggle
+                    checked={twitch?.events?.redemptions !== false}
+                    onChange={(v) => set({ events: { redemptions: v } })}
+                />
+            </div>
+
+            <div className="field-row">
                 <label className="field-label">{t('settings.twitch.events_other')}</label>
                 <Toggle
                     checked={twitch?.events?.other !== false}

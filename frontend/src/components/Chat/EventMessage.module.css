@@ -31,6 +31,11 @@
     background: rgba(91, 155, 213, 0.08);
 }
 
+.redemption {
+    border-left-color: #bf5af2;
+    background: rgba(191, 90, 242, 0.08);
+}
+
 .other {
     border-left-color: var(--color-text-dim);
     background: rgba(255, 255, 255, 0.04);

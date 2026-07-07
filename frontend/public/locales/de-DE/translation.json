@@ -34,7 +34,8 @@
         "disconnected": "Getrennt",
         "scroll_to_bottom": "Nach unten scrollen",
         "scroll_to_top": "Nach oben scrollen",
-        "vanish": "Vanish-Modus umschalten"
+        "vanish": "Vanish-Modus umschalten",
+        "redemption": "{{user}} hat {{reward}} eingelöst ({{cost}} Punkte)"
     },
     "settings": {
         "support": "Ghost Chat gefällt dir? Unterstütze das Projekt!",
@@ -70,6 +71,7 @@
             "events_subs": "Abonnements",
             "events_raids": "Raids",
             "events_announcements": "Ankuendigungen",
+            "events_redemptions": "Kanalpunkte-Einlösungen",
             "events_other": "Sonstige Ereignisse"
         },
         "youtube": {

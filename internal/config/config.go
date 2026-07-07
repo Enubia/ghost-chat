@@ -25,6 +25,7 @@ type TwitchEvents struct {
 	Subscriptions bool `json:"subscriptions"`
 	Raids         bool `json:"raids"`
 	Announcements bool `json:"announcements"`
+	Redemptions   bool `json:"redemptions"`
 	Other         bool `json:"other"`
 }
 
@@ -126,6 +127,7 @@ func DefaultConfig() Config {
 				Subscriptions: true,
 				Raids:         true,
 				Announcements: true,
+				Redemptions:   true,
 				Other:         true,
 			},
 		},

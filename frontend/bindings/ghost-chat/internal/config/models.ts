@@ -335,6 +335,27 @@ export class ThemeConfig {
     }
 }
 
+export class TwitchAccount {
+    "login": string;
+
+    /** Creates a new TwitchAccount instance. */
+    constructor($$source: Partial<TwitchAccount> = {}) {
+        if (!("login" in $$source)) {
+            this["login"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new TwitchAccount instance from a string or object.
+     */
+    static createFrom($$source: any = {}): TwitchAccount {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new TwitchAccount($$parsedSource as Partial<TwitchAccount>);
+    }
+}
+
 export class TwitchConfig {
     "default_channel": string;
     "fade": boolean;
@@ -344,6 +365,7 @@ export class TwitchConfig {
     "hide_badges": boolean;
     "user_blacklist": string[];
     "events": TwitchEvents;
+    "account": TwitchAccount;
 
     /** Creates a new TwitchConfig instance. */
     constructor($$source: Partial<TwitchConfig> = {}) {
@@ -371,6 +393,9 @@ export class TwitchConfig {
         if (!("events" in $$source)) {
             this["events"] = (new TwitchEvents());
         }
+        if (!("account" in $$source)) {
+            this["account"] = (new TwitchAccount());
+        }
 
         Object.assign(this, $$source);
     }
@@ -381,12 +406,16 @@ export class TwitchConfig {
     static createFrom($$source: any = {}): TwitchConfig {
         const $$createField6_0 = $$createType9;
         const $$createField7_0 = $$createType12;
+        const $$createField8_0 = $$createType13;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
             $$parsedSource["user_blacklist"] = $$createField6_0($$parsedSource["user_blacklist"]);
         }
         if ("events" in $$parsedSource) {
             $$parsedSource["events"] = $$createField7_0($$parsedSource["events"]);
+        }
+        if ("account" in $$parsedSource) {
+            $$parsedSource["account"] = $$createField8_0($$parsedSource["account"]);
         }
         return new TwitchConfig($$parsedSource as Partial<TwitchConfig>);
     }
@@ -396,6 +425,7 @@ export class TwitchEvents {
     "subscriptions": boolean;
     "raids": boolean;
     "announcements": boolean;
+    "redemptions": boolean;
     "other": boolean;
 
     /** Creates a new TwitchEvents instance. */
@@ -408,6 +438,9 @@ export class TwitchEvents {
         }
         if (!("announcements" in $$source)) {
             this["announcements"] = false;
+        }
+        if (!("redemptions" in $$source)) {
+            this["redemptions"] = false;
         }
         if (!("other" in $$source)) {
             this["other"] = false;
@@ -537,3 +570,4 @@ const $$createType9 = $Create.Array($Create.Any);
 const $$createType10 = Theme.createFrom;
 const $$createType11 = $Create.Array($$createType10);
 const $$createType12 = TwitchEvents.createFrom;
+const $$createType13 = TwitchAccount.createFrom;

@@ -34,8 +34,9 @@ const SUB_EVENTS = new Set([
 
 const RAID_EVENTS = new Set(['raid', 'unraid']);
 const ANNOUNCEMENT_EVENTS = new Set(['announcement']);
+const REDEMPTION_EVENTS = new Set(['channel_points_redemption']);
 
-export function classifyEvent(eventType: string): 'sub' | 'raid' | 'announcement' | 'other' {
+export function classifyEvent(eventType: string): 'sub' | 'raid' | 'announcement' | 'redemption' | 'other' {
     if (SUB_EVENTS.has(eventType)) {
         return 'sub';
     }
@@ -46,6 +47,10 @@ export function classifyEvent(eventType: string): 'sub' | 'raid' | 'announcement
 
     if (ANNOUNCEMENT_EVENTS.has(eventType)) {
         return 'announcement';
+    }
+
+    if (REDEMPTION_EVENTS.has(eventType)) {
+        return 'redemption';
     }
 
     return 'other';
@@ -94,6 +99,10 @@ function isEventAllowed(eventType: string, events: Partial<TwitchEvents>): boole
 
     if (category === 'announcement') {
         return events.announcements !== false;
+    }
+
+    if (category === 'redemption') {
+        return events.redemptions !== false;
     }
 
     return events.other !== false;

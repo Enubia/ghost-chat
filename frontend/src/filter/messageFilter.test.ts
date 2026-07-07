@@ -40,6 +40,7 @@ function makeTwitchConfig(overrides: Partial<Config['twitch']> = {}): Config {
                 subscriptions: true,
                 raids: true,
                 announcements: true,
+                redemptions: true,
                 other: true,
             },
             ...overrides,
@@ -159,7 +160,7 @@ describe('shouldDisplay', () => {
     describe('event gating', () => {
         it('allows sub event when subscriptions is enabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: true, other: true },
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(true);
@@ -167,7 +168,7 @@ describe('shouldDisplay', () => {
 
         it('blocks sub event when subscriptions is disabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: false, raids: true, announcements: true, other: true },
+                events: { subscriptions: false, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(false);
@@ -175,7 +176,7 @@ describe('shouldDisplay', () => {
 
         it('blocks resub event when subscriptions is disabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: false, raids: true, announcements: true, other: true },
+                events: { subscriptions: false, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'resub' }), config)).toBe(false);
@@ -183,7 +184,7 @@ describe('shouldDisplay', () => {
 
         it('allows raid event when raids is enabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: true, other: true },
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'raid' }), config)).toBe(true);
@@ -191,7 +192,7 @@ describe('shouldDisplay', () => {
 
         it('blocks raid event when raids is disabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: false, announcements: true, other: true },
+                events: { subscriptions: true, raids: false, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'raid' }), config)).toBe(false);
@@ -199,7 +200,7 @@ describe('shouldDisplay', () => {
 
         it('allows announcement event when announcements is enabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: true, other: true },
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'announcement' }), config)).toBe(true);
@@ -207,7 +208,7 @@ describe('shouldDisplay', () => {
 
         it('blocks announcement event when announcements is disabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: false, other: true },
+                events: { subscriptions: true, raids: true, announcements: false, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'announcement' }), config)).toBe(false);
@@ -215,7 +216,7 @@ describe('shouldDisplay', () => {
 
         it('allows unknown event type when other is enabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: true, other: true },
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: true },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'somefutureevent' }), config)).toBe(true);
@@ -223,7 +224,7 @@ describe('shouldDisplay', () => {
 
         it('blocks unknown event type when other is disabled', () => {
             const config = makeTwitchConfig({
-                events: { subscriptions: true, raids: true, announcements: true, other: false },
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: false },
             });
 
             expect(shouldDisplay(makeMsg({ eventType: 'somefutureevent' }), config)).toBe(false);
@@ -233,6 +234,30 @@ describe('shouldDisplay', () => {
             const config = makeTwitchConfig({ events: {} as Config['twitch']['events'] });
 
             expect(shouldDisplay(makeMsg({ eventType: 'sub' }), config)).toBe(true);
+        });
+
+        it('allows redemption event when redemptions is enabled', () => {
+            const config = makeTwitchConfig({
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: true, other: true },
+            });
+
+            expect(shouldDisplay(makeMsg({ eventType: 'channel_points_redemption' }), config)).toBe(true);
+        });
+
+        it('blocks redemption event when redemptions is disabled', () => {
+            const config = makeTwitchConfig({
+                events: { subscriptions: true, raids: true, announcements: true, redemptions: false, other: true },
+            });
+
+            expect(shouldDisplay(makeMsg({ eventType: 'channel_points_redemption' }), config)).toBe(false);
+        });
+
+        it('applies the user blacklist to redemptions', () => {
+            const config = makeTwitchConfig({ user_blacklist: ['blockedredeemer'] });
+
+            expect(
+                shouldDisplay(makeMsg({ eventType: 'channel_points_redemption', username: 'blockedredeemer' }), config)
+            ).toBe(false);
         });
     });
 });
@@ -338,6 +363,10 @@ describe('classifyEvent', () => {
 
     it('classifies announcement as announcement', () => {
         expect(classifyEvent('announcement')).toBe('announcement');
+    });
+
+    it('classifies channel_points_redemption as redemption', () => {
+        expect(classifyEvent('channel_points_redemption')).toBe('redemption');
     });
 
     it('classifies unknown event as other', () => {
