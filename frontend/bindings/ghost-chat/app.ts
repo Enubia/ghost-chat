@@ -15,6 +15,10 @@ import * as config$0 from "./internal/config/models.js";
 // @ts-ignore: Unused imports
 import * as application$0 from "../github.com/wailsapp/wails/v3/pkg/application/models.js";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
+import * as $models from "./models.js";
+
 export function CenterOnScreen(): $CancellablePromise<void> {
     return $Call.ByID(4082082385);
 }
@@ -65,6 +69,20 @@ export function ToggleVanish(): $CancellablePromise<void> {
     return $Call.ByID(1605625794);
 }
 
+export function TwitchAuthStatus(): $CancellablePromise<$models.TwitchAuthStatus> {
+    return $Call.ByID(2272043130).then(($result: any) => {
+        return $$createType2($result);
+    });
+}
+
+export function TwitchLogout(): $CancellablePromise<void> {
+    return $Call.ByID(1810509340);
+}
+
+export function TwitchStartLogin(): $CancellablePromise<void> {
+    return $Call.ByID(2519824671);
+}
+
 export function UpdateConfig(cfg: config$0.Config | null): $CancellablePromise<void> {
     return $Call.ByID(481689322, cfg);
 }
@@ -72,3 +90,4 @@ export function UpdateConfig(cfg: config$0.Config | null): $CancellablePromise<v
 // Private type creation functions
 const $$createType0 = config$0.Config.createFrom;
 const $$createType1 = $Create.Nullable($$createType0);
+const $$createType2 = $models.TwitchAuthStatus.createFrom;

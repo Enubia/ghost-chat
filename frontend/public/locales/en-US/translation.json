@@ -63,6 +63,13 @@
             "user_blacklist_placeholder": "user1, user2, ..."
         },
         "twitch": {
+            "account": "Twitch Account",
+            "account_hint": "Connect your Twitch account to enable channel point redemptions.",
+            "connect": "Connect",
+            "pending_instruction": "Enter this code on Twitch to authorize Ghost Chat:",
+            "open_twitch": "Open Twitch",
+            "connected_as": "Connected as {{login}}",
+            "logout": "Log out",
             "bots": "Show Bots",
             "hide_commands": "Hide Commands",
             "hide_badges": "Hide Badges",
@@ -72,6 +79,7 @@
             "events_raids": "Raids",
             "events_announcements": "Announcements",
             "events_redemptions": "Channel Point Redemptions",
+            "events_redemptions_hint": "Connect your Twitch account to enable channel point redemptions.",
             "events_other": "Other Events"
         },
         "youtube": {

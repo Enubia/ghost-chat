@@ -63,6 +63,13 @@
             "user_blacklist_placeholder": "benutzer1, benutzer2, ..."
         },
         "twitch": {
+            "account": "Twitch-Konto",
+            "account_hint": "Verbinde dein Twitch-Konto, um Kanalpunkte-Einlösungen zu aktivieren.",
+            "connect": "Verbinden",
+            "pending_instruction": "Gib diesen Code auf Twitch ein, um Ghost Chat zu autorisieren:",
+            "open_twitch": "Twitch öffnen",
+            "connected_as": "Verbunden als {{login}}",
+            "logout": "Abmelden",
             "bots": "Bots anzeigen",
             "hide_commands": "Befehle ausblenden",
             "hide_badges": "Abzeichen ausblenden",
@@ -72,6 +79,7 @@
             "events_raids": "Raids",
             "events_announcements": "Ankuendigungen",
             "events_redemptions": "Kanalpunkte-Einlösungen",
+            "events_redemptions_hint": "Verbinde dein Twitch-Konto, um Kanalpunkte-Einlösungen zu aktivieren.",
             "events_other": "Sonstige Ereignisse"
         },
         "youtube": {

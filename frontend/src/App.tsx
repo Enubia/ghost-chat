@@ -12,6 +12,7 @@ import { Home } from '@/components/Home/Home';
 import { Settings } from '@/components/Settings/Settings';
 import { ThemePreview } from '@/components/Settings/ThemePreview';
 import { TitleBar } from '@/components/TitleBar/TitleBar';
+import { useAuthStore } from '@/stores/auth';
 import { useConfigStore } from '@/stores/config';
 import { useConnectionStore } from '@/stores/connection';
 
@@ -27,6 +28,11 @@ function App() {
     const loaded = useConfigStore((s) => s.loaded);
     const language = useConfigStore((s) => s.config?.general?.language);
     const setConnected = useConnectionStore((s) => s.setConnected);
+    const seedAuth = useAuthStore((s) => s.seed);
+    const setAuthPending = useAuthStore((s) => s.setPending);
+    const setAuthConnected = useAuthStore((s) => s.setConnected);
+    const setAuthLoggedOut = useAuthStore((s) => s.setLoggedOut);
+    const setAuthError = useAuthStore((s) => s.setError);
 
     const toggleSettings = () => {
         if (settingsOpen) {
@@ -57,6 +63,35 @@ function App() {
             cancelDisconnected();
         };
     }, [setConnected]);
+
+    useEffect(() => {
+        void seedAuth();
+
+        const cancelPending = Events.On('twitch:auth:pending', (ev) => {
+            setAuthPending(ev.data as { userCode: string; verificationUri: string; expiresIn: number });
+        });
+
+        const cancelSuccess = Events.On('twitch:auth:success', (ev) => {
+            const { login } = ev.data as { login: string };
+            setAuthConnected(login);
+        });
+
+        const cancelError = Events.On('twitch:auth:error', (ev) => {
+            const { reason } = ev.data as { reason: string };
+            setAuthError(reason);
+        });
+
+        const cancelLoggedOut = Events.On('twitch:auth:loggedout', () => {
+            setAuthLoggedOut();
+        });
+
+        return () => {
+            cancelPending();
+            cancelSuccess();
+            cancelError();
+            cancelLoggedOut();
+        };
+    }, [seedAuth, setAuthPending, setAuthConnected, setAuthError, setAuthLoggedOut]);
 
     useEffect(() => {
         const cancelVanish = Events.On('vanish:toggle', (ev) => {

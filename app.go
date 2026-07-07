@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"ghost-chat/internal/auth"
 	"ghost-chat/internal/chat"
 	"ghost-chat/internal/chat/kick"
 	"ghost-chat/internal/chat/twitch"
@@ -24,6 +25,7 @@ type App struct {
 	window         *application.WebviewWindow
 	config         *config.Config
 	configPath     string
+	auth           *auth.Manager
 	clients        map[chat.Platform]chat.Client
 	emit           func(event string, data any)
 	version        string
@@ -37,6 +39,7 @@ func NewApp(cfg *config.Config, configPath string, version string) *App {
 	return &App{
 		config:     cfg,
 		configPath: configPath,
+		auth:       auth.NewManager(auth.NewKeychainTokenStore()),
 		version:    version,
 		lastX:      cfg.WindowState.X,
 		lastY:      cfg.WindowState.Y,
@@ -123,6 +126,8 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 		}
 	}()
 
+	go a.restoreTwitchAuth()
+
 	return nil
 }
 
@@ -163,8 +168,10 @@ func (a *App) GetConfig() *config.Config {
 func (a *App) UpdateConfig(cfg *config.Config) error {
 	oldConfig := a.config
 	oldKeybind := a.config.Keybinds.Vanish.Keybind
+	account := a.config.Twitch.Account
 
 	a.config = cfg
+	a.config.Twitch.Account = account
 
 	if err := config.Save(a.config, a.configPath); err != nil {
 		a.config = oldConfig
