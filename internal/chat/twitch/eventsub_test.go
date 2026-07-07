@@ -2,7 +2,7 @@ package twitch
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -98,9 +98,15 @@ func newMockEventSubServer(t *testing.T) *mockEventSubServer {
 	})
 
 	mux.HandleFunc("/eventsub/subscriptions", func(w http.ResponseWriter, r *http.Request) {
-		sessionID := r.Header.Get("X-Test-Session")
+		var body struct {
+			Transport struct {
+				SessionID string `json:"session_id"`
+			} `json:"transport"`
+		}
 
-		m.subscribed <- sessionID
+		json.NewDecoder(r.Body).Decode(&body)
+
+		m.subscribed <- body.Transport.SessionID
 
 		w.WriteHeader(http.StatusAccepted)
 		w.Write([]byte(`{"data":[{"id":"sub1","status":"enabled"}]}`))
@@ -143,7 +149,10 @@ func TestEventSubWelcomeTriggersSubscribeAndNotification(t *testing.T) {
 	t.Cleanup(es.Stop)
 
 	select {
-	case <-m.subscribed:
+	case sid := <-m.subscribed:
+		if sid != "sess-abc" {
+			t.Fatalf("subscribe used session id %q, want %q", sid, "sess-abc")
+		}
 	case <-time.After(3 * time.Second):
 		t.Fatal("subscription was not created after welcome")
 	}
@@ -300,8 +309,6 @@ func TestEventSubStartStopIdempotent(t *testing.T) {
 	es.Start()
 	es.Stop()
 	es.Stop()
-
-	_ = errors.New
 }
 
 func TestParseFrameNotificationMapsRedemption(t *testing.T) {

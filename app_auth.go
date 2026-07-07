@@ -49,9 +49,23 @@ func (a *App) TwitchAuthStatus() (TwitchAuthStatus, error) {
 }
 
 func (a *App) TwitchStartLogin() error {
+	a.authMu.Lock()
+
+	if a.authLoginPending {
+		a.authMu.Unlock()
+
+		return nil
+	}
+
+	a.authLoginPending = true
+
+	a.authMu.Unlock()
+
 	dc, err := a.auth.RequestDeviceCode(context.Background())
 
 	if err != nil {
+		a.clearAuthLoginPending()
+
 		return fmt.Errorf("start twitch login: %w", err)
 	}
 
@@ -62,6 +76,8 @@ func (a *App) TwitchStartLogin() error {
 	})
 
 	go func() {
+		defer a.clearAuthLoginPending()
+
 		login, err := a.auth.CompleteDeviceLogin(context.Background(), dc)
 
 		if err != nil {
@@ -80,6 +96,13 @@ func (a *App) TwitchStartLogin() error {
 	}()
 
 	return nil
+}
+
+func (a *App) clearAuthLoginPending() {
+	a.authMu.Lock()
+	defer a.authMu.Unlock()
+
+	a.authLoginPending = false
 }
 
 func (a *App) TwitchLogout() error {

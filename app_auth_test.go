@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"path/filepath"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -209,5 +210,84 @@ func TestTwitchStartLoginEmitsPendingAndSuccess(t *testing.T) {
 
 	if a.config.Twitch.Account.Login != "streamer" {
 		t.Errorf("persisted login = %q, want %q", a.config.Twitch.Account.Login, "streamer")
+	}
+}
+
+func TestTwitchStartLoginIgnoresConcurrentStart(t *testing.T) {
+	keyring.MockInit()
+
+	release := make(chan struct{})
+
+	var releaseOnce sync.Once
+
+	closeRelease := func() {
+		releaseOnce.Do(func() { close(release) })
+	}
+
+	var deviceCount int32
+
+	h := &stubHandler{
+		device: func(w http.ResponseWriter, r *http.Request) {
+			atomic.AddInt32(&deviceCount, 1)
+
+			w.Write([]byte(`{"device_code":"dev123","user_code":"ABCD-EFGH","verification_uri":"https://twitch.tv/activate","expires_in":1800,"interval":1}`))
+		},
+		token: func(w http.ResponseWriter, r *http.Request) {
+			<-release
+
+			w.Write([]byte(`{"access_token":"at1","refresh_token":"rt1","expires_in":3600}`))
+		},
+		validate: func(w http.ResponseWriter, r *http.Request) {
+			w.Write([]byte(`{"login":"streamer","user_id":"42","expires_in":3600}`))
+		},
+	}
+
+	server := httptest.NewServer(h)
+
+	t.Cleanup(server.Close)
+	t.Cleanup(closeRelease)
+
+	dir := t.TempDir()
+
+	cfg := &config.Config{}
+
+	a := NewApp(cfg, filepath.Join(dir, "config.json"), "test")
+
+	a.auth = auth.NewManager(
+		auth.NewKeychainTokenStore(),
+		auth.WithBaseURL(server.URL),
+		auth.WithHTTPClient(server.Client()),
+		auth.WithClock(func() time.Time { return time.Unix(1000, 0) }),
+		auth.WithSleep(func(time.Duration) {}),
+	)
+
+	var successOnce sync.Once
+
+	done := make(chan struct{})
+
+	a.emit = func(event string, data any) {
+		if event == "twitch:auth:success" {
+			successOnce.Do(func() { close(done) })
+		}
+	}
+
+	if err := a.TwitchStartLogin(); err != nil {
+		t.Fatalf("first TwitchStartLogin: %v", err)
+	}
+
+	if err := a.TwitchStartLogin(); err != nil {
+		t.Fatalf("second TwitchStartLogin: %v", err)
+	}
+
+	if got := atomic.LoadInt32(&deviceCount); got != 1 {
+		t.Fatalf("device code requested %d times, want 1 (second concurrent login must be a no-op)", got)
+	}
+
+	closeRelease()
+
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+		t.Fatal("login did not complete")
 	}
 }

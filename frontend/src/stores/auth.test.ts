@@ -58,4 +58,14 @@ describe('auth store', () => {
         expect(state.status).toBe('loggedOut');
         expect(state.pending).toBeNull();
     });
+
+    it('ignores a stale error while connected', () => {
+        useAuthStore.getState().setConnected('streamer');
+        useAuthStore.getState().setError('device code expired');
+
+        const state = useAuthStore.getState();
+
+        expect(state.status).toBe('connected');
+        expect(state.login).toBe('streamer');
+    });
 });

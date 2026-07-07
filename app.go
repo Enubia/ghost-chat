@@ -22,22 +22,24 @@ import (
 )
 
 type App struct {
-	app            *application.App
-	window         *application.WebviewWindow
-	config         *config.Config
-	configMu       sync.Mutex
-	configPath     string
-	auth           *auth.Manager
-	clients        map[chat.Platform]chat.Client
-	redemptions    *twitch.EventSub
-	redemptionsMu  sync.Mutex
-	twitchChannel  string
-	emit           func(event string, data any)
-	version        string
-	preExpandWidth int
-	vanished       bool
-	lastX, lastY   int
-	lastW, lastH   int
+	app              *application.App
+	window           *application.WebviewWindow
+	config           *config.Config
+	configMu         sync.Mutex
+	configPath       string
+	auth             *auth.Manager
+	clients          map[chat.Platform]chat.Client
+	redemptions      *twitch.EventSub
+	redemptionsMu    sync.Mutex
+	twitchChannel    string
+	authMu           sync.Mutex
+	authLoginPending bool
+	emit             func(event string, data any)
+	version          string
+	preExpandWidth   int
+	vanished         bool
+	lastX, lastY     int
+	lastW, lastH     int
 }
 
 func NewApp(cfg *config.Config, configPath string, version string) *App {

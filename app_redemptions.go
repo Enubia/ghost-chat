@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"ghost-chat/internal/auth"
 	"ghost-chat/internal/chat/twitch"
@@ -68,7 +69,7 @@ func (a *App) setTwitchChannel(channel string) {
 	a.redemptionsMu.Lock()
 	defer a.redemptionsMu.Unlock()
 
-	a.twitchChannel = channel
+	a.twitchChannel = strings.ToLower(strings.TrimPrefix(strings.TrimSpace(channel), "#"))
 
 	a.evaluateRedemptionsLocked()
 }

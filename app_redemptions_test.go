@@ -5,6 +5,7 @@ import (
 	"sync"
 	"testing"
 
+	"ghost-chat/internal/chat/twitch"
 	"ghost-chat/internal/config"
 
 	"github.com/zalando/go-keyring"
@@ -17,16 +18,34 @@ func TestSetAndClearTwitchChannelTracksState(t *testing.T) {
 
 	a := NewApp(cfg, filepath.Join(dir, "config.json"), "test")
 
-	a.setTwitchChannel("streamer")
-
-	if a.twitchChannel != "streamer" {
-		t.Errorf("twitchChannel = %q, want %q", a.twitchChannel, "streamer")
+	cases := []struct {
+		name  string
+		input string
+	}{
+		{"plain", "streamer"},
+		{"hash prefix", "#Streamer"},
+		{"surrounding whitespace", " streamer "},
+		{"mixed case", "StReAmEr"},
 	}
 
-	a.clearTwitchChannel()
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			a.setTwitchChannel(tc.input)
 
-	if a.twitchChannel != "" {
-		t.Errorf("twitchChannel = %q, want empty", a.twitchChannel)
+			if a.twitchChannel != "streamer" {
+				t.Errorf("twitchChannel = %q, want %q", a.twitchChannel, "streamer")
+			}
+
+			if !twitch.ShouldRunRedemptions(true, "streamer", a.twitchChannel) {
+				t.Errorf("gate did not match auth login for input %q (stored %q)", tc.input, a.twitchChannel)
+			}
+
+			a.clearTwitchChannel()
+
+			if a.twitchChannel != "" {
+				t.Errorf("twitchChannel = %q, want empty", a.twitchChannel)
+			}
+		})
 	}
 }
 

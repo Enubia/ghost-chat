@@ -31,7 +31,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     setLoggedOut: () => set({ status: 'loggedOut', login: '', pending: null }),
 
-    setError: () => set({ status: 'loggedOut', pending: null }),
+    setError: () => set((state) => (state.status === 'connected' ? {} : { status: 'loggedOut', pending: null })),
 
     seed: async () => {
         try {
