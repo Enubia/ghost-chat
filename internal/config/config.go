@@ -28,15 +28,20 @@ type TwitchEvents struct {
 	Other         bool `json:"other"`
 }
 
+type TwitchAccount struct {
+	Login string `json:"login"`
+}
+
 type TwitchConfig struct {
-	DefaultChannel string       `json:"default_channel"`
-	Fade           bool         `json:"fade"`
-	FadeTimeout    int          `json:"fade_timeout"`
-	Bots           bool         `json:"bots"`
-	HideCommands   bool         `json:"hide_commands"`
-	HideBadges     bool         `json:"hide_badges"`
-	UserBlacklist  []string     `json:"user_blacklist"`
-	Events         TwitchEvents `json:"events"`
+	DefaultChannel string        `json:"default_channel"`
+	Fade           bool          `json:"fade"`
+	FadeTimeout    int           `json:"fade_timeout"`
+	Bots           bool          `json:"bots"`
+	HideCommands   bool          `json:"hide_commands"`
+	HideBadges     bool          `json:"hide_badges"`
+	UserBlacklist  []string      `json:"user_blacklist"`
+	Events         TwitchEvents  `json:"events"`
+	Account        TwitchAccount `json:"account"`
 }
 
 type YouTubeConfig struct {
