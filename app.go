@@ -29,6 +29,9 @@ type App struct {
 	configPath     string
 	auth           *auth.Manager
 	clients        map[chat.Platform]chat.Client
+	redemptions    *twitch.EventSub
+	redemptionsMu  sync.Mutex
+	twitchChannel  string
 	emit           func(event string, data any)
 	version        string
 	preExpandWidth int
@@ -38,7 +41,7 @@ type App struct {
 }
 
 func NewApp(cfg *config.Config, configPath string, version string) *App {
-	return &App{
+	a := &App{
 		config:     cfg,
 		configPath: configPath,
 		auth:       auth.NewManager(auth.NewKeychainTokenStore()),
@@ -48,6 +51,16 @@ func NewApp(cfg *config.Config, configPath string, version string) *App {
 		lastW:      cfg.WindowState.Width,
 		lastH:      cfg.WindowState.Height,
 	}
+
+	onMessage := func(msg chat.ChatMessage) {
+		if a.emit != nil {
+			a.emit("chat:message", msg)
+		}
+	}
+
+	a.redemptions = twitch.NewEventSub(onMessage, twitchAuthAdapter{m: a.auth}, a.handleRedemptionAuthLost)
+
+	return a
 }
 
 func (a *App) SetApp(app *application.App, win *application.WebviewWindow) {
@@ -160,6 +173,11 @@ func (a *App) ServiceShutdown() error {
 		for _, c := range a.clients {
 			c.Disconnect()
 		}
+
+		if a.redemptions != nil {
+			a.redemptions.Stop()
+		}
+
 		ghHotkey.Unregister()
 	}()
 
@@ -209,7 +227,15 @@ func (a *App) Connect(platform chat.Platform, input string) error {
 		return fmt.Errorf("unknown platform: %s", platform)
 	}
 
-	return c.Connect(input)
+	if err := c.Connect(input); err != nil {
+		return err
+	}
+
+	if platform == chat.PlatformTwitch {
+		a.setTwitchChannel(input)
+	}
+
+	return nil
 }
 
 func (a *App) Disconnect(platform chat.Platform) error {
@@ -220,6 +246,10 @@ func (a *App) Disconnect(platform chat.Platform) error {
 	}
 
 	c.Disconnect()
+
+	if platform == chat.PlatformTwitch {
+		a.clearTwitchChannel()
+	}
 
 	return nil
 }

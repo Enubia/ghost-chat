@@ -75,6 +75,8 @@ func (a *App) TwitchStartLogin() error {
 		}
 
 		a.emit("twitch:auth:success", authSuccessData{Login: login})
+
+		a.evaluateRedemptions()
 	}()
 
 	return nil
@@ -90,6 +92,8 @@ func (a *App) TwitchLogout() error {
 	}
 
 	a.emit("twitch:auth:loggedout", nil)
+
+	a.evaluateRedemptions()
 
 	return nil
 }
@@ -120,4 +124,6 @@ func (a *App) restoreTwitchAuth() {
 	}
 
 	a.emit("twitch:auth:success", authSuccessData{Login: login})
+
+	a.evaluateRedemptions()
 }
