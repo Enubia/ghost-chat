@@ -28,6 +28,19 @@ type authErrorData struct {
 	Reason string `json:"reason"`
 }
 
+func (a *App) persistTwitchLogin(login string) error {
+	a.configMu.Lock()
+	defer a.configMu.Unlock()
+
+	if a.config.Twitch.Account.Login == login {
+		return nil
+	}
+
+	a.config.Twitch.Account.Login = login
+
+	return config.Save(a.config, a.configPath)
+}
+
 func (a *App) TwitchAuthStatus() (TwitchAuthStatus, error) {
 	return TwitchAuthStatus{
 		LoggedIn: a.auth.LoggedIn(),
@@ -57,9 +70,7 @@ func (a *App) TwitchStartLogin() error {
 			return
 		}
 
-		a.config.Twitch.Account.Login = login
-
-		if err := config.Save(a.config, a.configPath); err != nil {
+		if err := a.persistTwitchLogin(login); err != nil {
 			fmt.Printf("failed to save config after login: %s\n", err.Error())
 		}
 
@@ -74,9 +85,7 @@ func (a *App) TwitchLogout() error {
 		return fmt.Errorf("twitch logout: %w", err)
 	}
 
-	a.config.Twitch.Account.Login = ""
-
-	if err := config.Save(a.config, a.configPath); err != nil {
+	if err := a.persistTwitchLogin(""); err != nil {
 		return fmt.Errorf("save config after logout: %w", err)
 	}
 
@@ -93,9 +102,7 @@ func (a *App) restoreTwitchAuth() {
 	}
 
 	if errors.Is(err, auth.ErrInvalidGrant) {
-		a.config.Twitch.Account.Login = ""
-
-		if saveErr := config.Save(a.config, a.configPath); saveErr != nil {
+		if saveErr := a.persistTwitchLogin(""); saveErr != nil {
 			fmt.Printf("failed to clear login after invalid grant: %s\n", saveErr.Error())
 		}
 
@@ -108,12 +115,8 @@ func (a *App) restoreTwitchAuth() {
 		return
 	}
 
-	if login != a.config.Twitch.Account.Login {
-		a.config.Twitch.Account.Login = login
-
-		if saveErr := config.Save(a.config, a.configPath); saveErr != nil {
-			fmt.Printf("failed to persist restored login: %s\n", saveErr.Error())
-		}
+	if saveErr := a.persistTwitchLogin(login); saveErr != nil {
+		fmt.Printf("failed to persist restored login: %s\n", saveErr.Error())
 	}
 
 	a.emit("twitch:auth:success", authSuccessData{Login: login})

@@ -56,6 +56,55 @@ func TestUpdateConfigPreservesTwitchAccount(t *testing.T) {
 	}
 }
 
+func TestConfigWritesAreRaceFree(t *testing.T) {
+	dir := t.TempDir()
+
+	cfg := &config.Config{}
+	cfg.Twitch.Account.Login = "streamer"
+
+	a := NewApp(cfg, filepath.Join(dir, "config.json"), "test")
+
+	var wg sync.WaitGroup
+
+	wg.Add(3)
+
+	go func() {
+		defer wg.Done()
+
+		for range 100 {
+			if err := a.persistTwitchLogin("streamer"); err != nil {
+				t.Errorf("persistTwitchLogin: %v", err)
+			}
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+
+		for range 100 {
+			incoming := &config.Config{}
+
+			if err := a.UpdateConfig(incoming); err != nil {
+				t.Errorf("UpdateConfig: %v", err)
+			}
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+
+		for range 100 {
+			a.GetConfig()
+		}
+	}()
+
+	wg.Wait()
+
+	if got := a.config.Twitch.Account.Login; got != "streamer" {
+		t.Errorf("login clobbered: got %q, want %q", got, "streamer")
+	}
+}
+
 func TestTwitchAuthStatusReflectsManager(t *testing.T) {
 	dir := t.TempDir()
 

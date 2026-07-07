@@ -15,6 +15,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"sync"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 	"github.com/wailsapp/wails/v3/pkg/events"
@@ -24,6 +25,7 @@ type App struct {
 	app            *application.App
 	window         *application.WebviewWindow
 	config         *config.Config
+	configMu       sync.Mutex
 	configPath     string
 	auth           *auth.Manager
 	clients        map[chat.Platform]chat.Client
@@ -132,6 +134,9 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 }
 
 func (a *App) SaveWindowState() {
+	a.configMu.Lock()
+	defer a.configMu.Unlock()
+
 	a.config.WindowState.X = a.lastX
 	a.config.WindowState.Y = a.lastY
 
@@ -162,10 +167,15 @@ func (a *App) ServiceShutdown() error {
 }
 
 func (a *App) GetConfig() *config.Config {
+	a.configMu.Lock()
+	defer a.configMu.Unlock()
+
 	return a.config
 }
 
 func (a *App) UpdateConfig(cfg *config.Config) error {
+	a.configMu.Lock()
+
 	oldConfig := a.config
 	oldKeybind := a.config.Keybinds.Vanish.Keybind
 	account := a.config.Twitch.Account
@@ -175,8 +185,13 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 
 	if err := config.Save(a.config, a.configPath); err != nil {
 		a.config = oldConfig
+
+		a.configMu.Unlock()
+
 		return err
 	}
+
+	a.configMu.Unlock()
 
 	if cfg.Keybinds.Vanish.Keybind != oldKeybind {
 		if err := ghHotkey.Register(cfg.Keybinds.Vanish.Keybind, a.ToggleVanish); err != nil {

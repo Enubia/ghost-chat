@@ -354,6 +354,51 @@ func TestRefreshInvalidGrantClearsTokens(t *testing.T) {
 	}
 }
 
+func TestRefreshBadRequestClearsTokens(t *testing.T) {
+	h := &stubHandler{
+		token: func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(`{"error":"Bad Request","status":400,"message":"Invalid refresh token"}`))
+		},
+	}
+
+	store := newMemoryStore()
+
+	store.Save(TokenSet{AccessToken: "at-old", RefreshToken: "rt-old"})
+
+	server := httptest.NewServer(h)
+
+	t.Cleanup(server.Close)
+
+	mgr := NewManager(
+		store,
+		WithBaseURL(server.URL),
+		WithHTTPClient(server.Client()),
+		WithClock(func() time.Time { return time.Unix(1000, 0) }),
+		WithSleep(func(time.Duration) {}),
+	)
+
+	mgr.setLoggedIn(TokenSet{AccessToken: "at-old", RefreshToken: "rt-old"}, "streamer")
+
+	_, err := mgr.Refresh(context.Background())
+
+	if !errors.Is(err, ErrInvalidGrant) {
+		t.Fatalf("Refresh error = %v, want ErrInvalidGrant", err)
+	}
+
+	if _, loadErr := store.Load(); !errors.Is(loadErr, ErrNoToken) {
+		t.Errorf("store not cleared: load error = %v, want ErrNoToken", loadErr)
+	}
+
+	if mgr.LoggedIn() {
+		t.Error("expected LoggedIn to be false after invalid refresh grant")
+	}
+
+	if mgr.CurrentLogin() != "" {
+		t.Errorf("CurrentLogin = %q, want empty after invalid refresh grant", mgr.CurrentLogin())
+	}
+}
+
 func TestCompleteDeviceLoginStoresTokensAndLogin(t *testing.T) {
 	h := &stubHandler{
 		token: func(w http.ResponseWriter, r *http.Request) {

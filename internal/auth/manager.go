@@ -246,19 +246,21 @@ func (m *Manager) Refresh(ctx context.Context) (TokenSet, error) {
 		return TokenSet{}, fmt.Errorf("refresh token: %w", err)
 	}
 
+	status := resp.StatusCode
+
 	tr, err := decodeTokenResponse(resp)
 
 	if err != nil {
 		return TokenSet{}, err
 	}
 
+	if status >= 400 && status < 500 {
+		m.clearState()
+
+		return TokenSet{}, ErrInvalidGrant
+	}
+
 	if tr.AccessToken == "" {
-		if tr.reason() == "invalid_grant" {
-			m.clearState()
-
-			return TokenSet{}, ErrInvalidGrant
-		}
-
 		return TokenSet{}, fmt.Errorf("refresh token: %s", tr.reason())
 	}
 
