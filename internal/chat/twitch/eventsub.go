@@ -406,7 +406,7 @@ func (e *EventSub) trySubscribeWithRetry(ctx context.Context, sessionID string) 
 	for attempt := 0; attempt < subscriptionRetryLimit; attempt++ {
 		err = e.trySubscribe(ctx, sessionID)
 
-		if err == nil || errors.Is(err, errUnauthorized) || errors.Is(err, ErrAuthPermanent) {
+		if err == nil || !isTransientSubscriptionError(err) {
 			return err
 		}
 
@@ -416,6 +416,38 @@ func (e *EventSub) trySubscribeWithRetry(ctx context.Context, sessionID string) 
 	}
 
 	return err
+}
+
+func isTransientSubscriptionError(err error) bool {
+	var statusErr *subscriptionHTTPStatusError
+
+	if errors.As(err, &statusErr) {
+		return statusErr.status >= http.StatusInternalServerError && statusErr.status < 600
+	}
+
+	var transportErr *subscriptionTransportError
+
+	return errors.As(err, &transportErr)
+}
+
+type subscriptionTransportError struct {
+	err error
+}
+
+func (e *subscriptionTransportError) Error() string {
+	return fmt.Sprintf("create eventsub subscription: %v", e.err)
+}
+
+func (e *subscriptionTransportError) Unwrap() error {
+	return e.err
+}
+
+type subscriptionHTTPStatusError struct {
+	status int
+}
+
+func (e *subscriptionHTTPStatusError) Error() string {
+	return fmt.Sprintf("create eventsub subscription: unexpected status %d", e.status)
 }
 
 type subscriptionRequest struct {
@@ -471,7 +503,7 @@ func (e *EventSub) trySubscribe(ctx context.Context, sessionID string) error {
 	resp, err := e.httpClient.Do(req)
 
 	if err != nil {
-		return fmt.Errorf("create eventsub subscription: %w", err)
+		return &subscriptionTransportError{err: err}
 	}
 
 	defer resp.Body.Close()
@@ -484,6 +516,6 @@ func (e *EventSub) trySubscribe(ctx context.Context, sessionID string) error {
 	case http.StatusUnauthorized:
 		return errUnauthorized
 	default:
-		return fmt.Errorf("create eventsub subscription: unexpected status %d", resp.StatusCode)
+		return &subscriptionHTTPStatusError{status: resp.StatusCode}
 	}
 }

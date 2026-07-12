@@ -3,10 +3,12 @@ package twitch
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -16,17 +18,29 @@ import (
 )
 
 type stubAuthProvider struct {
-	token   string
-	userID  string
-	refresh func() error
+	token            string
+	userID           string
+	accessTokenErr   error
+	userIDErr        error
+	accessTokenCalls *atomic.Int32
+	userIDCalls      *atomic.Int32
+	refresh          func() error
 }
 
 func (s stubAuthProvider) AccessToken(ctx context.Context) (string, error) {
-	return s.token, nil
+	if s.accessTokenCalls != nil {
+		s.accessTokenCalls.Add(1)
+	}
+
+	return s.token, s.accessTokenErr
 }
 
 func (s stubAuthProvider) UserID(ctx context.Context, token string) (string, error) {
-	return s.userID, nil
+	if s.userIDCalls != nil {
+		s.userIDCalls.Add(1)
+	}
+
+	return s.userID, s.userIDErr
 }
 
 func (s stubAuthProvider) Refresh(ctx context.Context) error {
@@ -297,66 +311,184 @@ func TestEventSubSubscribeUnauthorizedRefreshInvalidGrantSignalsAuthLost(t *test
 	}
 }
 
-func TestEventSubRetriesTransientSubscriptionFailures(t *testing.T) {
-	provider := stubAuthProvider{token: "tok", userID: "42"}
+func TestEventSubSubscriptionRetryClassification(t *testing.T) {
+	for _, tc := range []struct {
+		name         string
+		statuses     []int
+		wantAttempts int32
+	}{
+		{name: "transient server error", statuses: []int{http.StatusInternalServerError, http.StatusInternalServerError, http.StatusAccepted}, wantAttempts: 3},
+		{name: "bad request", statuses: []int{http.StatusBadRequest}, wantAttempts: 1},
+		{name: "forbidden", statuses: []int{http.StatusForbidden}, wantAttempts: 1},
+		{name: "not found", statuses: []int{http.StatusNotFound}, wantAttempts: 1},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			upgrader := websocket.Upgrader{}
+			mux := http.NewServeMux()
+			var attempts atomic.Int32
+			attempted := make(chan struct{}, 1)
 
-	var attempts int
+			mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+				conn, err := upgrader.Upgrade(w, r, nil)
 
-	upgrader := websocket.Upgrader{}
-	mux := http.NewServeMux()
+				if err != nil {
+					return
+				}
 
-	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := upgrader.Upgrade(w, r, nil)
+				defer conn.Close()
 
-		if err != nil {
-			return
-		}
+				conn.WriteMessage(websocket.TextMessage, []byte(`{"metadata":{"message_type":"session_welcome"},"payload":{"session":{"id":"sess-abc","keepalive_timeout_seconds":10}}}`))
 
-		defer conn.Close()
+				for {
+					if _, _, err := conn.ReadMessage(); err != nil {
+						return
+					}
+				}
+			})
 
-		conn.WriteMessage(websocket.TextMessage, []byte(`{"metadata":{"message_type":"session_welcome"},"payload":{"session":{"id":"sess-abc","keepalive_timeout_seconds":10}}}`))
+			mux.HandleFunc("/eventsub/subscriptions", func(w http.ResponseWriter, r *http.Request) {
+				attempt := attempts.Add(1)
+				status := tc.statuses[min(int(attempt)-1, len(tc.statuses)-1)]
 
-		for {
-			if _, _, err := conn.ReadMessage(); err != nil {
-				return
+				w.WriteHeader(status)
+
+				if attempt == tc.wantAttempts {
+					attempted <- struct{}{}
+				}
+			})
+
+			server := httptest.NewServer(mux)
+
+			t.Cleanup(server.Close)
+
+			es := NewEventSub(func(chat.ChatMessage) {}, stubAuthProvider{token: "tok", userID: "42"}, func() {},
+				WithWSURL("ws"+strings.TrimPrefix(server.URL, "http")+"/ws"),
+				WithHelixURL(server.URL),
+				WithEventSubHTTPClient(server.Client()),
+			)
+
+			es.Start()
+
+			t.Cleanup(es.Stop)
+
+			select {
+			case <-attempted:
+			case <-time.After(3 * time.Second):
+				t.Fatalf("subscription attempts = %d, want %d", attempts.Load(), tc.wantAttempts)
 			}
-		}
-	})
 
-	attempted := make(chan struct{}, 1)
+			time.Sleep(100 * time.Millisecond)
 
-	mux.HandleFunc("/eventsub/subscriptions", func(w http.ResponseWriter, r *http.Request) {
-		attempts++
+			if got := attempts.Load(); got != tc.wantAttempts {
+				t.Fatalf("subscription attempts = %d, want %d", got, tc.wantAttempts)
+			}
+		})
+	}
+}
 
-		if attempts < 3 {
-			w.WriteHeader(http.StatusInternalServerError)
-		} else {
-			w.WriteHeader(http.StatusAccepted)
-		}
+func TestEventSubRetriesSubscriptionTransportFailures(t *testing.T) {
+	m := newMockEventSubServer(t)
+	var userIDCalls atomic.Int32
 
-		if attempts == 3 {
-			attempted <- struct{}{}
-		}
-	})
-
-	server := httptest.NewServer(mux)
-
-	t.Cleanup(server.Close)
-
-	es := NewEventSub(func(chat.ChatMessage) {}, provider, func() {},
-		WithWSURL("ws"+strings.TrimPrefix(server.URL, "http")+"/ws"),
-		WithHelixURL(server.URL),
-		WithEventSubHTTPClient(server.Client()),
+	es := NewEventSub(func(chat.ChatMessage) {}, stubAuthProvider{token: "tok", userID: "42", userIDCalls: &userIDCalls}, func() {},
+		WithWSURL(m.wsURL),
+		WithHelixURL("http://127.0.0.1:0"),
 	)
 
 	es.Start()
 
 	t.Cleanup(es.Stop)
 
-	select {
-	case <-attempted:
-	case <-time.After(3 * time.Second):
-		t.Fatalf("subscription attempts = %d, want 3", attempts)
+	deadline := time.After(3 * time.Second)
+
+	for userIDCalls.Load() < subscriptionRetryLimit {
+		select {
+		case <-deadline:
+			t.Fatalf("subscription attempts = %d, want %d", userIDCalls.Load(), subscriptionRetryLimit)
+		case <-time.After(10 * time.Millisecond):
+		}
+	}
+
+	if got := userIDCalls.Load(); got != subscriptionRetryLimit {
+		t.Fatalf("subscription attempts = %d, want %d", got, subscriptionRetryLimit)
+	}
+}
+
+func TestEventSubDoesNotRetryAuthProviderFailures(t *testing.T) {
+	for _, tc := range []struct {
+		name     string
+		provider stubAuthProvider
+		calls    func() int32
+	}{
+		func() struct {
+			name     string
+			provider stubAuthProvider
+			calls    func() int32
+		} {
+			var accessTokenCalls atomic.Int32
+
+			return struct {
+				name     string
+				provider stubAuthProvider
+				calls    func() int32
+			}{
+				name:     "access token",
+				provider: stubAuthProvider{accessTokenErr: errors.New("access token failed"), accessTokenCalls: &accessTokenCalls},
+				calls:    accessTokenCalls.Load,
+			}
+		}(),
+		func() struct {
+			name     string
+			provider stubAuthProvider
+			calls    func() int32
+		} {
+			var userIDCalls atomic.Int32
+
+			return struct {
+				name     string
+				provider stubAuthProvider
+				calls    func() int32
+			}{
+				name:     "user id",
+				provider: stubAuthProvider{token: "tok", userIDErr: errors.New("user id failed"), userIDCalls: &userIDCalls},
+				calls:    userIDCalls.Load,
+			}
+		}(),
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			m := newMockEventSubServer(t)
+			es := NewEventSub(func(chat.ChatMessage) {}, tc.provider, func() {},
+				WithWSURL(m.wsURL),
+				WithHelixURL(m.server.URL),
+				WithEventSubHTTPClient(m.server.Client()),
+			)
+
+			es.Start()
+
+			t.Cleanup(es.Stop)
+
+			deadline := time.After(3 * time.Second)
+
+			for tc.calls() == 0 {
+				select {
+				case <-deadline:
+					t.Fatal("auth provider was not called")
+				case <-time.After(10 * time.Millisecond):
+				}
+			}
+
+			time.Sleep(100 * time.Millisecond)
+
+			if got := tc.calls(); got != 1 {
+				t.Fatalf("auth provider calls = %d, want 1", got)
+			}
+
+			select {
+			case <-m.subscribed:
+				t.Fatal("subscription request was sent after auth provider failure")
+			case <-time.After(100 * time.Millisecond):
+			}
+		})
 	}
 }
 
