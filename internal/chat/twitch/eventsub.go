@@ -25,10 +25,12 @@ const (
 	msgReconnect    = "session_reconnect"
 	msgRevocation   = "revocation"
 
-	eventSubWSURL    = "wss://eventsub.wss.twitch.tv/ws"
-	helixBaseURL     = "https://api.twitch.tv/helix"
-	subscriptionType = "channel.channel_points_custom_reward_redemption.add"
-	keepaliveGrace   = 3 * time.Second
+	eventSubWSURL          = "wss://eventsub.wss.twitch.tv/ws"
+	helixBaseURL           = "https://api.twitch.tv/helix"
+	subscriptionType       = "channel.channel_points_custom_reward_redemption.add"
+	keepaliveGrace         = 3 * time.Second
+	welcomeTimeout         = 10 * time.Second
+	subscriptionRetryLimit = 3
 )
 
 var (
@@ -224,7 +226,11 @@ func (e *EventSub) run(ctx context.Context) {
 			return
 		}
 
-		err := e.serve(ctx, url)
+		err, welcomed := e.serve(ctx, url)
+
+		if welcomed {
+			backoff = time.Second
+		}
 
 		if ctx.Err() != nil {
 			return
@@ -246,24 +252,29 @@ func (e *EventSub) run(ctx context.Context) {
 	}
 }
 
-func (e *EventSub) serve(ctx context.Context, url string) error {
+func (e *EventSub) serve(ctx context.Context, url string) (error, bool) {
 	conn, err := e.dial(ctx, url)
 
 	if err != nil {
-		return err
+		return err, false
 	}
 
 	if !e.adoptConn(ctx, conn) {
 		conn.Close()
 
-		return errStop
+		return errStop, false
 	}
 
 	defer func() {
 		conn.Close()
 	}()
 
+	welcomed := false
 	var keepalive time.Duration
+
+	setWelcomeDeadline := func(c *websocket.Conn) {
+		c.SetReadDeadline(time.Now().Add(welcomeTimeout))
+	}
 
 	resetDeadline := func(c *websocket.Conn) {
 		if keepalive > 0 {
@@ -271,10 +282,12 @@ func (e *EventSub) serve(ctx context.Context, url string) error {
 		}
 	}
 
+	setWelcomeDeadline(conn)
+
 	for {
 		select {
 		case <-ctx.Done():
-			return errStop
+			return errStop, welcomed
 		default:
 		}
 
@@ -282,10 +295,10 @@ func (e *EventSub) serve(ctx context.Context, url string) error {
 
 		if rerr != nil {
 			if ctx.Err() != nil {
-				return errStop
+				return errStop, welcomed
 			}
 
-			return rerr
+			return rerr, welcomed
 		}
 
 		f, perr := parseFrame(raw)
@@ -296,6 +309,7 @@ func (e *EventSub) serve(ctx context.Context, url string) error {
 
 		switch f.kind {
 		case frameWelcome:
+			welcomed = true
 			keepalive = time.Duration(f.keepalive) * time.Second
 
 			resetDeadline(conn)
@@ -319,19 +333,19 @@ func (e *EventSub) serve(ctx context.Context, url string) error {
 			if !e.adoptConn(ctx, newConn) {
 				newConn.Close()
 
-				return errStop
+				return errStop, welcomed
 			}
 
 			old := conn
 			conn = newConn
 
-			resetDeadline(conn)
+			setWelcomeDeadline(conn)
 
 			old.Close()
 		case frameRevocation:
 			e.onAuthLost()
 
-			return errStop
+			return errStop, welcomed
 		}
 	}
 }
@@ -359,8 +373,9 @@ func (e *EventSub) adoptConn(ctx context.Context, conn *websocket.Conn) bool {
 	return true
 }
 
+// subscribe accepts a rare spurious logout when a real 401 races a user disconnect because the token is genuinely dead.
 func (e *EventSub) subscribe(ctx context.Context, sessionID string) {
-	err := e.trySubscribe(ctx, sessionID)
+	err := e.trySubscribeWithRetry(ctx, sessionID)
 
 	switch {
 	case err == nil:
@@ -376,13 +391,31 @@ func (e *EventSub) subscribe(ctx context.Context, sessionID string) {
 			return
 		}
 
-		if err2 := e.trySubscribe(ctx, sessionID); err2 != nil {
+		if err2 := e.trySubscribeWithRetry(ctx, sessionID); err2 != nil {
 			if errors.Is(err2, errUnauthorized) || errors.Is(err2, ErrAuthPermanent) {
 				e.onAuthLost()
 			}
 		}
 	default:
 	}
+}
+
+func (e *EventSub) trySubscribeWithRetry(ctx context.Context, sessionID string) error {
+	var err error
+
+	for attempt := 0; attempt < subscriptionRetryLimit; attempt++ {
+		err = e.trySubscribe(ctx, sessionID)
+
+		if err == nil || errors.Is(err, errUnauthorized) || errors.Is(err, ErrAuthPermanent) {
+			return err
+		}
+
+		if ctx.Err() != nil {
+			return ctx.Err()
+		}
+	}
+
+	return err
 }
 
 type subscriptionRequest struct {

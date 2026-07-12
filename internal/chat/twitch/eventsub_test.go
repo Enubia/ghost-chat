@@ -297,6 +297,175 @@ func TestEventSubSubscribeUnauthorizedRefreshInvalidGrantSignalsAuthLost(t *test
 	}
 }
 
+func TestEventSubRetriesTransientSubscriptionFailures(t *testing.T) {
+	provider := stubAuthProvider{token: "tok", userID: "42"}
+
+	var attempts int
+
+	upgrader := websocket.Upgrader{}
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		conn, err := upgrader.Upgrade(w, r, nil)
+
+		if err != nil {
+			return
+		}
+
+		defer conn.Close()
+
+		conn.WriteMessage(websocket.TextMessage, []byte(`{"metadata":{"message_type":"session_welcome"},"payload":{"session":{"id":"sess-abc","keepalive_timeout_seconds":10}}}`))
+
+		for {
+			if _, _, err := conn.ReadMessage(); err != nil {
+				return
+			}
+		}
+	})
+
+	attempted := make(chan struct{}, 1)
+
+	mux.HandleFunc("/eventsub/subscriptions", func(w http.ResponseWriter, r *http.Request) {
+		attempts++
+
+		if attempts < 3 {
+			w.WriteHeader(http.StatusInternalServerError)
+		} else {
+			w.WriteHeader(http.StatusAccepted)
+		}
+
+		if attempts == 3 {
+			attempted <- struct{}{}
+		}
+	})
+
+	server := httptest.NewServer(mux)
+
+	t.Cleanup(server.Close)
+
+	es := NewEventSub(func(chat.ChatMessage) {}, provider, func() {},
+		WithWSURL("ws"+strings.TrimPrefix(server.URL, "http")+"/ws"),
+		WithHelixURL(server.URL),
+		WithEventSubHTTPClient(server.Client()),
+	)
+
+	es.Start()
+
+	t.Cleanup(es.Stop)
+
+	select {
+	case <-attempted:
+	case <-time.After(3 * time.Second):
+		t.Fatalf("subscription attempts = %d, want 3", attempts)
+	}
+}
+
+func TestEventSubResetsBackoffAfterWelcome(t *testing.T) {
+	upgrader := websocket.Upgrader{}
+	mux := http.NewServeMux()
+	connections := make(chan time.Time, 4)
+	var connectionCount int
+	var connectionMu sync.Mutex
+
+	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		conn, err := upgrader.Upgrade(w, r, nil)
+
+		if err != nil {
+			return
+		}
+
+		connectionMu.Lock()
+		connectionCount++
+		count := connectionCount
+		connectionMu.Unlock()
+
+		connections <- time.Now()
+
+		if count == 3 {
+			conn.WriteMessage(websocket.TextMessage, []byte(`{"metadata":{"message_type":"session_welcome"},"payload":{"session":{"id":"sess-abc","keepalive_timeout_seconds":10}}}`))
+
+			time.Sleep(100 * time.Millisecond)
+		}
+
+		conn.Close()
+	})
+
+	server := httptest.NewServer(mux)
+
+	t.Cleanup(server.Close)
+
+	es := NewEventSub(func(chat.ChatMessage) {}, stubAuthProvider{token: "tok", userID: "42"}, func() {},
+		WithWSURL("ws"+strings.TrimPrefix(server.URL, "http")+"/ws"),
+		WithHelixURL(server.URL),
+	)
+
+	es.Start()
+
+	t.Cleanup(es.Stop)
+
+	var connected [4]time.Time
+
+	for i := range connected {
+		select {
+		case connected[i] = <-connections:
+		case <-time.After(8 * time.Second):
+			t.Fatalf("connection %d was not established", i+1)
+		}
+	}
+
+	if delay := connected[3].Sub(connected[2]); delay > 2*time.Second {
+		t.Errorf("reconnect delay after welcome = %v, want no more than 2s", delay)
+	}
+}
+
+func TestEventSubReconnectsWhenWelcomeDoesNotArrive(t *testing.T) {
+	upgrader := websocket.Upgrader{}
+	mux := http.NewServeMux()
+	connections := make(chan struct{}, 2)
+
+	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		conn, err := upgrader.Upgrade(w, r, nil)
+
+		if err != nil {
+			return
+		}
+
+		defer conn.Close()
+
+		connections <- struct{}{}
+
+		for {
+			if _, _, err := conn.ReadMessage(); err != nil {
+				return
+			}
+		}
+	})
+
+	server := httptest.NewServer(mux)
+
+	t.Cleanup(server.Close)
+
+	es := NewEventSub(func(chat.ChatMessage) {}, stubAuthProvider{token: "tok", userID: "42"}, func() {},
+		WithWSURL("ws"+strings.TrimPrefix(server.URL, "http")+"/ws"),
+	)
+
+	es.Start()
+
+	t.Cleanup(es.Stop)
+
+	select {
+	case <-connections:
+	case <-time.After(time.Second):
+		t.Fatal("initial connection was not established")
+	}
+
+	select {
+	case <-connections:
+	case <-time.After(12 * time.Second):
+		t.Fatal("connection without welcome was not retried")
+	}
+}
+
 func TestEventSubStartStopIdempotent(t *testing.T) {
 	provider := stubAuthProvider{token: "tok", userID: "42"}
 
