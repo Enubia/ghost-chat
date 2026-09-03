@@ -73,6 +73,7 @@
             "bots": "Show Bots",
             "hide_commands": "Hide Commands",
             "hide_badges": "Hide Badges",
+            "hide_gifs": "Hide GIFs",
             "events": "Events",
             "events_hint": "Show inline notifications for channel events (no login required)",
             "events_subs": "Subscriptions",

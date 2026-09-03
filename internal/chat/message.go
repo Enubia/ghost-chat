@@ -13,6 +13,7 @@ type Emote struct {
 	Start int    `json:"start"`
 	End   int    `json:"end"`
 	URL   string `json:"url"`
+	Kind  string `json:"kind,omitempty"`
 }
 
 type MessageFragment struct {

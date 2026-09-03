@@ -224,3 +224,50 @@ func TestFragmentize_NoEmotes(t *testing.T) {
 		t.Errorf("Text = %q, want %q", frags[0].Text, "just some text")
 	}
 }
+
+func TestFragmentize_Gif(t *testing.T) {
+	text := "[Y A Y Yes GIF by Djemilah Birnie]"
+
+	emotes := []Emote{
+		{ID: "joSNxeswxuc74Juo8X", Start: 0, End: len([]rune(text)) - 1, URL: "https://example.com/giphy.gif", Kind: "gif"},
+	}
+
+	frags := Fragmentize(text, emotes)
+
+	if len(frags) != 1 {
+		t.Fatalf("len = %d, want 1", len(frags))
+	}
+
+	if frags[0].Type != "gif" {
+		t.Errorf("frags[0].Type = %q, want gif", frags[0].Type)
+	}
+
+	if frags[0].Text != text {
+		t.Errorf("frags[0].Text = %q, want %q", frags[0].Text, text)
+	}
+
+	if frags[0].URL != "https://example.com/giphy.gif" {
+		t.Errorf("frags[0].URL = %q", frags[0].URL)
+	}
+}
+
+func TestFragmentize_GifWithEmote(t *testing.T) {
+	emotes := []Emote{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
+		{ID: "g1", Start: 6, End: 10, URL: "https://example.com/x.gif", Kind: "gif"},
+	}
+
+	frags := Fragmentize("Kappa [gif]", emotes)
+
+	if len(frags) != 3 {
+		t.Fatalf("len = %d, want 3", len(frags))
+	}
+
+	if frags[0].Type != "emote" || frags[0].Text != "Kappa" {
+		t.Errorf("frags[0] = {%q, %q}, want {emote, Kappa}", frags[0].Type, frags[0].Text)
+	}
+
+	if frags[2].Type != "gif" || frags[2].Text != "[gif]" {
+		t.Errorf("frags[2] = {%q, %q}, want {gif, [gif]}", frags[2].Type, frags[2].Text)
+	}
+}

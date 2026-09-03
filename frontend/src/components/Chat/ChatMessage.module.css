@@ -86,6 +86,14 @@
     vertical-align: middle;
 }
 
+.gif {
+    max-height: var(--theme-gif-size, 8em);
+    max-width: 100%;
+    margin: 0.15em 1px;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
 .avatar {
     width: var(--theme-avatar-size, 1.286em);
     height: var(--theme-avatar-size, 1.286em);

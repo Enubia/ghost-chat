@@ -273,6 +273,68 @@ func ParseEmotes(raw string) []chat.Emote {
 	return emotes
 }
 
+// ParseGifs parses the PRIVMSG 'gifs' tag into positioned GIF entries.
+//
+// Format: comma-separated list, each entry 'start-end|gifID|gifURL', e.g.
+//
+//	0-33|joSNxeswxuc74Juo8X|https://media4.giphy.com/media/.../giphy.gif?cid=...
+func ParseGifs(raw string) []chat.Emote {
+	if raw == "" {
+		return nil
+	}
+
+	parts := strings.Split(raw, ",")
+	gifs := make([]chat.Emote, 0, len(parts))
+
+	for _, part := range parts {
+		position, rest, ok := strings.Cut(part, "|")
+
+		if !ok {
+			continue
+		}
+
+		id, gifURL, ok := strings.Cut(rest, "|")
+
+		if !ok {
+			continue
+		}
+
+		startStr, endStr, ok := strings.Cut(position, "-")
+
+		if !ok {
+			continue
+		}
+
+		start, err := strconv.Atoi(startStr)
+
+		if err != nil {
+			log.Printf("error parsing gif position start '%s': %v", startStr, err)
+			continue
+		}
+
+		end, err := strconv.Atoi(endStr)
+
+		if err != nil {
+			log.Printf("error parsing gif position end '%s': %v", endStr, err)
+			continue
+		}
+
+		gifs = append(gifs, chat.Emote{
+			ID:    id,
+			Start: start,
+			End:   end,
+			URL:   gifURL,
+			Kind:  "gif",
+		})
+	}
+
+	if len(gifs) == 0 {
+		return nil
+	}
+
+	return gifs
+}
+
 func ParseTimestamp(raw string) time.Time {
 	parsedTimestamp := time.Now()
 

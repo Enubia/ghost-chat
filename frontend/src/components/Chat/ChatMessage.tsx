@@ -9,6 +9,7 @@ import { renderFragments } from './renderFragments';
 interface Props {
     message: ChatMessageType;
     hideBadges?: boolean;
+    hideGifs?: boolean;
     showTimestamp?: boolean;
     showPlatformIcon?: boolean;
     showColon?: boolean;
@@ -132,6 +133,7 @@ function PlatformIcon({ platform }: { platform: Platform }) {
 export function ChatMessage({
     message,
     hideBadges,
+    hideGifs,
     showTimestamp,
     showPlatformIcon,
     showColon = true,
@@ -160,7 +162,7 @@ export function ChatMessage({
     const wrapperClass = `${styles.message} ${pc} ${fading ? styles.fade : ''}`;
     const body =
         message.fragments && message.fragments.length > 0 ? (
-            renderFragments(message.fragments)
+            renderFragments(message.fragments, { hideGifs })
         ) : (
             <span>{message.text}</span>
         );

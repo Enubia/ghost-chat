@@ -51,8 +51,14 @@ func Fragmentize(text string, emotes []Emote) []MessageFragment {
 			})
 		}
 
+		kind := e.Kind
+
+		if kind == "" {
+			kind = "emote"
+		}
+
 		frags = append(frags, MessageFragment{
-			Type: "emote",
+			Type: kind,
 			Text: string(runes[e.Start : e.End+1]),
 			URL:  e.URL,
 		})

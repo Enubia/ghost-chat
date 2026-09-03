@@ -9,7 +9,7 @@ export interface Badge {
 }
 
 export interface MessageFragment {
-    type: 'text' | 'emote';
+    type: 'text' | 'emote' | 'gif';
     text: string;
     url: string;
 }

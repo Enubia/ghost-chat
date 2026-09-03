@@ -73,6 +73,7 @@
             "bots": "Bots anzeigen",
             "hide_commands": "Befehle ausblenden",
             "hide_badges": "Abzeichen ausblenden",
+            "hide_gifs": "GIFs ausblenden",
             "events": "Ereignisse",
             "events_hint": "Inline-Benachrichtigungen fuer Kanalereignisse anzeigen (kein Login erforderlich)",
             "events_subs": "Abonnements",

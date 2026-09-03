@@ -46,6 +46,7 @@ export function Chat() {
     const topToBottom = theme.top_to_bottom ?? false;
 
     const hideBadges = config?.twitch?.hide_badges ?? false;
+    const hideGifs = config?.twitch?.hide_gifs ?? false;
     const showTimestamp = config?.general?.show_timestamps ?? false;
 
     useEffect(() => {
@@ -270,6 +271,7 @@ export function Chat() {
                                   key={msg.id}
                                   message={msg}
                                   hideBadges={hideBadges}
+                                  hideGifs={hideGifs}
                                   showTimestamp={showTimestamp}
                                   showPlatformIcon={connectedCount > 1}
                                   showColon={theme.show_colon}

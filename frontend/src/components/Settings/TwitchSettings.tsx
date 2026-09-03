@@ -111,6 +111,14 @@ export function TwitchSettings() {
                 />
             </div>
 
+            <div className="field-row">
+                <label className="field-label">{t('settings.twitch.hide_gifs')}</label>
+                <Toggle
+                    checked={twitch?.hide_gifs ?? false}
+                    onChange={(v) => set({ hide_gifs: v })}
+                />
+            </div>
+
             <BlacklistField
                 initialValue={twitch?.user_blacklist ?? []}
                 onSave={(v) => set({ user_blacklist: v })}

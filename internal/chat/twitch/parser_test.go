@@ -130,6 +130,62 @@ func TestParseEmotes_Empty(t *testing.T) {
 	}
 }
 
+func TestParseGifs(t *testing.T) {
+	gifs := ParseGifs("0-33|joSNxeswxuc74Juo8X|https://media4.giphy.com/media/joSNxeswxuc74Juo8X/giphy.gif?cid=abc&ct=g")
+
+	want := []chat.Emote{
+		{
+			ID:    "joSNxeswxuc74Juo8X",
+			Start: 0,
+			End:   33,
+			URL:   "https://media4.giphy.com/media/joSNxeswxuc74Juo8X/giphy.gif?cid=abc&ct=g",
+			Kind:  "gif",
+		},
+	}
+
+	if len(gifs) != len(want) {
+		t.Fatalf("len(gifs) = %d, want %d", len(gifs), len(want))
+	}
+	for i, g := range gifs {
+		if g != want[i] {
+			t.Errorf("gifs[%d] = %+v, want %+v", i, g, want[i])
+		}
+	}
+}
+
+func TestParseGifs_Multiple(t *testing.T) {
+	gifs := ParseGifs("0-4|abc|https://example.com/a.gif,6-10|def|https://example.com/b.gif")
+
+	if len(gifs) != 2 {
+		t.Fatalf("len(gifs) = %d, want 2", len(gifs))
+	}
+
+	if gifs[0].ID != "abc" || gifs[0].Start != 0 || gifs[0].End != 4 {
+		t.Errorf("gifs[0] = %+v", gifs[0])
+	}
+
+	if gifs[1].ID != "def" || gifs[1].Start != 6 || gifs[1].End != 10 {
+		t.Errorf("gifs[1] = %+v", gifs[1])
+	}
+}
+
+func TestParseGifs_Empty(t *testing.T) {
+	gifs := ParseGifs("")
+	if gifs != nil {
+		t.Errorf("expected nil for empty gifs, got %v", gifs)
+	}
+}
+
+func TestParseGifs_Malformed(t *testing.T) {
+	if gifs := ParseGifs("garbage-without-pipes"); gifs != nil {
+		t.Errorf("expected nil for malformed gifs, got %v", gifs)
+	}
+
+	if gifs := ParseGifs("x-y|id|https://example.com/a.gif"); gifs != nil {
+		t.Errorf("expected nil for non-numeric positions, got %v", gifs)
+	}
+}
+
 func TestParseTimestamp(t *testing.T) {
 	ts := ParseTimestamp("1700000000000")
 	want := time.UnixMilli(1700000000000)

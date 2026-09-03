@@ -40,6 +40,7 @@ type TwitchConfig struct {
 	Bots           bool          `json:"bots"`
 	HideCommands   bool          `json:"hide_commands"`
 	HideBadges     bool          `json:"hide_badges"`
+	HideGifs       bool          `json:"hide_gifs"`
 	UserBlacklist  []string      `json:"user_blacklist"`
 	Events         TwitchEvents  `json:"events"`
 	Account        TwitchAccount `json:"account"`

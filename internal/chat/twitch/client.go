@@ -232,14 +232,14 @@ func (c *Client) handleMessage(raw string) {
 		chatMsg := ToChatMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
-		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"])
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags)
 
 		c.OnMessage(chatMsg)
 	case "USERNOTICE":
 		chatMsg := ToEventMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
-		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"])
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags)
 
 		c.OnMessage(chatMsg)
 	case "CLEARCHAT":
@@ -256,9 +256,10 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 	}
 }
 
-func (c *Client) buildFragments(text, emotesTag string) []chat.MessageFragment {
-	emotes := fillNativeEmoteURLs(ParseEmotes(emotesTag))
+func (c *Client) buildFragments(text string, tags map[string]string) []chat.MessageFragment {
+	emotes := fillNativeEmoteURLs(ParseEmotes(tags["emotes"]))
 	emotes = c.emotes.ResolveEmotes(text, emotes)
+	emotes = append(emotes, ParseGifs(tags["gifs"])...)
 
 	return chat.Fragmentize(text, emotes)
 }
