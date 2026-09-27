@@ -25,11 +25,11 @@ func TestFragmentize_PlainText(t *testing.T) {
 }
 
 func TestFragmentize_SingleEmote(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/emote.png"},
+	entities := []Entity{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/emote.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("Kappa hello", emotes)
+	frags := Fragmentize("Kappa hello", entities)
 
 	if len(frags) != 2 {
 		t.Fatalf("len = %d, want 2", len(frags))
@@ -57,12 +57,12 @@ func TestFragmentize_SingleEmote(t *testing.T) {
 }
 
 func TestFragmentize_AdjacentEmotes(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
-		{ID: "1902", Start: 6, End: 10, URL: "https://cdn.example.com/keepo.png"},
+	entities := []Entity{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
+		{ID: "1902", Start: 6, End: 10, URL: "https://cdn.example.com/keepo.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("Kappa Keepo", emotes)
+	frags := Fragmentize("Kappa Keepo", entities)
 
 	if len(frags) != 3 {
 		t.Fatalf("len = %d, want 3", len(frags))
@@ -82,11 +82,11 @@ func TestFragmentize_AdjacentEmotes(t *testing.T) {
 }
 
 func TestFragmentize_EmoteAtStart(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
+	entities := []Entity{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("Kappa", emotes)
+	frags := Fragmentize("Kappa", entities)
 
 	if len(frags) != 1 {
 		t.Fatalf("len = %d, want 1", len(frags))
@@ -98,11 +98,11 @@ func TestFragmentize_EmoteAtStart(t *testing.T) {
 }
 
 func TestFragmentize_EmoteAtEnd(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 6, End: 10, URL: "https://cdn.example.com/kappa.png"},
+	entities := []Entity{
+		{ID: "25", Start: 6, End: 10, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("hello Kappa", emotes)
+	frags := Fragmentize("hello Kappa", entities)
 
 	if len(frags) != 2 {
 		t.Fatalf("len = %d, want 2", len(frags))
@@ -118,11 +118,11 @@ func TestFragmentize_EmoteAtEnd(t *testing.T) {
 }
 
 func TestFragmentize_ThirdPartyEmoteWithURL(t *testing.T) {
-	emotes := []Emote{
-		{ID: "BTTV123", Start: 0, End: 5, URL: "https://cdn.betterttv.net/emote/BTTV123/1x"},
+	entities := []Entity{
+		{ID: "BTTV123", Start: 0, End: 5, URL: "https://cdn.betterttv.net/emote/BTTV123/1x", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("peepoG hey", emotes)
+	frags := Fragmentize("peepoG hey", entities)
 
 	if len(frags) != 2 {
 		t.Fatalf("len = %d, want 2", len(frags))
@@ -138,11 +138,11 @@ func TestFragmentize_ThirdPartyEmoteWithURL(t *testing.T) {
 }
 
 func TestFragmentize_EmojiBeforeEmote(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 2, End: 6, URL: "https://cdn.example.com/kappa.png"},
+	entities := []Entity{
+		{ID: "25", Start: 2, End: 6, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("🎉 Kappa", emotes)
+	frags := Fragmentize("🎉 Kappa", entities)
 
 	if len(frags) != 2 {
 		t.Fatalf("len = %d, want 2, got fragments: %+v", len(frags), frags)
@@ -158,12 +158,12 @@ func TestFragmentize_EmojiBeforeEmote(t *testing.T) {
 }
 
 func TestFragmentize_OverlappingRangesDropped(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
-		{ID: "bad", Start: 2, End: 8, URL: "https://cdn.example.com/bad.png"},
+	entities := []Entity{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
+		{ID: "bad", Start: 2, End: 8, URL: "https://cdn.example.com/bad.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("Kappa hello", emotes)
+	frags := Fragmentize("Kappa hello", entities)
 
 	for _, f := range frags {
 		if f.Type == "emote" && f.Text == "" {
@@ -185,12 +185,12 @@ func TestFragmentize_OverlappingRangesDropped(t *testing.T) {
 }
 
 func TestFragmentize_OutOfBoundsRangeDropped(t *testing.T) {
-	emotes := []Emote{
-		{ID: "bad", Start: 0, End: 100, URL: "https://cdn.example.com/bad.png"},
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
+	entities := []Entity{
+		{ID: "bad", Start: 0, End: 100, URL: "https://cdn.example.com/bad.png", Kind: FragmentEmote},
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
 	}
 
-	frags := Fragmentize("Kappa", emotes)
+	frags := Fragmentize("Kappa", entities)
 
 	emoteCount := 0
 
@@ -228,11 +228,11 @@ func TestFragmentize_NoEmotes(t *testing.T) {
 func TestFragmentize_Gif(t *testing.T) {
 	text := "[Y A Y Yes GIF by Djemilah Birnie]"
 
-	emotes := []Emote{
-		{ID: "joSNxeswxuc74Juo8X", Start: 0, End: len([]rune(text)) - 1, URL: "https://example.com/giphy.gif", Kind: "gif"},
+	entities := []Entity{
+		{ID: "joSNxeswxuc74Juo8X", Start: 0, End: len([]rune(text)) - 1, URL: "https://example.com/giphy.gif", Kind: FragmentGif},
 	}
 
-	frags := Fragmentize(text, emotes)
+	frags := Fragmentize(text, entities)
 
 	if len(frags) != 1 {
 		t.Fatalf("len = %d, want 1", len(frags))
@@ -252,12 +252,12 @@ func TestFragmentize_Gif(t *testing.T) {
 }
 
 func TestFragmentize_GifWithEmote(t *testing.T) {
-	emotes := []Emote{
-		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png"},
-		{ID: "g1", Start: 6, End: 10, URL: "https://example.com/x.gif", Kind: "gif"},
+	entities := []Entity{
+		{ID: "25", Start: 0, End: 4, URL: "https://cdn.example.com/kappa.png", Kind: FragmentEmote},
+		{ID: "g1", Start: 6, End: 10, URL: "https://example.com/x.gif", Kind: FragmentGif},
 	}
 
-	frags := Fragmentize("Kappa [gif]", emotes)
+	frags := Fragmentize("Kappa [gif]", entities)
 
 	if len(frags) != 3 {
 		t.Fatalf("len = %d, want 3", len(frags))

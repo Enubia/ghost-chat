@@ -12,6 +12,7 @@ export interface Theme {
     show_colon: boolean;
     badge_size: number;
     emote_size: number;
+    gif_size: number;
     show_avatars: boolean;
     avatar_size: number;
     text_weight: number;
@@ -37,6 +38,7 @@ export const BUILT_IN_THEMES: Theme[] = [
         show_colon: true,
         badge_size: 18,
         emote_size: 28,
+        gif_size: 112,
         show_avatars: true,
         avatar_size: 18,
         text_weight: 400,
@@ -60,6 +62,7 @@ export const BUILT_IN_THEMES: Theme[] = [
         show_colon: true,
         badge_size: 14,
         emote_size: 20,
+        gif_size: 80,
         show_avatars: false,
         avatar_size: 0,
         text_weight: 400,
@@ -83,6 +86,7 @@ export const BUILT_IN_THEMES: Theme[] = [
         show_colon: true,
         badge_size: 18,
         emote_size: 28,
+        gif_size: 112,
         show_avatars: true,
         avatar_size: 20,
         text_weight: 400,
@@ -102,6 +106,8 @@ export function getThemeById(id: string, customThemes: Theme[] = []): Theme {
 // are defined relative to this size and scale proportionally when font_size changes.
 const REF_FONT_SIZE = 14;
 
+export const DEFAULT_GIF_SIZE = 112;
+
 export function themeToCSS(theme: Theme): Record<string, string> {
     return {
         '--theme-font-family': theme.font_family,
@@ -114,6 +120,7 @@ export function themeToCSS(theme: Theme): Record<string, string> {
         '--theme-username-weight': String(theme.username_weight),
         '--theme-badge-size': `${(theme.badge_size / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-emote-size': `${(theme.emote_size / REF_FONT_SIZE).toFixed(3)}em`,
+        '--theme-gif-size': `${((theme.gif_size || DEFAULT_GIF_SIZE) / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-avatar-size': `${(theme.avatar_size / REF_FONT_SIZE).toFixed(3)}em`,
         '--theme-text-weight': String(theme.text_weight),
         '--theme-text-shadow': theme.text_shadow,

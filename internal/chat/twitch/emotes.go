@@ -84,7 +84,7 @@ func (e *EmoteStore) Fetch7TVChannel(userID string) error {
 	return nil
 }
 
-func (e *EmoteStore) ResolveEmotes(text string, existing []chat.Emote) []chat.Emote {
+func (e *EmoteStore) ResolveEmotes(text string, existing []chat.Entity) []chat.Entity {
 	e.mu.RLock()
 	defer e.mu.RUnlock()
 
@@ -107,11 +107,12 @@ func (e *EmoteStore) ResolveEmotes(text string, existing []chat.Emote) []chat.Em
 		word := string(runes[pos:end])
 
 		if url, ok := e.emotes[word]; ok {
-			result = append(result, chat.Emote{
+			result = append(result, chat.Entity{
 				ID:    word,
 				Start: pos,
 				End:   end - 1,
 				URL:   url,
+				Kind:  chat.FragmentEmote,
 			})
 		}
 
@@ -160,7 +161,7 @@ func bttvToMap(emotes []bttvEmote) map[string]string {
 }
 
 type ffzEmote struct {
-	Name string         `json:"name"`
+	Name string            `json:"name"`
 	URLs map[string]string `json:"urls"`
 }
 
@@ -192,8 +193,8 @@ func ffzSetsToMap(sets map[string]ffzSet) map[string]string {
 }
 
 type sevenTVEmote struct {
-	Name string        `json:"name"`
-	Data sevenTVData   `json:"data"`
+	Name string      `json:"name"`
+	Data sevenTVData `json:"data"`
 }
 
 type sevenTVData struct {
@@ -201,8 +202,8 @@ type sevenTVData struct {
 }
 
 type sevenTVHost struct {
-	URL   string          `json:"url"`
-	Files []sevenTVFile   `json:"files"`
+	URL   string        `json:"url"`
+	Files []sevenTVFile `json:"files"`
 }
 
 type sevenTVFile struct {

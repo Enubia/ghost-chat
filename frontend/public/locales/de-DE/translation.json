@@ -142,6 +142,8 @@
             "badge_size_desc": "Aendert die Groesse von Abonnenten- und Moderator-Abzeichen",
             "emote_size": "Emotegroesse",
             "emote_size_desc": "Aendert die Groesse von Emotes im Text",
+            "gif_size": "GIF-Groesse",
+            "gif_size_desc": "Legt die maximale Hoehe von Twitch-GIFs im Text fest",
             "show_avatars": "Avatare anzeigen",
             "show_avatars_desc": "Zeigt Profilbilder neben Nachrichten an",
             "avatar_size": "Avatargroesse",

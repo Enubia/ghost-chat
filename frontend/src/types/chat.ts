@@ -8,8 +8,10 @@ export interface Badge {
     url: string;
 }
 
+export type FragmentKind = 'text' | 'emote' | 'gif';
+
 export interface MessageFragment {
-    type: 'text' | 'emote' | 'gif';
+    type: FragmentKind;
     text: string;
     url: string;
 }

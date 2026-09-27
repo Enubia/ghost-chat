@@ -261,6 +261,7 @@ export function Chat() {
                               <EventMessage
                                   key={msg.id}
                                   message={msg}
+                                  hideGifs={hideGifs}
                                   showTimestamp={showTimestamp}
                                   fade={fade}
                                   fadeTimeout={timeoutSeconds}

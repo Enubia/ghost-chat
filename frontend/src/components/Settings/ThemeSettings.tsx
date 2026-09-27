@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
 import { useConfigStore } from '@/stores/config';
-import { BUILT_IN_THEMES, getThemeById } from '@/types/theme';
+import { BUILT_IN_THEMES, DEFAULT_GIF_SIZE, getThemeById } from '@/types/theme';
 import { validateThemeName } from '@/utils/validate';
 
 import styles from './ThemeSettings.module.css';
@@ -125,6 +125,7 @@ export function ThemeSettings() {
                 '  show_colon: Show ":" after username (true/false)',
                 '  badge_size: Badge icon size in pixels (10-28)',
                 '  emote_size: Emote size in pixels (16-48)',
+                '  gif_size: Maximum height of inline Twitch GIFs in pixels (48-240)',
                 '  show_avatars: Show user avatars (true/false)',
                 '  avatar_size: Avatar size in pixels (12-32)',
                 '  text_weight: CSS font-weight for message text (100-900, step 100; 400=normal, 700=bold)',
@@ -423,6 +424,16 @@ export function ThemeSettings() {
                     unit="px"
                     disabled={readonly}
                     onChange={(v) => updateProp('emote_size', v)}
+                />
+                <Slider
+                    label={t('settings.themes.gif_size')}
+                    hint={t('settings.themes.gif_size_desc')}
+                    value={displayTheme.gif_size || DEFAULT_GIF_SIZE}
+                    min={48}
+                    max={240}
+                    unit="px"
+                    disabled={readonly}
+                    onChange={(v) => updateProp('gif_size', v)}
                 />
                 <div>
                     <div className="field-row">

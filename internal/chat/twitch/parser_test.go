@@ -107,10 +107,10 @@ func TestParseBadges_Empty(t *testing.T) {
 func TestParseEmotes(t *testing.T) {
 	emotes := ParseEmotes("25:0-4,12-16/1902:6-10")
 
-	want := []chat.Emote{
-		{ID: "25", Start: 0, End: 4},
-		{ID: "25", Start: 12, End: 16},
-		{ID: "1902", Start: 6, End: 10},
+	want := []chat.Entity{
+		{ID: "25", Start: 0, End: 4, Kind: chat.FragmentEmote},
+		{ID: "25", Start: 12, End: 16, Kind: chat.FragmentEmote},
+		{ID: "1902", Start: 6, End: 10, Kind: chat.FragmentEmote},
 	}
 
 	if len(emotes) != len(want) {
@@ -130,16 +130,28 @@ func TestParseEmotes_Empty(t *testing.T) {
 	}
 }
 
-func TestParseGifs(t *testing.T) {
+func TestParseEmotes_SkipsMalformedKeepsValid(t *testing.T) {
+	emotes := ParseEmotes("25:x-4,6-y/1902:8-12")
+
+	want := []chat.Entity{
+		{ID: "1902", Start: 8, End: 12, Kind: chat.FragmentEmote},
+	}
+
+	if len(emotes) != len(want) || emotes[0] != want[0] {
+		t.Errorf("emotes = %+v, want %+v", emotes, want)
+	}
+}
+
+func TestParseGifs_TwitchDocExample(t *testing.T) {
 	gifs := ParseGifs("0-33|joSNxeswxuc74Juo8X|https://media4.giphy.com/media/joSNxeswxuc74Juo8X/giphy.gif?cid=abc&ct=g")
 
-	want := []chat.Emote{
+	want := []chat.Entity{
 		{
 			ID:    "joSNxeswxuc74Juo8X",
 			Start: 0,
 			End:   33,
 			URL:   "https://media4.giphy.com/media/joSNxeswxuc74Juo8X/giphy.gif?cid=abc&ct=g",
-			Kind:  "gif",
+			Kind:  chat.FragmentGif,
 		},
 	}
 
@@ -169,6 +181,60 @@ func TestParseGifs_Multiple(t *testing.T) {
 	}
 }
 
+func TestParseGifs_CommaInURL(t *testing.T) {
+	tests := []struct {
+		name string
+		raw  string
+		want []chat.Entity
+	}{
+		{
+			name: "single entry",
+			raw:  "0-4|abc|https://example.com/a.gif?w=1,2",
+			want: []chat.Entity{
+				{ID: "abc", Start: 0, End: 4, URL: "https://example.com/a.gif?w=1,2", Kind: chat.FragmentGif},
+			},
+		},
+		{
+			name: "followed by another entry",
+			raw:  "0-4|abc|https://example.com/a.gif?w=1,2,6-10|def|https://example.com/b.gif",
+			want: []chat.Entity{
+				{ID: "abc", Start: 0, End: 4, URL: "https://example.com/a.gif?w=1,2", Kind: chat.FragmentGif},
+				{ID: "def", Start: 6, End: 10, URL: "https://example.com/b.gif", Kind: chat.FragmentGif},
+			},
+		},
+		{
+			name: "comma before entry-like text",
+			raw:  "0-4|abc|https://example.com/a.gif?r=1-2,3-x|y,-5|z,7-|w",
+			want: []chat.Entity{
+				{ID: "abc", Start: 0, End: 4, URL: "https://example.com/a.gif?r=1-2,3-x|y,-5|z,7-|w", Kind: chat.FragmentGif},
+			},
+		},
+		{
+			name: "trailing comma",
+			raw:  "0-4|abc|https://example.com/a.gif,",
+			want: []chat.Entity{
+				{ID: "abc", Start: 0, End: 4, URL: "https://example.com/a.gif,", Kind: chat.FragmentGif},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gifs := ParseGifs(tt.raw)
+
+			if len(gifs) != len(tt.want) {
+				t.Fatalf("len(gifs) = %d, want %d: %+v", len(gifs), len(tt.want), gifs)
+			}
+
+			for i := range tt.want {
+				if gifs[i] != tt.want[i] {
+					t.Errorf("gifs[%d] = %+v, want %+v", i, gifs[i], tt.want[i])
+				}
+			}
+		})
+	}
+}
+
 func TestParseGifs_Empty(t *testing.T) {
 	gifs := ParseGifs("")
 	if gifs != nil {
@@ -177,12 +243,37 @@ func TestParseGifs_Empty(t *testing.T) {
 }
 
 func TestParseGifs_Malformed(t *testing.T) {
-	if gifs := ParseGifs("garbage-without-pipes"); gifs != nil {
-		t.Errorf("expected nil for malformed gifs, got %v", gifs)
+	tests := []struct {
+		name string
+		raw  string
+	}{
+		{"no pipes", "garbage-without-pipes"},
+		{"missing url", "0-4|id"},
+		{"missing dash", "4|id|https://example.com/a.gif"},
+		{"non-numeric start", "x-4|id|https://example.com/a.gif"},
+		{"non-numeric end", "0-y|id|https://example.com/a.gif"},
 	}
 
-	if gifs := ParseGifs("x-y|id|https://example.com/a.gif"); gifs != nil {
-		t.Errorf("expected nil for non-numeric positions, got %v", gifs)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gifs := ParseGifs(tt.raw)
+
+			if gifs == nil || len(gifs) != 0 {
+				t.Errorf("ParseGifs(%q) = %#v, want empty non-nil slice", tt.raw, gifs)
+			}
+		})
+	}
+}
+
+func TestParseGifs_SkipsMalformedKeepsValid(t *testing.T) {
+	gifs := ParseGifs("x-4|bad|https://example.com/bad.gif,6-10|good|https://example.com/good.gif")
+
+	want := []chat.Entity{
+		{ID: "good", Start: 6, End: 10, URL: "https://example.com/good.gif", Kind: chat.FragmentGif},
+	}
+
+	if len(gifs) != len(want) || gifs[0] != want[0] {
+		t.Errorf("gifs = %+v, want %+v", gifs, want)
 	}
 }
 

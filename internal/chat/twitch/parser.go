@@ -234,13 +234,13 @@ func ParseBadges(raw string) []chat.Badge {
 	return badges
 }
 
-func ParseEmotes(raw string) []chat.Emote {
+func ParseEmotes(raw string) []chat.Entity {
 	if raw == "" {
 		return nil
 	}
 
 	parts := strings.Split(raw, "/")
-	emotes := make([]chat.Emote, 0)
+	emotes := make([]chat.Entity, 0)
 
 	for _, part := range parts {
 		id, positions, _ := strings.Cut(part, ":")
@@ -262,10 +262,11 @@ func ParseEmotes(raw string) []chat.Emote {
 				continue
 			}
 
-			emotes = append(emotes, chat.Emote{
+			emotes = append(emotes, chat.Entity{
 				ID:    id,
 				Start: start,
 				End:   end,
+				Kind:  chat.FragmentEmote,
 			})
 		}
 	}
@@ -273,18 +274,13 @@ func ParseEmotes(raw string) []chat.Emote {
 	return emotes
 }
 
-// ParseGifs parses the PRIVMSG 'gifs' tag into positioned GIF entries.
-//
-// Format: comma-separated list, each entry 'start-end|gifID|gifURL', e.g.
-//
-//	0-33|joSNxeswxuc74Juo8X|https://media4.giphy.com/media/.../giphy.gif?cid=...
-func ParseGifs(raw string) []chat.Emote {
+func ParseGifs(raw string) []chat.Entity {
 	if raw == "" {
 		return nil
 	}
 
-	parts := strings.Split(raw, ",")
-	gifs := make([]chat.Emote, 0, len(parts))
+	parts := splitGifEntries(raw)
+	gifs := make([]chat.Entity, 0, len(parts))
 
 	for _, part := range parts {
 		position, rest, ok := strings.Cut(part, "|")
@@ -319,20 +315,57 @@ func ParseGifs(raw string) []chat.Emote {
 			continue
 		}
 
-		gifs = append(gifs, chat.Emote{
+		gifs = append(gifs, chat.Entity{
 			ID:    id,
 			Start: start,
 			End:   end,
 			URL:   gifURL,
-			Kind:  "gif",
+			Kind:  chat.FragmentGif,
 		})
 	}
 
-	if len(gifs) == 0 {
-		return nil
+	return gifs
+}
+
+func splitGifEntries(raw string) []string {
+	var entries []string
+
+	start := 0
+
+	for i := 0; i < len(raw); i++ {
+		if raw[i] == ',' && startsGifEntry(raw[i+1:]) {
+			entries = append(entries, raw[start:i])
+			start = i + 1
+		}
 	}
 
-	return gifs
+	return append(entries, raw[start:])
+}
+
+func startsGifEntry(s string) bool {
+	position, _, ok := strings.Cut(s, "|")
+
+	if !ok {
+		return false
+	}
+
+	startStr, endStr, ok := strings.Cut(position, "-")
+
+	return ok && isDigits(startStr) && isDigits(endStr)
+}
+
+func isDigits(s string) bool {
+	if s == "" {
+		return false
+	}
+
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return false
+		}
+	}
+
+	return true
 }
 
 func ParseTimestamp(raw string) time.Time {

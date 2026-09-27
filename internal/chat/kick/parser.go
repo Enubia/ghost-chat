@@ -41,14 +41,14 @@ func parseContent(content string) ([]chat.MessageFragment, string) {
 	for _, match := range reEmote.FindAllStringSubmatchIndex(content, -1) {
 		if match[0] > lastIdx {
 			segment := content[lastIdx:match[0]]
-			fragments = append(fragments, chat.MessageFragment{Type: "text", Text: segment})
+			fragments = append(fragments, chat.MessageFragment{Type: chat.FragmentText, Text: segment})
 			plainText.WriteString(segment)
 		}
 
 		emoteID := content[match[2]:match[3]]
 		emoteName := content[match[4]:match[5]]
 		fragments = append(fragments, chat.MessageFragment{
-			Type: "emote",
+			Type: chat.FragmentEmote,
 			Text: emoteName,
 			URL:  "https://files.kick.com/emotes/" + emoteID + "/fullsize",
 		})
@@ -58,7 +58,7 @@ func parseContent(content string) ([]chat.MessageFragment, string) {
 
 	if lastIdx < len(content) {
 		segment := content[lastIdx:]
-		fragments = append(fragments, chat.MessageFragment{Type: "text", Text: segment})
+		fragments = append(fragments, chat.MessageFragment{Type: chat.FragmentText, Text: segment})
 		plainText.WriteString(segment)
 	}
 

@@ -10,35 +10,19 @@ export function renderFragments(fragments: MessageFragment[], options: Options =
     return (
         <span>
             {fragments.map((frag, i) => {
-                if (frag.type === 'emote') {
-                    return (
-                        <img
-                            key={i}
-                            className={styles.emote}
-                            src={frag.url}
-                            alt={frag.text}
-                            title={frag.text}
-                        />
-                    );
+                if (frag.type === 'text' || (frag.type === 'gif' && options.hideGifs)) {
+                    return <span key={i}>{frag.text}</span>;
                 }
 
-                if (frag.type === 'gif') {
-                    if (options.hideGifs) {
-                        return <span key={i}>{frag.text}</span>;
-                    }
-
-                    return (
-                        <img
-                            key={i}
-                            className={styles.gif}
-                            src={frag.url}
-                            alt={frag.text}
-                            title={frag.text}
-                        />
-                    );
-                }
-
-                return <span key={i}>{frag.text}</span>;
+                return (
+                    <img
+                        key={i}
+                        className={frag.type === 'gif' ? styles.gif : styles.emote}
+                        src={frag.url}
+                        alt={frag.text}
+                        title={frag.text}
+                    />
+                );
             })}
         </span>
     );

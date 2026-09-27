@@ -142,6 +142,8 @@
             "badge_size_desc": "Changes the size of subscriber and moderator badges",
             "emote_size": "Emote Size",
             "emote_size_desc": "Changes how large emotes appear inline",
+            "gif_size": "GIF Size",
+            "gif_size_desc": "Sets the maximum height of inline Twitch GIFs",
             "show_avatars": "Show Avatars",
             "show_avatars_desc": "Displays user profile pictures next to messages",
             "avatar_size": "Avatar Size",

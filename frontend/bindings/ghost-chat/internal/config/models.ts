@@ -219,6 +219,7 @@ export class Theme {
     "show_colon": boolean;
     "badge_size": number;
     "emote_size": number;
+    "gif_size": number;
     "show_avatars": boolean;
     "avatar_size": number;
     "text_weight": number;
@@ -268,6 +269,9 @@ export class Theme {
         }
         if (!("emote_size" in $$source)) {
             this["emote_size"] = 0;
+        }
+        if (!("gif_size" in $$source)) {
+            this["gif_size"] = 0;
         }
         if (!("show_avatars" in $$source)) {
             this["show_avatars"] = false;

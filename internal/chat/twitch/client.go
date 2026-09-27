@@ -232,14 +232,14 @@ func (c *Client) handleMessage(raw string) {
 		chatMsg := ToChatMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
-		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags)
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"], chatMsg.Tags["gifs"])
 
 		c.OnMessage(chatMsg)
 	case "USERNOTICE":
 		chatMsg := ToEventMessage(message)
 		c.resolveBadgeURLs(chatMsg.Badges)
 
-		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags)
+		chatMsg.Fragments = c.buildFragments(chatMsg.Text, chatMsg.Tags["emotes"], "")
 
 		c.OnMessage(chatMsg)
 	case "CLEARCHAT":
@@ -256,15 +256,15 @@ func (c *Client) resolveBadgeURLs(badges []chat.Badge) {
 	}
 }
 
-func (c *Client) buildFragments(text string, tags map[string]string) []chat.MessageFragment {
-	emotes := fillNativeEmoteURLs(ParseEmotes(tags["emotes"]))
-	emotes = c.emotes.ResolveEmotes(text, emotes)
-	emotes = append(emotes, ParseGifs(tags["gifs"])...)
+func (c *Client) buildFragments(text, emotesTag, gifsTag string) []chat.MessageFragment {
+	entities := ParseGifs(gifsTag)
+	entities = append(entities, fillNativeEmoteURLs(ParseEmotes(emotesTag))...)
+	entities = c.emotes.ResolveEmotes(text, entities)
 
-	return chat.Fragmentize(text, emotes)
+	return chat.Fragmentize(text, entities)
 }
 
-func fillNativeEmoteURLs(emotes []chat.Emote) []chat.Emote {
+func fillNativeEmoteURLs(emotes []chat.Entity) []chat.Entity {
 	for i := range emotes {
 		if emotes[i].URL == "" {
 			emotes[i].URL = twitchEmoteCDN + "/" + emotes[i].ID + "/default/dark/1.0"

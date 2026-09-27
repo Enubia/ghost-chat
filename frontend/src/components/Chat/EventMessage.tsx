@@ -10,6 +10,7 @@ import { renderFragments } from './renderFragments';
 
 interface Props {
     message: ChatMessageType;
+    hideGifs?: boolean;
     showTimestamp?: boolean;
     fade?: boolean;
     fadeTimeout?: number;
@@ -34,7 +35,7 @@ const EVENT_ACCENT_CLASS: Record<ReturnType<typeof classifyEvent>, string> = {
     other: styles.other,
 };
 
-export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
+export function EventMessage({ message, hideGifs, showTimestamp, fade, fadeTimeout, onFaded }: Props) {
     const { t } = useTranslation();
     const [fading, setFading] = useState(false);
 
@@ -78,7 +79,7 @@ export function EventMessage({ message, showTimestamp, fade, fadeTimeout, onFade
             {message.text && (
                 <span className={styles.userMessage}>
                     {message.fragments && message.fragments.length > 0 ? (
-                        renderFragments(message.fragments)
+                        renderFragments(message.fragments, { hideGifs })
                     ) : (
                         <span>{message.text}</span>
                     )}
