@@ -77,7 +77,7 @@ Merge the latest from upstream before submitting.
 - **Pin dependencies** to exact versions (no `^` or `~`)
 - Run `cd frontend && pnpm fix` before committing any frontend changes
 
-See [CLAUDE.md](CLAUDE.md) for full conventions and project structure.
+See [AGENTS.md](AGENTS.md) for full conventions and project structure.
 
 ## Translations
 
