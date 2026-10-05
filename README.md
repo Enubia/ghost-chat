@@ -82,7 +82,7 @@ Built with Go and Wails v3 for native performance. Runs on macOS and Windows.
 - Go 1.25+
 - Node.js 20+
 - pnpm
-- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@latest`
+- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27`
 - macOS: Xcode Command Line Tools (`xcode-select --install`)
 - Windows: WebView2 (included in Windows 10/11)
 

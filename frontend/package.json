@@ -14,7 +14,7 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "@wailsio/runtime": "3.0.0-alpha.79",
+        "@wailsio/runtime": "3.0.0-beta.27",
         "i18next": "25.8.13",
         "i18next-http-backend": "3.0.2",
         "react": "19.2.4",
