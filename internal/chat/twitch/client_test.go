@@ -105,6 +105,65 @@ func TestHandleMessage_PRIVMSG(t *testing.T) {
 	}
 }
 
+func TestHandleMessage_PRIVMSGGifWinsTieWithThirdPartyEmote(t *testing.T) {
+	var got chat.ChatMessage
+	client := NewClient(
+		func(msg chat.ChatMessage) { got = msg },
+		func(event string, data any) {},
+	)
+
+	client.emotes.store(map[string]string{"[yay": "https://cdn.example.com/yay.png"})
+
+	line := "@display-name=TestUser;id=msg-1;emotes=;gifs=0-12|g1|https://example.com/x.gif;tmi-sent-ts=1700000000000 :testuser!testuser@testuser.tmi.twitch.tv PRIVMSG #channel :[yay yes gif] hi"
+	client.handleMessage(line)
+
+	if len(got.Fragments) != 2 {
+		t.Fatalf("len(Fragments) = %d, want 2: %+v", len(got.Fragments), got.Fragments)
+	}
+
+	if got.Fragments[0].Type != chat.FragmentGif || got.Fragments[0].Text != "[yay yes gif]" {
+		t.Errorf("Fragments[0] = %+v, want gif [yay yes gif]", got.Fragments[0])
+	}
+}
+
+func TestHandleMessage_PRIVMSGNativeEmoteGetsCDNURL(t *testing.T) {
+	var got chat.ChatMessage
+	client := NewClient(
+		func(msg chat.ChatMessage) { got = msg },
+		func(event string, data any) {},
+	)
+
+	line := "@display-name=TestUser;id=msg-1;emotes=25:0-4;tmi-sent-ts=1700000000000 :testuser!testuser@testuser.tmi.twitch.tv PRIVMSG #channel :Kappa hi"
+	client.handleMessage(line)
+
+	if len(got.Fragments) != 2 {
+		t.Fatalf("len(Fragments) = %d, want 2: %+v", len(got.Fragments), got.Fragments)
+	}
+
+	want := chat.MessageFragment{Type: chat.FragmentEmote, Text: "Kappa", URL: twitchEmoteCDN + "/25/default/dark/1.0"}
+
+	if got.Fragments[0] != want {
+		t.Errorf("Fragments[0] = %+v, want %+v", got.Fragments[0], want)
+	}
+}
+
+func TestHandleMessage_USERNOTICEIgnoresGifs(t *testing.T) {
+	var got chat.ChatMessage
+	client := NewClient(
+		func(msg chat.ChatMessage) { got = msg },
+		func(event string, data any) {},
+	)
+
+	line := "@display-name=TestUser;id=evt-1;msg-id=resub;emotes=;gifs=0-12|g1|https://example.com/x.gif;tmi-sent-ts=1700000000000 :testuser!testuser@testuser.tmi.twitch.tv USERNOTICE #channel :[yay yes gif] hi"
+	client.handleMessage(line)
+
+	want := chat.MessageFragment{Type: chat.FragmentText, Text: "[yay yes gif] hi"}
+
+	if len(got.Fragments) != 1 || got.Fragments[0] != want {
+		t.Errorf("Fragments = %+v, want [%+v]", got.Fragments, want)
+	}
+}
+
 func TestHandleMessage_PING(t *testing.T) {
 	// handleMessage needs a conn to send PONG.
 	// We use fakeIRC so we can verify the PONG was received.

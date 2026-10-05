@@ -8,17 +8,26 @@ type Badge struct {
 	URL     string `json:"url"`
 }
 
-type Emote struct {
-	ID    string `json:"id"`
-	Start int    `json:"start"`
-	End   int    `json:"end"`
-	URL   string `json:"url"`
+type FragmentKind string
+
+const (
+	FragmentText  FragmentKind = "text"
+	FragmentEmote FragmentKind = "emote"
+	FragmentGif   FragmentKind = "gif"
+)
+
+type Entity struct {
+	ID    string       `json:"id"`
+	Start int          `json:"start"`
+	End   int          `json:"end"`
+	URL   string       `json:"url"`
+	Kind  FragmentKind `json:"kind"`
 }
 
 type MessageFragment struct {
-	Type string `json:"type"`
-	Text string `json:"text"`
-	URL  string `json:"url"`
+	Type FragmentKind `json:"type"`
+	Text string       `json:"text"`
+	URL  string       `json:"url"`
 }
 
 type SuperChatDetails struct {

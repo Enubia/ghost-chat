@@ -44,6 +44,28 @@ const SAMPLE_MESSAGES: ChatMessageType[] = [
         membershipEvent: false,
     },
     {
+        id: 'g1',
+        platform: Platform.PlatformTwitch,
+        username: 'GifEnjoyer',
+        color: '#ff7f50',
+        text: 'same energy [Y A Y Yes GIF by Djemilah Birnie]',
+        badges: [],
+        timestamp: new Date().toISOString(),
+        isAction: false,
+        tags: {},
+        avatar: '',
+        fragments: [
+            { type: 'text', text: 'same energy ', url: '' },
+            {
+                type: 'gif',
+                text: '[Y A Y Yes GIF by Djemilah Birnie]',
+                url: 'https://media.giphy.com/media/joSNxeswxuc74Juo8X/200.gif',
+            },
+        ],
+        superChat: null,
+        membershipEvent: false,
+    },
+    {
         id: 'p2',
         platform: Platform.PlatformYouTube,
         username: 'StreamViewer',

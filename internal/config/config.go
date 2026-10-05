@@ -40,6 +40,7 @@ type TwitchConfig struct {
 	Bots           bool          `json:"bots"`
 	HideCommands   bool          `json:"hide_commands"`
 	HideBadges     bool          `json:"hide_badges"`
+	HideGifs       bool          `json:"hide_gifs"`
 	UserBlacklist  []string      `json:"user_blacklist"`
 	Events         TwitchEvents  `json:"events"`
 	Account        TwitchAccount `json:"account"`
@@ -74,6 +75,7 @@ type Theme struct {
 	ShowColon       bool    `json:"show_colon"`
 	BadgeSize       int     `json:"badge_size"`
 	EmoteSize       int     `json:"emote_size"`
+	GifSize         int     `json:"gif_size"`
 	ShowAvatars     bool    `json:"show_avatars"`
 	AvatarSize      int     `json:"avatar_size"`
 	TextWeight      int     `json:"text_weight"`

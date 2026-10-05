@@ -104,7 +104,7 @@ func parseRuns(runs []Run) []chat.MessageFragment {
 	for _, run := range runs {
 		if run.Emoji == nil {
 			if run.Text != "" {
-				fragments = append(fragments, chat.MessageFragment{Type: "text", Text: run.Text})
+				fragments = append(fragments, chat.MessageFragment{Type: chat.FragmentText, Text: run.Text})
 			}
 			continue
 		}
@@ -116,9 +116,9 @@ func parseRuns(runs []Run) []chat.MessageFragment {
 
 		url := largestThumbnail(run.Emoji.Image.Thumbnails)
 		if url != "" {
-			fragments = append(fragments, chat.MessageFragment{Type: "emote", Text: shortcode, URL: url})
+			fragments = append(fragments, chat.MessageFragment{Type: chat.FragmentEmote, Text: shortcode, URL: url})
 		} else {
-			fragments = append(fragments, chat.MessageFragment{Type: "text", Text: shortcode})
+			fragments = append(fragments, chat.MessageFragment{Type: chat.FragmentText, Text: shortcode})
 		}
 	}
 

@@ -45,13 +45,38 @@ function makeMsg(overrides: Partial<ChatMessage> = {}): ChatMessage {
     };
 }
 
-function render(msg: ChatMessage) {
+function render(msg: ChatMessage, hideGifs?: boolean) {
     return renderToStaticMarkup(
         <I18nextProvider i18n={i18n}>
-            <EventMessage message={msg} />
+            <EventMessage
+                message={msg}
+                hideGifs={hideGifs}
+            />
         </I18nextProvider>
     );
 }
+
+describe('EventMessage gifs', () => {
+    const withGif = makeMsg({
+        eventType: 'resub',
+        systemMessage: 'CoolViewer subscribed for 12 months',
+        text: '[cool gif]',
+        fragments: [{ type: 'gif', text: '[cool gif]', url: 'https://example.com/x.gif' }],
+    });
+
+    it('renders gif fragments as images by default', () => {
+        const html = render(withGif);
+
+        expect(html).toContain('src="https://example.com/x.gif"');
+    });
+
+    it('renders gif fragments as placeholder text when hideGifs is on', () => {
+        const html = render(withGif, true);
+
+        expect(html).not.toContain('<img');
+        expect(html).toContain('[cool gif]');
+    });
+});
 
 describe('EventMessage redemption', () => {
     const redemption = makeMsg({

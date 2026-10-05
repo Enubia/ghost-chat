@@ -219,6 +219,7 @@ export class Theme {
     "show_colon": boolean;
     "badge_size": number;
     "emote_size": number;
+    "gif_size": number;
     "show_avatars": boolean;
     "avatar_size": number;
     "text_weight": number;
@@ -268,6 +269,9 @@ export class Theme {
         }
         if (!("emote_size" in $$source)) {
             this["emote_size"] = 0;
+        }
+        if (!("gif_size" in $$source)) {
+            this["gif_size"] = 0;
         }
         if (!("show_avatars" in $$source)) {
             this["show_avatars"] = false;
@@ -363,6 +367,7 @@ export class TwitchConfig {
     "bots": boolean;
     "hide_commands": boolean;
     "hide_badges": boolean;
+    "hide_gifs": boolean;
     "user_blacklist": string[];
     "events": TwitchEvents;
     "account": TwitchAccount;
@@ -387,6 +392,9 @@ export class TwitchConfig {
         if (!("hide_badges" in $$source)) {
             this["hide_badges"] = false;
         }
+        if (!("hide_gifs" in $$source)) {
+            this["hide_gifs"] = false;
+        }
         if (!("user_blacklist" in $$source)) {
             this["user_blacklist"] = [];
         }
@@ -404,18 +412,18 @@ export class TwitchConfig {
      * Creates a new TwitchConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): TwitchConfig {
-        const $$createField6_0 = $$createType9;
-        const $$createField7_0 = $$createType12;
-        const $$createField8_0 = $$createType13;
+        const $$createField7_0 = $$createType9;
+        const $$createField8_0 = $$createType12;
+        const $$createField9_0 = $$createType13;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
-            $$parsedSource["user_blacklist"] = $$createField6_0($$parsedSource["user_blacklist"]);
+            $$parsedSource["user_blacklist"] = $$createField7_0($$parsedSource["user_blacklist"]);
         }
         if ("events" in $$parsedSource) {
-            $$parsedSource["events"] = $$createField7_0($$parsedSource["events"]);
+            $$parsedSource["events"] = $$createField8_0($$parsedSource["events"]);
         }
         if ("account" in $$parsedSource) {
-            $$parsedSource["account"] = $$createField8_0($$parsedSource["account"]);
+            $$parsedSource["account"] = $$createField9_0($$parsedSource["account"]);
         }
         return new TwitchConfig($$parsedSource as Partial<TwitchConfig>);
     }

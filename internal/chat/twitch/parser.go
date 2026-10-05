@@ -234,13 +234,13 @@ func ParseBadges(raw string) []chat.Badge {
 	return badges
 }
 
-func ParseEmotes(raw string) []chat.Emote {
+func ParseEmotes(raw string) []chat.Entity {
 	if raw == "" {
 		return nil
 	}
 
 	parts := strings.Split(raw, "/")
-	emotes := make([]chat.Emote, 0)
+	emotes := make([]chat.Entity, 0)
 
 	for _, part := range parts {
 		id, positions, _ := strings.Cut(part, ":")
@@ -262,15 +262,110 @@ func ParseEmotes(raw string) []chat.Emote {
 				continue
 			}
 
-			emotes = append(emotes, chat.Emote{
+			emotes = append(emotes, chat.Entity{
 				ID:    id,
 				Start: start,
 				End:   end,
+				Kind:  chat.FragmentEmote,
 			})
 		}
 	}
 
 	return emotes
+}
+
+func ParseGifs(raw string) []chat.Entity {
+	if raw == "" {
+		return nil
+	}
+
+	parts := splitGifEntries(raw)
+	gifs := make([]chat.Entity, 0, len(parts))
+
+	for _, part := range parts {
+		position, rest, ok := strings.Cut(part, "|")
+
+		if !ok {
+			continue
+		}
+
+		id, gifURL, ok := strings.Cut(rest, "|")
+
+		if !ok {
+			continue
+		}
+
+		startStr, endStr, ok := strings.Cut(position, "-")
+
+		if !ok {
+			continue
+		}
+
+		start, err := strconv.Atoi(startStr)
+
+		if err != nil {
+			log.Printf("error parsing gif position start '%s': %v", startStr, err)
+			continue
+		}
+
+		end, err := strconv.Atoi(endStr)
+
+		if err != nil {
+			log.Printf("error parsing gif position end '%s': %v", endStr, err)
+			continue
+		}
+
+		gifs = append(gifs, chat.Entity{
+			ID:    id,
+			Start: start,
+			End:   end,
+			URL:   gifURL,
+			Kind:  chat.FragmentGif,
+		})
+	}
+
+	return gifs
+}
+
+func splitGifEntries(raw string) []string {
+	var entries []string
+
+	start := 0
+
+	for i := 0; i < len(raw); i++ {
+		if raw[i] == ',' && startsGifEntry(raw[i+1:]) {
+			entries = append(entries, raw[start:i])
+			start = i + 1
+		}
+	}
+
+	return append(entries, raw[start:])
+}
+
+func startsGifEntry(s string) bool {
+	position, _, ok := strings.Cut(s, "|")
+
+	if !ok {
+		return false
+	}
+
+	startStr, endStr, ok := strings.Cut(position, "-")
+
+	return ok && isDigits(startStr) && isDigits(endStr)
+}
+
+func isDigits(s string) bool {
+	if s == "" {
+		return false
+	}
+
+	for _, r := range s {
+		if r < '0' || r > '9' {
+			return false
+		}
+	}
+
+	return true
 }
 
 func ParseTimestamp(raw string) time.Time {
