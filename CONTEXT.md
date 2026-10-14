@@ -33,7 +33,7 @@ The pure module deciding which Chat Messages display and how they fade: `shouldD
 _Avoid_: display logic, message handler
 
 **Bug Report**:
-A problem report a user submits from inside the app, optionally carrying Diagnostics and a contact email. It lands privately and is only seen by the maintainer until Promoted.
+A problem report a user submits from inside the app, optionally carrying Diagnostics and the reporter's Discord handle so the maintainer can follow up. It lands privately and is only seen by the maintainer until Promoted.
 _Avoid_: ticket, feedback, support request
 
 **Diagnostics**:
