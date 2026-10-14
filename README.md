@@ -55,6 +55,14 @@ Built with Go and Wails v3 for native performance. Runs on macOS and Windows.
 </p>
 </details>
 
+## Reporting bugs
+
+Open Settings → **Report a bug** in the app. No GitHub account is needed, and you can attach diagnostics (app version, OS, connected platforms, recent log lines) after previewing them. Reports reach the maintainer privately; the optional Discord username is only used to contact you for details. You can still [open a GitHub issue](https://github.com/Enubia/ghost-chat/issues/new/choose) if you prefer.
+
+<p align="center">
+  <img src="images/report.png" alt="Report a bug" width="280" />
+</p>
+
 ## Features
 
 - **Multi-platform chat** - Twitch IRC, YouTube Live Chat, and Kick in one overlay

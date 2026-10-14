@@ -521,6 +521,16 @@ a:hover {
     margin-top: 10px;
 }
 
+.faq-answer img {
+    display: block;
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    margin-top: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
 /* ---- Footer ---- */
 
 .footer {

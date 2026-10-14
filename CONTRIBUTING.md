@@ -4,7 +4,9 @@ Thank you for your interest in contributing to Ghost Chat!
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose) to report bugs.
+The easiest way to report a bug is in the app: Settings → Report a bug. Alternatively, use [GitHub Issues](https://github.com/Enubia/ghost-chat/issues/new/choose).
+
+Issues labeled `in-app` are Promotions: redacted public copies of Bug Reports submitted privately through the app (see `docs/adr/0001-in-app-bug-reports-triaged-privately.md`). The original report and its Diagnostics stay private.
 
 Please include:
 - Steps to reproduce
