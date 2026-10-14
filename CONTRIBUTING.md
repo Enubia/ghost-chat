@@ -18,7 +18,7 @@ Please include:
 - Go 1.25+
 - Node.js 20+
 - pnpm
-- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@latest`
+- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27`
 - macOS: Xcode Command Line Tools
 - Windows: WebView2 (included in Windows 10/11)
 
@@ -40,6 +40,26 @@ wails3 task build         # production binary → bin/ghost-chat
 wails3 task package       # .app bundle (macOS) or .exe (Windows)
 ```
 
+### Wails versions and macOS troubleshooting
+
+Keep the Wails Go module, CLI and `@wailsio/runtime` compatible; this project pins beta.27 for all three. After changing Go versions, rebuild the pinned CLI with the current Go toolchain before regenerating bindings:
+
+```bash
+go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27
+wails3 generate bindings -ts -clean
+```
+
+macOS build tasks enable Wails' `private_mac_apis` tag to preserve the transparent overlay. Direct Go builds also need it (`go build -tags production,private_mac_apis .`). Wails beta.19+ otherwise leaves the webview opaque; see [upstream guidance](https://v3.wails.io/guides/build/private-macos-apis).
+
+If the selected Xcode linker and SDK are mismatched (for example, `ld: unsupported tapi file type '!tapi-tbd'` or an unsupported `arm64e.x1` target), verify `xcode-select -p` and `xcrun --show-sdk-path`. If the Command Line Tools provide a matching toolchain, select them for the affected command only:
+
+```bash
+DEVELOPER_DIR=/Library/Developer/CommandLineTools wails3 dev
+DEVELOPER_DIR=/Library/Developer/CommandLineTools wails3 task package
+```
+
+Do not edit SDK files or change the global Xcode selection to work around this.
+
 ## Contribution Workflow
 
 1. Fork the repo
@@ -57,7 +77,7 @@ Merge the latest from upstream before submitting.
 - **Pin dependencies** to exact versions (no `^` or `~`)
 - Run `cd frontend && pnpm fix` before committing any frontend changes
 
-See [CLAUDE.md](CLAUDE.md) for full conventions and project structure.
+See [AGENTS.md](AGENTS.md) for full conventions and project structure.
 
 ## Translations
 

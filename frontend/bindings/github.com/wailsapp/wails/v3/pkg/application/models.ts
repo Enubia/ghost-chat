@@ -28,6 +28,7 @@ export class App {
     "Clipboard": ClipboardManager | null;
     "SystemTray": SystemTrayManager | null;
     "Autostart": AutostartManager | null;
+    "GlobalShortcut": GlobalShortcutManager | null;
     "Updater": updater$0.Updater | null;
     "Logger": slog$0.Logger | null;
 
@@ -69,6 +70,9 @@ export class App {
         if (!("Autostart" in $$source)) {
             this["Autostart"] = null;
         }
+        if (!("GlobalShortcut" in $$source)) {
+            this["GlobalShortcut"] = null;
+        }
         if (!("Updater" in $$source)) {
             this["Updater"] = null;
         }
@@ -97,6 +101,7 @@ export class App {
         const $$createField11_0 = $$createType23;
         const $$createField12_0 = $$createType25;
         const $$createField13_0 = $$createType27;
+        const $$createField14_0 = $$createType29;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("Window" in $$parsedSource) {
             $$parsedSource["Window"] = $$createField0_0($$parsedSource["Window"]);
@@ -134,11 +139,14 @@ export class App {
         if ("Autostart" in $$parsedSource) {
             $$parsedSource["Autostart"] = $$createField11_0($$parsedSource["Autostart"]);
         }
+        if ("GlobalShortcut" in $$parsedSource) {
+            $$parsedSource["GlobalShortcut"] = $$createField12_0($$parsedSource["GlobalShortcut"]);
+        }
         if ("Updater" in $$parsedSource) {
-            $$parsedSource["Updater"] = $$createField12_0($$parsedSource["Updater"]);
+            $$parsedSource["Updater"] = $$createField13_0($$parsedSource["Updater"]);
         }
         if ("Logger" in $$parsedSource) {
-            $$parsedSource["Logger"] = $$createField13_0($$parsedSource["Logger"]);
+            $$parsedSource["Logger"] = $$createField14_0($$parsedSource["Logger"]);
         }
         return new App($$parsedSource as Partial<App>);
     }
@@ -300,6 +308,38 @@ export class EventManager {
 }
 
 /**
+ * GlobalShortcutManager manages application-wide (global) keyboard shortcuts.
+ *
+ * Unlike menu accelerators or [KeyBindingManager] - which only fire while a
+ * Wails window has focus - a global shortcut fires regardless of which
+ * application is currently focused, as long as the Wails application is
+ * running.
+ *
+ * Global shortcuts are owned by the application, not by an individual window.
+ * Registering the same accelerator twice within the same application is
+ * reported as an error and the original binding is preserved; see [Register].
+ *
+ * Shortcuts may be registered before [App.Run] is called: the binding with the
+ * operating system is then deferred until the application starts.
+ */
+export class GlobalShortcutManager {
+
+    /** Creates a new GlobalShortcutManager instance. */
+    constructor($$source: Partial<GlobalShortcutManager> = {}) {
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new GlobalShortcutManager instance from a string or object.
+     */
+    static createFrom($$source: any = {}): GlobalShortcutManager {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new GlobalShortcutManager($$parsedSource as Partial<GlobalShortcutManager>);
+    }
+}
+
+/**
  * KeyBindingManager manages all key binding operations
  */
 export class KeyBindingManager {
@@ -438,7 +478,9 @@ const $$createType20 = SystemTrayManager.createFrom;
 const $$createType21 = $Create.Nullable($$createType20);
 const $$createType22 = AutostartManager.createFrom;
 const $$createType23 = $Create.Nullable($$createType22);
-const $$createType24 = updater$0.Updater.createFrom;
+const $$createType24 = GlobalShortcutManager.createFrom;
 const $$createType25 = $Create.Nullable($$createType24);
-const $$createType26 = slog$0.Logger.createFrom;
+const $$createType26 = updater$0.Updater.createFrom;
 const $$createType27 = $Create.Nullable($$createType26);
+const $$createType28 = slog$0.Logger.createFrom;
+const $$createType29 = $Create.Nullable($$createType28);
