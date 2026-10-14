@@ -44,7 +44,8 @@
             "twitch": "Twitch",
             "youtube": "YouTube",
             "kick": "Kick",
-            "themes": "Designs"
+            "themes": "Designs",
+            "report": "Fehler melden"
         },
         "general": {
             "language": "Sprache",
@@ -160,5 +161,31 @@
         "kick_channel_chars": "Nur Buchstaben, Zahlen, Unterstriche und Bindestriche",
         "fade_timeout": "Muss eine ganze Zahl zwischen 1 und 300 sein",
         "theme_name_empty": "Designname darf nicht leer sein"
+    },
+    "report": {
+        "title": "Titel",
+        "description": "Was ist passiert",
+        "steps": "Schritte zur Reproduktion (optional)",
+        "discord": "Discord-Benutzername (optional)",
+        "discord_hint": "Nur für den Maintainer sichtbar, damit er dich bei Rückfragen erreichen kann",
+        "include_diagnostics": "Diagnosedaten einbeziehen",
+        "preview": "Vorschau der gesendeten Daten",
+        "diagnostics": {
+            "version": "Version",
+            "os": "Betriebssystem",
+            "platforms": "Plattformen",
+            "logs": "Log-Auszug"
+        },
+        "submit": "Bericht senden",
+        "sent": "Danke, Bericht #{{id}} ist eingegangen",
+        "rate_limited": "Zu viele Berichte, bitte versuche es später erneut",
+        "fallback": "Der Berichtsdienst war nicht erreichbar, stattdessen wurde GitHub in deinem Browser geöffnet",
+        "error": "Etwas ist schiefgelaufen, bitte versuche es erneut",
+        "errors": {
+            "title": "Der Titel muss 5-120 Zeichen lang sein",
+            "description": "Beschreibung ist erforderlich (max. 5000 Zeichen)",
+            "steps": "Die Schritte dürfen höchstens 5000 Zeichen lang sein",
+            "discord": "Gib einen gültigen Discord-Benutzernamen ein (2-32 Zeichen: a-z, 0-9, _ und .)"
+        }
     }
 }

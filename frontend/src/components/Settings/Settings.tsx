@@ -6,12 +6,13 @@ import { useConfigStore } from '@/stores/config';
 
 import { GeneralSettings } from './GeneralSettings';
 import { KickSettings } from './KickSettings';
+import { ReportSettings } from './ReportSettings';
 import styles from './Settings.module.css';
 import { ThemeSettings } from './ThemeSettings';
 import { TwitchSettings } from './TwitchSettings';
 import { YouTubeSettings } from './YouTubeSettings';
 
-const tabKeys = ['general', 'twitch', 'youtube', 'kick', 'themes'] as const;
+const tabKeys = ['general', 'twitch', 'youtube', 'kick', 'themes', 'report'] as const;
 type Tab = (typeof tabKeys)[number];
 
 export function Settings({ onTabChange }: { onTabChange?: (tab: string) => void }) {
@@ -65,6 +66,7 @@ export function Settings({ onTabChange }: { onTabChange?: (tab: string) => void 
                 {activeTab === 'youtube' && <YouTubeSettings />}
                 {activeTab === 'kick' && <KickSettings />}
                 {activeTab === 'themes' && <ThemeSettings />}
+                {activeTab === 'report' && <ReportSettings />}
             </div>
             {saved && <span className={styles.saved}>Saved</span>}
         </div>
