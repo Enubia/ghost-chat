@@ -23,7 +23,7 @@ var appIcon []byte
 
 var version = "dev"
 
-var reportEndpoint = ""
+const reportEndpoint = "https://ghost-chat-reports.marcoschuster.workers.dev"
 
 func main() {
 	if closer, err := logging.Setup(version == "dev"); err == nil {

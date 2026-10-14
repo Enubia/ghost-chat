@@ -11,8 +11,6 @@ vars:
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
   VERSION:
     sh: echo "${VERSION:-$(git describe --tags --always 2>/dev/null || echo dev)}"
-  REPORT_ENDPOINT:
-    sh: echo "${REPORT_ENDPOINT:-}"
 
 tasks:
   build:
