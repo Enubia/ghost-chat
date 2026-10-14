@@ -46,16 +46,18 @@ func main() {
 		return
 	}
 
-	normalizedVersion := config.NormalizeVersion(version)
+	if version != "dev" {
+		normalizedVersion := config.NormalizeVersion(version)
 
-	if err := config.RunMigrations(cfg, normalizedVersion); err != nil {
-		slog.Error("failed to run migrations", "error", err)
-	}
+		if err := config.RunMigrations(cfg, normalizedVersion); err != nil {
+			slog.Error("failed to run migrations", "error", err)
+		}
 
-	cfg.Version = normalizedVersion
+		cfg.Version = normalizedVersion
 
-	if err := config.Save(cfg, configPath); err != nil {
-		slog.Error("failed to save config", "error", err)
+		if err := config.Save(cfg, configPath); err != nil {
+			slog.Error("failed to save config", "error", err)
+		}
 	}
 
 	svc := NewApp(cfg, configPath, version)
