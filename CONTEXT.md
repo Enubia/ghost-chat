@@ -37,7 +37,7 @@ A problem report a user submits from inside the app, optionally carrying Diagnos
 _Avoid_: ticket, feedback, support request
 
 **Diagnostics**:
-The machine-collected context attached to a Bug Report with the user's consent: app version, OS and architecture, connected Platforms, and recent log lines. Never includes tokens or channel names.
+The machine-collected context attached to a Bug Report with the user's consent: app version, OS and architecture, connected Platforms, and recent log lines. Never includes tokens or credentials; log lines may name channels.
 _Avoid_: telemetry, metadata
 
 **Promotion**:
