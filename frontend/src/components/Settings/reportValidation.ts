@@ -32,19 +32,19 @@ export function validateReport(values: ReportValues): ReportErrors {
     const description = length(values.description);
 
     if (title < 5 || title > 120) {
-        errors.title = 'report.errors.title';
+        errors.title = 'validation.report_title';
     }
 
     if (description < 1 || description > 5000) {
-        errors.description = 'report.errors.description';
+        errors.description = 'validation.report_description';
     }
 
     if (length(values.steps) > 5000) {
-        errors.steps = 'report.errors.steps';
+        errors.steps = 'validation.report_steps';
     }
 
     if (!validDiscord(values.discord)) {
-        errors.discord = 'report.errors.discord';
+        errors.discord = 'validation.report_discord';
     }
 
     return errors;

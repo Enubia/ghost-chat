@@ -207,6 +207,7 @@ func (r *rotatingFile) Write(p []byte) (int, error) {
 	}
 
 	n, err := r.file.Write(p)
+
 	r.size += int64(n)
 
 	return n, err

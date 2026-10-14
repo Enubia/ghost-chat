@@ -8,7 +8,6 @@ Users submit Bug Reports from inside the app; the app posts them to a Cloudflare
 - **Public GitHub issues only**: requires a GitHub account, which most streamers lack, and would publish diagnostics.
 - **Worker filing straight into the public repo**: no account needed, but diagnostics and Discord handles would be public.
 - **Automatic redaction on Promotion**: rejected; scrubbing free text and logs reliably is not achievable, so redaction stays manual.
-
 - **Contact email**: replaced by an optional Discord handle; users only share an identity they already use publicly, and no email addresses are stored.
 
 ## Consequences

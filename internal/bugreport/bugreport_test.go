@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -331,7 +332,7 @@ func TestFallbackURLIsPublicSafe(t *testing.T) {
 	}
 }
 
-func TestFallbackURLWithoutDiagnosticsOmitsEnvironment(t *testing.T) {
+func TestFallbackURLWithoutDiagnosticsKeepsVersionAndPlatformOnly(t *testing.T) {
 	f := newFixture(t, status(503, ""))
 
 	in := validInput()
@@ -342,9 +343,28 @@ func TestFallbackURLWithoutDiagnosticsOmitsEnvironment(t *testing.T) {
 	}
 
 	u, _ := url.Parse(f.opened[0])
+	body := u.Query().Get("body")
 
-	if strings.Contains(u.Query().Get("body"), "1.2.3") {
-		t.Fatal("version included without diagnostics")
+	if !strings.Contains(body, "1.2.3") || !strings.Contains(body, runtime.GOOS+"/"+runtime.GOARCH) {
+		t.Fatalf("version or platform missing: %s", body)
+	}
+
+	if strings.Contains(body, "SECRET-LOG-LINE") || strings.Contains(body, "twitch") {
+		t.Fatalf("diagnostics leaked: %s", body)
+	}
+}
+
+func TestSubmitUnparsableCreatedBodyIsSent(t *testing.T) {
+	f := newFixture(t, status(201, "not json"))
+
+	res, err := f.reporter.Submit(validInput())
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if res.Status != "sent" || res.ID != 0 || len(f.opened) != 0 {
+		t.Fatalf("got %+v opened %v", res, f.opened)
 	}
 }
 
@@ -374,6 +394,7 @@ func TestClientSideValidation(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			f := newFixture(t, status(201, `{"id":1}`))
 			in := validInput()
+
 			c.mutate(&in)
 
 			res, err := f.reporter.Submit(in)

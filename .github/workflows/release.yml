@@ -83,6 +83,7 @@ jobs:
       - run: wails3 task darwin:package:universal
         env:
           VERSION: ${{ needs.determine-version.outputs.version }}
+          REPORT_ENDPOINT: ${{ vars.REPORT_ENDPOINT }}
 
       - name: Zip app bundle
         run: cd bin && zip -r ghost-chat-macos.zip ghost-chat.app
@@ -121,6 +122,7 @@ jobs:
       - run: wails3 task build
         env:
           VERSION: ${{ needs.determine-version.outputs.version }}
+          REPORT_ENDPOINT: ${{ vars.REPORT_ENDPOINT }}
 
       - uses: actions/upload-artifact@v7
         with:

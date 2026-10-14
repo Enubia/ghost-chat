@@ -22,11 +22,12 @@ const (
 	StatusRateLimited = "rate_limited"
 	StatusFallback    = "fallback"
 
-	maxLogBytes     = 64 * 1024
-	maxBodyBytes    = 96 * 1024
-	defaultTimeout  = 15 * time.Second
-	fallbackBaseURL = "https://github.com/Enubia/ghost-chat/issues/new"
-	fallbackMaxText = 2000
+	maxLogBytes      = 64 * 1024
+	maxBodyBytes     = 96 * 1024
+	maxResponseBytes = 64 * 1024
+	defaultTimeout   = 15 * time.Second
+	fallbackBaseURL  = "https://github.com/Enubia/ghost-chat/issues/new"
+	fallbackMaxText  = 2000
 )
 
 type Input struct {
@@ -173,7 +174,7 @@ func (r *Reporter) post(body []byte) (Result, bool) {
 
 	defer resp.Body.Close()
 
-	data, _ := io.ReadAll(io.LimitReader(resp.Body, 64*1024))
+	data, _ := io.ReadAll(io.LimitReader(resp.Body, maxResponseBytes))
 
 	switch {
 	case resp.StatusCode == http.StatusCreated:
@@ -183,8 +184,6 @@ func (r *Reporter) post(body []byte) (Result, bool) {
 
 		if err := json.Unmarshal(data, &out); err != nil {
 			slog.Warn("bug report response unreadable", "error", err)
-
-			return Result{}, false
 		}
 
 		return Result{Status: StatusSent, ID: out.ID}, true
@@ -230,11 +229,10 @@ func fallbackURL(p payload, version string) string {
 		b.WriteString(truncate(p.Steps, fallbackMaxText))
 	}
 
-	if p.Diagnostics != nil {
-		fmt.Fprintf(&b, "\n\n## Environment\n\n- App version: %s\n- OS: %s/%s\n", version, p.Diagnostics.OS, p.Diagnostics.Arch)
-	}
+	fmt.Fprintf(&b, "\n\n## Environment\n\n- App version: %s\n- OS: %s/%s\n", version, runtime.GOOS, runtime.GOARCH)
 
 	q := url.Values{}
+
 	q.Set("labels", "bug")
 	q.Set("title", p.Title)
 	q.Set("body", b.String())

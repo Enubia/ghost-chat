@@ -30,7 +30,11 @@ export async function submitReport(values: ReportValues, includeDiagnostics: boo
             case 'invalid': {
                 const field = fields.find((f) => f === result.field);
 
-                return { status: 'invalid', errors: field ? { [field]: `report.errors.${field}` } : {} };
+                if (!field) {
+                    return { status: 'error' };
+                }
+
+                return { status: 'invalid', errors: { [field]: `validation.report_${field}` } };
             }
             case 'rate_limited':
                 return { status: 'rate_limited' };

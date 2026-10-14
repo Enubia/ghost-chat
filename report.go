@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"ghost-chat/internal/bugreport"
 	"ghost-chat/internal/config"
 	"ghost-chat/internal/logging"
@@ -31,7 +32,7 @@ func (a *App) installID() (string, error) {
 
 	if created {
 		if err := config.Save(a.config, a.configPath); err != nil {
-			return "", err
+			return "", fmt.Errorf("save config: %w", err)
 		}
 	}
 

@@ -48,7 +48,7 @@ export function ReportForm({
             }}
         >
             <div className="field">
-                <label className="field-label">{t('report.title')}</label>
+                <label className="field-label">{t('settings.report.title')}</label>
                 <input
                     type="text"
                     value={values.title}
@@ -58,7 +58,7 @@ export function ReportForm({
             </div>
 
             <div className="field">
-                <label className="field-label">{t('report.description')}</label>
+                <label className="field-label">{t('settings.report.description')}</label>
                 <textarea
                     rows={4}
                     value={values.description}
@@ -68,7 +68,7 @@ export function ReportForm({
             </div>
 
             <div className="field">
-                <label className="field-label">{t('report.steps')}</label>
+                <label className="field-label">{t('settings.report.steps')}</label>
                 <textarea
                     rows={3}
                     value={values.steps}
@@ -78,13 +78,13 @@ export function ReportForm({
             </div>
 
             <div className="field">
-                <label className="field-label">{t('report.discord')}</label>
+                <label className="field-label">{t('settings.report.discord')}</label>
                 <input
                     type="text"
                     value={values.discord}
                     onChange={(e) => onChange('discord', e.target.value)}
                 />
-                <span className="field-hint">{t('report.discord_hint')}</span>
+                <span className="field-hint">{t('settings.report.discord_hint')}</span>
                 {error('discord')}
             </div>
 
@@ -94,22 +94,22 @@ export function ReportForm({
                     checked={includeDiagnostics}
                     onChange={(e) => onIncludeChange(e.target.checked)}
                 />
-                {t('report.include_diagnostics')}
+                {t('settings.report.include_diagnostics')}
             </label>
 
             {includeDiagnostics && diagnostics && (
                 <details className={styles.preview}>
-                    <summary>{t('report.preview')}</summary>
+                    <summary>{t('settings.report.preview')}</summary>
                     <dl>
-                        <dt>{t('report.diagnostics.version')}</dt>
+                        <dt>{t('settings.report.diagnostics.version')}</dt>
                         <dd>{diagnostics.appVersion}</dd>
-                        <dt>{t('report.diagnostics.os')}</dt>
+                        <dt>{t('settings.report.diagnostics.os')}</dt>
                         <dd>
                             {diagnostics.os}/{diagnostics.arch}
                         </dd>
-                        <dt>{t('report.diagnostics.platforms')}</dt>
+                        <dt>{t('settings.report.diagnostics.platforms')}</dt>
                         <dd>{diagnostics.platforms.join(', ')}</dd>
-                        <dt>{t('report.diagnostics.logs')}</dt>
+                        <dt>{t('settings.report.diagnostics.logs')}</dt>
                     </dl>
                     <pre>{diagnostics.logs}</pre>
                 </details>
@@ -117,16 +117,16 @@ export function ReportForm({
 
             <button
                 type="submit"
-                className={styles.submit}
+                className="btn btn-primary"
                 disabled={status === 'sending'}
             >
-                {t('report.submit')}
+                {t('settings.report.submit')}
             </button>
 
-            {status === 'sent' && <span className="field-success">{t('report.sent', { id: reportId })}</span>}
-            {status === 'rate_limited' && <span className="field-error">{t('report.rate_limited')}</span>}
-            {status === 'fallback' && <span className="field-hint">{t('report.fallback')}</span>}
-            {status === 'error' && <span className="field-error">{t('report.error')}</span>}
+            {status === 'sent' && <span className="field-success">{t('settings.report.sent', { id: reportId })}</span>}
+            {status === 'rate_limited' && <span className="field-error">{t('settings.report.rate_limited')}</span>}
+            {status === 'fallback' && <span className="field-hint">{t('settings.report.fallback')}</span>}
+            {status === 'error' && <span className="field-error">{t('settings.report.error')}</span>}
         </form>
     );
 }
