@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"ghost-chat/internal/chat"
+	"ghost-chat/internal/logging"
 
 	"github.com/gorilla/websocket"
 )
@@ -65,7 +66,7 @@ func (c *Client) Connect(input string) error {
 
 	pusher, err := FetchPusherConfig(channelID)
 	if err != nil {
-		logf("using default pusher config: %v", err)
+		logging.Platform("kick").Warn("using default pusher config", "error", err)
 
 		pusher = defaultPusherConfig
 	}
@@ -152,18 +153,18 @@ func (c *Client) reconnect(ctx context.Context) {
 		case <-time.After(backoff):
 		}
 
-		logf("reconnecting...")
+		logging.Platform("kick").Info("reconnecting")
 
 		conn, err := dialPusher(pusher)
 		if err != nil {
-			logf("reconnect dial failed: %v", err)
+			logging.Platform("kick").Warn("reconnect dial failed", "error", err)
 			backoff = min(backoff*2, maxBackoff)
 			continue
 		}
 
 		if err := subscribe(conn, chatroomID); err != nil {
 			conn.Close()
-			logf("reconnect subscribe failed: %v", err)
+			logging.Platform("kick").Warn("reconnect subscribe failed", "error", err)
 			backoff = min(backoff*2, maxBackoff)
 			continue
 		}
@@ -225,12 +226,12 @@ func (c *Client) handleMessage(raw []byte) {
 		// then decode that string into KickChatMessage.
 		var inner string
 		if err := json.Unmarshal(pm.Data, &inner); err != nil {
-			logf("failed to decode chat event data: %v", err)
+			logging.Platform("kick").Warn("failed to decode chat event data", "error", err)
 			return
 		}
 		var km KickChatMessage
 		if err := json.Unmarshal([]byte(inner), &km); err != nil {
-			logf("failed to parse chat message: %v", err)
+			logging.Platform("kick").Warn("failed to parse chat message", "error", err)
 			return
 		}
 		c.OnMessage(parseMessage(km))
@@ -275,8 +276,4 @@ func subscribe(conn *websocket.Conn, chatroomID int) error {
 		return err
 	}
 	return conn.WriteMessage(websocket.TextMessage, msg)
-}
-
-func logf(format string, args ...any) {
-	fmt.Printf("[kick] "+format+"\n", args...)
 }

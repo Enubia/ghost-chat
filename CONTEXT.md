@@ -31,3 +31,15 @@ _Avoid_: animated emote, sticker
 **Message Filter**:
 The pure module deciding which Chat Messages display and how they fade: `shouldDisplay`, `fadePolicy`, `classifyEvent`. Filtering happens at intake — a rejected Chat Message is dropped permanently, and config changes are not retroactive.
 _Avoid_: display logic, message handler
+
+**Bug Report**:
+A problem report a user submits from inside the app, optionally carrying Diagnostics and the reporter's Discord handle so the maintainer can follow up. It lands privately and is only seen by the maintainer until Promoted.
+_Avoid_: ticket, feedback, support request
+
+**Diagnostics**:
+The machine-collected context attached to a Bug Report with the user's consent: app version, OS and architecture, connected Platforms, and recent log lines. Never includes tokens or credentials; log lines may name channels.
+_Avoid_: telemetry, metadata
+
+**Promotion**:
+The maintainer publishing a redacted copy of a Bug Report as a public issue. Redaction is manual; the private Bug Report is closed and linked to its public copy.
+_Avoid_: publishing, forwarding, sync

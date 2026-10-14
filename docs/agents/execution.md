@@ -17,7 +17,8 @@ Either shape works here — use whichever a given piece of work produced:
 
 ## How a run goes
 
-1. Work on a feature branch or worktree — never `main` without consent.
+1. Work on a feature branch (workspace mode: `git switch -c`) — never `main`
+   without consent.
 2. Per task: dispatch a fresh implementer subagent (builds test-first via the
    `tdd` skill) → generate a diff package → dispatch a task reviewer (spec
    compliance + code quality) → loop fixes until clean → record the task in the
@@ -34,7 +35,6 @@ a context compaction: trust the ledger and `git log` over recollection.
 
 ## Domain docs
 
-This repo has a `CONTEXT.md` (domain glossary) at the root — reviewers and
-implementers read it for the area they touch and use that vocabulary. There is
-no `docs/adr/` yet; if one is added later, treat decisions it records as
-settled and don't re-litigate them.
+This repo has a `CONTEXT.md` (domain glossary) at the root and decisions in
+`docs/adr/` — reviewers and implementers read both for the area they touch, use
+that vocabulary, and treat recorded decisions as settled.

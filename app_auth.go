@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 
 	"ghost-chat/internal/auth"
 	"ghost-chat/internal/config"
@@ -87,7 +88,7 @@ func (a *App) TwitchStartLogin() error {
 		}
 
 		if err := a.persistTwitchLogin(login); err != nil {
-			fmt.Printf("failed to save config after login: %s\n", err.Error())
+			slog.Error("failed to save config after login", "error", err)
 		}
 
 		a.emit("twitch:auth:success", authSuccessData{Login: login})
@@ -130,7 +131,7 @@ func (a *App) restoreTwitchAuth() {
 
 	if errors.Is(err, auth.ErrInvalidGrant) {
 		if saveErr := a.persistTwitchLogin(""); saveErr != nil {
-			fmt.Printf("failed to clear login after invalid grant: %s\n", saveErr.Error())
+			slog.Error("failed to clear login after invalid grant", "error", saveErr)
 		}
 
 		a.emit("twitch:auth:loggedout", nil)
@@ -143,7 +144,7 @@ func (a *App) restoreTwitchAuth() {
 	}
 
 	if saveErr := a.persistTwitchLogin(login); saveErr != nil {
-		fmt.Printf("failed to persist restored login: %s\n", saveErr.Error())
+		slog.Error("failed to persist restored login", "error", saveErr)
 	}
 
 	a.emit("twitch:auth:success", authSuccessData{Login: login})

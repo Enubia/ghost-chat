@@ -3,6 +3,7 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	"log/slog"
 	"os"
 	"path/filepath"
 )
@@ -59,7 +60,7 @@ func Load(path string) (*Config, error) {
 }
 
 func recoverCorrupted(path string, bytes []byte, err error) (*Config, error) {
-	println("Warning: config file is corrupted, backing up and starting fresh:", err.Error())
+	slog.Warn("config file is corrupted, backing up and starting fresh", "error", err)
 
 	_ = os.WriteFile(path+".corrupted", bytes, 0644)
 	_ = os.Remove(path)

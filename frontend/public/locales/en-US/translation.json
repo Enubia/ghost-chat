@@ -44,7 +44,8 @@
             "twitch": "Twitch",
             "youtube": "YouTube",
             "kick": "Kick",
-            "themes": "Themes"
+            "themes": "Themes",
+            "report": "Report a bug"
         },
         "general": {
             "language": "Language",
@@ -151,6 +152,26 @@
             "export": "Export",
             "import": "Import",
             "llm_hint": "Tip: Export your theme and ask an AI chatbot to adjust it for you, then import it back."
+        },
+        "report": {
+            "title": "Title",
+            "description": "What happened",
+            "steps": "Steps to reproduce (optional)",
+            "discord": "Discord username (optional)",
+            "discord_hint": "Only visible to the maintainer, so they can reach you for details",
+            "include_diagnostics": "Include diagnostics",
+            "preview": "Preview what will be sent",
+            "diagnostics": {
+                "version": "Version",
+                "os": "OS",
+                "platforms": "Platforms",
+                "logs": "Log tail"
+            },
+            "submit": "Send report",
+            "sent": "Thanks, report #{{id}} received",
+            "rate_limited": "Too many reports, try again later",
+            "fallback": "Couldn't reach the report service, opened GitHub in your browser instead",
+            "error": "Something went wrong, please try again"
         }
     },
     "validation": {
@@ -159,6 +180,10 @@
         "kick_channel_length": "Must be 3-26 characters",
         "kick_channel_chars": "Only letters, numbers, underscores, and hyphens",
         "fade_timeout": "Must be a whole number between 1 and 300",
-        "theme_name_empty": "Theme name cannot be empty"
+        "theme_name_empty": "Theme name cannot be empty",
+        "report_title": "Title must be 5-120 characters",
+        "report_description": "Description is required (max 5000 characters)",
+        "report_steps": "Steps must be at most 5000 characters",
+        "report_discord": "Enter a valid Discord username (2-32 characters: a-z, 0-9, _ and .)"
     }
 }
