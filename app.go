@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"ghost-chat/internal/auth"
+	"ghost-chat/internal/bugreport"
 	"ghost-chat/internal/chat"
 	"ghost-chat/internal/chat/kick"
 	"ghost-chat/internal/chat/twitch"
@@ -41,6 +42,7 @@ type App struct {
 	vanished         bool
 	lastX, lastY     int
 	lastW, lastH     int
+	platforms        bugreport.PlatformTracker
 }
 
 func NewApp(cfg *config.Config, configPath string, version string) *App {
@@ -89,7 +91,12 @@ func makeHandlers(emit func(string, any)) (func(chat.ChatMessage), func(string, 
 }
 
 func (a *App) wireClients() {
-	onMessage, onEvent := makeHandlers(a.emit)
+	onMessage, emitEvent := makeHandlers(a.emit)
+
+	onEvent := func(event string, data any) {
+		a.platforms.Observe(event, data)
+		emitEvent(event, data)
+	}
 
 	a.clients = map[chat.Platform]chat.Client{
 		chat.PlatformTwitch:  twitch.NewClient(onMessage, onEvent),
@@ -201,8 +208,11 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 	oldKeybind := a.config.Keybinds.Vanish.Keybind
 	account := a.config.Twitch.Account
 
+	installID := a.config.InstallID
+
 	a.config = cfg
 	a.config.Twitch.Account = account
+	a.config.InstallID = installID
 
 	if err := config.Save(a.config, a.configPath); err != nil {
 		a.config = oldConfig

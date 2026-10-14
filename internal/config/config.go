@@ -97,6 +97,7 @@ type CustomSource struct {
 
 type Config struct {
 	Version      string        `json:"version"`
+	InstallID    string        `json:"install_id"`
 	WindowState  WindowState   `json:"window_state"`
 	General      General       `json:"general"`
 	Keybinds     Keybinds      `json:"keybinds"`

@@ -7,6 +7,9 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import * as bugreport$0 from "./internal/bugreport/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import * as chat$0 from "./internal/chat/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -49,6 +52,12 @@ export function OpenConfigFolder(): $CancellablePromise<void> {
     return $Call.ByID(431469111);
 }
 
+export function PreviewDiagnostics(): $CancellablePromise<bugreport$0.Diagnostics> {
+    return $Call.ByID(2915962677).then(($result: any) => {
+        return $$createType2($result);
+    });
+}
+
 export function ResolveYouTubeVideo(input: string): $CancellablePromise<string> {
     return $Call.ByID(3831771995, input);
 }
@@ -65,13 +74,19 @@ export function ShrinkToChat(): $CancellablePromise<void> {
     return $Call.ByID(594383055);
 }
 
+export function SubmitBugReport(report: bugreport$0.Input): $CancellablePromise<bugreport$0.Result> {
+    return $Call.ByID(1258695203, report).then(($result: any) => {
+        return $$createType3($result);
+    });
+}
+
 export function ToggleVanish(): $CancellablePromise<void> {
     return $Call.ByID(1605625794);
 }
 
 export function TwitchAuthStatus(): $CancellablePromise<$models.TwitchAuthStatus> {
     return $Call.ByID(2272043130).then(($result: any) => {
-        return $$createType2($result);
+        return $$createType4($result);
     });
 }
 
@@ -90,4 +105,6 @@ export function UpdateConfig(cfg: config$0.Config | null): $CancellablePromise<v
 // Private type creation functions
 const $$createType0 = config$0.Config.createFrom;
 const $$createType1 = $Create.Nullable($$createType0);
-const $$createType2 = $models.TwitchAuthStatus.createFrom;
+const $$createType2 = bugreport$0.Diagnostics.createFrom;
+const $$createType3 = bugreport$0.Result.createFrom;
+const $$createType4 = $models.TwitchAuthStatus.createFrom;

@@ -7,6 +7,7 @@ import { Create as $Create } from "@wailsio/runtime";
 
 export class Config {
     "version": string;
+    "install_id": string;
     "window_state": WindowState;
     "general": General;
     "keybinds": Keybinds;
@@ -20,6 +21,9 @@ export class Config {
     constructor($$source: Partial<Config> = {}) {
         if (!("version" in $$source)) {
             this["version"] = "";
+        }
+        if (!("install_id" in $$source)) {
+            this["install_id"] = "";
         }
         if (!("window_state" in $$source)) {
             this["window_state"] = (new WindowState());
@@ -53,38 +57,38 @@ export class Config {
      * Creates a new Config instance from a string or object.
      */
     static createFrom($$source: any = {}): Config {
-        const $$createField1_0 = $$createType0;
-        const $$createField2_0 = $$createType1;
-        const $$createField3_0 = $$createType2;
-        const $$createField4_0 = $$createType3;
-        const $$createField5_0 = $$createType4;
-        const $$createField6_0 = $$createType5;
-        const $$createField7_0 = $$createType6;
-        const $$createField8_0 = $$createType7;
+        const $$createField2_0 = $$createType0;
+        const $$createField3_0 = $$createType1;
+        const $$createField4_0 = $$createType2;
+        const $$createField5_0 = $$createType3;
+        const $$createField6_0 = $$createType4;
+        const $$createField7_0 = $$createType5;
+        const $$createField8_0 = $$createType6;
+        const $$createField9_0 = $$createType7;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("window_state" in $$parsedSource) {
-            $$parsedSource["window_state"] = $$createField1_0($$parsedSource["window_state"]);
+            $$parsedSource["window_state"] = $$createField2_0($$parsedSource["window_state"]);
         }
         if ("general" in $$parsedSource) {
-            $$parsedSource["general"] = $$createField2_0($$parsedSource["general"]);
+            $$parsedSource["general"] = $$createField3_0($$parsedSource["general"]);
         }
         if ("keybinds" in $$parsedSource) {
-            $$parsedSource["keybinds"] = $$createField3_0($$parsedSource["keybinds"]);
+            $$parsedSource["keybinds"] = $$createField4_0($$parsedSource["keybinds"]);
         }
         if ("theme" in $$parsedSource) {
-            $$parsedSource["theme"] = $$createField4_0($$parsedSource["theme"]);
+            $$parsedSource["theme"] = $$createField5_0($$parsedSource["theme"]);
         }
         if ("twitch" in $$parsedSource) {
-            $$parsedSource["twitch"] = $$createField5_0($$parsedSource["twitch"]);
+            $$parsedSource["twitch"] = $$createField6_0($$parsedSource["twitch"]);
         }
         if ("youtube" in $$parsedSource) {
-            $$parsedSource["youtube"] = $$createField6_0($$parsedSource["youtube"]);
+            $$parsedSource["youtube"] = $$createField7_0($$parsedSource["youtube"]);
         }
         if ("kick" in $$parsedSource) {
-            $$parsedSource["kick"] = $$createField7_0($$parsedSource["kick"]);
+            $$parsedSource["kick"] = $$createField8_0($$parsedSource["kick"]);
         }
         if ("custom_source" in $$parsedSource) {
-            $$parsedSource["custom_source"] = $$createField8_0($$parsedSource["custom_source"]);
+            $$parsedSource["custom_source"] = $$createField9_0($$parsedSource["custom_source"]);
         }
         return new Config($$parsedSource as Partial<Config>);
     }

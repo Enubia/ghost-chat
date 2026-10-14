@@ -23,6 +23,8 @@ var appIcon []byte
 
 var version = "dev"
 
+var reportEndpoint = ""
+
 func main() {
 	if closer, err := logging.Setup(version == "dev"); err == nil {
 		defer closer.Close()
