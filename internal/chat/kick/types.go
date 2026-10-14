@@ -42,7 +42,20 @@ type KickBadge struct {
 
 // ChannelResponse is used when resolving a slug → chatroom ID.
 type ChannelResponse struct {
+	ID       int `json:"id"`
 	Chatroom struct {
 		ID int `json:"id"`
 	} `json:"chatroom"`
+}
+
+type realtimeConnectionResponse struct {
+	Data struct {
+		Connections []struct {
+			Provider    string `json:"provider"`
+			Credentials struct {
+				AppKey  string `json:"app_key"`
+				Cluster string `json:"cluster"`
+			} `json:"credentials"`
+		} `json:"connections"`
+	} `json:"data"`
 }

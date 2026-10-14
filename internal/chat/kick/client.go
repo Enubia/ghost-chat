@@ -14,7 +14,6 @@ import (
 
 const (
 	kickUA            = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-	pusherURL         = "wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false"
 	heartbeatInterval = 30 * time.Second
 	maxBackoff        = 60 * time.Second
 )
@@ -27,6 +26,7 @@ type Client struct {
 	cancel     context.CancelFunc
 	conn       *websocket.Conn
 	chatroomID int
+	pusher     PusherConfig
 
 	OnMessage MessageHandler
 	OnEvent   EventHandler
@@ -58,12 +58,19 @@ func (c *Client) Connect(input string) error {
 		return fmt.Errorf("failed to resolve channel: %w", err)
 	}
 
-	chatroomID, err := FetchChatroomID(slug)
+	channelID, chatroomID, err := FetchChannel(slug)
 	if err != nil {
 		return fmt.Errorf("failed to fetch chatroom ID: %w", err)
 	}
 
-	conn, err := dialPusher()
+	pusher, err := FetchPusherConfig(channelID)
+	if err != nil {
+		logf("using default pusher config: %v", err)
+
+		pusher = defaultPusherConfig
+	}
+
+	conn, err := dialPusher(pusher)
 	if err != nil {
 		return fmt.Errorf("failed to connect to Pusher: %w", err)
 	}
@@ -77,6 +84,7 @@ func (c *Client) Connect(input string) error {
 	c.cancel = cancel
 	c.conn = conn
 	c.chatroomID = chatroomID
+	c.pusher = pusher
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformKick)})
 
@@ -132,6 +140,7 @@ func (c *Client) readLoop(ctx context.Context, conn *websocket.Conn) {
 func (c *Client) reconnect(ctx context.Context) {
 	c.mu.Lock()
 	chatroomID := c.chatroomID
+	pusher := c.pusher
 	c.mu.Unlock()
 
 	backoff := time.Second
@@ -145,7 +154,7 @@ func (c *Client) reconnect(ctx context.Context) {
 
 		logf("reconnecting...")
 
-		conn, err := dialPusher()
+		conn, err := dialPusher(pusher)
 		if err != nil {
 			logf("reconnect dial failed: %v", err)
 			backoff = min(backoff*2, maxBackoff)
@@ -229,8 +238,8 @@ func (c *Client) handleMessage(raw []byte) {
 }
 
 // dialPusher opens a WebSocket connection to Pusher and waits for connection_established.
-func dialPusher() (*websocket.Conn, error) {
-	conn, _, err := websocket.DefaultDialer.Dial(pusherURL, nil)
+func dialPusher(cfg PusherConfig) (*websocket.Conn, error) {
+	conn, _, err := websocket.DefaultDialer.Dial(cfg.URL(), nil)
 	if err != nil {
 		return nil, err
 	}
