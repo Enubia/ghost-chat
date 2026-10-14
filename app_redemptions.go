@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
+	"log/slog"
 	"strings"
 
 	"ghost-chat/internal/auth"
@@ -93,11 +93,11 @@ func (a *App) handleRedemptionAuthLost() {
 	a.redemptionsMu.Unlock()
 
 	if err := a.auth.Logout(context.Background()); err != nil {
-		fmt.Printf("failed to log out after redemption auth loss: %s\n", err.Error())
+		slog.Error("failed to log out after redemption auth loss", "error", err)
 	}
 
 	if err := a.persistTwitchLogin(""); err != nil {
-		fmt.Printf("failed to clear login after redemption auth loss: %s\n", err.Error())
+		slog.Error("failed to clear login after redemption auth loss", "error", err)
 	}
 
 	a.emit("twitch:auth:loggedout", nil)

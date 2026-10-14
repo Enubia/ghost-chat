@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"math/rand/v2"
 	"net/http"
 	"net/http/cookiejar"
@@ -125,10 +126,10 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 			case errors.Is(err, ErrRateLimited):
 				rlFailures++
 				wait = rateLimitBackoff(rlFailures)
-				logf("rate-limited, backing off %v", wait)
+				logger().Warn("rate-limited, backing off", "wait", wait)
 
 			case errors.Is(err, ErrAuthStale):
-				logf("auth/config stale, re-bootstrapping: %v", err)
+				logger().Warn("auth/config stale, re-bootstrapping", "error", err)
 				if c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
@@ -137,7 +138,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			default:
 				failures++
-				logf("poll error: %v (failure %d/%d)", err, failures, maxFailuresBeforeReboot)
+				logger().Warn("poll error", "error", err, "failure", failures, "max", maxFailuresBeforeReboot)
 				if failures >= maxFailuresBeforeReboot && c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
@@ -187,7 +188,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) bool {
 	newCont, newCfg, err := fetchInitialData(ctx, videoURL)
 	if err != nil {
-		logf("re-bootstrap failed: %v", err)
+		logger().Error("re-bootstrap failed", "error", err)
 		return false
 	}
 
@@ -562,6 +563,6 @@ func nextBackoff(d time.Duration) time.Duration {
 	return min(d*2, maxBackoff)
 }
 
-func logf(format string, args ...any) {
-	fmt.Printf("[youtube] "+format+"\n", args...)
+func logger() *slog.Logger {
+	return slog.Default().With("platform", "youtube")
 }

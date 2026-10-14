@@ -11,6 +11,7 @@ import (
 	"ghost-chat/internal/config"
 	ghHotkey "ghost-chat/internal/hotkey"
 	"ghost-chat/internal/updater"
+	"log/slog"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -138,7 +139,7 @@ func (a *App) ServiceStartup(ctx context.Context, options application.ServiceOpt
 	go func() {
 		if keybind := a.config.Keybinds.Vanish.Keybind; keybind != "" {
 			if err := ghHotkey.Register(keybind, a.ToggleVanish); err != nil {
-				fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+				slog.Error("failed to register vanish hotkey", "error", err)
 			}
 		}
 	}()
@@ -164,7 +165,7 @@ func (a *App) SaveWindowState() {
 	a.config.WindowState.Height = a.lastH
 
 	if err := config.Save(a.config, a.configPath); err != nil {
-		fmt.Printf("failed to save config: %s\n", err.Error())
+		slog.Error("failed to save config", "error", err)
 	}
 }
 
@@ -215,7 +216,7 @@ func (a *App) UpdateConfig(cfg *config.Config) error {
 
 	if cfg.Keybinds.Vanish.Keybind != oldKeybind {
 		if err := ghHotkey.Register(cfg.Keybinds.Vanish.Keybind, a.ToggleVanish); err != nil {
-			fmt.Printf("failed to register vanish hotkey: %s\n", err.Error())
+			slog.Error("failed to register vanish hotkey", "error", err)
 		}
 	}
 

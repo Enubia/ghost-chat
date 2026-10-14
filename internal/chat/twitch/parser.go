@@ -1,7 +1,7 @@
 package twitch
 
 import (
-	"log"
+	"log/slog"
 	"net/url"
 	"strconv"
 	"strings"
@@ -105,7 +105,7 @@ func ToChatMessage(msg IRCMessage) chat.ChatMessage {
 	var isAction bool
 
 	if msg.Command != "PRIVMSG" {
-		log.Printf("unsupported command '%s', only PRIVMSG is supported", msg.Command)
+		slog.Debug("unsupported command, only PRIVMSG is supported", "command", msg.Command)
 		return chat.ChatMessage{}
 	}
 
@@ -251,14 +251,14 @@ func ParseEmotes(raw string) []chat.Entity {
 			start, err := strconv.Atoi(startStr)
 
 			if err != nil {
-				log.Printf("error parsing emote position start '%s': %v", startStr, err)
+				slog.Warn("error parsing emote position start", "value", startStr, "error", err)
 				continue
 			}
 
 			end, err := strconv.Atoi(endStr)
 
 			if err != nil {
-				log.Printf("error parsing emote position end '%s': %v", endStr, err)
+				slog.Warn("error parsing emote position end", "value", endStr, "error", err)
 				continue
 			}
 
@@ -304,14 +304,14 @@ func ParseGifs(raw string) []chat.Entity {
 		start, err := strconv.Atoi(startStr)
 
 		if err != nil {
-			log.Printf("error parsing gif position start '%s': %v", startStr, err)
+			slog.Warn("error parsing gif position start", "value", startStr, "error", err)
 			continue
 		}
 
 		end, err := strconv.Atoi(endStr)
 
 		if err != nil {
-			log.Printf("error parsing gif position end '%s': %v", endStr, err)
+			slog.Warn("error parsing gif position end", "value", endStr, "error", err)
 			continue
 		}
 
@@ -378,7 +378,7 @@ func ParseTimestamp(raw string) time.Time {
 	converted, err := strconv.ParseInt(raw, 10, 64)
 
 	if err != nil {
-		log.Printf("error parsing timestamp '%s': %v", raw, err)
+		slog.Warn("error parsing timestamp", "value", raw, "error", err)
 		return parsedTimestamp
 	}
 

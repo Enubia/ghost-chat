@@ -3,6 +3,8 @@ package main
 import (
 	"embed"
 	"ghost-chat/internal/config"
+	"ghost-chat/internal/logging"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -22,30 +24,36 @@ var appIcon []byte
 var version = "dev"
 
 func main() {
+	if closer, err := logging.Setup(version == "dev"); err == nil {
+		defer closer.Close()
+	} else {
+		slog.Error("failed to set up file logging", "error", err)
+	}
+
 	configPath, err := config.GetConfigPath()
 
 	if err != nil {
-		println("Error getting config path:", err.Error())
+		slog.Error("failed to get config path", "error", err)
 		return
 	}
 
 	cfg, err := config.Load(configPath)
 
 	if err != nil {
-		println("Error loading config:", err.Error())
+		slog.Error("failed to load config", "error", err)
 		return
 	}
 
 	normalizedVersion := config.NormalizeVersion(version)
 
 	if err := config.RunMigrations(cfg, normalizedVersion); err != nil {
-		println("Error running migrations:", err.Error())
+		slog.Error("failed to run migrations", "error", err)
 	}
 
 	cfg.Version = normalizedVersion
 
 	if err := config.Save(cfg, configPath); err != nil {
-		println("Error saving config:", err.Error())
+		slog.Error("failed to save config", "error", err)
 	}
 
 	svc := NewApp(cfg, configPath, version)
@@ -116,6 +124,6 @@ func main() {
 	tray.SetMenu(menu)
 
 	if err := app.Run(); err != nil {
-		println("Error:", err.Error())
+		slog.Error("application run failed", "error", err)
 	}
 }
