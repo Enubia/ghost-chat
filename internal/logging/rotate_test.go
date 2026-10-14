@@ -78,3 +78,40 @@ func TestRotatingFileAppendsToExisting(t *testing.T) {
 		t.Fatalf("got %q", got)
 	}
 }
+
+func TestRotatingFileSurvivesRotationFailure(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, FileName)
+
+	w, err := newRotatingFile(path, 100, 2)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer w.Close()
+
+	blocker := filepath.Join(dir, FileName+".1")
+
+	if err := os.MkdirAll(filepath.Join(blocker, "child"), 0o700); err != nil {
+		t.Fatal(err)
+	}
+
+	line := strings.Repeat("x", 49) + "\n"
+
+	for range 5 {
+		if _, err := w.Write([]byte(line)); err != nil {
+			t.Fatalf("write failed: %v", err)
+		}
+	}
+
+	data, err := os.ReadFile(path)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(data) != 5*len(line) {
+		t.Fatalf("expected %d bytes, got %d", 5*len(line), len(data))
+	}
+}

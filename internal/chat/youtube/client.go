@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log/slog"
 	"math/rand/v2"
 	"net/http"
 	"net/http/cookiejar"
@@ -18,6 +17,7 @@ import (
 	"time"
 
 	"ghost-chat/internal/chat"
+	"ghost-chat/internal/logging"
 )
 
 const (
@@ -126,10 +126,10 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 			case errors.Is(err, ErrRateLimited):
 				rlFailures++
 				wait = rateLimitBackoff(rlFailures)
-				logger().Warn("rate-limited, backing off", "wait", wait)
+				logging.Platform("youtube").Warn("rate-limited, backing off", "wait", wait)
 
 			case errors.Is(err, ErrAuthStale):
-				logger().Warn("auth/config stale, re-bootstrapping", "error", err)
+				logging.Platform("youtube").Warn("auth/config stale, re-bootstrapping", "error", err)
 				if c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
@@ -138,7 +138,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			default:
 				failures++
-				logger().Warn("poll error", "error", err, "failure", failures, "max", maxFailuresBeforeReboot)
+				logging.Platform("youtube").Warn("poll error", "error", err, "failure", failures, "max", maxFailuresBeforeReboot)
 				if failures >= maxFailuresBeforeReboot && c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
 					failures, backoff = 0, defaultPollInterval
 					continue
@@ -188,7 +188,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) bool {
 	newCont, newCfg, err := fetchInitialData(ctx, videoURL)
 	if err != nil {
-		logger().Error("re-bootstrap failed", "error", err)
+		logging.Platform("youtube").Error("re-bootstrap failed", "error", err)
 		return false
 	}
 
@@ -561,8 +561,4 @@ func rateLimitBackoff(failures int) time.Duration {
 
 func nextBackoff(d time.Duration) time.Duration {
 	return min(d*2, maxBackoff)
-}
-
-func logger() *slog.Logger {
-	return slog.Default().With("platform", "youtube")
 }

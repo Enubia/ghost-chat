@@ -71,3 +71,65 @@ func setDir(t *testing.T, dir string) {
 
 	t.Cleanup(func() { dirOverride = previous })
 }
+
+func writeRotated(t *testing.T, dir, content string) {
+	t.Helper()
+
+	if err := os.WriteFile(filepath.Join(dir, FileName+".1"), []byte(content), 0o600); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestTailFillsFromRotatedFile(t *testing.T) {
+	tests := []struct {
+		name     string
+		rotated  string
+		current  string
+		maxBytes int
+		want     string
+	}{
+		{"fills remainder", "old1\nold2\n", "new\n", 100, "old1\nold2\nnew\n"},
+		{"cuts rotated at line boundary", "old1\nold2\nold3\n", "new\n", 13, "old3\nnew\n"},
+		{"rotated line boundary exact", "old1\nold2\n", "new\n", 14, "old1\nold2\nnew\n"},
+		{"current fills max", "old\n", "new1\nnew2\n", 10, "new1\nnew2\n"},
+		{"empty current", "old1\nold2\n", "", 100, "old1\nold2\n"},
+		{"oversize rotated line", "oldoldold\n", "new\n", 8, "new\n"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			dir := useDir(t)
+			writeRotated(t, dir, tt.rotated)
+			writeLog(t, dir, tt.current)
+
+			got, err := Tail(tt.maxBytes)
+
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			if got != tt.want {
+				t.Fatalf("got %q want %q", got, tt.want)
+			}
+
+			if len(got) > tt.maxBytes {
+				t.Fatalf("got %d bytes, max %d", len(got), tt.maxBytes)
+			}
+		})
+	}
+}
+
+func TestTailRotatedOnly(t *testing.T) {
+	dir := useDir(t)
+	writeRotated(t, dir, "old\n")
+
+	got, err := Tail(100)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if got != "old\n" {
+		t.Fatalf("got %q", got)
+	}
+}

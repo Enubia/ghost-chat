@@ -3,12 +3,12 @@ package twitch
 import (
 	"context"
 	"fmt"
-	"log/slog"
 	"strings"
 	"sync"
 	"time"
 
 	"ghost-chat/internal/chat"
+	"ghost-chat/internal/logging"
 
 	"github.com/gorilla/websocket"
 )
@@ -190,42 +190,42 @@ func (c *Client) handleMessage(raw string) {
 		roomID := message.Tags["room-id"]
 		go func() {
 			if err := c.badges.FetchGlobal(); err != nil {
-				slog.Warn("failed to fetch global badges", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch global badges", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.badges.FetchChannel(channel); err != nil {
-				slog.Warn("failed to fetch channel badges", "channel", channel, "error", err)
+				logging.Platform("twitch").Warn("failed to fetch channel badges", "channel", channel, "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.FetchBTTVGlobal(); err != nil {
-				slog.Warn("failed to fetch bttv global emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch bttv global emotes", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.FetchBTTVChannel(roomID); err != nil {
-				slog.Warn("failed to fetch bttv channel emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch bttv channel emotes", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.FetchFFZGlobal(); err != nil {
-				slog.Warn("failed to fetch ffz global emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch ffz global emotes", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.FetchFFZChannel(channel); err != nil {
-				slog.Warn("failed to fetch ffz channel emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch ffz channel emotes", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.Fetch7TVGlobal(); err != nil {
-				slog.Warn("failed to fetch 7tv global emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch 7tv global emotes", "error", err)
 			}
 		}()
 		go func() {
 			if err := c.emotes.Fetch7TVChannel(roomID); err != nil {
-				slog.Warn("failed to fetch 7tv channel emotes", "error", err)
+				logging.Platform("twitch").Warn("failed to fetch 7tv channel emotes", "error", err)
 			}
 		}()
 	case "PRIVMSG":

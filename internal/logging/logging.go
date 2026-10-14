@@ -1,7 +1,9 @@
 package logging
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
 	"log/slog"
@@ -27,7 +29,7 @@ func Dir() (string, error) {
 	configDir, err := os.UserConfigDir()
 
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("resolve user config dir: %w", err)
 	}
 
 	return filepath.Join(configDir, "ghost-chat", "logs"), nil
@@ -37,17 +39,17 @@ func Setup(dev bool) (io.Closer, error) {
 	dir, err := Dir()
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("resolve log dir: %w", err)
 	}
 
 	if err := os.MkdirAll(dir, 0o700); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("create log dir: %w", err)
 	}
 
 	file, err := newRotatingFile(filepath.Join(dir, FileName), maxFileSize, maxFiles)
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("open log file: %w", err)
 	}
 
 	var out io.Writer = file
@@ -61,21 +63,49 @@ func Setup(dev bool) (io.Closer, error) {
 	return file, nil
 }
 
+func Platform(name string) *slog.Logger {
+	return slog.Default().With("platform", name)
+}
+
 func Tail(maxBytes int) (string, error) {
 	dir, err := Dir()
 
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("resolve log dir: %w", err)
 	}
 
-	file, err := os.Open(filepath.Join(dir, FileName))
-
-	if errors.Is(err, fs.ErrNotExist) {
+	if maxBytes <= 0 {
 		return "", nil
 	}
 
+	current, whole, err := readTail(filepath.Join(dir, FileName), maxBytes)
+
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("read log tail: %w", err)
+	}
+
+	if !whole || len(current) >= maxBytes {
+		return current, nil
+	}
+
+	older, _, err := readTail(filepath.Join(dir, FileName+".1"), maxBytes-len(current))
+
+	if err != nil {
+		return "", fmt.Errorf("read rotated log tail: %w", err)
+	}
+
+	return older + current, nil
+}
+
+func readTail(path string, maxBytes int) (string, bool, error) {
+	file, err := os.Open(path)
+
+	if errors.Is(err, fs.ErrNotExist) {
+		return "", true, nil
+	}
+
+	if err != nil {
+		return "", false, err
 	}
 
 	defer file.Close()
@@ -83,51 +113,43 @@ func Tail(maxBytes int) (string, error) {
 	info, err := file.Stat()
 
 	if err != nil {
-		return "", err
+		return "", false, err
 	}
 
 	size := info.Size()
 
-	if maxBytes <= 0 || size == 0 {
-		return "", nil
+	if size == 0 {
+		return "", true, nil
 	}
 
 	start := max(size-int64(maxBytes), 0)
 	buf := make([]byte, size-start)
 
 	if _, err := file.ReadAt(buf, start); err != nil && !errors.Is(err, io.EOF) {
-		return "", err
+		return "", false, err
 	}
 
-	if start > 0 {
-		prev := make([]byte, 1)
-
-		if _, err := file.ReadAt(prev, start-1); err != nil {
-			return "", err
-		}
-
-		if prev[0] != '\n' {
-			idx := indexByte(buf, '\n')
-
-			if idx < 0 {
-				return "", nil
-			}
-
-			buf = buf[idx+1:]
-		}
+	if start == 0 {
+		return string(buf), true, nil
 	}
 
-	return string(buf), nil
-}
+	prev := make([]byte, 1)
 
-func indexByte(b []byte, c byte) int {
-	for i, v := range b {
-		if v == c {
-			return i
-		}
+	if _, err := file.ReadAt(prev, start-1); err != nil {
+		return "", false, err
 	}
 
-	return -1
+	if prev[0] != '\n' {
+		idx := bytes.IndexByte(buf, '\n')
+
+		if idx < 0 {
+			return "", false, nil
+		}
+
+		buf = buf[idx+1:]
+	}
+
+	return string(buf), false, nil
 }
 
 type rotatingFile struct {
@@ -174,9 +196,13 @@ func (r *rotatingFile) Write(p []byte) (int, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	if r.size > 0 && r.size+int64(len(p)) > r.maxSize {
-		if err := r.rotate(); err != nil {
-			return 0, err
+	if r.file != nil && r.size > 0 && r.size+int64(len(p)) > r.maxSize {
+		r.rotate()
+	}
+
+	if r.file == nil {
+		if err := r.open(); err != nil {
+			return 0, fmt.Errorf("reopen log file: %w", err)
 		}
 	}
 
@@ -186,23 +212,23 @@ func (r *rotatingFile) Write(p []byte) (int, error) {
 	return n, err
 }
 
-func (r *rotatingFile) rotate() error {
-	if err := r.file.Close(); err != nil {
-		return err
-	}
+func (r *rotatingFile) rotate() {
+	r.file.Close()
+	r.file = nil
 
 	for i := r.keep - 1; i >= 1; i-- {
 		from := r.path
+
 		if i > 1 {
 			from = r.numbered(i - 1)
 		}
 
 		if err := os.Rename(from, r.numbered(i)); err != nil && !errors.Is(err, fs.ErrNotExist) {
-			return err
+			break
 		}
 	}
 
-	return r.open()
+	r.open()
 }
 
 func (r *rotatingFile) numbered(i int) string {
@@ -212,6 +238,10 @@ func (r *rotatingFile) numbered(i int) string {
 func (r *rotatingFile) Close() error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
+
+	if r.file == nil {
+		return nil
+	}
 
 	return r.file.Close()
 }
