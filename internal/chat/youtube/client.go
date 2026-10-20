@@ -38,6 +38,12 @@ var ErrRateLimited = errors.New("youtube rate-limited this ip (anti-bot)")
 // usually because the continuation token or innertube config has expired.
 var ErrAuthStale = errors.New("youtube auth/config stale")
 
+// ErrNotLive means the page's chat is a replay of a finished stream, which
+// get_live_chat rejects.
+var ErrNotLive = errors.New("youtube stream is not live")
+
+const maxErrorBodySnippet = 200
+
 var httpClient = newHTTPClient()
 
 type MessageHandler func(chat.ChatMessage)
@@ -130,7 +136,12 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			case errors.Is(err, ErrAuthStale):
 				logging.Platform("youtube").Warn("auth/config stale, re-bootstrapping", "error", err)
-				if c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
+				ok, rerr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
+				if errors.Is(rerr, ErrNotLive) {
+					c.streamEnded()
+					return
+				}
+				if ok {
 					failures, backoff = 0, defaultPollInterval
 					continue
 				}
@@ -139,9 +150,16 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 			default:
 				failures++
 				logging.Platform("youtube").Warn("poll error", "error", err, "failure", failures, "max", maxFailuresBeforeReboot)
-				if failures >= maxFailuresBeforeReboot && c.rebootstrap(ctx, videoURL, &continuation, &cfg) {
-					failures, backoff = 0, defaultPollInterval
-					continue
+				if failures >= maxFailuresBeforeReboot {
+					ok, rerr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
+					if errors.Is(rerr, ErrNotLive) {
+						c.streamEnded()
+						return
+					}
+					if ok {
+						failures, backoff = 0, defaultPollInterval
+						continue
+					}
 				}
 				wait, backoff = backoff, nextBackoff(backoff)
 			}
@@ -183,19 +201,25 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 	}
 }
 
+func (c *Client) streamEnded() {
+	logging.Platform("youtube").Warn("stream ended, disconnecting")
+
+	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
+}
+
 // rebootstrap re-fetches the watch page to recover a fresh continuation token and
 // innertube config, used when the current ones go stale. Returns true on success.
-func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) bool {
+func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) (bool, error) {
 	newCont, newCfg, err := fetchInitialData(ctx, videoURL)
 	if err != nil {
 		logging.Platform("youtube").Error("re-bootstrap failed", "error", err)
-		return false
+		return false, err
 	}
 
 	*continuation = newCont
 	*cfg = newCfg
 
-	return true
+	return true, nil
 }
 
 // fetchInitialData fetches a YouTube watch page, extracts the first live chat
@@ -206,8 +230,10 @@ func fetchInitialData(ctx context.Context, videoURL string) (continuation string
 		return "", YtCfg{}, fmt.Errorf("failed to fetch page: %w", err)
 	}
 
-	html := string(body)
+	return parseWatchPage(string(body))
+}
 
+func parseWatchPage(html string) (continuation string, cfg YtCfg, err error) {
 	// Extract ytInitialData JSON
 	initDataJSON, err := extractJSONObject(html, "ytInitialData")
 	if err != nil {
@@ -217,6 +243,15 @@ func fetchInitialData(ctx context.Context, videoURL string) (continuation string
 	var initData map[string]any
 	if err := json.Unmarshal(initDataJSON, &initData); err != nil {
 		return "", YtCfg{}, fmt.Errorf("failed to parse ytInitialData: %w", err)
+	}
+
+	if replay, err := navigateJSON(initData,
+		"contents", "twoColumnWatchNextResults", "conversationBar",
+		"liveChatRenderer", "isReplay",
+	); err == nil {
+		if isReplay, _ := replay.(bool); isReplay {
+			return "", YtCfg{}, ErrNotLive
+		}
 	}
 
 	// Navigate to the live chat continuation token.
@@ -476,7 +511,8 @@ func doRequest(ctx context.Context, method, requestURL string, body []byte, extr
 	case resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden:
 		return nil, fmt.Errorf("%w: http %d", ErrAuthStale, resp.StatusCode)
 	case resp.StatusCode != http.StatusOK:
-		return nil, fmt.Errorf("http %d from %s", resp.StatusCode, requestURL)
+		snippet, _ := io.ReadAll(io.LimitReader(resp.Body, maxErrorBodySnippet))
+		return nil, fmt.Errorf("http %d from %s: %s", resp.StatusCode, requestURL, strings.TrimSpace(string(snippet)))
 	}
 
 	return io.ReadAll(resp.Body)
