@@ -52,6 +52,8 @@ type EventHandler func(event string, data any)
 type Client struct {
 	mu     sync.Mutex
 	cancel context.CancelFunc
+	ended  bool
+	http   *http.Client
 
 	OnMessage MessageHandler
 	OnEvent   EventHandler
@@ -59,6 +61,7 @@ type Client struct {
 
 func NewClient(onMessage MessageHandler, onEvent EventHandler) *Client {
 	return &Client{
+		http:      httpClient,
 		OnMessage: onMessage,
 		OnEvent:   onEvent,
 	}
@@ -80,13 +83,14 @@ func (c *Client) Connect(input string) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	continuation, cfg, err := fetchInitialData(ctx, videoURL)
+	continuation, cfg, err := fetchInitialData(ctx, c.http, videoURL)
 	if err != nil {
 		cancel()
 		return fmt.Errorf("failed to fetch initial data: %w", err)
 	}
 
 	c.cancel = cancel
+	c.ended = false
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
 
@@ -103,8 +107,19 @@ func (c *Client) Disconnect() {
 		c.cancel = nil
 	}
 
+	alreadyEnded := c.ended
+	c.ended = false
+
 	c.mu.Unlock()
 
+	if alreadyEnded {
+		return
+	}
+
+	c.emitDisconnected()
+}
+
+func (c *Client) emitDisconnected() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
@@ -120,7 +135,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 		default:
 		}
 
-		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, continuation, cfg)
+		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, c.http, continuation, cfg)
 		if err != nil {
 			if ctx.Err() != nil {
 				return
@@ -128,39 +143,40 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			var wait time.Duration
 
+			needsRefresh := false
+			rateLimited := false
+
 			switch {
 			case errors.Is(err, ErrRateLimited):
+				rateLimited = true
 				rlFailures++
 				wait = rateLimitBackoff(rlFailures)
 				logging.Platform("youtube").Warn("rate-limited, backing off", "wait", wait)
 
 			case errors.Is(err, ErrAuthStale):
 				logging.Platform("youtube").Warn("auth/config stale, re-bootstrapping", "error", err)
-				ok, rerr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
-				if errors.Is(rerr, ErrNotLive) {
-					c.streamEnded()
-					return
-				}
-				if ok {
-					failures, backoff = 0, defaultPollInterval
-					continue
-				}
-				wait, backoff = backoff, nextBackoff(backoff)
+				needsRefresh = true
 
 			default:
 				failures++
 				logging.Platform("youtube").Warn("poll error", "error", err, "failure", failures, "max", maxFailuresBeforeReboot)
-				if failures >= maxFailuresBeforeReboot {
-					ok, rerr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
-					if errors.Is(rerr, ErrNotLive) {
-						c.streamEnded()
-						return
-					}
-					if ok {
-						failures, backoff = 0, defaultPollInterval
-						continue
-					}
+				needsRefresh = failures >= maxFailuresBeforeReboot
+			}
+
+			if needsRefresh {
+				recoverErr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
+				if errors.Is(recoverErr, ErrNotLive) {
+					c.streamEnded(ctx)
+					return
 				}
+
+				if recoverErr == nil {
+					failures, backoff = 0, defaultPollInterval
+					continue
+				}
+			}
+
+			if !rateLimited {
 				wait, backoff = backoff, nextBackoff(backoff)
 			}
 
@@ -201,31 +217,44 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 	}
 }
 
-func (c *Client) streamEnded() {
+func (c *Client) streamEnded(ctx context.Context) {
+	c.mu.Lock()
+
+	if ctx.Err() != nil {
+		c.mu.Unlock()
+		return
+	}
+
+	c.cancel()
+	c.cancel = nil
+	c.ended = true
+
+	c.mu.Unlock()
+
 	logging.Platform("youtube").Warn("stream ended, disconnecting")
 
-	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
+	c.emitDisconnected()
 }
 
-// rebootstrap re-fetches the watch page to recover a fresh continuation token and
-// innertube config, used when the current ones go stale. Returns true on success.
-func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) (bool, error) {
-	newCont, newCfg, err := fetchInitialData(ctx, videoURL)
+// rebootstrap re-fetches the watch page to needsRefresh a fresh continuation token and
+// innertube config, used when the current ones go stale.
+func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) error {
+	newCont, newCfg, err := fetchInitialData(ctx, c.http, videoURL)
 	if err != nil {
 		logging.Platform("youtube").Error("re-bootstrap failed", "error", err)
-		return false, err
+		return err
 	}
 
 	*continuation = newCont
 	*cfg = newCfg
 
-	return true, nil
+	return nil
 }
 
 // fetchInitialData fetches a YouTube watch page, extracts the first live chat
 // continuation token and innertube client config.
-func fetchInitialData(ctx context.Context, videoURL string) (continuation string, cfg YtCfg, err error) {
-	body, err := doRequest(ctx, "GET", videoURL, nil, nil)
+func fetchInitialData(ctx context.Context, hc *http.Client, videoURL string) (continuation string, cfg YtCfg, err error) {
+	body, err := doRequest(ctx, hc, "GET", videoURL, nil, nil)
 	if err != nil {
 		return "", YtCfg{}, fmt.Errorf("failed to fetch page: %w", err)
 	}
@@ -301,7 +330,7 @@ func parseWatchPage(html string) (continuation string, cfg YtCfg, err error) {
 // pollChatOnce sends one request to the innertube live_chat endpoint and returns
 // the parsed messages, deletion target IDs, the next continuation token, and the
 // suggested polling interval.
-func pollChatOnce(ctx context.Context, continuation string, cfg YtCfg) (messages []chat.ChatMessage, deletions []string, nextContinuation string, timeoutMs int, err error) {
+func pollChatOnce(ctx context.Context, hc *http.Client, continuation string, cfg YtCfg) (messages []chat.ChatMessage, deletions []string, nextContinuation string, timeoutMs int, err error) {
 	reqBody, err := buildPollRequestBody(continuation, cfg)
 	if err != nil {
 		return nil, nil, "", 0, err
@@ -323,7 +352,7 @@ func pollChatOnce(ctx context.Context, continuation string, cfg YtCfg) (messages
 		hdr.Set("X-YouTube-Client-Version", cfg.InnertubeClientVersion)
 	}
 
-	respBody, err := doRequest(ctx, "POST", pollURL, reqBody, hdr)
+	respBody, err := doRequest(ctx, hc, "POST", pollURL, reqBody, hdr)
 	if err != nil {
 		return nil, nil, "", 0, err
 	}
@@ -469,7 +498,7 @@ func navigateJSON(v any, keys ...any) (any, error) {
 
 // doRequest performs an HTTP request with a browser-like header set and classifies
 // the common failure modes (rate-limit, stale auth) into typed errors.
-func doRequest(ctx context.Context, method, requestURL string, body []byte, extraHeaders http.Header) ([]byte, error) {
+func doRequest(ctx context.Context, hc *http.Client, method, requestURL string, body []byte, extraHeaders http.Header) ([]byte, error) {
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -496,7 +525,7 @@ func doRequest(ctx context.Context, method, requestURL string, body []byte, extr
 		}
 	}
 
-	resp, err := httpClient.Do(req)
+	resp, err := hc.Do(req)
 	if err != nil {
 		if errors.Is(err, ErrRateLimited) {
 			return nil, ErrRateLimited

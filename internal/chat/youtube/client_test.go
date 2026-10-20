@@ -46,7 +46,7 @@ func TestDoRequestIncludesBodySnippet(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	_, err := doRequest(context.Background(), "POST", srv.URL, []byte("{}"), nil)
+	_, err := doRequest(context.Background(), httpClient, "POST", srv.URL, []byte("{}"), nil)
 	if err == nil {
 		t.Fatal("expected error")
 	}
@@ -76,10 +76,6 @@ func TestPollLoopDisconnectsWhenStreamEnds(t *testing.T) {
 	defer srv.Close()
 
 	target, _ := url.Parse(srv.URL)
-	orig := httpClient.Transport
-	httpClient.Transport = rewriteTransport{target: target}
-	defer func() { httpClient.Transport = orig }()
-
 	var mu sync.Mutex
 	var events []string
 	c := NewClient(nil, func(event string, _ any) {
@@ -88,8 +84,12 @@ func TestPollLoopDisconnectsWhenStreamEnds(t *testing.T) {
 		mu.Unlock()
 	})
 
+	c.http = &http.Client{Transport: rewriteTransport{target: target}}
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+
+	c.cancel = cancel
 
 	done := make(chan struct{})
 	go func() {
