@@ -236,7 +236,7 @@ func (c *Client) streamEnded(ctx context.Context) {
 	c.emitDisconnected()
 }
 
-// rebootstrap re-fetches the watch page to needsRefresh a fresh continuation token and
+// rebootstrap re-fetches the watch page to recover a fresh continuation token and
 // innertube config, used when the current ones go stale.
 func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) error {
 	newCont, newCfg, err := fetchInitialData(ctx, c.http, videoURL)
