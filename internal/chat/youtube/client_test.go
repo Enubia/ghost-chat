@@ -76,8 +76,10 @@ func TestPollLoopDisconnectsWhenStreamEnds(t *testing.T) {
 	defer srv.Close()
 
 	target, _ := url.Parse(srv.URL)
+
 	var mu sync.Mutex
 	var events []string
+
 	c := NewClient(nil, func(event string, _ any) {
 		mu.Lock()
 		events = append(events, event)
@@ -92,6 +94,7 @@ func TestPollLoopDisconnectsWhenStreamEnds(t *testing.T) {
 	c.cancel = cancel
 
 	done := make(chan struct{})
+
 	go func() {
 		c.pollLoop(ctx, "https://www.youtube.com/watch?v=x", "tok", YtCfg{})
 		close(done)
