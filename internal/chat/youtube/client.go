@@ -53,7 +53,7 @@ type Client struct {
 	mu     sync.Mutex
 	cancel context.CancelFunc
 	ended  bool
-	http   *http.Client
+	hc     *http.Client
 
 	OnMessage MessageHandler
 	OnEvent   EventHandler
@@ -61,7 +61,7 @@ type Client struct {
 
 func NewClient(onMessage MessageHandler, onEvent EventHandler) *Client {
 	return &Client{
-		http:      httpClient,
+		hc:        httpClient,
 		OnMessage: onMessage,
 		OnEvent:   onEvent,
 	}
@@ -83,7 +83,7 @@ func (c *Client) Connect(input string) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	continuation, cfg, err := fetchInitialData(ctx, c.http, videoURL)
+	continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
 	if err != nil {
 		cancel()
 		return fmt.Errorf("failed to fetch initial data: %w", err)
@@ -135,7 +135,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 		default:
 		}
 
-		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, c.http, continuation, cfg)
+		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, c.hc, continuation, cfg)
 		if err != nil {
 			if ctx.Err() != nil {
 				return
@@ -239,7 +239,7 @@ func (c *Client) streamEnded(ctx context.Context) {
 // rebootstrap re-fetches the watch page to recover a fresh continuation token and
 // innertube config, used when the current ones go stale.
 func (c *Client) rebootstrap(ctx context.Context, videoURL string, continuation *string, cfg *YtCfg) error {
-	newCont, newCfg, err := fetchInitialData(ctx, c.http, videoURL)
+	newCont, newCfg, err := fetchInitialData(ctx, c.hc, videoURL)
 	if err != nil {
 		logging.Platform("youtube").Error("re-bootstrap failed", "error", err)
 		return err

@@ -86,7 +86,7 @@ func TestPollLoopDisconnectsWhenStreamEnds(t *testing.T) {
 		mu.Unlock()
 	})
 
-	c.http = &http.Client{Transport: rewriteTransport{target: target}}
+	c.hc = &http.Client{Transport: rewriteTransport{target: target}}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
