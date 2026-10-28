@@ -33,7 +33,9 @@ export function Home() {
         return inputs[platform] || (config?.kick?.default_channel ?? '');
     };
 
-    const anyConnected = Object.values(connected).some(Boolean) || Object.values(waiting).some(Boolean);
+    const isActive = (platform: Platform) => Boolean(connected[platform] || waiting[platform]);
+
+    const anyActive = Object.values(connected).some(Boolean) || Object.values(waiting).some(Boolean);
 
     const handleOpenSource = () => {
         void update({ custom_source: { url: sourceURL } }, { silent: true }).then(() => navigate('/source'));
@@ -42,7 +44,7 @@ export function Home() {
     const handleToggle = async (platform: Platform) => {
         setError(null);
 
-        if (connected[platform] || waiting[platform]) {
+        if (isActive(platform)) {
             void Disconnect(platform);
         } else {
             setConnecting(platform);
@@ -121,7 +123,7 @@ export function Home() {
                         onChange={(e) => setInput(Platform.PlatformYouTube, e.target.value)}
                     />
                     <button
-                        className={`btn ${connected[Platform.PlatformYouTube] || waiting[Platform.PlatformYouTube] ? 'btn-danger' : 'btn-primary'}`}
+                        className={`btn ${isActive(Platform.PlatformYouTube) ? 'btn-danger' : 'btn-primary'}`}
                         onClick={() => void handleToggle(Platform.PlatformYouTube)}
                         disabled={!getInput(Platform.PlatformYouTube) || connecting !== null}
                     >
@@ -202,7 +204,7 @@ export function Home() {
                 </div>
             </div>
 
-            {anyConnected && (
+            {anyActive && (
                 <button
                     className="btn btn-primary"
                     onClick={() => navigate('/chat')}

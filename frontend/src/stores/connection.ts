@@ -2,12 +2,12 @@ import type { Platform } from '@bindings/ghost-chat/internal/chat/models.js';
 
 import { create } from 'zustand';
 
-type ConnectedMap = Partial<Record<Platform, boolean>>;
+type PlatformFlags = Partial<Record<Platform, boolean>>;
 type InputMap = Partial<Record<Platform, string>>;
 
 interface ConnectionState {
-    connected: ConnectedMap;
-    waiting: ConnectedMap;
+    connected: PlatformFlags;
+    waiting: PlatformFlags;
     inputs: InputMap;
     setConnected: (platform: Platform, value: boolean) => void;
     setWaiting: (platform: Platform, value: boolean) => void;
