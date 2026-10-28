@@ -90,6 +90,10 @@ func CompareSemver(a, b string) (int, error) {
 
 // helper function so that we can test the migration logic
 func runMigrations(cfg *Config, migrations []Migration, targetVersion string) error {
+	if cfg.Version == "" {
+		return nil
+	}
+
 	for _, migration := range migrations {
 		comparison, err := CompareSemver(migration.Version, cfg.Version)
 
