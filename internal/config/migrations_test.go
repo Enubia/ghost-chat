@@ -127,3 +127,30 @@ func TestSkipsMigrationsNewerThanTarget(t *testing.T) {
 		t.Errorf("got version %s, want 1.0.0", cfg.Version)
 	}
 }
+
+func TestSkipsMigrationsWhenVersionEmpty(t *testing.T) {
+	cfg := DefaultConfig()
+	cfg.Version = ""
+
+	ran := false
+
+	migs := []Migration{
+		{Version: "1.1.0", Migrate: func(cfg *Config) {
+			ran = true
+		}},
+	}
+
+	err := runMigrations(&cfg, migs, "2.0.0")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if ran {
+		t.Error("expected no migrations to run")
+	}
+
+	if cfg.Version != "" {
+		t.Errorf("got version %s, want empty", cfg.Version)
+	}
+}
