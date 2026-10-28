@@ -57,7 +57,8 @@ type Client struct {
 	ended  bool
 	hc     *http.Client
 
-	waitInterval func() time.Duration
+	waitInterval     func() time.Duration
+	rateLimitBackoff func(int) time.Duration
 
 	OnMessage MessageHandler
 	OnEvent   EventHandler
@@ -65,10 +66,11 @@ type Client struct {
 
 func NewClient(onMessage MessageHandler, onEvent EventHandler) *Client {
 	return &Client{
-		hc:           httpClient,
-		waitInterval: defaultWaitInterval,
-		OnMessage:    onMessage,
-		OnEvent:      onEvent,
+		hc:               httpClient,
+		waitInterval:     defaultWaitInterval,
+		rateLimitBackoff: rateLimitBackoff,
+		OnMessage:        onMessage,
+		OnEvent:          onEvent,
 	}
 }
 
@@ -95,10 +97,7 @@ func (c *Client) Connect(input string) error {
 			return fmt.Errorf("failed to fetch initial data: %w", err)
 		}
 
-		c.cancel = cancel
-		c.ended = false
-
-		c.emitConnected()
+		c.activate(cancel, "chat:connected")
 
 		go func() {
 			if c.pollLoop(ctx, target.videoURL, continuation, cfg) == pollEnded {
@@ -111,7 +110,9 @@ func (c *Client) Connect(input string) error {
 
 	videoURL, err := resolveLiveURL(ctx, c.hc, target.liveURL)
 	if errors.Is(err, ErrChannelOffline) || errors.Is(err, ErrRateLimited) {
-		return c.startWaiting(ctx, cancel, target.liveURL)
+		c.startWaiting(ctx, cancel, target.liveURL)
+
+		return nil
 	}
 
 	if err != nil {
@@ -120,8 +121,10 @@ func (c *Client) Connect(input string) error {
 	}
 
 	continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
-	if errors.Is(err, ErrNotLive) {
-		return c.startWaiting(ctx, cancel, target.liveURL)
+	if errors.Is(err, ErrNotLive) || errors.Is(err, ErrRateLimited) {
+		c.startWaiting(ctx, cancel, target.liveURL)
+
+		return nil
 	}
 
 	if err != nil {
@@ -129,38 +132,37 @@ func (c *Client) Connect(input string) error {
 		return fmt.Errorf("failed to fetch initial data: %w", err)
 	}
 
-	c.cancel = cancel
-	c.ended = false
-
-	c.emitConnected()
+	c.activate(cancel, "chat:connected")
 
 	go c.runChannel(ctx, target.liveURL, &liveSession{videoURL: videoURL, continuation: continuation, cfg: cfg})
 
 	return nil
 }
 
-func (c *Client) startWaiting(ctx context.Context, cancel context.CancelFunc, liveURL string) error {
+func (c *Client) activate(cancel context.CancelFunc, event string) {
 	c.cancel = cancel
 	c.ended = false
 
-	c.emitWaiting()
+	c.emit(event)
+}
+
+func (c *Client) startWaiting(ctx context.Context, cancel context.CancelFunc, liveURL string) {
+	c.activate(cancel, "chat:waiting")
 
 	go c.runChannel(ctx, liveURL, nil)
-
-	return nil
 }
 
 func defaultWaitInterval() time.Duration {
 	return waitPollInterval + time.Duration(rand.Int64N(int64(waitPollJitter)))
 }
 
-func (c *Client) emitWaiting() {
-	c.OnEvent("chat:waiting", map[string]string{"platform": string(chat.PlatformYouTube)})
+func (c *Client) emit(event string) {
+	c.OnEvent(event, map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) emitConnected() {
-	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
-}
+func (c *Client) emitWaiting() { c.emit("chat:waiting") }
+
+func (c *Client) emitConnected() { c.emit("chat:connected") }
 
 func (c *Client) emitIfActive(ctx context.Context, emit func()) bool {
 	c.mu.Lock()
@@ -217,7 +219,7 @@ func (c *Client) waitForLive(ctx context.Context, liveURL string) (*liveSession,
 		wait := c.waitInterval()
 
 		if rlFailures > 0 {
-			wait = max(wait, rateLimitBackoff(rlFailures))
+			wait = max(wait, c.rateLimitBackoff(rlFailures))
 		}
 
 		select {
@@ -235,12 +237,20 @@ func (c *Client) waitForLive(ctx context.Context, liveURL string) (*liveSession,
 			if errors.Is(err, ErrRateLimited) {
 				rlFailures++
 				logging.Platform("youtube").Warn("rate-limited while waiting", "failures", rlFailures)
-			} else if !errors.Is(err, ErrChannelOffline) {
+
+				continue
+			}
+
+			rlFailures = 0
+
+			if !errors.Is(err, ErrChannelOffline) {
 				logging.Platform("youtube").Warn("live check failed", "error", err)
 			}
 
 			continue
 		}
+
+		rlFailures = 0
 
 		continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
 		if err != nil {
@@ -281,9 +291,7 @@ func (c *Client) Disconnect() {
 	c.emitDisconnected()
 }
 
-func (c *Client) emitDisconnected() {
-	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
-}
+func (c *Client) emitDisconnected() { c.emit("chat:disconnected") }
 
 type pollResult int
 

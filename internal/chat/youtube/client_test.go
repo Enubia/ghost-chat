@@ -127,6 +127,15 @@ type fakeYouTube struct {
 	live        bool
 	ended       bool
 	rateLimited bool
+	watchLimit  bool
+	liveScript  []string
+}
+
+func (f *fakeYouTube) setWatchRateLimited(v bool) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+
+	f.watchLimit = v
 }
 
 func (f *fakeYouTube) set(live, ended bool) {
@@ -157,6 +166,19 @@ func (f *fakeYouTube) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		_, _ = io.WriteString(w, `{}`)
 	case strings.HasSuffix(r.URL.Path, "/live"):
+		if len(f.liveScript) > 0 {
+			step := f.liveScript[0]
+			f.liveScript = f.liveScript[1:]
+
+			if step == "rl" {
+				w.WriteHeader(http.StatusTooManyRequests)
+			} else {
+				_, _ = io.WriteString(w, `<link rel="canonical" href="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA">`)
+			}
+
+			return
+		}
+
 		if f.rateLimited {
 			w.WriteHeader(http.StatusTooManyRequests)
 
@@ -171,6 +193,12 @@ func (f *fakeYouTube) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		_, _ = io.WriteString(w, `<link rel="canonical" href="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA">`)
 	default:
+		if f.watchLimit {
+			w.WriteHeader(http.StatusTooManyRequests)
+
+			return
+		}
+
 		_, _ = io.WriteString(w, watchPage(f.ended))
 	}
 }
@@ -182,8 +210,9 @@ type eventLog struct {
 
 func (l *eventLog) add(e string, _ any) {
 	l.mu.Lock()
+	defer l.mu.Unlock()
+
 	l.events = append(l.events, e)
-	l.mu.Unlock()
 }
 
 func (l *eventLog) snapshot() []string {
@@ -389,4 +418,59 @@ func TestNoEventsAfterDisconnect(t *testing.T) {
 			t.Fatalf("events after disconnect: %v", got[settled:])
 		}
 	}
+}
+
+func TestWaitForLiveResetsRateLimitFailuresOnSuccessfulCheck(t *testing.T) {
+	f := &fakeYouTube{liveScript: []string{"rl", "rl", "rl", "offline", "rl"}}
+	c, log := newTestClient(t, f)
+
+	var mu sync.Mutex
+	var calls []int
+
+	c.rateLimitBackoff = func(failures int) time.Duration {
+		mu.Lock()
+		defer mu.Unlock()
+
+		calls = append(calls, failures)
+
+		return time.Millisecond
+	}
+
+	c.waitInterval = func() time.Duration { return time.Millisecond }
+
+	f.set(true, false)
+
+	if err := c.Connect("@MrBeast"); err != nil {
+		t.Fatalf("Connect: %v", err)
+	}
+
+	log.waitFor(t, "chat:waiting", "chat:connected")
+
+	mu.Lock()
+	defer mu.Unlock()
+
+	want := []int{1, 2, 1}
+	if len(calls) != len(want) {
+		t.Fatalf("backoff calls = %v, want %v", calls, want)
+	}
+
+	for i := range want {
+		if calls[i] != want[i] {
+			t.Fatalf("backoff calls = %v, want %v", calls, want)
+		}
+	}
+}
+
+func TestConnectChannelLiveButWatchPageRateLimitedWaits(t *testing.T) {
+	f := &fakeYouTube{live: true, watchLimit: true}
+	c, log := newTestClient(t, f)
+
+	if err := c.Connect("@MrBeast"); err != nil {
+		t.Fatalf("Connect: %v", err)
+	}
+
+	log.waitFor(t, "chat:waiting")
+
+	f.setWatchRateLimited(false)
+	log.waitFor(t, "chat:waiting", "chat:connected")
 }

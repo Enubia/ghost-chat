@@ -143,12 +143,12 @@ func resolveLiveURL(ctx context.Context, hc *http.Client, liveURL string) (strin
 func parseLivePage(html string) (string, error) {
 	tag := reCanonical.FindString(html)
 	if tag == "" {
-		return "", fmt.Errorf("canonical link not found on live page")
+		return "", errors.New("canonical link not found on live page")
 	}
 
 	m := reHref.FindStringSubmatch(tag)
 	if len(m) < 2 {
-		return "", fmt.Errorf("canonical link has no href")
+		return "", errors.New("canonical link has no href")
 	}
 
 	if videoID := extractVideoID(strings.ReplaceAll(m[1], "&amp;", "&")); videoID != "" {
