@@ -58,6 +58,10 @@
     &.connected {
         background: var(--color-success);
     }
+
+    &.waiting {
+        background: var(--color-warning);
+    }
 }
 
 .hint {

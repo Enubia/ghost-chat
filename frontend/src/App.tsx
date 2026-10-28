@@ -28,6 +28,7 @@ function App() {
     const loaded = useConfigStore((s) => s.loaded);
     const language = useConfigStore((s) => s.config?.general?.language);
     const setConnected = useConnectionStore((s) => s.setConnected);
+    const setWaiting = useConnectionStore((s) => s.setWaiting);
     const seedAuth = useAuthStore((s) => s.seed);
     const setAuthPending = useAuthStore((s) => s.setPending);
     const setAuthConnected = useAuthStore((s) => s.setConnected);
@@ -53,6 +54,11 @@ function App() {
             setConnected(platform, true);
         });
 
+        const cancelWaiting = Events.On('chat:waiting', (ev) => {
+            const { platform } = ev.data as { platform: Platform };
+            setWaiting(platform, true);
+        });
+
         const cancelDisconnected = Events.On('chat:disconnected', (ev) => {
             const { platform } = ev.data as { platform: Platform };
             setConnected(platform, false);
@@ -60,9 +66,10 @@ function App() {
 
         return () => {
             cancelConnected();
+            cancelWaiting();
             cancelDisconnected();
         };
-    }, [setConnected]);
+    }, [setConnected, setWaiting]);
 
     useEffect(() => {
         void seedAuth();

@@ -34,7 +34,11 @@ export function Chat() {
     const twitchConnected = useConnectionStore((s) => s.connected[Platform.PlatformTwitch]);
     const youtubeConnected = useConnectionStore((s) => s.connected[Platform.PlatformYouTube]);
     const kickConnected = useConnectionStore((s) => s.connected[Platform.PlatformKick]);
+    const twitchWaiting = useConnectionStore((s) => s.waiting[Platform.PlatformTwitch]);
+    const youtubeWaiting = useConnectionStore((s) => s.waiting[Platform.PlatformYouTube]);
+    const kickWaiting = useConnectionStore((s) => s.waiting[Platform.PlatformKick]);
     const connected = twitchConnected || youtubeConnected || kickConnected;
+    const anyWaiting = twitchWaiting || youtubeWaiting || kickWaiting;
     const connectedCount = [twitchConnected, youtubeConnected, kickConnected].filter(Boolean).length;
     const messagesRef = useRef<HTMLDivElement>(null);
 
@@ -239,7 +243,11 @@ export function Chat() {
                         />
                     </svg>
                 </button>
-                {!connected && <span className={styles.disconnected}>{t('chat.disconnected')}</span>}
+                {!connected && (
+                    <span className={styles.disconnected}>
+                        {anyWaiting ? t('home.waiting') : t('chat.disconnected')}
+                    </span>
+                )}
             </div>
             <div
                 ref={messagesRef}
