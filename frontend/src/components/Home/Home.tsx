@@ -16,7 +16,7 @@ export function Home() {
     const config = useConfigStore((s) => s.config);
     const update = useConfigStore((s) => s.update);
 
-    const { connected, inputs, setInput } = useConnectionStore();
+    const { connected, waiting, inputs, setInput } = useConnectionStore();
     const [error, setError] = useState<string | null>(null);
     const [connecting, setConnecting] = useState<Platform | null>(null);
     const [sourceURL, setSourceURL] = useState(config?.custom_source?.url ?? '');
@@ -33,7 +33,7 @@ export function Home() {
         return inputs[platform] || (config?.kick?.default_channel ?? '');
     };
 
-    const anyConnected = Object.values(connected).some(Boolean);
+    const anyConnected = Object.values(connected).some(Boolean) || Object.values(waiting).some(Boolean);
 
     const handleOpenSource = () => {
         void update({ custom_source: { url: sourceURL } }, { silent: true }).then(() => navigate('/source'));
@@ -42,7 +42,7 @@ export function Home() {
     const handleToggle = async (platform: Platform) => {
         setError(null);
 
-        if (connected[platform]) {
+        if (connected[platform] || waiting[platform]) {
             void Disconnect(platform);
         } else {
             setConnecting(platform);
@@ -109,7 +109,7 @@ export function Home() {
                             {t('home.youtube')}
                         </span>
                         <span
-                            className={`${styles.status} ${connected[Platform.PlatformYouTube] ? styles.connected : ''}`}
+                            className={`${styles.status} ${connected[Platform.PlatformYouTube] ? styles.connected : ''} ${waiting[Platform.PlatformYouTube] ? styles.waiting : ''}`}
                         />
                     </div>
                     <input
@@ -121,15 +121,17 @@ export function Home() {
                         onChange={(e) => setInput(Platform.PlatformYouTube, e.target.value)}
                     />
                     <button
-                        className={`btn ${connected[Platform.PlatformYouTube] ? 'btn-danger' : 'btn-primary'}`}
+                        className={`btn ${connected[Platform.PlatformYouTube] || waiting[Platform.PlatformYouTube] ? 'btn-danger' : 'btn-primary'}`}
                         onClick={() => void handleToggle(Platform.PlatformYouTube)}
                         disabled={!getInput(Platform.PlatformYouTube) || connecting !== null}
                     >
                         {connecting === Platform.PlatformYouTube
                             ? t('home.connecting')
-                            : connected[Platform.PlatformYouTube]
-                              ? t('home.disconnect')
-                              : t('home.connect')}
+                            : waiting[Platform.PlatformYouTube]
+                              ? t('home.waiting')
+                              : connected[Platform.PlatformYouTube]
+                                ? t('home.disconnect')
+                                : t('home.connect')}
                     </button>
                 </div>
 

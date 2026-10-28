@@ -7,18 +7,28 @@ type InputMap = Partial<Record<Platform, string>>;
 
 interface ConnectionState {
     connected: ConnectedMap;
+    waiting: ConnectedMap;
     inputs: InputMap;
     setConnected: (platform: Platform, value: boolean) => void;
+    setWaiting: (platform: Platform, value: boolean) => void;
     setInput: (platform: Platform, value: string) => void;
 }
 
 export const useConnectionStore = create<ConnectionState>((set) => ({
     connected: {},
+    waiting: {},
     inputs: {},
 
     setConnected: (platform, value) =>
         set((s) => ({
             connected: { ...s.connected, [platform]: value },
+            waiting: { ...s.waiting, [platform]: false },
+        })),
+
+    setWaiting: (platform, value) =>
+        set((s) => ({
+            waiting: { ...s.waiting, [platform]: value },
+            connected: value ? { ...s.connected, [platform]: false } : s.connected,
         })),
 
     setInput: (platform, value) =>

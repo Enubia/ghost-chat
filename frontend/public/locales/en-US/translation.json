@@ -13,6 +13,7 @@
         "connect": "Connect",
         "connecting": "Connecting...",
         "disconnect": "Disconnect",
+        "waiting": "Waiting for stream to start",
         "open_chat": "Open Chat",
         "placeholder": {
             "channel": "Channel name",
