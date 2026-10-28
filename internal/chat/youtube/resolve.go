@@ -55,12 +55,12 @@ func resolveInput(input string) (resolvedInput, error) {
 			return resolvedInput{}, fmt.Errorf("no video ID in youtu.be URL")
 		}
 
-		return resolvedInput{videoURL: "https://www.youtube.com/watch?v=" + videoID}, nil
+		return resolvedInput{videoURL: watchURL(videoID)}, nil
 
 	case "www.youtube.com", "youtube.com":
 		if u.Path == "/watch" {
 			if v := u.Query().Get("v"); v != "" {
-				return resolvedInput{videoURL: "https://www.youtube.com/watch?v=" + v}, nil
+				return resolvedInput{videoURL: watchURL(v)}, nil
 			}
 		}
 
@@ -95,6 +95,10 @@ func ResolveVideoURL(input string) (string, error) {
 	return resolveLiveURL(context.Background(), httpClient, r.liveURL)
 }
 
+func watchURL(videoID string) string {
+	return "https://www.youtube.com/watch?v=" + videoID
+}
+
 // isChannelID returns true if s looks like a raw YouTube channel ID (UC + 22 chars).
 func isChannelID(s string) bool {
 	return strings.HasPrefix(s, "UC") && len(s) == 24 && !strings.ContainsAny(s, "/ ?.")
@@ -125,7 +129,7 @@ func resolveLiveURL(ctx context.Context, hc *http.Client, liveURL string) (strin
 	}
 
 	if videoID := extractVideoID(resp.Request.URL.String()); videoID != "" {
-		return "https://www.youtube.com/watch?v=" + videoID, nil
+		return watchURL(videoID), nil
 	}
 
 	body, err := io.ReadAll(resp.Body)
@@ -148,7 +152,7 @@ func parseLivePage(html string) (string, error) {
 	}
 
 	if videoID := extractVideoID(strings.ReplaceAll(m[1], "&amp;", "&")); videoID != "" {
-		return "https://www.youtube.com/watch?v=" + videoID, nil
+		return watchURL(videoID), nil
 	}
 
 	return "", ErrChannelOffline

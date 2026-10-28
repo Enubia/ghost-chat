@@ -88,28 +88,42 @@ func (c *Client) Connect(input string) error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	videoURL := target.videoURL
-
-	if target.isChannel() {
-		videoURL, err = resolveLiveURL(ctx, c.hc, target.liveURL)
-		if errors.Is(err, ErrChannelOffline) {
-			c.cancel = cancel
-			c.ended = false
-
-			c.emitWaiting()
-
-			go c.waitForLive(ctx, target.liveURL)
-
-			return nil
-		}
-
+	if !target.isChannel() {
+		continuation, cfg, err := fetchInitialData(ctx, c.hc, target.videoURL)
 		if err != nil {
 			cancel()
-			return fmt.Errorf("failed to resolve video URL: %w", err)
+			return fmt.Errorf("failed to fetch initial data: %w", err)
 		}
+
+		c.cancel = cancel
+		c.ended = false
+
+		c.emitConnected()
+
+		go func() {
+			if c.pollLoop(ctx, target.videoURL, continuation, cfg) == pollEnded {
+				c.streamEnded(ctx)
+			}
+		}()
+
+		return nil
+	}
+
+	videoURL, err := resolveLiveURL(ctx, c.hc, target.liveURL)
+	if errors.Is(err, ErrChannelOffline) || errors.Is(err, ErrRateLimited) {
+		return c.startWaiting(ctx, cancel, target.liveURL)
+	}
+
+	if err != nil {
+		cancel()
+		return fmt.Errorf("failed to resolve video URL: %w", err)
 	}
 
 	continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
+	if errors.Is(err, ErrNotLive) {
+		return c.startWaiting(ctx, cancel, target.liveURL)
+	}
+
 	if err != nil {
 		cancel()
 		return fmt.Errorf("failed to fetch initial data: %w", err)
@@ -118,13 +132,20 @@ func (c *Client) Connect(input string) error {
 	c.cancel = cancel
 	c.ended = false
 
-	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
+	c.emitConnected()
 
-	if target.isChannel() {
-		go c.runChannel(ctx, target.liveURL, videoURL, continuation, cfg)
-	} else {
-		go c.pollLoop(ctx, videoURL, continuation, cfg, false)
-	}
+	go c.runChannel(ctx, target.liveURL, &liveSession{videoURL: videoURL, continuation: continuation, cfg: cfg})
+
+	return nil
+}
+
+func (c *Client) startWaiting(ctx context.Context, cancel context.CancelFunc, liveURL string) error {
+	c.cancel = cancel
+	c.ended = false
+
+	c.emitWaiting()
+
+	go c.runChannel(ctx, liveURL, nil)
 
 	return nil
 }
@@ -137,40 +158,78 @@ func (c *Client) emitWaiting() {
 	c.OnEvent("chat:waiting", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) runChannel(ctx context.Context, liveURL, videoURL, continuation string, cfg YtCfg) {
-	if !c.pollLoop(ctx, videoURL, continuation, cfg, true) {
-		return
-	}
-
-	if ctx.Err() != nil {
-		return
-	}
-
-	logging.Platform("youtube").Info("stream ended, waiting for next stream")
-
-	c.emitWaiting()
-	c.waitForLive(ctx, liveURL)
+func (c *Client) emitConnected() {
+	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) waitForLive(ctx context.Context, liveURL string) {
+func (c *Client) emitIfActive(ctx context.Context, emit func()) bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	if ctx.Err() != nil {
+		return false
+	}
+
+	emit()
+
+	return true
+}
+
+type liveSession struct {
+	videoURL     string
+	continuation string
+	cfg          YtCfg
+}
+
+func (c *Client) runChannel(ctx context.Context, liveURL string, session *liveSession) {
+	for {
+		if session == nil {
+			var ok bool
+
+			session, ok = c.waitForLive(ctx, liveURL)
+			if !ok {
+				return
+			}
+
+			if !c.emitIfActive(ctx, c.emitConnected) {
+				return
+			}
+		}
+
+		if c.pollLoop(ctx, session.videoURL, session.continuation, session.cfg) != pollEnded {
+			return
+		}
+
+		session = nil
+
+		logging.Platform("youtube").Info("stream ended, waiting for next stream")
+
+		if !c.emitIfActive(ctx, c.emitWaiting) {
+			return
+		}
+	}
+}
+
+func (c *Client) waitForLive(ctx context.Context, liveURL string) (*liveSession, bool) {
 	rlFailures := 0
 
 	for {
 		wait := c.waitInterval()
+
 		if rlFailures > 0 {
 			wait = max(wait, rateLimitBackoff(rlFailures))
 		}
 
 		select {
 		case <-ctx.Done():
-			return
+			return nil, false
 		case <-time.After(wait):
 		}
 
 		videoURL, err := resolveLiveURL(ctx, c.hc, liveURL)
 		if err != nil {
 			if ctx.Err() != nil {
-				return
+				return nil, false
 			}
 
 			if errors.Is(err, ErrRateLimited) {
@@ -186,7 +245,7 @@ func (c *Client) waitForLive(ctx context.Context, liveURL string) {
 		continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
 		if err != nil {
 			if ctx.Err() != nil {
-				return
+				return nil, false
 			}
 
 			if errors.Is(err, ErrRateLimited) {
@@ -198,15 +257,7 @@ func (c *Client) waitForLive(ctx context.Context, liveURL string) {
 			continue
 		}
 
-		if ctx.Err() != nil {
-			return
-		}
-
-		c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
-
-		c.runChannel(ctx, liveURL, videoURL, continuation, cfg)
-
-		return
+		return &liveSession{videoURL: videoURL, continuation: continuation, cfg: cfg}, true
 	}
 }
 
@@ -234,7 +285,14 @@ func (c *Client) emitDisconnected() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cfg YtCfg, resumeOnEnd bool) bool {
+type pollResult int
+
+const (
+	pollStopped pollResult = iota
+	pollEnded
+)
+
+func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cfg YtCfg) pollResult {
 	backoff := defaultPollInterval
 	rlFailures := 0
 	failures := 0
@@ -242,14 +300,14 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 	for {
 		select {
 		case <-ctx.Done():
-			return false
+			return pollStopped
 		default:
 		}
 
 		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, c.hc, continuation, cfg)
 		if err != nil {
 			if ctx.Err() != nil {
-				return false
+				return pollStopped
 			}
 
 			var wait time.Duration
@@ -277,13 +335,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 			if needsRefresh {
 				recoverErr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
 				if errors.Is(recoverErr, ErrNotLive) {
-					if resumeOnEnd {
-						return true
-					}
-
-					c.streamEnded(ctx)
-
-					return false
+					return pollEnded
 				}
 
 				if recoverErr == nil {
@@ -298,7 +350,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			select {
 			case <-ctx.Done():
-				return false
+				return pollStopped
 			case <-time.After(wait):
 			}
 
@@ -327,7 +379,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 		select {
 		case <-ctx.Done():
-			return false
+			return pollStopped
 		case <-time.After(interval):
 		}
 	}
