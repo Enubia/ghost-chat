@@ -9,5 +9,6 @@ minimumReleaseAgeExclude:
     - typescript
     - react
     - react-dom
+    - '@wailsio/runtime'
 onlyBuiltDependencies:
     - esbuild

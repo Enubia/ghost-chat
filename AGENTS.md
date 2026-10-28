@@ -1,6 +1,6 @@
 # Ghost Chat v4
 
-Desktop chat overlay for streamers. Go + Wails v3 (alpha) + React + TypeScript. Go chat clients live in `internal/chat/{twitch,youtube,kick}`, the UI in `frontend/`, the landing page in `website/`.
+Desktop chat overlay for streamers. Go + Wails v3 + React + TypeScript. Go chat clients live in `internal/chat/{twitch,youtube,kick}`, the UI in `frontend/`, the landing page in `website/`.
 
 ## Commands
 
@@ -32,7 +32,7 @@ cd frontend && pnpm build    # tsc + vite build
 - Blank line before/after function calls, if/loops/closures, and assignments; sequential declarations or assignments may be grouped
 
 ## Wails v3 bindings
-- Go methods on `App` generate TS in `frontend/bindings/`. Regenerate with `wails3 generate bindings -ts -clean` — the project commits `.ts`; a bare `generate` emits `.js` on alpha.97+.
+- Go methods on `App` generate TS in `frontend/bindings/`. Regenerate with `wails3 generate bindings -ts -clean` — the project commits `.ts`; a bare `generate` emits `.js`.
 - Imports: methods `from '@bindings/ghost-chat/app.js'`, types `from '@bindings/ghost-chat/internal/config/models.js'`, runtime `from '@wailsio/runtime'`
 - Events: `Events.On('name', (ev) => ev.data)` — the callback gets a `WailsEvent` with `.data`
 

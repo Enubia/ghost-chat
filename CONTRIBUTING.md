@@ -17,10 +17,10 @@ Please include:
 ## Development Setup
 
 ### Prerequisites
-- Go 1.25+
+- Go 1.26+
 - Node.js 20+
 - pnpm
-- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27`
+- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0`
 - macOS: Xcode Command Line Tools
 - Windows: WebView2 (included in Windows 10/11)
 
@@ -44,10 +44,10 @@ wails3 task package       # .app bundle (macOS) or .exe (Windows)
 
 ### Wails versions and macOS troubleshooting
 
-Keep the Wails Go module, CLI and `@wailsio/runtime` compatible; this project pins beta.27 for all three. After changing Go versions, rebuild the pinned CLI with the current Go toolchain before regenerating bindings:
+Keep the Wails Go module, CLI and `@wailsio/runtime` compatible; this project pins v3.0.0 for all three. After changing Go versions, rebuild the pinned CLI with the current Go toolchain before regenerating bindings:
 
 ```bash
-go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27
+go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0
 wails3 generate bindings -ts -clean
 ```
 
