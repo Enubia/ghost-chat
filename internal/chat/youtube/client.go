@@ -28,6 +28,8 @@ const (
 	rateLimitBackoffBase    = 30 * time.Second
 	rateLimitBackoffMax     = 5 * time.Minute
 	maxFailuresBeforeReboot = 3
+	waitPollInterval        = 60 * time.Second
+	waitPollJitter          = 15 * time.Second
 )
 
 // ErrRateLimited means YouTube served its anti-bot interstitial (the /sorry page)
@@ -55,15 +57,18 @@ type Client struct {
 	ended  bool
 	hc     *http.Client
 
+	waitInterval func() time.Duration
+
 	OnMessage MessageHandler
 	OnEvent   EventHandler
 }
 
 func NewClient(onMessage MessageHandler, onEvent EventHandler) *Client {
 	return &Client{
-		hc:        httpClient,
-		OnMessage: onMessage,
-		OnEvent:   onEvent,
+		hc:           httpClient,
+		waitInterval: defaultWaitInterval,
+		OnMessage:    onMessage,
+		OnEvent:      onEvent,
 	}
 }
 
@@ -76,12 +81,33 @@ func (c *Client) Connect(input string) error {
 		c.cancel = nil
 	}
 
-	videoURL, err := ResolveVideoURL(input)
+	target, err := resolveInput(input)
 	if err != nil {
 		return fmt.Errorf("failed to resolve video URL: %w", err)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
+
+	videoURL := target.videoURL
+
+	if target.isChannel() {
+		videoURL, err = resolveLiveURL(ctx, c.hc, target.liveURL)
+		if errors.Is(err, ErrChannelOffline) {
+			c.cancel = cancel
+			c.ended = false
+
+			c.emitWaiting()
+
+			go c.waitForLive(ctx, target.liveURL)
+
+			return nil
+		}
+
+		if err != nil {
+			cancel()
+			return fmt.Errorf("failed to resolve video URL: %w", err)
+		}
+	}
 
 	continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
 	if err != nil {
@@ -94,9 +120,94 @@ func (c *Client) Connect(input string) error {
 
 	c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
 
-	go c.pollLoop(ctx, videoURL, continuation, cfg)
+	if target.isChannel() {
+		go c.runChannel(ctx, target.liveURL, videoURL, continuation, cfg)
+	} else {
+		go c.pollLoop(ctx, videoURL, continuation, cfg, false)
+	}
 
 	return nil
+}
+
+func defaultWaitInterval() time.Duration {
+	return waitPollInterval + time.Duration(rand.Int64N(int64(waitPollJitter)))
+}
+
+func (c *Client) emitWaiting() {
+	c.OnEvent("chat:waiting", map[string]string{"platform": string(chat.PlatformYouTube)})
+}
+
+func (c *Client) runChannel(ctx context.Context, liveURL, videoURL, continuation string, cfg YtCfg) {
+	if !c.pollLoop(ctx, videoURL, continuation, cfg, true) {
+		return
+	}
+
+	if ctx.Err() != nil {
+		return
+	}
+
+	logging.Platform("youtube").Info("stream ended, waiting for next stream")
+
+	c.emitWaiting()
+	c.waitForLive(ctx, liveURL)
+}
+
+func (c *Client) waitForLive(ctx context.Context, liveURL string) {
+	rlFailures := 0
+
+	for {
+		wait := c.waitInterval()
+		if rlFailures > 0 {
+			wait = max(wait, rateLimitBackoff(rlFailures))
+		}
+
+		select {
+		case <-ctx.Done():
+			return
+		case <-time.After(wait):
+		}
+
+		videoURL, err := resolveLiveURL(ctx, c.hc, liveURL)
+		if err != nil {
+			if ctx.Err() != nil {
+				return
+			}
+
+			if errors.Is(err, ErrRateLimited) {
+				rlFailures++
+				logging.Platform("youtube").Warn("rate-limited while waiting", "failures", rlFailures)
+			} else if !errors.Is(err, ErrChannelOffline) {
+				logging.Platform("youtube").Warn("live check failed", "error", err)
+			}
+
+			continue
+		}
+
+		continuation, cfg, err := fetchInitialData(ctx, c.hc, videoURL)
+		if err != nil {
+			if ctx.Err() != nil {
+				return
+			}
+
+			if errors.Is(err, ErrRateLimited) {
+				rlFailures++
+			}
+
+			logging.Platform("youtube").Warn("bootstrap failed while waiting", "error", err)
+
+			continue
+		}
+
+		if ctx.Err() != nil {
+			return
+		}
+
+		c.OnEvent("chat:connected", map[string]string{"platform": string(chat.PlatformYouTube)})
+
+		c.runChannel(ctx, liveURL, videoURL, continuation, cfg)
+
+		return
+	}
 }
 
 func (c *Client) Disconnect() {
@@ -123,7 +234,7 @@ func (c *Client) emitDisconnected() {
 	c.OnEvent("chat:disconnected", map[string]string{"platform": string(chat.PlatformYouTube)})
 }
 
-func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cfg YtCfg) {
+func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cfg YtCfg, resumeOnEnd bool) bool {
 	backoff := defaultPollInterval
 	rlFailures := 0
 	failures := 0
@@ -131,14 +242,14 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 	for {
 		select {
 		case <-ctx.Done():
-			return
+			return false
 		default:
 		}
 
 		messages, deletions, nextCont, timeoutMs, err := pollChatOnce(ctx, c.hc, continuation, cfg)
 		if err != nil {
 			if ctx.Err() != nil {
-				return
+				return false
 			}
 
 			var wait time.Duration
@@ -166,8 +277,13 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 			if needsRefresh {
 				recoverErr := c.rebootstrap(ctx, videoURL, &continuation, &cfg)
 				if errors.Is(recoverErr, ErrNotLive) {
+					if resumeOnEnd {
+						return true
+					}
+
 					c.streamEnded(ctx)
-					return
+
+					return false
 				}
 
 				if recoverErr == nil {
@@ -182,7 +298,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 			select {
 			case <-ctx.Done():
-				return
+				return false
 			case <-time.After(wait):
 			}
 
@@ -211,7 +327,7 @@ func (c *Client) pollLoop(ctx context.Context, videoURL, continuation string, cf
 
 		select {
 		case <-ctx.Done():
-			return
+			return false
 		case <-time.After(interval):
 		}
 	}
