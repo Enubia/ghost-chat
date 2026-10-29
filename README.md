@@ -87,10 +87,10 @@ Open Settings → **Report a bug** in the app. No GitHub account is needed, and 
 
 ### Prerequisites
 
-- Go 1.25+
+- Go 1.26+
 - Node.js 20+
 - pnpm
-- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27`
+- Wails v3 CLI: `go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0`
 - macOS: Xcode Command Line Tools (`xcode-select --install`)
 - Windows: WebView2 (included in Windows 10/11)
 

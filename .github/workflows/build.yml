@@ -33,7 +33,7 @@ jobs:
 
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.25"
+          go-version: "1.26"
 
       - uses: pnpm/action-setup@v5
         with:
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 24
 
-      - run: go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0-beta.27
+      - run: go install github.com/wailsapp/wails/v3/cmd/wails3@v3.0.0
 
       - run: pnpm install --frozen-lockfile
         working-directory: frontend
