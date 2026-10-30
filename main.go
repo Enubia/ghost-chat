@@ -104,6 +104,7 @@ func main() {
 		BackgroundColour: application.NewRGBA(0, 0, 0, 0),
 		Windows: application.WindowsWindow{
 			DisableFramelessWindowDecorations: true,
+			HiddenOnTaskbar:                   cfg.General.HideFromTaskbar,
 		},
 		Mac: application.MacWindow{
 			Backdrop: application.MacBackdropTransparent,
@@ -119,6 +120,7 @@ func main() {
 	menu := app.NewMenu()
 	menu.Add("Ghost Chat " + version).SetEnabled(false)
 	menu.AddSeparator()
+	menu.Add("Show/Hide").OnClick(func(_ *application.Context) { svc.ToggleWindowVisibility() })
 	menu.Add("Center on Screen").OnClick(func(_ *application.Context) { svc.CenterOnScreen() })
 	menu.Add("Toggle Vanish").OnClick(func(_ *application.Context) { svc.ToggleVanish() })
 	menu.Add("Open Config Folder").OnClick(func(_ *application.Context) { svc.OpenConfigFolder() })
@@ -126,6 +128,7 @@ func main() {
 	menu.Add("Quit").OnClick(func(_ *application.Context) { win.Close() })
 
 	tray.SetMenu(menu)
+	tray.OnClick(svc.ToggleWindowVisibility)
 
 	if err := app.Run(); err != nil {
 		slog.Error("application run failed", "error", err)

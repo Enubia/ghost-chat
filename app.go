@@ -311,6 +311,17 @@ func (a *App) centeredPosition(w, h int) (int, int) {
 	return centerInWorkArea(primary.WorkArea, w, h)
 }
 
+func (a *App) ToggleWindowVisibility() {
+	if a.window.IsVisible() {
+		a.window.Hide()
+
+		return
+	}
+
+	a.window.Show()
+	a.window.Focus()
+}
+
 func (a *App) CenterOnScreen() {
 	w, h := a.window.Size()
 	x, y := a.centeredPosition(w, h)

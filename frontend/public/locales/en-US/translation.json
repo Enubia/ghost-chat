@@ -55,6 +55,8 @@
             "press_keys": "Press a key combination...",
             "not_set": "Not set",
             "show_waiting_message": "Show Waiting Message",
+            "hide_from_taskbar": "Hide from taskbar",
+            "hide_from_taskbar_hint": "Takes effect after a restart. Also hides the window from Alt-Tab. Use the tray icon to bring it back.",
             "hotkey_hint": "Requires one of Ctrl, Alt, or Shift plus another key. E.g. Ctrl+Shift+V"
         },
         "platform": {

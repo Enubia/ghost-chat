@@ -1,4 +1,4 @@
-import { Window, Browser } from '@wailsio/runtime';
+import { Window, Browser, System } from '@wailsio/runtime';
 import { useTranslation } from 'react-i18next';
 
 import ghostSvg from '@/assets/ghost.svg';
@@ -14,6 +14,7 @@ interface TitleBarProps {
 
 export function TitleBar({ onSettingsToggle, settingsOpen, updateInfo }: TitleBarProps) {
     const { t } = useTranslation();
+    const hideFromTaskbar = useConfigStore((s) => !!s.config?.general?.hide_from_taskbar);
     const hotkeySet = useConfigStore((s) => !!s.config?.keybinds?.vanish?.keybind);
 
     return (
@@ -62,7 +63,9 @@ export function TitleBar({ onSettingsToggle, settingsOpen, updateInfo }: TitleBa
                 </button>
                 <button
                     className={styles.controlBtn}
-                    onClick={() => Window.Minimise()}
+                    onClick={() =>
+                        hideFromTaskbar && System.IsWindows() ? void Window.Hide() : void Window.Minimise()
+                    }
                     title={t('titlebar.minimize')}
                 >
                     <svg

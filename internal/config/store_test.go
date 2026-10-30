@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -104,5 +105,44 @@ func TestLoadRecoversFromInvalidJSON(t *testing.T) {
 
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
 		t.Errorf("Expected corrupted file at %s to be removed, but it still exists", path)
+	}
+}
+
+func TestHideFromTaskbarDefaultsToFalse(t *testing.T) {
+	cfg := DefaultConfig()
+
+	if cfg.General.HideFromTaskbar {
+		t.Error("hide from taskbar should default to false")
+	}
+}
+
+func TestHideFromTaskbarRoundTrip(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "ghost-chat", "config.json")
+
+	cfg := DefaultConfig()
+	cfg.General.HideFromTaskbar = true
+
+	if err := Save(&cfg, path); err != nil {
+		t.Fatal(err)
+	}
+
+	raw, err := os.ReadFile(path)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !strings.Contains(string(raw), `"hide_from_taskbar": true`) {
+		t.Errorf("expected hide_from_taskbar key in saved json, got %s", raw)
+	}
+
+	loaded, err := Load(path)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !loaded.General.HideFromTaskbar {
+		t.Error("hide from taskbar did not survive round trip")
 	}
 }
