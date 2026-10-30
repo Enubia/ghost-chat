@@ -2,33 +2,18 @@ package main
 
 import (
 	"errors"
-	"sort"
 	"testing"
 
 	"ghost-chat/internal/chat"
 	"ghost-chat/internal/config"
 )
 
-type failingClient struct {
-	fakeClient
-	err error
-}
-
-func (f *failingClient) Connect(input string) error {
-	f.mu.Lock()
-	defer f.mu.Unlock()
-
-	f.calls = append(f.calls, "connect:"+input)
-
-	return f.err
-}
-
-func newAutoConnectApp(cfg *config.Config) (*App, map[chat.Platform]*fakeClient, *failingClient) {
+func newAutoConnectApp(cfg *config.Config) (*App, map[chat.Platform]*fakeClient, *fakeClient) {
 	a := NewApp(cfg, "", "test")
 
 	twitchClient := &fakeClient{}
 	kickClient := &fakeClient{}
-	youtubeClient := &failingClient{err: errors.New("channel not found")}
+	youtubeClient := &fakeClient{err: errors.New("channel not found")}
 
 	a.clients = map[chat.Platform]chat.Client{
 		chat.PlatformTwitch:  twitchClient,
@@ -89,8 +74,6 @@ func TestAutoConnectReportsErrorsPerPlatform(t *testing.T) {
 		t.Fatalf("results = %+v, want 3", results)
 	}
 
-	sort.Slice(results, func(i, j int) bool { return results[i].Platform < results[j].Platform })
-
 	byPlatform := map[chat.Platform]string{}
 
 	for _, r := range results {
@@ -145,5 +128,25 @@ func TestAutoConnectTwitchSetsRedemptionChannel(t *testing.T) {
 
 	if a.twitchChannel != "streamer" {
 		t.Errorf("twitchChannel = %q, want streamer", a.twitchChannel)
+	}
+}
+
+func TestAutoConnectSkipsWhitespaceOnlyDefaults(t *testing.T) {
+	cfg := &config.Config{}
+	cfg.Twitch.ConnectOnStartup = true
+	cfg.Twitch.DefaultChannel = "   "
+	cfg.Kick.ConnectOnStartup = true
+	cfg.Kick.DefaultChannel = "	"
+	cfg.YouTube.ConnectOnStartup = true
+	cfg.YouTube.ChannelID = " "
+
+	a, fakes, yt := newAutoConnectApp(cfg)
+
+	if results := a.AutoConnect(); len(results) != 0 {
+		t.Fatalf("results = %+v, want none", results)
+	}
+
+	if len(fakes[chat.PlatformTwitch].calls) != 0 || len(fakes[chat.PlatformKick].calls) != 0 || len(yt.calls) != 0 {
+		t.Errorf("no platform should connect")
 	}
 }

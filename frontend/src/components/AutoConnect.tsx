@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useConnectionStore } from '@/stores/connection';
 
-const labelKeys: Record<Platform, string> = {
-    [Platform.$zero]: 'home.twitch',
+const labelKeys: Partial<Record<Platform, string>> = {
     [Platform.PlatformTwitch]: 'home.twitch',
     [Platform.PlatformYouTube]: 'home.youtube',
     [Platform.PlatformKick]: 'home.kick',
@@ -20,7 +19,7 @@ export function AutoConnect() {
     useEffect(() => {
         void runAutoConnect()
             .then((results) => {
-                const label = (platform: Platform) => t(labelKeys[platform]);
+                const label = (platform: Platform) => (labelKeys[platform] ? t(labelKeys[platform]) : String(platform));
                 const anyConnected = useConnectionStore.getState().applyAutoConnectResults(results, label);
 
                 if (anyConnected) {

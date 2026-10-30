@@ -13,15 +13,21 @@ type fakeClient struct {
 	lastInput string
 	calls     []string
 	onMessage func(chat.ChatMessage)
+	err       error
 }
 
 func (f *fakeClient) Connect(input string) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
-	f.connected = true
 	f.lastInput = input
 	f.calls = append(f.calls, "connect:"+input)
+
+	if f.err != nil {
+		return f.err
+	}
+
+	f.connected = true
 
 	return nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"sync"
 
 	"ghost-chat/internal/chat"
@@ -24,16 +25,22 @@ func (a *App) AutoConnect() []AutoConnectResult {
 
 	targets := map[chat.Platform]string{}
 
-	if a.config.Twitch.ConnectOnStartup && a.config.Twitch.DefaultChannel != "" {
-		targets[chat.PlatformTwitch] = a.config.Twitch.DefaultChannel
+	if a.config.Twitch.ConnectOnStartup {
+		if v := strings.TrimSpace(a.config.Twitch.DefaultChannel); v != "" {
+			targets[chat.PlatformTwitch] = v
+		}
 	}
 
-	if a.config.YouTube.ConnectOnStartup && a.config.YouTube.ChannelID != "" {
-		targets[chat.PlatformYouTube] = a.config.YouTube.ChannelID
+	if a.config.YouTube.ConnectOnStartup {
+		if v := strings.TrimSpace(a.config.YouTube.ChannelID); v != "" {
+			targets[chat.PlatformYouTube] = v
+		}
 	}
 
-	if a.config.Kick.ConnectOnStartup && a.config.Kick.DefaultChannel != "" {
-		targets[chat.PlatformKick] = a.config.Kick.DefaultChannel
+	if a.config.Kick.ConnectOnStartup {
+		if v := strings.TrimSpace(a.config.Kick.DefaultChannel); v != "" {
+			targets[chat.PlatformKick] = v
+		}
 	}
 
 	a.configMu.Unlock()
