@@ -60,18 +60,22 @@ export function TwitchSettings() {
             )}
 
             {loggedIn && (
-                <div className="field-row">
-                    <span className="field-label">{t('settings.twitch.connected_as', { login })}</span>
-                    <button
-                        className="btn btn-ghost"
-                        onClick={() => void TwitchLogout()}
-                    >
-                        {t('settings.twitch.logout')}
-                    </button>
+                <div className="field">
+                    <div className="field-row">
+                        <span className="field-label">{t('settings.twitch.connected_as', { login })}</span>
+                        <button
+                            className="btn btn-ghost"
+                            onClick={() => void TwitchLogout()}
+                        >
+                            {t('settings.twitch.logout')}
+                        </button>
+                    </div>
+                    <span className="field-hint">{t('settings.twitch.connected_hint')}</span>
                 </div>
             )}
 
             <ChannelField
+                key={twitch?.default_channel ?? ''}
                 initialValue={twitch?.default_channel ?? ''}
                 labelKey="settings.platform.default_channel"
                 placeholderKey="settings.platform.default_channel"

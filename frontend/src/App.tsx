@@ -81,6 +81,7 @@ function App() {
         const cancelSuccess = Events.On('twitch:auth:success', (ev) => {
             const { login } = ev.data as { login: string };
             setAuthConnected(login);
+            void useConfigStore.getState().load();
         });
 
         const cancelError = Events.On('twitch:auth:error', (ev) => {

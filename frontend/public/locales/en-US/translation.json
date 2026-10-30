@@ -71,6 +71,7 @@
             "pending_instruction": "Enter this code on Twitch to authorize Ghost Chat:",
             "open_twitch": "Open Twitch",
             "connected_as": "Connected as {{login}}",
+            "connected_hint": "The channel to read chat from is set under Default Channel below.",
             "logout": "Log out",
             "bots": "Show Bots",
             "hide_commands": "Hide Commands",
