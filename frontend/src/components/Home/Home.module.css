@@ -71,6 +71,7 @@
 
 .error {
     width: 100%;
+    white-space: pre-line;
     padding: 8px 12px;
     font-size: 12px;
     color: var(--color-danger);

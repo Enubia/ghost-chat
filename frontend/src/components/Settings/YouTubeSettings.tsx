@@ -10,6 +10,7 @@ import { useConfigStore } from '@/stores/config';
 
 import { BlacklistField } from './fields/BlacklistField';
 import { ChannelField } from './fields/ChannelField';
+import { ConnectOnStartupField } from './fields/ConnectOnStartupField';
 import { FadeControls } from './fields/FadeControls';
 
 export function YouTubeSettings() {
@@ -77,6 +78,12 @@ export function YouTubeSettings() {
                     {resolving ? t('settings.youtube.detecting') : t('settings.youtube.detect')}
                 </button>
             </ChannelField>
+
+            <ConnectOnStartupField
+                checked={yt?.connect_on_startup ?? false}
+                channel={yt?.channel_id ?? ''}
+                onChange={(v) => set({ connect_on_startup: v })}
+            />
 
             <FadeControls
                 fade={yt?.fade ?? false}

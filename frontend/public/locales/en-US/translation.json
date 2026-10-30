@@ -61,6 +61,8 @@
         },
         "platform": {
             "default_channel": "Default Channel",
+            "connect_on_startup": "Connect on startup",
+            "connect_on_startup_hint": "Set a channel above to enable.",
             "fade": "Fade Messages",
             "fade_timeout": "Fade Timeout (seconds)",
             "user_blacklist": "User Blacklist",

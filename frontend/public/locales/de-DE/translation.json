@@ -61,6 +61,8 @@
         },
         "platform": {
             "default_channel": "Standardkanal",
+            "connect_on_startup": "Beim Start verbinden",
+            "connect_on_startup_hint": "Lege oben einen Kanal fest, um dies zu aktivieren.",
             "fade": "Nachrichten ausblenden",
             "fade_timeout": "Ausblenden nach (Sekunden)",
             "user_blacklist": "Benutzer-Sperrliste",
