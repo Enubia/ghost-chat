@@ -128,7 +128,10 @@ func main() {
 	menu.Add("Quit").OnClick(func(_ *application.Context) { win.Close() })
 
 	tray.SetMenu(menu)
-	tray.OnClick(svc.ToggleWindowVisibility)
+
+	if runtime.GOOS == "windows" {
+		tray.OnClick(svc.ToggleWindowVisibility)
+	}
 
 	if err := app.Run(); err != nil {
 		slog.Error("application run failed", "error", err)

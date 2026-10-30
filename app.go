@@ -311,15 +311,40 @@ func (a *App) centeredPosition(w, h int) (int, int) {
 	return centerInWorkArea(primary.WorkArea, w, h)
 }
 
-func (a *App) ToggleWindowVisibility() {
-	if a.window.IsVisible() {
-		a.window.Hide()
+type toggleableWindow interface {
+	IsVisible() bool
+	IsMinimised() bool
+	Hide()
+	Show()
+	UnMinimise()
+	Focus()
+}
+
+type webviewToggleWindow struct {
+	*application.WebviewWindow
+}
+
+func (w webviewToggleWindow) Hide() { w.WebviewWindow.Hide() }
+func (w webviewToggleWindow) Show() { w.WebviewWindow.Show() }
+
+func toggleWindow(w toggleableWindow) {
+	if w.IsVisible() && !w.IsMinimised() {
+		w.Hide()
 
 		return
 	}
 
-	a.window.Show()
-	a.window.Focus()
+	w.Show()
+
+	if w.IsMinimised() {
+		w.UnMinimise()
+	}
+
+	w.Focus()
+}
+
+func (a *App) ToggleWindowVisibility() {
+	toggleWindow(webviewToggleWindow{a.window})
 }
 
 func (a *App) CenterOnScreen() {
