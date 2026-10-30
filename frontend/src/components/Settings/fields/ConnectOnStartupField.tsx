@@ -18,7 +18,7 @@ export function ConnectOnStartupField({ checked, channel, onChange }: ConnectOnS
                 <label className="field-label">{t('settings.platform.connect_on_startup')}</label>
                 <Toggle
                     checked={checked}
-                    disabled={!hasChannel}
+                    disabled={!hasChannel && !checked}
                     onChange={onChange}
                 />
             </div>
