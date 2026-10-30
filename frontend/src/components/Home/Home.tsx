@@ -16,8 +16,7 @@ export function Home() {
     const config = useConfigStore((s) => s.config);
     const update = useConfigStore((s) => s.update);
 
-    const { connected, waiting, inputs, setInput } = useConnectionStore();
-    const [error, setError] = useState<string | null>(null);
+    const { connected, waiting, inputs, error, setInput, setError } = useConnectionStore();
     const [connecting, setConnecting] = useState<Platform | null>(null);
     const [sourceURL, setSourceURL] = useState(config?.custom_source?.url ?? '');
 

@@ -35,31 +35,34 @@ type TwitchAccount struct {
 }
 
 type TwitchConfig struct {
-	DefaultChannel string        `json:"default_channel"`
-	Fade           bool          `json:"fade"`
-	FadeTimeout    int           `json:"fade_timeout"`
-	Bots           bool          `json:"bots"`
-	HideCommands   bool          `json:"hide_commands"`
-	HideBadges     bool          `json:"hide_badges"`
-	HideGifs       bool          `json:"hide_gifs"`
-	UserBlacklist  []string      `json:"user_blacklist"`
-	Events         TwitchEvents  `json:"events"`
-	Account        TwitchAccount `json:"account"`
+	DefaultChannel   string        `json:"default_channel"`
+	ConnectOnStartup bool          `json:"connect_on_startup"`
+	Fade             bool          `json:"fade"`
+	FadeTimeout      int           `json:"fade_timeout"`
+	Bots             bool          `json:"bots"`
+	HideCommands     bool          `json:"hide_commands"`
+	HideBadges       bool          `json:"hide_badges"`
+	HideGifs         bool          `json:"hide_gifs"`
+	UserBlacklist    []string      `json:"user_blacklist"`
+	Events           TwitchEvents  `json:"events"`
+	Account          TwitchAccount `json:"account"`
 }
 
 type YouTubeConfig struct {
-	ChannelID     string   `json:"channel_id"`
-	VideoURL      string   `json:"video_url"`
-	Fade          bool     `json:"fade"`
-	FadeTimeout   int      `json:"fade_timeout"`
-	UserBlacklist []string `json:"user_blacklist"`
+	ChannelID        string   `json:"channel_id"`
+	ConnectOnStartup bool     `json:"connect_on_startup"`
+	VideoURL         string   `json:"video_url"`
+	Fade             bool     `json:"fade"`
+	FadeTimeout      int      `json:"fade_timeout"`
+	UserBlacklist    []string `json:"user_blacklist"`
 }
 
 type KickConfig struct {
-	DefaultChannel string   `json:"default_channel"`
-	Fade           bool     `json:"fade"`
-	FadeTimeout    int      `json:"fade_timeout"`
-	UserBlacklist  []string `json:"user_blacklist"`
+	DefaultChannel   string   `json:"default_channel"`
+	ConnectOnStartup bool     `json:"connect_on_startup"`
+	Fade             bool     `json:"fade"`
+	FadeTimeout      int      `json:"fade_timeout"`
+	UserBlacklist    []string `json:"user_blacklist"`
 }
 
 type Theme struct {

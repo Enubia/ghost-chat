@@ -7,5 +7,6 @@ export {
 };
 
 export {
+    AutoConnectResult,
     TwitchAuthStatus
 } from "./models.js";

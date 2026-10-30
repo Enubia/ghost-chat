@@ -22,6 +22,12 @@ import * as application$0 from "../github.com/wailsapp/wails/v3/pkg/application/
 // @ts-ignore: Unused imports
 import * as $models from "./models.js";
 
+export function AutoConnect(): $CancellablePromise<$models.AutoConnectResult[]> {
+    return $Call.ByID(1151107900).then(($result: any) => {
+        return $$createType1($result);
+    });
+}
+
 export function CenterOnScreen(): $CancellablePromise<void> {
     return $Call.ByID(4082082385);
 }
@@ -44,7 +50,7 @@ export function ExportTheme(filename: string, content: string): $CancellableProm
 
 export function GetConfig(): $CancellablePromise<config$0.Config | null> {
     return $Call.ByID(1200034045).then(($result: any) => {
-        return $$createType1($result);
+        return $$createType3($result);
     });
 }
 
@@ -54,7 +60,7 @@ export function OpenConfigFolder(): $CancellablePromise<void> {
 
 export function PreviewDiagnostics(): $CancellablePromise<bugreport$0.Diagnostics> {
     return $Call.ByID(2915962677).then(($result: any) => {
-        return $$createType2($result);
+        return $$createType4($result);
     });
 }
 
@@ -76,7 +82,7 @@ export function ShrinkToChat(): $CancellablePromise<void> {
 
 export function SubmitBugReport(report: bugreport$0.Input): $CancellablePromise<bugreport$0.Result> {
     return $Call.ByID(1258695203, report).then(($result: any) => {
-        return $$createType3($result);
+        return $$createType5($result);
     });
 }
 
@@ -90,7 +96,7 @@ export function ToggleWindowVisibility(): $CancellablePromise<void> {
 
 export function TwitchAuthStatus(): $CancellablePromise<$models.TwitchAuthStatus> {
     return $Call.ByID(2272043130).then(($result: any) => {
-        return $$createType4($result);
+        return $$createType6($result);
     });
 }
 
@@ -107,8 +113,10 @@ export function UpdateConfig(cfg: config$0.Config | null): $CancellablePromise<v
 }
 
 // Private type creation functions
-const $$createType0 = config$0.Config.createFrom;
-const $$createType1 = $Create.Nullable($$createType0);
-const $$createType2 = bugreport$0.Diagnostics.createFrom;
-const $$createType3 = bugreport$0.Result.createFrom;
-const $$createType4 = $models.TwitchAuthStatus.createFrom;
+const $$createType0 = $models.AutoConnectResult.createFrom;
+const $$createType1 = $Create.Array($$createType0);
+const $$createType2 = config$0.Config.createFrom;
+const $$createType3 = $Create.Nullable($$createType2);
+const $$createType4 = bugreport$0.Diagnostics.createFrom;
+const $$createType5 = bugreport$0.Result.createFrom;
+const $$createType6 = $models.TwitchAuthStatus.createFrom;

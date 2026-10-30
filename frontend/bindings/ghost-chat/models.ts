@@ -5,6 +5,35 @@
 // @ts-ignore: Unused imports
 import { Create as $Create } from "@wailsio/runtime";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
+import * as chat$0 from "./internal/chat/models.js";
+
+export class AutoConnectResult {
+    "platform": chat$0.Platform;
+    "error": string;
+
+    /** Creates a new AutoConnectResult instance. */
+    constructor($$source: Partial<AutoConnectResult> = {}) {
+        if (!("platform" in $$source)) {
+            this["platform"] = chat$0.Platform.$zero;
+        }
+        if (!("error" in $$source)) {
+            this["error"] = "";
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new AutoConnectResult instance from a string or object.
+     */
+    static createFrom($$source: any = {}): AutoConnectResult {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new AutoConnectResult($$parsedSource as Partial<AutoConnectResult>);
+    }
+}
+
 export class TwitchAuthStatus {
     "loggedIn": boolean;
     "login": string;

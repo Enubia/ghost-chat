@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
+import { AutoConnect } from '@/components/AutoConnect';
 import { Chat } from '@/components/Chat/Chat';
 import { CustomSource } from '@/components/CustomSource/CustomSource';
 import { Home } from '@/components/Home/Home';
@@ -141,6 +142,7 @@ function App() {
 
     return (
         <HashRouter>
+            <AutoConnect />
             <div
                 className={`${styles.app} ${settingsOpen ? styles.withSettings : ''} ${vanished ? styles.vanished : ''}`}
                 data-vanished={vanished || undefined}

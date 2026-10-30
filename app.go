@@ -43,6 +43,7 @@ type App struct {
 	lastX, lastY     int
 	lastW, lastH     int
 	platforms        bugreport.PlatformTracker
+	autoConnectOnce  sync.Once
 }
 
 func NewApp(cfg *config.Config, configPath string, version string) *App {

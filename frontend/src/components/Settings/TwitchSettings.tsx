@@ -13,6 +13,7 @@ import { validateTwitchChannel } from '@/utils/validate';
 
 import { BlacklistField } from './fields/BlacklistField';
 import { ChannelField } from './fields/ChannelField';
+import { ConnectOnStartupField } from './fields/ConnectOnStartupField';
 import { FadeControls } from './fields/FadeControls';
 
 export function TwitchSettings() {
@@ -82,6 +83,12 @@ export function TwitchSettings() {
                 onSave={(v) => set({ default_channel: v })}
                 normalize={(v) => v.toLowerCase()}
                 validator={validateTwitchChannel}
+            />
+
+            <ConnectOnStartupField
+                checked={twitch?.connect_on_startup ?? false}
+                channel={twitch?.default_channel ?? ''}
+                onChange={(v) => set({ connect_on_startup: v })}
             />
 
             <FadeControls
