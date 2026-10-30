@@ -178,6 +178,7 @@ export class Keybinds {
 
 export class KickConfig {
     "default_channel": string;
+    "connect_on_startup": boolean;
     "fade": boolean;
     "fade_timeout": number;
     "user_blacklist": string[];
@@ -186,6 +187,9 @@ export class KickConfig {
     constructor($$source: Partial<KickConfig> = {}) {
         if (!("default_channel" in $$source)) {
             this["default_channel"] = "";
+        }
+        if (!("connect_on_startup" in $$source)) {
+            this["connect_on_startup"] = false;
         }
         if (!("fade" in $$source)) {
             this["fade"] = false;
@@ -204,10 +208,10 @@ export class KickConfig {
      * Creates a new KickConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): KickConfig {
-        const $$createField3_0 = $$createType9;
+        const $$createField4_0 = $$createType9;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
-            $$parsedSource["user_blacklist"] = $$createField3_0($$parsedSource["user_blacklist"]);
+            $$parsedSource["user_blacklist"] = $$createField4_0($$parsedSource["user_blacklist"]);
         }
         return new KickConfig($$parsedSource as Partial<KickConfig>);
     }
@@ -370,6 +374,7 @@ export class TwitchAccount {
 
 export class TwitchConfig {
     "default_channel": string;
+    "connect_on_startup": boolean;
     "fade": boolean;
     "fade_timeout": number;
     "bots": boolean;
@@ -384,6 +389,9 @@ export class TwitchConfig {
     constructor($$source: Partial<TwitchConfig> = {}) {
         if (!("default_channel" in $$source)) {
             this["default_channel"] = "";
+        }
+        if (!("connect_on_startup" in $$source)) {
+            this["connect_on_startup"] = false;
         }
         if (!("fade" in $$source)) {
             this["fade"] = false;
@@ -420,18 +428,18 @@ export class TwitchConfig {
      * Creates a new TwitchConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): TwitchConfig {
-        const $$createField7_0 = $$createType9;
-        const $$createField8_0 = $$createType12;
-        const $$createField9_0 = $$createType13;
+        const $$createField8_0 = $$createType9;
+        const $$createField9_0 = $$createType12;
+        const $$createField10_0 = $$createType13;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
-            $$parsedSource["user_blacklist"] = $$createField7_0($$parsedSource["user_blacklist"]);
+            $$parsedSource["user_blacklist"] = $$createField8_0($$parsedSource["user_blacklist"]);
         }
         if ("events" in $$parsedSource) {
-            $$parsedSource["events"] = $$createField8_0($$parsedSource["events"]);
+            $$parsedSource["events"] = $$createField9_0($$parsedSource["events"]);
         }
         if ("account" in $$parsedSource) {
-            $$parsedSource["account"] = $$createField9_0($$parsedSource["account"]);
+            $$parsedSource["account"] = $$createField10_0($$parsedSource["account"]);
         }
         return new TwitchConfig($$parsedSource as Partial<TwitchConfig>);
     }
@@ -533,6 +541,7 @@ export class WindowState {
 
 export class YouTubeConfig {
     "channel_id": string;
+    "connect_on_startup": boolean;
     "video_url": string;
     "fade": boolean;
     "fade_timeout": number;
@@ -542,6 +551,9 @@ export class YouTubeConfig {
     constructor($$source: Partial<YouTubeConfig> = {}) {
         if (!("channel_id" in $$source)) {
             this["channel_id"] = "";
+        }
+        if (!("connect_on_startup" in $$source)) {
+            this["connect_on_startup"] = false;
         }
         if (!("video_url" in $$source)) {
             this["video_url"] = "";
@@ -563,10 +575,10 @@ export class YouTubeConfig {
      * Creates a new YouTubeConfig instance from a string or object.
      */
     static createFrom($$source: any = {}): YouTubeConfig {
-        const $$createField4_0 = $$createType9;
+        const $$createField5_0 = $$createType9;
         let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
         if ("user_blacklist" in $$parsedSource) {
-            $$parsedSource["user_blacklist"] = $$createField4_0($$parsedSource["user_blacklist"]);
+            $$parsedSource["user_blacklist"] = $$createField5_0($$parsedSource["user_blacklist"]);
         }
         return new YouTubeConfig($$parsedSource as Partial<YouTubeConfig>);
     }
