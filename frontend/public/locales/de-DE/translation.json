@@ -71,6 +71,7 @@
             "pending_instruction": "Gib diesen Code auf Twitch ein, um Ghost Chat zu autorisieren:",
             "open_twitch": "Twitch öffnen",
             "connected_as": "Verbunden als {{login}}",
+            "connected_hint": "Der Kanal, dessen Chat gelesen wird, wird unten unter Standardkanal festgelegt.",
             "logout": "Abmelden",
             "bots": "Bots anzeigen",
             "hide_commands": "Befehle ausblenden",

@@ -291,3 +291,103 @@ func TestTwitchStartLoginIgnoresConcurrentStart(t *testing.T) {
 		t.Fatal("login did not complete")
 	}
 }
+
+func TestPersistTwitchLoginFillsEmptyDefaultChannel(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "config.json")
+
+	a := NewApp(&config.Config{}, path, "test")
+
+	if err := a.persistTwitchLogin("streamer"); err != nil {
+		t.Fatalf("persistTwitchLogin: %v", err)
+	}
+
+	if got := a.config.Twitch.DefaultChannel; got != "streamer" {
+		t.Errorf("default channel = %q, want %q", got, "streamer")
+	}
+
+	saved, err := config.Load(path)
+
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+
+	if got := saved.Twitch.DefaultChannel; got != "streamer" {
+		t.Errorf("saved default channel = %q, want %q", got, "streamer")
+	}
+}
+
+func TestPersistTwitchLoginKeepsExistingDefaultChannel(t *testing.T) {
+	cfg := &config.Config{}
+	cfg.Twitch.DefaultChannel = "otherchannel"
+
+	a := NewApp(cfg, filepath.Join(t.TempDir(), "config.json"), "test")
+
+	if err := a.persistTwitchLogin("streamer"); err != nil {
+		t.Fatalf("persistTwitchLogin: %v", err)
+	}
+
+	if got := a.config.Twitch.DefaultChannel; got != "otherchannel" {
+		t.Errorf("default channel = %q, want %q", got, "otherchannel")
+	}
+}
+
+func TestPersistTwitchLoginUnchangedLoginKeepsEmptyDefaultChannel(t *testing.T) {
+	cfg := &config.Config{}
+	cfg.Twitch.Account.Login = "streamer"
+
+	a := NewApp(cfg, filepath.Join(t.TempDir(), "config.json"), "test")
+
+	if err := a.persistTwitchLogin("streamer"); err != nil {
+		t.Fatalf("persistTwitchLogin: %v", err)
+	}
+
+	if got := a.config.Twitch.DefaultChannel; got != "" {
+		t.Errorf("default channel = %q, want empty", got)
+	}
+}
+
+func TestTwitchLogoutKeepsDefaultChannel(t *testing.T) {
+	keyring.MockInit()
+
+	cfg := &config.Config{}
+	cfg.Twitch.Account.Login = "streamer"
+	cfg.Twitch.DefaultChannel = "streamer"
+
+	a := NewApp(cfg, filepath.Join(t.TempDir(), "config.json"), "test")
+
+	a.emit = func(string, any) {}
+
+	if err := a.TwitchLogout(); err != nil {
+		t.Fatalf("TwitchLogout: %v", err)
+	}
+
+	if got := a.config.Twitch.Account.Login; got != "" {
+		t.Errorf("login = %q, want empty", got)
+	}
+
+	if got := a.config.Twitch.DefaultChannel; got != "streamer" {
+		t.Errorf("default channel = %q, want %q", got, "streamer")
+	}
+}
+
+func TestRedemptionAuthLossKeepsDefaultChannel(t *testing.T) {
+	keyring.MockInit()
+
+	cfg := &config.Config{}
+	cfg.Twitch.Account.Login = "streamer"
+	cfg.Twitch.DefaultChannel = "streamer"
+
+	a := NewApp(cfg, filepath.Join(t.TempDir(), "config.json"), "test")
+
+	a.emit = func(string, any) {}
+
+	a.handleRedemptionAuthLost()
+
+	if got := a.config.Twitch.Account.Login; got != "" {
+		t.Errorf("login = %q, want empty", got)
+	}
+
+	if got := a.config.Twitch.DefaultChannel; got != "streamer" {
+		t.Errorf("default channel = %q, want %q", got, "streamer")
+	}
+}

@@ -39,6 +39,10 @@ func (a *App) persistTwitchLogin(login string) error {
 
 	a.config.Twitch.Account.Login = login
 
+	if login != "" && a.config.Twitch.DefaultChannel == "" {
+		a.config.Twitch.DefaultChannel = login
+	}
+
 	return config.Save(a.config, a.configPath)
 }
 
