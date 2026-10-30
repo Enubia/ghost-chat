@@ -122,6 +122,7 @@ export class General {
     "language": string;
     "show_timestamps": boolean;
     "show_waiting_message": boolean;
+    "hide_from_taskbar": boolean;
 
     /** Creates a new General instance. */
     constructor($$source: Partial<General> = {}) {
@@ -133,6 +134,9 @@ export class General {
         }
         if (!("show_waiting_message" in $$source)) {
             this["show_waiting_message"] = false;
+        }
+        if (!("hide_from_taskbar" in $$source)) {
+            this["hide_from_taskbar"] = false;
         }
 
         Object.assign(this, $$source);

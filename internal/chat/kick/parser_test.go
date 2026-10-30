@@ -99,7 +99,6 @@ func TestParseContent_EmoteAtStart(t *testing.T) {
 	}
 }
 
-
 func TestParseTimestamp(t *testing.T) {
 	ts := parseTimestamp("2025-01-14T16:08:06Z")
 	want := time.Date(2025, 1, 14, 16, 8, 6, 0, time.UTC)

@@ -84,6 +84,10 @@ export function ToggleVanish(): $CancellablePromise<void> {
     return $Call.ByID(1605625794);
 }
 
+export function ToggleWindowVisibility(): $CancellablePromise<void> {
+    return $Call.ByID(2241336245);
+}
+
 export function TwitchAuthStatus(): $CancellablePromise<$models.TwitchAuthStatus> {
     return $Call.ByID(2272043130).then(($result: any) => {
         return $$createType4($result);

@@ -1,3 +1,4 @@
+import { System } from '@wailsio/runtime';
 import { useTranslation } from 'react-i18next';
 
 import { Toggle } from '@/components/Toggle';
@@ -54,6 +55,19 @@ export function GeneralSettings() {
                     onChange={(v) => void update({ general: { show_waiting_message: v } })}
                 />
             </div>
+
+            {System.IsWindows() && (
+                <div className="field">
+                    <div className="field-row">
+                        <label className="field-label">{t('settings.general.hide_from_taskbar')}</label>
+                        <Toggle
+                            checked={config?.general?.hide_from_taskbar ?? false}
+                            onChange={(v) => void update({ general: { hide_from_taskbar: v } })}
+                        />
+                    </div>
+                    <span className="field-hint">{t('settings.general.hide_from_taskbar_hint')}</span>
+                </div>
+            )}
 
             <div className="field">
                 <label className="field-label">{t('settings.general.vanish_hotkey')}</label>

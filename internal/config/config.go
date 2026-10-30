@@ -11,6 +11,7 @@ type General struct {
 	Language           string `json:"language"` // default "en-US"
 	ShowTimestamps     bool   `json:"show_timestamps"`
 	ShowWaitingMessage bool   `json:"show_waiting_message"`
+	HideFromTaskbar    bool   `json:"hide_from_taskbar"`
 }
 
 type VanishKeybind struct {

@@ -55,6 +55,8 @@
             "press_keys": "Tastenkombination drücken...",
             "not_set": "Nicht gesetzt",
             "show_waiting_message": "Wartenachricht anzeigen",
+            "hide_from_taskbar": "Aus der Taskleiste ausblenden",
+            "hide_from_taskbar_hint": "Wird nach einem Neustart wirksam. Blendet das Fenster auch in Alt-Tab aus. Über das Tray-Symbol wieder einblenden.",
             "hotkey_hint": "Erfordert Strg, Alt oder Shift plus eine weitere Taste. Z.B. Strg+Shift+V"
         },
         "platform": {
