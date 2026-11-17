@@ -53,17 +53,38 @@ func TestParseLivePage(t *testing.T) {
 }
 
 func TestResolveInputKinds(t *testing.T) {
-	for _, in := range []string{"@MrBeast", "UCX6OQ3DkcsbYNE6H8uQQuVA", "https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA", "youtube.com/@x/live"} {
+	for _, in := range []string{
+		"@MrBeast",
+		"UCX6OQ3DkcsbYNE6H8uQQuVA",
+		"https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA",
+		"youtube.com/@x/live",
+		"https://m.youtube.com/@x",
+	} {
 		r, err := resolveInput(in)
 		if err != nil || !r.isChannel() {
 			t.Errorf("%q: got %+v, %v; want channel", in, r, err)
 		}
 	}
 
-	for _, in := range []string{"https://www.youtube.com/watch?v=abc", "https://youtu.be/abc"} {
+	for _, in := range []string{
+		"https://www.youtube.com/watch?v=abc",
+		"https://youtu.be/abc",
+		"https://www.youtube.com/live/abc",
+		"https://youtube.com/live/abc?si=share",
+		"https://m.youtube.com/watch?v=abc",
+		"m.youtube.com/live/abc",
+		"https://www.youtube.com/live/abc/",
+	} {
 		r, err := resolveInput(in)
 		if err != nil || r.isChannel() || r.videoURL != "https://www.youtube.com/watch?v=abc" {
 			t.Errorf("%q: got %+v, %v; want video", in, r, err)
 		}
+	}
+}
+
+func TestResolveInputTrailingSlash(t *testing.T) {
+	r, err := resolveInput("https://www.youtube.com/@x/")
+	if err != nil || r.liveURL != "https://www.youtube.com/@x/live" {
+		t.Errorf("got %+v, %v; want https://www.youtube.com/@x/live", r, err)
 	}
 }

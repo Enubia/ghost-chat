@@ -20,17 +20,21 @@ export function Home() {
     const [connecting, setConnecting] = useState<Platform | null>(null);
     const [sourceURL, setSourceURL] = useState(config?.custom_source?.url ?? '');
 
-    const getInput = (platform: Platform): string => {
-        if (platform === Platform.PlatformTwitch) {
-            return inputs[platform] || (config?.twitch?.default_channel ?? '');
-        }
-
-        if (platform === Platform.PlatformYouTube) {
-            return inputs[platform] || (config?.youtube?.channel_id ?? '');
-        }
-
-        return inputs[platform] || (config?.kick?.default_channel ?? '');
+    const savedChannels: Record<Platform, string> = {
+        [Platform.$zero]: '',
+        [Platform.PlatformTwitch]: config?.twitch?.default_channel ?? '',
+        [Platform.PlatformYouTube]: config?.youtube?.channel_id ?? '',
+        [Platform.PlatformKick]: config?.kick?.default_channel ?? '',
     };
+
+    const getInput = (platform: Platform): string => {
+        const saved = savedChannels[platform];
+        const draft = inputs[platform];
+
+        return draft?.saved === saved ? draft.text : saved;
+    };
+
+    const handleInput = (platform: Platform, text: string) => setInput(platform, text, savedChannels[platform]);
 
     const isActive = (platform: Platform) => Boolean(connected[platform] || waiting[platform]);
 
@@ -82,7 +86,7 @@ export function Home() {
                         type="text"
                         placeholder={t('home.placeholder.channel')}
                         value={getInput(Platform.PlatformTwitch)}
-                        onChange={(e) => setInput(Platform.PlatformTwitch, e.target.value)}
+                        onChange={(e) => handleInput(Platform.PlatformTwitch, e.target.value)}
                     />
                     <button
                         className={`btn ${connected[Platform.PlatformTwitch] ? 'btn-danger' : 'btn-primary'}`}
@@ -119,7 +123,7 @@ export function Home() {
                             defaultValue: '@handle, channel ID, or video URL',
                         })}
                         value={getInput(Platform.PlatformYouTube)}
-                        onChange={(e) => setInput(Platform.PlatformYouTube, e.target.value)}
+                        onChange={(e) => handleInput(Platform.PlatformYouTube, e.target.value)}
                     />
                     <button
                         className={`btn ${isActive(Platform.PlatformYouTube) ? 'btn-danger' : 'btn-primary'}`}
@@ -158,7 +162,7 @@ export function Home() {
                         type="text"
                         placeholder={t('home.placeholder.kick_channel')}
                         value={getInput(Platform.PlatformKick)}
-                        onChange={(e) => setInput(Platform.PlatformKick, e.target.value)}
+                        onChange={(e) => handleInput(Platform.PlatformKick, e.target.value)}
                     />
                     <button
                         className={`btn ${connected[Platform.PlatformKick] ? 'btn-danger' : 'btn-primary'}`}

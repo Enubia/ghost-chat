@@ -57,14 +57,20 @@ func resolveInput(input string) (resolvedInput, error) {
 
 		return resolvedInput{videoURL: watchURL(videoID)}, nil
 
-	case "www.youtube.com", "youtube.com":
+	case "www.youtube.com", "youtube.com", "m.youtube.com":
 		if u.Path == "/watch" {
 			if v := u.Query().Get("v"); v != "" {
 				return resolvedInput{videoURL: watchURL(v)}, nil
 			}
 		}
 
-		liveURL := "https://www.youtube.com" + u.Path
+		path := strings.TrimSuffix(u.Path, "/")
+
+		if videoID, ok := strings.CutPrefix(path, "/live/"); ok && isVideoID(videoID) {
+			return resolvedInput{videoURL: watchURL(videoID)}, nil
+		}
+
+		liveURL := "https://www.youtube.com" + path
 		if !strings.HasSuffix(liveURL, "/live") {
 			liveURL += "/live"
 		}
@@ -80,8 +86,9 @@ func resolveInput(input string) (resolvedInput, error) {
 // https://www.youtube.com/watch?v={videoId} URL. A channel that is not live
 // yields ErrChannelOffline.
 //
-// Accepted inputs: full watch URL, youtu.be short URL, channel handle (@name),
-// channel ID (UCxxxxxxx), or channel/handle URL.
+// Accepted inputs: full watch URL, youtu.be short URL, /live/{videoId} URL,
+// channel handle (@name), channel ID (UCxxxxxxx), or channel/handle URL, on
+// youtube.com or m.youtube.com.
 func ResolveVideoURL(input string) (string, error) {
 	r, err := resolveInput(input)
 	if err != nil {
@@ -93,6 +100,10 @@ func ResolveVideoURL(input string) (string, error) {
 	}
 
 	return resolveLiveURL(context.Background(), httpClient, r.liveURL)
+}
+
+func isVideoID(s string) bool {
+	return s != "" && !strings.Contains(s, "/")
 }
 
 func watchURL(videoID string) string {
