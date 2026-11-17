@@ -48,47 +48,68 @@ func resolveInput(input string) (resolvedInput, error) {
 		return resolvedInput{}, fmt.Errorf("invalid input: %w", err)
 	}
 
-	switch u.Host {
+	segments := strings.FieldsFunc(u.Path, func(r rune) bool { return r == '/' })
+
+	switch strings.ToLower(u.Hostname()) {
 	case "youtu.be":
-		videoID := strings.TrimPrefix(u.Path, "/")
-		if videoID == "" {
+		if len(segments) == 0 {
 			return resolvedInput{}, fmt.Errorf("no video ID in youtu.be URL")
 		}
 
-		return resolvedInput{videoURL: watchURL(videoID)}, nil
+		return resolvedInput{videoURL: watchURL(segments[0])}, nil
 
-	case "www.youtube.com", "youtube.com", "m.youtube.com":
-		if u.Path == "/watch" {
-			if v := u.Query().Get("v"); v != "" {
-				return resolvedInput{videoURL: watchURL(v)}, nil
-			}
-		}
-
-		path := strings.TrimSuffix(u.Path, "/")
-
-		if videoID, ok := strings.CutPrefix(path, "/live/"); ok && isVideoID(videoID) {
-			return resolvedInput{videoURL: watchURL(videoID)}, nil
-		}
-
-		liveURL := "https://www.youtube.com" + path
-		if !strings.HasSuffix(liveURL, "/live") {
-			liveURL += "/live"
-		}
-
-		return resolvedInput{liveURL: liveURL}, nil
+	case "www.youtube.com", "youtube.com", "m.youtube.com", "music.youtube.com":
+		return resolveYouTubePath(segments, u.Query().Get("v"), input)
 
 	default:
 		return resolvedInput{}, fmt.Errorf("unrecognised YouTube URL: %s", input)
 	}
 }
 
+func resolveYouTubePath(segments []string, videoParam string, input string) (resolvedInput, error) {
+	if len(segments) == 0 {
+		return resolvedInput{}, fmt.Errorf("no channel or video in YouTube URL: %s", input)
+	}
+
+	switch first := segments[0]; {
+	case first == "watch":
+		if videoParam == "" {
+			return resolvedInput{}, fmt.Errorf("no video ID in YouTube URL: %s", input)
+		}
+
+		return resolvedInput{videoURL: watchURL(videoParam)}, nil
+
+	case first == "live" || first == "shorts":
+		if len(segments) < 2 {
+			return resolvedInput{}, fmt.Errorf("no video ID in YouTube URL: %s", input)
+		}
+
+		return resolvedInput{videoURL: watchURL(segments[1])}, nil
+
+	case first == "channel" || first == "c" || first == "user":
+		if len(segments) < 2 {
+			return resolvedInput{}, fmt.Errorf("no channel in YouTube URL: %s", input)
+		}
+
+		return channelLive("/" + first + "/" + segments[1]), nil
+
+	default:
+		return channelLive("/" + first), nil
+	}
+}
+
+func channelLive(channelPath string) resolvedInput {
+	return resolvedInput{liveURL: "https://www.youtube.com" + channelPath + "/live"}
+}
+
 // ResolveVideoURL normalises any user-provided YouTube input into a canonical
 // https://www.youtube.com/watch?v={videoId} URL. A channel that is not live
 // yields ErrChannelOffline.
 //
-// Accepted inputs: full watch URL, youtu.be short URL, /live/{videoId} URL,
-// channel handle (@name), channel ID (UCxxxxxxx), or channel/handle URL, on
-// youtube.com or m.youtube.com.
+// Accepted inputs: watch, youtu.be, /live/{videoId} and /shorts/{videoId} URLs,
+// channel handle (@name), channel ID (UCxxxxxxx), or any channel/handle page URL
+// (tabs such as /streams are ignored), on youtube.com, m.youtube.com or
+// music.youtube.com.
 func ResolveVideoURL(input string) (string, error) {
 	r, err := resolveInput(input)
 	if err != nil {
@@ -100,10 +121,6 @@ func ResolveVideoURL(input string) (string, error) {
 	}
 
 	return resolveLiveURL(context.Background(), httpClient, r.liveURL)
-}
-
-func isVideoID(s string) bool {
-	return s != "" && !strings.Contains(s, "/")
 }
 
 func watchURL(videoID string) string {
