@@ -4,7 +4,12 @@ import type { AutoConnectResult } from '@bindings/ghost-chat/models.js';
 import { create } from 'zustand';
 
 type PlatformFlags = Partial<Record<Platform, boolean>>;
-type InputMap = Partial<Record<Platform, string>>;
+interface InputDraft {
+    text: string;
+    saved: string;
+}
+
+export type InputMap = Partial<Record<Platform, InputDraft>>;
 
 interface ConnectionState {
     connected: PlatformFlags;
@@ -13,7 +18,7 @@ interface ConnectionState {
     error: string | null;
     setConnected: (platform: Platform, value: boolean) => void;
     setWaiting: (platform: Platform, value: boolean) => void;
-    setInput: (platform: Platform, value: string) => void;
+    setInput: (platform: Platform, text: string, saved: string) => void;
     setError: (error: string | null) => void;
     applyAutoConnectResults: (
         results: AutoConnectResult[] | null | undefined,
@@ -39,9 +44,9 @@ export const useConnectionStore = create<ConnectionState>((set) => ({
             connected: value ? { ...s.connected, [platform]: false } : s.connected,
         })),
 
-    setInput: (platform, value) =>
+    setInput: (platform, text, saved) =>
         set((s) => ({
-            inputs: { ...s.inputs, [platform]: value },
+            inputs: { ...s.inputs, [platform]: { text, saved } },
         })),
 
     setError: (error) => set({ error }),
