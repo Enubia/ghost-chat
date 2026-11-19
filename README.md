@@ -32,6 +32,14 @@ Ghost Chat is a lightweight desktop overlay that displays live chat from **Twitc
 
 Built with Go and Wails v3 for native performance. Runs on macOS and Windows.
 
+<p align="center">
+  <a href="https://getghostchat.com/assets/promo.mp4">
+    <img src="images/promo-thumbnail.jpg" alt="Watch the one-minute tour" width="720" />
+  </a>
+  <br />
+  <sub>One-minute tour. New here? Watch the <a href="https://getghostchat.com/#tutorial">setup tutorial</a>.</sub>
+</p>
+
 ## Screenshots
 
 <p align="center">

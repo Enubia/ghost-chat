@@ -137,21 +137,9 @@
                 <p>Watch the tutorial to get up and running in minutes.</p>
             </div>
             <div class="video-wrapper reveal">
-                <!-- Replace VIDEO_ID with the actual YouTube video ID -->
-                <div class="video-placeholder" id="video-container">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Tutorial video coming soon</span>
-                </div>
-                <!--
-                    To embed the video, replace the div above with:
-                    <iframe
-                        src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
-                        title="Ghost Chat Tutorial"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                -->
+                <video controls preload="metadata" playsinline poster="assets/tutorial-poster.jpg">
+                    <source src="assets/tutorial.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </section>
@@ -160,7 +148,12 @@
         <div class="container">
             <div class="section-header reveal">
                 <h2>See it in action</h2>
-                <p>A few glimpses of Ghost Chat in use.</p>
+                <p>A one-minute tour, plus a few glimpses of Ghost Chat in use.</p>
+            </div>
+            <div class="video-wrapper video-tour reveal">
+                <video controls preload="metadata" playsinline poster="assets/promo-poster.jpg">
+                    <source src="assets/promo.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="screenshots-grid reveal">
                 <div class="screenshot-slot">

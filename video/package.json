@@ -1,0 +1,30 @@
+{
+    "name": "ghost-chat-video",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "studio": "remotion studio",
+        "render": "remotion render GhostChatPromo out/promo.mp4 --crf=24 && remotion render GhostChatTutorial out/tutorial.mp4 --crf=24",
+        "render:promo": "remotion render GhostChatPromo out/promo.mp4 --crf=24",
+        "render:tutorial": "remotion render GhostChatTutorial out/tutorial.mp4 --crf=24",
+        "typecheck": "tsc --noEmit"
+    },
+    "packageManager": "pnpm@10.33.2",
+    "dependencies": {
+        "@remotion/cli": "4.0.543",
+        "@remotion/google-fonts": "4.0.543",
+        "i18next": "25.8.13",
+        "react": "19.2.4",
+        "react-dom": "19.2.4",
+        "react-i18next": "16.5.4",
+        "react-router-dom": "7.13.1",
+        "remotion": "4.0.543",
+        "zustand": "5.0.11"
+    },
+    "devDependencies": {
+        "@types/react": "19.2.14",
+        "@types/react-dom": "19.2.3",
+        "typescript": "5.9.3"
+    }
+}

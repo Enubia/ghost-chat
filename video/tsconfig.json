@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["DOM", "DOM.Iterable", "ES2023"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "strict": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": false,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "baseUrl": ".",
+        "paths": {
+            "@bindings/ghost-chat/app.js": ["src/mocks/app.ts"],
+            "@bindings/*": ["../frontend/bindings/*"],
+            "@wailsio/runtime": ["src/mocks/runtime.ts"],
+            "wails-create": ["../frontend/node_modules/@wailsio/runtime/types/create.d.ts"],
+            "@/*": ["../frontend/src/*"],
+            "react": ["node_modules/@types/react"],
+            "react/*": ["node_modules/@types/react/*"]
+        }
+    },
+    "include": ["src", "remotion.config.ts"]
+}

@@ -11,6 +11,7 @@ wails3 task package          # .app bundle (macOS) / .exe (Windows)
 go test ./...                # Go tests
 cd frontend && pnpm fix      # MANDATORY after any frontend change — oxlint --fix --type-aware && oxfmt --write
 cd frontend && pnpm build    # tsc + vite build
+cd video && pnpm studio     # promo video (Remotion, reuses frontend components)
 ```
 
 ## Conventions
@@ -40,6 +41,7 @@ cd frontend && pnpm build    # tsc + vite build
 - `golang.design/x/hotkey` must register in a goroutine, not the main thread, or it SIGTRAPs on macOS
 - Window state is saved in `ShouldQuit`/`ServiceShutdown`; the macOS dock-quit routes through `ShouldQuit`
 - Adding or updating a platform also means updating `website/index.html` (hero, features, FAQ) and refreshing the screenshots in `website/assets/`
+- The promo and tutorial videos in `video/` render the real frontend components; after visible UI changes, re-render (`cd video && pnpm render`) and copy `out/*.mp4` to `website/assets/`
 
 ## Agent skills
 
